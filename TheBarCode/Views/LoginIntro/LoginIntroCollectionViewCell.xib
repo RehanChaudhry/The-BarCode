@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="LoginIntroCollectionViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pe7-C3-eRM" customClass="GradientView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="20" y="8" width="335" height="484"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-Fc-m2S">
+                                <rect key="frame" x="8" y="368" width="319" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="DUx-8U-q2n"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIX-gN-0pE">
+                                <rect key="frame" x="8" y="398" width="319" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="g0j-lE-YiE"/>
+                                </constraints>
+                                <string key="text">Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.</string>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_intro_1" translatesAutoresizingMaskIntoConstraints="NO" id="zKq-Cm-kmc">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="353"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="hIX-gN-0pE" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" constant="8" id="G4j-h1-lFX"/>
+                            <constraint firstItem="hIX-gN-0pE" firstAttribute="top" secondItem="xt5-Fc-m2S" secondAttribute="bottom" constant="8" id="Lfh-j3-PIO"/>
+                            <constraint firstAttribute="trailing" secondItem="xt5-Fc-m2S" secondAttribute="trailing" constant="8" id="OjC-rb-24v"/>
+                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="top" secondItem="Pe7-C3-eRM" secondAttribute="top" id="Qod-nD-Bcw"/>
+                            <constraint firstAttribute="trailing" secondItem="hIX-gN-0pE" secondAttribute="trailing" constant="8" id="QzR-K0-Xmq"/>
+                            <constraint firstAttribute="bottom" secondItem="hIX-gN-0pE" secondAttribute="bottom" constant="15" id="SIb-we-Ajj"/>
+                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="cNU-aI-nKj"/>
+                            <constraint firstItem="xt5-Fc-m2S" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" constant="8" id="gJh-j0-kZ4"/>
+                            <constraint firstAttribute="trailing" secondItem="zKq-Cm-kmc" secondAttribute="trailing" id="ksK-Zy-quL"/>
+                            <constraint firstItem="xt5-Fc-m2S" firstAttribute="top" secondItem="zKq-Cm-kmc" secondAttribute="bottom" constant="15" id="uby-UO-L3d"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Pe7-C3-eRM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="1D0-s4-MDI"/>
+                <constraint firstAttribute="bottom" secondItem="Pe7-C3-eRM" secondAttribute="bottom" constant="8" id="Kch-ju-e3h"/>
+                <constraint firstItem="Pe7-C3-eRM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="Yxc-LV-yXp"/>
+                <constraint firstAttribute="trailing" secondItem="Pe7-C3-eRM" secondAttribute="trailing" constant="20" id="fwd-Nz-FgF"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="containerView" destination="Pe7-C3-eRM" id="blb-qT-Ne9"/>
+                <outlet property="detailLabel" destination="hIX-gN-0pE" id="Xnd-vn-2N7"/>
+                <outlet property="imageView" destination="zKq-Cm-kmc" id="k4H-Xp-jDq"/>
+                <outlet property="titleLabel" destination="xt5-Fc-m2S" id="OIy-UT-kVl"/>
+            </connections>
+            <point key="canvasLocation" x="46.5" y="54"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="login_intro_1" width="343" height="342"/>
+    </resources>
+</document>

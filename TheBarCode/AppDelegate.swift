@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.customizeAppearance()
+        
         return true
     }
 
@@ -42,5 +45,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+//MARK: Appearance Customization
+
+extension AppDelegate {
+    func customizeAppearance() {
+        
+        let navigationBar = UINavigationBar.appearance()
+        
+        let scale = UIScreen.main.scale
+        
+        var navigationBarSize = navigationBar.frame.size
+        navigationBarSize.width = UIScreen.main.bounds.size.width * scale
+        navigationBarSize.height = 64.0 * scale
+        
+        let image = UIImage.from(color: UIColor.appNavBarGrayColor(), size: navigationBarSize)
+        navigationBar.setBackgroundImage(image, for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.tintColor = UIColor.appBlueColor()
+        navigationBar.titleTextAttributes = [NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 16.0), NSAttributedStringKey.foregroundColor : UIColor.white]
+        
+        navigationBar.isTranslucent = true
+        
+        let barButtonItem = UIBarButtonItem.appearance()
+        barButtonItem.tintColor = UIColor.appBlueColor()
+    }
 }
 

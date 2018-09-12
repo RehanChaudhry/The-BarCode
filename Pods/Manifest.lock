@@ -1,0 +1,36 @@
+PODS:
+  - Alamofire (4.7.3)
+  - Gradientable (0.0.2)
+  - PureLayout (3.1.2)
+  - Reusable (4.0.3):
+    - Reusable/Storyboard (= 4.0.3)
+    - Reusable/View (= 4.0.3)
+  - Reusable/Storyboard (4.0.3)
+  - Reusable/View (4.0.3)
+  - UIColor_Hex_Swift (4.0.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.7.3)
+  - Gradientable (~> 0.0.2)
+  - PureLayout (~> 3.1.2)
+  - Reusable (~> 4.0.3)
+  - UIColor_Hex_Swift (~> 4.0.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Gradientable
+    - PureLayout
+    - Reusable
+    - UIColor_Hex_Swift
+
+SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
+  PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
+  Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
+  UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
+
+PODFILE CHECKSUM: 731f3420d85d7c9f3ddf9b8f1109c01822875245
+
+COCOAPODS: 1.5.3

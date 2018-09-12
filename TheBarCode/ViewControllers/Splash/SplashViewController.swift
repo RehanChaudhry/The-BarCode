@@ -8,11 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.perform(#selector(moveToNextController), with: nil, afterDelay: 1.0)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.updateNavigationBarAppearance()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +29,10 @@ class ViewController: UIViewController {
     }
 
 
+    //MARK: My Methods
+    
+    @objc func moveToNextController() {
+        self.performSegue(withIdentifier: "SplashToLoginOptions", sender: nil)
+    }
 }
 

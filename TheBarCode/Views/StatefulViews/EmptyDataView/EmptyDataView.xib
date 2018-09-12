@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EmptyDataView" customModule="DramaSlayer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No friend available on the app." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjf-Kl-1hN">
+                    <rect key="frame" x="20" y="135.5" width="627" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photos and videos are more fun with friends. Invite your friends to share photo or video with them." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzq-eH-Lsl">
+                    <rect key="frame" x="20" y="169.5" width="627" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qz-SW-h0E">
+                    <rect key="frame" x="213" y="215.5" width="240" height="40"/>
+                    <color key="backgroundColor" red="0.066666666669999999" green="0.85098039219999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="9lz-Ox-XOC"/>
+                        <constraint firstAttribute="height" constant="40" id="d89-P8-Oea"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                    <state key="normal" title="Invite Friends" image="icon_loading">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="actionButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="iKd-5s-4kM"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="nzq-eH-Lsl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="0xW-YF-tXm"/>
+                <constraint firstItem="qjf-Kl-1hN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="LrQ-PK-pgP"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="M19-xM-LNs"/>
+                <constraint firstItem="nzq-eH-Lsl" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="R2D-AD-Dju"/>
+                <constraint firstAttribute="trailing" secondItem="qjf-Kl-1hN" secondAttribute="trailing" constant="20" id="VSw-RG-TsK"/>
+                <constraint firstItem="nzq-eH-Lsl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ccg-Mc-rFS"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="top" secondItem="nzq-eH-Lsl" secondAttribute="bottom" constant="10" id="gS0-v9-jUM"/>
+                <constraint firstItem="nzq-eH-Lsl" firstAttribute="top" secondItem="qjf-Kl-1hN" secondAttribute="bottom" constant="10" id="m3D-Dh-bbs"/>
+                <constraint firstAttribute="trailing" secondItem="nzq-eH-Lsl" secondAttribute="trailing" constant="20" id="o7w-pY-RwD"/>
+                <constraint firstItem="qjf-Kl-1hN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oNc-pp-iKh"/>
+            </constraints>
+            <connections>
+                <outlet property="actionButton" destination="3qz-SW-h0E" id="i8Q-ga-koh"/>
+                <outlet property="descriptionLabel" destination="nzq-eH-Lsl" id="x6D-23-r1s"/>
+                <outlet property="titleLabel" destination="qjf-Kl-1hN" id="BNG-YZ-u52"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_loading" width="21" height="21"/>
+    </resources>
+</document>

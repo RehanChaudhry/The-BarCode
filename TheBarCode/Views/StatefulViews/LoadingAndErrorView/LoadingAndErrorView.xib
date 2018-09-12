@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LoadingAndErrorView" customModule="DramaSlayer" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ab-jv-0Yb">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <connections>
+                        <action selector="retryButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="3d6-Fo-50w"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYL-MP-if7">
+                    <rect key="frame" x="16" y="8" width="343" height="651"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="RMA-L2-HXz">
+                    <rect key="frame" x="177" y="323" width="20" height="20"/>
+                    <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="SYL-MP-if7" secondAttribute="trailing" constant="16" id="7ag-6k-beG"/>
+                <constraint firstItem="3Ab-jv-0Yb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Oe-Nw-xpj"/>
+                <constraint firstItem="3Ab-jv-0Yb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FNg-Sf-ELf"/>
+                <constraint firstItem="RMA-L2-HXz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Gz6-8k-Z4N"/>
+                <constraint firstItem="RMA-L2-HXz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ofd-9k-QDE"/>
+                <constraint firstAttribute="trailing" secondItem="3Ab-jv-0Yb" secondAttribute="trailing" id="emt-E9-hqH"/>
+                <constraint firstItem="SYL-MP-if7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="lCI-YI-6Pk"/>
+                <constraint firstAttribute="bottom" secondItem="SYL-MP-if7" secondAttribute="bottom" constant="8" id="noL-FI-xyp"/>
+                <constraint firstItem="SYL-MP-if7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="qfR-fj-dex"/>
+                <constraint firstAttribute="bottom" secondItem="3Ab-jv-0Yb" secondAttribute="bottom" id="sUf-fv-Iw4"/>
+            </constraints>
+            <connections>
+                <outlet property="activityIndicator" destination="RMA-L2-HXz" id="dGx-Pi-fQG"/>
+                <outlet property="retryButton" destination="3Ab-jv-0Yb" id="Ja9-fT-0vV"/>
+                <outlet property="textLabel" destination="SYL-MP-if7" id="ttK-cv-Xkc"/>
+            </connections>
+            <point key="canvasLocation" x="25.5" y="51.5"/>
+        </view>
+    </objects>
+</document>
