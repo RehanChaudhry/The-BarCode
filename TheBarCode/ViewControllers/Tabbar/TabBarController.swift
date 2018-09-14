@@ -1,21 +1,26 @@
 //
-//  PermissionsInfoViewController.swift
+//  TabBarController.swift
 //  TheBarCode
 //
-//  Created by Mac OS X on 12/09/2018.
+//  Created by Mac OS X on 13/09/2018.
 //  Copyright © 2018 Cygnis Media. All rights reserved.
 //
 
 import UIKit
 
-class PermissionsInfoViewController: UIViewController {
+class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.navigationItem.hidesBackButton = false
+        let tabbarItems = self.tabBar.items!
+        let explore = tabbarItems[2]
+        
+        explore.selectedImage = #imageLiteral(resourceName: "icon_tab_explore_selected").withRenderingMode(.alwaysOriginal)
+        
+        self.selectedIndex = 2
     }
 
     override func didReceiveMemoryWarning() {

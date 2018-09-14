@@ -13,6 +13,8 @@ class CategoriesViewController: UIViewController {
 
     @IBOutlet var collectionView: StatefulCollectionView!
     
+    @IBOutlet var continueButton: UIButton!
+    
     @IBOutlet var infoLabel: UILabel!
     
     var isUpdating: Bool = true
@@ -25,11 +27,18 @@ class CategoriesViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         if self.isUpdating {
+            self.title = "Update preferences"
             self.infoLabel.text = "Please update your preferences."
-            self.navigationItem.hidesBackButton = false
+            let cancelBarButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
+            self.navigationItem.leftBarButtonItem = cancelBarButton
+            
+            self.continueButton.setTitle("Update", for: .normal)
         } else {
+            self.title = "Personalize your experience"
             self.navigationItem.hidesBackButton = true
             self.infoLabel.text = "Please tap on few things you like to get started."
+            
+            self.continueButton.setTitle("Continue", for: .normal)
         }
         
         categories.append(Category(title: "Beer Garden", image: "category_1", isSelected: false))
@@ -80,10 +89,18 @@ class CategoriesViewController: UIViewController {
         return size
     }
     
+    @objc func cancelBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+        if isUpdating {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+        }
     }
 
 }

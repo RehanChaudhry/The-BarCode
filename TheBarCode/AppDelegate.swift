@@ -70,6 +70,11 @@ extension AppDelegate {
         
         let barButtonItem = UIBarButtonItem.appearance()
         barButtonItem.tintColor = UIColor.appBlueColor()
+        
+        let tabbar = UITabBar.appearance()
+        tabbar.backgroundColor = UIColor.appNavBarGrayColor()
+        tabbar.tintColor = UIColor.appBlueColor()
+        tabbar.unselectedItemTintColor = UIColor.appGrayColor()
     }
 }
 

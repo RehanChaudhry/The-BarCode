@@ -56,15 +56,6 @@ class SIgnUpViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         
-        if segue.identifier == "SignUpToTermsNavigationSegue" {
-            let navigationController = segue.destination as! UINavigationController
-            let termsController = navigationController.viewControllers.first as! TermsViewController
-            termsController.shouldShowCancelButton = true
-        } else if segue.identifier == "SignUpToPolicyNavigationSegue" {
-            let navigationController = segue.destination as! UINavigationController
-            let policyController = navigationController.viewControllers.first as! PrivacyPolicyViewController
-            policyController.shouldShowCancelButton = true
-        }
     }
 
     //MARK: My Methods

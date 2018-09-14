@@ -1,6 +1,6 @@
 //
 //  UIFontAdditions.swift
-//  StormFiberHotspot
+//  TheBarCode
 //
 //  Created by Mac OS X on 03/04/2018.
 //  Copyright © 2018 Cygnis Media. All rights reserved.
