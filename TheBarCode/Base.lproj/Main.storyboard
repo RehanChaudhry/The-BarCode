@@ -1551,7 +1551,152 @@
                     <view key="view" contentMode="scaleToFill" id="Fgc-i7-Aky">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yzp-SM-t7h">
+                                <rect key="frame" x="0.0" y="64" width="375" height="99"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEc-rV-9d8">
+                                        <rect key="frame" x="16" y="24" width="44" height="44"/>
+                                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="8oY-uX-nco"/>
+                                            <constraint firstAttribute="width" constant="44" id="pS9-Lj-DkY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available Credits: You are out of credit. You can reload previous offers after 0D  0H  0M." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fk-cL-Bvr">
+                                        <rect key="frame" x="68" y="24" width="291" height="50.5"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FvM-Lo-zr0">
+                                        <rect key="frame" x="0.0" y="98" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.29803921570000003" green="0.29803921570000003" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="3y8-gP-9Uc"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="WEc-rV-9d8" firstAttribute="leading" secondItem="yzp-SM-t7h" secondAttribute="leading" constant="16" id="1gY-b1-zZb"/>
+                                    <constraint firstAttribute="bottom" secondItem="FvM-Lo-zr0" secondAttribute="bottom" id="26g-qc-Qjd"/>
+                                    <constraint firstItem="0Fk-cL-Bvr" firstAttribute="leading" secondItem="WEc-rV-9d8" secondAttribute="trailing" constant="8" id="32h-M7-rrC"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Fk-cL-Bvr" secondAttribute="trailing" constant="16" id="6Jx-27-bEM"/>
+                                    <constraint firstItem="WEc-rV-9d8" firstAttribute="top" secondItem="yzp-SM-t7h" secondAttribute="top" constant="24" id="BJo-z8-21A"/>
+                                    <constraint firstItem="FvM-Lo-zr0" firstAttribute="leading" secondItem="yzp-SM-t7h" secondAttribute="leading" id="cAB-u9-uyg"/>
+                                    <constraint firstAttribute="trailing" secondItem="FvM-Lo-zr0" secondAttribute="trailing" id="e4b-L7-0J1"/>
+                                    <constraint firstAttribute="height" constant="99" id="pwJ-0D-zfc"/>
+                                    <constraint firstItem="0Fk-cL-Bvr" firstAttribute="top" secondItem="yzp-SM-t7h" secondAttribute="top" constant="24" id="u5g-Je-xmn"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner_reload" translatesAutoresizingMaskIntoConstraints="NO" id="Jyy-yP-0QX">
+                                <rect key="frame" x="0.0" y="163" width="375" height="213"/>
+                            </imageView>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXa-wD-bfi" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
+                                <rect key="frame" x="16" y="603" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Zim-Zs-HTs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                                <state key="normal" title="Reload">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHn-hQ-4zg">
+                                <rect key="frame" x="16" y="400" width="343" height="179"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="179" id="Z5n-Qi-zAa"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Reload and Get Discounts
+
+Just pay
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="16" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="16" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="£1">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="48" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="48" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="16" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="to reload your previous offers">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="16" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Jyy-yP-0QX" firstAttribute="trailing" secondItem="gDf-Oz-dhl" secondAttribute="trailing" id="0J4-JS-TEC"/>
+                            <constraint firstItem="Jyy-yP-0QX" firstAttribute="leading" secondItem="gDf-Oz-dhl" secondAttribute="leading" id="57p-EY-FVm"/>
+                            <constraint firstItem="gDf-Oz-dhl" firstAttribute="trailing" secondItem="gHn-hQ-4zg" secondAttribute="trailing" constant="16" id="7Sr-vQ-VdH"/>
+                            <constraint firstItem="yzp-SM-t7h" firstAttribute="leading" secondItem="gDf-Oz-dhl" secondAttribute="leading" id="CIn-TH-gn0"/>
+                            <constraint firstItem="yzp-SM-t7h" firstAttribute="trailing" secondItem="gDf-Oz-dhl" secondAttribute="trailing" id="EEy-Og-Hhq"/>
+                            <constraint firstItem="gHn-hQ-4zg" firstAttribute="leading" secondItem="gDf-Oz-dhl" secondAttribute="leading" constant="16" id="HQC-6f-RO6"/>
+                            <constraint firstItem="gDf-Oz-dhl" firstAttribute="trailing" secondItem="WXa-wD-bfi" secondAttribute="trailing" constant="16" id="LWY-MX-rUF"/>
+                            <constraint firstItem="WXa-wD-bfi" firstAttribute="top" secondItem="gHn-hQ-4zg" secondAttribute="bottom" constant="24" id="UbV-HQ-lGy"/>
+                            <constraint firstItem="gDf-Oz-dhl" firstAttribute="bottom" secondItem="WXa-wD-bfi" secondAttribute="bottom" constant="20" id="Vj2-li-u2J"/>
+                            <constraint firstItem="WXa-wD-bfi" firstAttribute="leading" secondItem="gDf-Oz-dhl" secondAttribute="leading" constant="16" id="WB3-Na-xJg"/>
+                            <constraint firstItem="yzp-SM-t7h" firstAttribute="top" secondItem="gDf-Oz-dhl" secondAttribute="top" id="ehW-Ij-s23"/>
+                            <constraint firstItem="gHn-hQ-4zg" firstAttribute="top" secondItem="Jyy-yP-0QX" secondAttribute="bottom" constant="24" id="gFF-ZT-P86"/>
+                            <constraint firstItem="Jyy-yP-0QX" firstAttribute="top" secondItem="yzp-SM-t7h" secondAttribute="bottom" id="n0j-ff-IZ6"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="gDf-Oz-dhl"/>
                     </view>
                     <navigationItem key="navigationItem" title="Reload" id="swM-ln-Rjc">
@@ -1561,10 +1706,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="creditsLabel" destination="WEc-rV-9d8" id="cVX-Pw-kKT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xNd-qR-jbT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4404" y="4942"/>
+            <point key="canvasLocation" x="4309.6000000000004" y="4842.7286356821596"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="e6w-ZF-Cd8">
@@ -1583,7 +1731,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nEx-BF-ZDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3692" y="4943"/>
+            <point key="canvasLocation" x="3598" y="4844"/>
         </scene>
         <!--FAQs-->
         <scene sceneID="7ED-Ez-0tT">
@@ -1669,6 +1817,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="banner_reload" width="375" height="249"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
         <image name="icon_notification" width="21" height="24"/>
@@ -1683,8 +1832,8 @@
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1dj-kX-8t1"/>
+        <segue reference="lFn-an-dqK"/>
         <segue reference="qOu-sH-Uj1"/>
-        <segue reference="Tsk-gy-Yut"/>
+        <segue reference="gfy-jQ-g7J"/>
     </inferredMetricsTieBreakers>
 </document>

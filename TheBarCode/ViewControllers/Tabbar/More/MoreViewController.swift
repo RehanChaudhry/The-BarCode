@@ -19,7 +19,12 @@ class MoreViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.title = "Welcome, Phillip May"
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 21))
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont.appBoldFontOf(size: 16.0)
+        titleLabel.textColor = UIColor.white
+        titleLabel.text = "Welcome, Phillip May"
+        self.navigationItem.titleView = titleLabel
         
         self.tableView.backgroundColor = UIColor.clear
         

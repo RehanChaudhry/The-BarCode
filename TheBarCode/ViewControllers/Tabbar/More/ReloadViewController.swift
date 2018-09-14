@@ -10,10 +10,14 @@ import UIKit
 
 class ReloadViewController: UIViewController {
 
+    @IBOutlet var creditsLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.creditsLabel.layer.borderColor = UIColor.appGradientGrayStart().cgColor
     }
 
     override func didReceiveMemoryWarning() {
