@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (4.7.3)
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
   - Gradientable (0.0.2)
   - PureLayout (3.1.2)
   - Reusable (4.0.3):
@@ -7,30 +12,41 @@ PODS:
     - Reusable/View (= 4.0.3)
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
+  - StatefulTableView (0.1.0)
+  - TPKeyboardAvoiding (1.3.2)
   - UIColor_Hex_Swift (4.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7.3)
+  - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
   - PureLayout (~> 3.1.2)
   - Reusable (~> 4.0.3)
+  - StatefulTableView (~> 0.1.0)
+  - TPKeyboardAvoiding (~> 1.3.2)
   - UIColor_Hex_Swift (~> 4.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - GoogleMaps
     - Gradientable
     - PureLayout
     - Reusable
+    - StatefulTableView
+    - TPKeyboardAvoiding
     - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
+  StatefulTableView: be99827cf564125aedbc0738caa5b9742839cd59
+  TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 731f3420d85d7c9f3ddf9b8f1109c01822875245
+PODFILE CHECKSUM: 254586824b96bf63940dc84d48c7e67365588fe4
 
 COCOAPODS: 1.5.3

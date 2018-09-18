@@ -10,10 +10,13 @@ import UIKit
 
 class RulesViewController: UIViewController {
 
+    @IBOutlet var textView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
     }
 
     override func didReceiveMemoryWarning() {

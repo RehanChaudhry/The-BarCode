@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="suM-Yq-PQ4" customClass="BarTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="suM-Yq-PQ4" id="Uz3-UE-iJo">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="249.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V">
+                        <rect key="frame" x="16" y="24" width="288" height="162"/>
+                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="162" id="pRR-DD-B5n"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-uj-0UX">
+                        <rect key="frame" x="16" y="206" width="246" height="20"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="88w-H1-hsa">
+                        <rect key="frame" x="16" y="234" width="10" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="g7o-aQ-VU9"/>
+                            <constraint firstAttribute="height" constant="15" id="roj-3l-8mr"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PB5-K3-KjL">
+                        <rect key="frame" x="34" y="234" width="68" height="15"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Skp-3x-YSf">
+                        <rect key="frame" x="270" y="194" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="QWK-KN-EjE"/>
+                            <constraint firstAttribute="width" constant="44" id="RFH-Pc-ng7"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                        <state key="normal" image="icon_tab_fav"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="88w-H1-hsa" firstAttribute="top" secondItem="CR5-uj-0UX" secondAttribute="bottom" constant="8" id="C6e-LI-ieF"/>
+                    <constraint firstAttribute="bottom" secondItem="PB5-K3-KjL" secondAttribute="bottom" constant="0.5" id="EBC-nI-2Xh"/>
+                    <constraint firstItem="CR5-uj-0UX" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="20" id="EpX-Db-XEX"/>
+                    <constraint firstItem="Skp-3x-YSf" firstAttribute="centerY" secondItem="CR5-uj-0UX" secondAttribute="centerY" id="Kju-Oq-1Fp"/>
+                    <constraint firstItem="Skp-3x-YSf" firstAttribute="leading" secondItem="CR5-uj-0UX" secondAttribute="trailing" constant="8" id="MZd-cx-has"/>
+                    <constraint firstAttribute="trailing" secondItem="Skp-3x-YSf" secondAttribute="trailing" constant="6" id="Npa-k5-hfI"/>
+                    <constraint firstItem="ind-3c-R0V" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="Q55-dc-t3o"/>
+                    <constraint firstAttribute="trailing" secondItem="ind-3c-R0V" secondAttribute="trailing" constant="16" id="Uqt-Pk-QAf"/>
+                    <constraint firstItem="88w-H1-hsa" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="iym-WE-CnI"/>
+                    <constraint firstItem="PB5-K3-KjL" firstAttribute="leading" secondItem="88w-H1-hsa" secondAttribute="trailing" constant="8" id="kps-OR-puv"/>
+                    <constraint firstItem="PB5-K3-KjL" firstAttribute="top" secondItem="CR5-uj-0UX" secondAttribute="bottom" constant="8" id="vdW-4D-TqU"/>
+                    <constraint firstItem="CR5-uj-0UX" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="wLy-dm-g7u"/>
+                    <constraint firstItem="ind-3c-R0V" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="xb7-bb-PKG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="cuJ-Hl-gUF"/>
+            <connections>
+                <outlet property="coverImageView" destination="ind-3c-R0V" id="PHU-Al-icl"/>
+                <outlet property="distanceLabel" destination="PB5-K3-KjL" id="Vmv-PE-lVo"/>
+                <outlet property="favouriteButton" destination="Skp-3x-YSf" id="JhB-hY-PRO"/>
+                <outlet property="locationIconImageView" destination="88w-H1-hsa" id="IhG-Nb-n55"/>
+                <outlet property="titleLabel" destination="CR5-uj-0UX" id="WUV-03-M4P"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="cover_1" width="1029" height="486"/>
+        <image name="icon_map" width="15" height="20"/>
+        <image name="icon_tab_fav" width="28" height="26"/>
+    </resources>
+</document>

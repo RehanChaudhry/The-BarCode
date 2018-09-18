@@ -8,6 +8,9 @@ target 'TheBarCode' do
   pod 'Reusable', '~> 4.0.3'
   pod 'UIColor_Hex_Swift', '~> 4.0.2'
   pod 'PureLayout', '~> 3.1.2'
+  pod 'GoogleMaps', '~> 2.7.0'
+  pod 'StatefulTableView', '~> 0.1.0'
+  pod 'TPKeyboardAvoiding', '~> 1.3.2'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

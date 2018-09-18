@@ -31,12 +31,18 @@ class FieldView: UIView, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.textField.returnKeyType = .default
+        
         self.placeholderLabel.textColor = UIColor.appGrayColor()
         self.textField.textColor = UIColor.appGrayColor()
         self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
     }
     
     //MARK: My Methods
+    
+    func setReturnKey(returnKey: UIReturnKeyType) {
+        self.textField.returnKeyType = returnKey
+    }
     
     func reset() {
         self.validationLabel.isHidden = true

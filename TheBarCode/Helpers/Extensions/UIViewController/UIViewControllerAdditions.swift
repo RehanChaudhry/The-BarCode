@@ -15,7 +15,7 @@ extension UIViewController {
     }
     
     func updateNavigationBarAppearance() {
-        if self is LoginOptionsViewController || self is SplashViewController {
+        if self is LoginOptionsViewController || self is SplashViewController || self is ExploreViewController {
             self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController!.navigationBar.backgroundColor = UIColor.clear
         } else {

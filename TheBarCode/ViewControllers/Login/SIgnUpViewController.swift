@@ -9,6 +9,21 @@
 import UIKit
 import PureLayout
 
+enum Gender: String {
+    case male = "male", female = "female", other = "other"
+    
+    func description() -> String {
+        switch self {
+        case .male:
+            return "Male"
+        case .female:
+            return "Female"
+        default:
+            return "Other"
+        }
+    }
+}
+
 class SIgnUpViewController: UIViewController {
 
     @IBOutlet var scrollView: UIScrollView!
@@ -28,13 +43,27 @@ class SIgnUpViewController: UIViewController {
     var dobFieldView: FieldView!
     var genderFieldView: FieldView!
     
+    @IBOutlet var dateInputView: UIView!
+    @IBOutlet var pickerInputView: UIView!
+    
+    @IBOutlet var datePicker: UIDatePicker!
+    @IBOutlet var pickerView: UIPickerView!
+    
     let termsScheme = "thebarcode://terms"
     let policyScheme = "thebarcode://policy"
+    
+    var selectedGender: Gender = Gender.male
+    var selectedDob: Date = Date()
+    
+    var genders: [Gender] = [Gender.male, Gender.female, Gender.other]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        self.selectedDob = self.datePicker.date
         
         self.addBackButton()
         
@@ -65,6 +94,7 @@ class SIgnUpViewController: UIViewController {
         self.fullNameFieldView = FieldView.loadFromNib()
         self.fullNameFieldView.setUpFieldView(placeholder: "FULL NAME", fieldPlaceholder: "Enter your full name", iconImage: nil)
         self.fullNameFieldView.setKeyboardType()
+        self.fullNameFieldView.setReturnKey(returnKey: .next)
         self.contentView.addSubview(self.fullNameFieldView)
         
         self.fullNameFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fbSignUpView, withOffset: 5.0)
@@ -75,6 +105,7 @@ class SIgnUpViewController: UIViewController {
         self.emailFieldView = FieldView.loadFromNib()
         self.emailFieldView.setUpFieldView(placeholder: "EMAIL ADDRESS", fieldPlaceholder: "Enter your email address", iconImage: nil)
         self.emailFieldView.setKeyboardType(keyboardType: .emailAddress)
+        self.emailFieldView.setReturnKey(returnKey: .next)
         self.contentView.addSubview(self.emailFieldView)
         
         self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
@@ -85,6 +116,7 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView = FieldView.loadFromNib()
         self.passwordFieldView.setUpFieldView(placeholder: "PASSWORD", fieldPlaceholder: "Create your account password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
+        self.passwordFieldView.setReturnKey(returnKey: .next)
         self.contentView.addSubview(self.passwordFieldView)
         
         self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
@@ -93,10 +125,11 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.dobFieldView = FieldView.loadFromNib()
+        self.dobFieldView.textField.delegate = self
         self.dobFieldView.fieldRight.constant = 8.0
         self.dobFieldView.validationLabelRight.constant = 8.0
         self.dobFieldView.setUpFieldView(placeholder: "DATE OF BIRTH", fieldPlaceholder: "DD/MM/YYYY", iconImage: #imageLiteral(resourceName: "icon_calendar"))
-        self.dobFieldView.setKeyboardType(inputView: nil)
+        self.dobFieldView.setKeyboardType(inputView: self.dateInputView)
         self.contentView.addSubview(self.dobFieldView)
         
         self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
@@ -104,11 +137,12 @@ class SIgnUpViewController: UIViewController {
         self.dobFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.genderFieldView = FieldView.loadFromNib()
+        self.genderFieldView.textField.delegate = self
         self.genderFieldView.fieldLeft.constant = 8.0
         self.genderFieldView.validationLabelLeft.constant = 8.0
         self.genderFieldView.placeholderLabelLeft.constant = 8.0
         self.genderFieldView.setUpFieldView(placeholder: "GENDER", fieldPlaceholder: "Select gender", iconImage: #imageLiteral(resourceName: "icon_dropdown"))
-        self.genderFieldView.setKeyboardType(inputView: nil)
+        self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
         self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
@@ -125,6 +159,11 @@ class SIgnUpViewController: UIViewController {
         self.contentHeight.constant = CGFloat(71.0 * rowCount) + 2.0 + self.fbSignUpView.frame.height - navbarHeight - statusBarHeight
         
         self.view.layoutIfNeeded()
+        
+        self.fullNameFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
+        self.emailFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
+        self.passwordFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
+        
     }
     
     func setUpTermsAndPolicyLink() {
@@ -157,6 +196,67 @@ class SIgnUpViewController: UIViewController {
         self.termsPolicyTextView.attributedText = attributedTermsAndPolicy
     }
     
+    func isDataValid() -> Bool {
+        var isValid = true
+        
+        if self.fullNameFieldView.textField.text!.trimWhiteSpaces().count < 2 {
+            isValid = false
+           self.fullNameFieldView.showValidationMessage(message: "Please enter your name.")
+        } else {
+            self.fullNameFieldView.reset()
+        }
+        
+        if !self.emailFieldView.textField.text!.isValidEmail() {
+            isValid = false
+            self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
+        } else {
+            self.emailFieldView.reset()
+        }
+        
+        if self.passwordFieldView.textField.text!.count < 6 {
+            isValid = false
+            self.passwordFieldView.showValidationMessage(message: "Please enter password of atleast 6 characters.")
+        } else {
+            self.passwordFieldView.reset()
+        }
+        
+        if self.dobFieldView.textField.text!.count == 0 {
+            isValid = false
+            self.dobFieldView.showValidationMessage(message: "Please select your dob.")
+        } else {
+            self.dobFieldView.reset()
+        }
+        
+        if self.genderFieldView.textField.text!.count == 0 {
+            isValid = false
+            self.genderFieldView.showValidationMessage(message: "Please select your gender.")
+        } else {
+            self.genderFieldView.reset()
+        }
+        
+        return isValid
+    }
+    
+    @objc func textFieldDidEndOnExit(sender: UITextField) {
+        if sender == self.fullNameFieldView.textField {
+            self.emailFieldView.textField.becomeFirstResponder()
+        } else if sender == self.emailFieldView.textField {
+            self.passwordFieldView.textField.becomeFirstResponder()
+        } else if sender == self.passwordFieldView.textField {
+            self.dobFieldView.textField.becomeFirstResponder()
+        }
+    }
+    
+    func updateGenderField() {
+        self.genderFieldView.textField.text = self.selectedGender.description()
+    }
+    
+    func updateDobField() {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "dd/MM/yyyy"
+        self.dobFieldView.textField.text = dateformatter.string(from: self.selectedDob)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func fbSignUpButtonTapped(sender: UIButton) {
@@ -164,13 +264,41 @@ class SIgnUpViewController: UIViewController {
     }
     
     @IBAction func createAccountButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "SignUpToReferralSegue", sender: nil)
+        self.view.endEditing(true)
+        
+        if self.isDataValid() {
+            self.performSegue(withIdentifier: "SignUpToReferralSegue", sender: nil)
+        }
+    }
+    
+    @IBAction func doneBarButtonTapped(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func nextBarButtonTapped(sender: UIBarButtonItem) {
+        if self.dobFieldView.textField.isFirstResponder {
+            self.genderFieldView.textField.becomeFirstResponder()
+        }
+    }
+    
+    @IBAction func previousBarButtonTapped(sender: UIBarButtonItem) {
+        if self.genderFieldView.textField.isFirstResponder {
+            self.dobFieldView.textField.becomeFirstResponder()
+        } else if self.dobFieldView.textField.isFirstResponder {
+            self.passwordFieldView.textField.becomeFirstResponder()
+        }
+    }
+    
+    @IBAction func datePickerValueChanged(sender: UIDatePicker) {
+        self.selectedDob = sender.date
+        self.updateDobField()
     }
 }
 
 //MARK: UITextViewDelegate
 
 extension SIgnUpViewController: UITextViewDelegate {
+    
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         
         if URL.absoluteString == termsScheme {
@@ -180,5 +308,56 @@ extension SIgnUpViewController: UITextViewDelegate {
         }
         
         return false
+    }
+}
+
+extension SIgnUpViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == self.genderFieldView.textField {
+            self.updateGenderField()
+        } else if textField == self.dobFieldView.textField {
+            self.updateDobField()
+        }
+    }
+}
+
+//MARK: UIPickerViewDelegate, UIPickerViewDataSource
+
+extension SIgnUpViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.genders.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let titleLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 30.0))
+        
+        var title: String = ""
+    
+        if genderFieldView.textField.isFirstResponder {
+            title = self.genders[row].description()
+        }
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+        
+        let attributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 16.0),
+                                                         
+                                                         NSAttributedStringKey.foregroundColor : UIColor.white,
+                                                         NSAttributedStringKey.paragraphStyle : paraStyle]
+        let attributedTitle = NSAttributedString(string: title, attributes: attributes)
+        titleLabel.attributedText = attributedTitle
+        
+        return titleLabel
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedGender = self.genders[row]
+        self.updateGenderField()
     }
 }

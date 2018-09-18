@@ -54,4 +54,8 @@ extension UIColor {
         return UIColor("#333333")
     }
     
+    static func appLightGrayColor() -> UIColor {
+        return UIColor("#CCCCCC")
+    }
+    
 }
