@@ -59,6 +59,7 @@ class LoginViewController: UIViewController {
         self.passwordFieldView.setUpFieldView(placeholder: "PASSWORD", fieldPlaceholder: "Enter your account password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
         self.passwordFieldView.setReturnKey(returnKey: .done)
+        self.passwordFieldView.makeSecure(secure: true)
         self.fbSignInView.addSubview(self.passwordFieldView)
         
         self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)

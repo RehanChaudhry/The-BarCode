@@ -47,7 +47,10 @@ class PermissionsInfoViewController: UIViewController {
     
     func presentTabbarController() {
         let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-        self.navigationController?.present(tabbarController!, animated: true, completion: nil)
+        self.navigationController?.present(tabbarController!, animated: true, completion: {
+            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+            self.navigationController?.popToViewController(loginOptions, animated: false)
+        })
     }
     
     //MARK: My IBActions

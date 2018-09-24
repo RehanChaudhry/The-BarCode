@@ -9,15 +9,16 @@
 import UIKit
 import Reusable
 import Gradientable
+import FSPagerView
 
-class LoginIntroCollectionViewCell: UICollectionViewCell, NibReusable {
+class LoginIntroCollectionViewCell: FSPagerViewCell, NibReusable {
 
     @IBOutlet var containerView: GradientView!
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var coverImage: UIImageView!
     
     
     override func awakeFromNib() {

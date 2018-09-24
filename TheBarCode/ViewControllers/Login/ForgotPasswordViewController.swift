@@ -20,6 +20,10 @@ class ForgotPasswordViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+
+        
         self.addBackButton()
         self.setUpFields()
     }
@@ -32,6 +36,7 @@ class ForgotPasswordViewController: UIViewController {
     //MARK: My Methods
     
     func setUpFields() {
+        
         self.emailFieldView = FieldView.loadFromNib()
         self.emailFieldView.setUpFieldView(placeholder: "EMAIL ADDRESS", fieldPlaceholder: "Enter your email address", iconImage: nil)
         self.emailFieldView.setKeyboardType(keyboardType: .emailAddress)
@@ -43,14 +48,43 @@ class ForgotPasswordViewController: UIViewController {
         self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
     }
     
+    func isDataValid() -> Bool {
+        
+        var isValid = true
+        
+        if !self.emailFieldView.textField.text!.isValidEmail() {
+            isValid = false
+            self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
+        } else {
+            self.emailFieldView.reset()
+        }
+        
+        return isValid
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        
+        self.emailFieldView.textField.resignFirstResponder()
+    }
+    
     //MARK: My IBActions
     
     @IBAction func backButtonTapped(sender: UIButton) {
+        
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func forgotPasswordButtonTapped(sender: UIButton) {
         
+        self.view.endEditing(true)
+        
+        if self.isDataValid() {
+            let alertController = UIAlertController(title: "Forgot Password", message: "An email with instructions about how to reset your password has been sent. Please follow the instructions to reset your password.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel) { (action) in
+                self.navigationController?.popViewController(animated: true)
+            })
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
 }

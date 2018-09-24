@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.3)
+  - FSPagerView (0.7.2)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -18,6 +19,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7.3)
+  - FSPagerView (~> 0.7.2)
   - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
   - PureLayout (~> 3.1.2)
@@ -29,6 +31,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - FSPagerView
     - GoogleMaps
     - Gradientable
     - PureLayout
@@ -39,6 +42,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
@@ -47,6 +51,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 254586824b96bf63940dc84d48c7e67365588fe4
+PODFILE CHECKSUM: 738514e1e18cdb0c7a784071d85b87cd9b57d02b
 
 COCOAPODS: 1.5.3

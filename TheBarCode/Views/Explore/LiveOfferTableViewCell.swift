@@ -31,6 +31,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     override func setUpCell() {
         super.setUpCell()
         
+        self.detailLabel.text = "2 live offers"
     }
     
 }

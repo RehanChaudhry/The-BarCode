@@ -39,6 +39,8 @@ class ExploreViewController: UIViewController {
     var dealsController: DealsViewController!
     var liveOffersController: LiveOffersViewController!
     
+    var defaultButtonTitleColor: UIColor!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +50,8 @@ class ExploreViewController: UIViewController {
         self.segmentContainerView.backgroundColor = UIColor.clear
         
         self.setUpContainerViews()
+        
+        self.defaultButtonTitleColor = self.barsButton.titleColor(for: .normal)
         
         self.barsButton.sendActions(for: .touchUpInside)
     }
@@ -76,6 +80,10 @@ class ExploreViewController: UIViewController {
         self.dealsButton.backgroundColor = self.tempView.backgroundColor
         self.barsButton.backgroundColor = self.tempView.backgroundColor
         self.liveOffersButton.backgroundColor = self.tempView.backgroundColor
+        
+        self.dealsButton.setTitleColor(defaultButtonTitleColor, for: .normal)
+        self.barsButton.setTitleColor(defaultButtonTitleColor, for: .normal)
+        self.liveOffersButton.setTitleColor(defaultButtonTitleColor, for: .normal)
     }
     
     func setUpContainerViews() {
@@ -104,6 +112,7 @@ class ExploreViewController: UIViewController {
         self.resetSegmentedButton()
         
         sender.backgroundColor = UIColor.black
+        sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .bars
         
@@ -114,6 +123,7 @@ class ExploreViewController: UIViewController {
         self.resetSegmentedButton()
         
         sender.backgroundColor = UIColor.black
+        sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .deals
         
@@ -124,6 +134,7 @@ class ExploreViewController: UIViewController {
         self.resetSegmentedButton()
         
         sender.backgroundColor = UIColor.black
+        sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .liveOffers
         

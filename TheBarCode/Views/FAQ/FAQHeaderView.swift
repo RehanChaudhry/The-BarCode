@@ -33,10 +33,16 @@ class FAQHeaderView: UITableViewHeaderFooterView, NibReusable {
     
     //MARK: My Methods
     
-    func setUpHeaderView(faqSection: FAQSection) {
+    func setUpHeaderView(faqSection: FAQSection, isOpen: Bool) {
         UIView.performWithoutAnimation {
             self.titleButton.setTitle(faqSection.title, for: .normal)
             self.titleButton.layoutIfNeeded()
+        }
+        
+        if isOpen {
+            self.imageView.transform = CGAffineTransform(rotationAngle: (CGFloat.pi / 180.0) * (-180.0))
+        } else {
+            self.imageView.transform = CGAffineTransform(rotationAngle: 0.0)
         }
     }
     

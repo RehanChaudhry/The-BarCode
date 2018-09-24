@@ -40,6 +40,9 @@ class ExploreBaseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.appGrayColor()
+        
         self.snackBarContainer.addSubview(snackBar)
         self.snackBar.autoPinEdgesToSuperviewEdges()
         

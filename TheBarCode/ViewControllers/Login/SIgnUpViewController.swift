@@ -49,6 +49,8 @@ class SIgnUpViewController: UIViewController {
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var pickerView: UIPickerView!
     
+    @IBOutlet var bottomView: UIView!
+    
     let termsScheme = "thebarcode://terms"
     let policyScheme = "thebarcode://policy"
     
@@ -117,6 +119,7 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView.setUpFieldView(placeholder: "PASSWORD", fieldPlaceholder: "Create your account password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
         self.passwordFieldView.setReturnKey(returnKey: .next)
+        self.passwordFieldView.makeSecure(secure: true)
         self.contentView.addSubview(self.passwordFieldView)
         
         self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
@@ -152,12 +155,10 @@ class SIgnUpViewController: UIViewController {
         self.genderFieldView.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.dobFieldView)
         self.genderFieldView.autoMatch(ALDimension.width, to: ALDimension.width, of: self.dobFieldView)
 
-        let navbarHeight = self.navigationController!.navigationBar.frame.size.height
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let fieldViewsHeight = CGFloat(4.0 * 71.0) + 2.0
+        let height = self.fbSignUpView.frame.origin.y + self.fbSignUpView.frame.height + self.bottomView.frame.height + fieldViewsHeight
+        self.contentHeight.constant = height
 
-        let rowCount = 5.0
-        self.contentHeight.constant = CGFloat(71.0 * rowCount) + 2.0 + self.fbSignUpView.frame.height - navbarHeight - statusBarHeight
-        
         self.view.layoutIfNeeded()
         
         self.fullNameFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
@@ -188,9 +189,7 @@ class SIgnUpViewController: UIViewController {
         attributedTermsAndPolicy.addAttribute(NSAttributedStringKey.link, value: policyUrl, range: (termsAndPolicy as NSString).range(of: privacyPolicy))
         
         let linkAttributes = [NSAttributedStringKey.foregroundColor.rawValue : UIColor.appBlueColor(),
-                              NSAttributedStringKey.font.rawValue : UIFont.appRegularFontOf(size: 14.0),
-                              NSAttributedStringKey.underlineColor.rawValue : UIColor.appBlueColor(),
-                              NSAttributedStringKey.underlineStyle.rawValue : NSUnderlineStyle.styleSingle.rawValue] as [String : Any]
+                              NSAttributedStringKey.font.rawValue : UIFont.appRegularFontOf(size: 14.0)] as [String : Any]
         self.termsPolicyTextView.linkTextAttributes = linkAttributes
         
         self.termsPolicyTextView.attributedText = attributedTermsAndPolicy
@@ -292,6 +291,10 @@ class SIgnUpViewController: UIViewController {
     @IBAction func datePickerValueChanged(sender: UIDatePicker) {
         self.selectedDob = sender.date
         self.updateDobField()
+    }
+    
+    @IBAction func signInButtonTapped(sender: UIButton) {
+        self.performSegue(withIdentifier: "SignUpToSignInSegue", sender: nil)
     }
 }
 

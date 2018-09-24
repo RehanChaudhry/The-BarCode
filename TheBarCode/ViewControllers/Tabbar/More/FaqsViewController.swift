@@ -83,7 +83,7 @@ extension FaqsViewController: UITableViewDataSource, UITableViewDelegate {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(FAQHeaderView.self)
         headerView?.section = section
         headerView?.delegate = self
-        headerView?.setUpHeaderView(faqSection: self.faqSections[section])
+        headerView?.setUpHeaderView(faqSection: self.faqSections[section], isOpen: self.expandedSection.contains(section))
         return headerView
     }
     
@@ -120,5 +120,12 @@ extension FaqsViewController: FAQHeaderViewDelegate {
             self.tableView.insertRows(at: indexPaths, with: .automatic)
         }
 
+        if let headerView = self.tableView.headerView(forSection: section) as? FAQHeaderView {
+            let faqSection = self.faqSections[section]
+            
+            UIView.animate(withDuration: 0.3) {
+                headerView.setUpHeaderView(faqSection: faqSection, isOpen: self.expandedSection.contains(section))
+            }
+        }
     }
 }

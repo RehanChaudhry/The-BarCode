@@ -24,8 +24,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0NT-Y5-muv">
-                        <rect key="frame" x="32" y="24" width="280" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0NT-Y5-muv">
+                        <rect key="frame" x="32" y="24" width="256" height="19.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -33,7 +33,7 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="0NT-Y5-muv" secondAttribute="trailing" constant="8" id="FsP-vX-7lK"/>
+                    <constraint firstAttribute="trailing" secondItem="0NT-Y5-muv" secondAttribute="trailing" constant="32" id="FsP-vX-7lK"/>
                     <constraint firstItem="0NT-Y5-muv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="lcl-gB-N4i"/>
                     <constraint firstAttribute="bottom" secondItem="0NT-Y5-muv" secondAttribute="bottom" id="oJ2-Wt-aND"/>
                     <constraint firstItem="0NT-Y5-muv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="t67-mR-lY7"/>

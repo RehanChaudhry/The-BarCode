@@ -28,7 +28,7 @@
                             <rect key="frame" x="16" y="24" width="343" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XUo-TL-xMt">
-                                    <rect key="frame" x="16" y="8" width="288" height="34"/>
+                                    <rect key="frame" x="16" y="8" width="291" height="34"/>
                                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button">
@@ -38,11 +38,11 @@
                                         <action selector="headerBgButtonTappedWithSender:" destination="sBO-g2-vGP" eventType="touchUpInside" id="owM-J3-YKH"/>
                                     </connections>
                                 </button>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yaY-Im-sVT">
-                                    <rect key="frame" x="312" y="17.5" width="15" height="15"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accordion" translatesAutoresizingMaskIntoConstraints="NO" id="yaY-Im-sVT">
+                                    <rect key="frame" x="315" y="21" width="12" height="8"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="15" id="5HQ-ah-ANf"/>
-                                        <constraint firstAttribute="width" constant="15" id="wQ4-GO-1if"/>
+                                        <constraint firstAttribute="height" constant="8" id="5HQ-ah-ANf"/>
+                                        <constraint firstAttribute="width" constant="12" id="wQ4-GO-1if"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
@@ -90,4 +90,7 @@
             <point key="canvasLocation" x="-125.5" y="-222"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon_accordion" width="12" height="8"/>
+    </resources>
 </document>

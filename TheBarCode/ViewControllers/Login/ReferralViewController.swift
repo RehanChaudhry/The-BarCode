@@ -20,6 +20,9 @@ class ReferralViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
         self.navigationItem.hidesBackButton = true
         self.setUpFields()
     }
@@ -52,6 +55,24 @@ class ReferralViewController: UIViewController {
         self.codeFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
     }
     
+    func isDataValid() -> Bool {
+        var isValid = true
+        
+        if self.codeFieldView.textField.text!.count < 6 {
+            isValid = false
+            self.codeFieldView.showValidationMessage(message: "Please enter 7 characters invite code.")
+        } else {
+            self.codeFieldView.reset()
+        }
+        
+        return isValid
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        
+        self.codeFieldView.textField.resignFirstResponder()
+    }
+    
     //MARK: My IBActions
     
     @IBAction func skipButtonTapped(sender: UIButton) {
@@ -59,7 +80,12 @@ class ReferralViewController: UIViewController {
     }
     
     @IBAction func continuePasswordButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "ReferralToCategories", sender: nil)
+        
+        self.view.endEditing(true)
+        
+        if self.isDataValid() {
+            self.performSegue(withIdentifier: "ReferralToCategories", sender: nil)
+        }
     }
     
 }

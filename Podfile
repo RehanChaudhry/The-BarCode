@@ -11,6 +11,7 @@ target 'TheBarCode' do
   pod 'GoogleMaps', '~> 2.7.0'
   pod 'StatefulTableView', '~> 0.1.0'
   pod 'TPKeyboardAvoiding', '~> 1.3.2'
+  pod 'FSPagerView', '~> 0.7.2'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

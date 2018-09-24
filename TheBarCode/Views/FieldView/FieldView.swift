@@ -33,12 +33,17 @@ class FieldView: UIView, NibReusable {
         
         self.textField.returnKeyType = .default
         
-        self.placeholderLabel.textColor = UIColor.appGrayColor()
+        self.placeholderLabel.font = UIFont.appBoldFontOf(size: self.placeholderLabel.font.pointSize)
+        self.placeholderLabel.textColor = UIColor.white
         self.textField.textColor = UIColor.appGrayColor()
         self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
     }
     
     //MARK: My Methods
+    
+    func makeSecure(secure: Bool) {
+        self.textField.isSecureTextEntry = secure
+    }
     
     func setReturnKey(returnKey: UIReturnKeyType) {
         self.textField.returnKeyType = returnKey
@@ -52,7 +57,7 @@ class FieldView: UIView, NibReusable {
         
         self.reset()
         
-        let placeholderTextColor = UIColor.appGrayColor().withAlphaComponent(0.2)
+        let placeholderTextColor = UIColor.appGrayColor()
         let placeholderAttributes = [NSAttributedStringKey.foregroundColor : placeholderTextColor,
                                      NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 15.0)]
         let attributedPlaceholder = NSAttributedString(string: fieldPlaceholder, attributes: placeholderAttributes)

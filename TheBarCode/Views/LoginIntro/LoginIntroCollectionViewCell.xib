@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
         </array>
@@ -27,41 +30,50 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pe7-C3-eRM" customClass="GradientView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="20" y="8" width="335" height="484"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-Fc-m2S">
-                                <rect key="frame" x="8" y="368" width="319" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="DUx-8U-q2n"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="18"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIX-gN-0pE">
-                                <rect key="frame" x="8" y="398" width="319" height="71"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="g0j-lE-YiE"/>
-                                </constraints>
-                                <string key="text">Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.</string>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_intro_1" translatesAutoresizingMaskIntoConstraints="NO" id="zKq-Cm-kmc">
-                                <rect key="frame" x="0.0" y="0.0" width="335" height="353"/>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_intro_1" translatesAutoresizingMaskIntoConstraints="NO" id="zKq-Cm-kmc">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="342"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Avy-BT-X1D">
+                                <rect key="frame" x="0.0" y="353" width="335" height="131"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJx-JH-xzD">
+                                        <rect key="frame" x="8" y="15" width="319" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="q1E-F6-Yvk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmR-V8-Cp6">
+                                        <rect key="frame" x="8" y="45" width="319" height="71"/>
+                                        <string key="text">Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.</string>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="cmR-V8-Cp6" secondAttribute="trailing" constant="8" id="6Fk-np-6yD"/>
+                                    <constraint firstItem="cmR-V8-Cp6" firstAttribute="leading" secondItem="Avy-BT-X1D" secondAttribute="leading" constant="8" id="Ama-xU-LRg"/>
+                                    <constraint firstItem="cmR-V8-Cp6" firstAttribute="top" secondItem="gJx-JH-xzD" secondAttribute="bottom" constant="8" id="I5C-GB-BKb"/>
+                                    <constraint firstAttribute="trailing" secondItem="gJx-JH-xzD" secondAttribute="trailing" constant="8" id="OPe-Cx-n2j"/>
+                                    <constraint firstAttribute="bottom" secondItem="cmR-V8-Cp6" secondAttribute="bottom" constant="15" id="Wwv-Xa-amB"/>
+                                    <constraint firstItem="gJx-JH-xzD" firstAttribute="leading" secondItem="Avy-BT-X1D" secondAttribute="leading" constant="8" id="Z6V-s9-IeY"/>
+                                    <constraint firstItem="gJx-JH-xzD" firstAttribute="top" secondItem="Avy-BT-X1D" secondAttribute="top" constant="15" id="fCV-En-4dZ"/>
+                                    <constraint firstAttribute="height" constant="131" id="p1X-vE-vVY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="hIX-gN-0pE" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" constant="8" id="G4j-h1-lFX"/>
-                            <constraint firstItem="hIX-gN-0pE" firstAttribute="top" secondItem="xt5-Fc-m2S" secondAttribute="bottom" constant="8" id="Lfh-j3-PIO"/>
-                            <constraint firstAttribute="trailing" secondItem="xt5-Fc-m2S" secondAttribute="trailing" constant="8" id="OjC-rb-24v"/>
+                            <constraint firstItem="Avy-BT-X1D" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="F25-WZ-ip2"/>
+                            <constraint firstAttribute="bottom" secondItem="Avy-BT-X1D" secondAttribute="bottom" id="OA5-vu-d2S"/>
                             <constraint firstItem="zKq-Cm-kmc" firstAttribute="top" secondItem="Pe7-C3-eRM" secondAttribute="top" id="Qod-nD-Bcw"/>
-                            <constraint firstAttribute="trailing" secondItem="hIX-gN-0pE" secondAttribute="trailing" constant="8" id="QzR-K0-Xmq"/>
-                            <constraint firstAttribute="bottom" secondItem="hIX-gN-0pE" secondAttribute="bottom" constant="15" id="SIb-we-Ajj"/>
                             <constraint firstItem="zKq-Cm-kmc" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="cNU-aI-nKj"/>
-                            <constraint firstItem="xt5-Fc-m2S" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" constant="8" id="gJh-j0-kZ4"/>
                             <constraint firstAttribute="trailing" secondItem="zKq-Cm-kmc" secondAttribute="trailing" id="ksK-Zy-quL"/>
-                            <constraint firstItem="xt5-Fc-m2S" firstAttribute="top" secondItem="zKq-Cm-kmc" secondAttribute="bottom" constant="15" id="uby-UO-L3d"/>
+                            <constraint firstAttribute="trailing" secondItem="Avy-BT-X1D" secondAttribute="trailing" id="wr9-GY-xgu"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -81,9 +93,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
                 <outlet property="containerView" destination="Pe7-C3-eRM" id="blb-qT-Ne9"/>
-                <outlet property="detailLabel" destination="hIX-gN-0pE" id="Xnd-vn-2N7"/>
-                <outlet property="imageView" destination="zKq-Cm-kmc" id="k4H-Xp-jDq"/>
-                <outlet property="titleLabel" destination="xt5-Fc-m2S" id="OIy-UT-kVl"/>
+                <outlet property="coverImage" destination="zKq-Cm-kmc" id="Qhj-5R-d8C"/>
             </connections>
             <point key="canvasLocation" x="46.5" y="54"/>
         </collectionViewCell>
