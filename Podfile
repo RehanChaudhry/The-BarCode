@@ -12,6 +12,7 @@ target 'TheBarCode' do
   pod 'StatefulTableView', '~> 0.1.0'
   pod 'TPKeyboardAvoiding', '~> 1.3.2'
   pod 'FSPagerView', '~> 0.7.2'
+  pod 'SJSegmentedScrollView', '~> 1.3.9'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

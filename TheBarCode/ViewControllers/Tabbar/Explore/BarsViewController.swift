@@ -9,7 +9,13 @@
 import UIKit
 import Reusable
 
+protocol BarsViewControllerDelegate: class {
+    func barsController(controller: BarsViewController, didSelectBar bar: Any)
+}
+
 class BarsViewController: ExploreBaseViewController {
+    
+    weak var delegate: BarsViewControllerDelegate!
     
     var bars: [Bar] = []
     
@@ -63,7 +69,7 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        self.delegate.barsController(controller: self, didSelectBar: indexPath)
     }
 }
 

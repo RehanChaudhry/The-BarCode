@@ -107,7 +107,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iL4-uf-J5N">
-                                <rect key="frame" x="92.5" y="604" width="190" height="31"/>
+                                <rect key="frame" x="94.5" y="604" width="186" height="31"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
                                         <fragment content="Already a member?">
@@ -2804,6 +2804,143 @@ Cg
                 </view>
             </objects>
             <point key="canvasLocation" x="5438" y="1984"/>
+        </scene>
+        <!--Explore Detail View Controller-->
+        <scene sceneID="m1g-6A-x0B">
+            <objects>
+                <viewController storyboardIdentifier="ExploreDetailViewController" id="Eeg-kR-SY4" customClass="ExploreDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b9a-2E-tVx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNE-Mn-wYt">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="QNE-Mn-wYt" firstAttribute="leading" secondItem="kYt-Oe-Ir0" secondAttribute="leading" id="6Bx-ma-ZWM"/>
+                            <constraint firstItem="QNE-Mn-wYt" firstAttribute="trailing" secondItem="kYt-Oe-Ir0" secondAttribute="trailing" id="Chj-Zt-22W"/>
+                            <constraint firstItem="QNE-Mn-wYt" firstAttribute="bottom" secondItem="kYt-Oe-Ir0" secondAttribute="bottom" id="EkI-cS-nOt"/>
+                            <constraint firstItem="QNE-Mn-wYt" firstAttribute="top" secondItem="kYt-Oe-Ir0" secondAttribute="top" id="Nxw-gu-efY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kYt-Oe-Ir0"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <connections>
+                        <outlet property="containerView" destination="QNE-Mn-wYt" id="dYX-y5-7IY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3LL-tn-tL9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6520.8000000000002" y="1618.7406296851575"/>
+        </scene>
+        <!--Explore Detail Header View Controller-->
+        <scene sceneID="uX6-US-NuD">
+            <objects>
+                <viewController storyboardIdentifier="ExploreDetailHeaderViewController" id="zyv-eO-QJ3" customClass="ExploreDetailHeaderViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="52n-pS-LR8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="261"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uO6-Jj-ct7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="178"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="178" id="sLo-1Q-2jU"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VHq-yh-llP">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9e-OY-zML">
+                                <rect key="frame" x="16" y="198" width="291" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="4 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJK-RA-LqE">
+                                <rect key="frame" x="34" y="226" width="68" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6r9-aI-D3c">
+                                <rect key="frame" x="323" y="186" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" image="icon_tab_fav"/>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="cyn-Wx-4Sv">
+                                <rect key="frame" x="16" y="226" width="10" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uO6-Jj-ct7" firstAttribute="leading" secondItem="XhV-Uv-IFZ" secondAttribute="leading" id="4z0-Sk-zcQ"/>
+                            <constraint firstItem="uO6-Jj-ct7" firstAttribute="trailing" secondItem="XhV-Uv-IFZ" secondAttribute="trailing" id="eDZ-Up-vHR"/>
+                            <constraint firstItem="uO6-Jj-ct7" firstAttribute="top" secondItem="XhV-Uv-IFZ" secondAttribute="top" id="pAr-7V-VR4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XhV-Uv-IFZ"/>
+                    </view>
+                    <size key="freeformSize" width="375" height="261"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-ld-8aO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7749.6000000000004" y="1016.9415292353824"/>
+        </scene>
+        <!--Explore About View Controller-->
+        <scene sceneID="UZt-3A-2Vd">
+            <objects>
+                <viewController storyboardIdentifier="ExploreAboutViewController" id="AEL-Vg-BBd" customClass="ExploreAboutViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Bf0-Ct-Kks">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="R7e-gn-yKI"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f1s-wS-KhI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7324" y="1732"/>
+        </scene>
+        <!--Explore Deals View Controller-->
+        <scene sceneID="jIa-US-eNr">
+            <objects>
+                <viewController storyboardIdentifier="ExploreDealsViewController" id="BYZ-Jn-m3e" customClass="ExploreDealsViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JWp-8g-AMJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="kou-3T-Z84"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HVx-1H-ZtD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8134" y="1731"/>
+        </scene>
+        <!--Explore Live Offers View Controller-->
+        <scene sceneID="Uor-1T-iSp">
+            <objects>
+                <viewController storyboardIdentifier="ExploreLiveOffersViewController" id="Cmj-Sj-K2i" customClass="ExploreLiveOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3a0-vz-TeI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="SdE-O6-g4Q"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x85-ff-XVY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8951" y="1731"/>
         </scene>
     </scenes>
     <resources>

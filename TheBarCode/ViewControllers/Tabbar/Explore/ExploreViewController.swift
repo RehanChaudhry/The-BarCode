@@ -88,6 +88,7 @@ class ExploreViewController: UIViewController {
     
     func setUpContainerViews() {
         self.barsController = self.storyboard!.instantiateViewController(withIdentifier: "BarsViewController") as! BarsViewController
+        self.barsController.delegate = self
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
         
         self.dealsController = self.storyboard!.instantiateViewController(withIdentifier: "DealsViewController") as! DealsViewController
@@ -104,6 +105,11 @@ class ExploreViewController: UIViewController {
         parent.addSubview(controller.view)
         
         controller.view.autoPinEdgesToSuperviewEdges()
+    }
+    
+    func moveToDetail() {
+        let exploreDetailController = self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailViewController") as! ExploreDetailViewController
+        self.navigationController?.pushViewController(exploreDetailController, animated: true)
     }
     
     //MARK: My IBActions
@@ -140,7 +146,12 @@ class ExploreViewController: UIViewController {
         
         self.scrollView.scrollToPage(page: 2, animated: true)
     }
-    
-    
+}
 
+//MARK: BarsViewControllerDelegate
+
+extension ExploreViewController: BarsViewControllerDelegate {
+    func barsController(controller: BarsViewController, didSelectBar bar: Any) {
+        self.moveToDetail()
+    }
 }
