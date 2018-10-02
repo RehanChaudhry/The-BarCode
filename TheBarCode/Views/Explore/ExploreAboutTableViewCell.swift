@@ -7,22 +7,44 @@
 //
 
 import UIKit
+import Reusable
 
-class ExploreAboutTableViewCell: UITableViewCell {
+class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var timingsLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
+    
+    @IBOutlet var websiteLabel: UILabel!
+    @IBOutlet var phoneNumberLabel: UILabel!
+    @IBOutlet var emailLabel: UILabel!
     
     @IBOutlet var websiteButton: UIButton!
     @IBOutlet var phoneNumberButton: UIButton!
     @IBOutlet var emailButton: UIButton!
     @IBOutlet var directionsButton: UIButton!
     
+    @IBOutlet var websiteButtonHeight: NSLayoutConstraint!
+    @IBOutlet var phoneNumberButtonHeight: NSLayoutConstraint!
+    @IBOutlet var emailButtonHeight: NSLayoutConstraint!
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.websiteButtonHeight.constant = self.websiteLabel.frame.height
+        self.phoneNumberButtonHeight.constant = self.phoneNumberLabel.frame.height
+        self.emailButtonHeight.constant = self.emailLabel.frame.height
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.selectionStyle = .none
+        
+        self.emailLabel.isHidden = true
+        self.websiteLabel.isHidden = true
+        self.phoneNumberLabel.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,5 +52,10 @@ class ExploreAboutTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+
+    //MARK: My Methods
     
+    func setUpCell() {
+
+    }
 }

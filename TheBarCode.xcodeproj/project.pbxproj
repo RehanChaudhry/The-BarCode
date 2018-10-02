@@ -49,9 +49,9 @@
 		0C44DD38214A7F9F000F5D64 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C44DD36214A7F9F000F5D64 /* MenuCell.xib */; };
 		0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD37214A7F9F000F5D64 /* MenuCell.swift */; };
 		0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */; };
-		0C478A91215C9D7F002C51FA /* ExploreAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A90215C9D7F002C51FA /* ExploreAboutViewController.swift */; };
-		0C478A93215C9D92002C51FA /* ExploreDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A92215C9D92002C51FA /* ExploreDealsViewController.swift */; };
-		0C478A95215C9DFD002C51FA /* ExploreLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A94215C9DFD002C51FA /* ExploreLiveOffersViewController.swift */; };
+		0C478A91215C9D7F002C51FA /* ExploreDetailAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */; };
+		0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */; };
+		0C478A95215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */; };
 		0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */; };
 		0C478A99215C9E39002C51FA /* ExploreAboutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */; };
 		0C478A9B215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */; };
@@ -121,6 +121,8 @@
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
 		0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFD214F931700B017CC /* BarsViewController.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
+		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
+		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
 		1BB4FF9A2378BA58A2051D0D /* Pods_TheBarCodeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B8285B129E90CB60867109 /* Pods_TheBarCodeUITests.framework */; };
 		66179A6F0060C94E8267F21E /* Pods_TheBarCodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
@@ -192,9 +194,9 @@
 		0C44DD36214A7F9F000F5D64 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		0C44DD37214A7F9F000F5D64 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailViewController.swift; sourceTree = "<group>"; };
-		0C478A90215C9D7F002C51FA /* ExploreAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreAboutViewController.swift; sourceTree = "<group>"; };
-		0C478A92215C9D92002C51FA /* ExploreDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDealsViewController.swift; sourceTree = "<group>"; };
-		0C478A94215C9DFD002C51FA /* ExploreLiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreLiveOffersViewController.swift; sourceTree = "<group>"; };
+		0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailAboutViewController.swift; sourceTree = "<group>"; };
+		0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailDealsViewController.swift; sourceTree = "<group>"; };
+		0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailLiveOffersViewController.swift; sourceTree = "<group>"; };
 		0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreAboutTableViewCell.swift; sourceTree = "<group>"; };
 		0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreAboutTableViewCell.xib; sourceTree = "<group>"; };
 		0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,8 @@
 		0CBFFFFF214F932400B017CC /* LiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOffersViewController.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
+		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreDetailHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		11136F2B381C7B0AA8DFA60D /* Pods-TheBarCodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.release.xcconfig"; sourceTree = "<group>"; };
 		46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -484,9 +488,9 @@
 				0CBF0001214F933000B017CC /* DealsViewController.swift */,
 				0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */,
 				0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */,
-				0C478A90215C9D7F002C51FA /* ExploreAboutViewController.swift */,
-				0C478A92215C9D92002C51FA /* ExploreDealsViewController.swift */,
-				0C478A94215C9DFD002C51FA /* ExploreLiveOffersViewController.swift */,
+				0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */,
+				0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */,
+				0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -558,6 +562,8 @@
 				0C8BDCD62150D0CD00D5117B /* LiveOfferTableViewCell.xib */,
 				0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */,
 				0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */,
+				0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */,
+				0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -964,6 +970,7 @@
 				0C955DBB2147896D00F9385B /* LoginIntroCollectionViewCell.xib in Resources */,
 				0C23A8532146550000DFB281 /* Assets.xcassets in Resources */,
 				0C23A8AB2146873400DFB281 /* Lato-BoldItalic.ttf in Resources */,
+				0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */,
 				0C8BDCD82150D0CD00D5117B /* LiveOfferTableViewCell.xib in Resources */,
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
@@ -1126,11 +1133,11 @@
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,
 				0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */,
-				0C478A91215C9D7F002C51FA /* ExploreAboutViewController.swift in Sources */,
+				0C478A91215C9D7F002C51FA /* ExploreDetailAboutViewController.swift in Sources */,
 				0C8E9AAB214BBAE300224720 /* FAQ.swift in Sources */,
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
-				0C478A93215C9D92002C51FA /* ExploreDealsViewController.swift in Sources */,
+				0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */,
 				0CBF0002214F933000B017CC /* DealsViewController.swift in Sources */,
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				0C955DEF2149317100F9385B /* StatefulCollectionView+LoadMore.swift in Sources */,
@@ -1152,6 +1159,7 @@
 				0C955DC02147935A00F9385B /* IntroOption.swift in Sources */,
 				0C8E9A91214A87E600224720 /* AccountSettingsViewController.swift in Sources */,
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,
+				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
 				0C955DBD21478B7500F9385B /* GradientView.swift in Sources */,
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,
 				0C8BDCD32150D0BE00D5117B /* DealTableViewCell.swift in Sources */,
@@ -1172,7 +1180,7 @@
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
 				0C8E9AA0214B9CD300224720 /* FAQHeaderView.swift in Sources */,
 				0C478A9B215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift in Sources */,
-				0C478A95215C9DFD002C51FA /* ExploreLiveOffersViewController.swift in Sources */,
+				0C478A95215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,
 				0C955DF02149317100F9385B /* StatefulCollectionView+State.swift in Sources */,
@@ -1369,7 +1377,10 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1387,7 +1398,10 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1404,7 +1418,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1422,7 +1440,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1439,7 +1461,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1456,7 +1482,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
