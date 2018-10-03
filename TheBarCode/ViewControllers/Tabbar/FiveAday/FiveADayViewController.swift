@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FSPagerView
 
 class FiveADayViewController: UIViewController {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="alr-Yh-hkk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WXV-7G-uNE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -100,10 +100,6 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
-                                <connections>
-                                    <outlet property="dataSource" destination="m3z-3m-BJ2" id="hL7-ef-ORj"/>
-                                    <outlet property="delegate" destination="m3z-3m-BJ2" id="Fsn-bB-oTL"/>
-                                </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muW-8j-V4y" customClass="FSPagerView" customModule="FSPagerView">
                                 <rect key="frame" x="0.0" y="83" width="375" height="500"/>
@@ -120,10 +116,6 @@
                         <viewLayoutGuide key="safeArea" id="Mp2-sH-qjZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="5 a Day" id="SwJ-Id-irG"/>
-                    <connections>
-                        <outlet property="collectionView" destination="6Uh-GM-uTU" id="48g-Uy-Lae"/>
-                        <outlet property="pagerView" destination="muW-8j-V4y" id="o4f-MK-Qty"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RJp-Nb-p6i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3385,15 +3377,15 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeK-0b-UVT">
-                                <rect key="frame" x="16" y="193.5" width="343" height="280"/>
+                                <rect key="frame" x="16" y="131" width="343" height="281"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
                                         <rect key="frame" x="24" y="24" width="243" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vda-ZN-sHK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vda-ZN-sHK">
                                         <rect key="frame" x="275" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="6EI-jv-giQ"/>
@@ -3404,21 +3396,21 @@ Cg
                                             <action selector="closeButtonTapped:" destination="WXV-7G-uNE" eventType="touchUpInside" id="yqs-61-U9G"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufb-bU-Qte">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufb-bU-Qte">
                                         <rect key="frame" x="0.0" y="67.5" width="343" height="1"/>
                                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="li5-we-Foa"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Please ask bartender to enter 4 digits BarCode to activate this deal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
-                                        <rect key="frame" x="24" y="92.5" width="295" height="33"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please ask bartender to enter 4 digits BarCode to activate this deal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
+                                        <rect key="frame" x="24" y="92.5" width="295" height="34"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5xh-4U-oji" customClass="CustomField" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="141.5" width="74" height="35"/>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5xh-4U-oji">
+                                        <rect key="frame" x="16" y="142.5" width="69" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="OJD-Sx-qHx"/>
                                         </constraints>
@@ -3432,8 +3424,8 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowContextMenu" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rVC-VU-0j0" customClass="CustomField" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="95" y="141.5" width="74" height="35"/>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rVC-VU-0j0">
+                                        <rect key="frame" x="97" y="142.5" width="68.5" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="nk9-AT-fI5"/>
                                         </constraints>
@@ -3447,8 +3439,8 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowContextMenu" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-XV-7Lv" customClass="CustomField" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="174" y="141.5" width="74" height="35"/>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-XV-7Lv">
+                                        <rect key="frame" x="177.5" y="142.5" width="69" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="wHv-vq-tNV"/>
                                         </constraints>
@@ -3462,8 +3454,8 @@ Cg
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowContextMenu" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R7n-rj-AyM" customClass="CustomField" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="253" y="141.5" width="74" height="35"/>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="X" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R7n-rj-AyM">
+                                        <rect key="frame" x="258.5" y="142.5" width="68.5" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="7fl-6h-mdF"/>
                                         </constraints>
@@ -3478,7 +3470,7 @@ Cg
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-d2-h0A" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="24" y="206" width="295" height="44"/>
+                                        <rect key="frame" x="24" y="207" width="295" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="lJR-hJ-REm"/>
                                         </constraints>
@@ -3505,6 +3497,10 @@ Cg
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowContextMenu" value="NO"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="textFieldTextDidChanged:" destination="WXV-7G-uNE" eventType="editingChanged" id="knF-Ob-kkW"/>
+                                            <outlet property="delegate" destination="WXV-7G-uNE" id="6Y6-qo-cth"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
@@ -3513,16 +3509,15 @@ Cg
                                     <constraint firstItem="q3P-VI-ZkD" firstAttribute="top" secondItem="aeK-0b-UVT" secondAttribute="top" constant="24" id="54l-dA-mhy"/>
                                     <constraint firstItem="qz2-EY-GyF" firstAttribute="leading" secondItem="aeK-0b-UVT" secondAttribute="leading" constant="24" id="6Lh-Ay-bb8"/>
                                     <constraint firstItem="ufb-bU-Qte" firstAttribute="leading" secondItem="aeK-0b-UVT" secondAttribute="leading" id="9th-L4-G1m"/>
-                                    <constraint firstItem="qz2-EY-GyF" firstAttribute="top" secondItem="ufb-bU-Qte" secondAttribute="bottom" constant="24" id="AVi-LL-wF3"/>
                                     <constraint firstItem="q3P-VI-ZkD" firstAttribute="leading" secondItem="aeK-0b-UVT" secondAttribute="leading" constant="24" id="B1F-Gz-17k"/>
-                                    <constraint firstItem="R7n-rj-AyM" firstAttribute="leading" secondItem="jNw-XV-7Lv" secondAttribute="trailing" constant="5" id="BAm-1H-RPl"/>
+                                    <constraint firstItem="R7n-rj-AyM" firstAttribute="leading" secondItem="jNw-XV-7Lv" secondAttribute="trailing" constant="12" id="BAm-1H-RPl"/>
                                     <constraint firstItem="8oD-d2-h0A" firstAttribute="leading" secondItem="aeK-0b-UVT" secondAttribute="leading" constant="24" id="BSe-QV-upV"/>
-                                    <constraint firstItem="jNw-XV-7Lv" firstAttribute="leading" secondItem="rVC-VU-0j0" secondAttribute="trailing" constant="5" id="Iys-fH-tNH"/>
+                                    <constraint firstItem="jNw-XV-7Lv" firstAttribute="leading" secondItem="rVC-VU-0j0" secondAttribute="trailing" constant="12" id="Iys-fH-tNH"/>
                                     <constraint firstAttribute="trailing" secondItem="8oD-d2-h0A" secondAttribute="trailing" constant="24" id="JC1-lC-LbV"/>
                                     <constraint firstItem="jNw-XV-7Lv" firstAttribute="top" secondItem="qz2-EY-GyF" secondAttribute="bottom" constant="16" id="Kse-Nd-lxW"/>
                                     <constraint firstItem="R7n-rj-AyM" firstAttribute="top" secondItem="qz2-EY-GyF" secondAttribute="bottom" constant="16" id="Noz-iZ-nTQ"/>
                                     <constraint firstAttribute="trailing" secondItem="R7n-rj-AyM" secondAttribute="trailing" constant="16" id="OqJ-lb-RNY"/>
-                                    <constraint firstAttribute="height" constant="280" id="SlR-R8-uDv"/>
+                                    <constraint firstAttribute="height" constant="281" id="SlR-R8-uDv"/>
                                     <constraint firstItem="5xh-4U-oji" firstAttribute="width" secondItem="rVC-VU-0j0" secondAttribute="width" id="Sm9-5H-QgH"/>
                                     <constraint firstItem="8oD-d2-h0A" firstAttribute="top" secondItem="R7n-rj-AyM" secondAttribute="bottom" constant="29.5" id="YrI-Qe-uLp"/>
                                     <constraint firstItem="5xh-4U-oji" firstAttribute="top" secondItem="qz2-EY-GyF" secondAttribute="bottom" constant="16" id="anE-GB-kCW"/>
@@ -3535,8 +3530,9 @@ Cg
                                     <constraint firstItem="jNw-XV-7Lv" firstAttribute="width" secondItem="5xh-4U-oji" secondAttribute="width" id="rgP-5B-i7l"/>
                                     <constraint firstItem="vda-ZN-sHK" firstAttribute="centerY" secondItem="q3P-VI-ZkD" secondAttribute="centerY" id="rxb-e1-Wn3"/>
                                     <constraint firstAttribute="trailing" secondItem="ufb-bU-Qte" secondAttribute="trailing" id="uCP-FV-Rg1"/>
+                                    <constraint firstItem="qz2-EY-GyF" firstAttribute="top" secondItem="ufb-bU-Qte" secondAttribute="bottom" constant="24" id="uUj-v5-KIy"/>
                                     <constraint firstAttribute="trailing" secondItem="qz2-EY-GyF" secondAttribute="trailing" constant="24" id="xA4-KC-Zbv"/>
-                                    <constraint firstItem="rVC-VU-0j0" firstAttribute="leading" secondItem="5xh-4U-oji" secondAttribute="trailing" constant="5" id="xkg-yL-gjY"/>
+                                    <constraint firstItem="rVC-VU-0j0" firstAttribute="leading" secondItem="5xh-4U-oji" secondAttribute="trailing" constant="12" id="xkg-yL-gjY"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -3547,13 +3543,20 @@ Cg
                             </view>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="aeK-0b-UVT" firstAttribute="top" secondItem="Un9-xf-lou" secondAttribute="top" constant="111" id="DmZ-db-SeX"/>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="leading" secondItem="Un9-xf-lou" secondAttribute="leading" constant="16" id="YPx-cd-RBH"/>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="centerX" secondItem="zqj-Yz-Ty6" secondAttribute="centerX" id="f6B-qb-2t3"/>
-                            <constraint firstItem="aeK-0b-UVT" firstAttribute="centerY" secondItem="zqj-Yz-Ty6" secondAttribute="centerY" id="jZt-NJ-DN2"/>
                             <constraint firstItem="Un9-xf-lou" firstAttribute="trailing" secondItem="aeK-0b-UVT" secondAttribute="trailing" constant="16" id="rK7-iT-V9m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Un9-xf-lou"/>
                     </view>
+                    <connections>
+                        <outlet property="codeField1" destination="5xh-4U-oji" id="ZYd-hD-K8D"/>
+                        <outlet property="codeField2" destination="rVC-VU-0j0" id="O70-JP-DaJ"/>
+                        <outlet property="codeField3" destination="jNw-XV-7Lv" id="Arj-lO-AFE"/>
+                        <outlet property="codeField4" destination="R7n-rj-AyM" id="GPL-Yd-ReD"/>
+                        <outlet property="hiddenField" destination="SYq-hg-G5w" id="ZFw-c4-qLG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1H-tf-b9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
