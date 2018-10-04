@@ -21,12 +21,7 @@ class LiveOffersViewController: ExploreBaseViewController {
         
         self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
+        self.offers = LiveOffer.getDummyList()
         
     }
 
@@ -58,7 +53,7 @@ extension LiveOffersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        cell.setUpCell()
+        cell.setUpCell(offer: self.offers[indexPath.row])
         return cell
     }
     

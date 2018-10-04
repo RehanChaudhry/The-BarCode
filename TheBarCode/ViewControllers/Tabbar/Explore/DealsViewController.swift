@@ -21,13 +21,8 @@ class DealsViewController: ExploreBaseViewController {
         
         self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         
-        self.deals.append(Deal())
-        self.deals.append(Deal())
-        self.deals.append(Deal())
-        self.deals.append(Deal())
-        self.deals.append(Deal())
-        self.deals.append(Deal())
-        self.deals.append(Deal())
+        self.deals = Deal.getDummyList()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +53,7 @@ extension DealsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
+        cell.setUpCell(deal: self.deals[indexPath.row])
         return cell
     }
     

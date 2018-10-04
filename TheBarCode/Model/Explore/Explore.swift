@@ -8,8 +8,16 @@
 
 import UIKit
 
-class Explore: NSObject {
-    var coverImage: String = ""
-    var title: String = ""
-    var distance: String = ""
+class Explore {
+    var coverImage: String!
+    var title: String!
+    var distance: String!
+    
+    
+    init(coverImage: String,title: String!, distance: String) {
+        self.coverImage = coverImage
+        self.title = title
+        self.distance = distance
+    }
+    
 }
