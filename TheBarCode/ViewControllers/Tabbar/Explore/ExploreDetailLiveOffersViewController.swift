@@ -10,11 +10,17 @@ import UIKit
 import StatefulTableView
 import SJSegmentedScrollView
 
+protocol ExploreDetailLiveOffersViewControllerDelegate: class {
+    func exploreOffersController(controller: ExploreDetailLiveOffersViewController, didSelectRowAt indexPath: IndexPath)
+}
+
 class ExploreDetailLiveOffersViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
     var offers: [LiveOffer] = []
+    
+    weak var delegate: ExploreDetailLiveOffersViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +81,7 @@ extension ExploreDetailLiveOffersViewController: UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        self.delegate.exploreOffersController(controller: self, didSelectRowAt: indexPath)
     }
 }
 

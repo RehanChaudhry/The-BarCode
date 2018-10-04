@@ -13,13 +13,15 @@ import SJSegmentedScrollView
 class ExploreDetailAboutViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         self.tableView.register(cellType: ExploreAboutTableViewCell.self)
+        self.tableView.estimatedRowHeight = 400.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +41,11 @@ extension ExploreDetailAboutViewController: UITableViewDelegate, UITableViewData
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
         cell.setUpCell()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: false)
+        
     }
 }
 

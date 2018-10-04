@@ -10,9 +10,15 @@ import UIKit
 import StatefulTableView
 import SJSegmentedScrollView
 
+protocol ExploreDetailDealsViewControllerDelegate: class {
+    func exploreDealsController(controller: ExploreDetailDealsViewController, didSelectRowAt indexPath: IndexPath)
+}
+
 class ExploreDetailDealsViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView! 
+    
+    weak var delegate: ExploreDetailDealsViewControllerDelegate!
     
     var deals: [Deal] = []
     
@@ -75,7 +81,7 @@ extension ExploreDetailDealsViewController: UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        self.delegate.exploreDealsController(controller: self, didSelectRowAt: indexPath)
     }
 }
 

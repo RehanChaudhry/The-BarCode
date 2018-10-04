@@ -87,14 +87,14 @@ class ExploreViewController: UIViewController {
     }
     
     func setUpContainerViews() {
-        self.barsController = self.storyboard!.instantiateViewController(withIdentifier: "BarsViewController") as! BarsViewController
+        self.barsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsViewController") as! BarsViewController)
         self.barsController.delegate = self
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
         
-        self.dealsController = self.storyboard!.instantiateViewController(withIdentifier: "DealsViewController") as! DealsViewController
+        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "DealsViewController") as! DealsViewController)
         self.addViewController(controller: self.dealsController, parent: self.dealsContainerView)
         
-        self.liveOffersController = self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController
+        self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController)
         self.addViewController(controller: self.liveOffersController, parent: self.liveOffersContainerView)
     }
     
@@ -108,8 +108,8 @@ class ExploreViewController: UIViewController {
     }
     
     func moveToDetail() {
-        let exploreDetailController = self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailViewController") as! ExploreDetailViewController
-        self.navigationController?.pushViewController(exploreDetailController, animated: true)
+        let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
+        self.present(exploreDetailNav, animated: true, completion: nil)
     }
     
     //MARK: My IBActions

@@ -28,12 +28,23 @@ class ExploreDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.setUpSegmentedController()
-        
+        self.addBackButton()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isUserInteractionEnabled = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     //MARK: My Methods
@@ -53,11 +64,17 @@ class ExploreDetailViewController: UIViewController {
         
         self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailDealsViewController") as! ExploreDetailDealsViewController)
         self.dealsController.title = "Deals"
+        self.dealsController.delegate = self
         self.dealsController.view.backgroundColor = self.containerView.backgroundColor
         
         self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailLiveOffersViewController") as! ExploreDetailLiveOffersViewController)
         self.offersController.title = "Live Offers"
+        self.offersController.delegate = self
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
+        
+        self.aboutController.automaticallyAdjustsScrollViewInsets = false
+        self.dealsController.automaticallyAdjustsScrollViewInsets = false
+        self.offersController.automaticallyAdjustsScrollViewInsets = false
         
         self.segmentedController = SJSegmentedViewController(headerViewController: self.headerController, segmentControllers: [self.aboutController, self.dealsController, self.offersController])
         self.segmentedController.delegate = self
@@ -75,11 +92,16 @@ class ExploreDetailViewController: UIViewController {
         
         self.segmentedController.view.autoPinEdgesToSuperviewEdges()
         
-//        self.segmentedController.
     }
 
+    //MARK: My IBActions
+    
+    @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
+//MARK: SJSegmentedViewControllerDelegate
 extension ExploreDetailViewController: SJSegmentedViewControllerDelegate {
     func didMoveToPage(_ controller: UIViewController, segment: SJSegmentTab?, index: Int) {
         
@@ -89,5 +111,19 @@ extension ExploreDetailViewController: SJSegmentedViewControllerDelegate {
         
         let segmentTab = self.segmentedController.segments[index]
         segmentTab.titleColor(UIColor.appBlueColor())
+    }
+}
+
+//MARK: ExploreDetailDealsViewControllerDelegate
+extension ExploreDetailViewController: ExploreDetailDealsViewControllerDelegate {
+    func exploreDealsController(controller: ExploreDetailDealsViewController, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: nil)
+    }
+}
+
+//MARK: ExploreDetailLiveOffersViewControllerDelegate
+extension ExploreDetailViewController: ExploreDetailLiveOffersViewControllerDelegate {
+    func exploreOffersController(controller: ExploreDetailLiveOffersViewController, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: nil)
     }
 }

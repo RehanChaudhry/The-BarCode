@@ -41,7 +41,7 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         // Initialization code
         
         self.selectionStyle = .none
-        
+                
         self.emailLabel.isHidden = true
         self.websiteLabel.isHidden = true
         self.phoneNumberLabel.isHidden = true
