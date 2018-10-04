@@ -28,12 +28,8 @@ class BarsViewController: ExploreBaseViewController {
         
         self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
         
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
+        self.bars = Bar.getDummyList()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,6 +59,7 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
+        cell.setUpCell(bar: self.bars[indexPath.row])
         return cell
     }
     

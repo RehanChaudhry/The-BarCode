@@ -29,13 +29,7 @@ class FavouritesViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        self.bars.append(Bar())
-        
+        self.bars = Bar.getDummyFavList()
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +67,7 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
+        cell.setUpCell(bar: self.bars[indexPath.row])
         return cell
     }
     

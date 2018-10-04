@@ -42,7 +42,11 @@ class ExploreBaseTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setUpCell() {
+    func setUpCell(explore: Explore) {
+        
+        coverImageView.image = UIImage(named: explore.coverImage)
+        titleLabel.text = explore.title
+        distanceLabel.text = explore.distance
         
     }
 }

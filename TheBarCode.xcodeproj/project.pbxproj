@@ -132,6 +132,11 @@
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
 		1BB4FF9A2378BA58A2051D0D /* Pods_TheBarCodeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B8285B129E90CB60867109 /* Pods_TheBarCodeUITests.framework */; };
 		66179A6F0060C94E8267F21E /* Pods_TheBarCodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */; };
+		83B2BE4D216358EF003ACA78 /* OutOfCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE4C216358EF003ACA78 /* OutOfCreditViewController.swift */; };
+		83B2BE4F21635908003ACA78 /* RedeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE4E21635908003ACA78 /* RedeemStartViewController.swift */; };
+		83B2BE512163592F003ACA78 /* RedeemActiveDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE502163592F003ACA78 /* RedeemActiveDealViewController.swift */; };
+		83B2BE562163767F003ACA78 /* FiveADayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE552163767F003ACA78 /* FiveADayCollectionViewCell.swift */; };
+		83B2BE5821637691003ACA78 /* FiveADayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B2BE5721637691003ACA78 /* FiveADayCollectionViewCell.xib */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 /* End PBXBuildFile section */
 
@@ -287,6 +292,11 @@
 		46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81B8285B129E90CB60867109 /* Pods_TheBarCodeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCodeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83B2BE4C216358EF003ACA78 /* OutOfCreditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutOfCreditViewController.swift; sourceTree = "<group>"; };
+		83B2BE4E21635908003ACA78 /* RedeemStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemStartViewController.swift; sourceTree = "<group>"; };
+		83B2BE502163592F003ACA78 /* RedeemActiveDealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemActiveDealViewController.swift; sourceTree = "<group>"; };
+		83B2BE552163767F003ACA78 /* FiveADayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveADayCollectionViewCell.swift; sourceTree = "<group>"; };
+		83B2BE5721637691003ACA78 /* FiveADayCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiveADayCollectionViewCell.xib; sourceTree = "<group>"; };
 		978374FDD2BC17E29FDA033D /* Pods-TheBarCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
 		DC86CC07188FB5523F35C28B /* Pods-TheBarCodeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -383,6 +393,7 @@
 		0C23A8792146562200DFB281 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				83B2BE4B216358BF003ACA78 /* Popups */,
 				0C955DD42147F1E300F9385B /* OtherControllers */,
 				0C955DB7214788EA00F9385B /* Splash */,
 				0C23A8802146573400DFB281 /* Login */,
@@ -655,6 +666,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5A88EC21647F7400F16851 /* Invite */,
+				83B2BE5421637640003ACA78 /* FiveADay */,
 				0C8BDCE721511EE500D5117B /* Snackbar */,
 				0C8BDCC82150C4CF00D5117B /* Explore */,
 				0C8E9A9E214B9CBA00224720 /* FAQ */,
@@ -865,6 +877,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		83B2BE4B216358BF003ACA78 /* Popups */ = {
+			isa = PBXGroup;
+			children = (
+				83B2BE4C216358EF003ACA78 /* OutOfCreditViewController.swift */,
+				83B2BE4E21635908003ACA78 /* RedeemStartViewController.swift */,
+				83B2BE502163592F003ACA78 /* RedeemActiveDealViewController.swift */,
+			);
+			path = Popups;
+			sourceTree = "<group>";
+		};
+		83B2BE5421637640003ACA78 /* FiveADay */ = {
+			isa = PBXGroup;
+			children = (
+				83B2BE552163767F003ACA78 /* FiveADayCollectionViewCell.swift */,
+				83B2BE5721637691003ACA78 /* FiveADayCollectionViewCell.xib */,
+			);
+			path = FiveADay;
+			sourceTree = "<group>";
+		};
 		F54BB40885CF1B9A266539F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1022,6 +1053,7 @@
 				0C23A851214654FD00DFB281 /* Main.storyboard in Resources */,
 				0C23A8B12146873400DFB281 /* Lato-Semibold.ttf in Resources */,
 				0C955E08214931D500F9385B /* LoadingAndErrorView.xib in Resources */,
+				83B2BE5821637691003ACA78 /* FiveADayCollectionViewCell.xib in Resources */,
 				0C23A8A92146873400DFB281 /* Lato-Hairline.ttf in Resources */,
 				0C23A8A42146873400DFB281 /* Lato-Bold.ttf in Resources */,
 				0C23A8AD2146873400DFB281 /* Lato-Black.ttf in Resources */,
@@ -1171,6 +1203,7 @@
 				0C23A87F214656C300DFB281 /* SIgnUpViewController.swift in Sources */,
 				0C8E9A97214A8A8800224720 /* ReloadViewController.swift in Sources */,
 				0C5A88F321647FEE00F16851 /* Contact.swift in Sources */,
+				83B2BE562163767F003ACA78 /* FiveADayCollectionViewCell.swift in Sources */,
 				0C955DD82147F20E00F9385B /* PrivacyPolicyViewController.swift in Sources */,
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,
@@ -1185,6 +1218,7 @@
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				0C955DEF2149317100F9385B /* StatefulCollectionView+LoadMore.swift in Sources */,
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
+				83B2BE4D216358EF003ACA78 /* OutOfCreditViewController.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,
 				0C8E9A99214A908800224720 /* FaqsViewController.swift in Sources */,
 				0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */,
@@ -1216,6 +1250,7 @@
 				0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */,
 				0C23A8882146581B00DFB281 /* ExploreViewController.swift in Sources */,
 				0C955DCE2147CDEB00F9385B /* FieldView.swift in Sources */,
+				83B2BE4F21635908003ACA78 /* RedeemStartViewController.swift in Sources */,
 				0C955DFD214931A500F9385B /* EmptyDataView.swift in Sources */,
 				0C8BDCE52150E4D400D5117B /* StringAdditions.swift in Sources */,
 				0C8BDCDD2150D77600D5117B /* Bar.swift in Sources */,
@@ -1232,6 +1267,7 @@
 				0C8BDCE9215120F000D5117B /* SnackbarView.swift in Sources */,
 				0C955DF82149319200F9385B /* TableViewLoadMoreCell.swift in Sources */,
 				0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */,
+				83B2BE512163592F003ACA78 /* RedeemActiveDealViewController.swift in Sources */,
 				0C955DF12149317100F9385B /* StatefulCollectionView+InitialLoad.swift in Sources */,
 				0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */,
 				0C8BDCDF2150D78F00D5117B /* Deal.swift in Sources */,

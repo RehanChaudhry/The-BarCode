@@ -27,12 +27,8 @@ class ExploreDetailLiveOffersViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
-        self.offers.append(LiveOffer())
+        self.offers = LiveOffer.getDummyList()
+     
         
         self.setUpStatefulTableView()
     }
@@ -74,7 +70,7 @@ extension ExploreDetailLiveOffersViewController: UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        cell.setUpCell()
+        cell.setUpCell(offer: self.offers[indexPath.row])
         return cell
     }
     

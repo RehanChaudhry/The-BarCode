@@ -28,10 +28,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    override func setUpCell() {
-        super.setUpCell()
+    func setUpCell(offer: LiveOffer) {
+        super.setUpCell(explore: offer)
         
-        self.detailLabel.text = "2 live offers"
+        self.detailLabel.text = offer.detail
     }
     
 }

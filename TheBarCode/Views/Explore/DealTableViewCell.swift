@@ -28,9 +28,9 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    override func setUpCell() {
-        super.setUpCell()
+    func setUpCell(deal: Deal) {
+        super.setUpCell(explore: deal)
         
-        self.detailLabel.text = "2 deals available"
+        self.detailLabel.text = deal.detail
     }
 }

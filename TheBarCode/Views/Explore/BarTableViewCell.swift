@@ -28,8 +28,9 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    override func setUpCell() {
-        super.setUpCell()
-        
+    func setUpCell(bar: Bar) {
+        super.setUpCell(explore: bar)
+    
+        self.favouriteButton.tintColor = bar.isFavourite ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
     }
 }
