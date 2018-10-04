@@ -32,6 +32,8 @@ class Deal: Explore {
         return deal
     }
     
+
+    
     
 
 }

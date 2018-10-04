@@ -12,16 +12,35 @@ import FSPagerView
 
 class FiveADayViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pagerView: FSPagerView!
+    
+    @IBOutlet var pageControl: UIPageControl!
+    
+    var size : CGSize!
+    
+    var deals : [FiveADayDeal] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        collectionView.register(cellType: FiveADayCollectionViewCell.self)
-
+        self.deals = FiveADayDeal.getDummyList()
+        
+        self.pagerView.register(FiveADayCollectionViewCell.nib, forCellWithReuseIdentifier: FiveADayCollectionViewCell.reuseIdentifier)
+        self.pagerView.backgroundColor = .clear
+        
+        size = CGSize(width: self.pagerView.frame.width - 60, height: 540.0)
+        self.pagerView.itemSize = size
+        
+        
+        self.pagerView.isInfinite = true
+        self.pagerView.automaticSlidingInterval = 4.0
+        
+        self.pageControl.transform = CGAffineTransform.init(scaleX: 1.2, y: 1.2)
+        self.pageControl.numberOfPages = deals.count
+        self.pageControl.currentPage = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +48,14 @@ class FiveADayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.pagerView.itemSize = size
+//        let transform = CGAffineTransform(scaleX: 5.0, y: 5.0)
+//        self.pagerView.itemSize = self.pagerView.frame.size.applying(transform)
 
+    }
     /*
     // MARK: - Navigation
 
@@ -42,26 +68,33 @@ class FiveADayViewController: UIViewController {
 
 }
 
-extension FiveADayViewController: UICollectionViewDataSource,UICollectionViewDelegate {
+
+
+//MARK: FSPagerViewDataSource, FSPagerViewDelegate
+
+extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+    func pagerViewDidScroll(_ pagerView: FSPagerView) {
+        self.pageControl.currentPage = pagerView.currentIndex
     }
     
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+    func pagerView(_ pagerView: FSPagerView, shouldSelectItemAt index: Int) -> Bool {
+        return false
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: FiveADayCollectionViewCell.self)
+    func numberOfItems(in pagerView: FSPagerView) -> Int {
+        return deals.count
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
+        let identifier = FiveADayCollectionViewCell.reuseIdentifier
+        let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index) as! FiveADayCollectionViewCell
+        cell.setUpCell(deal: deals[index])
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        
     }
+    
 }
