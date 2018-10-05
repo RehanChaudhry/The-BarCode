@@ -8,7 +8,71 @@
 
 import UIKit
 import Reusable
+import FSPagerView
+import Gradientable
 
-class FiveADayCollectionViewCell: UICollectionViewCell , NibReusable {
+class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
+    
+    @IBOutlet var shadowView: ShadowView!
+    
+    @IBOutlet var coverImageView: UIImageView!
+    
+    @IBOutlet var dealTitleLabel: UILabel!
+    @IBOutlet var dealSubTitleLabel: UILabel!
+    @IBOutlet var dealDetailLabel: UILabel!
+    @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var distanceLabel: UILabel!
+    
+    @IBOutlet var redeemButton: GradientButton!
+    
+    @IBOutlet var coverImageHeight: NSLayoutConstraint!
+    @IBOutlet var detailVerticalSpacing: NSLayoutConstraint!
+    
+    @IBOutlet var detailButton: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.coverImageView.roundCorners(corners: [.topLeft, .topRight], radius: self.shadowView.cornerRadius)
+    }
+    
+    //MARK: My Methods
+    
+    func setUpCell(deal: FiveADayDeal) {
+        self.coverImageView.image = UIImage(named: deal.coverImage)
+        self.dealTitleLabel.text = deal.title.uppercased()
+        self.dealSubTitleLabel.text = deal.subTitle
+        self.dealDetailLabel.text = deal.detail
+        self.locationLabel.text = deal.location
+        self.distanceLabel.text = deal.distance
+
+        if UIScreen.main.bounds.size.width == 320.0 {
+            self.coverImageHeight.constant = 165.0
+        } else {
+            let coverHeight = ((220.0 / 302.0) * self.frame.width)
+            self.coverImageHeight.constant = coverHeight
+        }
+
+        self.layoutIfNeeded()
+        
+        if self.dealDetailLabel.isTruncated {
+            self.dealDetailLabel.isHidden = true
+//            self.detailVerticalSpacing.constant = 8.0 + 29.0
+            
+            self.detailButton.isHidden = false
+        } else {
+            self.dealDetailLabel.isHidden = false
+//            self.detailVerticalSpacing.constant = 8.0
+            
+            self.detailButton.isHidden = true
+        }
+    }
+    
     
 }

@@ -18,10 +18,21 @@ class GradientButton: GradientableButton {
         }
     }
     
+    var startColor: UIColor = UIColor.appGreenColor()
+    var endColor: UIColor = UIColor.appBlueColor()
+    var locations: [NSNumber]?
+    var directions: GradientableOptionsDirection = .right
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
+//        self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.updateGradient(colors: [self.startColor, self.endColor], locations: self.locations, direction: directions)
     }
     
     //MARK: My Methods
@@ -29,6 +40,20 @@ class GradientButton: GradientableButton {
     func updateGradient(colors: [UIColor]?, locations: [NSNumber]?, direction: GradientableOptionsDirection) {
         let gradientOptions = GradientableOptions(colors: colors, locations: locations, direction: direction)
         self.set(options: gradientOptions)
+        
+        if let startColor = colors?.first {
+            self.startColor = startColor
+        }
+        
+        if let endColor = colors?.last {
+            self.endColor = endColor
+        }
+        
+        if let locations = locations {
+            self.locations = locations
+        }
+        
+        self.directions = direction
     }
 
 }

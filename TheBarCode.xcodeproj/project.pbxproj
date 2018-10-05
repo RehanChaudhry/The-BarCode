@@ -62,6 +62,7 @@
 		0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */; };
 		0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */; };
 		0C5A88FB2164D91C00F16851 /* OfferDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */; };
+		0C8848652167370500DB222F /* UILableAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8848642167370500DB222F /* UILableAdditions.swift */; };
 		0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */; };
 		0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCC92150C4E500D5117B /* ExploreBaseTableViewCell.swift */; };
 		0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCCD2150D0AF00D5117B /* BarTableViewCell.swift */; };
@@ -132,6 +133,7 @@
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
 		1BB4FF9A2378BA58A2051D0D /* Pods_TheBarCodeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B8285B129E90CB60867109 /* Pods_TheBarCodeUITests.framework */; };
 		66179A6F0060C94E8267F21E /* Pods_TheBarCodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */; };
+		83563F572166107A003DE5BB /* FiveADayDeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83563F562166107A003DE5BB /* FiveADayDeal.swift */; };
 		83B2BE4D216358EF003ACA78 /* OutOfCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE4C216358EF003ACA78 /* OutOfCreditViewController.swift */; };
 		83B2BE4F21635908003ACA78 /* RedeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE4E21635908003ACA78 /* RedeemStartViewController.swift */; };
 		83B2BE512163592F003ACA78 /* RedeemActiveDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B2BE502163592F003ACA78 /* RedeemActiveDealViewController.swift */; };
@@ -219,6 +221,7 @@
 		0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferDetailTableViewCell.xib; sourceTree = "<group>"; };
+		0C8848642167370500DB222F /* UILableAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILableAdditions.swift; sourceTree = "<group>"; };
 		0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewAdditions.swift; sourceTree = "<group>"; };
 		0C8BDCC92150C4E500D5117B /* ExploreBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseTableViewCell.swift; sourceTree = "<group>"; };
 		0C8BDCCD2150D0AF00D5117B /* BarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarTableViewCell.swift; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 		46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4807B8C7EDCE9906EB751E64 /* Pods_TheBarCodeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCodeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81B8285B129E90CB60867109 /* Pods_TheBarCodeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheBarCodeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83563F562166107A003DE5BB /* FiveADayDeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveADayDeal.swift; sourceTree = "<group>"; };
 		83B2BE4C216358EF003ACA78 /* OutOfCreditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutOfCreditViewController.swift; sourceTree = "<group>"; };
 		83B2BE4E21635908003ACA78 /* RedeemStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemStartViewController.swift; sourceTree = "<group>"; };
 		83B2BE502163592F003ACA78 /* RedeemActiveDealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemActiveDealViewController.swift; sourceTree = "<group>"; };
@@ -417,6 +421,7 @@
 		0C23A88D2146730800DFB281 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0C884863216736ED00DB222F /* UILabel */,
 				0C8BDCE32150E4AB00D5117B /* String */,
 				0C8BDCC52150C32F00D5117B /* UIScrollView */,
 				0C955DD12147D3C500F9385B /* UIViewAdditions */,
@@ -586,6 +591,14 @@
 			path = Invite;
 			sourceTree = "<group>";
 		};
+		0C884863216736ED00DB222F /* UILabel */ = {
+			isa = PBXGroup;
+			children = (
+				0C8848642167370500DB222F /* UILableAdditions.swift */,
+			);
+			path = UILabel;
+			sourceTree = "<group>";
+		};
 		0C8BDCC52150C32F00D5117B /* UIScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,6 +721,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5A88F121647FE100F16851 /* Invite */,
+				83563F552166105F003DE5BB /* FiveADay */,
 				0C8BDCD92150D6FA00D5117B /* Explore */,
 				0C8E9AA7214BBAC100224720 /* FAQ */,
 				0C44DD32214A7F3E000F5D64 /* MoreMenu */,
@@ -875,6 +889,14 @@
 				E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		83563F552166105F003DE5BB /* FiveADay */ = {
+			isa = PBXGroup;
+			children = (
+				83563F562166107A003DE5BB /* FiveADayDeal.swift */,
+			);
+			path = FiveADay;
 			sourceTree = "<group>";
 		};
 		83B2BE4B216358BF003ACA78 /* Popups */ = {
@@ -1245,10 +1267,12 @@
 				0C955DDC2149264100F9385B /* CategoriesViewController.swift in Sources */,
 				0C23A88F2146732000DFB281 /* UIColorAdditions.swift in Sources */,
 				0C955DB52147824C00F9385B /* GradientButton.swift in Sources */,
+				0C8848652167370500DB222F /* UILableAdditions.swift in Sources */,
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
 				0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */,
 				0C23A8882146581B00DFB281 /* ExploreViewController.swift in Sources */,
+				83563F572166107A003DE5BB /* FiveADayDeal.swift in Sources */,
 				0C955DCE2147CDEB00F9385B /* FieldView.swift in Sources */,
 				83B2BE4F21635908003ACA78 /* RedeemStartViewController.swift in Sources */,
 				0C955DFD214931A500F9385B /* EmptyDataView.swift in Sources */,

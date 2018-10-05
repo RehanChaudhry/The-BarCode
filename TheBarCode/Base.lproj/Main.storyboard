@@ -249,7 +249,7 @@
             </objects>
             <point key="canvasLocation" x="3543" y="576"/>
         </scene>
-        <!--5 a Day-->
+        <!--Data Source-->
         <scene sceneID="EqC-GW-fm3">
             <objects>
                 <viewController storyboardIdentifier="FiveADayViewController" id="m3z-3m-BJ2" customClass="FiveADayViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
@@ -257,35 +257,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Uh-GM-uTU">
-                                <rect key="frame" x="0.0" y="84" width="375" height="500"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="muW-8j-V4y" customClass="FSPagerView" customModule="FSPagerView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="509"/>
                                 <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="500" id="BGH-Ob-AT7"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="20" id="kYc-I4-63W">
-                                    <size key="itemSize" width="302" height="554"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muW-8j-V4y" customClass="FSPagerView" customModule="FSPagerView">
-                                <rect key="frame" x="0.0" y="83" width="375" height="500"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="m3z-3m-BJ2" id="Vbb-7C-Mqe"/>
+                                    <outlet property="delegate" destination="m3z-3m-BJ2" id="bmF-u5-kn8"/>
+                                </connections>
                             </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="b78-pb-dC8">
+                                <rect key="frame" x="152" y="573" width="71" height="37"/>
+                                <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6Uh-GM-uTU" firstAttribute="trailing" secondItem="Mp2-sH-qjZ" secondAttribute="trailing" id="K60-gs-rLl"/>
-                            <constraint firstItem="6Uh-GM-uTU" firstAttribute="leading" secondItem="Mp2-sH-qjZ" secondAttribute="leading" id="iIi-OY-Pwh"/>
-                            <constraint firstItem="6Uh-GM-uTU" firstAttribute="top" secondItem="Mp2-sH-qjZ" secondAttribute="top" constant="20" id="yiZ-lO-phX"/>
+                            <constraint firstItem="muW-8j-V4y" firstAttribute="top" secondItem="Mp2-sH-qjZ" secondAttribute="top" id="N4V-Qo-w6A"/>
+                            <constraint firstItem="muW-8j-V4y" firstAttribute="leading" secondItem="Mp2-sH-qjZ" secondAttribute="leading" id="au5-Eu-Id8"/>
+                            <constraint firstItem="b78-pb-dC8" firstAttribute="top" secondItem="muW-8j-V4y" secondAttribute="bottom" id="cLH-jZ-l6h"/>
+                            <constraint firstItem="muW-8j-V4y" firstAttribute="trailing" secondItem="Mp2-sH-qjZ" secondAttribute="trailing" id="i1V-aq-E7o"/>
+                            <constraint firstItem="Mp2-sH-qjZ" firstAttribute="bottom" secondItem="b78-pb-dC8" secondAttribute="bottom" constant="8" id="nwO-fC-azR"/>
+                            <constraint firstItem="b78-pb-dC8" firstAttribute="centerX" secondItem="2Jn-ue-yP3" secondAttribute="centerX" id="wOi-Ng-QR0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mp2-sH-qjZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="5 a Day" id="SwJ-Id-irG"/>
+                    <connections>
+                        <outlet property="pageControl" destination="b78-pb-dC8" id="i8H-rv-iAa"/>
+                        <outlet property="pagerView" destination="muW-8j-V4y" id="S6Z-0x-rmS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RJp-Nb-p6i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3698,7 +3699,7 @@ Cg
                                             </connections>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIG OFF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-0o-YdM">
-                                            <rect key="frame" x="16" y="217" width="343" height="15"/>
+                                            <rect key="frame" x="16" y="362" width="343" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="llz-sc-nKP"/>
                                             </constraints>
@@ -3707,7 +3708,7 @@ Cg
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get 25% cash back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-PY-Vmc">
-                                            <rect key="frame" x="16" y="248" width="343" height="20"/>
+                                            <rect key="frame" x="16" y="393" width="343" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="KKY-Yy-rXM"/>
                                             </constraints>
