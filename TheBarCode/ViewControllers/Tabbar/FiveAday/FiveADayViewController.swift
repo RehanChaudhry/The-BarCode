@@ -12,6 +12,8 @@ import FSPagerView
 
 protocol FiveADayViewControllerDelegate {
     func showPopup()
+    func showDealDetail(index: Int)
+
 }
 
 
@@ -79,7 +81,7 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
         let identifier = FiveADayCollectionViewCell.reuseIdentifier
         let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index) as! FiveADayCollectionViewCell
         cell.delegate = self
-        cell.setUpCell(deal: deals[index])
+        cell.setUpCell(deal: deals[index], index: index)
         return cell
     }
     
@@ -93,5 +95,12 @@ extension FiveADayViewController: FiveADayViewControllerDelegate{
         let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemStartViewController, animated: true, completion: nil)
+    }
+    
+    func showDealDetail(index: Int){
+        let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
+        fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
+        fiveADayDetailViewController.deal = deals[index]
+        self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
 }

@@ -31,6 +31,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     @IBOutlet var detailButton: UIButton!
     
     var delegate : FiveADayViewControllerDelegate?
+    var index : Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,7 +47,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(deal: FiveADayDeal) {
+    func setUpCell(deal: FiveADayDeal, index: Int) {
+        self.index = index
         self.coverImageView.image = UIImage(named: deal.coverImage)
         self.dealTitleLabel.text = deal.title.uppercased()
         self.dealSubTitleLabel.text = deal.subTitle
@@ -80,4 +82,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         delegate?.showPopup()
     }
     
+    @IBAction func viewDetailButtonTapped(_ sender: Any) {
+        delegate?.showDealDetail(index: self.index)
+    }
 }
