@@ -40,6 +40,9 @@ class ReloadViewController: UITableViewController {
     
 
     //MARK: My IBActions
+    @IBAction func reloadButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)

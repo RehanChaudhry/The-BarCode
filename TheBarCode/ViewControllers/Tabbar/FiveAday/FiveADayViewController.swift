@@ -10,6 +10,11 @@ import UIKit
 import Reusable
 import FSPagerView
 
+protocol FiveADayViewControllerDelegate {
+    func showPopup()
+}
+
+
 class FiveADayViewController: UIViewController {
 
     
@@ -73,6 +78,7 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let identifier = FiveADayCollectionViewCell.reuseIdentifier
         let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index) as! FiveADayCollectionViewCell
+        cell.delegate = self
         cell.setUpCell(deal: deals[index])
         return cell
     }
@@ -80,5 +86,12 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         
     }
-    
+}
+
+extension FiveADayViewController: FiveADayViewControllerDelegate{
+    func showPopup() {
+        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemStartViewController, animated: true, completion: nil)
+    }
 }

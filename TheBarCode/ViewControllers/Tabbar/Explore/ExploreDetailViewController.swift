@@ -99,6 +99,12 @@ class ExploreDetailViewController: UIViewController {
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func getOffButtonTapped(_ sender: Any) {
+        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemStartViewController, animated: true, completion: nil)
+    }
 }
 
 //MARK: SJSegmentedViewControllerDelegate

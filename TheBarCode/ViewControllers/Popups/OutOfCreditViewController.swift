@@ -9,6 +9,8 @@
 import UIKit
 
 class OutOfCreditViewController: UIViewController {
+    
+    var presentedVC : UIViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +36,31 @@ class OutOfCreditViewController: UIViewController {
     
     //MARK: IBActions
     @IBAction func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func reloadButtonTapped(_ sender: Any) {
+        presentedVC = self.presentingViewController
+        self.dismiss(animated: true) {
+            let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+            reloadNavigation.modalPresentationStyle = .overCurrentContext
+            self.presentedVC.present(reloadNavigation, animated: true, completion: nil)
+        }     
     }
+    
     @IBAction func inviteButtonTapped(_ sender: Any) {
+        presentedVC = self.presentingViewController
+        self.dismiss(animated: true) {
+            
+            let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+            let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+            inviteController.shouldShowCancelBarButton = true
+            inviteNavigation.modalPresentationStyle = .overCurrentContext
+            self.presentedVC.present(inviteNavigation, animated: true, completion: nil)
+            
+        }
+        
+        
     }
     
 }

@@ -50,6 +50,14 @@ class OfferDetailViewController: UIViewController {
         headerFrame.size.height = headerViewHeight
         self.headerView.frame = headerFrame
     }
+    
+    //MARK: IBAction
+    @IBAction func redeemDealButtonTapped(_ sender: Any) {
+        let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+        outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+        self.present(outOfCreditViewController, animated: true, completion: nil)
+    }
+    
 
 }
 
