@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol DealsViewControllerDelegate: class {
+    func dealsController(controller: DealsViewController, didSelectDeal deal: Any)
+}
+
 class DealsViewController: ExploreBaseViewController {
 
     var deals: [Deal] = []
+    
+    weak var delegate: DealsViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +66,7 @@ extension DealsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        self.delegate.dealsController(controller: self, didSelectDeal: self.deals[indexPath.row])
     }
 }
 

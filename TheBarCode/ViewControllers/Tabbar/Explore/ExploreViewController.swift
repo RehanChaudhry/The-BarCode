@@ -92,9 +92,11 @@ class ExploreViewController: UIViewController {
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
         
         self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "DealsViewController") as! DealsViewController)
+        self.dealsController.delegate = self
         self.addViewController(controller: self.dealsController, parent: self.dealsContainerView)
         
         self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController)
+        self.liveOffersController.delegate = self
         self.addViewController(controller: self.liveOffersController, parent: self.liveOffersContainerView)
     }
     
@@ -149,9 +151,21 @@ class ExploreViewController: UIViewController {
 }
 
 //MARK: BarsViewControllerDelegate
-
 extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, didSelectBar bar: Any) {
+        self.moveToDetail()
+    }
+}
+
+//MARK: DealsViewControllerDelegate
+extension ExploreViewController: DealsViewControllerDelegate {
+    func dealsController(controller: DealsViewController, didSelectDeal deal: Any) {
+        self.moveToDetail()
+    }
+}
+
+extension ExploreViewController: LiveOffersViewControllerDelegate {
+    func liveOffersController(controller: LiveOffersViewController, didSelectLiveOffer offer: Any) {
         self.moveToDetail()
     }
 }

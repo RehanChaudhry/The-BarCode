@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol LiveOffersViewControllerDelegate: class {
+    func liveOffersController(controller: LiveOffersViewController, didSelectLiveOffer offer: Any)
+}
+
 class LiveOffersViewController: ExploreBaseViewController {
 
     var offers: [LiveOffer] = []
+    
+    weak var delegate: LiveOffersViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +66,7 @@ extension LiveOffersViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        self.delegate.liveOffersController(controller: self, didSelectLiveOffer: self.offers[indexPath.row])
     }
 }
 
