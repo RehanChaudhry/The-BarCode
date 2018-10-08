@@ -2566,10 +2566,36 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available Credits: You are out of credit. You can reload previous offers after 0D  0H  0M." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
                                     <rect key="frame" x="68" y="24" width="291" height="50.5"/>
-                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Available Credits: You are out of credit. You can reload previous offers after">
+                                            <attributes>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="14" name="Lato-Regular"/>
+                                                <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" ">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="14" name="Lato-Regular"/>
+                                                <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="00:00:00:00">
+                                            <attributes>
+                                                <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <font key="NSFont" size="14" name="Lato-Bold"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=".">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jy-Hr-ZlP">
@@ -3026,19 +3052,26 @@ Cg
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="16" maxY="0.0"/>
                                 <attributedString key="attributedText">
+                                    <fragment content="Existing Rules &amp; Restrictions Relating To Use Of The Barcode.">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="16" headIndent="16" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
                                     <fragment>
-                                        <string key="content">Existing Rules &amp; Restrictions Relating To Use Of The Barcode. 
+                                        <string key="content"> 
 </string>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="16" headIndent="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Redemption Rules">
                                         <attributes>
-                                            <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="16" headIndent="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3047,8 +3080,8 @@ Cg
 Cg
 </string>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="16" headIndent="16" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3057,51 +3090,54 @@ Cg
 Cg
 </string>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">	•	A user can only redeem one offer (either a 5 A Day, Live, Exclusive or Standard 25%) in each bar in every 7 day ‘validity’ period.
+                                        <mutableString key="content">	•	A user can only redeem one offer (either a 5 A Day, Live, Exclusive or Standard 25%) in each bar in every 7 day ‘validity’ period.
 	•	The only way they can redeem more offers at the same bar within a 7 day validity period is to ‘reload’ that bar by applying one of your credit (you receive these either by successfully inviting friends to sign up to The Barcode, by sharing Live &amp; 5 A Day offers with friends who then redeem those offers or by receiving a credit from a friend who has sent you one of their credits).
 	•	Regardless of how many credits a user has, they still cannot redeem more than 2 rounds in any 1 evening at a single bar. For example:
-	</string>
+	</mutableString>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="50" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="⁃">
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="LucidaGrande"/>
                                             <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="50" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">	If they have not been to that bar during their current validity period they can redeem their first offer and then apply a credit to redeem another one. If they try again they will receive a pop up explaining why they cannot redeem another round but telling them they can use again tomorrow (or at another bar). We did have all these pop ups working on the app, along with the countdown timer at the top of the page, bars listed sharing credits function working but it all seems to have disappeared now which is frustrating).
-	</string>
+                                        <mutableString key="content">	If they have not been to that bar during their current validity period they can redeem their first offer and then apply a credit to redeem another one. If they try again they will receive a pop up explaining why they cannot redeem another round but telling them they can use again tomorrow (or at another bar). We did have all these pop ups working on the app, along with the countdown timer at the top of the page, bars listed sharing credits function working but it all seems to have disappeared now which is frustrating).
+	</mutableString>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="50" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="⁃">
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="LucidaGrande"/>
                                             <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="50" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">	If they have been to that bar already during the validity period and want to go again on another evening, then they can apply a credit and go to the bar and get their discount. They can then apply another credit to receive a second discount but this will then not permit them to use anymore. Again, we had pop ups for this explaining ‘You have already used this offer. However you can apply a credit to use again!’ (or words to that effect).</string>
+                                        <mutableString key="content">	If they have been to that bar already during the validity period and want to go again on another evening, then they can apply a credit and go to the bar and get their discount. They can then apply another credit to receive a second discount but this will then not permit them to use anymore. Again, we had pop ups for this explaining ‘You have already used this offer. However you can apply a credit to use again!’ (or words to that effect).</mutableString>
                                         <attributes>
-                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="50" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
