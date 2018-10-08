@@ -56,6 +56,7 @@ class AccountSettingsViewController: UIViewController {
         self.addBackButton()
         
         self.setUpFields()
+        self.setUpUserProfile()
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +167,13 @@ class AccountSettingsViewController: UIViewController {
         self.fullNameFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
         self.emailFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
         
+    }
+    
+    func setUpUserProfile() {
+        self.emailFieldView.textField.text = "philip.may@example.com"
+        self.fullNameFieldView.textField.text = "Philip May"
+        self.genderFieldView.textField.text = "Male"
+        self.dobFieldView.textField.text = "06/24/1984"
     }
     
     func updateGenderField() {
