@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -75,9 +75,11 @@
                 <outlet property="iconImageView" destination="kxF-1C-cHJ" id="VNJ-u4-soT"/>
                 <outlet property="iconWidth" destination="vlG-Qm-RRN" id="8PT-Aq-ARl"/>
                 <outlet property="placeholderLabel" destination="9Yt-wV-YgH" id="oyE-f1-rxw"/>
+                <outlet property="placeholderLabelHeight" destination="H6J-sN-ceN" id="7HU-wu-RZZ"/>
                 <outlet property="placeholderLabelLeft" destination="3Lq-bY-bWd" id="rGf-f1-lzM"/>
                 <outlet property="textField" destination="Q7g-Iz-lAL" id="Z6Q-Yz-NMZ"/>
                 <outlet property="validationLabel" destination="zvZ-fM-0dc" id="2O2-wr-Az5"/>
+                <outlet property="validationLabelHeight" destination="rlD-ua-RCK" id="apD-99-BuJ"/>
                 <outlet property="validationLabelLeft" destination="EYP-3n-gcq" id="Zay-zM-QLl"/>
                 <outlet property="validationLabelRight" destination="6Dq-Op-Uvb" id="sV3-dj-rMh"/>
             </connections>

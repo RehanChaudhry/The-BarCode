@@ -22,6 +22,8 @@ class FieldView: UIView, NibReusable {
     
     @IBOutlet var validationLabelLeft: NSLayoutConstraint!
     @IBOutlet var validationLabelRight: NSLayoutConstraint!
+    @IBOutlet var placeholderLabelHeight: NSLayoutConstraint!
+    @IBOutlet var validationLabelHeight: NSLayoutConstraint!
     
     @IBOutlet var fieldLeft: NSLayoutConstraint!
     @IBOutlet var fieldRight: NSLayoutConstraint!

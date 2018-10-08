@@ -12,20 +12,22 @@ class RedeemActiveDealViewController: UIViewController {
 
     @IBOutlet weak var hiddenField: UITextField!
     
-    @IBOutlet weak var codeField1: UITextField!
-    @IBOutlet weak var codeField2: UITextField!
-    @IBOutlet weak var codeField3: UITextField!
-    @IBOutlet weak var codeField4: UITextField!
+    @IBOutlet var codeFieldContainer1: UIView!
+    @IBOutlet var codeFieldContainer2: UIView!
+    @IBOutlet var codeFieldContainer3: UIView!
+    @IBOutlet var codeFieldContainer4: UIView!
+    
+    var codeFieldView1: FieldView!
+    var codeFieldView2: FieldView!
+    var codeFieldView3: FieldView!
+    var codeFieldView4: FieldView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        customizeUserInterface()
-
         // Do any additional setup after loading the view.
-        hiddenField.becomeFirstResponder()
         
-
+        self.setUpFieldViews()
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,72 +37,105 @@ class RedeemActiveDealViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         hiddenField.becomeFirstResponder()
-
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-     //
-    */
+    //MARK: My Methods
     
-    func customizeUserInterface() {
-        codeField1.addBorders(edges: [.bottom], color: .white, thickness: 1.0)
-        codeField2.addBorders(edges: [.bottom], color: .white, thickness: 1.0)
-        codeField3.addBorders(edges: [.bottom], color: .white, thickness: 1.0)
-        codeField4.addBorders(edges: [.bottom], color: .white, thickness: 1.0)
+    func setUpFieldViews() {
+        self.codeFieldView1 = FieldView.loadFromNib()
+        self.codeFieldView1.textField.isEnabled = false
+        self.codeFieldView1.makeSecure(secure: true)
+        self.codeFieldView1.fieldLeft.constant = 0.0
+        self.codeFieldView1.fieldRight.constant = 0.0
+        self.codeFieldView1.placeholderLabelHeight.constant = 0.0
+        self.codeFieldView1.validationLabelHeight.constant = 0.0
+        self.codeFieldView1.setUpFieldView(fieldPlaceholder: "X")
+        self.codeFieldView1.textField.textAlignment = .center
+        self.codeFieldContainer1.addSubview(self.codeFieldView1)
+        self.codeFieldView1.autoPinEdgesToSuperviewEdges()
+        
+        self.codeFieldView2 = FieldView.loadFromNib()
+        self.codeFieldView2.textField.isEnabled = false
+        self.codeFieldView2.makeSecure(secure: true)
+        self.codeFieldView2.fieldLeft.constant = 0.0
+        self.codeFieldView2.fieldRight.constant = 0.0
+        self.codeFieldView2.placeholderLabelHeight.constant = 0.0
+        self.codeFieldView2.validationLabelHeight.constant = 0.0
+        self.codeFieldView2.setUpFieldView(fieldPlaceholder: "X")
+        self.codeFieldView2.textField.textAlignment = .center
+        self.codeFieldContainer2.addSubview(self.codeFieldView2)
+        self.codeFieldView2.autoPinEdgesToSuperviewEdges()
+        
+        self.codeFieldView3 = FieldView.loadFromNib()
+        self.codeFieldView3.textField.isEnabled = false
+        self.codeFieldView3.makeSecure(secure: true)
+        self.codeFieldView3.fieldLeft.constant = 0.0
+        self.codeFieldView3.fieldRight.constant = 0.0
+        self.codeFieldView3.placeholderLabelHeight.constant = 0.0
+        self.codeFieldView3.validationLabelHeight.constant = 0.0
+        self.codeFieldView3.setUpFieldView(fieldPlaceholder: "X")
+        self.codeFieldView3.textField.textAlignment = .center
+        self.codeFieldContainer3.addSubview(self.codeFieldView3)
+        self.codeFieldView3.autoPinEdgesToSuperviewEdges()
+        
+        self.codeFieldView4 = FieldView.loadFromNib()
+        self.codeFieldView4.textField.isEnabled = false
+        self.codeFieldView4.makeSecure(secure: true)
+        self.codeFieldView4.fieldLeft.constant = 0.0
+        self.codeFieldView4.fieldRight.constant = 0.0
+        self.codeFieldView4.placeholderLabelHeight.constant = 0.0
+        self.codeFieldView4.validationLabelHeight.constant = 0.0
+        self.codeFieldView4.setUpFieldView(fieldPlaceholder: "X")
+        self.codeFieldView4.textField.textAlignment = .center
+        self.codeFieldContainer4.addSubview(self.codeFieldView4)
+        self.codeFieldView4.autoPinEdgesToSuperviewEdges()
     }
     
     func resetField() {
-        codeField1.text = ""
-        codeField2.text = ""
-        codeField3.text = ""
-        codeField4.text = ""
+        self.codeFieldView1.textField.text = ""
+        self.codeFieldView2.textField.text = ""
+        self.codeFieldView3.textField.text = ""
+        self.codeFieldView4.textField.text = ""
     }
     
     //MARK: IBActions
     @IBAction func textFieldTextDidChanged(_ sender: Any) {
         
         let text = hiddenField.text!
-        resetField()
+        self.resetField()
         
         for (index, char) in text.enumerated() {
             if index == 0 {
-                codeField1.text = "\(char)"
+                self.codeFieldView1.textField.text = "\(char)"
             } else if index == 1 {
-                codeField2.text = "\(char)"
+                self.codeFieldView2.textField.text = "\(char)"
             } else if index == 2 {
-                codeField3.text = "\(char)"
+                self.codeFieldView3.textField.text = "\(char)"
             } else if index == 3 {
-                codeField4.text = "\(char)"
+                self.codeFieldView4.textField.text = "\(char)"
             } else {
                 break
             }
         }
-        
-        if text.count >= 4 {
-          //  verifyCode(code: text)
-        }
-        
-       // continueButton.isEnabled = text.count >= 4
     }
     
+    //MARK: My IBActions
+    
     @IBAction func closeButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     
     
     @IBAction func confirmButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
 }
 
+//MARK: UITextFieldDelegate
 extension RedeemActiveDealViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 4
