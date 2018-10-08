@@ -10,6 +10,8 @@ import UIKit
 
 class RedeemStartViewController: UIViewController {
 
+    var presentedVC : UIViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,10 +34,21 @@ class RedeemStartViewController: UIViewController {
     }
     */
     @IBAction func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func barTenderReadyButtonTapped(_ sender: Any) {
+        presentedVC = self.presentingViewController
+        
+        self.dismiss(animated: true) {
+            let redeemActiveDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemActiveDealViewController") as! RedeemActiveDealViewController)
+            redeemActiveDealViewController.modalPresentationStyle = .overCurrentContext
+            self.presentedVC.present(redeemActiveDealViewController, animated: true, completion: nil)
+
+        }
     }
+    
     @IBAction func takeMeBackButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

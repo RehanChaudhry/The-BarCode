@@ -30,6 +30,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var detailButton: UIButton!
     
+    var delegate : FiveADayViewControllerDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -74,5 +76,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         }
     }
     
+    @IBAction func redeemDealButtonTapped(_ sender: Any) {
+        delegate?.showPopup()
+    }
     
 }

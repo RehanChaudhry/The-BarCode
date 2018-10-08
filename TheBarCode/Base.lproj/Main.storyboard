@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x19-sG-FCr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x19-sG-FCr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -159,7 +160,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TBC1867" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYm-S6-wXt">
-                                                    <rect key="frame" x="149" y="378" width="77" height="22"/>
+                                                    <rect key="frame" x="149.5" y="378" width="76" height="22"/>
                                                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -197,7 +198,14 @@
                             <outlet property="delegate" destination="3OH-rn-xK7" id="Gqa-M7-HFV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Invite" id="VL8-90-036"/>
+                    <navigationItem key="navigationItem" title="Invite" id="VL8-90-036">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Wb5-aW-FnH">
+                            <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="3OH-rn-xK7" id="Od9-28-LJm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="headerView" destination="9eU-7j-0RW" id="DB8-wX-6FV"/>
                         <segue destination="cno-zB-d4w" kind="show" identifier="InviteToContactsSegue" id="ncT-K6-Uov"/>
@@ -484,7 +492,7 @@
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ll-3m-ujy">
                                                 <rect key="frame" x="0.0" y="421" width="375" height="182"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7G-gb-goB">
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7G-gb-goB">
                                                         <rect key="frame" x="94.5" y="128" width="186" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="31" id="9w0-6Z-Xej"/>
@@ -515,7 +523,7 @@
                                                             <action selector="signInButtonTappedWithSender:" destination="Z16-Wr-qWJ" eventType="touchUpInside" id="Sem-55-b2m"/>
                                                         </connections>
                                                     </button>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="By clicking Create Account or Sign Up with Facebook you agree to the Terms of Use and Privacy Policy." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ygv-al-aRl">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="By clicking Create Account or Sign Up with Facebook you agree to the Terms of Use and Privacy Policy." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ygv-al-aRl">
                                                         <rect key="frame" x="16" y="78" width="343" height="50"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -525,7 +533,7 @@
                                                             <outlet property="delegate" destination="Z16-Wr-qWJ" id="FrT-V6-E5o"/>
                                                         </connections>
                                                     </textView>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojD-Cm-JIL" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojD-Cm-JIL" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="IhO-8c-BDe"/>
@@ -1499,7 +1507,7 @@
         <!--INVITE-->
         <scene sceneID="gku-34-KDx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fyj-Rt-3bq" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="InviteNavigation" automaticallyAdjustsScrollViewInsets="NO" id="fyj-Rt-3bq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="INVITE" image="icon_tab_invite" id="Ae2-yK-qb6"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
@@ -2058,7 +2066,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpe-8Q-ftB">
-                                                        <rect key="frame" x="86" y="22" width="281" height="20"/>
+                                                        <rect key="frame" x="86" y="22" width="281" height="19"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Phillip May ">
                                                                 <attributes>
@@ -2617,6 +2625,9 @@
                                                             <real key="value" value="22"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="reloadButtonTapped:" destination="GYQ-Vt-p8e" eventType="touchUpInside" id="tdP-Rb-yXC"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIq-M1-GLf">
                                                     <rect key="frame" x="16" y="24" width="343" height="173"/>
@@ -2776,7 +2787,7 @@ Cg
         <!--Out Of Credit View Controller-->
         <scene sceneID="L8u-gK-e3R">
             <objects>
-                <viewController id="hzU-7e-WgU" customClass="OutOfCreditViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OutOfCreditViewController" id="hzU-7e-WgU" customClass="OutOfCreditViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j7B-nS-uGB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2784,13 +2795,13 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bo9-IC-9Hs">
                                 <rect key="frame" x="16" y="141.5" width="343" height="384"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Opps! You are out of credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKo-za-L4s">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opps! You are out of credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKo-za-L4s">
                                         <rect key="frame" x="24" y="24" width="243" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
                                         <rect key="frame" x="275" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="FEB-70-AR3"/>
@@ -2801,14 +2812,14 @@ Cg
                                             <action selector="closeButtonTapped:" destination="hzU-7e-WgU" eventType="touchUpInside" id="ZSV-az-GNN"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0j7-1B-ziD">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0j7-1B-ziD">
                                         <rect key="frame" x="0.0" y="67.5" width="343" height="1"/>
                                         <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="SjS-RR-mjc"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mwn-FI-aTv">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwn-FI-aTv">
                                         <rect key="frame" x="139.5" y="98.5" width="64" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_barcode" translatesAutoresizingMaskIntoConstraints="NO" id="n9k-eh-YtC">
@@ -2860,7 +2871,7 @@ Cg
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VV-tq-BAI">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VV-tq-BAI">
                                         <rect key="frame" x="24" y="192.5" width="295" height="34"/>
                                         <attributedString key="attributedText">
                                             <fragment content="You do not have enough credit to activate this deal. You can redeem next deal after ">
@@ -2884,7 +2895,7 @@ Cg
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="To activate this deal earlier, please use reload option or invite your friends to get credit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xea-VL-tXZ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To activate this deal earlier, please use reload option or invite your friends to get credit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xea-VL-tXZ">
                                         <rect key="frame" x="24" y="242.5" width="295" height="34"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2970,6 +2981,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Bo9-IC-9Hs" firstAttribute="leading" secondItem="aSC-K7-cCb" secondAttribute="leading" constant="16" id="411-aI-bnj"/>
                             <constraint firstItem="Bo9-IC-9Hs" firstAttribute="centerX" secondItem="j7B-nS-uGB" secondAttribute="centerX" id="WyR-Zu-zYK"/>
@@ -3535,7 +3547,7 @@ Cg
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="inviteContactButtonTappedWithSender:" destination="3OH-rn-xK7" eventType="touchUpInside" id="W3a-qI-3v7"/>
+                                            <action selector="getOffButtonTapped:" destination="Eeg-kR-SY4" eventType="touchUpInside" id="bpF-a8-J8X"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3681,7 +3693,7 @@ Cg
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Teg-RX-Qpg">
-                                            <rect key="frame" x="0.0" y="20" width="375" height="273"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="273"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="273" id="vf7-Z1-hIz"/>
@@ -3699,7 +3711,7 @@ Cg
                                             </connections>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIG OFF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-0o-YdM">
-                                            <rect key="frame" x="16" y="362" width="343" height="15"/>
+                                            <rect key="frame" x="16" y="217" width="343" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="llz-sc-nKP"/>
                                             </constraints>
@@ -3708,7 +3720,7 @@ Cg
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get 25% cash back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-PY-Vmc">
-                                            <rect key="frame" x="16" y="393" width="343" height="20"/>
+                                            <rect key="frame" x="16" y="248" width="343" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="KKY-Yy-rXM"/>
                                             </constraints>
@@ -3754,7 +3766,7 @@ Cg
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="inviteContactButtonTappedWithSender:" destination="3OH-rn-xK7" eventType="touchUpInside" id="eQe-JG-PTT"/>
+                                            <action selector="redeemDealButtonTapped:" destination="N9K-9o-Gsw" eventType="touchUpInside" id="Eel-CU-iRK"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3910,7 +3922,7 @@ Cg
         <!--Redeem Start View Controller-->
         <scene sceneID="S8p-8J-iRL">
             <objects>
-                <viewController id="cl3-8W-ZVR" customClass="RedeemStartViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RedeemStartViewController" id="cl3-8W-ZVR" customClass="RedeemStartViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="knI-9x-3k7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4021,6 +4033,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rkP-HO-SnY" firstAttribute="trailing" secondItem="IFa-7a-8gD" secondAttribute="trailing" constant="16" id="0or-fc-H7V"/>
                             <constraint firstItem="IFa-7a-8gD" firstAttribute="centerX" secondItem="knI-9x-3k7" secondAttribute="centerX" id="17g-9f-o4E"/>
@@ -4037,7 +4050,7 @@ Cg
         <!--Redeem Active Deal View Controller-->
         <scene sceneID="VH4-4g-ArR">
             <objects>
-                <viewController id="WXV-7G-uNE" customClass="RedeemActiveDealViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RedeemActiveDealViewController" id="WXV-7G-uNE" customClass="RedeemActiveDealViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zqj-Yz-Ty6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4045,13 +4058,13 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeK-0b-UVT">
                                 <rect key="frame" x="16" y="131" width="343" height="281"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
                                         <rect key="frame" x="24" y="24" width="243" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vda-ZN-sHK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vda-ZN-sHK">
                                         <rect key="frame" x="275" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="6EI-jv-giQ"/>
@@ -4062,14 +4075,14 @@ Cg
                                             <action selector="closeButtonTapped:" destination="WXV-7G-uNE" eventType="touchUpInside" id="yqs-61-U9G"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufb-bU-Qte">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufb-bU-Qte">
                                         <rect key="frame" x="0.0" y="67.5" width="343" height="1"/>
                                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="li5-we-Foa"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Please ask bartender to enter 4 digits BarCode to activate this deal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please ask bartender to enter 4 digits BarCode to activate this deal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
                                         <rect key="frame" x="24" y="92.5" width="295" height="34"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4208,6 +4221,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="top" secondItem="Un9-xf-lou" secondAttribute="top" constant="111" id="DmZ-db-SeX"/>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="leading" secondItem="Un9-xf-lou" secondAttribute="leading" constant="16" id="YPx-cd-RBH"/>
@@ -4217,10 +4231,10 @@ Cg
                         <viewLayoutGuide key="safeArea" id="Un9-xf-lou"/>
                     </view>
                     <connections>
-                        <outlet property="codeField1" destination="5xh-4U-oji" id="ZYd-hD-K8D"/>
-                        <outlet property="codeField2" destination="rVC-VU-0j0" id="O70-JP-DaJ"/>
-                        <outlet property="codeField3" destination="jNw-XV-7Lv" id="Arj-lO-AFE"/>
-                        <outlet property="codeField4" destination="R7n-rj-AyM" id="GPL-Yd-ReD"/>
+                        <outlet property="codeField1" destination="5xh-4U-oji" id="gqQ-uJ-02W"/>
+                        <outlet property="codeField2" destination="rVC-VU-0j0" id="SXE-8J-2rb"/>
+                        <outlet property="codeField3" destination="jNw-XV-7Lv" id="hm7-SD-QUt"/>
+                        <outlet property="codeField4" destination="R7n-rj-AyM" id="tnb-KJ-KmR"/>
                         <outlet property="hiddenField" destination="SYq-hg-G5w" id="ZFw-c4-qLG"/>
                     </connections>
                 </viewController>
@@ -4235,7 +4249,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
+        <image name="icon_list" width="22" height="15"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4246,7 +4260,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="138" height="138"/>
+        <image name="profile_image" width="46" height="46"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>

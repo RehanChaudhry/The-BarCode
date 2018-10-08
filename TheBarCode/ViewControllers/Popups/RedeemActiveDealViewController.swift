@@ -92,9 +92,12 @@ class RedeemActiveDealViewController: UIViewController {
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
+    
     @IBAction func confirmButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

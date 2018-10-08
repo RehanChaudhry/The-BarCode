@@ -13,12 +13,18 @@ class InviteViewController: UITableViewController {
 
     @IBOutlet var headerView: UIView!
     
+    var shouldShowCancelBarButton: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         self.addBackButton()
+        
+        if !self.shouldShowCancelBarButton {
+            self.navigationItem.leftBarButtonItem = nil
+        }
         
         let coverHeight = ((307.0 / 375.0) * self.view.frame.width)
         var headerFrame = headerView.frame
@@ -80,6 +86,11 @@ class InviteViewController: UITableViewController {
         activityViewController.popoverPresentationController?.sourceRect = sender.frame
         self.present(activityViewController, animated: true, completion: nil)
     }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 extension InviteViewController {
