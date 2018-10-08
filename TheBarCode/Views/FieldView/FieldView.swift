@@ -9,6 +9,11 @@
 import UIKit
 import Reusable
 
+protocol FieldViewDelegate: class {
+    func fieldView(fieldView: FieldView, didBeginEditing textField: UITextField)
+    func fieldView(fieldView: FieldView, didEndEditing textField: UITextField)
+}
+
 class FieldView: UIView, NibReusable {
 
     @IBOutlet var textField: UITextField!
@@ -30,6 +35,10 @@ class FieldView: UIView, NibReusable {
     
     @IBOutlet var iconWidth: NSLayoutConstraint!
     
+    weak var delegate: FieldViewDelegate?
+    
+    var borders: [UIView] = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -37,11 +46,18 @@ class FieldView: UIView, NibReusable {
         
         self.placeholderLabel.font = UIFont.appBoldFontOf(size: self.placeholderLabel.font.pointSize)
         self.placeholderLabel.textColor = UIColor.white
-        self.textField.textColor = UIColor.appGrayColor()
-        self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
+        self.textField.textColor = UIColor.white
+        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
+        self.textField.delegate = self
     }
     
     //MARK: My Methods
+    
+    func removeBorders() {
+        for border in borders {
+            border.removeFromSuperview()
+        }
+    }
     
     func makeSecure(secure: Bool) {
         self.textField.isSecureTextEntry = secure
@@ -89,4 +105,21 @@ class FieldView: UIView, NibReusable {
         self.validationLabel.text = message
         self.validationLabel.isHidden = false
     }
+}
+
+//MARK: UITextFieldDelegate
+extension FieldView: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.removeBorders()
+        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.white , thickness: 1.0)
+        self.delegate?.fieldView(fieldView: self, didBeginEditing: self.textField)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.removeBorders()
+        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
+        self.delegate?.fieldView(fieldView: self, didEndEditing: self.textField)
+    }
+    
 }

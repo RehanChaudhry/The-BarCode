@@ -91,7 +91,7 @@ class AccountSettingsViewController: UIViewController {
         self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.dobFieldView = FieldView.loadFromNib()
-//        self.dobFieldView.textField.delegate = self
+        self.dobFieldView.delegate = self
         self.dobFieldView.fieldRight.constant = 8.0
         self.dobFieldView.validationLabelRight.constant = 8.0
         self.dobFieldView.setUpFieldView(placeholder: "DATE OF BIRTH", fieldPlaceholder: "DD/MM/YYYY", iconImage: #imageLiteral(resourceName: "icon_calendar"))
@@ -103,7 +103,7 @@ class AccountSettingsViewController: UIViewController {
         self.dobFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.genderFieldView = FieldView.loadFromNib()
-//        self.genderFieldView.textField.delegate = self
+        self.genderFieldView.delegate = self
         self.genderFieldView.fieldLeft.constant = 8.0
         self.genderFieldView.validationLabelLeft.constant = 8.0
         self.genderFieldView.placeholderLabelLeft.constant = 8.0
@@ -268,3 +268,19 @@ extension AccountSettingsViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
 }
 
+
+extension AccountSettingsViewController: FieldViewDelegate {
+    
+    func fieldView(fieldView: FieldView, didBeginEditing textField: UITextField) {
+        if textField == self.genderFieldView.textField {
+            self.updateGenderField()
+        } else if textField == self.dobFieldView.textField {
+            self.updateDobField()
+        }
+    }
+    
+    func fieldView(fieldView: FieldView, didEndEditing textField: UITextField) {
+        
+    }
+    
+}
