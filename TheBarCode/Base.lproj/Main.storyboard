@@ -300,6 +300,90 @@
             </objects>
             <point key="canvasLocation" x="2861.5999999999999" y="1274.2128935532235"/>
         </scene>
+        <!--FiveA Day Detail View Controller-->
+        <scene sceneID="reB-cf-aec">
+            <objects>
+                <viewController storyboardIdentifier="FiveADayDetailViewController" id="BEP-Di-gOn" customClass="FiveADayDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sys-Gk-SgT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwA-MM-9wU">
+                                <rect key="frame" x="47.5" y="188" width="280" height="290"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1j-rq-KL5">
+                                        <rect key="frame" x="24" y="24" width="180" height="19.5"/>
+                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4m-5N-Oif">
+                                        <rect key="frame" x="212" y="11.5" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="2BS-DR-fA5"/>
+                                            <constraint firstAttribute="height" constant="44" id="EEN-zT-BBU"/>
+                                        </constraints>
+                                        <state key="normal" image="close"/>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="BEP-Di-gOn" eventType="touchUpInside" id="G0g-qP-10r"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g0o-ZK-4Zp">
+                                        <rect key="frame" x="0.0" y="67.5" width="280" height="1"/>
+                                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="sbU-0v-ON1"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-VS-yvS">
+                                        <rect key="frame" x="0.0" y="78.5" width="280" height="211.5"/>
+                                        <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BEP-Di-gOn" id="oyP-QD-f1K"/>
+                                            <outlet property="delegate" destination="BEP-Di-gOn" id="fzb-c8-XHN"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="j4m-5N-Oif" secondAttribute="trailing" constant="24" id="Fkz-iD-aRa"/>
+                                    <constraint firstAttribute="bottom" secondItem="PeD-VS-yvS" secondAttribute="bottom" id="GgR-m7-Ojp"/>
+                                    <constraint firstItem="j4m-5N-Oif" firstAttribute="leading" secondItem="W1j-rq-KL5" secondAttribute="trailing" constant="8" id="NU4-PX-Dc4"/>
+                                    <constraint firstAttribute="trailing" secondItem="g0o-ZK-4Zp" secondAttribute="trailing" id="TCe-TD-C0w"/>
+                                    <constraint firstAttribute="height" constant="290" id="YGN-Ff-UZa"/>
+                                    <constraint firstItem="g0o-ZK-4Zp" firstAttribute="top" secondItem="W1j-rq-KL5" secondAttribute="bottom" constant="24" id="giy-CN-hNJ"/>
+                                    <constraint firstItem="W1j-rq-KL5" firstAttribute="top" secondItem="vwA-MM-9wU" secondAttribute="top" constant="24" id="hyc-mu-nrt"/>
+                                    <constraint firstItem="PeD-VS-yvS" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" id="jqR-9L-yIq"/>
+                                    <constraint firstAttribute="trailing" secondItem="PeD-VS-yvS" secondAttribute="trailing" id="l3P-b3-rii"/>
+                                    <constraint firstItem="PeD-VS-yvS" firstAttribute="top" secondItem="g0o-ZK-4Zp" secondAttribute="bottom" constant="10" id="oQM-sp-yr6"/>
+                                    <constraint firstItem="g0o-ZK-4Zp" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" id="peF-0j-PXh"/>
+                                    <constraint firstItem="j4m-5N-Oif" firstAttribute="centerY" secondItem="W1j-rq-KL5" secondAttribute="centerY" id="qgx-S6-Sch"/>
+                                    <constraint firstItem="W1j-rq-KL5" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" constant="24" id="rPI-qn-w7R"/>
+                                    <constraint firstAttribute="width" constant="280" id="vWu-eN-h4q"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vwA-MM-9wU" firstAttribute="centerX" secondItem="sys-Gk-SgT" secondAttribute="centerX" id="ppx-XJ-Dyx"/>
+                            <constraint firstItem="vwA-MM-9wU" firstAttribute="centerY" secondItem="sys-Gk-SgT" secondAttribute="centerY" id="wQ5-ep-ka6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="luO-4K-WOq"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="PeD-VS-yvS" id="5wn-53-dim"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P2Y-RO-EA9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3716" y="1243.6281859070466"/>
+        </scene>
         <!--Data Source-->
         <scene sceneID="ONg-ru-9bm">
             <objects>
