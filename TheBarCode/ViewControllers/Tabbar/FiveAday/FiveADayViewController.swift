@@ -9,6 +9,7 @@
 import UIKit
 import Reusable
 import FSPagerView
+import ObjectMapper
 
 protocol FiveADayViewControllerDelegate {
     func showPopup()
@@ -19,12 +20,13 @@ protocol FiveADayViewControllerDelegate {
 
 class FiveADayViewController: UIViewController {
 
-    
     @IBOutlet var pagerView: FSPagerView!
     
     @IBOutlet var pageControl: UIPageControl!
     
     var deals : [FiveADayDeal] = []
+    
+    var statefulView: LoadingAndErrorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,17 @@ class FiveADayViewController: UIViewController {
         self.pagerView.backgroundColor = .clear
         self.pagerView.automaticSlidingInterval = 4.0
         self.pagerView.register(FiveADayCollectionViewCell.nib, forCellWithReuseIdentifier: FiveADayCollectionViewCell.reuseIdentifier)
+        
+        self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.view.addSubview(statefulView)
+        
+        self.statefulView.retryHandler = {(sender: UIButton) in
+            
+        }
+        
+        self.statefulView.autoPinEdgesToSuperviewEdges()
+        
+        self.getFiveADayDeals()
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,8 +71,6 @@ class FiveADayViewController: UIViewController {
     }
     
 }
-
-
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
 
@@ -90,7 +101,8 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     }
 }
 
-extension FiveADayViewController: FiveADayViewControllerDelegate{
+//MARK: FiveADayViewControllerDelegate
+extension FiveADayViewController: FiveADayViewControllerDelegate {
     func showPopup() {
         let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
@@ -102,5 +114,37 @@ extension FiveADayViewController: FiveADayViewControllerDelegate{
         fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
         fiveADayDetailViewController.deal = deals[index]
         self.present(fiveADayDetailViewController, animated: true, completion: nil)
+    }
+}
+
+//MARK: Webservices Methods
+extension FiveADayViewController {
+    func getFiveADayDeals() {
+        self.statefulView.showLoading()
+        self.statefulView.isHidden = false
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathFiveADayDeals, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To Reload")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Reload")
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseDeals = (responseDict?["data"] as? [[String : Any]]) {
+                self.deals.removeAll()
+                
+                
+                
+                self.pagerView.reloadData()
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")
+            }
+        }
     }
 }

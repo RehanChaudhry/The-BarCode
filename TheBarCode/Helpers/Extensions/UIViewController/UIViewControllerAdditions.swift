@@ -32,4 +32,10 @@ extension UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.view.backgroundColor = UIColor.appBgGrayColor()
     }
+    
+    func showAlertController(title: String, msg: String) {
+        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
 }

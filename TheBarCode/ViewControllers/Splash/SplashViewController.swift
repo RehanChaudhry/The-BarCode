@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import CoreStore
 
 class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        CoreStore.defaultStack = DataStack(
+            CoreStoreSchema(
+                modelVersion: "V1",
+                entities: [
+                    Entity<User>("User")
+                ]
+            )
+        )
+        
+        try! CoreStore.addStorageAndWait()
         
         self.perform(#selector(moveToNextController), with: nil, afterDelay: 1.0)
     }

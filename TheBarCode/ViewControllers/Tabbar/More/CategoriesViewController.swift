@@ -96,10 +96,19 @@ class CategoriesViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
-        if isUpdating {
-            self.dismiss(animated: true, completion: nil)
+        
+        let selectedCategory = self.categories.first { (category) -> Bool in
+            return category.isSelected
+        }
+        
+        if let _ = selectedCategory {
+            if isUpdating {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+            }
         } else {
-            self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+            self.showAlertController(title: "", msg: "Select at least one to proceed")
         }
     }
 

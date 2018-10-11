@@ -26,6 +26,10 @@ extension UIColor {
         return UIColor("#2C2C2C")
     }
     
+    static func appFieldBottomBorderColor() -> UIColor {
+        return UIColor("#727272")
+    }
+    
     static func appNavBarGrayColor() -> UIColor {
         return UIColor("#1C1C1C")
     }

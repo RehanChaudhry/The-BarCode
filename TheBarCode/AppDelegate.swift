@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.customizeAppearance()
         GMSServices.provideAPIKey("AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8")
+        
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         
         return true
@@ -47,7 +50,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if url.scheme == "fb182951649264383" {
+            let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
+            return handled ?? false
+        }
+        
+        return false
+        
+    }
 }
 
 //MARK: Appearance Customization
@@ -78,6 +90,9 @@ extension AppDelegate {
         tabbar.backgroundColor = UIColor.appNavBarGrayColor()
         tabbar.tintColor = UIColor.appBlueColor()
         tabbar.unselectedItemTintColor = UIColor.appGrayColor()
+        tabbar.shadowImage = UIImage()
+        
+        UIPickerView.appearance(whenContainedInInstancesOf: [UIView.self]).backgroundColor = UIColor.clear
     }
 }
 

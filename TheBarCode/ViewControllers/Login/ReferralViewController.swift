@@ -58,11 +58,11 @@ class ReferralViewController: UIViewController {
     func isDataValid() -> Bool {
         var isValid = true
         
-        if self.codeFieldView.textField.text!.count < 6 {
+        if self.codeFieldView.textField.text!.count == 7 {
+            self.codeFieldView.reset()
+        } else {
             isValid = false
             self.codeFieldView.showValidationMessage(message: "Please enter 7 characters invite code.")
-        } else {
-            self.codeFieldView.reset()
         }
         
         return isValid

@@ -17,6 +17,8 @@ class RedeemActiveDealViewController: UIViewController {
     @IBOutlet var codeFieldContainer3: UIView!
     @IBOutlet var codeFieldContainer4: UIView!
     
+    @IBOutlet var popUpTopMargin: NSLayoutConstraint!
+    
     var codeFieldView1: FieldView!
     var codeFieldView2: FieldView!
     var codeFieldView3: FieldView!
@@ -26,6 +28,10 @@ class RedeemActiveDealViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        if UIScreen.main.bounds.size.height <= 568.0 {
+            self.popUpTopMargin.constant = 40.0
+        }
         
         self.setUpFieldViews()
     }

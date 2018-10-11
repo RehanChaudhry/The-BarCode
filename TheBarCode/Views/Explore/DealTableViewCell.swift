@@ -33,4 +33,5 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         self.detailLabel.text = deal.detail
     }
+    
 }

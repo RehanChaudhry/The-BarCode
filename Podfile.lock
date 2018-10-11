@@ -1,5 +1,16 @@
 PODS:
   - Alamofire (4.7.3)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
+  - CoreStore (5.3.1)
+  - FBSDKCoreKit (4.37.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.37.0):
+    - FBSDKCoreKit
   - FSPagerView (0.7.2)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
@@ -7,54 +18,80 @@ PODS:
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
   - Gradientable (0.0.2)
+  - KeychainAccess (3.1.2)
+  - ObjectMapper (3.3.0)
   - PureLayout (3.1.2)
   - Reusable (4.0.3):
     - Reusable/Storyboard (= 4.0.3)
     - Reusable/View (= 4.0.3)
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
+  - RNCryptor (5.0.3)
   - SJSegmentedScrollView (1.3.9)
   - StatefulTableView (0.1.0)
+  - SwiftyJSON (4.2.0)
   - TPKeyboardAvoiding (1.3.2)
   - UIColor_Hex_Swift (4.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7.3)
+  - CoreStore (~> 5.3.1)
+  - FBSDKLoginKit (~> 4.37.0)
   - FSPagerView (~> 0.7.2)
   - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
+  - KeychainAccess (~> 3.1.2)
+  - ObjectMapper (~> 3.3.0)
   - PureLayout (~> 3.1.2)
   - Reusable (~> 4.0.3)
+  - RNCryptor (~> 5.0.3)
   - SJSegmentedScrollView (~> 1.3.9)
   - StatefulTableView (~> 0.1.0)
+  - SwiftyJSON (~> 4.2.0)
   - TPKeyboardAvoiding (~> 1.3.2)
   - UIColor_Hex_Swift (~> 4.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Bolts
+    - CoreStore
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - FSPagerView
     - GoogleMaps
     - Gradientable
+    - KeychainAccess
+    - ObjectMapper
     - PureLayout
     - Reusable
+    - RNCryptor
     - SJSegmentedScrollView
     - StatefulTableView
+    - SwiftyJSON
     - TPKeyboardAvoiding
     - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  CoreStore: 89d0c8e7a9d76d0c533018b4850245c973f4ecbd
+  FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
+  FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
+  RNCryptor: c93d19029dcf7ff160aca0f24d6c9e7b0d82f664
   SJSegmentedScrollView: 41dde7568372103e3526caa9de6914f9725256f7
   StatefulTableView: be99827cf564125aedbc0738caa5b9742839cd59
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 35a0ffab8c0516cc6e0b651f7cb7f0e1aa57ff91
+PODFILE CHECKSUM: cb39d8e71e0e5d5361df20a34a6a7a2e242737b2
 
 COCOAPODS: 1.5.3

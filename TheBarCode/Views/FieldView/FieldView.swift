@@ -42,13 +42,15 @@ class FieldView: UIView, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.textField.keyboardAppearance = .dark
+        self.textField.textColor = UIColor.white
         self.textField.returnKeyType = .default
+        self.textField.delegate = self
         
         self.placeholderLabel.font = UIFont.appBoldFontOf(size: self.placeholderLabel.font.pointSize)
         self.placeholderLabel.textColor = UIColor.white
-        self.textField.textColor = UIColor.white
-        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
-        self.textField.delegate = self
+        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appFieldBottomBorderColor() , thickness: 1.0)
+        
     }
     
     //MARK: My Methods
@@ -111,14 +113,18 @@ class FieldView: UIView, NibReusable {
 extension FieldView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.removeBorders()
-        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.white , thickness: 1.0)
+        for border in borders {
+            border.backgroundColor = UIColor.white
+        }
+        
         self.delegate?.fieldView(fieldView: self, didBeginEditing: self.textField)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.removeBorders()
-        self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appGrayColor() , thickness: 1.0)
+        for border in borders {
+            border.backgroundColor = UIColor.appFieldBottomBorderColor()
+        }
+        
         self.delegate?.fieldView(fieldView: self, didEndEditing: self.textField)
     }
     

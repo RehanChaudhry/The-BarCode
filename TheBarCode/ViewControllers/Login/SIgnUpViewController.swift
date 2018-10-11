@@ -8,6 +8,8 @@
 
 import UIKit
 import PureLayout
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 enum Gender: String {
     case male = "male", female = "female", other = "other"
@@ -221,7 +223,7 @@ class SIgnUpViewController: UIViewController {
         
         if self.dobFieldView.textField.text!.count == 0 {
             isValid = false
-            self.dobFieldView.showValidationMessage(message: "Please select your dob.")
+            self.dobFieldView.showValidationMessage(message: "Please select your DOB.")
         } else {
             self.dobFieldView.reset()
         }
@@ -259,14 +261,49 @@ class SIgnUpViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func fbSignUpButtonTapped(sender: UIButton) {
-        
+        let loginManager = FBSDKLoginManager()
+        let permissions = ["public_profile", "email"]
+        loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
+            
+            guard result?.isCancelled == false else {
+                debugPrint("Facebook login cancelled")
+                return
+            }
+            
+            guard error == nil else {
+                self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
+                return
+            }
+            
+            let params = ["fields": "id, name, email, picture.width(180).height(180)"]
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
+            graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
+                guard error == nil else {
+                    self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
+                    return
+                }
+                
+                if let result = graphRequestResult as? [String : Any] {
+                    let name = result["name"] as! String
+                    if let email = result["email"] as? String {
+                        self.emailFieldView.textField.text = email
+                    }
+                    
+                    self.fullNameFieldView.textField.text = name
+                    
+                } else {
+                    self.showAlertController(title: "", msg: "Unknown error occurred")
+                }
+            })
+            
+        }
     }
     
     @IBAction func createAccountButtonTapped(sender: UIButton) {
         self.view.endEditing(true)
         
         if self.isDataValid() {
-            self.performSegue(withIdentifier: "SignUpToReferralSegue", sender: nil)
+            self.signUp()
         }
     }
     
@@ -368,4 +405,38 @@ extension SIgnUpViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         self.selectedGender = self.genders[row]
         self.updateGenderField()
     }
+}
+
+//MARK: Webservices Methods
+extension SIgnUpViewController {
+    
+    func signUp() {
+        let fullName = self.fullNameFieldView.textField.text!
+        let email = self.emailFieldView.textField.text!
+        let password = self.passwordFieldView.textField.text!
+        let gender = self.selectedGender.rawValue
+        let dob = Utility.shared.serverDateFormattedString(date: self.selectedDob)
+        
+        let params = ["full_name" : fullName,
+                      "email" : email,
+                      "password" : password,
+                      "gender" : gender,
+                      "date_of_birth" : dob]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathRegister, method: .post) { (response, serverError, error) in
+            
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            self.performSegue(withIdentifier: "SignUpToReferralSegue", sender: nil)
+        }
+        
+    }
+    
 }

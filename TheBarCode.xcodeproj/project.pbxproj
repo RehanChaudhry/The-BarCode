@@ -128,6 +128,12 @@
 		0CBF0002214F933000B017CC /* DealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0001214F933000B017CC /* DealsViewController.swift */; };
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
 		0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFD214F931700B017CC /* BarsViewController.swift */; };
+		0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */; };
+		0CC81F9F216DCC8F00FDB92D /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */; };
+		0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA0216DCE6100FDB92D /* APIPaths.swift */; };
+		0CC81FA4216DD04700FDB92D /* ServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA3216DD04700FDB92D /* ServerError.swift */; };
+		0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA6216DD3FE00FDB92D /* Utility.swift */; };
+		0CC81FAA216DD58C00FDB92D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA9216DD58C00FDB92D /* User.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -291,6 +297,12 @@
 		0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseViewController.swift; sourceTree = "<group>"; };
 		0CBFFFFD214F931700B017CC /* BarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsViewController.swift; sourceTree = "<group>"; };
 		0CBFFFFF214F932400B017CC /* LiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOffersViewController.swift; sourceTree = "<group>"; };
+		0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
+		0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
+		0CC81FA0216DCE6100FDB92D /* APIPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaths.swift; sourceTree = "<group>"; };
+		0CC81FA3216DD04700FDB92D /* ServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerError.swift; sourceTree = "<group>"; };
+		0CC81FA6216DD3FE00FDB92D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		0CC81FA9216DD58C00FDB92D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -445,6 +457,8 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0CC81FA5216DD3DC00FDB92D /* Utility */,
+				0CC81F9B216DCC6900FDB92D /* APIHelper */,
 				0C955DC42147C99C00F9385B /* CustomNavigationController */,
 				0C23A891214686FF00DFB281 /* Fonts */,
 				0C23A88D2146730800DFB281 /* Extensions */,
@@ -730,6 +744,8 @@
 		0C955DBE214792F500F9385B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0CC81FA8216DD58300FDB92D /* User */,
+				0CC81FA2216DD03A00FDB92D /* ServerError */,
 				0C5A88F121647FE100F16851 /* Invite */,
 				83563F552166105F003DE5BB /* FiveADay */,
 				0C8BDCD92150D6FA00D5117B /* Explore */,
@@ -886,6 +902,40 @@
 				0C955E0A2149362800F9385B /* LoadMore.swift */,
 			);
 			path = LoadingAndError;
+			sourceTree = "<group>";
+		};
+		0CC81F9B216DCC6900FDB92D /* APIHelper */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */,
+				0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */,
+				0CC81FA0216DCE6100FDB92D /* APIPaths.swift */,
+			);
+			path = APIHelper;
+			sourceTree = "<group>";
+		};
+		0CC81FA2216DD03A00FDB92D /* ServerError */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81FA3216DD04700FDB92D /* ServerError.swift */,
+			);
+			path = ServerError;
+			sourceTree = "<group>";
+		};
+		0CC81FA5216DD3DC00FDB92D /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81FA6216DD3FE00FDB92D /* Utility.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		0CC81FA8216DD58300FDB92D /* User */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81FA9216DD58C00FDB92D /* User.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		4A9E9CCE7E564ED1B20E0245 /* Pods */ = {
@@ -1160,24 +1210,40 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreStore/CoreStore.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/Gradientable/Gradientable.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/RNCryptor/RNCryptor.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
 				"${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulTableView/StatefulTableView.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gradientable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNCryptor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJSegmentedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulTableView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
 			);
@@ -1233,6 +1299,7 @@
 				0C23A8B92146876B00DFB281 /* UIFontAdditions.swift in Sources */,
 				0C5A88EB21647E8200F16851 /* ContactsViewController.swift in Sources */,
 				0C23A87D214656BA00DFB281 /* LoginViewController.swift in Sources */,
+				0CC81F9F216DCC8F00FDB92D /* APIHelper.swift in Sources */,
 				0C955DF32149317100F9385B /* StatefulCollectionView.swift in Sources */,
 				0C955DDA2149226A00F9385B /* ReferralViewController.swift in Sources */,
 				0C23A87F214656C300DFB281 /* SIgnUpViewController.swift in Sources */,
@@ -1248,10 +1315,12 @@
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */,
+				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
 				0CBF0002214F933000B017CC /* DealsViewController.swift in Sources */,
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */,
+				0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */,
 				0C955DEF2149317100F9385B /* StatefulCollectionView+LoadMore.swift in Sources */,
 				832FD1D2216B2BC1008516F4 /* DealDetailTableViewCell.swift in Sources */,
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
@@ -1271,6 +1340,7 @@
 				0C955DD32147D3D000F9385B /* UIViewAdditions.swift in Sources */,
 				0C8E9A9B214A909E00224720 /* RulesViewController.swift in Sources */,
 				0C955DC02147935A00F9385B /* IntroOption.swift in Sources */,
+				0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */,
 				0C8E9A91214A87E600224720 /* AccountSettingsViewController.swift in Sources */,
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,
 				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
@@ -1293,6 +1363,7 @@
 				8344E2A22167678100CB8BD2 /* RedeemActiveDealViewController.swift in Sources */,
 				0C8BDCE52150E4D400D5117B /* StringAdditions.swift in Sources */,
 				0C8BDCDD2150D77600D5117B /* Bar.swift in Sources */,
+				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
 				0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */,
 				0C955DD62147F20100F9385B /* TermsViewController.swift in Sources */,
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
@@ -1311,6 +1382,7 @@
 				0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */,
 				0C8BDCDF2150D78F00D5117B /* Deal.swift in Sources */,
 				0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */,
+				0CC81FA4216DD04700FDB92D /* ServerError.swift in Sources */,
 				0C23A88A2146582A00DFB281 /* FavouritesViewController.swift in Sources */,
 				0C955DDF2149277D00F9385B /* Category.swift in Sources */,
 				0C955DC32147C85900F9385B /* UIViewControllerAdditions.swift in Sources */,
@@ -1497,10 +1569,7 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1518,10 +1587,7 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1538,11 +1604,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1560,11 +1622,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1581,11 +1639,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1602,11 +1656,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

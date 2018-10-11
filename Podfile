@@ -4,6 +4,7 @@ target 'TheBarCode' do
   use_frameworks!
   
   pod 'Alamofire', '~> 4.7.3'
+  pod 'ObjectMapper', '~> 3.3.0'
   pod 'Gradientable', '~> 0.0.2'
   pod 'Reusable', '~> 4.0.3'
   pod 'UIColor_Hex_Swift', '~> 4.0.2'
@@ -13,6 +14,11 @@ target 'TheBarCode' do
   pod 'TPKeyboardAvoiding', '~> 1.3.2'
   pod 'FSPagerView', '~> 0.7.2'
   pod 'SJSegmentedScrollView', '~> 1.3.9'
+  pod 'SwiftyJSON', '~> 4.2.0'
+  pod 'RNCryptor', '~> 5.0.3'
+  pod 'KeychainAccess', '~> 3.1.2'
+  pod 'CoreStore', '~> 5.3.1'
+  pod 'FBSDKLoginKit', '~> 4.37.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

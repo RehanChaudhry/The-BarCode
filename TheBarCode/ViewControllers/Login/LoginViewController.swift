@@ -28,6 +28,9 @@ class LoginViewController: UIViewController {
         
         self.addBackButton()
         self.setUpFields()
+        
+        self.emailFieldView.textField.text = "test@test.com"
+        self.passwordFieldView.textField.text = "pojopojo"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,12 +110,47 @@ class LoginViewController: UIViewController {
         self.view.endEditing(true)
         
         if self.isDataValid() {
+            self.login()
+        }
+    }
+}
+
+//MARK: Webservices Method
+extension LoginViewController {
+    
+    func login() {
+        
+        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+        self.navigationController?.present(tabbarController!, animated: true, completion: {
+            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+            self.navigationController?.popToViewController(loginOptions, animated: false)
+        })
+        return
+        
+        let email = self.emailFieldView.textField.text!
+        let password = self.passwordFieldView.textField.text!
+        
+        let params: [String : Any] = ["email" : email,
+                                      "password" : password]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAuthenticate, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "Authentication", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
+                return
+            }
+            
             let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
             self.navigationController?.present(tabbarController!, animated: true, completion: {
                 let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
                 self.navigationController?.popToViewController(loginOptions, animated: false)
             })
+            
         }
     }
-
+    
 }

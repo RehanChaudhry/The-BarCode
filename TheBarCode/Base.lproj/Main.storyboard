@@ -308,16 +308,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwA-MM-9wU">
-                                <rect key="frame" x="47.5" y="188" width="280" height="290"/>
+                                <rect key="frame" x="37.5" y="193.5" width="300" height="280"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1j-rq-KL5">
-                                        <rect key="frame" x="24" y="24" width="180" height="19.5"/>
+                                        <rect key="frame" x="24" y="24" width="200" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4m-5N-Oif">
-                                        <rect key="frame" x="212" y="11.5" width="44" height="44"/>
+                                        <rect key="frame" x="232" y="12" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="2BS-DR-fA5"/>
                                             <constraint firstAttribute="height" constant="44" id="EEN-zT-BBU"/>
@@ -328,14 +328,14 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g0o-ZK-4Zp">
-                                        <rect key="frame" x="0.0" y="67.5" width="280" height="1"/>
+                                        <rect key="frame" x="0.0" y="67.5" width="300" height="1"/>
                                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="sbU-0v-ON1"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-VS-yvS">
-                                        <rect key="frame" x="0.0" y="78.5" width="280" height="211.5"/>
+                                        <rect key="frame" x="0.0" y="78.5" width="300" height="201.5"/>
                                         <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="dataSource" destination="BEP-Di-gOn" id="oyP-QD-f1K"/>
@@ -349,7 +349,7 @@
                                     <constraint firstAttribute="bottom" secondItem="PeD-VS-yvS" secondAttribute="bottom" id="GgR-m7-Ojp"/>
                                     <constraint firstItem="j4m-5N-Oif" firstAttribute="leading" secondItem="W1j-rq-KL5" secondAttribute="trailing" constant="8" id="NU4-PX-Dc4"/>
                                     <constraint firstAttribute="trailing" secondItem="g0o-ZK-4Zp" secondAttribute="trailing" id="TCe-TD-C0w"/>
-                                    <constraint firstAttribute="height" constant="290" id="YGN-Ff-UZa"/>
+                                    <constraint firstAttribute="height" constant="280" id="YGN-Ff-UZa"/>
                                     <constraint firstItem="g0o-ZK-4Zp" firstAttribute="top" secondItem="W1j-rq-KL5" secondAttribute="bottom" constant="24" id="giy-CN-hNJ"/>
                                     <constraint firstItem="W1j-rq-KL5" firstAttribute="top" secondItem="vwA-MM-9wU" secondAttribute="top" constant="24" id="hyc-mu-nrt"/>
                                     <constraint firstItem="PeD-VS-yvS" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" id="jqR-9L-yIq"/>
@@ -358,7 +358,7 @@
                                     <constraint firstItem="g0o-ZK-4Zp" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" id="peF-0j-PXh"/>
                                     <constraint firstItem="j4m-5N-Oif" firstAttribute="centerY" secondItem="W1j-rq-KL5" secondAttribute="centerY" id="qgx-S6-Sch"/>
                                     <constraint firstItem="W1j-rq-KL5" firstAttribute="leading" secondItem="vwA-MM-9wU" secondAttribute="leading" constant="24" id="rPI-qn-w7R"/>
-                                    <constraint firstAttribute="width" constant="280" id="vWu-eN-h4q"/>
+                                    <constraint firstAttribute="width" constant="300" id="vWu-eN-h4q"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -368,7 +368,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vwA-MM-9wU" firstAttribute="centerX" secondItem="sys-Gk-SgT" secondAttribute="centerX" id="ppx-XJ-Dyx"/>
                             <constraint firstItem="vwA-MM-9wU" firstAttribute="centerY" secondItem="sys-Gk-SgT" secondAttribute="centerY" id="wQ5-ep-ka6"/>
@@ -538,19 +538,19 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTt-fS-7SE">
                                                         <rect key="frame" x="177.5" y="92" width="20" height="17"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4IG-tC-rMa">
                                                         <rect key="frame" x="16" y="100" width="145.5" height="1"/>
-                                                        <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="HlK-UV-aR5"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ji-L2-SIv">
                                                         <rect key="frame" x="213.5" y="100" width="146.5" height="1"/>
-                                                        <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="hP8-Mx-XGE"/>
                                                         </constraints>
@@ -707,10 +707,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="206"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Elc-Vx-Fed">
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Elc-Vx-Fed">
                             <rect key="frame" x="0.0" y="44" width="375" height="162"/>
-                            <date key="date" timeIntervalSinceReferenceDate="544429941.89450395">
-                                <!--2018-04-03 06:32:21 +0000-->
+                            <date key="date" timeIntervalSinceReferenceDate="-31640399.105496049">
+                                <!--1999-12-31 19:00:00 +0000-->
                             </date>
                             <date key="minimumDate" timeIntervalSinceReferenceDate="-347115600">
                                 <!--1990-01-01 11:00:00 +0000-->
@@ -766,6 +766,7 @@
                     <subviews>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLY-Ap-Z7R">
                             <rect key="frame" x="0.0" y="44" width="375" height="162"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="Z16-Wr-qWJ" id="dS2-Vq-KNt"/>
                                 <outlet property="delegate" destination="Z16-Wr-qWJ" id="Fs9-xB-Ov9"/>
@@ -857,9 +858,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8YQ-4W-kyg">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8YQ-4W-kyg">
                                 <rect key="frame" x="16" y="148" width="343" height="1"/>
-                                <color key="backgroundColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="YsA-8v-Diy"/>
                                 </constraints>
@@ -918,7 +919,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on few things you like to get started." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25M-o2-pH9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on a few things you like to get started." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25M-o2-pH9">
                                 <rect key="frame" x="16" y="88" width="343" height="18"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -996,10 +997,10 @@
             </objects>
             <point key="canvasLocation" x="4408.8000000000002" y="-1895.8020989505249"/>
         </scene>
-        <!--Permissions required-->
+        <!--Permissions Required-->
         <scene sceneID="Bbt-OV-9Gv">
             <objects>
-                <viewController storyboardIdentifier="PermissionsInfoViewController" title="Permissions required" id="PRh-VO-DX3" customClass="PermissionsInfoViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PermissionsInfoViewController" title="Permissions Required" id="PRh-VO-DX3" customClass="PermissionsInfoViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k7Q-dZ-uF4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1023,7 +1024,7 @@
                                     <action selector="askMeButtonTappedWithSender:" destination="PRh-VO-DX3" eventType="touchUpInside" id="LJe-7C-j1r"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location and Push Notification permissions required" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRE-Cc-G3S">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location &amp; Push Notification Permissions Required" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRE-Cc-G3S">
                                 <rect key="frame" x="16" y="458" width="343" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="0b2-fU-OKM"/>
@@ -1061,7 +1062,7 @@
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1E-5I-jBQ">
                                                 <rect key="frame" x="0.0" y="60" width="335" height="1"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="Lfq-qg-J3L"/>
                                                 </constraints>
@@ -1157,7 +1158,7 @@
                                                             <font key="NSFont" size="14" name="Lato-Regular"/>
                                                         </attributes>
                                                     </fragment>
-                                                    <fragment content="For the best user experience choose &quot;Always Allow&quot;.">
+                                                    <fragment content="For the best user experience choose &quot;Always Allow&quot;">
                                                         <attributes>
                                                             <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <font key="NSFont" size="14" name="Lato-Regular"/>
@@ -1247,22 +1248,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="88" width="343" height="54"/>
-                                <string key="text">It is often forgotten that password thing. Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
+                                <rect key="frame" x="16" y="44" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="166" width="343" height="1"/>
-                                <color key="backgroundColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="16" y="122" width="343" height="1"/>
+                                <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="286" width="343" height="44"/>
+                                <rect key="frame" x="16" y="242" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1280,7 +1280,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -1406,19 +1406,19 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5m-UA-4NV">
                                                         <rect key="frame" x="177.5" y="92" width="20" height="17"/>
                                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                                        <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="textColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DES-IL-kMO">
                                                         <rect key="frame" x="16" y="100" width="145.5" height="1"/>
-                                                        <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="IbR-ue-LUA"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MfH-mf-tqm">
                                                         <rect key="frame" x="213.5" y="100" width="145.5" height="1"/>
-                                                        <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="G45-lG-ajg"/>
                                                         </constraints>
@@ -2168,10 +2168,10 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdS-Yb-e2E">
-                                                        <rect key="frame" x="86" y="42" width="137" height="29"/>
+                                                        <rect key="frame" x="86" y="42" width="139" height="29"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
-                                                                <fragment content="Logout from facebook">
+                                                                <fragment content="Logout from Facebook">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <font key="NSFont" size="14" name="Lato-Semibold"/>
@@ -2316,10 +2316,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="206"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="rvu-mB-CaB">
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvu-mB-CaB">
                             <rect key="frame" x="0.0" y="44" width="375" height="162"/>
-                            <date key="date" timeIntervalSinceReferenceDate="544429941.89450395">
-                                <!--2018-04-03 06:32:21 +0000-->
+                            <date key="date" timeIntervalSinceReferenceDate="-31640399.105496049">
+                                <!--1999-12-31 19:00:00 +0000-->
                             </date>
                             <date key="minimumDate" timeIntervalSinceReferenceDate="-347115600">
                                 <!--1990-01-01 11:00:00 +0000-->
@@ -2375,6 +2375,7 @@
                     <subviews>
                         <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Le5-ir-INX">
                             <rect key="frame" x="0.0" y="44" width="375" height="162"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="peb-EV-3zL" id="yMJ-Sm-liX"/>
                                 <outlet property="delegate" destination="peb-EV-3zL" id="Kv8-ey-RLL"/>
@@ -2427,26 +2428,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on few things you like to get started." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dR-F6-pyD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please update push notification settings." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dR-F6-pyD">
                                 <rect key="frame" x="16" y="88" width="343" height="18"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 a Day Receive notifications for 5 a Day" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Epd-RJ-GtI">
-                                <rect key="frame" x="16" y="130" width="286" height="34"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Epd-RJ-GtI">
+                                <rect key="frame" x="16" y="130" width="286" height="42"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="5 a Day">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" Receive notifications for 5 a Day">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Live Offers Receive notifications for Live Offers" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOl-QU-gpw">
-                                <rect key="frame" x="21" y="213" width="281" height="34"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOl-QU-gpw">
+                                <rect key="frame" x="21" y="221" width="281" height="42"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Live Offers">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" Receive notifications for Live Offers">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2a-qN-6ww" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="296" width="343" height="44"/>
+                                <rect key="frame" x="16" y="312" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Y4a-61-cPv"/>
                                 </constraints>
@@ -2464,25 +2493,25 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcN-bV-caK">
-                                <rect key="frame" x="16" y="188" width="343" height="1"/>
+                                <rect key="frame" x="16" y="196" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="dev-TF-eHc"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uz7-D8-YN7">
-                                <rect key="frame" x="16" y="271" width="343" height="1"/>
+                                <rect key="frame" x="16" y="287" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="ZOn-5h-cOT"/>
                                 </constraints>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tXf-iz-yem">
-                                <rect key="frame" x="310" y="131.5" width="51" height="31"/>
+                                <rect key="frame" x="310" y="135.5" width="51" height="31"/>
                                 <color key="onTintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v9a-sO-ega">
-                                <rect key="frame" x="310" y="214.5" width="51" height="31"/>
+                                <rect key="frame" x="310" y="226.5" width="51" height="31"/>
                                 <color key="onTintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </switch>
                         </subviews>
@@ -2653,29 +2682,23 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
                                     <rect key="frame" x="68" y="24" width="291" height="50.5"/>
                                     <attributedString key="attributedText">
-                                        <fragment content="Available Credits: You are out of credit. You can reload previous offers after">
+                                        <fragment content="Available Credits: You are out of credit. You can reload previous offers after ">
                                             <attributes>
-                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="14" name="Lato-Regular"/>
                                                 <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
                                             </attributes>
                                         </fragment>
-                                        <fragment content=" ">
-                                            <attributes>
-                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <font key="NSFont" size="14" name="Lato-Regular"/>
-                                                <font key="NSOriginalFont" size="14" name="Lato-Regular"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="00:00:00:00">
+                                        <fragment content="00 : 00 : 00 : 00">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="14" name="Lato-Bold"/>
+                                                <font key="NSOriginalFont" size="14" name="Lato-Bold"/>
                                             </attributes>
                                         </fragment>
                                         <fragment content=".">
                                             <attributes>
-                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="14" name="Lato-Regular"/>
                                             </attributes>
                                         </fragment>
@@ -3090,7 +3113,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Bo9-IC-9Hs" firstAttribute="leading" secondItem="aSC-K7-cCb" secondAttribute="leading" constant="16" id="411-aI-bnj"/>
                             <constraint firstItem="Bo9-IC-9Hs" firstAttribute="centerX" secondItem="j7B-nS-uGB" secondAttribute="centerX" id="WyR-Zu-zYK"/>
@@ -3179,10 +3202,10 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">	•	A user can only redeem one offer (either a 5 A Day, Live, Exclusive or Standard 25%) in each bar in every 7 day ‘validity’ period.
+                                        <string key="content">	•	A user can only redeem one offer (either a 5 A Day, Live, Exclusive or Standard 25%) in each bar in every 7 day ‘validity’ period.
 	•	The only way they can redeem more offers at the same bar within a 7 day validity period is to ‘reload’ that bar by applying one of your credit (you receive these either by successfully inviting friends to sign up to The Barcode, by sharing Live &amp; 5 A Day offers with friends who then redeem those offers or by receiving a credit from a friend who has sent you one of their credits).
 	•	Regardless of how many credits a user has, they still cannot redeem more than 2 rounds in any 1 evening at a single bar. For example:
-	</mutableString>
+	</string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
@@ -3199,8 +3222,8 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">	If they have not been to that bar during their current validity period they can redeem their first offer and then apply a credit to redeem another one. If they try again they will receive a pop up explaining why they cannot redeem another round but telling them they can use again tomorrow (or at another bar). We did have all these pop ups working on the app, along with the countdown timer at the top of the page, bars listed sharing credits function working but it all seems to have disappeared now which is frustrating).
-	</mutableString>
+                                        <string key="content">	If they have not been to that bar during their current validity period they can redeem their first offer and then apply a credit to redeem another one. If they try again they will receive a pop up explaining why they cannot redeem another round but telling them they can use again tomorrow (or at another bar). We did have all these pop ups working on the app, along with the countdown timer at the top of the page, bars listed sharing credits function working but it all seems to have disappeared now which is frustrating).
+	</string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
@@ -3217,7 +3240,7 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">	If they have been to that bar already during the validity period and want to go again on another evening, then they can apply a credit and go to the bar and get their discount. They can then apply another credit to receive a second discount but this will then not permit them to use anymore. Again, we had pop ups for this explaining ‘You have already used this offer. However you can apply a credit to use again!’ (or words to that effect).</mutableString>
+                                        <string key="content">	If they have been to that bar already during the validity period and want to go again on another evening, then they can apply a credit and go to the bar and get their discount. They can then apply another credit to receive a second discount but this will then not permit them to use anymore. Again, we had pop ups for this explaining ‘You have already used this offer. However you can apply a credit to use again!’ (or words to that effect).</string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="Lato-Regular"/>
@@ -4152,7 +4175,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rkP-HO-SnY" firstAttribute="trailing" secondItem="IFa-7a-8gD" secondAttribute="trailing" constant="16" id="0or-fc-H7V"/>
                             <constraint firstItem="IFa-7a-8gD" firstAttribute="centerX" secondItem="knI-9x-3k7" secondAttribute="centerX" id="17g-9f-o4E"/>
@@ -4231,7 +4254,7 @@ Cg
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="allowContextMenu" value="NO"/>
                                         </userDefinedRuntimeAttributes>
@@ -4299,7 +4322,7 @@ Cg
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="top" secondItem="Un9-xf-lou" secondAttribute="top" constant="100" id="DmZ-db-SeX"/>
                             <constraint firstItem="aeK-0b-UVT" firstAttribute="leading" secondItem="Un9-xf-lou" secondAttribute="leading" constant="16" id="YPx-cd-RBH"/>
@@ -4314,6 +4337,7 @@ Cg
                         <outlet property="codeFieldContainer3" destination="Dsy-G7-WMi" id="gfm-I7-JUO"/>
                         <outlet property="codeFieldContainer4" destination="Ziw-0K-R9P" id="Wvo-1I-cid"/>
                         <outlet property="hiddenField" destination="SYq-hg-G5w" id="ZFw-c4-qLG"/>
+                        <outlet property="popUpTopMargin" destination="DmZ-db-SeX" id="TZi-nG-BP5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1H-tf-b9z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4345,6 +4369,6 @@ Cg
     <inferredMetricsTieBreakers>
         <segue reference="NvO-HD-pWX"/>
         <segue reference="jef-DV-LyY"/>
-        <segue reference="gfy-jQ-g7J"/>
+        <segue reference="Tsk-gy-Yut"/>
     </inferredMetricsTieBreakers>
 </document>
