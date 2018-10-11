@@ -134,6 +134,7 @@
 		0CC81FA4216DD04700FDB92D /* ServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA3216DD04700FDB92D /* ServerError.swift */; };
 		0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA6216DD3FE00FDB92D /* Utility.swift */; };
 		0CC81FAA216DD58C00FDB92D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA9216DD58C00FDB92D /* User.swift */; };
+		0CC81FAD216F21B800FDB92D /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -303,6 +304,7 @@
 		0CC81FA3216DD04700FDB92D /* ServerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerError.swift; sourceTree = "<group>"; };
 		0CC81FA6216DD3FE00FDB92D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0CC81FA9216DD58C00FDB92D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0CC81FAB216F21AF00FDB92D /* AsyncImageView */,
 				0C5A88EC21647F7400F16851 /* Invite */,
 				83B2BE5421637640003ACA78 /* FiveADay */,
 				0C8BDCE721511EE500D5117B /* Snackbar */,
@@ -936,6 +939,14 @@
 				0CC81FA9216DD58C00FDB92D /* User.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		0CC81FAB216F21AF00FDB92D /* AsyncImageView */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */,
+			);
+			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
 		4A9E9CCE7E564ED1B20E0245 /* Pods */ = {
@@ -1221,6 +1232,7 @@
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/RNCryptor/RNCryptor.framework",
 				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulTableView/StatefulTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -1241,6 +1253,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNCryptor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJSegmentedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -1391,6 +1404,7 @@
 				0C44DD34214A7F5E000F5D64 /* MoreMenuItem.swift in Sources */,
 				0C955DC62147C9B400F9385B /* CustomNavigationController.swift in Sources */,
 				0C23A8862146580A00DFB281 /* FiveADayViewController.swift in Sources */,
+				0CC81FAD216F21B800FDB92D /* AsyncImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

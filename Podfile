@@ -19,6 +19,7 @@ target 'TheBarCode' do
   pod 'KeychainAccess', '~> 3.1.2'
   pod 'CoreStore', '~> 5.3.1'
   pod 'FBSDKLoginKit', '~> 4.37.0'
+  pod 'SDWebImage', '~> 4.4.2'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

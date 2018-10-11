@@ -26,6 +26,11 @@ class SplashViewController: UIViewController {
         
         try! CoreStore.addStorageAndWait()
         
+
+        let dataStack = Utility.inMemoryStack
+        
+        try! dataStack.addStorageAndWait(InMemoryStore())
+        
         self.perform(#selector(moveToNextController), with: nil, afterDelay: 1.0)
     }
     

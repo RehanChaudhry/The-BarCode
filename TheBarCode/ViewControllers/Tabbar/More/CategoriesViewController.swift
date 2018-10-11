@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import CoreStore
 
 class CategoriesViewController: UIViewController {
 
@@ -20,6 +21,10 @@ class CategoriesViewController: UIViewController {
     var isUpdating: Bool = true
     
     var categories: [Category] = []
+    
+    var statefulView: LoadingAndErrorView!
+    
+    let transaction = Utility.inMemoryStack.beginUnsafe()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,25 +46,21 @@ class CategoriesViewController: UIViewController {
             self.continueButton.setTitle("Continue", for: .normal)
         }
         
-        categories.append(Category(title: "Beer Garden", image: "category_1", isSelected: false))
-        categories.append(Category(title: "Champagne", image: "category_2", isSelected: false))
-        categories.append(Category(title: "Cocktails", image: "category_3", isSelected: false))
-        categories.append(Category(title: "Family", image: "category_4", isSelected: false))
-        categories.append(Category(title: "Craft Beer", image: "category_5", isSelected: false))
-        categories.append(Category(title: "Sports", image: "category_6", isSelected: false))
-        categories.append(Category(title: "Gastropub", image: "category_7", isSelected: false))
-        categories.append(Category(title: "Late License", image: "category_8", isSelected: false))
-        categories.append(Category(title: "Live Music", image: "category_9", isSelected: false))
-        categories.append(Category(title: "Pool", image: "category_10", isSelected: false))
-        categories.append(Category(title: "Wifi", image: "category_11", isSelected: false))
-        categories.append(Category(title: "Wine bar", image: "category_12", isSelected: false))
+        self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.view.addSubview(statefulView)
+        
+        self.statefulView.retryHandler = {(sender: UIButton) in
+            
+        }
+        
+        self.statefulView.autoPinEdgesToSuperviewEdges()
         
         self.collectionView.innerCollection.register(cellType: CategoryCollectionViewCell.self)
         self.collectionView.innerCollection.delegate = self
         self.collectionView.innerCollection.dataSource = self
         
-        collectionView.backgroundColor = .clear
-        for aView in collectionView.subviews {
+        self.collectionView.backgroundColor = .clear
+        for aView in self.collectionView.subviews {
             aView.backgroundColor = .clear
         }
         
@@ -67,6 +68,8 @@ class CategoriesViewController: UIViewController {
         layout?.minimumInteritemSpacing = 16.0
         layout?.sectionInset = UIEdgeInsetsMake(0.0, 16.0, 16.0, 16.0)
         layout?.minimumLineSpacing = 16.0
+        
+        self.getCategories()
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,15 +101,11 @@ class CategoriesViewController: UIViewController {
     @IBAction func continueButtonTapped(sender: UIButton) {
         
         let selectedCategory = self.categories.first { (category) -> Bool in
-            return category.isSelected
+            return category.isSelected.value
         }
         
         if let _ = selectedCategory {
-            if isUpdating {
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
-            }
+            self.updatePreferences()
         } else {
             self.showAlertController(title: "", msg: "Select at least one to proceed")
         }
@@ -139,6 +138,7 @@ extension CategoriesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: CategoryCollectionViewCellDelegate
 extension CategoriesViewController: CategoryCollectionViewCellDelegate {
     func categoryCell(cell: CategoryCollectionViewCell, categoryButtonTapped sender: UIButton) {
         
@@ -148,10 +148,82 @@ extension CategoriesViewController: CategoryCollectionViewCellDelegate {
         }
         
         let category = self.categories[indexPath.item]
-        category.isSelected = !category.isSelected
-        self.categories[indexPath.item] = category
+        category.isSelected.value = !category.isSelected.value
         
-        self.collectionView.innerCollection.reloadData()
-        
+        self.collectionView.innerCollection.reloadItems(at: [indexPath])
     }
+}
+
+//MARK: Webservices Methods
+extension CategoriesViewController {
+    
+    func getCategories() {
+        self.statefulView.showLoading()
+        self.statefulView.isHidden = false
+        
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathCategories, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To Reload")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Reload")
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseCategories = (responseDict?["data"] as? [[String : Any]]) {
+                self.categories.removeAll()
+
+                let dataStack = Utility.inMemoryStack
+                try! dataStack.perform(synchronous: { (transaction) -> Void in
+                    let importedObjects = try! transaction.importUniqueObjects(Into<Category>(), sourceArray: responseCategories)
+                    debugPrint("Imported categories count: \(importedObjects.count)")
+                })
+                
+                self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy<Category>.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+                self.collectionView.innerCollection.reloadData()
+                
+                self.statefulView.isHidden = true
+                self.statefulView.showNothing()
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")
+            }
+        }
+    }
+    
+    func updatePreferences() {
+        
+        let selectedCategories = self.categories.filter { (category) -> Bool in
+            return category.isSelected.value
+        }
+        
+        let selectedCategoriesIds = selectedCategories.map({$0.id.value})
+        let params = ["ids" : selectedCategoriesIds]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateSelectedCategories, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! self.transaction.commitAndWait()
+            
+            if self.isUpdating {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+            }
+        }
+    }
+    
 }

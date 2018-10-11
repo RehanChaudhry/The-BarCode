@@ -15,7 +15,7 @@ protocol CategoryCollectionViewCellDelegate: class {
 
 class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
 
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var imageView: AsyncImageView!
     
     @IBOutlet var titleButton: UIButton!
     
@@ -33,13 +33,14 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
     func setUpCell(category: Category) {
         
         UIView.performWithoutAnimation {
-            self.titleButton.setTitle(category.title, for: .normal)
+            self.titleButton.setTitle(category.title.value, for: .normal)
             self.titleButton.layoutIfNeeded()
         }
         
-        self.imageView.image = UIImage(named: category.image)
+        let url = URL(string: category.image.value)
+        self.imageView.setImageWith(url: url, showRetryButton: false)
         
-        if category.isSelected {
+        if category.isSelected.value {
             self.imageView.layer.borderWidth = 1.0
             self.titleButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         } else {

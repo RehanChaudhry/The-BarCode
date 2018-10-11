@@ -20,6 +20,15 @@ class Utility: NSObject {
     
     static let shared = Utility()
     
+    static let inMemoryStack = DataStack(
+        CoreStoreSchema(
+            modelVersion: "V1",
+            entities: [
+                Entity<Category>("Category")
+            ]
+        )
+    )
+    
     lazy var deviceId: String = {
         
         let keyChainServiceName = bundleId + ".keychainservice"
