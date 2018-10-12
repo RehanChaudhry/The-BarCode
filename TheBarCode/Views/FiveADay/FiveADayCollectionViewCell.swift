@@ -15,7 +15,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var shadowView: ShadowView!
     
-    @IBOutlet var coverImageView: UIImageView!
+    @IBOutlet var coverImageView: AsyncImageView!
     
     @IBOutlet var dealTitleLabel: UILabel!
     @IBOutlet var dealSubTitleLabel: UILabel!
@@ -49,13 +49,21 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     func setUpCell(deal: FiveADayDeal, index: Int) {
         self.index = index
-        self.coverImageView.image = UIImage(named: deal.coverImage)
-        self.dealTitleLabel.text = deal.title.uppercased()
-        self.dealSubTitleLabel.text = deal.subTitle
-        self.dealDetailLabel.text = deal.detail
-        self.locationLabel.text = deal.location
-        self.distanceLabel.text = deal.distance
 
+        self.coverImageView.setImageWith(url: URL(string: deal.image.value), showRetryButton: false)
+        self.dealTitleLabel.text = deal.title.value
+        self.dealSubTitleLabel.text =  deal.subTitle.value
+        self.dealDetailLabel.text =  deal.detail.value
+        self.locationLabel.text = deal.establishment.value!.title.value
+        
+        if let distance = deal.establishment.value?.distance {
+            self.distanceLabel.isHidden = false
+            self.distanceLabel.text = distance.value
+        } else {
+            self.distanceLabel.isHidden = true
+        }
+ 
+        
         if UIScreen.main.bounds.size.width == 320.0 {
             self.coverImageHeight.constant = 165.0
         } else {

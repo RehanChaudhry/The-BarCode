@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import FSPagerView
 import ObjectMapper
+import CoreStore
 
 protocol FiveADayViewControllerDelegate {
     func showPopup()
@@ -33,7 +34,7 @@ class FiveADayViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.deals = FiveADayDeal.getDummyList()
+        //self.deals = FiveADayDeal.getDummyList()
         
         self.pageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         
@@ -135,12 +136,30 @@ extension FiveADayViewController {
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let responseDeals = (responseDict?["data"] as? [[String : Any]]) {
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                    let deals = try! transaction.importUniqueObjects(Into<FiveADayDeal>(), sourceArray: responseArray)
+                    
+                    if !deals.isEmpty {
+                        let ids = deals.map{$0.uniqueIDValue}
+                        transaction.deleteAll(From<FiveADayDeal>(), Where<FiveADayDeal>("NOT(%K in %@)", FiveADayDeal.uniqueIDKeyPath, ids))
+                    }
+                })
+                
                 self.deals.removeAll()
+                self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
                 
-                
+                if self.deals.isEmpty {
+                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To Refresh")
+                } else {
+                    self.statefulView.isHidden = true
+                    self.statefulView.showNothing()
+                }
                 
                 self.pagerView.reloadData()
+                self.pageControl.numberOfPages = self.deals.count
+                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")

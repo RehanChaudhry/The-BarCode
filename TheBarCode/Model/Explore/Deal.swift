@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreStore
 
 class Deal: Explore {
-    var detail: String! = ""
+   /* var detail: String! = ""
 
     init(detail: String, coverImage: String, title: String!, distance: String) {
         super.init(coverImage: coverImage, title: title, distance: distance)
@@ -35,5 +36,5 @@ class Deal: Explore {
 
     
     
-
+*/
 }

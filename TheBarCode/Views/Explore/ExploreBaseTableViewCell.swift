@@ -43,10 +43,10 @@ class ExploreBaseTableViewCell: UITableViewCell {
     }
     
     func setUpCell(explore: Explore) {
-        
-        coverImageView.image = UIImage(named: explore.coverImage)
-        titleLabel.text = explore.title
-        distanceLabel.text = explore.distance
-        
+        //TODO
+//        coverImageView.image = UIImage(named: explore.coverImage)
+//        titleLabel.text = explore.title
+//        distanceLabel.text = explore.distance
+//        
     }
 }

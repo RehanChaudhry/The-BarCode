@@ -30,8 +30,8 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func setUpCell(deal: Deal) {
         super.setUpCell(explore: deal)
-        
-        self.detailLabel.text = deal.detail
+        //TODO
+        //self.detailLabel.text = deal.detail
     }
     
 }

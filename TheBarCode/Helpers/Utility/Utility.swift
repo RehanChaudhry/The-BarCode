@@ -24,7 +24,12 @@ class Utility: NSObject {
         CoreStoreSchema(
             modelVersion: "V1",
             entities: [
-                Entity<Category>("Category")
+                Entity<Category>("Category"),
+                Entity<FiveADayDeal>("FiveADayDeal"),
+                Entity<Explore>("Explore", isAbstract: true),
+                Entity<Bar>("Bar"),
+                Entity<Deal>("Deal"),
+                Entity<LiveOffer>("LiveOffer")
             ]
         )
     )

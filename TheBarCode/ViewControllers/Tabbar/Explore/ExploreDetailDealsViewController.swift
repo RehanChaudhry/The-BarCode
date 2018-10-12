@@ -29,7 +29,7 @@ class ExploreDetailDealsViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
-        self.deals = Deal.getDummyList()
+        //self.deals = Deal.getDummyList()
        
     }
 

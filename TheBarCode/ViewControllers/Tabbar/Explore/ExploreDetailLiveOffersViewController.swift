@@ -27,7 +27,7 @@ class ExploreDetailLiveOffersViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.offers = LiveOffer.getDummyList()
+       // self.offers = LiveOffer.getDummyList()
      
         
         self.setUpStatefulTableView()

@@ -27,7 +27,7 @@ class DealsViewController: ExploreBaseViewController {
         
         self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         
-        self.deals = Deal.getDummyList()
+       // self.deals = Deal.getDummyList()
 
     }
 
@@ -77,3 +77,4 @@ extension DealsViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
+

@@ -27,7 +27,7 @@ class LiveOffersViewController: ExploreBaseViewController {
         
         self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         
-        self.offers = LiveOffer.getDummyList()
+       // self.offers = LiveOffer.getDummyList()
         
     }
 

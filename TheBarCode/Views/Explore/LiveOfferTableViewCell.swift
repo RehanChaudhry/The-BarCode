@@ -30,8 +30,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func setUpCell(offer: LiveOffer) {
         super.setUpCell(explore: offer)
-        
-        self.detailLabel.text = offer.detail
+        //TODO:
+        //self.detailLabel.text = offer.detail
     }
     
 }

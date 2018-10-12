@@ -29,7 +29,7 @@ class FavouritesViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
-        self.bars = Bar.getDummyFavList()
+       // self.bars = Bar.getDummyFavList()
     }
 
     override func didReceiveMemoryWarning() {
