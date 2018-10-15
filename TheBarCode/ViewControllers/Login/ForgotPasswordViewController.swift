@@ -79,12 +79,38 @@ class ForgotPasswordViewController: UIViewController {
         self.view.endEditing(true)
         
         if self.isDataValid() {
+            self.forgotPassword()
+        }
+    }
+
+}
+
+//MARK: Websercices Methods
+extension ForgotPasswordViewController {
+    
+    func forgotPassword() {
+        
+        let params = ["email" : self.emailFieldView.textField.text!]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathForgotPassword, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "Forgot Password", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "Forgot Password", msg: serverError!.errorMessages())
+                return
+            }
+            
             let alertController = UIAlertController(title: "Forgot Password", message: "An email with instructions about how to reset your password has been sent. Please follow the instructions to reset your password.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .cancel) { (action) in
                 self.navigationController?.popViewController(animated: true)
             })
             self.present(alertController, animated: true, completion: nil)
-        }
-    }
 
+        }
+        
+    }
+    
 }

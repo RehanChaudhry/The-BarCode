@@ -9,9 +9,11 @@
 import UIKit
 import Reusable
 
-protocol FieldViewDelegate: class {
-    func fieldView(fieldView: FieldView, didBeginEditing textField: UITextField)
-    func fieldView(fieldView: FieldView, didEndEditing textField: UITextField)
+@objc protocol FieldViewDelegate: class {
+    @objc optional func fieldView(fieldView: FieldView, didBeginEditing textField: UITextField)
+    @objc optional func fieldView(fieldView: FieldView, didEndEditing textField: UITextField)
+    
+    @objc optional func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool
 }
 
 class FieldView: UIView, NibReusable {
@@ -117,7 +119,7 @@ extension FieldView: UITextFieldDelegate {
             border.backgroundColor = UIColor.white
         }
         
-        self.delegate?.fieldView(fieldView: self, didBeginEditing: self.textField)
+        self.delegate?.fieldView?(fieldView: self, didBeginEditing: self.textField)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -125,7 +127,11 @@ extension FieldView: UITextFieldDelegate {
             border.backgroundColor = UIColor.appFieldBottomBorderColor()
         }
         
-        self.delegate?.fieldView(fieldView: self, didEndEditing: self.textField)
+        self.delegate?.fieldView?(fieldView: self, didEndEditing: self.textField)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return self.delegate?.fieldView?(fieldView: self, shouldChangeCharactersIn: range, replacementString: string, textField: self.textField) ?? true
     }
     
 }

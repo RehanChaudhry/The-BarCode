@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import AVFoundation
 import FSPagerView
+import CoreLocation
 
 class LoginOptionsViewController: UIViewController {
 
@@ -22,6 +23,8 @@ class LoginOptionsViewController: UIViewController {
     var introOptions: [IntroOption] = [IntroOption(), IntroOption(), IntroOption()]
     
     var avPlayer: AVPlayer!
+    
+    var viewAlreadyAppeared: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +67,11 @@ class LoginOptionsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         self.avPlayer.play()
+        
+        if !self.viewAlreadyAppeared {
+            self.viewAlreadyAppeared = true
+            self.moveToNextControllerIfNeeded()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -83,15 +91,33 @@ class LoginOptionsViewController: UIViewController {
         self.pagerView.itemSize = self.pagerView.frame.size
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: My Methods
+    
+    func moveToNextControllerIfNeeded() {
+        
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("No user found")
+            return
+        }
+        
+        switch user.status {
+        case .active:
+            if !user.isCategorySelected.value {
+                self.performSegue(withIdentifier: "SignOptionsToCategoriesSegue", sender: nil)
+            } else if CLLocationManager.authorizationStatus() == .notDetermined {
+                self.performSegue(withIdentifier: "SignOptionsToPermissionSegue", sender: nil)
+            } else {
+                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                self.navigationController?.present(tabbarController!, animated: true, completion: {
+                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                    self.navigationController?.popToViewController(loginOptions, animated: false)
+                })
+            }
+        default:
+            Utility.shared.removeUser()
+            self.showAlertController(title: "", msg: "Please sign in again")
+        }
     }
-    */
     
     //MARK: My IBActions
     

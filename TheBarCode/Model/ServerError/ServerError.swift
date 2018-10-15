@@ -18,6 +18,8 @@ class ServerError: Mappable {
     
     var errors: [ErrorObject] = []
     
+    var statusCode: Int = 0
+    
     required init?(map: Map) {
         
     }

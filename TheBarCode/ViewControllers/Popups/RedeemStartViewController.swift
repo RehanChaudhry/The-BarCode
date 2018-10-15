@@ -41,7 +41,7 @@ class RedeemStartViewController: UIViewController {
         presentedVC = self.presentingViewController
         
         self.dismiss(animated: true) {
-            let redeemActiveDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemActiveDealViewController") as! RedeemActiveDealViewController)
+            let redeemActiveDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "CodeVerificationViewController") as! CodeVerificationViewController)
             redeemActiveDealViewController.modalPresentationStyle = .overCurrentContext
             self.presentedVC.present(redeemActiveDealViewController, animated: true, completion: nil)
 

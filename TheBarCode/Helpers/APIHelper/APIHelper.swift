@@ -160,6 +160,7 @@ class APIHelper {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: .allowFragments) as! [String : Any]
                     let serverError = Mapper<ServerError>().map(JSON: jsonObject)
+                    serverError?.statusCode = response.response!.statusCode
                     debugPrint("jsonObject: \(jsonObject)")
                     completion(nil, serverError, nil)
                 } catch {

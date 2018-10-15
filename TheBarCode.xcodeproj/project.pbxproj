@@ -135,6 +135,8 @@
 		0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA6216DD3FE00FDB92D /* Utility.swift */; };
 		0CC81FAA216DD58C00FDB92D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FA9216DD58C00FDB92D /* User.swift */; };
 		0CC81FAD216F21B800FDB92D /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */; };
+		0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */; };
+		0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -148,7 +150,7 @@
 		8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29B216760DA00CB8BD2 /* FiveADayDeal.swift */; };
 		8344E2A02167678100CB8BD2 /* OutOfCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29D2167678000CB8BD2 /* OutOfCreditViewController.swift */; };
 		8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */; };
-		8344E2A22167678100CB8BD2 /* RedeemActiveDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29F2167678100CB8BD2 /* RedeemActiveDealViewController.swift */; };
+		8344E2A22167678100CB8BD2 /* CodeVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29F2167678100CB8BD2 /* CodeVerificationViewController.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 /* End PBXBuildFile section */
@@ -305,6 +307,8 @@
 		0CC81FA6216DD3FE00FDB92D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		0CC81FA9216DD58C00FDB92D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewController.swift; sourceTree = "<group>"; };
+		0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemDealViewController.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -321,7 +325,7 @@
 		8344E29B216760DA00CB8BD2 /* FiveADayDeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveADayDeal.swift; sourceTree = "<group>"; };
 		8344E29D2167678000CB8BD2 /* OutOfCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutOfCreditViewController.swift; sourceTree = "<group>"; };
 		8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedeemStartViewController.swift; sourceTree = "<group>"; };
-		8344E29F2167678100CB8BD2 /* RedeemActiveDealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedeemActiveDealViewController.swift; sourceTree = "<group>"; };
+		8344E29F2167678100CB8BD2 /* CodeVerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewController.swift; sourceTree = "<group>"; };
 		83FD60422167726D0069A90A /* UIApplicationAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationAdditions.swift; sourceTree = "<group>"; };
 		978374FDD2BC17E29FDA033D /* Pods-TheBarCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
@@ -974,8 +978,10 @@
 			isa = PBXGroup;
 			children = (
 				8344E29D2167678000CB8BD2 /* OutOfCreditViewController.swift */,
-				8344E29F2167678100CB8BD2 /* RedeemActiveDealViewController.swift */,
+				8344E29F2167678100CB8BD2 /* CodeVerificationViewController.swift */,
 				8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */,
+				0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */,
+				0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -1227,6 +1233,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/Gradientable/Gradientable.framework",
+				"${BUILT_PRODUCTS_DIR}/HTTPStatusCodes/HTTPStatusCodes.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
@@ -1248,6 +1255,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gradientable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTTPStatusCodes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
@@ -1363,17 +1371,19 @@
 				0CBF0000214F932400B017CC /* LiveOffersViewController.swift in Sources */,
 				0C955DEE2149317100F9385B /* StatefulCollectionDelegate.swift in Sources */,
 				0C955DDC2149264100F9385B /* CategoriesViewController.swift in Sources */,
+				0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */,
 				8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */,
 				0C23A88F2146732000DFB281 /* UIColorAdditions.swift in Sources */,
 				0C955DB52147824C00F9385B /* GradientButton.swift in Sources */,
 				0C8848652167370500DB222F /* UILableAdditions.swift in Sources */,
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
+				0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
 				0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */,
 				0C23A8882146581B00DFB281 /* ExploreViewController.swift in Sources */,
 				0C955DCE2147CDEB00F9385B /* FieldView.swift in Sources */,
 				0C955DFD214931A500F9385B /* EmptyDataView.swift in Sources */,
-				8344E2A22167678100CB8BD2 /* RedeemActiveDealViewController.swift in Sources */,
+				8344E2A22167678100CB8BD2 /* CodeVerificationViewController.swift in Sources */,
 				0C8BDCE52150E4D400D5117B /* StringAdditions.swift in Sources */,
 				0C8BDCDD2150D77600D5117B /* Bar.swift in Sources */,
 				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
@@ -1583,7 +1593,10 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1601,7 +1614,10 @@
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1618,7 +1634,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1636,7 +1656,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1653,7 +1677,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -1670,7 +1698,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCodeUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCodeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

@@ -1,5 +1,5 @@
 //
-//  RedeemActiveDealViewController.swift
+//  CodeVerificationViewController.swift
 //  TheBarCode
 //
 //  Created by Aasna Islam on 02/10/2018.
@@ -8,9 +8,14 @@
 
 import UIKit
 
-class RedeemActiveDealViewController: UIViewController {
+class CodeVerificationViewController: UIViewController {
 
-    @IBOutlet weak var hiddenField: UITextField!
+    @IBOutlet var hiddenField: UITextField!
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subTitleLabel: UILabel!
+    
+    @IBOutlet var actionButton: UIButton!
     
     @IBOutlet var codeFieldContainer1: UIView!
     @IBOutlet var codeFieldContainer2: UIView!
@@ -18,11 +23,14 @@ class RedeemActiveDealViewController: UIViewController {
     @IBOutlet var codeFieldContainer4: UIView!
     
     @IBOutlet var popUpTopMargin: NSLayoutConstraint!
+    @IBOutlet var containerHeight: NSLayoutConstraint!
     
     var codeFieldView1: FieldView!
     var codeFieldView2: FieldView!
     var codeFieldView3: FieldView!
     var codeFieldView4: FieldView!
+    
+    var maxLength = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +38,10 @@ class RedeemActiveDealViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         if UIScreen.main.bounds.size.height <= 568.0 {
-            self.popUpTopMargin.constant = 40.0
+            self.popUpTopMargin.constant = 30.0
         }
+        
+        self.actionButton.isEnabled = false
         
         self.setUpFieldViews()
     }
@@ -125,6 +135,8 @@ class RedeemActiveDealViewController: UIViewController {
                 break
             }
         }
+        
+        self.actionButton.isEnabled = text.count >= self.maxLength
     }
     
     //MARK: My IBActions
@@ -134,17 +146,11 @@ class RedeemActiveDealViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
-    @IBAction func confirmButtonTapped(_ sender: Any) {
-        self.view.endEditing(true)
-        self.dismiss(animated: true, completion: nil)
-    }
 }
 
 //MARK: UITextFieldDelegate
-extension RedeemActiveDealViewController: UITextFieldDelegate {
+extension CodeVerificationViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let maxLength = 4
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString

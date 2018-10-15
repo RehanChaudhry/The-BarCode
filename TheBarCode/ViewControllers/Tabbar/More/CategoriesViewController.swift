@@ -9,6 +9,7 @@
 import UIKit
 import Reusable
 import CoreStore
+import CoreLocation
 
 class CategoriesViewController: UIViewController {
 
@@ -18,7 +19,7 @@ class CategoriesViewController: UIViewController {
     
     @IBOutlet var infoLabel: UILabel!
     
-    var isUpdating: Bool = true
+    var isUpdating: Bool = false
     
     var categories: [Category] = []
     
@@ -111,6 +112,17 @@ class CategoriesViewController: UIViewController {
         }
     }
 
+    func moveToNextController() {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+        } else {
+            let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+            self.navigationController?.present(tabbarController!, animated: true, completion: {
+                let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                self.navigationController?.popToViewController(loginOptions, animated: false)
+            })
+        }
+    }
 }
 
 extension CategoriesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -218,10 +230,16 @@ extension CategoriesViewController {
             
             try! self.transaction.commitAndWait()
             
+            let user = Utility.shared.getCurrentUser()!
+            try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                let edittedUser = transaction.edit(user)
+                edittedUser?.isCategorySelected.value = true
+            })
+            
             if self.isUpdating {
                 self.dismiss(animated: true, completion: nil)
             } else {
-                self.performSegue(withIdentifier: "CategoriesToPermissionSegue", sender: nil)
+                self.moveToNextController()
             }
         }
     }

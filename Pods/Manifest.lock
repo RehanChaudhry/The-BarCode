@@ -18,6 +18,7 @@ PODS:
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
   - Gradientable (0.0.2)
+  - HTTPStatusCodes (3.2.0)
   - KeychainAccess (3.1.2)
   - ObjectMapper (3.3.0)
   - PureLayout (3.1.2)
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - FSPagerView (~> 0.7.2)
   - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
+  - HTTPStatusCodes (~> 3.2.0)
   - KeychainAccess (~> 3.1.2)
   - ObjectMapper (~> 3.3.0)
   - PureLayout (~> 3.1.2)
@@ -65,6 +67,7 @@ SPEC REPOS:
     - FSPagerView
     - GoogleMaps
     - Gradientable
+    - HTTPStatusCodes
     - KeychainAccess
     - ObjectMapper
     - PureLayout
@@ -86,6 +89,7 @@ SPEC CHECKSUMS:
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
+  HTTPStatusCodes: 69f50d229c4b5d6dcb48fad9c86e32ded975bcd3
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
@@ -98,6 +102,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 3cd169b4b88a8947ea356db2738244f9a6385b23
+PODFILE CHECKSUM: 0e2c5cdb0d06ed74bb9d6e1a7b2b2b60b0cf4415
 
 COCOAPODS: 1.5.3

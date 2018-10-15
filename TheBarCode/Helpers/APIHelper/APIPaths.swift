@@ -9,8 +9,14 @@
 import UIKit
 
 let apiPathAuthenticate = "auth/login"
-let apiPathRegister = ""
+let apiPathRegister = "auth/register"
 let apiPathRefreshToken = ""
+let apiPathSocialLogin = "social/login"
+let apiPathEmailVerification = "user/customer-activate"
+let apiPathResendVerificationEmail = "user/resend-activation-email"
+let apiPathForgotPassword = "auth/password/email"
+
+let apiPathReferral = "user/update-referral-code"
 
 let apiPathFiveADayDeals = "five-a-day"
 

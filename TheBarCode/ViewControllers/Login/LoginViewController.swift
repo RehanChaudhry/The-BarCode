@@ -8,6 +8,10 @@
 
 import UIKit
 import PureLayout
+import CoreLocation
+import HTTPStatusCodes
+import FBSDKLoginKit
+import FBSDKCoreKit
 
 class LoginViewController: UIViewController {
 
@@ -29,8 +33,8 @@ class LoginViewController: UIViewController {
         self.addBackButton()
         self.setUpFields()
         
-        self.emailFieldView.textField.text = "test@test.com"
-        self.passwordFieldView.textField.text = "pojopojo"
+        self.emailFieldView.textField.text = "mzeeshan+5@cygnismedia.com"
+        self.passwordFieldView.textField.text = "12345678"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,11 +103,19 @@ class LoginViewController: UIViewController {
         
         return isValid
     }
-
+    
+    func showVerificationController() {
+        let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "EmailVerificationViewController") as! EmailVerificationViewController)
+        verificationController.modalPresentationStyle = .overCurrentContext
+        verificationController.delegate = self
+        verificationController.email = self.emailFieldView.textField.text!
+        self.present(verificationController, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func fbSignInButtonTapped(sender: UIButton) {
-        
+        self.socialLogin()
     }
     
     @IBAction func signInButtonTapped(sender: UIButton) {
@@ -115,17 +127,42 @@ class LoginViewController: UIViewController {
     }
 }
 
+//MARK: EmailVerificationViewControllerDelegate
+extension LoginViewController: EmailVerificationViewControllerDelegate {
+    func userVerifiedSuccessfully() {
+        
+        guard let user = Utility.shared.getCurrentUser() else {
+            self.showAlertController(title: "User Not Found", msg: "User does not exists. Please resign in.")
+            return
+        }
+
+        switch user.status {
+        case .active:
+            if !user.isCategorySelected.value {
+                self.performSegue(withIdentifier: "SignInToCategoriesSegue", sender: nil)
+            } else if CLLocationManager.authorizationStatus() == .notDetermined {
+                self.performSegue(withIdentifier: "SignInToPermissionSegue", sender: nil)
+            } else {
+                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                self.navigationController?.present(tabbarController!, animated: true, completion: {
+                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                    self.navigationController?.popToViewController(loginOptions, animated: false)
+                })
+            }
+            
+        case .pending:
+            self.showVerificationController()
+        default:
+            self.showAlertController(title: "Account Blocked", msg: "For some reason your account has been blocked. Please contact admin.")
+        }
+        
+    }
+}
+
 //MARK: Webservices Method
 extension LoginViewController {
     
     func login() {
-        
-        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-        self.navigationController?.present(tabbarController!, animated: true, completion: {
-            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-            self.navigationController?.popToViewController(loginOptions, animated: false)
-        })
-        return
         
         let email = self.emailFieldView.textField.text!
         let password = self.passwordFieldView.textField.text!
@@ -140,14 +177,112 @@ extension LoginViewController {
             }
             
             guard serverError == nil else {
-                self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
+                if serverError!.statusCode == HTTPStatusCode.gone.rawValue {
+                    self.showVerificationController()
+                } else {
+                    self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
+                }
                 return
             }
             
-            let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-            self.navigationController?.present(tabbarController!, animated: true, completion: {
-                let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-                self.navigationController?.popToViewController(loginOptions, animated: false)
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseUser = (responseDict?["data"] as? [String : Any]) {
+                let _ = Utility.shared.saveCurrentUser(userDict: responseUser)
+                self.userVerifiedSuccessfully()
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+        }
+    }
+    
+    func socialLogin() {
+        
+        let loginManager = FBSDKLoginManager()
+        let permissions = ["public_profile", "email"]
+        loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
+            
+            guard result?.isCancelled == false else {
+                debugPrint("Facebook login cancelled")
+                return
+            }
+            
+            guard error == nil else {
+                self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
+                return
+            }
+            
+            let params = ["fields": "id, name, email, picture.width(180).height(180)"]
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
+            graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
+                
+                guard error == nil else {
+                    self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
+                    return
+                }
+                
+                if let result = graphRequestResult as? [String : Any] {
+                    
+                    let socialAccountId = "\(result["id"]!)"
+                    let fullName = result["name"] as! String
+                    let profileImage = "http://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
+                    let accessToken = FBSDKAccessToken.current()!.tokenString
+                    let email = result["email"] as? String
+                    
+                    var socialLoginParams = ["social_account_id" : socialAccountId,
+                                             "full_name" : fullName,
+                                             "profile_image" : profileImage,
+                                             "access_token" : accessToken!]
+                    if let email = email {
+                        socialLoginParams["email"] = email
+                    }
+                    
+                    let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
+                        
+                        guard error == nil else {
+                            self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
+                            return
+                        }
+                        
+                        guard serverError == nil else {
+                            
+                            if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                                
+                                let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
+                                signUpViewController.socialAccountId = socialAccountId
+                                let _ = signUpViewController.view
+                                self.navigationController?.pushViewController(signUpViewController, animated: true)
+                                
+                                let name = result["name"] as! String
+                                if let email = result["email"] as? String {
+                                    signUpViewController.emailFieldView.textField.text = email
+                                }
+                                
+                                signUpViewController.fullNameFieldView.textField.text = name
+                            } else {
+                                self.showAlertController(title: "Facebook Login", msg: serverError!.errorMessages())
+                            }
+                            
+                            return
+                        }
+                        
+                        let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+                        if let responseUser = (responseDict?["data"] as? [String : Any]) {
+                            
+                            let _ = Utility.shared.saveCurrentUser(userDict: responseUser)
+                            
+                            self.userVerifiedSuccessfully()
+                            
+                        } else {
+                            let genericError = APIHelper.shared.getGenericError()
+                            self.showAlertController(title: "", msg: genericError.localizedDescription)
+                        }
+                        
+                    })
+                    
+                } else {
+                    self.showAlertController(title: "", msg: "Unknown error occurred")
+                }
             })
             
         }

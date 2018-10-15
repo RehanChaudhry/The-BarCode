@@ -60,11 +60,11 @@ class Utility: NSObject {
     }()
     
     func saveCurrentUser(userDict: [String : Any]) -> User {
-        var user: User!
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
-            user = try! transaction.importUniqueObject(Into<User>(), source: userDict)
+            let user = try! transaction.importUniqueObject(Into<User>(), source: userDict)
+            let _ = transaction.deleteAll(From<User>().where(\User.userId != user!.userId.value))
         })
-        return user
+        return self.getCurrentUser()!
     }
     
     func getCurrentUser() -> User? {

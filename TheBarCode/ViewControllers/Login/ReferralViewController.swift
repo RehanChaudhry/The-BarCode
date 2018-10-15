@@ -8,12 +8,16 @@
 
 import UIKit
 import PureLayout
+import CoreStore
+import CoreLocation
 
 class ReferralViewController: UIViewController {
 
     @IBOutlet var separatorView: UIView!
     
     var codeFieldView: FieldView!
+    
+    var characterLimit = 7
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +51,7 @@ class ReferralViewController: UIViewController {
         self.codeFieldView = FieldView.loadFromNib()
         self.codeFieldView.setUpFieldView(placeholder: "REFERRAL CODE", fieldPlaceholder: "Enter 7 characters referral/invite code", iconImage: nil)
         self.codeFieldView.setKeyboardType(keyboardType: .emailAddress)
+        self.codeFieldView.delegate = self
         self.view.addSubview(self.codeFieldView)
         
         self.codeFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.separatorView, withOffset: 24.0)
@@ -58,11 +63,11 @@ class ReferralViewController: UIViewController {
     func isDataValid() -> Bool {
         var isValid = true
         
-        if self.codeFieldView.textField.text!.count == 7 {
+        if self.codeFieldView.textField.text!.count == characterLimit {
             self.codeFieldView.reset()
         } else {
             isValid = false
-            self.codeFieldView.showValidationMessage(message: "Please enter 7 characters invite code.")
+            self.codeFieldView.showValidationMessage(message: "Please enter \(characterLimit) characters invite code.")
         }
         
         return isValid
@@ -84,8 +89,57 @@ class ReferralViewController: UIViewController {
         self.view.endEditing(true)
         
         if self.isDataValid() {
-            self.performSegue(withIdentifier: "ReferralToCategories", sender: nil)
+            self.referral()
         }
     }
     
+}
+
+//MARK: FieldViewDelegate
+extension ReferralViewController: FieldViewDelegate {
+    func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
+        let maxLength = self.characterLimit
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+}
+
+//MARK: Webservices Methods
+extension ReferralViewController {
+    func referral() {
+        let referralCode = self.codeFieldView.textField.text!
+        let params = ["own_referral_code" : referralCode]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathReferral, method: .put) { (response, serverError, error) in
+            guard error == nil else {
+                self.showAlertController(title: "Referral", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "Referral", msg: serverError!.errorMessages())
+                return
+            }
+            
+            let currentUser = Utility.shared.getCurrentUser()!
+            try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                let editedUser = transaction.edit(currentUser)
+                editedUser?.referralCode.value = referralCode
+            })
+            
+            if !currentUser.isCategorySelected.value {
+                self.performSegue(withIdentifier: "ReferralToCategories", sender: nil)
+            } else if CLLocationManager.authorizationStatus() == .notDetermined {
+                self.performSegue(withIdentifier: "SignInToPermissionSegue", sender: nil)
+            } else {
+                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                self.navigationController?.present(tabbarController!, animated: true, completion: {
+                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                    self.navigationController?.popToViewController(loginOptions, animated: false)
+                })
+            }
+            
+        }
+    }
 }
