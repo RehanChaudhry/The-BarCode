@@ -11,7 +11,12 @@ import CoreStore
 
 class Bar: Explore {
     
-    let fiveADayDeal = Relationship.ToOne<FiveADayDeal>("fiveADayDeal", inverse: {$0.establishment})
+//    let fiveADayDeal = Relationship.ToOne<FiveADayDeal>("fiveADayDeal", inverse: {$0.establishment})
+    
+   let fiveADayDeal = Relationship.ToManyUnordered<FiveADayDeal>("fiveADayDeal", inverse: { $0.establishment })
+}
+    
+    
     
     
     
@@ -50,7 +55,6 @@ class Bar: Explore {
         let bar1 = Bar(coverImage: "fav1", title: "Ye Olde Fighting Cocks", distance: "4 miles away")
         return bar1
     }*/
-}
 
 
 //extension Bar {

@@ -13,7 +13,7 @@ import ObjectMapper
 import CoreStore
 
 protocol FiveADayViewControllerDelegate {
-    func showPopup()
+    func showPopup(index: Int)
     func showDealDetail(index: Int)
 
 }
@@ -62,6 +62,13 @@ class FiveADayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        self.deals.removeAll()
+        self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -104,10 +111,17 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
 
 //MARK: FiveADayViewControllerDelegate
 extension FiveADayViewController: FiveADayViewControllerDelegate {
-    func showPopup() {
-        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-        redeemStartViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemStartViewController, animated: true, completion: nil)
+    
+    func showPopup(index: Int) {
+        let deal = self.deals[index]
+        if let bar = deal.establishment.value {
+            if bar.isOfferRedeemed.value {
+                let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+                redeemStartViewController.modalPresentationStyle = .overCurrentContext
+                redeemStartViewController.deal =  deal
+                self.present(redeemStartViewController, animated: true, completion: nil)
+            }
+        }
     }
     
     func showDealDetail(index: Int){

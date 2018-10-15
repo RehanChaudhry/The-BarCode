@@ -18,3 +18,5 @@ let apiPathCategories = "interest"
 let apiPathUpdateSelectedCategories = "userinterest/update-user-interest"
 
 let apiEstablishment = "establishment"
+
+let apiOfferRedeem = "offer-redeem"

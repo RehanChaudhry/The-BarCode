@@ -35,8 +35,6 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        
     }
     
     override func layoutSubviews() {
@@ -50,7 +48,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     func setUpCell(deal: FiveADayDeal, index: Int) {
         self.index = index
 
-        self.coverImageView.setImageWith(url: URL(string: deal.image.value), showRetryButton: false)
+        self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value!), showRetryButton: false)
         self.dealTitleLabel.text = deal.title.value
         self.dealSubTitleLabel.text =  deal.subTitle.value
         self.dealDetailLabel.text =  deal.detail.value
@@ -61,6 +59,10 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.distanceLabel.text = distance.value
         } else {
             self.distanceLabel.isHidden = true
+        }
+        
+        if !deal.establishment.value!.isOfferRedeemed.value {
+            redeemButton.isEnabled = false
         }
  
         
@@ -75,19 +77,20 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
         if self.dealDetailLabel.isTruncated {
             self.dealDetailLabel.isHidden = true
-//            self.detailVerticalSpacing.constant = 8.0 + 29.0
+            self.detailVerticalSpacing.constant = 8.0 + 29.0
             
             self.detailButton.isHidden = false
         } else {
             self.dealDetailLabel.isHidden = false
-//            self.detailVerticalSpacing.constant = 8.0
+            self.detailVerticalSpacing.constant = 8.0
             
             self.detailButton.isHidden = true
         }
+        
     }
     
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
-        delegate?.showPopup()
+        delegate?.showPopup(index: self.index)
     }
     
     @IBAction func viewDetailButtonTapped(_ sender: Any) {
