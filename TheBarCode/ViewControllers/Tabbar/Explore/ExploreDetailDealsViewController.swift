@@ -106,7 +106,7 @@ extension ExploreDetailDealsViewController {
         }
         
         let params: [String : Any] = ["establishment_id": self.explore.id.value,
-                                      "type" : "live",
+                                      "type" : "deals",
                                       "pagination" : true,
                                       "page": self.dealsLoadMore.next]
         
