@@ -71,12 +71,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="9eU-7j-0RW">
+                        <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" id="9eU-7j-0RW">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="243"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_invite" translatesAutoresizingMaskIntoConstraints="NO" id="jBN-at-LIP">
-                                    <rect key="frame" x="0.0" y="-64" width="375" height="307"/>
+                                    <rect key="frame" x="0.0" y="-64" width="375" height="374"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -311,13 +311,13 @@
                                 <rect key="frame" x="37.5" y="193.5" width="300" height="280"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1j-rq-KL5">
-                                        <rect key="frame" x="24" y="24" width="200" height="19.5"/>
+                                        <rect key="frame" x="24" y="24" width="200" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4m-5N-Oif">
-                                        <rect key="frame" x="232" y="12" width="44" height="44"/>
+                                        <rect key="frame" x="232" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="2BS-DR-fA5"/>
                                             <constraint firstAttribute="height" constant="44" id="EEN-zT-BBU"/>
@@ -328,14 +328,14 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g0o-ZK-4Zp">
-                                        <rect key="frame" x="0.0" y="67.5" width="300" height="1"/>
+                                        <rect key="frame" x="0.0" y="67" width="300" height="1"/>
                                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="sbU-0v-ON1"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PeD-VS-yvS">
-                                        <rect key="frame" x="0.0" y="78.5" width="300" height="201.5"/>
+                                        <rect key="frame" x="0.0" y="78" width="300" height="202"/>
                                         <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="dataSource" destination="BEP-Di-gOn" id="oyP-QD-f1K"/>
@@ -1259,20 +1259,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="44" width="343" height="54"/>
+                                <rect key="frame" x="16" y="88" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="122" width="343" height="1"/>
+                                <rect key="frame" x="16" y="166" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="242" width="343" height="44"/>
+                                <rect key="frame" x="16" y="286" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1290,7 +1290,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -2671,7 +2671,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="XoL-km-z5W">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="XoL-km-z5W">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="349"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -2694,7 +2694,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
                                     <rect key="frame" x="68" y="24" width="291" height="50.5"/>
                                     <attributedString key="attributedText">
                                         <fragment content="Available Credits: You are out of credit. You can reload previous offers after ">
@@ -2720,14 +2720,14 @@
                                     </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jy-Hr-ZlP">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jy-Hr-ZlP">
                                     <rect key="frame" x="0.0" y="99" width="375" height="1"/>
                                     <color key="backgroundColor" red="0.29803921570000003" green="0.29803921570000003" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="prO-OJ-Eqa"/>
                                     </constraints>
                                 </view>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner_reload" translatesAutoresizingMaskIntoConstraints="NO" id="rLW-pv-QCV">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="banner_reload" translatesAutoresizingMaskIntoConstraints="NO" id="rLW-pv-QCV">
                                     <rect key="frame" x="0.0" y="100" width="375" height="249"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
@@ -3310,10 +3310,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="3690" y="6439"/>
         </scene>
-        <!--Deals View Controller-->
+        <!--Bars With Deals View Controller-->
         <scene sceneID="Ekn-5T-lVB">
             <objects>
-                <viewController storyboardIdentifier="DealsViewController" id="NiB-C1-khw" customClass="DealsViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarsWithDealsViewController" id="NiB-C1-khw" customClass="BarsWithDealsViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="94D-2F-NCI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3494,10 +3494,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="4634" y="1984"/>
         </scene>
-        <!--Live Offers View Controller-->
+        <!--Bars With Live Offers View Controller-->
         <scene sceneID="SeQ-65-VHf">
             <objects>
-                <viewController storyboardIdentifier="LiveOffersViewController" id="yTy-af-VGc" customClass="LiveOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarsWithLiveOffersViewController" id="yTy-af-VGc" customClass="BarsWithLiveOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OtY-uW-l7A">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3681,7 +3681,7 @@ Cg
         <!--Albert's Schloss-->
         <scene sceneID="m1g-6A-x0B">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetailViewController" id="Eeg-kR-SY4" customClass="ExploreDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarDetailViewController" id="Eeg-kR-SY4" customClass="BarDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9a-2E-tVx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3751,10 +3751,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="7460" y="1618.7406296851575"/>
         </scene>
-        <!--Explore Detail Header View Controller-->
+        <!--Bar Detail Header View Controller-->
         <scene sceneID="uX6-US-NuD">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetailHeaderViewController" id="zyv-eO-QJ3" customClass="ExploreDetailHeaderViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarDetailHeaderViewController" id="zyv-eO-QJ3" customClass="BarDetailHeaderViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="52n-pS-LR8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="261"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3853,7 +3853,7 @@ Cg
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Teg-RX-Qpg">
-                                            <rect key="frame" x="0.0" y="20" width="375" height="273"/>
+                                            <rect key="frame" x="0.0" y="20" width="600" height="273"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="273" id="vf7-Z1-hIz"/>
@@ -3871,7 +3871,7 @@ Cg
                                             </connections>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIG OFF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-0o-YdM">
-                                            <rect key="frame" x="16" y="217" width="343" height="15"/>
+                                            <rect key="frame" x="16" y="150" width="568" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="llz-sc-nKP"/>
                                             </constraints>
@@ -3880,7 +3880,7 @@ Cg
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get 25% cash back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-PY-Vmc">
-                                            <rect key="frame" x="16" y="248" width="343" height="20"/>
+                                            <rect key="frame" x="16" y="181" width="568" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="KKY-Yy-rXM"/>
                                             </constraints>
@@ -3966,10 +3966,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="9197.6000000000004" y="878.41079460269873"/>
         </scene>
-        <!--Explore Detail About View Controller-->
+        <!--Bar Detail About View Controller-->
         <scene sceneID="UZt-3A-2Vd">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetailAboutViewController" id="AEL-Vg-BBd" customClass="ExploreDetailAboutViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarDetailAboutViewController" id="AEL-Vg-BBd" customClass="BarDetailAboutViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bf0-Ct-Kks">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4001,10 +4001,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="8263.2000000000007" y="1731.1844077961021"/>
         </scene>
-        <!--Explore Detail Deals View Controller-->
+        <!--Bar Deals View Controller-->
         <scene sceneID="jIa-US-eNr">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetailDealsViewController" id="BYZ-Jn-m3e" customClass="ExploreDetailDealsViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarDealsViewController" id="BYZ-Jn-m3e" customClass="BarDealsViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JWp-8g-AMJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4031,10 +4031,10 @@ Cg
             </objects>
             <point key="canvasLocation" x="9072.7999999999993" y="1730.2848575712146"/>
         </scene>
-        <!--Explore Detail Live Offers View Controller-->
+        <!--Bar Live Offers View Controller-->
         <scene sceneID="Uor-1T-iSp">
             <objects>
-                <viewController storyboardIdentifier="ExploreDetailLiveOffersViewController" id="Cmj-Sj-K2i" customClass="ExploreDetailLiveOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BarLiveOffersViewController" id="Cmj-Sj-K2i" customClass="BarLiveOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3a0-vz-TeI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4064,7 +4064,7 @@ Cg
         <!--Navigation Controller-->
         <scene sceneID="zH1-5G-19z">
             <objects>
-                <navigationController storyboardIdentifier="ExploreDetailNavigation" automaticallyAdjustsScrollViewInsets="NO" id="DtS-4u-nEJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="BarDetailNavigation" automaticallyAdjustsScrollViewInsets="NO" id="DtS-4u-nEJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="3jD-3r-oLj">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4549,7 +4549,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22" height="15"/>
+        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4560,7 +4560,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="46" height="46"/>
+        <image name="profile_image" width="138" height="138"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>

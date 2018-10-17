@@ -10,10 +10,10 @@ import UIKit
 import Reusable
 import SJSegmentedScrollView
 
-class ExploreDetailAboutViewController: UIViewController {
+class BarDetailAboutViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    var explore : Explore!
+    var bar : Bar!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +33,14 @@ class ExploreDetailAboutViewController: UIViewController {
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource
-extension ExploreDetailAboutViewController: UITableViewDelegate, UITableViewDataSource {
+extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
-        cell.setUpCell(explore: self.explore)
+        cell.setUpCell(explore: self.bar)
         return cell
     }
     
@@ -51,7 +51,7 @@ extension ExploreDetailAboutViewController: UITableViewDelegate, UITableViewData
 }
 
 //MARK: SJSegmentedViewControllerViewSource
-extension ExploreDetailAboutViewController: SJSegmentedViewControllerViewSource {
+extension BarDetailAboutViewController: SJSegmentedViewControllerViewSource {
     func viewForSegmentControllerToObserveContentOffsetChange() -> UIView {
         return self.tableView
     }

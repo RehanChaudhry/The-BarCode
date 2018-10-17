@@ -10,7 +10,7 @@ import UIKit
 import Reusable
 import CoreStore
 
-class ExploreDetailHeaderViewController: UIViewController {
+class BarDetailHeaderViewController: UIViewController {
 
     @IBOutlet var collectionView: UICollectionView!
     
@@ -20,7 +20,7 @@ class ExploreDetailHeaderViewController: UIViewController {
     
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
     
-    var explore: Explore!
+    var bar: Bar!
     
     var images: [String] = ["cover_detail", "cover_detail", "cover_detail"]
     
@@ -30,7 +30,7 @@ class ExploreDetailHeaderViewController: UIViewController {
         // Do any additional setup after loading the view.
         
 //        self.pageControl.numberOfPages = self.images.count
-        let color =  self.explore.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
+        let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
         self.favouriteButton.tintColor = color
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
     }
@@ -49,10 +49,10 @@ class ExploreDetailHeaderViewController: UIViewController {
 }
 
 //MARK: Webservices Methods
-extension ExploreDetailHeaderViewController {
+extension BarDetailHeaderViewController {
     func markFavourite() {
       
-        let params:[String : Any] = ["establishment_id": self.explore.id.value, "is_favorite" : !(self.explore.isUserFavourite.value)]
+        let params:[String : Any] = ["establishment_id": self.bar.id.value, "is_favorite" : !(self.bar.isUserFavourite.value)]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
             
@@ -75,9 +75,9 @@ extension ExploreDetailHeaderViewController {
 //                    bar.isUserFavourite.value = !(self.explore.isUserFavourite.value)
                 })
               
-                self.explore.isUserFavourite.value = !(self.explore.isUserFavourite.value)
+                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
                 
-                let color =  self.explore.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
+                let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
                 self.favouriteButton.tintColor = color
                 
             } else {
@@ -89,22 +89,22 @@ extension ExploreDetailHeaderViewController {
 }
 
 //MARK: UICollectionViewDataSource, UICollectionViewDelegate
-extension ExploreDetailHeaderViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension BarDetailHeaderViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.explore.images.count
+        return self.bar.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(for: indexPath, cellType: ExploreDetailHeaderCollectionViewCell.self)
-        cell.setUpCell(imageName: self.explore.images[indexPath.item].url.value)
+        cell.setUpCell(imageName: self.bar.images[indexPath.item].url.value)
         return cell
     }
     
 }
 
 //MARK: UICollectionViewDelegateFlowLayout
-extension ExploreDetailHeaderViewController: UICollectionViewDelegateFlowLayout {
+extension BarDetailHeaderViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView.frame.size
     }

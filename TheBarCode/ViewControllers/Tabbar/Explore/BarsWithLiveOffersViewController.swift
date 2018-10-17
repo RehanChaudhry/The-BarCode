@@ -1,5 +1,5 @@
 //
-//  DealsViewController.swift
+//  LiveOffersViewController.swift
 //  TheBarCode
 //
 //  Created by Mac OS X on 17/09/2018.
@@ -7,23 +7,19 @@
 //
 
 import UIKit
-import StatefulTableView
 import CoreStore
 import Alamofire
 import ObjectMapper
+import StatefulTableView
 
-protocol DealsViewControllerDelegate: class {
-    func dealsController(controller: DealsViewController, didSelectDeal deal: Explore)
+
+protocol BarsWithLiveOffersViewControllerDelegate: class {
+    func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
 }
 
-class DealsViewController: ExploreBaseViewController {
+class BarsWithLiveOffersViewController: ExploreBaseViewController {
 
-    var deals: [Bar] = []
-    
-    weak var delegate: DealsViewControllerDelegate!
-    
-    var dealsRequest: DataRequest?
-    var dealsLoadMore = Pagination()
+    weak var delegate: BarsWithLiveOffersViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +29,6 @@ class DealsViewController: ExploreBaseViewController {
         self.searchBar.delegate = self
         
         self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
-        
         self.statefulTableView.triggerInitialLoad()
     }
 
@@ -48,7 +43,7 @@ class DealsViewController: ExploreBaseViewController {
     override func setUpStatefulTableView() {
         super.setUpStatefulTableView()
         
-        self.statefulTableView.innerTable.register(cellType: DealTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: LiveOfferTableViewCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
@@ -58,32 +53,32 @@ class DealsViewController: ExploreBaseViewController {
 
 //MARK: UITableViewDataSource, UITableViewDelegate
 
-extension DealsViewController: UITableViewDataSource, UITableViewDelegate {
+extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.deals.count
+        return self.bars.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-        cell.setUpCell(explore: self.deals[indexPath.row])
+        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
+        cell.setUpCell(explore: self.bars[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-        //todo
-        //self.delegate.dealsController(controller: self, didSelectDeal: self.deals[indexPath.row])
+        
+        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: self.bars[indexPath.row])
     }
 }
 
 //MARK: UISearchBarDelegate
 
-extension DealsViewController: UISearchBarDelegate {
+extension BarsWithLiveOffersViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
@@ -91,30 +86,31 @@ extension DealsViewController: UISearchBarDelegate {
 
 
 //MARK: Webservices Methods
-extension DealsViewController {
-    func getdeals(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
+extension BarsWithLiveOffersViewController {
+    func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
         if isRefreshing {
-            self.dealsLoadMore = Pagination()
+            self.loadMore = Pagination()
         }
         
-        let params:[String : Any] = ["type": "deals", "pagination" : true,"page": self.dealsLoadMore.next]
-        self.dealsLoadMore.isLoading = true
-        
-        
+        let params:[String : Any] = ["type": ExploreType.liveOffers.rawValue,
+                                     "pagination" : true,
+                                     "page": self.loadMore.next]
+        self.loadMore.isLoading = true
+
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
-            self.dealsLoadMore.isLoading = false
+            self.loadMore.isLoading = false
             
             guard error == nil else {
-                self.dealsLoadMore.error = error! as NSError
+                self.loadMore.error = error! as NSError
                 self.statefulTableView.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
-                self.dealsLoadMore.error = serverError!.nsError()
+                self.loadMore.error = serverError!.nsError()
                 self.statefulTableView.reloadData()
                 completion(serverError!.nsError())
                 return
@@ -122,26 +118,27 @@ extension DealsViewController {
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
-               
+                
                 if isRefreshing {
-                    self.deals.removeAll()
+                    self.bars.removeAll()
                 }
                 
+                var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let bars = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    
-                    if !bars.isEmpty {
-                        let ids = bars.map{$0.uniqueIDValue}
-                        transaction.deleteAll(From<Bar>(), Where<Bar>("NOT(%K in %@)", Bar.uniqueIDKeyPath, ids))
-                    }
+                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
+                    importedObjects.append(contentsOf: objects)
                 })
                 
-                self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<Bar>()) ?? [])
+                for object in importedObjects {
+                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    self.bars.append(fetchedObject!)
+                }
                 
-                self.dealsLoadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
-                self.statefulTableView.canLoadMore = self.dealsLoadMore.canLoadMore()
+                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
+                
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -151,26 +148,26 @@ extension DealsViewController {
     }
 }
 
-extension DealsViewController: StatefulTableDelegate {
+extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getdeals(isRefreshing: false) {  [unowned self] (error) in
-            handler(self.deals.count == 0, error)
+        self.getBars(isRefreshing: false) {  [unowned self] (error) in
+            handler(self.bars.count == 0, error)
         }
     }
     
     func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
-        self.dealsLoadMore.error = nil
+        self.loadMore.error = nil
         tvc.innerTable.reloadData()
         
-        self.getdeals(isRefreshing: false) { [unowned self] (error) in
-            handler(self.dealsLoadMore.canLoadMore(), error, error != nil)
+        self.getBars(isRefreshing: false) { [unowned self] (error) in
+            handler(self.loadMore.canLoadMore(), error, error != nil)
         }
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getdeals(isRefreshing: true) { [unowned self] (error) in
-            handler(self.deals.count == 0, error)
+        self.getBars(isRefreshing: true) { [unowned self] (error) in
+            handler(self.bars.count == 0, error)
         }
     }
     
@@ -227,7 +224,6 @@ extension DealsViewController: StatefulTableDelegate {
         return loadingView
     }
 }
-
 
 
 

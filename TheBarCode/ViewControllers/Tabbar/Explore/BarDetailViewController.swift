@@ -10,20 +10,19 @@ import UIKit
 import SJSegmentedScrollView
 import PureLayout
 
-class ExploreDetailViewController: UIViewController {
+class BarDetailViewController: UIViewController {
     
     @IBOutlet var containerView: UIView!
     
-    var headerController: ExploreDetailHeaderViewController!
+    var headerController: BarDetailHeaderViewController!
     
-    var aboutController: ExploreDetailAboutViewController!
-    var dealsController: ExploreDetailDealsViewController!
-    var offersController: ExploreDetailLiveOffersViewController!
+    var aboutController: BarDetailAboutViewController!
+    var dealsController: BarDealsViewController!
+    var offersController: BarLiveOffersViewController!
     
     var segmentedController: SJSegmentedViewController!
     
-    var explore: Explore!
-    var deal: Deal!
+    var selectedBar: Bar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,24 +57,24 @@ class ExploreDetailViewController: UIViewController {
         let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
         let headerViewHeight = collectionViewHeight + 83.0
         
-        self.headerController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailHeaderViewController") as! ExploreDetailHeaderViewController)
-        headerController.explore = self.explore
+        self.headerController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailHeaderViewController") as! BarDetailHeaderViewController)
+        headerController.bar = self.selectedBar
         let _ = self.headerController.view
         self.headerController.collectionViewHeight.constant = collectionViewHeight
         
-        self.aboutController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailAboutViewController") as! ExploreDetailAboutViewController)
-        self.aboutController.explore = self.explore
+        self.aboutController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailAboutViewController") as! BarDetailAboutViewController)
+        self.aboutController.bar = self.selectedBar
         self.aboutController.title = "About"
         self.aboutController.view.backgroundColor = self.containerView.backgroundColor
         
-        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailDealsViewController") as! ExploreDetailDealsViewController)
-        self.dealsController.explore = self.explore
+        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDealsViewController") as! BarDealsViewController)
+        self.dealsController.bar = self.selectedBar
         self.dealsController.title = "Deals"
         self.dealsController.delegate = self
         self.dealsController.view.backgroundColor = self.containerView.backgroundColor
         
-        self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailLiveOffersViewController") as! ExploreDetailLiveOffersViewController)
-        self.offersController.explore = self.explore
+        self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "BarLiveOffersViewController") as! BarLiveOffersViewController)
+        self.offersController.bar = self.selectedBar
         self.offersController.title = "Live Offers"
         self.offersController.delegate = self
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
@@ -111,7 +110,7 @@ class ExploreDetailViewController: UIViewController {
     @IBAction func getOffButtonTapped(_ sender: Any) {
         let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
         redeemStartViewController.type = .standard
-        redeemStartViewController.establishmentID = self.explore.id.value
+        redeemStartViewController.barId = self.selectedBar.id.value
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemStartViewController, animated: true, completion: nil)
     }
@@ -136,7 +135,7 @@ class ExploreDetailViewController: UIViewController {
 }
 
 //MARK: SJSegmentedViewControllerDelegate
-extension ExploreDetailViewController: SJSegmentedViewControllerDelegate {
+extension BarDetailViewController: SJSegmentedViewControllerDelegate {
     func didMoveToPage(_ controller: UIViewController, segment: SJSegmentTab?, index: Int) {
         
         for segment in self.segmentedController.segments {
@@ -149,17 +148,15 @@ extension ExploreDetailViewController: SJSegmentedViewControllerDelegate {
 }
 
 //MARK: ExploreDetailDealsViewControllerDelegate
-extension ExploreDetailViewController: ExploreDetailDealsViewControllerDelegate {
-    func exploreDealsController(controller: ExploreDetailDealsViewController, didSelectRowAt deal: Deal) {
-
+extension BarDetailViewController: BarDealsViewControllerDelegate {
+    func barDealsController(controller: BarDealsViewController, didSelectRowAt deal: Deal) {
         self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: deal)
-    
     }
 }
 
 //MARK: ExploreDetailLiveOffersViewControllerDelegate
-extension ExploreDetailViewController: ExploreDetailLiveOffersViewControllerDelegate {
-    func exploreOffersController(controller: ExploreDetailLiveOffersViewController, didSelectRowAt offer: LiveOffer) {
+extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
+    func barLiveOffersController(controller: BarLiveOffersViewController, didSelectRowAt offer: LiveOffer) {
         self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: offer)
     }
 }

@@ -61,7 +61,7 @@ extension Explore: ImportableUniqueObject {
     }
     
     static func uniqueID(from source: [String : Any], in transaction: BaseDataTransaction) throws -> String? {
-        return "\(String(describing: source["id"]!))"
+        return "\(source["id"]!)"
     }
     
     func didInsert(from source: [String : Any], in transaction: BaseDataTransaction) throws {
@@ -74,7 +74,7 @@ extension Explore: ImportableUniqueObject {
     
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
-        self.userId.value = "\(String(describing: source["user_id"]!))"
+        self.userId.value = "\(source["user_id"]!)"
         self.title.value = source["title"] as! String
         self.detail.value = source["description"] as! String
         self.managerName.value = source["manager_name"] as! String

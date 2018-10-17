@@ -10,7 +10,7 @@ import UIKit
 import PureLayout
 
 enum ExploreType: String {
-    case deals = "deals", bars = "bars", liveOffers = "liveOffers"
+    case bars = "bars", deals = "deals", liveOffers = "live_offers"
 }
 
 enum DisplayType: String {
@@ -36,8 +36,8 @@ class ExploreViewController: UIViewController {
     var exploreType = ExploreType.bars
     
     var barsController: BarsViewController!
-    var dealsController: DealsViewController!
-    var liveOffersController: LiveOffersViewController!
+    var dealsController: BarsWithDealsViewController!
+    var liveOffersController: BarsWithLiveOffersViewController!
     
     var defaultButtonTitleColor: UIColor!
     
@@ -91,11 +91,11 @@ class ExploreViewController: UIViewController {
         self.barsController.delegate = self
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
         
-        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "DealsViewController") as! DealsViewController)
+        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithDealsViewController") as! BarsWithDealsViewController)
         self.dealsController.delegate = self
         self.addViewController(controller: self.dealsController, parent: self.dealsContainerView)
         
-        self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController)
+        self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithLiveOffersViewController") as! BarsWithLiveOffersViewController)
         self.liveOffersController.delegate = self
         self.addViewController(controller: self.liveOffersController, parent: self.liveOffersContainerView)
     }
@@ -109,13 +109,12 @@ class ExploreViewController: UIViewController {
         controller.view.autoPinEdgesToSuperviewEdges()
     }
     
-    func moveToDetail(obj: Explore) {
-        let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
-        let exploreDetailVC = exploreDetailNav.viewControllers.first as! ExploreDetailViewController
-        exploreDetailVC.explore = obj
-        self.present(exploreDetailNav, animated: true, completion: nil)
+    func moveToBarDetail(bar: Bar) {
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = bar
+        self.present(barDetailNav, animated: true, completion: nil)
     }
-    
 
     //MARK: My IBActions
     
@@ -156,19 +155,20 @@ class ExploreViewController: UIViewController {
 //MARK: BarsViewControllerDelegate
 extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
-        self.moveToDetail(obj: bar)
+        self.moveToBarDetail(bar: bar)
     }
 }
 
-//MARK: DealsViewControllerDelegate
-extension ExploreViewController: DealsViewControllerDelegate {
-    func dealsController(controller: DealsViewController, didSelectDeal deal: Explore) {
-        self.moveToDetail(obj: deal)
+//MARK: BarsWithDealsViewControllerDelegate
+extension ExploreViewController: BarsWithDealsViewControllerDelegate {
+    func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar) {
+        self.moveToBarDetail(bar: bar)
     }
 }
 
-extension ExploreViewController: LiveOffersViewControllerDelegate {
-    func liveOffersController(controller: LiveOffersViewController, didSelectLiveOffer offer: Explore) {
-        self.moveToDetail(obj: offer)
+//MARK: BarsWithLiveOffersViewControllerDelegate
+extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
+    func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar) {
+        self.moveToBarDetail(bar: bar)
     }
 }

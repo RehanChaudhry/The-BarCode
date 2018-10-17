@@ -9,6 +9,7 @@
 import UIKit
 import StatefulTableView
 import GoogleMaps
+import Alamofire
 
 class ExploreBaseViewController: UIViewController {
 
@@ -34,6 +35,11 @@ class ExploreBaseViewController: UIViewController {
     var displayType: DisplayType = .list
     
     var snackBar: SnackbarView = SnackbarView.loadFromNib()
+    
+    var dataRequest: DataRequest?
+    var loadMore = Pagination()
+    
+    var bars: [Bar] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,5 +140,5 @@ class ExploreBaseViewController: UIViewController {
         self.scrollView.scrollToPage(page: 1, animated: true)
                 
     }
-
 }
+

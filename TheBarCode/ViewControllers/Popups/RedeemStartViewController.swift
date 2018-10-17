@@ -15,7 +15,7 @@ class RedeemStartViewController: UIViewController {
     var deal : Deal!
 
     var type: OfferType = .unknown
-    var establishmentID = ""
+    var barId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +68,7 @@ extension RedeemStartViewController {
         
         var params : [String : Any] = [:]
         if type == .standard {
-             params = ["establishment_id" :  self.establishmentID,
+             params = ["establishment_id" :  self.barId,
                         "type" : "standard"]
         } else {
             params = ["establishment_id" : self.deal.establishmentId.value,

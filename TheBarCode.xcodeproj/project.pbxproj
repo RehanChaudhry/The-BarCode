@@ -51,13 +51,13 @@
 		0C44DD34214A7F5E000F5D64 /* MoreMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */; };
 		0C44DD38214A7F9F000F5D64 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C44DD36214A7F9F000F5D64 /* MenuCell.xib */; };
 		0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD37214A7F9F000F5D64 /* MenuCell.swift */; };
-		0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */; };
-		0C478A91215C9D7F002C51FA /* ExploreDetailAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */; };
-		0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */; };
-		0C478A95215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */; };
+		0C478A8F215C9A75002C51FA /* BarDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A8E215C9A75002C51FA /* BarDetailViewController.swift */; };
+		0C478A91215C9D7F002C51FA /* BarDetailAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A90215C9D7F002C51FA /* BarDetailAboutViewController.swift */; };
+		0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A92215C9D92002C51FA /* BarDealsViewController.swift */; };
+		0C478A95215C9DFD002C51FA /* BarLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A94215C9DFD002C51FA /* BarLiveOffersViewController.swift */; };
 		0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */; };
 		0C478A99215C9E39002C51FA /* ExploreAboutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */; };
-		0C478A9B215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */; };
+		0C478A9B215CC3DD002C51FA /* BarDetailHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A9A215CC3DD002C51FA /* BarDetailHeaderViewController.swift */; };
 		0C5A88EB21647E8200F16851 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88EA21647E8200F16851 /* ContactsViewController.swift */; };
 		0C5A88EF21647F8A00F16851 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88ED21647F8A00F16851 /* ContactTableViewCell.swift */; };
 		0C5A88F021647F8A00F16851 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88EE21647F8A00F16851 /* ContactTableViewCell.xib */; };
@@ -127,8 +127,8 @@
 		0C955E08214931D500F9385B /* LoadingAndErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C955E06214931D500F9385B /* LoadingAndErrorView.xib */; };
 		0C955E0B2149362900F9385B /* LoadMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0A2149362800F9385B /* LoadMore.swift */; };
 		0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */; };
-		0CBF0000214F932400B017CC /* LiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFF214F932400B017CC /* LiveOffersViewController.swift */; };
-		0CBF0002214F933000B017CC /* DealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0001214F933000B017CC /* DealsViewController.swift */; };
+		0CBF0000214F932400B017CC /* BarsWithLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFF214F932400B017CC /* BarsWithLiveOffersViewController.swift */; };
+		0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0001214F933000B017CC /* BarsWithDealsViewController.swift */; };
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
 		0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFD214F931700B017CC /* BarsViewController.swift */; };
 		0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */; };
@@ -230,13 +230,13 @@
 		0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreMenuItem.swift; sourceTree = "<group>"; };
 		0C44DD36214A7F9F000F5D64 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		0C44DD37214A7F9F000F5D64 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
-		0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailViewController.swift; sourceTree = "<group>"; };
-		0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailAboutViewController.swift; sourceTree = "<group>"; };
-		0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailDealsViewController.swift; sourceTree = "<group>"; };
-		0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailLiveOffersViewController.swift; sourceTree = "<group>"; };
+		0C478A8E215C9A75002C51FA /* BarDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDetailViewController.swift; sourceTree = "<group>"; };
+		0C478A90215C9D7F002C51FA /* BarDetailAboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDetailAboutViewController.swift; sourceTree = "<group>"; };
+		0C478A92215C9D92002C51FA /* BarDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDealsViewController.swift; sourceTree = "<group>"; };
+		0C478A94215C9DFD002C51FA /* BarLiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarLiveOffersViewController.swift; sourceTree = "<group>"; };
 		0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreAboutTableViewCell.swift; sourceTree = "<group>"; };
 		0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreAboutTableViewCell.xib; sourceTree = "<group>"; };
-		0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderViewController.swift; sourceTree = "<group>"; };
+		0C478A9A215CC3DD002C51FA /* BarDetailHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDetailHeaderViewController.swift; sourceTree = "<group>"; };
 		0C5A88EA21647E8200F16851 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		0C5A88ED21647F8A00F16851 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88EE21647F8A00F16851 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
@@ -306,10 +306,10 @@
 		0C955E06214931D500F9385B /* LoadingAndErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingAndErrorView.xib; sourceTree = "<group>"; };
 		0C955E0A2149362800F9385B /* LoadMore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMore.swift; sourceTree = "<group>"; };
 		0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsInfoViewController.swift; sourceTree = "<group>"; };
-		0CBF0001214F933000B017CC /* DealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsViewController.swift; sourceTree = "<group>"; };
+		0CBF0001214F933000B017CC /* BarsWithDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsWithDealsViewController.swift; sourceTree = "<group>"; };
 		0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseViewController.swift; sourceTree = "<group>"; };
 		0CBFFFFD214F931700B017CC /* BarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsViewController.swift; sourceTree = "<group>"; };
-		0CBFFFFF214F932400B017CC /* LiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveOffersViewController.swift; sourceTree = "<group>"; };
+		0CBFFFFF214F932400B017CC /* BarsWithLiveOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsWithLiveOffersViewController.swift; sourceTree = "<group>"; };
 		0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
 		0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		0CC81FA0216DCE6100FDB92D /* APIPaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaths.swift; sourceTree = "<group>"; };
@@ -577,13 +577,13 @@
 				0C23A8872146581B00DFB281 /* ExploreViewController.swift */,
 				0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */,
 				0CBFFFFD214F931700B017CC /* BarsViewController.swift */,
-				0CBFFFFF214F932400B017CC /* LiveOffersViewController.swift */,
-				0CBF0001214F933000B017CC /* DealsViewController.swift */,
-				0C478A8E215C9A75002C51FA /* ExploreDetailViewController.swift */,
-				0C478A9A215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift */,
-				0C478A90215C9D7F002C51FA /* ExploreDetailAboutViewController.swift */,
-				0C478A92215C9D92002C51FA /* ExploreDetailDealsViewController.swift */,
-				0C478A94215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift */,
+				0CBF0001214F933000B017CC /* BarsWithDealsViewController.swift */,
+				0CBFFFFF214F932400B017CC /* BarsWithLiveOffersViewController.swift */,
+				0C478A8E215C9A75002C51FA /* BarDetailViewController.swift */,
+				0C478A9A215CC3DD002C51FA /* BarDetailHeaderViewController.swift */,
+				0C478A90215C9D7F002C51FA /* BarDetailAboutViewController.swift */,
+				0C478A92215C9D92002C51FA /* BarDealsViewController.swift */,
+				0C478A94215C9DFD002C51FA /* BarLiveOffersViewController.swift */,
 				0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */,
 			);
 			path = Explore;
@@ -1383,7 +1383,7 @@
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,
 				0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */,
-				0C478A91215C9D7F002C51FA /* ExploreDetailAboutViewController.swift in Sources */,
+				0C478A91215C9D7F002C51FA /* BarDetailAboutViewController.swift in Sources */,
 				0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */,
 				0C8E9AAB214BBAE300224720 /* FAQ.swift in Sources */,
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
@@ -1391,10 +1391,10 @@
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
 				0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */,
 				0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */,
-				0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */,
+				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
-				0CBF0002214F933000B017CC /* DealsViewController.swift in Sources */,
+				0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */,
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */,
 				0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */,
@@ -1426,7 +1426,7 @@
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,
 				83A4B6352175ADC600730056 /* Offer.swift in Sources */,
 				0C8BDCD32150D0BE00D5117B /* DealTableViewCell.swift in Sources */,
-				0CBF0000214F932400B017CC /* LiveOffersViewController.swift in Sources */,
+				0CBF0000214F932400B017CC /* BarsWithLiveOffersViewController.swift in Sources */,
 				0C955DEE2149317100F9385B /* StatefulCollectionDelegate.swift in Sources */,
 				0C955DDC2149264100F9385B /* CategoriesViewController.swift in Sources */,
 				0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */,
@@ -1437,7 +1437,7 @@
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
 				0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
-				0C478A8F215C9A75002C51FA /* ExploreDetailViewController.swift in Sources */,
+				0C478A8F215C9A75002C51FA /* BarDetailViewController.swift in Sources */,
 				0C23A8882146581B00DFB281 /* ExploreViewController.swift in Sources */,
 				0C955DCE2147CDEB00F9385B /* FieldView.swift in Sources */,
 				0C955DFD214931A500F9385B /* EmptyDataView.swift in Sources */,
@@ -1448,9 +1448,9 @@
 				0C955DD62147F20100F9385B /* TermsViewController.swift in Sources */,
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
 				0C8E9AA0214B9CD300224720 /* FAQHeaderView.swift in Sources */,
-				0C478A9B215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift in Sources */,
+				0C478A9B215CC3DD002C51FA /* BarDetailHeaderViewController.swift in Sources */,
 				0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */,
-				0C478A95215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift in Sources */,
+				0C478A95215C9DFD002C51FA /* BarLiveOffersViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,

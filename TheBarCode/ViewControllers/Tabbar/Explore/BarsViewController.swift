@@ -21,11 +21,6 @@ class BarsViewController: ExploreBaseViewController {
     
     weak var delegate: BarsViewControllerDelegate!
     
-    var dealsRequest: DataRequest?
-    var dealsLoadMore = Pagination()
-    
-    var bars: [Bar] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,7 +54,7 @@ class BarsViewController: ExploreBaseViewController {
 //MARK: UITableViewDataSource, UITableViewDelegate
 
 extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
@@ -94,25 +89,27 @@ extension BarsViewController {
     func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
         if isRefreshing {
-            self.dealsLoadMore = Pagination()
+            self.loadMore = Pagination()
         }
         
-        let params:[String : Any] = ["type": "bars", "pagination" : true,"page": self.dealsLoadMore.next]
-        self.dealsLoadMore.isLoading = true
+        let params:[String : Any] = ["type": ExploreType.bars.rawValue,
+                                     "pagination" : true,
+                                     "page": self.loadMore.next]
+        self.loadMore.isLoading = true
         
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
-            self.dealsLoadMore.isLoading = false
+            self.loadMore.isLoading = false
 
             guard error == nil else {
-                self.dealsLoadMore.error = error! as NSError
+                self.loadMore.error = error! as NSError
                 self.statefulTableView.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
-                self.dealsLoadMore.error = serverError!.nsError()
+                self.loadMore.error = serverError!.nsError()
                 self.statefulTableView.reloadData()
                 completion(serverError!.nsError())
                 return
@@ -124,20 +121,20 @@ extension BarsViewController {
                 if isRefreshing {
                     self.bars.removeAll()
                 }
-                
+
+                var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let bars = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    
-                    if !bars.isEmpty {
-                        let ids = bars.map{$0.uniqueIDValue}
-                        transaction.deleteAll(From<Bar>(), Where<Bar>("NOT(%K in %@)", Bar.uniqueIDKeyPath, ids))
-                    }
+                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
+                    importedObjects.append(contentsOf: objects)
                 })
                 
-                self.bars.append(contentsOf: Utility.inMemoryStack.fetchAll(From<Bar>()) ?? [])
-                
-                self.dealsLoadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
-                self.statefulTableView.canLoadMore = self.dealsLoadMore.canLoadMore()
+                for object in importedObjects {
+                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    self.bars.append(fetchedObject!)
+                }
+
+                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
                 
@@ -159,11 +156,11 @@ extension BarsViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
-        self.dealsLoadMore.error = nil
+        self.loadMore.error = nil
         tvc.innerTable.reloadData()
         
         self.getBars(isRefreshing: false) { [unowned self] (error) in
-            handler(self.dealsLoadMore.canLoadMore(), error, error != nil)
+            handler(self.loadMore.canLoadMore(), error, error != nil)
         }
     }
     
