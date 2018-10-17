@@ -95,7 +95,11 @@ extension User: ImportableUniqueObject {
         
         self.profileImage.value = source["profile_image"] as? String
         
-        self.isLocationUpdated.value = source["is_location_updated"] as! Bool
+        if let isLocationUpdated = source["is_location_updated"] as? Bool {
+            self.isLocationUpdated.value = isLocationUpdated
+        } else {
+            self.isLocationUpdated.value = false
+        }
         
         if let socialAccountId = source["social_account_id"] as? String {
             self.socialAccountId.value = socialAccountId
