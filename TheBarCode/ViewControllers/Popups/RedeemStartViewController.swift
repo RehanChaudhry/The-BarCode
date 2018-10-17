@@ -95,7 +95,7 @@ extension RedeemStartViewController {
                     
                     try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
                         let editedObject = transaction.edit(self.deal)
-                        editedObject!.establishment.value!.isOfferRedeemed.value = false
+                        editedObject!.establishment.value!.canRedeemOffer.value = false
                     })
                     
                     self.dismiss(animated: true, completion: nil)

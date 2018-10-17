@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */; };
 		0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84B214654FD00DFB281 /* AppDelegate.swift */; };
 		0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84D214654FD00DFB281 /* SplashViewController.swift */; };
 		0C23A851214654FD00DFB281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C23A84F214654FD00DFB281 /* Main.storyboard */; };
@@ -180,6 +181,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCosumptionViewController.swift; sourceTree = "<group>"; };
 		0C23A848214654FD00DFB281 /* TheBarCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBarCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C23A84B214654FD00DFB281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C23A84D214654FD00DFB281 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -1027,6 +1029,7 @@
 				8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */,
 				0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */,
 				0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */,
+				0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -1421,6 +1424,7 @@
 				0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */,
 				0C8E9A91214A87E600224720 /* AccountSettingsViewController.swift in Sources */,
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,
+				0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */,
 				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
 				0C955DBD21478B7500F9385B /* GradientView.swift in Sources */,
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,

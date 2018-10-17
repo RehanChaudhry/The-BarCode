@@ -10,11 +10,19 @@ import UIKit
 import Contacts
 import FirebaseDynamicLinks
 
+protocol InviteViewControllerDelegate: class {
+    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem)
+}
+
 class InviteViewController: UITableViewController {
 
     @IBOutlet var headerView: UIView!
     
     var shouldShowCancelBarButton: Bool = false
+    
+    var isRedeemingDeal: Bool = false
+    
+    weak var delegate: InviteViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,8 +91,10 @@ class InviteViewController: UITableViewController {
         self.generateAndShareDynamicLink()
     }
     
-    @IBAction func cancelButtonTapped(_ sender: Any) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.navigationController?.dismiss(animated: true, completion: {
+            self.delegate?.inviteViewController(controller: self, cancelButtonTapped: sender)
+        })
     }
     
 }

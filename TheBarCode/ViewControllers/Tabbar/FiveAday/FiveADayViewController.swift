@@ -12,12 +12,6 @@ import FSPagerView
 import ObjectMapper
 import CoreStore
 
-protocol FiveADayViewControllerDelegate {
-    func showPopup(index: Int)
-    func showDealDetail(index: Int)
-
-}
-
 
 class FiveADayViewController: UIViewController {
 
@@ -41,8 +35,8 @@ class FiveADayViewController: UIViewController {
         self.pageControl.numberOfPages = deals.count
         self.pagerView.isInfinite = true
         self.pageControl.currentPage = 0
-        self.pagerView.backgroundColor = .clear
         self.pagerView.automaticSlidingInterval = 4.0
+        self.pagerView.backgroundColor = .clear
         self.pagerView.register(FiveADayCollectionViewCell.nib, forCellWithReuseIdentifier: FiveADayCollectionViewCell.reuseIdentifier)
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
@@ -60,13 +54,6 @@ class FiveADayViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
-        self.deals.removeAll()
-        self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
     }
     
     override func viewDidLayoutSubviews() {
@@ -100,32 +87,12 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
         let identifier = FiveADayCollectionViewCell.reuseIdentifier
         let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index) as! FiveADayCollectionViewCell
         cell.delegate = self
-        cell.setUpCell(deal: deals[index], index: index)
+        cell.setUpCell(deal: self.deals[index])
         return cell
     }
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         
-    }
-}
-
-//MARK: FiveADayViewControllerDelegate
-extension FiveADayViewController: FiveADayViewControllerDelegate {
-    
-    func showPopup(index: Int) {
-        let deal = self.deals[index]
-        if let bar = deal.establishment.value {
-            if bar.isOfferRedeemed.value {
-                redeemFiveADayDeal(deal: deal)
-            }
-        }
-    }
-    
-    func showDealDetail(index: Int){
-        let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
-        fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
-        fiveADayDetailViewController.deal = deals[index]
-        self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
 }
 
@@ -182,13 +149,21 @@ extension FiveADayViewController {
 
 //MARK: WebService Method
 extension FiveADayViewController {
-    func redeemFiveADayDeal(deal: FiveADayDeal) {
+    func redeemFiveADayDeal(deal: FiveADayDeal, cell: FiveADayCollectionViewCell) {
+        
+        self.pagerView.automaticSlidingInterval = 0.0
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        cell.redeemButton.showLoader()
         
         let params: [String: Any] = ["establishment_id": deal.establishmentId.value,
                       "type": "reload",
                       "offer_id": deal.id.value ]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
+            
+            self.pagerView.automaticSlidingInterval = 4.0
+            cell.redeemButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
                 self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
@@ -205,7 +180,7 @@ extension FiveADayViewController {
                     
                     try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
                         let editedObject = transaction.edit(deal)
-                        editedObject!.establishment.value!.isOfferRedeemed.value = false
+                        editedObject!.establishment.value!.canRedeemOffer.value = false
                     })
                     
                 } else {
@@ -217,5 +192,95 @@ extension FiveADayViewController {
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
             }
         }
+    }
+}
+
+extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
+    func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton) {
+        let index = self.pagerView.index(for: cell)
+        let deal = self.deals[index]
+        if let bar = deal.establishment.value {
+            if bar.canRedeemOffer.value {
+                self.redeemFiveADayDeal(deal: deal, cell: cell)
+            } else {
+                if bar.credit.value > 0 {
+                    let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+                    creditConsumptionController.delegate = self
+                    creditConsumptionController.modalPresentationStyle = .overCurrentContext
+                    self.present(creditConsumptionController, animated: true, completion: nil)
+                    
+                    
+                } else {
+                    self.pagerView.automaticSlidingInterval = 0.0
+                    let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+                    outOfCreditViewController.delegate = self
+                    outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+                    self.present(outOfCreditViewController, animated: true, completion: nil)
+                }
+            }
+        } else {
+            debugPrint("Bar not found")
+        }
+    }
+    
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton) {
+        let index = self.pagerView.index(for: cell)
+        
+        let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
+        fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
+        fiveADayDetailViewController.deal = self.deals[index]
+        self.present(fiveADayDetailViewController, animated: true, completion: nil)
+    }
+}
+
+extension FiveADayViewController: OutOfCreditViewControllerDelegate {
+    
+    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+    
+    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton) {
+        
+        let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.isRedeemingDeal = true
+        reloadController.delegate = self
+        self.present(reloadNavigation, animated: true, completion: nil)
+    }
+    
+    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton) {
+        
+        let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.shouldShowCancelBarButton = true
+        inviteController.isRedeemingDeal = true
+        inviteController.delegate = self
+        self.present(inviteNavigation, animated: true, completion: nil)
+        
+    }
+    
+}
+
+//MARK: ReloadViewControllerDelegate
+extension FiveADayViewController: ReloadViewControllerDelegate {
+    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+}
+
+//MARK: InviteViewControllerDelegate
+extension FiveADayViewController: InviteViewControllerDelegate {
+    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+}
+
+extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton) {
+        
+    }
+    
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton) {
+        self.pagerView.automaticSlidingInterval = 4.0
     }
 }

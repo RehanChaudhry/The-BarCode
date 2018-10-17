@@ -33,7 +33,7 @@ class BarDetailViewController: UIViewController {
         self.setUpSegmentedController()
         self.addBackButton()
         
-        if selectedBar.isOfferRedeemed.value {
+        if selectedBar.canRedeemOffer.value {
             
         }
         
@@ -114,7 +114,7 @@ class BarDetailViewController: UIViewController {
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
     
-        if self.selectedBar.isOfferRedeemed.value {
+        if self.selectedBar.canRedeemOffer.value {
             redeemStandardDeal()
         }
     }
@@ -180,7 +180,7 @@ extension BarDetailViewController {
                     
                     try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
                         let editedObject = transaction.edit(self.selectedBar)
-                        editedObject!.isOfferRedeemed.value = false
+                        editedObject!.canRedeemOffer.value = false
                     })
                     
                 } else {

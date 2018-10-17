@@ -39,6 +39,14 @@ class User: CoreStoreObject {
     var socialAccountId = Value.Optional<String>("social_account_id")
     var referralCode = Value.Optional<String>("referral_code")
     
+    var creditsRaw = Value.Optional<String>("credits_raw")
+    
+    var credit: Int {
+        get {
+            return Int(creditsRaw.value!) ?? 0
+        }
+    }
+    
     var status: UserStatus {
         get {
             if let userStatus = UserStatus(rawValue: self.statusRaw.value) {
@@ -88,12 +96,14 @@ extension User: ImportableUniqueObject {
 //        self.refreshToken.value = source["refresh_token"] as! String
         self.ownReferralCode.value = source["own_referral_code"] as! String
         self.statusRaw.value = source["status"] as! String
+        self.creditsRaw.value = "\(source["credit"]!)"
         
         self.liveOfferNotificationEnabled.value = source["is_live_offer_notify"] as! Bool
         self.fiveADayNotificationEnabled.value = source["is_5_day_notify"] as! Bool
         self.isCategorySelected.value = source["is_interest_selected"] as! Bool
         
         self.profileImage.value = source["profile_image"] as? String
+        
         
         if let isLocationUpdated = source["is_location_updated"] as? Bool {
             self.isLocationUpdated.value = isLocationUpdated

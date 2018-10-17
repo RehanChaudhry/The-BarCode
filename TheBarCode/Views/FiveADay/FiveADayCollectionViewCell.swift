@@ -11,6 +11,11 @@ import Reusable
 import FSPagerView
 import Gradientable
 
+protocol FiveADayCollectionViewCellDelegate: class {
+    func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton)
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton)
+}
+
 class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var shadowView: ShadowView!
@@ -30,9 +35,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var detailButton: UIButton!
     
-    var delegate : FiveADayViewControllerDelegate?
-    var index : Int!
-    
+    weak var delegate : FiveADayCollectionViewCellDelegate!
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -45,9 +49,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(deal: Deal, index: Int) {
-        self.index = index
-
+    func setUpCell(deal: Deal) {
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value!), showRetryButton: false)
         self.dealTitleLabel.text = deal.title.value
         self.dealSubTitleLabel.text =  deal.subTitle.value
@@ -59,13 +61,9 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.distanceLabel.text = distance.value
         } else {
             self.distanceLabel.isHidden = true
-        }
-        
-        if !deal.establishment.value!.isOfferRedeemed.value {
-            redeemButton.isEnabled = false
+            self.distanceLabel.text = ""
         }
  
-        
         if UIScreen.main.bounds.size.width == 320.0 {
             self.coverImageHeight.constant = 165.0
         } else {
@@ -89,11 +87,12 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
     }
     
-    @IBAction func redeemDealButtonTapped(_ sender: Any) {
-        delegate?.showPopup(index: self.index)
+    //MARK: My IBActions
+    @IBAction func redeemDealButtonTapped(_ sender: UIButton) {
+        self.delegate!.fiveADayCell(cell: self, redeemedButtonTapped: sender)
     }
     
-    @IBAction func viewDetailButtonTapped(_ sender: Any) {
-        delegate?.showDealDetail(index: self.index)
+    @IBAction func viewDetailButtonTapped(_ sender: UIButton) {
+        self.delegate.fiveADayCell(cell: self, viewDetailButtonTapped: sender)
     }
 }
