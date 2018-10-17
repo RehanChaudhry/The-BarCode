@@ -29,11 +29,17 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
     }
     
     func configCell(deal: FiveADayDeal) {
-        self.titleLabel.text = deal.title
-        self.subTitleLabel.text = deal.subTitle
-        self.detailLabel.text = deal.detail
-        self.locationLabel.text = deal.distance
-        self.barNameLabel.text = deal.location
+        self.titleLabel.text = deal.title.value
+        self.subTitleLabel.text =  deal.subTitle.value
+        self.detailLabel.text =  deal.detail.value
+        self.barNameLabel.text = deal.establishment.value!.title.value
+        
+        if let distance = deal.establishment.value?.distance {
+            self.locationLabel.isHidden = false
+            self.locationLabel.text = distance.value
+        } else {
+            self.locationLabel.isHidden = true
+        }
     }
 
 }

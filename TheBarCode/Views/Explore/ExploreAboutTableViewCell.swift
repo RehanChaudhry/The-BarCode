@@ -55,7 +55,12 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
 
     //MARK: My Methods
     
-    func setUpCell() {
-
+    func setUpCell(explore: Explore) {
+        infoLabel.text = explore.detail.value
+        timingsLabel.text = explore.businessTiming.value
+        websiteButton.setTitle(explore.website.value, for: .normal)
+        phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
+        addressLabel.text = explore.address.value
+        
     }
 }

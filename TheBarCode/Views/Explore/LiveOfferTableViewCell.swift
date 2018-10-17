@@ -12,6 +12,7 @@ import Reusable
 class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
 
     @IBOutlet var detailLabel: UILabel!
+    @IBOutlet weak var validityLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +29,56 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(offer: LiveOffer) {
-        super.setUpCell(explore: offer)
+    override func setUpCell(explore: Explore) {
         
-        self.detailLabel.text = offer.detail
+        if let image = explore.images.first {
+            coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false)
+        }
+        
+        titleLabel.text = explore.title.value
+        distanceLabel.text = explore.distance.value
+        detailLabel.text = "\(explore.deals.value) live offer"
+        locationIconImageView.isHidden = false
+        distanceLabel.isHidden = false
+        detailLabel.isHidden = false
+        validityLabel.isHidden = true
+        
+    }
+    
+    func setUpDetailCell(offer: LiveOffer) {
+        
+        let explore = offer.establishment.value!
+        let url = offer.image.value
+        coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
+            
+        titleLabel.text = explore.title.value
+        locationIconImageView.isHidden = true
+        distanceLabel.isHidden = true
+        detailLabel.isHidden = true
+        
+        validityLabel.attributedText = getAttributedString(startTime: offer.endTime.value)
+    }
+    
+    func getAttributedString(startTime:String) -> NSMutableAttributedString {
+        
+        let font = UIFont.appRegularFontOf(size: 12.0)
+        let attributesWhite: [NSAttributedStringKey: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.white]
+        let attributesBlue: [NSAttributedStringKey: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.appBlueColor()]
+        
+        let description = "Expires in:"
+        let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
+
+        let description1 = " \(startTime)"
+        let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
+
+        text.append(text1)
+        
+        return text
+        
     }
     
 }

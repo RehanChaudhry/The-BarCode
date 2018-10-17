@@ -32,10 +32,16 @@ class GradientButton: LoadingButton, Gradientable {
 //        self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
     }
     
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.updateGradient(colors: [self.startColor, self.endColor], locations: self.locations, direction: directions)
+        if self.isEnabled {
+            self.updateGradient(colors: [self.startColor, self.endColor], locations: self.locations, direction: directions)
+        } else {
+            self.updateGradient(colors: [self.startColor.withAlphaComponent(0.5), self.endColor.withAlphaComponent(0.5)], locations: self.locations, direction: directions)
+        }
     }
     
     //MARK: My Methods

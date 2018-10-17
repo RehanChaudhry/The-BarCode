@@ -10,9 +10,10 @@ import UIKit
 import Reusable
 import FSPagerView
 import ObjectMapper
+import CoreStore
 
 protocol FiveADayViewControllerDelegate {
-    func showPopup()
+    func showPopup(index: Int)
     func showDealDetail(index: Int)
 
 }
@@ -33,7 +34,7 @@ class FiveADayViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.deals = FiveADayDeal.getDummyList()
+        //self.deals = FiveADayDeal.getDummyList()
         
         self.pageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         
@@ -59,6 +60,13 @@ class FiveADayViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        self.deals.removeAll()
+        self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
     }
     
     override func viewDidLayoutSubviews() {
@@ -103,10 +111,17 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
 
 //MARK: FiveADayViewControllerDelegate
 extension FiveADayViewController: FiveADayViewControllerDelegate {
-    func showPopup() {
-        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-        redeemStartViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemStartViewController, animated: true, completion: nil)
+    
+    func showPopup(index: Int) {
+        let deal = self.deals[index]
+        if let bar = deal.establishment.value {
+            if bar.isOfferRedeemed.value {
+                let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+                redeemStartViewController.modalPresentationStyle = .overCurrentContext
+                redeemStartViewController.deal =  deal
+                self.present(redeemStartViewController, animated: true, completion: nil)
+            }
+        }
     }
     
     func showDealDetail(index: Int){
@@ -135,12 +150,30 @@ extension FiveADayViewController {
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let responseDeals = (responseDict?["data"] as? [[String : Any]]) {
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                    let deals = try! transaction.importUniqueObjects(Into<FiveADayDeal>(), sourceArray: responseArray)
+                    
+                    if !deals.isEmpty {
+                        let ids = deals.map{$0.uniqueIDValue}
+                        transaction.deleteAll(From<FiveADayDeal>(), Where<FiveADayDeal>("NOT(%K in %@)", FiveADayDeal.uniqueIDKeyPath, ids))
+                    }
+                })
+                
                 self.deals.removeAll()
+                self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
                 
-                
+                if self.deals.isEmpty {
+                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To Refresh")
+                } else {
+                    self.statefulView.isHidden = true
+                    self.statefulView.showNothing()
+                }
                 
                 self.pagerView.reloadData()
+                self.pageControl.numberOfPages = self.deals.count
+                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")

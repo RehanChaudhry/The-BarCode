@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import CoreStore
 
 class FiveADayDeal: Deal {
+
+}
+
+
+
+/*class FiveADayDeal: Deal {
     var location: String! = ""
     var subTitle: String! = ""
     var isRedeemDeal : Bool = false
@@ -38,8 +45,4 @@ class FiveADayDeal: Deal {
         return deal1
     }
 
-    
-
-    
-    
-}
+}*/

@@ -195,7 +195,7 @@ extension CategoriesViewController {
                     debugPrint("Imported categories count: \(importedObjects.count)")
                 })
                 
-                self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy<Category>.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+                self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
                 self.collectionView.innerCollection.reloadData()
                 
                 self.statefulView.isHidden = true

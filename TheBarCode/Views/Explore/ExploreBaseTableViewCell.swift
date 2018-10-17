@@ -10,7 +10,8 @@ import UIKit
 
 class ExploreBaseTableViewCell: UITableViewCell {
 
-    @IBOutlet var coverImageView: UIImageView!
+    @IBOutlet var coverImageView: AsyncImageView!
+    
     @IBOutlet var locationIconImageView: UIImageView!
     
     @IBOutlet var titleLabel: UILabel!
@@ -43,10 +44,12 @@ class ExploreBaseTableViewCell: UITableViewCell {
     }
     
     func setUpCell(explore: Explore) {
-        
-        coverImageView.image = UIImage(named: explore.coverImage)
-        titleLabel.text = explore.title
-        distanceLabel.text = explore.distance
-        
+        if explore.images.value.count > 0 {
+            let url = explore.images.value[0].url.value
+            coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
+
+        }
+        titleLabel.text = explore.title.value
+        distanceLabel.text = explore.distance.value
     }
 }

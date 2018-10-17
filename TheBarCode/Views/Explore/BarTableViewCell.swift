@@ -30,7 +30,6 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func setUpCell(bar: Bar) {
         super.setUpCell(explore: bar)
-    
-        self.favouriteButton.tintColor = bar.isFavourite ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+       self.favouriteButton.tintColor = bar.isUserFavourite.value ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
     }
 }

@@ -61,6 +61,12 @@ class ServerError: Mappable {
         return singleErrorMessage
     }
     
+    func nsError() -> NSError {
+        //TODO
+        let error = NSError(domain: "ServerError", code: 200, userInfo: [NSLocalizedDescriptionKey : self.errorMessages()])
+        return error
+    }
+    
 }
 
 class ErrorObject: NSObject {

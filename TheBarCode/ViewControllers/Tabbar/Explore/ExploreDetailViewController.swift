@@ -22,6 +22,9 @@ class ExploreDetailViewController: UIViewController {
     
     var segmentedController: SJSegmentedViewController!
     
+    var explore: Explore!
+    var deal: Deal!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,6 +32,7 @@ class ExploreDetailViewController: UIViewController {
         
         self.setUpSegmentedController()
         self.addBackButton()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,19 +59,23 @@ class ExploreDetailViewController: UIViewController {
         let headerViewHeight = collectionViewHeight + 83.0
         
         self.headerController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailHeaderViewController") as! ExploreDetailHeaderViewController)
+        headerController.explore = self.explore
         let _ = self.headerController.view
         self.headerController.collectionViewHeight.constant = collectionViewHeight
         
         self.aboutController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailAboutViewController") as! ExploreDetailAboutViewController)
+        self.aboutController.explore = self.explore
         self.aboutController.title = "About"
         self.aboutController.view.backgroundColor = self.containerView.backgroundColor
         
         self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailDealsViewController") as! ExploreDetailDealsViewController)
+        self.dealsController.explore = self.explore
         self.dealsController.title = "Deals"
         self.dealsController.delegate = self
         self.dealsController.view.backgroundColor = self.containerView.backgroundColor
         
         self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "ExploreDetailLiveOffersViewController") as! ExploreDetailLiveOffersViewController)
+        self.offersController.explore = self.explore
         self.offersController.title = "Live Offers"
         self.offersController.delegate = self
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
@@ -102,9 +110,29 @@ class ExploreDetailViewController: UIViewController {
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
         let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.type = .standard
+        redeemStartViewController.establishmentID = self.explore.id.value
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemStartViewController, animated: true, completion: nil)
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+//    {
+//        if (segue.identifier == "segueTest") {
+//            var svc = segue!.destinationViewController
+//
+//
+//        }
+//    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ExploreDetailToOfferDetailSegue" {
+            let vc = segue.destination as! OfferDetailViewController
+            vc.deal = sender as? Deal
+        }
+    }
+    
+    
 }
 
 //MARK: SJSegmentedViewControllerDelegate
@@ -122,14 +150,16 @@ extension ExploreDetailViewController: SJSegmentedViewControllerDelegate {
 
 //MARK: ExploreDetailDealsViewControllerDelegate
 extension ExploreDetailViewController: ExploreDetailDealsViewControllerDelegate {
-    func exploreDealsController(controller: ExploreDetailDealsViewController, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: nil)
+    func exploreDealsController(controller: ExploreDetailDealsViewController, didSelectRowAt deal: Deal) {
+
+        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: deal)
+    
     }
 }
 
 //MARK: ExploreDetailLiveOffersViewControllerDelegate
 extension ExploreDetailViewController: ExploreDetailLiveOffersViewControllerDelegate {
-    func exploreOffersController(controller: ExploreDetailLiveOffersViewController, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: nil)
+    func exploreOffersController(controller: ExploreDetailLiveOffersViewController, didSelectRowAt offer: LiveOffer) {
+        self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: offer)
     }
 }

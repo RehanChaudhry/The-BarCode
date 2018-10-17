@@ -24,5 +24,13 @@ let apiPathCategories = "interest"
 let apiPathUpdateSelectedCategories = "userinterest/update-user-interest"
 
 let apiPathInviteViaEmail = "send-invite"
-
 let apiPathLocationUpdate = "user/update-location"
+
+let apiEstablishment = "establishment"
+
+let apiOfferRedeem = "offer-redeem"
+let apioffer = "offer"
+let apiFavorite = "user-favorite-establishment"
+
+let apiUpdateFavorite = "user-favorite-establishment/update"
+

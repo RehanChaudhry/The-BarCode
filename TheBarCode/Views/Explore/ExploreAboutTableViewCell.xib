@@ -247,13 +247,16 @@ Sunday - 12:00 - 22:00</string>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addressLabel" destination="i8c-xh-cze" id="v2X-id-7XS"/>
                 <outlet property="directionsButton" destination="YQO-1k-7ft" id="cxj-kE-n8W"/>
                 <outlet property="emailButton" destination="tPn-zR-PNb" id="vSI-Cm-doz"/>
                 <outlet property="emailButtonHeight" destination="3gk-d2-hyQ" id="Hxe-e6-qNF"/>
                 <outlet property="emailLabel" destination="VtQ-gi-lNY" id="X48-cN-Q1D"/>
+                <outlet property="infoLabel" destination="5LA-UJ-j43" id="pPi-2R-lmi"/>
                 <outlet property="phoneNumberButton" destination="bs9-GE-FgW" id="sDa-58-skm"/>
                 <outlet property="phoneNumberButtonHeight" destination="nRj-Us-CkJ" id="R1u-Wc-Dq3"/>
                 <outlet property="phoneNumberLabel" destination="mHh-cy-EnE" id="pzZ-fq-fJ5"/>
+                <outlet property="timingsLabel" destination="cQZ-hh-5Hh" id="yBN-zn-27E"/>
                 <outlet property="websiteButton" destination="E3T-fZ-hrt" id="Dau-du-fWg"/>
                 <outlet property="websiteButtonHeight" destination="jZC-U1-5IZ" id="OUT-Oh-ipK"/>
                 <outlet property="websiteLabel" destination="2Vd-yV-E3a" id="BUn-6L-hMc"/>
