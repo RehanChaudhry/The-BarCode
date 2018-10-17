@@ -8,8 +8,9 @@
 
 import UIKit
 import Gradientable
+import PureLayout
 
-class GradientButton: GradientableButton {
+class GradientButton: LoadingButton, Gradientable {
 
     @IBInspectable
     public var cornerRadius: CGFloat = 2.0 {
@@ -22,6 +23,8 @@ class GradientButton: GradientableButton {
     var endColor: UIColor = UIColor.appBlueColor()
     var locations: [NSNumber]?
     var directions: GradientableOptionsDirection = .right
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

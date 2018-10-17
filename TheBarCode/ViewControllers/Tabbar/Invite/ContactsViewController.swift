@@ -28,7 +28,7 @@ class ContactsViewController: UIViewController {
         self.statefulView.backgroundColor = self.view.backgroundColor
         self.view.addSubview(statefulView)
         
-        self.statefulView.retryHandler = {(sender: UIButton) in
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
             self.loadContactsFromAddressBook()
         }
         
@@ -98,7 +98,12 @@ class ContactsViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func inviteBarButtonTapped(sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        
+        if self.contacts.first(where: {$0.isSelected}) != nil {
+            self.sendInvites()
+        } else {
+            self.showAlertController(title: "Invite Via Email", msg: "Please select atleast 1 contact to send invitation via email.")
+        }
     }
 }
 
@@ -118,5 +123,38 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         
         self.contacts[indexPath.row].isSelected = !self.contacts[indexPath.row].isSelected
         self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+}
+
+//MARK: Webservices Methods
+extension ContactsViewController {
+    
+    func sendInvites() {
+        
+        let selectedEmails = self.contacts.compactMap { (contact) -> String? in
+            if contact.isSelected {
+                return contact.email
+            } else {
+                return nil
+            }
+        }
+        
+        let params = ["emails" : selectedEmails]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathInviteViaEmail, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "Invite Via Email", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "Invite Via Email", msg: serverError!.errorMessages())
+                return
+            }
+            
+            self.navigationController?.popViewController(animated: true)
+            
+        }
+        
     }
 }

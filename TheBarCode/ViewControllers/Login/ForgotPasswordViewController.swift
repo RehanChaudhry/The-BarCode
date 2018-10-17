@@ -8,10 +8,13 @@
 
 import UIKit
 import PureLayout
+import ObjectMapper
 
 class ForgotPasswordViewController: UIViewController {
 
     @IBOutlet var separatorView: UIView!
+    
+    @IBOutlet var forgotPasswordButton: GradientButton!
     
     var emailFieldView: FieldView!
     
@@ -90,8 +93,14 @@ extension ForgotPasswordViewController {
     
     func forgotPassword() {
         
+        self.forgotPasswordButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let params = ["email" : self.emailFieldView.textField.text!]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathForgotPassword, method: .post) { (response, serverError, error) in
+        
+            self.forgotPasswordButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
                 self.showAlertController(title: "Forgot Password", msg: error!.localizedDescription)
@@ -103,11 +112,18 @@ extension ForgotPasswordViewController {
                 return
             }
             
-            let alertController = UIAlertController(title: "Forgot Password", message: "An email with instructions about how to reset your password has been sent. Please follow the instructions to reset your password.", preferredStyle: .alert)
+            var message: String = "An email with instructions about how to reset your password has been sent. Please follow the instructions to reset your password."
+            if let responseDict = response as? [String : Any] {
+                let serverMessage = Mapper<ServerMessage>().map(JSON: responseDict)
+                message = serverMessage!.message
+            }
+            
+            let alertController = UIAlertController(title: "Forgot Password", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .cancel) { (action) in
                 self.navigationController?.popViewController(animated: true)
             })
             self.present(alertController, animated: true, completion: nil)
+            
 
         }
         

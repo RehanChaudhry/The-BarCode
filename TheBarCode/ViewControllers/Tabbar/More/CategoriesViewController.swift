@@ -15,7 +15,7 @@ class CategoriesViewController: UIViewController {
 
     @IBOutlet var collectionView: StatefulCollectionView!
     
-    @IBOutlet var continueButton: UIButton!
+    @IBOutlet var continueButton: GradientButton!
     
     @IBOutlet var infoLabel: UILabel!
     
@@ -216,7 +216,14 @@ extension CategoriesViewController {
         
         let selectedCategoriesIds = selectedCategories.map({$0.id.value})
         let params = ["ids" : selectedCategoriesIds]
+        
+        self.continueButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateSelectedCategories, method: .post) { (response, serverError, error) in
+            
+            self.continueButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
                 self.showAlertController(title: "", msg: error!.localizedDescription)

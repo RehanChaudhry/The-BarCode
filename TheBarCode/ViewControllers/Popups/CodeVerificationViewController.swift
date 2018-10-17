@@ -15,7 +15,7 @@ class CodeVerificationViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
     
-    @IBOutlet var actionButton: UIButton!
+    @IBOutlet var actionButton: GradientButton!
     
     @IBOutlet var codeFieldContainer1: UIView!
     @IBOutlet var codeFieldContainer2: UIView!

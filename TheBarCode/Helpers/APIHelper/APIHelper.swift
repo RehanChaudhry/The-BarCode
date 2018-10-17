@@ -12,7 +12,8 @@ import ObjectMapper
 import RNCryptor
 import SwiftyJSON
 
-let baseURLString = "https://thebarcode-qa.cygnismedia.com/api/"
+let barCodeDomainURLString = "https://thebarcode-qa.cygnismedia.com/"
+let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
 let clientScret = "a7024f16e0c8d6475c2f82c66a8f6d9d85380e63"
 let grantTypePassword = "password"
@@ -194,8 +195,7 @@ class APIHelper {
     }
     
     func getGenericHeaders() -> [String : String] {
-        let headers = ["Accept" : "application/json",
-                       "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImNiNjA3YjE0N2UyZDczMmVjZWJmNTM4NjU3NGY1MTYwYTc0MmRjNDEzMGU3NzFlMGFkYjM3MzgxMjM2NmRmYTgxYzVhMDgxZGY0N2YxODVlIn0.eyJhdWQiOiI0NSIsImp0aSI6ImNiNjA3YjE0N2UyZDczMmVjZWJmNTM4NjU3NGY1MTYwYTc0MmRjNDEzMGU3NzFlMGFkYjM3MzgxMjM2NmRmYTgxYzVhMDgxZGY0N2YxODVlIiwiaWF0IjoxNTM4NjY4OTA0LCJuYmYiOjE1Mzg2Njg5MDQsImV4cCI6MTU3MDIwNDkwNCwic3ViIjoiMTEzIiwic2NvcGVzIjpbInVzZXIuc2hvdyIsInVwZGF0ZS5yZWZlcnJhbC5jb2RlIiwiaW50ZXJlc3QuaW5kZXgiLCJ1c2VyLnVwZGF0ZSIsInVwZGF0ZS51c2VyLmludGVyZXN0cyIsInVwZGF0ZS51c2VyLmZhdm9yaXRlLmVzdGFibGlzaG1lbnQiLCJ1c2VyLWZhdm9yaXRlLWVzdGFibGlzaG1lbnQuaW5kZXgiLCJvZmZlci5pbmRleCIsIm9mZmVyLnNob3ciLCJlc3RhYmxpc2htZW50LmluZGV4IiwiZXN0YWJsaXNobWVudC5zaG93Iiwic3Vic2NyaXB0aW9uLnN0b3JlIiwib2ZmZXItcmVkZWVtLnN0b3JlIiwiZml2ZS1hLWRheS5pbmRleCIsInZpZXcuc3RvcmUiLCJzZW5kLWludml0ZS5zdG9yZSJdfQ.lrcgSWp-MkkLRtDSq4HW439kivsXzuUShfGqasL0XsACB523KzRDojfTru7PLUOxFBFDbnAY0qDIZE2H3jSoOOEHtqBKqfaJTT4X0WE8K0OaJiJKzZ1EC_XVK1wEV9e3RQMtCTDjw9pent8x7BzwJqOlr1bSBFDT6IGQzDNqXcUY1aOiYCXVBPka_kYqXgRGmipweiqjt4pmmVe6pp3MEL4mse-1fhL8TER__WfXBLHdioJSzA4o7cBhv4-sdvov63TuCAOOc_0o8UxOVmHXYNB9znJaQXPg93lR6fFg3OUnBrngEVkXi_yv35bPPQoUPOndAdSbrMATu3IRPh_h1Vc8o3WW929Ypx5lmAJBZl2so334pkWzV1qy75rP_5fVOQHmlRVV6f0twhPNzMTOv0EzhKNuv8CKgdJSyvNVYJMFt1-MLdKuVOBHlOM8r2cWzdfJ_7eGKOrzKLFe9TUP_Zc7KfHYnfN7FovpguQY7SdIpixfSozi0A0tfvDyRTdQNlYFN925mOZODpVDaEhGJ5--M83phasc4a3HVZpxQ5aoPxicZEc_HMeYwelZSznLd9g4G-dOCpJ3y6IH3qof8QnCNBl_x6nyvWCMn6Y-wa-kE10-tk5ryANLnwK0KS9U6BShVGRbVXMpDUko8UWKh0fI9qGD971ojOWlO8Ih-g0"]
+        let headers = ["Accept" : "application/json"]
         return headers
     }
 }

@@ -15,6 +15,8 @@ class ReferralViewController: UIViewController {
 
     @IBOutlet var separatorView: UIView!
     
+    @IBOutlet var referralButton: GradientButton!
+    
     var codeFieldView: FieldView!
     
     var characterLimit = 7
@@ -29,6 +31,25 @@ class ReferralViewController: UIViewController {
         
         self.navigationItem.hidesBackButton = true
         self.setUpFields()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let inviteUrl = appDelegate.inviteUrlString {
+            
+            let urlComponents = URLComponents(string: inviteUrl)
+            if let queryItems = urlComponents?.queryItems {
+                for queryItem in queryItems {
+                    if queryItem.name == "referral" {
+                        self.codeFieldView.textField.text = queryItem.value
+                        break
+                    }
+                }
+                
+                appDelegate.inviteUrlString = nil
+                
+            } else {
+                debugPrint("Invitation url query param not available")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,7 +132,15 @@ extension ReferralViewController {
     func referral() {
         let referralCode = self.codeFieldView.textField.text!
         let params = ["own_referral_code" : referralCode]
+        
+        self.referralButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathReferral, method: .put) { (response, serverError, error) in
+            
+            self.referralButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             guard error == nil else {
                 self.showAlertController(title: "Referral", msg: error!.localizedDescription)
                 return

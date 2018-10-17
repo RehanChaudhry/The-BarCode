@@ -11,10 +11,17 @@ import KeychainAccess
 import CoreStore
 
 let bundleId = Bundle.main.bundleIdentifier!
+let androidPackageName = "com.cygnismedia.thebarcode"
+
+let theBarCodeInviteScheme = "theBarCodeInviteScheme"
 
 let deviceIdKey = "deviceIdKey"
 
+let kAppStoreId = ""
+
 let genericErrorMessage = "Opps! Something went wrong"
+
+
 
 class Utility: NSObject {
     
@@ -76,6 +83,7 @@ class Utility: NSObject {
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             transaction.deleteAll(From<User>())
         })
+        APIHelper.shared.setUpOAuthHandler(accessToken: nil, refreshToken: nil)
         
         debugPrint("cleared user info from local db")
     }

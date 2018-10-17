@@ -8,6 +8,7 @@
 
 import UIKit
 import Contacts
+import FirebaseDynamicLinks
 
 class InviteViewController: UITableViewController {
 
@@ -79,12 +80,7 @@ class InviteViewController: UITableViewController {
     }
     
     @IBAction func shareInviteCodeButtonTapped(sender: UIButton) {
-        let share = "John has invited you to join bar code"
-        let url = URL(string: "http://google.com")!
-        let activityViewController = UIActivityViewController(activityItems: [share, url], applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        activityViewController.popoverPresentationController?.sourceRect = sender.frame
-        self.present(activityViewController, animated: true, completion: nil)
+        self.generateAndShareDynamicLink()
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
@@ -98,5 +94,53 @@ extension InviteViewController {
         
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor.clear
+    }
+}
+
+extension InviteViewController {
+    func generateAndShareDynamicLink() {
+        
+        let user = Utility.shared.getCurrentUser()!
+        let ownReferralCode = user.ownReferralCode.value
+        let inviteUrlString = barCodeDomainURLString + "referral=" + ownReferralCode
+        
+        let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        let dynamicLinkInviteDomain = "thebarcode.page.link"
+        
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
+        linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
+        linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
+        linkComponents.iOSParameters?.appStoreID = kAppStoreId
+        linkComponents.iOSParameters?.fallbackURL = URL(string: barCodeDomainURLString)
+        linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
+        
+        linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
+        
+        linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkComponents.socialMetaTagParameters?.title = "The Bar Code Invitation"
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has invited you to join The Bar Code. With Bar Code you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        
+        linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+        linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
+        
+        linkComponents.shorten { (shortUrl, warnings, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "Invite", msg: error!.localizedDescription)
+                return
+            }
+            
+            if let warnings = warnings{
+                debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+            
+        }
+        
     }
 }

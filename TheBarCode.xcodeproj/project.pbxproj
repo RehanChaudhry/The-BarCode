@@ -43,6 +43,8 @@
 		0C23A8B42146873400DFB281 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C23A8A22146873000DFB281 /* Lato-SemiboldItalic.ttf */; };
 		0C23A8B52146873400DFB281 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C23A8A32146873200DFB281 /* Lato-BlackItalic.ttf */; };
 		0C23A8B92146876B00DFB281 /* UIFontAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A8B82146876A00DFB281 /* UIFontAdditions.swift */; };
+		0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E2B21762AB100FA993F /* LoadingButton.swift */; };
+		0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E2E2177083000FA993F /* ServerMessage.swift */; };
 		0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD24214A3BFF000F5D64 /* ShadowView.swift */; };
 		0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD28214A6580000F5D64 /* TabBarController.swift */; };
 		0C44DD34214A7F5E000F5D64 /* MoreMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */; };
@@ -137,6 +139,8 @@
 		0CC81FAD216F21B800FDB92D /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */; };
 		0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */; };
 		0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */; };
+		0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FB32174A9DD00FDB92D /* MyLocationManager.swift */; };
+		0CC81FB62175A67500FDB92D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CC81FB52175A67400FDB92D /* GoogleService-Info.plist */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -215,6 +219,8 @@
 		0C23A8A22146873000DFB281 /* Lato-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		0C23A8A32146873200DFB281 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
 		0C23A8B82146876A00DFB281 /* UIFontAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontAdditions.swift; sourceTree = "<group>"; };
+		0C302E2B21762AB100FA993F /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
+		0C302E2E2177083000FA993F /* ServerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerMessage.swift; sourceTree = "<group>"; };
 		0C44DD24214A3BFF000F5D64 /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		0C44DD28214A6580000F5D64 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreMenuItem.swift; sourceTree = "<group>"; };
@@ -309,6 +315,8 @@
 		0CC81FAC216F21B800FDB92D /* AsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
 		0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewController.swift; sourceTree = "<group>"; };
 		0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemDealViewController.swift; sourceTree = "<group>"; };
+		0CC81FB32174A9DD00FDB92D /* MyLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLocationManager.swift; sourceTree = "<group>"; };
+		0CC81FB52175A67400FDB92D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -392,6 +400,7 @@
 				0C23A84F214654FD00DFB281 /* Main.storyboard */,
 				0C23A8522146550000DFB281 /* Assets.xcassets */,
 				0C23A8542146550000DFB281 /* LaunchScreen.storyboard */,
+				0CC81FB52175A67400FDB92D /* GoogleService-Info.plist */,
 				0C23A8572146550000DFB281 /* Info.plist */,
 				0CE4618521522C6000124E7F /* splash.mp4 */,
 				0C23A8792146562200DFB281 /* ViewControllers */,
@@ -463,6 +472,7 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0CC81FB22174A9BC00FDB92D /* LocationManager */,
 				0CC81FA5216DD3DC00FDB92D /* Utility */,
 				0CC81F9B216DCC6900FDB92D /* APIHelper */,
 				0C955DC42147C99C00F9385B /* CustomNavigationController */,
@@ -511,6 +521,22 @@
 				0C23A8B82146876A00DFB281 /* UIFontAdditions.swift */,
 			);
 			path = UIFont;
+			sourceTree = "<group>";
+		};
+		0C302E2A21762A9B00FA993F /* LoadingButton */ = {
+			isa = PBXGroup;
+			children = (
+				0C302E2B21762AB100FA993F /* LoadingButton.swift */,
+			);
+			path = LoadingButton;
+			sourceTree = "<group>";
+		};
+		0C302E2D217707D900FA993F /* ServerMessage */ = {
+			isa = PBXGroup;
+			children = (
+				0C302E2E2177083000FA993F /* ServerMessage.swift */,
+			);
+			path = ServerMessage;
 			sourceTree = "<group>";
 		};
 		0C44DD23214A3BB8000F5D64 /* ShadowView */ = {
@@ -708,6 +734,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0C302E2A21762A9B00FA993F /* LoadingButton */,
 				0CC81FAB216F21AF00FDB92D /* AsyncImageView */,
 				0C5A88EC21647F7400F16851 /* Invite */,
 				83B2BE5421637640003ACA78 /* FiveADay */,
@@ -751,6 +778,7 @@
 		0C955DBE214792F500F9385B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0C302E2D217707D900FA993F /* ServerMessage */,
 				0CC81FA8216DD58300FDB92D /* User */,
 				0CC81FA2216DD03A00FDB92D /* ServerError */,
 				0C5A88F121647FE100F16851 /* Invite */,
@@ -953,6 +981,14 @@
 			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
+		0CC81FB22174A9BC00FDB92D /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				0CC81FB32174A9DD00FDB92D /* MyLocationManager.swift */,
+			);
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
 		4A9E9CCE7E564ED1B20E0245 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1084,6 +1120,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
 					};
 					0C23A85B2146550000DFB281 = {
@@ -1131,6 +1170,7 @@
 				0C23A8AA2146873400DFB281 /* Lato-LightItalic.ttf in Resources */,
 				0C8E9AA2214B9CE300224720 /* FAQHeaderView.xib in Resources */,
 				0C8BDCD42150D0BE00D5117B /* DealTableViewCell.xib in Resources */,
+				0CC81FB62175A67500FDB92D /* GoogleService-Info.plist in Resources */,
 				0C8E9AA6214B9F7E00224720 /* FAQTableViewCell.xib in Resources */,
 				0C23A8562146550000DFB281 /* LaunchScreen.storyboard in Resources */,
 				0C8BDCEB2151210B00D5117B /* SnackbarView.xib in Resources */,
@@ -1232,6 +1272,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Gradientable/Gradientable.framework",
 				"${BUILT_PRODUCTS_DIR}/HTTPStatusCodes/HTTPStatusCodes.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
@@ -1245,6 +1286,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1254,6 +1296,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gradientable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTTPStatusCodes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
@@ -1267,6 +1310,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1335,6 +1379,8 @@
 				0C8E9AAB214BBAE300224720 /* FAQ.swift in Sources */,
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
+				0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */,
+				0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */,
 				0C478A93215C9D92002C51FA /* ExploreDetailDealsViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
@@ -1392,6 +1438,7 @@
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
 				0C8E9AA0214B9CD300224720 /* FAQHeaderView.swift in Sources */,
 				0C478A9B215CC3DD002C51FA /* ExploreDetailHeaderViewController.swift in Sources */,
+				0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */,
 				0C478A95215C9DFD002C51FA /* ExploreDetailLiveOffersViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,

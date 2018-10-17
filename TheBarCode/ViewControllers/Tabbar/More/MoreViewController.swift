@@ -14,16 +14,18 @@ class MoreViewController: UIViewController {
     
     var menuItems: [MenuItem] = []
     
+    var titleLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 21))
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont.appBoldFontOf(size: 16.0)
-        titleLabel.textColor = UIColor.white
-        titleLabel.text = "Welcome, Phillip May"
+        self.titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 270, height: 21))
+        self.titleLabel.textAlignment = .center
+        self.titleLabel.font = UIFont.appBoldFontOf(size: 16.0)
+        self.titleLabel.textColor = UIColor.white
+        self.titleLabel.text = "Welcome, Phillip May"
         self.navigationItem.titleView = titleLabel
         
         self.tableView.backgroundColor = UIColor.clear
@@ -36,6 +38,12 @@ class MoreViewController: UIViewController {
         
         self.tableView.register(cellType: MenuCell.self)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.titleLabel.text = "Welcome, \(Utility.shared.getCurrentUser()!.fullName.value)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,6 +74,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         if menuItem.type == .signOut {
             let alertController = UIAlertController(title: "Confirm", message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)
             alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (action) in
+                Utility.shared.removeUser()
                 self.tabBarController?.dismiss(animated: true, completion: nil)
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in

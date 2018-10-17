@@ -8,14 +8,15 @@
 
 import UIKit
 import CoreStore
+import ObjectMapper
 
 protocol EmailVerificationViewControllerDelegate: class {
-    func userVerifiedSuccessfully()
+    func userVerifiedSuccessfully(canShowReferral: Bool)
 }
 
 class EmailVerificationViewController: CodeVerificationViewController {
 
-    @IBOutlet var resendCodeButton: UIButton!
+    @IBOutlet var resendCodeButton: LoadingButton!
     
     var delegate: EmailVerificationViewControllerDelegate!
     
@@ -25,6 +26,8 @@ class EmailVerificationViewController: CodeVerificationViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.resendCodeButton.updateAcivityIndicatorColor(color: .white)
         
         let subTitlePlaceholder = "Enter the confirmation code here which we have sent you on "
         let subTitleText = subTitlePlaceholder + self.email
@@ -64,7 +67,14 @@ extension EmailVerificationViewController {
     func verifyCurrentUser() {
         let params = ["email" : self.email!,
                       "activation_code" : self.hiddenField.text!]
+        
+        self.actionButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathEmailVerification, method: .post) { (response, serverError, error) in
+        
+            self.actionButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
                 self.showAlertController(title: "", msg: error!.localizedDescription)
@@ -79,10 +89,11 @@ extension EmailVerificationViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseUser = (responseDict?["data"] as? [String : Any]) {
                 
-                let _ = Utility.shared.saveCurrentUser(userDict: responseUser)
+                let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
 
                 self.dismiss(animated: true, completion: {
-                    self.delegate.userVerifiedSuccessfully()
+                    self.delegate.userVerifiedSuccessfully(canShowReferral: true)
                 })
                 
             } else {
@@ -95,7 +106,14 @@ extension EmailVerificationViewController {
     
     func resendCode() {
         let params = ["email" : self.email!]
+        
+        self.resendCodeButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathResendVerificationEmail, method: .post) { (response, serverError, error) in
+            
+            self.resendCodeButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
                 self.showAlertController(title: "", msg: error!.localizedDescription)
@@ -107,8 +125,12 @@ extension EmailVerificationViewController {
                 return
             }
             
-            self.showAlertController(title: "Verification Code Resent", msg: "Email containing verfication code has been sent on \(self.email!)")
-            
+            if let responseDict = response as? [String : Any] {
+                let serverMessage = Mapper<ServerMessage>().map(JSON: responseDict)
+                self.showAlertController(title: "Verification Code", msg: serverMessage!.message)
+            } else {
+                self.showAlertController(title: "Verification Code", msg: "Email containing verfication code has been sent on \(self.email!)")
+            }
         }
     }
 }

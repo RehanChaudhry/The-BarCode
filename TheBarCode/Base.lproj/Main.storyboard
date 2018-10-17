@@ -518,7 +518,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vk-f5-2f1">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="133"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tda-BJ-Y2U">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tda-BJ-Y2U" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
                                                         <color key="backgroundColor" red="0.23137254901960785" green="0.3411764705882353" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -698,6 +698,7 @@
                         <outlet property="pickerInputView" destination="iBb-02-YHP" id="YiS-4A-3WU"/>
                         <outlet property="pickerView" destination="OLY-Ap-Z7R" id="lNS-2f-qcS"/>
                         <outlet property="scrollView" destination="0o2-6R-J2v" id="tWm-Fm-pYu"/>
+                        <outlet property="signUpButton" destination="ojD-Cm-JIL" id="9z4-0p-Mn0"/>
                         <outlet property="termsPolicyTextView" destination="ygv-al-aRl" id="bDJ-kw-GhK"/>
                         <segue destination="3VE-Tb-YFU" kind="presentation" identifier="SignUpToTermsNavigationSegue" id="pcn-lo-3Qy"/>
                         <segue destination="cJM-Ij-Bga" kind="presentation" identifier="SignUpToPolicyNavigationSegue" id="4qA-zL-FVb"/>
@@ -890,6 +891,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="mmI-VP-9LH"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="referralButton" destination="33r-bU-HAW" id="cgF-c4-lHw"/>
                         <outlet property="separatorView" destination="8YQ-4W-kyg" id="gfp-u1-mWO"/>
                         <segue destination="2ep-56-xnh" kind="show" identifier="ReferralToCategories" id="jef-DV-LyY"/>
                     </connections>
@@ -1091,7 +1093,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ojl-Yp-Efu">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ojl-Yp-Efu" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
                                                 <rect key="frame" x="24" y="348" width="287" height="44"/>
                                                 <color key="backgroundColor" red="0.71764705882352942" green="0.71764705882352942" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -1110,7 +1112,7 @@
                                                     <action selector="notNowButtonTappedWithSender:" destination="PRh-VO-DX3" eventType="touchUpInside" id="pF0-5l-Jje"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VW3-aG-3He">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VW3-aG-3He" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
                                                 <rect key="frame" x="24" y="294" width="287" height="44"/>
                                                 <color key="backgroundColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -1238,7 +1240,10 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="alwaysAllowButton" destination="1zI-TM-hZj" id="2Sr-G6-ClG"/>
+                        <outlet property="notNowButton" destination="Ojl-Yp-Efu" id="DLh-mr-yCx"/>
                         <outlet property="overlayView" destination="ygh-ap-whl" id="nbV-4o-f42"/>
+                        <outlet property="whenInUserButton" destination="VW3-aG-3He" id="5vU-65-uOR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s5G-e1-IT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1313,6 +1318,7 @@
                         <viewLayoutGuide key="safeArea" id="2xW-qP-d67"/>
                     </view>
                     <connections>
+                        <outlet property="forgotPasswordButton" destination="tQW-ph-Cz2" id="1Wn-2W-ySu"/>
                         <outlet property="separatorView" destination="Cb1-RX-Ian" id="DgP-uz-Eo5"/>
                     </connections>
                 </viewController>
@@ -1389,7 +1395,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upS-JM-Mqx">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="133"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISX-68-rW1">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISX-68-rW1" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
                                                         <color key="backgroundColor" red="0.23137254900000001" green="0.3411764706" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -1565,6 +1571,7 @@
                         <outlet property="fbSignInButton" destination="ISX-68-rW1" id="NoR-tP-eUD"/>
                         <outlet property="fbSignInView" destination="dPi-AP-qzz" id="nE9-zn-zP8"/>
                         <outlet property="scrollView" destination="VWo-9o-3b7" id="Ruk-co-O28"/>
+                        <outlet property="signInButton" destination="pfv-g1-5ht" id="6nZ-KD-JAd"/>
                         <segue destination="Nkf-DM-qHe" kind="show" identifier="SignInToReferralSegue" id="GxS-gt-e7N"/>
                         <segue destination="2ep-56-xnh" kind="show" identifier="SignInToCategoriesSegue" id="9Xs-Lb-DGS"/>
                         <segue destination="PRh-VO-DX3" kind="show" identifier="SignInToPermissionSegue" id="juh-XV-uIV"/>
@@ -4446,7 +4453,7 @@ Cg
                                         <rect key="frame" x="175" y="140" width="67" height="51"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpF-Az-ip2">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpF-Az-ip2" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
                                         <rect key="frame" x="8" y="267" width="327" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="Ii0-8d-A7w"/>
@@ -4523,6 +4530,7 @@ Cg
                         <outlet property="containerHeight" destination="djM-9Q-qGs" id="pIQ-Nh-KQi"/>
                         <outlet property="hiddenField" destination="f6Q-A0-2ZG" id="OqB-fj-6Px"/>
                         <outlet property="popUpTopMargin" destination="gIm-cm-ue9" id="iCS-c2-vz5"/>
+                        <outlet property="resendCodeButton" destination="dpF-Az-ip2" id="2JO-wZ-Oqr"/>
                         <outlet property="subTitleLabel" destination="IBl-NU-w6w" id="H5Q-0v-ktU"/>
                         <outlet property="titleLabel" destination="jS4-yw-Sb8" id="L0g-C2-HDK"/>
                     </connections>
@@ -4554,10 +4562,10 @@ Cg
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lFn-an-dqK"/>
-        <segue reference="ofk-tc-f0B"/>
-        <segue reference="zzt-np-QEr"/>
+        <segue reference="NvO-HD-pWX"/>
+        <segue reference="R5G-Fa-IEs"/>
+        <segue reference="jef-DV-LyY"/>
         <segue reference="K4O-bU-rQm"/>
-        <segue reference="gfy-jQ-g7J"/>
+        <segue reference="Tsk-gy-Yut"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -9,13 +9,16 @@
 import UIKit
 import GoogleMaps
 import FBSDKLoginKit
+import Firebase
+import FirebaseDynamicLinks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var inviteUrlString: String?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -24,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        FirebaseOptions.defaultOptions()?.deepLinkURLScheme = theBarCodeInviteScheme
+        FirebaseApp.configure()
         
         return true
     }
@@ -49,12 +54,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        
+        let universalUrl = userActivity.webpageURL
+        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(universalUrl!) { (dynamicLink, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting dynamic link: \(error!.localizedDescription)")
+                return
+            }
+            
+            self.inviteUrlString = dynamicLink!.url!.absoluteString
+            
+        }
+        
+        return handled
+    }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         if url.scheme == "fb182951649264383" {
             let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
             return handled ?? false
+        } else if url.scheme?.lowercased() == theBarCodeInviteScheme.lowercased() {
+            self.inviteUrlString = url.absoluteString
+            return true
         }
         
         return false

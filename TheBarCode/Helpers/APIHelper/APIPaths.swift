@@ -22,3 +22,7 @@ let apiPathFiveADayDeals = "five-a-day"
 
 let apiPathCategories = "interest"
 let apiPathUpdateSelectedCategories = "userinterest/update-user-interest"
+
+let apiPathInviteViaEmail = "send-invite"
+
+let apiPathLocationUpdate = "user/update-location"

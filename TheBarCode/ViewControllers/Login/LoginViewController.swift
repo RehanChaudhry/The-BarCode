@@ -20,7 +20,9 @@ class LoginViewController: UIViewController {
     
     @IBOutlet var fbSignInView: UIView!
     
-    @IBOutlet var fbSignInButton: UIButton!
+    @IBOutlet var fbSignInButton: LoadingButton!
+    
+    @IBOutlet var signInButton: GradientButton!
     
     var emailFieldView: FieldView!
     var passwordFieldView: FieldView!
@@ -30,6 +32,7 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.fbSignInButton.updateAcivityIndicatorColor(color: UIColor.white)
         self.addBackButton()
         self.setUpFields()
         
@@ -129,7 +132,7 @@ class LoginViewController: UIViewController {
 
 //MARK: EmailVerificationViewControllerDelegate
 extension LoginViewController: EmailVerificationViewControllerDelegate {
-    func userVerifiedSuccessfully() {
+    func userVerifiedSuccessfully(canShowReferral: Bool) {
         
         guard let user = Utility.shared.getCurrentUser() else {
             self.showAlertController(title: "User Not Found", msg: "User does not exists. Please resign in.")
@@ -138,7 +141,9 @@ extension LoginViewController: EmailVerificationViewControllerDelegate {
 
         switch user.status {
         case .active:
-            if !user.isCategorySelected.value {
+            if canShowReferral && user.referralCode.value == nil {
+                self.performSegue(withIdentifier: "SignInToReferralSegue", sender: nil)
+            } else if !user.isCategorySelected.value {
                 self.performSegue(withIdentifier: "SignInToCategoriesSegue", sender: nil)
             } else if CLLocationManager.authorizationStatus() == .notDetermined {
                 self.performSegue(withIdentifier: "SignInToPermissionSegue", sender: nil)
@@ -169,7 +174,15 @@ extension LoginViewController {
         
         let params: [String : Any] = ["email" : email,
                                       "password" : password]
+        
+        self.signInButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAuthenticate, method: .post) { (response, serverError, error) in
+            
+            defer {
+                self.signInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
             
             guard error == nil else {
                 self.showAlertController(title: "Authentication", msg: error!.localizedDescription)
@@ -187,8 +200,10 @@ extension LoginViewController {
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseUser = (responseDict?["data"] as? [String : Any]) {
-                let _ = Utility.shared.saveCurrentUser(userDict: responseUser)
-                self.userVerifiedSuccessfully()
+                let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+                
+                self.userVerifiedSuccessfully(canShowReferral: false)
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
@@ -200,14 +215,22 @@ extension LoginViewController {
         
         let loginManager = FBSDKLoginManager()
         let permissions = ["public_profile", "email"]
+        
+        self.fbSignInButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
             
             guard result?.isCancelled == false else {
                 debugPrint("Facebook login cancelled")
+                self.fbSignInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 return
             }
             
             guard error == nil else {
+                self.fbSignInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
                 self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
                 return
             }
@@ -217,6 +240,8 @@ extension LoginViewController {
             graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
                 
                 guard error == nil else {
+                    self.fbSignInButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
                     return
                 }
@@ -240,11 +265,16 @@ extension LoginViewController {
                     let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
                         
                         guard error == nil else {
+                            self.fbSignInButton.hideLoader()
+                            UIApplication.shared.endIgnoringInteractionEvents()
                             self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
                             return
                         }
                         
                         guard serverError == nil else {
+                            
+                            self.fbSignInButton.hideLoader()
+                            UIApplication.shared.endIgnoringInteractionEvents()
                             
                             if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
                                 
@@ -269,18 +299,25 @@ extension LoginViewController {
                         let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
                         if let responseUser = (responseDict?["data"] as? [String : Any]) {
                             
-                            let _ = Utility.shared.saveCurrentUser(userDict: responseUser)
+                            let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                            APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
                             
-                            self.userVerifiedSuccessfully()
+                            self.userVerifiedSuccessfully(canShowReferral: false)
+                            
                             
                         } else {
                             let genericError = APIHelper.shared.getGenericError()
                             self.showAlertController(title: "", msg: genericError.localizedDescription)
                         }
                         
+                        self.fbSignInButton.hideLoader()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        
                     })
                     
                 } else {
+                    self.fbSignInButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                     self.showAlertController(title: "", msg: "Unknown error occurred")
                 }
             })

@@ -100,6 +100,8 @@ class LoginOptionsViewController: UIViewController {
             return
         }
         
+        APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+        
         switch user.status {
         case .active:
             if !user.isCategorySelected.value {

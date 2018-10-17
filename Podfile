@@ -21,6 +21,7 @@ target 'TheBarCode' do
   pod 'FBSDKLoginKit', '~> 4.37.0'
   pod 'SDWebImage', '~> 4.4.2'
   pod 'HTTPStatusCodes', '~> 3.2.0'
+  pod 'Firebase/DynamicLinks', '~> 5.10.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

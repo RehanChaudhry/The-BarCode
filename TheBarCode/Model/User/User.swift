@@ -31,7 +31,9 @@ class User: CoreStoreObject {
     
     var liveOfferNotificationEnabled = Value.Required<Bool>("live_offer_notif_enabled", initial: true)
     var fiveADayNotificationEnabled = Value.Required<Bool>("five_a_day_notif_enabled", initial: true)
+    
     var isCategorySelected = Value.Required<Bool>("is_category_selected", initial: false)
+    var isLocationUpdated = Value.Required<Bool>("is_location_update", initial: false)
     
     var profileImage = Value.Optional<String>("profile_image")
     var socialAccountId = Value.Optional<String>("social_account_id")
@@ -92,6 +94,8 @@ extension User: ImportableUniqueObject {
         self.isCategorySelected.value = source["is_interest_selected"] as! Bool
         
         self.profileImage.value = source["profile_image"] as? String
+        
+        self.isLocationUpdated.value = source["is_location_updated"] as! Bool
         
         if let socialAccountId = source["social_account_id"] as? String {
             self.socialAccountId.value = socialAccountId
