@@ -152,17 +152,18 @@ extension FiveADayViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
+                
+                var importedObjects: [FiveADayDeal] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let deals = try! transaction.importUniqueObjects(Into<FiveADayDeal>(), sourceArray: responseArray)
-                    
-                    if !deals.isEmpty {
-                        let ids = deals.map{$0.uniqueIDValue}
-                        transaction.deleteAll(From<FiveADayDeal>(), Where<FiveADayDeal>("NOT(%K in %@)", FiveADayDeal.uniqueIDKeyPath, ids))
-                    }
+                    let objects = try! transaction.importUniqueObjects(Into<FiveADayDeal>(), sourceArray: responseArray)
+                    importedObjects.append(contentsOf: objects)
                 })
                 
                 self.deals.removeAll()
-                self.deals.append(contentsOf: Utility.inMemoryStack.fetchAll(From<FiveADayDeal>()) ?? [])
+                for object in importedObjects {
+                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    self.deals.append(fetchedObject!)
+                }
                 
                 if self.deals.isEmpty {
                     self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To Refresh")
