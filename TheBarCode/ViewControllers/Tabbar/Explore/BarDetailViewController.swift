@@ -13,7 +13,8 @@ import PureLayout
 class BarDetailViewController: UIViewController {
     
     @IBOutlet var containerView: UIView!
-    
+    @IBOutlet weak var standardRedeemButton: GradientButton!
+
     var headerController: BarDetailHeaderViewController!
     
     var aboutController: BarDetailAboutViewController!
@@ -31,6 +32,10 @@ class BarDetailViewController: UIViewController {
         
         self.setUpSegmentedController()
         self.addBackButton()
+        
+        if selectedBar.isOfferRedeemed.value {
+            
+        }
         
     }
 
@@ -108,21 +113,11 @@ class BarDetailViewController: UIViewController {
     }
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
-        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-        redeemStartViewController.type = .standard
-        redeemStartViewController.barId = self.selectedBar.id.value
-        redeemStartViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemStartViewController, animated: true, completion: nil)
-    }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
-//    {
-//        if (segue.identifier == "segueTest") {
-//            var svc = segue!.destinationViewController
-//
-//
-//        }
-//    }
+        if self.selectedBar.isOfferRedeemed.value {
+            redeemStandardDeal()
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ExploreDetailToOfferDetailSegue" {
@@ -158,5 +153,44 @@ extension BarDetailViewController: BarDealsViewControllerDelegate {
 extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
     func barLiveOffersController(controller: BarLiveOffersViewController, didSelectRowAt offer: LiveOffer) {
         self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: offer)
+    }
+}
+
+//MARK: WebService Method
+extension BarDetailViewController {
+    func redeemStandardDeal() {
+        
+        let params: [String: Any] = ["establishment_id": self.selectedBar.id.value,
+                                     "type": "standard"]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError?.errorMessages() ?? genericErrorMessage)
+                return
+            }
+            
+            if let responseObj = response as? [String : Any] {
+                if  let _ = responseObj["data"] as? [String : Any] {
+                    
+                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                        let editedObject = transaction.edit(self.selectedBar)
+                        editedObject!.isOfferRedeemed.value = false
+                    })
+                    
+                } else {
+                    let genericError = APIHelper.shared.getGenericError()
+                    self.showAlertController(title: "", msg: genericError.localizedDescription)
+                }
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+        }
     }
 }

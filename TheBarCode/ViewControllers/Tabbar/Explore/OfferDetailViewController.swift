@@ -21,6 +21,7 @@ class OfferDetailViewController: UIViewController {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet weak var redeemButton: GradientButton!
     
     var images: [String] = ["cover_offer_detail"]
     
@@ -39,6 +40,12 @@ class OfferDetailViewController: UIViewController {
         
         self.tableView.estimatedRowHeight = 250.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        if let offer = self.deal.offer.value {
+            if offer.type == .bannerAds {
+                self.redeemButton.isHidden = true
+            }
+        }
         
     }
     

@@ -116,10 +116,7 @@ extension FiveADayViewController: FiveADayViewControllerDelegate {
         let deal = self.deals[index]
         if let bar = deal.establishment.value {
             if bar.isOfferRedeemed.value {
-                let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-                redeemStartViewController.modalPresentationStyle = .overCurrentContext
-                redeemStartViewController.deal =  deal
-                self.present(redeemStartViewController, animated: true, completion: nil)
+                redeemFiveADayDeal(deal: deal)
             }
         }
     }
@@ -178,6 +175,46 @@ extension FiveADayViewController {
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")
+            }
+        }
+    }
+}
+
+//MARK: WebService Method
+extension FiveADayViewController {
+    func redeemFiveADayDeal(deal: FiveADayDeal) {
+        
+        let params: [String: Any] = ["establishment_id": deal.establishmentId.value,
+                      "type": "reload",
+                      "offer_id": deal.id.value ]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError?.errorMessages() ?? genericErrorMessage)
+                return
+            }
+            
+            if let responseObj = response as? [String : Any] {
+                if  let _ = responseObj["data"] as? [String : Any] {
+                    
+                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                        let editedObject = transaction.edit(deal)
+                        editedObject!.establishment.value!.isOfferRedeemed.value = false
+                    })
+                    
+                } else {
+                    let genericError = APIHelper.shared.getGenericError()
+                    self.showAlertController(title: "", msg: genericError.localizedDescription)
+                }
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
             }
         }
     }

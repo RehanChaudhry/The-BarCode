@@ -14,6 +14,7 @@ enum OfferType : String {
     fiveADay = "5 A Day",
     live = "Live",
     exclusive = "Exclusive",
+    bannerAds = "Banner Ads",
     unknown = "unknown"
     
     func description() -> String {
@@ -26,6 +27,8 @@ enum OfferType : String {
             return ""
         case .exclusive:
             return ""
+        case .bannerAds:
+            return "Banner Ads"
         case .unknown:
             return "unknown"
         }

@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
+            timestampString = "561454317.726127"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "barTenderRedeemDeal()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheBarCode.RedeemStartViewController.barTenderRedeemDeal() -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
+                  timestampString = "561471193.085583"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "1477">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;TheBarCode.ServerError&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TheBarCode.RedeemStartViewController.barTenderRedeemDeal() -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
+                  timestampString = "561471193.088884"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
