@@ -12,8 +12,10 @@ class RedeemStartViewController: UIViewController {
 
     var presentedVC : UIViewController!
     
-    var deal : FiveADayDeal!
+    var deal : Deal!
 
+    var type: OfferType = .unknown
+    var establishmentID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,10 +66,15 @@ class RedeemStartViewController: UIViewController {
 extension RedeemStartViewController {
     func barTenderRedeemDeal() {
         
-        let params = ["establishment_id" : self.deal.establishmentId.value,
-                      "type" : "reload",
-                      "offer_id" : self.deal.id.value
-        ]
+        var params : [String : Any] = [:]
+        if type == .standard {
+             params = ["establishment_id" :  self.establishmentID,
+                        "type" : "standard"]
+        } else {
+            params = ["establishment_id" : self.deal.establishmentId.value,
+                      "type" :"reload",
+                      "offer_id" :self.deal.id.value ]
+        }
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
@@ -84,6 +91,8 @@ extension RedeemStartViewController {
             
             if let responseObj = response as? [String : Any] {
                 if  let _ = responseObj["data"] as? [String : Any] {
+                    //todo fetch establishment from establishment id than set flag 
+                    
                     try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
                         let editedObject = transaction.edit(self.deal)
                         editedObject!.establishment.value!.isOfferRedeemed.value = false

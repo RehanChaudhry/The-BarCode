@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="249.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -81,7 +81,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="cuJ-Hl-gUF"/>
             <connections>
-                <outlet property="coverImageView" destination="ind-3c-R0V" id="PHU-Al-icl"/>
+                <outlet property="coverImageView" destination="ind-3c-R0V" id="T9E-kf-Gve"/>
                 <outlet property="distanceLabel" destination="PB5-K3-KjL" id="Vmv-PE-lVo"/>
                 <outlet property="favouriteButton" destination="Skp-3x-YSf" id="JhB-hY-PRO"/>
                 <outlet property="locationIconImageView" destination="88w-H1-hsa" id="IhG-Nb-n55"/>

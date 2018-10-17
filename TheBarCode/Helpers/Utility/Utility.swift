@@ -29,7 +29,9 @@ class Utility: NSObject {
                 Entity<Explore>("Explore", isAbstract: true),
                 Entity<Bar>("Bar"),
                 Entity<Deal>("Deal"),
-                Entity<LiveOffer>("LiveOffer")
+                Entity<LiveOffer>("LiveOffer"),
+                Entity<ImageItem>("ImageItem"),
+                Entity<Offer>("Offer")
             ]
         )
     )

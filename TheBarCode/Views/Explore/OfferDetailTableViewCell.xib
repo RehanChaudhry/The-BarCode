@@ -82,6 +82,9 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="barNameLabel" destination="eSE-1m-2ly" id="QY3-rF-jvk"/>
+                <outlet property="detailLabel" destination="35U-As-bEU" id="PIc-TI-6gS"/>
+                <outlet property="distanceLabel" destination="Wdj-iC-GK1" id="diQ-8G-aTK"/>
                 <outlet property="validityLabel" destination="hBD-I3-mIh" id="6Hb-cx-bxy"/>
             </connections>
             <point key="canvasLocation" x="121.59999999999999" y="197.45127436281859"/>

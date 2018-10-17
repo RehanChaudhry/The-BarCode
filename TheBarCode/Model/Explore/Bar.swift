@@ -13,7 +13,7 @@ class Bar: Explore {
     
 //    let fiveADayDeal = Relationship.ToOne<FiveADayDeal>("fiveADayDeal", inverse: {$0.establishment})
     
-   let fiveADayDeal = Relationship.ToManyUnordered<FiveADayDeal>("fiveADayDeal", inverse: { $0.establishment })
+   let fiveADayDeal = Relationship.ToManyOrdered<Deal>("fiveADayDeal", inverse: { $0.establishment })
 }
     
     

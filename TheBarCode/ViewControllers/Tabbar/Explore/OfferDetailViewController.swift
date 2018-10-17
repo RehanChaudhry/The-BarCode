@@ -24,6 +24,8 @@ class OfferDetailViewController: UIViewController {
     
     var images: [String] = ["cover_offer_detail"]
     
+    var deal: Deal!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,6 +39,7 @@ class OfferDetailViewController: UIViewController {
         
         self.tableView.estimatedRowHeight = 250.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,6 +72,7 @@ extension OfferDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: OfferDetailTableViewCell.self)
+        cell.configCell(deal: self.deal)
         return cell
     }
 }

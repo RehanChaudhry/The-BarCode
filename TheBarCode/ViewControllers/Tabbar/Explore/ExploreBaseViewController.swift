@@ -82,6 +82,33 @@ class ExploreBaseViewController: UIViewController {
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
     }
+    
+    func createMapMarker(explore: Bar) -> GMSMarker {
+        
+        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
+        
+        let marker = GMSMarker(position: location.coordinate)
+        marker.title = explore.title.value
+        marker.snippet = explore.address.value
+
+        return marker
+    }
+    
+    func setUpExplore(bars: [Bar]) {
+    
+        mapView.clear()
+        var bounds = GMSCoordinateBounds()
+        for explore in bars {
+            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
+            
+            bounds = bounds.includingCoordinate(location.coordinate)
+            let marker = self.createMapMarker(explore: explore)
+            marker.map = mapView
+        }
+        
+        let update = GMSCameraUpdate.fit(bounds, withPadding: 60.0)
+        mapView.animate(with: update)
+    }
 
     //MARK: My IBActions
     
@@ -105,6 +132,7 @@ class ExploreBaseViewController: UIViewController {
         self.displayType = .map
         
         self.scrollView.scrollToPage(page: 1, animated: true)
+                
     }
 
 }

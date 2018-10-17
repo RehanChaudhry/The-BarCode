@@ -45,7 +45,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(deal: FiveADayDeal, index: Int) {
+    func setUpCell(deal: Deal, index: Int) {
         self.index = index
 
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value!), showRetryButton: false)

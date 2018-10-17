@@ -11,7 +11,7 @@ import Reusable
 
 class ExploreDetailHeaderCollectionViewCell: UICollectionViewCell, NibReusable {
 
-    @IBOutlet var coverImageView: UIImageView!
+    @IBOutlet var coverImageView: AsyncImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +21,8 @@ class ExploreDetailHeaderCollectionViewCell: UICollectionViewCell, NibReusable {
     //MARK: My Methods
     
     func setUpCell(imageName: String) {
-        self.coverImageView.image = UIImage(named: imageName)
+        let url = URL(string: imageName)
+        self.coverImageView.setImageWith(url: url, showRetryButton: false)
     }
 
 }

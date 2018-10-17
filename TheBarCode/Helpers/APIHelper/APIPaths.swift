@@ -20,3 +20,7 @@ let apiPathUpdateSelectedCategories = "userinterest/update-user-interest"
 let apiEstablishment = "establishment"
 
 let apiOfferRedeem = "offer-redeem"
+let apioffer = "offer"
+let apiFavorite = "user-favorite-establishment"
+
+let apiUpdateFavorite = "user-favorite-establishment/update"

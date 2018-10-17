@@ -109,11 +109,14 @@ class ExploreViewController: UIViewController {
         controller.view.autoPinEdgesToSuperviewEdges()
     }
     
-    func moveToDetail() {
+    func moveToDetail(obj: Explore) {
         let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
+        let exploreDetailVC = exploreDetailNav.viewControllers.first as! ExploreDetailViewController
+        exploreDetailVC.explore = obj
         self.present(exploreDetailNav, animated: true, completion: nil)
     }
     
+
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
@@ -152,20 +155,20 @@ class ExploreViewController: UIViewController {
 
 //MARK: BarsViewControllerDelegate
 extension ExploreViewController: BarsViewControllerDelegate {
-    func barsController(controller: BarsViewController, didSelectBar bar: Any) {
-        self.moveToDetail()
+    func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
+        self.moveToDetail(obj: bar)
     }
 }
 
 //MARK: DealsViewControllerDelegate
 extension ExploreViewController: DealsViewControllerDelegate {
-    func dealsController(controller: DealsViewController, didSelectDeal deal: Any) {
-        self.moveToDetail()
+    func dealsController(controller: DealsViewController, didSelectDeal deal: Explore) {
+        self.moveToDetail(obj: deal)
     }
 }
 
 extension ExploreViewController: LiveOffersViewControllerDelegate {
-    func liveOffersController(controller: LiveOffersViewController, didSelectLiveOffer offer: Any) {
-        self.moveToDetail()
+    func liveOffersController(controller: LiveOffersViewController, didSelectLiveOffer offer: Explore) {
+        self.moveToDetail(obj: offer)
     }
 }

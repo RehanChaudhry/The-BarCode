@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="249.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="wx2-1M-QH6">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="wx2-1M-QH6" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -59,6 +59,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-eR-6bt">
+                        <rect key="frame" x="16" y="234" width="288" height="15"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="03Q-CP-Jb5"/>
@@ -67,8 +73,11 @@
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Cgb-jY-vvM"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="leading" secondItem="2jA-pV-ECg" secondAttribute="trailing" constant="8" id="EBz-AP-Fp6"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="Fmn-z5-jYo"/>
+                    <constraint firstAttribute="trailing" secondItem="EFD-eR-6bt" secondAttribute="trailing" constant="16" id="FrL-Y8-IMa"/>
+                    <constraint firstItem="EFD-eR-6bt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="IO0-Ym-wRy"/>
                     <constraint firstAttribute="trailing" secondItem="wx2-1M-QH6" secondAttribute="trailing" constant="16" id="QNI-gD-B0l"/>
                     <constraint firstAttribute="trailing" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="16" id="Uf0-UO-kcD"/>
+                    <constraint firstItem="EFD-eR-6bt" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Wee-Ws-l11"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="top" secondItem="BaG-X9-k2d" secondAttribute="top" constant="24" id="Y0j-fg-8Ws"/>
                     <constraint firstItem="2jA-pV-ECg" firstAttribute="leading" secondItem="e7T-kn-Jzp" secondAttribute="trailing" constant="8" id="ZDL-yx-gXZ"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="20" id="a2m-6A-czE"/>
@@ -79,12 +88,14 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="hee-Tq-Mfk"/>
             <connections>
-                <outlet property="coverImageView" destination="wx2-1M-QH6" id="pku-Sr-YS3"/>
+                <outlet property="coverImageView" destination="wx2-1M-QH6" id="QbB-hK-WF6"/>
                 <outlet property="detailLabel" destination="B9e-ds-BcJ" id="mBe-C2-MA3"/>
                 <outlet property="distanceLabel" destination="2jA-pV-ECg" id="afT-jw-dGT"/>
                 <outlet property="locationIconImageView" destination="e7T-kn-Jzp" id="Fag-89-bs9"/>
                 <outlet property="titleLabel" destination="djc-IT-5qt" id="q1E-fc-PJR"/>
+                <outlet property="validityLabel" destination="EFD-eR-6bt" id="bbv-Wa-pNS"/>
             </connections>
+            <point key="canvasLocation" x="80" y="48.575712143928037"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -40,7 +40,8 @@ class Explore: CoreStoreObject {
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
     var credit = Value.Required<Int>("credit", initial: 0)
     
-    var images = Value.Required<String>("images", initial: "") //TODO handle array
+    var images = Relationship.ToManyOrdered<ImageItem>("images", inverse: { $0.explore })
+    
     var lastReloadTime = Value.Required<String>("last_reload_time", initial: "") //TODO dateObject
     
 }
@@ -51,7 +52,7 @@ extension Explore: ImportableUniqueObject {
     typealias ImportSource = [String: Any]
     
     class var uniqueIDKeyPath: String {
-        return String(keyPath: \Bar.id)
+        return String(keyPath: \Explore.id)
     }
     
     var uniqueIDValue: String {
@@ -100,7 +101,14 @@ extension Explore: ImportableUniqueObject {
         self.liveOffers.value = source["live_offers"] as! Int
         self.isUserFavourite.value = source["is_user_favourite"] as! Bool
         self.credit.value = source["credit"] as! Int
-        
+
+        if let items = source["images"] as? [[String : Any]] {
+            let importedObjects = try! transaction.importObjects(Into<ImageItem>(), sourceArray: items)
+            
+            if !importedObjects.isEmpty {
+                self.images.value = importedObjects
+            }
+        }
         //TODO: handle array and object
 //        self.images.value = source["images"] as! String
 //        self.lastReloadTime.value = source["last_reload_time"] as! String

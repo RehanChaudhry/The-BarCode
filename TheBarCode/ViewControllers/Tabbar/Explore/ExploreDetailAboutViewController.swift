@@ -13,7 +13,8 @@ import SJSegmentedScrollView
 class ExploreDetailAboutViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-        
+    var explore : Explore!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,7 +40,7 @@ extension ExploreDetailAboutViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
-        cell.setUpCell()
+        cell.setUpCell(explore: self.explore)
         return cell
     }
     
