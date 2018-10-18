@@ -4666,7 +4666,109 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6yK-1o-LWD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5910" y="4980"/>
+            <point key="canvasLocation" x="6153" y="4985"/>
+        </scene>
+        <!--Cannot Redeem View Controller-->
+        <scene sceneID="yuF-oG-s98">
+            <objects>
+                <viewController storyboardIdentifier="CannotRedeemViewController" id="X8P-bq-kYV" customClass="CannotRedeemViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VMf-5v-b84">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmB-V3-hBj">
+                                <rect key="frame" x="16" y="224" width="343" height="219"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already Redeemed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31w-ht-si8">
+                                        <rect key="frame" x="24" y="24" width="243" height="19"/>
+                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9g-qQ-UHm">
+                                        <rect key="frame" x="275" y="11.5" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="BID-WL-bJJ"/>
+                                            <constraint firstAttribute="height" constant="44" id="jxy-x9-amL"/>
+                                        </constraints>
+                                        <state key="normal" image="close"/>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="X8P-bq-kYV" eventType="touchUpInside" id="3B0-3I-66n"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z2t-CI-cw1">
+                                        <rect key="frame" x="0.0" y="67" width="343" height="1"/>
+                                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="jlf-lW-Xsm"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have already availed standard offer. Please reload to unlock standard offer." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P17-Ni-BjD">
+                                        <rect key="frame" x="24" y="92" width="295" height="34"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-WC-xng" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="151" width="311" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="VwF-fD-79Z"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="okButtonTapped:" destination="X8P-bq-kYV" eventType="touchUpInside" id="5pn-Su-ErJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="mYc-WC-xng" secondAttribute="bottom" constant="24" id="0Fq-LF-aFb"/>
+                                    <constraint firstAttribute="trailing" secondItem="H9g-qQ-UHm" secondAttribute="trailing" constant="24" id="1MZ-S3-zvp"/>
+                                    <constraint firstAttribute="trailing" secondItem="mYc-WC-xng" secondAttribute="trailing" constant="16" id="1QZ-QN-icF"/>
+                                    <constraint firstAttribute="trailing" secondItem="P17-Ni-BjD" secondAttribute="trailing" constant="24" id="2JO-vL-NRZ"/>
+                                    <constraint firstItem="Z2t-CI-cw1" firstAttribute="top" secondItem="31w-ht-si8" secondAttribute="bottom" constant="24" id="2sF-am-R81"/>
+                                    <constraint firstAttribute="height" constant="219" id="Jk4-5G-ddN"/>
+                                    <constraint firstAttribute="trailing" secondItem="Z2t-CI-cw1" secondAttribute="trailing" id="PD2-d4-WEd"/>
+                                    <constraint firstItem="mYc-WC-xng" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" constant="16" id="R1m-KD-ahs"/>
+                                    <constraint firstItem="P17-Ni-BjD" firstAttribute="top" secondItem="Z2t-CI-cw1" secondAttribute="bottom" constant="24" id="byY-M0-ye0"/>
+                                    <constraint firstItem="mYc-WC-xng" firstAttribute="centerX" secondItem="xmB-V3-hBj" secondAttribute="centerX" id="oaC-0h-bwZ"/>
+                                    <constraint firstItem="H9g-qQ-UHm" firstAttribute="leading" secondItem="31w-ht-si8" secondAttribute="trailing" constant="8" id="pqh-Fq-3Lf"/>
+                                    <constraint firstItem="H9g-qQ-UHm" firstAttribute="centerY" secondItem="31w-ht-si8" secondAttribute="centerY" id="uys-YZ-GwS"/>
+                                    <constraint firstItem="Z2t-CI-cw1" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" id="wmx-5H-e4N"/>
+                                    <constraint firstItem="31w-ht-si8" firstAttribute="top" secondItem="xmB-V3-hBj" secondAttribute="top" constant="24" id="xRt-qF-l44"/>
+                                    <constraint firstItem="31w-ht-si8" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" constant="24" id="yMD-tX-8Rr"/>
+                                    <constraint firstItem="P17-Ni-BjD" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" constant="24" id="zR6-cz-7CT"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xmB-V3-hBj" firstAttribute="centerX" secondItem="VMf-5v-b84" secondAttribute="centerX" id="9E4-jz-aSo"/>
+                            <constraint firstItem="xmB-V3-hBj" firstAttribute="leading" secondItem="WpS-Gc-QxU" secondAttribute="leading" constant="16" id="WYd-3B-7MA"/>
+                            <constraint firstItem="xmB-V3-hBj" firstAttribute="centerY" secondItem="VMf-5v-b84" secondAttribute="centerY" id="aEZ-hN-iNR"/>
+                            <constraint firstItem="WpS-Gc-QxU" firstAttribute="trailing" secondItem="xmB-V3-hBj" secondAttribute="trailing" constant="16" id="xD6-jk-3sQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WpS-Gc-QxU"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4bQ-T6-J28" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6807" y="4985"/>
         </scene>
     </scenes>
     <resources>
@@ -4675,7 +4777,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
+        <image name="icon_list" width="22" height="15"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4686,7 +4788,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="138" height="138"/>
+        <image name="profile_image" width="46" height="46"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>

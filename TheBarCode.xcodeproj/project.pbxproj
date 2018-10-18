@@ -159,6 +159,7 @@
 		8372F62B217784D7005F3E6D /* DateAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372F62A217784D7005F3E6D /* DateAdditions.swift */; };
 		8372F62E21779415005F3E6D /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372F62D21779415005F3E6D /* Timer.swift */; };
 		837B48B32175FB2C00841419 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B48B22175FB2C00841419 /* Pagination.swift */; };
+		838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C56A621789C1100E47678 /* CannotRedeemViewController.swift */; };
 		83A4B6352175ADC600730056 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4B6342175ADC600730056 /* Offer.swift */; };
 		83AF91912174800A00CE552F /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91902174800A00CE552F /* ImageItem.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
@@ -344,6 +345,7 @@
 		8372F62A217784D7005F3E6D /* DateAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAdditions.swift; sourceTree = "<group>"; };
 		8372F62D21779415005F3E6D /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		837B48B22175FB2C00841419 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
+		838C56A621789C1100E47678 /* CannotRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotRedeemViewController.swift; sourceTree = "<group>"; };
 		83A4B6342175ADC600730056 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		83AF91902174800A00CE552F /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
 		83FD60422167726D0069A90A /* UIApplicationAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationAdditions.swift; sourceTree = "<group>"; };
@@ -1044,6 +1046,7 @@
 				0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */,
 				0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */,
 				0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */,
+				838C56A621789C1100E47678 /* CannotRedeemViewController.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -1455,6 +1458,7 @@
 				0C955DB52147824C00F9385B /* GradientButton.swift in Sources */,
 				0C8848652167370500DB222F /* UILableAdditions.swift in Sources */,
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
+				838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */,
 				0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
 				0C478A8F215C9A75002C51FA /* BarDetailViewController.swift in Sources */,

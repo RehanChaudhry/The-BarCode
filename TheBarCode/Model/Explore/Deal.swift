@@ -9,6 +9,33 @@
 import UIKit
 import CoreStore
 
+enum OfferType: String {
+    case standard = "Standard",
+    fiveADay = "5 A Day",
+    live = "Live",
+    exclusive = "Exclusive",
+    bannerAds = "Banner Ads",
+    unknown = "unknown"
+    
+    func serverParamValue() -> String {
+        switch self {
+        case .standard:
+            return "standard"
+        case .fiveADay:
+            return "f_a_day"
+        case .live:
+            return "live"
+        case .exclusive:
+            return "exclusive"
+        case .bannerAds:
+            return "banner_ads"
+        case .unknown:
+            return "unknown"
+        }
+    }
+    
+}
+
 class Deal: CoreStoreObject {
     
     var id = Value.Required<String>("id", initial: "")

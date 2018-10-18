@@ -62,12 +62,18 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     func getAttributedString(startTime:String, endTime:String, status: String) -> NSMutableAttributedString {
         
         let font = UIFont.appRegularFontOf(size: 12.0)
+        
         let attributesWhite: [NSAttributedStringKey: Any] = [
             .font: font,
             .foregroundColor: UIColor.white]
+        
         let attributesBlue: [NSAttributedStringKey: Any] = [
             .font: font,
             .foregroundColor: UIColor.appBlueColor()]
+        
+        let attributesRed: [NSAttributedStringKey: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.appRedColor()]
         
         let description = "Validity Period"
         let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
@@ -85,12 +91,16 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             text.append(text1)
             text.append(text2)
             text.append(text3)
-        } else {
-            let attributesRed: [NSAttributedStringKey: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.appRedColor()]
             
-            let description1 = "Expired"
+        } else if status.lowercased() == "Expired".lowercased() {
+        
+            let description1 = " Expired "
+            let text1 = NSMutableAttributedString(string: description1, attributes: attributesRed)
+            text.append(text1)
+            
+        } else if status.lowercased() == "In-active".lowercased() {
+        
+            let description1 = " In-Active "
             let text1 = NSMutableAttributedString(string: description1, attributes: attributesRed)
             text.append(text1)
             

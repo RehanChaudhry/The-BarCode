@@ -34,7 +34,7 @@ class Explore: CoreStoreObject {
     var formattedUpdatedAt = Value.Optional<String>("formatted_updated_at")
     var distance = Value.Optional<String>("distance")
     var canRedeemOffer = Value.Required<Bool>("is_offer_redeemed", initial: false)
-    var isStandardOfferRedeemed = Value.Required<Bool>("is_standard_offer_redeemed", initial: false)
+    var canStandardOfferRedeemed = Value.Required<Bool>("can_redeem_standard_offer", initial: false)
     var deals = Value.Required<Int>("deals", initial: 0)
     var liveOffers = Value.Required<Int>("live_offers", initial: 0)
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
@@ -95,8 +95,8 @@ extension Explore: ImportableUniqueObject {
         self.facebookPageUrl.value = source["facebook_page_url"] as? String
         self.formattedUpdatedAt.value = source["formatted_updated_at"] as? String
         self.distance.value = source["distance"] as? String
-        self.canRedeemOffer.value = source["is_offer_redeemed"] as! Bool
-        self.isStandardOfferRedeemed.value = source["is_standard_offer_redeemed"] as! Bool
+        self.canRedeemOffer.value = source["can_redeem_offer"] as! Bool
+        self.canStandardOfferRedeemed.value = source["can_redeem_standard_offer"] as! Bool
         self.deals.value = source["deals"] as! Int
         self.liveOffers.value = source["live_offers"] as! Int
         self.isUserFavourite.value = source["is_user_favourite"] as! Bool

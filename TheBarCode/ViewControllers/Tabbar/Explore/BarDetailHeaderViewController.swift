@@ -24,6 +24,8 @@ class BarDetailHeaderViewController: UIViewController {
     
     var images: [String] = ["cover_detail", "cover_detail", "cover_detail"]
     
+    let transaction = Utility.inMemoryStack.beginUnsafe()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,8 +53,15 @@ class BarDetailHeaderViewController: UIViewController {
 //MARK: Webservices Methods
 extension BarDetailHeaderViewController {
     func markFavourite() {
-      
+        
         let params:[String : Any] = ["establishment_id": self.bar.id.value, "is_favorite" : !(self.bar.isUserFavourite.value)]
+        
+        let editedObject = transaction.edit(self.bar)
+        editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
+        
+        
+        let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
+        self.favouriteButton.tintColor = color
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
             
@@ -69,16 +78,17 @@ extension BarDetailHeaderViewController {
             let responseDict = (response as? [String : Any])
             debugPrint("responseDict == \(responseDict)")
             if let responseID = (responseDict?["data"] as? Int) {
+                debugPrint("responseID == \(responseID)")
+//                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+//                    let editedObject = transaction.edit(self.bar)
+//                    editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+//                })
+//
+//                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
                 
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-//                    let bar : Bar = try! transaction.fetchOne(From<Bar>().where(\.id == "\(responseID)"))
-//                    bar.isUserFavourite.value = !(self.explore.isUserFavourite.value)
-                })
-              
-                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
-                
-                let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
-                self.favouriteButton.tintColor = color
+                try! self.transaction.commitAndWait()
+
+         
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()

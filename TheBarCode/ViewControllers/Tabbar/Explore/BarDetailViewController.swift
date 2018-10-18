@@ -116,12 +116,26 @@ class BarDetailViewController: UIViewController {
     
         if self.selectedBar.canRedeemOffer.value {
             redeemStandardDeal()
-        } else if self.selectedBar.credit.value > 0 {
-            
         } else {
-            let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
-            outOfCreditViewController.modalPresentationStyle = .overCurrentContext
-            self.present(outOfCreditViewController, animated: true, completion: nil)
+            //Standard offer cannot be redeem again
+            let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+            cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+            self.present(cannotRedeemViewController, animated: true, completion: nil)
+            
+            
+//            if self.selectedBar.credit.value > 0 {
+//                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+//                creditConsumptionController.delegate = self
+//                creditConsumptionController.modalPresentationStyle = .overCurrentContext
+//                self.present(creditConsumptionController, animated: true, completion: nil)
+//
+//
+//            } else {
+//                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+//                outOfCreditViewController.delegate = self
+//                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+//                self.present(outOfCreditViewController, animated: true, completion: nil)
+//            }
         }
     }
     
@@ -206,4 +220,58 @@ extension BarDetailViewController {
             }
         }
     }
+}
+
+//MARK: CreditCosumptionViewControllerDelegate
+extension BarDetailViewController: CreditCosumptionViewControllerDelegate {
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+    }
+    
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+    }    
+}
+
+
+extension BarDetailViewController: OutOfCreditViewControllerDelegate {
+    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+    }
+    
+    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
+        let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.isRedeemingDeal = true
+        reloadController.delegate = self
+        reloadController.selectedIndex = selectedIndex
+        self.present(reloadNavigation, animated: true, completion: nil)
+        
+    }
+    
+    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+        let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.shouldShowCancelBarButton = true
+        inviteController.isRedeemingDeal = true
+        inviteController.delegate = self
+        inviteController.selectedIndex = selectedIndex
+        self.present(inviteNavigation, animated: true, completion: nil)
+        
+    }
+}
+
+extension BarDetailViewController: ReloadViewControllerDelegate {
+    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
+        
+    }
+
+}
+
+extension BarDetailViewController : InviteViewControllerDelegate {
+    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
+        
+    }
+
 }
