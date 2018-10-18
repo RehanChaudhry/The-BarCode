@@ -9,15 +9,17 @@
 import UIKit
 
 protocol OutOfCreditViewControllerDelegate: class {
-    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton)
-    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton)
-    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton)
+    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int)
+    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int)
+    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int)
 }
 
 class OutOfCreditViewController: UIViewController {
     
     weak var delegate: OutOfCreditViewControllerDelegate!
 
+    var selectedIndex: Int = NSNotFound
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,14 +34,14 @@ class OutOfCreditViewController: UIViewController {
     //MARK: IBActions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-            self.delegate.outOfCreditViewController(controller: self, closeButtonTapped: sender)
+            self.delegate.outOfCreditViewController(controller: self, closeButtonTapped: sender, selectedIndex: self.selectedIndex)
         }
     }
     
     @IBAction func reloadButtonTapped(_ sender: UIButton) {
         
         self.dismiss(animated: true) {
-            self.delegate.outOfCreditViewController(controller: self, reloadButtonTapped: sender)
+            self.delegate.outOfCreditViewController(controller: self, reloadButtonTapped: sender, selectedIndex: self.selectedIndex)
         }
         
     }
@@ -47,7 +49,7 @@ class OutOfCreditViewController: UIViewController {
     @IBAction func inviteButtonTapped(_ sender: UIButton) {
         
         self.dismiss(animated: true) {
-            self.delegate.outOfCreditViewController(controller: self, inviteButtonTapped: sender)
+            self.delegate.outOfCreditViewController(controller: self, inviteButtonTapped: sender, selectedIndex: self.selectedIndex)
         }
         
     }

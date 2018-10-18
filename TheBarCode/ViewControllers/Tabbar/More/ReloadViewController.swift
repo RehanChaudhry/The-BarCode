@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol ReloadViewControllerDelegate: class {
-    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem)
+@objc protocol ReloadViewControllerDelegate: class {
+    @objc optional func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
 }
 
 class ReloadViewController: UITableViewController {
@@ -21,6 +21,8 @@ class ReloadViewController: UITableViewController {
     var isRedeemingDeal: Bool = false
     
     weak var delegate: ReloadViewControllerDelegate?
+    
+    var selectedIndex: Int = NSNotFound
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +56,7 @@ class ReloadViewController: UITableViewController {
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true) {
-            self.delegate?.reloadController(controller: self, cancelButtonTapped: sender)
+            self.delegate?.reloadController?(controller: self, cancelButtonTapped: sender, selectedIndex: self.selectedIndex)
         }
     }
 

@@ -10,8 +10,8 @@ import UIKit
 import Contacts
 import FirebaseDynamicLinks
 
-protocol InviteViewControllerDelegate: class {
-    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem)
+@objc protocol InviteViewControllerDelegate: class {
+    @objc optional func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
 }
 
 class InviteViewController: UITableViewController {
@@ -23,6 +23,8 @@ class InviteViewController: UITableViewController {
     var isRedeemingDeal: Bool = false
     
     weak var delegate: InviteViewControllerDelegate?
+    
+    var selectedIndex: Int = NSNotFound
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +95,7 @@ class InviteViewController: UITableViewController {
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         self.navigationController?.dismiss(animated: true, completion: {
-            self.delegate?.inviteViewController(controller: self, cancelButtonTapped: sender)
+            self.delegate?.inviteViewController?(controller: self, cancelButtonTapped: sender, selectedIndex: self.selectedIndex)
         })
     }
     
