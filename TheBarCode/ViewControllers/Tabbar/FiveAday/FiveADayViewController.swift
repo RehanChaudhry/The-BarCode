@@ -203,10 +203,12 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
             if bar.canRedeemOffer.value {
                 self.redeemFiveADayDeal(deal: deal, cell: cell)
             } else {
-                if bar.credit.value > 0 {
+                if bar.credit.value == 0 {
+                    self.pagerView.automaticSlidingInterval = 0.0
                     let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
                     creditConsumptionController.delegate = self
                     creditConsumptionController.modalPresentationStyle = .overCurrentContext
+                    creditConsumptionController.selectedIndex = index
                     self.present(creditConsumptionController, animated: true, completion: nil)
                     
                     
@@ -215,6 +217,7 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                     let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
                     outOfCreditViewController.delegate = self
                     outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+                    outOfCreditViewController.selectedIndex = index
                     self.present(outOfCreditViewController, animated: true, completion: nil)
                 }
             }
@@ -234,53 +237,50 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
 }
 
 extension FiveADayViewController: OutOfCreditViewControllerDelegate {
-    
-    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton) {
+    func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
     
-    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton) {
-        
+    func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
         let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
         reloadController.delegate = self
+        reloadController.selectedIndex = selectedIndex
         self.present(reloadNavigation, animated: true, completion: nil)
     }
     
-    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton) {
-        
+    func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int) {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         inviteController.shouldShowCancelBarButton = true
         inviteController.isRedeemingDeal = true
         inviteController.delegate = self
+        inviteController.selectedIndex = selectedIndex
         self.present(inviteNavigation, animated: true, completion: nil)
-        
     }
-    
 }
 
 //MARK: ReloadViewControllerDelegate
 extension FiveADayViewController: ReloadViewControllerDelegate {
-    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem) {
+    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
 }
 
 //MARK: InviteViewControllerDelegate
 extension FiveADayViewController: InviteViewControllerDelegate {
-    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem) {
+    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
 }
 
 extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
-    func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton) {
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
         
     }
     
-    func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton) {
+    func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
 }
