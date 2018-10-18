@@ -53,11 +53,13 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceLabel.isHidden = true
         detailLabel.isHidden = true
         
-        validityLabel.attributedText = getAttributedString(startTime: deal.startTime.value, endTime: deal.endTime.value)
+        let startDateTime = Date.getFormattedDate(string: deal.starDateTime.value, formatter: "MMM dd  hh:mm a")
+        let endDateTime = Date.getFormattedDate(string: deal.endDateTime.value, formatter: "MMM dd  hh:mm a")
+        validityLabel.attributedText = getAttributedString(startTime: startDateTime, endTime: endDateTime, status: deal.statusText.value)
     }
     
     
-    func getAttributedString(startTime:String, endTime:String) -> NSMutableAttributedString {
+    func getAttributedString(startTime:String, endTime:String, status: String) -> NSMutableAttributedString {
         
         let font = UIFont.appRegularFontOf(size: 12.0)
         let attributesWhite: [NSAttributedStringKey: Any] = [
@@ -70,18 +72,29 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         let description = "Validity Period"
         let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
         
-        let description1 = " \(startTime)"
-        let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
-        
-        let description2 = " to "
-        let text2 = NSMutableAttributedString(string: description2, attributes: attributesWhite)
-        
-        let description3 = "\(endTime)"
-        let text3 = NSMutableAttributedString(string: description3, attributes: attributesBlue)
-        
-        text.append(text1)
-        text.append(text2)
-        text.append(text3)
+        if status.lowercased() == "active".lowercased() {
+            let description1 = " \(startTime)"
+            let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
+            
+            let description2 = " to "
+            let text2 = NSMutableAttributedString(string: description2, attributes: attributesWhite)
+            
+            let description3 = "\(endTime)"
+            let text3 = NSMutableAttributedString(string: description3, attributes: attributesBlue)
+            
+            text.append(text1)
+            text.append(text2)
+            text.append(text3)
+        } else {
+            let attributesRed: [NSAttributedStringKey: Any] = [
+                .font: font,
+                .foregroundColor: UIColor.appRedColor()]
+            
+            let description1 = "Expired"
+            let text1 = NSMutableAttributedString(string: description1, attributes: attributesRed)
+            text.append(text1)
+            
+        }
         
         return text
         

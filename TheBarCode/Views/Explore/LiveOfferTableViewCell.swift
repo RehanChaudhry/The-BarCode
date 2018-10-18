@@ -56,10 +56,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceLabel.isHidden = true
         detailLabel.isHidden = true
         
-        validityLabel.attributedText = getAttributedString(startTime: offer.endTime.value)
+        validityLabel.attributedText = getAttributedString(endTime: offer.endTime.value)
     }
     
-    func getAttributedString(startTime:String) -> NSMutableAttributedString {
+    func getAttributedString(endTime:String) -> NSMutableAttributedString {
         
         let font = UIFont.appRegularFontOf(size: 12.0)
         let attributesWhite: [NSAttributedStringKey: Any] = [
@@ -72,7 +72,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         let description = "Expires in:"
         let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
 
-        let description1 = " \(startTime)"
+        let description1 = " \(endTime)"
         let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
 
         text.append(text1)

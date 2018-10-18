@@ -116,6 +116,12 @@ class BarDetailViewController: UIViewController {
     
         if self.selectedBar.canRedeemOffer.value {
             redeemStandardDeal()
+        } else if self.selectedBar.credit.value > 0 {
+            
+        } else {
+            let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+            self.present(outOfCreditViewController, animated: true, completion: nil)
         }
     }
     
@@ -158,13 +164,20 @@ extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
 
 //MARK: WebService Method
 extension BarDetailViewController {
+    
     func redeemStandardDeal() {
-        
+       
+        self.standardRedeemButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+
         let params: [String: Any] = ["establishment_id": self.selectedBar.id.value,
                                      "type": OfferType.standard.serverParamValue()]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
+            self.standardRedeemButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+           
             guard error == nil else {
                 self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
                 return

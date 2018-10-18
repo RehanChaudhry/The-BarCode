@@ -100,20 +100,28 @@ class ExploreBaseViewController: UIViewController {
         return marker
     }
     
-    func setUpExplore(bars: [Bar]) {
+    func setUpBarMarkers(bars: [Bar]) {
     
         mapView.clear()
+        mapView.isMyLocationEnabled = true
+        
         var bounds = GMSCoordinateBounds()
         for explore in bars {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
             let marker = self.createMapMarker(explore: explore)
+            
+            let iconImage =  UIImage(named: "Pins")
+            let markerView = UIImageView(image: iconImage)
+            marker.iconView = markerView
+
             marker.map = mapView
         }
         
         let update = GMSCameraUpdate.fit(bounds, withPadding: 60.0)
         mapView.animate(with: update)
+        
     }
 
     //MARK: My IBActions
@@ -138,6 +146,8 @@ class ExploreBaseViewController: UIViewController {
         self.displayType = .map
         
         self.scrollView.scrollToPage(page: 1, animated: true)
+        
+        self.setUpBarMarkers(bars: self.bars)
                 
     }
 }
