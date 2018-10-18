@@ -61,8 +61,8 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         
         let validtyPlaceHodler = "Validity period: "
         let to = " to "
-        let fromDate = deal.startTime.value
-        let toDate = deal.endTime.value
+        let fromDate = Date.getFormattedDate(string: deal.starDateTime.value, formatter: "MMM dd  hh:mm a")
+        let toDate = Date.getFormattedDate(string: deal.endDateTime.value, formatter: "MMM dd  hh:mm a")
         
         let finalText = validtyPlaceHodler + fromDate + to + toDate
         
