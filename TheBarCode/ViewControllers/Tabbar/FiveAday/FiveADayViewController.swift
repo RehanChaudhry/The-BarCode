@@ -149,15 +149,17 @@ extension FiveADayViewController {
 
 //MARK: WebService Method
 extension FiveADayViewController {
-    func redeemFiveADayDeal(deal: FiveADayDeal, cell: FiveADayCollectionViewCell) {
+    func redeemFiveADayDeal(deal: FiveADayDeal, cell: FiveADayCollectionViewCell, redeemWithCredit: Bool) {
         
         self.pagerView.automaticSlidingInterval = 0.0
         UIApplication.shared.beginIgnoringInteractionEvents()
         cell.redeemButton.showLoader()
         
+        let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
+        
         let params: [String: Any] = ["establishment_id": deal.establishmentId.value,
-                      "type": "reload",
-                      "offer_id": deal.id.value ]
+                      "type": redeemType.rawValue,
+                      "offer_id" : deal.id.value]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
@@ -201,9 +203,9 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
         let deal = self.deals[index]
         if let bar = deal.establishment.value {
             if bar.canRedeemOffer.value {
-                self.redeemFiveADayDeal(deal: deal, cell: cell)
+                self.redeemFiveADayDeal(deal: deal, cell: cell, redeemWithCredit: false)
             } else {
-                if bar.credit.value == 0 {
+                if bar.credit.value > 0 {
                     self.pagerView.automaticSlidingInterval = 0.0
                     let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
                     creditConsumptionController.delegate = self
@@ -277,6 +279,15 @@ extension FiveADayViewController: InviteViewControllerDelegate {
 
 extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+        guard selectedIndex != NSNotFound else {
+            debugPrint("Index not found for deal redumtion")
+            return
+        }
+        
+        let cell = self.pagerView(self.pagerView, cellForItemAt: selectedIndex)
+        let deal = self.deals[selectedIndex]
+        self.redeemFiveADayDeal(deal: deal, cell: cell as! FiveADayCollectionViewCell, redeemWithCredit: true)
         
     }
     

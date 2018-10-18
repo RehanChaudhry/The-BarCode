@@ -9,7 +9,7 @@
 import UIKit
 import CoreStore
 
-enum OfferType : String {
+enum OfferType: String {
     case standard = "Standard",
     fiveADay = "5 A Day",
     live = "Live",
@@ -17,18 +17,18 @@ enum OfferType : String {
     bannerAds = "Banner Ads",
     unknown = "unknown"
     
-    func description() -> String {
+    func serverParamValue() -> String {
         switch self {
         case .standard:
             return "standard"
         case .fiveADay:
-            return ""
+            return "f_a_day"
         case .live:
-            return ""
+            return "live"
         case .exclusive:
-            return ""
+            return "exclusive"
         case .bannerAds:
-            return "Banner Ads"
+            return "banner_ads"
         case .unknown:
             return "unknown"
         }

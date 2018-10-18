@@ -21,7 +21,11 @@ let kAppStoreId = ""
 
 let genericErrorMessage = "Opps! Something went wrong"
 
-
+enum RedeemType: String {
+    case standard = "standard",
+    credit = "credit",
+    any = "reload"
+}
 
 class Utility: NSObject {
     

@@ -161,7 +161,7 @@ extension BarDetailViewController {
     func redeemStandardDeal() {
         
         let params: [String: Any] = ["establishment_id": self.selectedBar.id.value,
-                                     "type": "standard"]
+                                     "type": OfferType.standard.serverParamValue()]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
