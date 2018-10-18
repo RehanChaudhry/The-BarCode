@@ -1984,7 +1984,8 @@
                         <outlet property="listButton" destination="oIg-R0-Gzl" id="tBN-RV-NQt"/>
                         <outlet property="listContainer" destination="7Zv-Wd-T9V" id="nf1-pc-W7M"/>
                         <outlet property="mapButton" destination="t2t-uF-F9W" id="YlD-9R-6NS"/>
-                        <outlet property="mapContainer" destination="dLV-1b-Bmi" id="wDb-IX-mMk"/>
+                        <outlet property="mapContainer" destination="dLV-1b-Bmi" id="DuE-Fg-7Hw"/>
+                        <outlet property="mapView" destination="6rK-vT-PGL" id="Mot-ML-R11"/>
                         <outlet property="scrollView" destination="691-bs-LYe" id="v2O-XU-wR4"/>
                         <outlet property="searchBar" destination="VFx-BH-hPf" id="e2D-lS-cCa"/>
                         <outlet property="searchBarContainer" destination="V5J-aW-r3g" id="nUN-vY-vKk"/>
