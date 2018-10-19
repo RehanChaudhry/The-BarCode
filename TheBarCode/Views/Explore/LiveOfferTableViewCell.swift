@@ -14,6 +14,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet weak var validityLabel: UILabel!
     
+    //Timer
+    var timer = Timer()
+    var seconds = 43200
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -57,6 +61,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         detailLabel.isHidden = true
         
         validityLabel.attributedText = getAttributedString(endTime: offer.endTime.value)
+        
+       // runTimer()
     }
     
     func getAttributedString(endTime:String) -> NSMutableAttributedString {
@@ -81,4 +87,23 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
     }
     
+}
+
+
+extension LiveOfferTableViewCell {
+    
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(LiveOfferTableViewCell.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer() {
+        seconds -= 1
+        if seconds < 0 {
+            timer.invalidate()
+        }
+        
+        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
+//        self.timerWithTextLabel.attributedText = getAttributedString(endTime:timerString)
+        
+    }
 }

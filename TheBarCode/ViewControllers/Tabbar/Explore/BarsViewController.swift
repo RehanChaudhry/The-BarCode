@@ -15,6 +15,8 @@ import ObjectMapper
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
+    func barsController(controller: FavouritesViewController, didSelectBar bar: Bar)
+
 }
 
 class BarsViewController: ExploreBaseViewController {

@@ -17,6 +17,8 @@ class RedeemStartViewController: UIViewController {
     var type: OfferType = .unknown
     var barId = ""
     
+    var redeemWithCredit: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,15 +47,14 @@ class RedeemStartViewController: UIViewController {
     @IBAction func barTenderReadyButtonTapped(_ sender: Any) {
         presentedVC = self.presentingViewController
         
-        self.barTenderRedeemDeal()
-        
-        
-//        self.dismiss(animated: true) {
-//            let redeemActiveDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemActiveDealViewController") as! RedeemActiveDealViewController)
-//            redeemActiveDealViewController.modalPresentationStyle = .overCurrentContext
-//            self.presentedVC.present(redeemActiveDealViewController, animated: true, completion: nil)
-//
-//        }
+        self.dismiss(animated: true) {
+            let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+            redeemDealViewController.deal = self.deal
+            redeemDealViewController.redeemWithCredit = self.redeemWithCredit
+            redeemDealViewController.modalPresentationStyle = .overCurrentContext
+            self.presentedVC.present(redeemDealViewController, animated: true, completion: nil)
+
+        }
     }
     
     @IBAction func takeMeBackButtonTapped(_ sender: Any) {
