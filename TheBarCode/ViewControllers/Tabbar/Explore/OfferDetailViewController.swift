@@ -59,6 +59,8 @@ class OfferDetailViewController: UIViewController {
 //            }
 //        }
         
+        viewOffer()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -248,6 +250,40 @@ extension OfferDetailViewController {
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+        }
+    }
+    
+    //viewOffer
+    func viewOffer() {
+        
+        let params: [String: Any] = ["view": self.deal.id.value,
+                                     "type":"offer_view"]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("error while view api : \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror while view api : \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            if let responseObj = response as? [String : Any] {
+                if  let _ = responseObj["data"] as? [String : Any] {
+                    
+                    
+                } else {
+                    let genericError = APIHelper.shared.getGenericError()
+                    debugPrint("servererror while view api : \(genericError.localizedDescription)")
+                }
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("servererror while view api : \(genericError.localizedDescription)")
+                
             }
         }
     }

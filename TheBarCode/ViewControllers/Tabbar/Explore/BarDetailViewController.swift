@@ -37,6 +37,8 @@ class BarDetailViewController: UIViewController {
             
         }
         
+        viewProfile()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -222,6 +224,41 @@ extension BarDetailViewController {
             }
         }
     }
+    
+    //View for statistics
+    func viewProfile() {
+        
+        let params: [String: Any] = ["view": self.selectedBar.id.value,
+                                     "type":"profile_view"]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("error while view api : \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror while view api : \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            if let responseObj = response as? [String : Any] {
+                if  let _ = responseObj["data"] as? [String : Any] {
+                    
+                    
+                } else {
+                    let genericError = APIHelper.shared.getGenericError()
+                    debugPrint("genericerror while view api : \(genericError.localizedDescription)")
+                }
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("genericerror while view api : \(genericError.localizedDescription)")
+
+            }
+        }
+    }
+    
 }
 
 //MARK: CreditCosumptionViewControllerDelegate

@@ -38,3 +38,4 @@ let apiPathReloadStatus = "subscription/detail"
 
 let apiPathReload = "subscription"
 
+let apiPathView = "view"

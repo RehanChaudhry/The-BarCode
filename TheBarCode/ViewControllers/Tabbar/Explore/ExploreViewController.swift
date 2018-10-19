@@ -157,6 +157,10 @@ extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
+    
+    func barsController(controller: FavouritesViewController, didSelectBar bar: Bar){
+        self.moveToBarDetail(bar: bar)
+    }
 }
 
 //MARK: BarsWithDealsViewControllerDelegate

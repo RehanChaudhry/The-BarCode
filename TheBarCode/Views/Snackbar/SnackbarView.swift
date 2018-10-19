@@ -11,7 +11,7 @@ import Gradientable
 import Reusable
 
 enum SnackbarType: String {
-    case discount = "discount", reload = "reload"
+    case discount = "discount", reload = "reload", canReload = "canReload"
 }
 
 enum GradientType: String {
@@ -38,12 +38,20 @@ class SnackbarView: GradientView, NibLoadable {
         
         self.type = type
         
+        
         if type == .discount {
             self.reloadInfoView.isHidden = true
             self.discountInfoView.isHidden = false
+            self.discountInfoLabel.text = "GET 25% OFF YOUR FIRST ROUND"
+
         } else if type == .reload {
             self.reloadInfoView.isHidden = false
             self.discountInfoView.isHidden = true
+            self.reloadInfoLabel.text = ""
+        } else if type == .canReload {
+            self.reloadInfoView.isHidden = false
+            self.discountInfoView.isHidden = true
+            self.discountInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
         }
         
         self.gradientType = gradientType
