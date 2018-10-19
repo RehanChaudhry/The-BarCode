@@ -2866,6 +2866,7 @@ Cg
                     <connections>
                         <outlet property="creditsLabel" destination="Rxg-YR-ZwN" id="2Ay-Ek-LVK"/>
                         <outlet property="headerView" destination="XoL-km-z5W" id="auN-Ok-WiE"/>
+                        <outlet property="timerWithTextLabel" destination="Axy-hU-CQm" id="tfS-Vz-sj9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-zq-rah" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4765,6 +4766,10 @@ Cg
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WpS-Gc-QxU"/>
                     </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="P17-Ni-BjD" id="i3t-f1-Fdg"/>
+                        <outlet property="titleLabel" destination="31w-ht-si8" id="94v-wM-Ivv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bQ-T6-J28" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

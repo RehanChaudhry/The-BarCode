@@ -162,6 +162,7 @@
 		838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C56A621789C1100E47678 /* CannotRedeemViewController.swift */; };
 		83A4B6352175ADC600730056 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4B6342175ADC600730056 /* Offer.swift */; };
 		83AF91912174800A00CE552F /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91902174800A00CE552F /* ImageItem.swift */; };
+		83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 /* End PBXBuildFile section */
@@ -348,6 +349,7 @@
 		838C56A621789C1100E47678 /* CannotRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotRedeemViewController.swift; sourceTree = "<group>"; };
 		83A4B6342175ADC600730056 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		83AF91902174800A00CE552F /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
+		83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemInfo.swift; sourceTree = "<group>"; };
 		83FD60422167726D0069A90A /* UIApplicationAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationAdditions.swift; sourceTree = "<group>"; };
 		978374FDD2BC17E29FDA033D /* Pods-TheBarCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
@@ -808,6 +810,7 @@
 				0C955DDE2149277D00F9385B /* Category.swift */,
 				83AF91902174800A00CE552F /* ImageItem.swift */,
 				837B48B22175FB2C00841419 /* Pagination.swift */,
+				83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1414,6 +1417,7 @@
 				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
+				83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */,
 				0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */,
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */,
@@ -1672,7 +1676,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1682,6 +1687,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "TheBarCode-Dev";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1693,7 +1699,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = BQTXXBH526;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1703,6 +1710,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.TheBarCode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "TheBarCode-Dev";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

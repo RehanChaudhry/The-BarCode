@@ -104,4 +104,41 @@ class Utility: NSObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
     }
+    
+    //decrement credit by 1 
+    func userCreditUpdate(){
+        let user = CoreStore.fetchOne(From<User>())
+        
+        try! CoreStore.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(user)
+            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > -1 {
+                let credit = creditInt - 1
+                editedObject!.creditsRaw.value = "\(credit)"
+            }
+
+        })
+    }
+    
+    
+    func timeString(time:TimeInterval) -> String {
+        
+        let timeInt = Int(time)
+        
+        let days = Int(timeInt / 86400)
+        let hours = Int((timeInt % 86400) / 3600)
+        let minutes = Int((timeInt % 3600) / 60)
+        let seconds = Int((timeInt % 3600) % 60)
+        return String(format: "%d : %d  : %d : %d",days, hours, minutes,seconds)
+    }
+    
+    func checkTimerEnd(time:TimeInterval) -> Bool {
+
+        let timeInt = Int(time)
+
+        let days = Int(timeInt / 86400)
+        let hours = Int((timeInt % 86400) / 3600)
+        let minutes = Int((timeInt % 3600) / 60)
+        let seconds = Int((timeInt % 3600) % 60)
+        return (days == 0 && hours == 0 && minutes == 0 && seconds == 0 )
+    }
 }

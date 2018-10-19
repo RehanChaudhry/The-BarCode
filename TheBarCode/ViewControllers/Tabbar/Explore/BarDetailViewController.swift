@@ -120,6 +120,8 @@ class BarDetailViewController: UIViewController {
             //Standard offer cannot be redeem again
             let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
             cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+            cannotRedeemViewController.titleText = "Alert"
+            cannotRedeemViewController.messageText = "You have already redeem standard offer. To redeem Standard Offer reload first."
             self.present(cannotRedeemViewController, animated: true, completion: nil)
             
             

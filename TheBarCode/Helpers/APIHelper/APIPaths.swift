@@ -34,5 +34,7 @@ let apiFavorite = "user-favorite-establishment"
 
 let apiUpdateFavorite = "user-favorite-establishment/update"
 
-let apiPathReloadStatus = ""
+let apiPathReloadStatus = "subscription/detail"
+
+let apiPathReload = "subscription"
 

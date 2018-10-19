@@ -21,6 +21,15 @@ class RedeemDealViewController: CodeVerificationViewController {
         // Do any additional setup after loading the view.
     }
     
+    func showAlertAndDismiss(msg: String){
+        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "", style: .cancel) { (alert) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 
     //MARK: My IBActions
     
@@ -52,12 +61,12 @@ extension RedeemDealViewController {
             UIApplication.shared.endIgnoringInteractionEvents()
 
             guard error == nil else {
-                self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
+                self.showAlertAndDismiss(msg: error?.localizedDescription ?? genericErrorMessage)
                 return
             }
             
             guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError?.errorMessages() ?? genericErrorMessage)
+                self.showAlertAndDismiss(msg: serverError?.errorMessages() ?? genericErrorMessage)
                 return
             }
             
@@ -70,17 +79,20 @@ extension RedeemDealViewController {
                     })
                     
                     self.dismiss(animated: true, completion: nil)
-
+                    
+                    if redeemWithCredit {
+                        Utility.shared.userCreditUpdate()
+                    }
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
-                    self.showAlertController(title: "", msg: genericError.localizedDescription)
+                    self.showAlertAndDismiss(msg: genericError.localizedDescription)
                 }
             } else {
-                
                 let genericError = APIHelper.shared.getGenericError()
-                self.showAlertController(title: "", msg: genericError.localizedDescription)
+                self.showAlertAndDismiss(msg: genericError.localizedDescription)
             }
         }
     }
 }
+

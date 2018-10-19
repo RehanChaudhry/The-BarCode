@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-            timestampString = "561557162.784128"
+            timestampString = "561572821.829325"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "80"
@@ -26,7 +26,7 @@
                   moduleName = "TheBarCode"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561557163.067139"
+                  timestampString = "561635296.33312"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "80"
@@ -41,7 +41,7 @@
                   moduleName = "TheBarCode"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561557163.071052"
+                  timestampString = "561635296.337484"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "82"
@@ -59,86 +59,6 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheBarCode/ViewControllers/Popups/RedeemDealViewController.swift"
-            timestampString = "561557162.7854021"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "redeemDeal(redeemWithCredit:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TheBarCode.RedeemDealViewController.redeemDeal(redeemWithCredit: Swift.Bool) -&gt; ()"
-                  moduleName = "TheBarCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemDealViewController.swift"
-                  timestampString = "561557163.082212"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "1743">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;TheBarCode.ServerError&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TheBarCode.RedeemDealViewController.redeemDeal(redeemWithCredit: Swift.Bool) -&gt; ()"
-                  moduleName = "TheBarCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemDealViewController.swift"
-                  timestampString = "561557163.085407"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "52"
-                  endingLineNumber = "52"
-                  offsetFromSymbolStart = "80">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheBarCode/ViewControllers/Tabbar/Explore/OfferDetailViewController.swift"
-            timestampString = "561557162.785648"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "redeemDealButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TheBarCode/ViewControllers/Tabbar/Explore/OfferDetailViewController.swift"
-            timestampString = "561557162.786291"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "redeemDeal(redeemWithCredit:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -10,10 +10,19 @@ import UIKit
 
 class CannotRedeemViewController: UIViewController {
 
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    var messageText: String = ""
+    var titleText: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.messageLabel.text = messageText
+        self.titleLabel.text = titleText
+    
     }
     
 

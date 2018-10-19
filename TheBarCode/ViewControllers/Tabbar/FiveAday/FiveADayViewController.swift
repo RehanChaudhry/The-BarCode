@@ -185,6 +185,10 @@ extension FiveADayViewController {
                         editedObject!.establishment.value!.canRedeemOffer.value = false
                     })
                     
+                    if redeemWithCredit {
+                        Utility.shared.userCreditUpdate()
+                    }
+                    
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
                     self.showAlertController(title: "", msg: genericError.localizedDescription)
