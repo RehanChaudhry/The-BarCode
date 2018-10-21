@@ -9,6 +9,7 @@
 import UIKit
 import PureLayout
 
+
 enum ExploreType: String {
     case bars = "bars", deals = "deals", liveOffers = "live_offers"
 }
@@ -41,6 +42,7 @@ class ExploreViewController: UIViewController {
     
     var defaultButtonTitleColor: UIColor!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,6 +56,7 @@ class ExploreViewController: UIViewController {
         self.defaultButtonTitleColor = self.barsButton.titleColor(for: .normal)
         
         self.barsButton.sendActions(for: .touchUpInside)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,6 +119,8 @@ class ExploreViewController: UIViewController {
         self.present(barDetailNav, animated: true, completion: nil)
     }
 
+
+    
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
@@ -157,10 +162,6 @@ extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
-    
-    func barsController(controller: FavouritesViewController, didSelectBar bar: Bar){
-        self.moveToBarDetail(bar: bar)
-    }
 }
 
 //MARK: BarsWithDealsViewControllerDelegate
@@ -176,3 +177,4 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
         self.moveToBarDetail(bar: bar)
     }
 }
+

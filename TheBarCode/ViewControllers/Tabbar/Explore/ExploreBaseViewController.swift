@@ -10,6 +10,8 @@ import UIKit
 import StatefulTableView
 import GoogleMaps
 import Alamofire
+import ObjectMapper
+import HTTPStatusCodes
 
 class ExploreBaseViewController: UIViewController {
 
@@ -40,7 +42,10 @@ class ExploreBaseViewController: UIViewController {
     var loadMore = Pagination()
     
     var bars: [Bar] = []
-    
+
+    var canReload: Bool = true
+    var redeemInfo: RedeemInfo!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,6 +62,8 @@ class ExploreBaseViewController: UIViewController {
         self.listButton.tintColor = UIColor.appBlueColor()
         
         self.setUpStatefulTableView()
+        
+        self.checkReloadStatus()
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,6 +130,11 @@ class ExploreBaseViewController: UIViewController {
         mapView.animate(with: update)
         
     }
+    
+    func canTimerReload(redeemInfo: RedeemInfo) -> Bool {
+        let interval =  TimeInterval(redeemInfo.remainingSeconds!)
+        return (Utility.shared.checkTimerEnd(time:interval))
+    }
 
     //MARK: My IBActions
     
@@ -151,4 +163,45 @@ class ExploreBaseViewController: UIViewController {
                 
     }
 }
+
+//MARK: Web API
+extension ExploreBaseViewController {
+    func checkReloadStatus() {
+        
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                    //Show alert when tap on reload
+                    //All your deals are already unlocked no need to reload
+                    self.canReload = false
+                } else {
+                    debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+                }
+                
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
+                
+                let redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
+                
+                debugPrint("current servertimer \(redeemInfo .currentServerDatetime!)")
+                debugPrint("redeem time \(redeemInfo .redeemDatetime!)!")
+                
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
+            }
+        }
+    }
+}
+
 

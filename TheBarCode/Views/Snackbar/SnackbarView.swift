@@ -47,7 +47,7 @@ class SnackbarView: GradientView, NibLoadable {
         } else if type == .reload {
             self.reloadInfoView.isHidden = false
             self.discountInfoView.isHidden = true
-            self.reloadInfoLabel.text = ""
+            self.reloadInfoLabel.text = "RELOAD IN "
         } else if type == .canReload {
             self.reloadInfoView.isHidden = false
             self.discountInfoView.isHidden = true

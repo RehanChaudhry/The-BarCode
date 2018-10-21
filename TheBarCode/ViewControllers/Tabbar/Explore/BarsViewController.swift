@@ -12,11 +12,10 @@ import Reusable
 import CoreStore
 import Alamofire
 import ObjectMapper
+import HTTPStatusCodes
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
-    func barsController(controller: FavouritesViewController, didSelectBar bar: Bar)
-
 }
 
 class BarsViewController: ExploreBaseViewController {
@@ -30,7 +29,15 @@ class BarsViewController: ExploreBaseViewController {
         
         self.searchBar.delegate = self
         
-        self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
+        
+        
+        
+        if self.canReload {
+            self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
+        } else {
+            self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
+        }
+        
         
         self.statefulTableView.triggerInitialLoad()
     }
@@ -147,6 +154,8 @@ extension BarsViewController {
             }
         }
     }
+    
+ 
 }
 
 extension BarsViewController: StatefulTableDelegate {

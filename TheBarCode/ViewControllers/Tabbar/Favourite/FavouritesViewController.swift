@@ -16,8 +16,6 @@ class FavouritesViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
-    weak var delegate: BarsViewControllerDelegate!
-
     var bars: [Bar] = []
     
     var dealsRequest: DataRequest?
@@ -64,6 +62,13 @@ class FavouritesViewController: UIViewController {
         self.statefulTableView.statefulDelegate = self
 
     }
+    
+    func moveToBarDetail(bar: Bar) {
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = bar
+        self.present(barDetailNav, animated: true, completion: nil)
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -86,9 +91,9 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-       
-        self.delegate.barsController(controller: self, didSelectBar: self.bars[indexPath.row])
-
+        
+        self.moveToBarDetail(bar: self.bars[indexPath.row])
+        
 //        let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
 //        self.present(exploreDetailNav, animated: true, completion: nil)
     }
@@ -232,4 +237,3 @@ extension FavouritesViewController: StatefulTableDelegate {
         return loadingView
     }
 }
-

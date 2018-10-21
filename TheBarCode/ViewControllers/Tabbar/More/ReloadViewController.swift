@@ -34,12 +34,11 @@ class ReloadViewController: UITableViewController {
     var dataRequest: DataRequest?
     
     var canReload: Bool = true
-    
     var redeemInfo: RedeemInfo!
     
     //Timer
     var timer = Timer()
-    var seconds = 43200
+    var seconds = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +94,7 @@ class ReloadViewController: UITableViewController {
         let description = "Available Credits: \n You are out of credit. You can reload previous offers after ."
         let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
     
-        let description1 = " timer "
+        let description1 = " \(timer) "
         let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
         
         let description2 = "."
@@ -109,7 +108,7 @@ class ReloadViewController: UITableViewController {
 
     func canTimerReload(redeemInfo: RedeemInfo) -> Bool {
 
-        let redeemedDateString = redeemInfo.redeemDatetime!//"2018-10-03 00:00:00"
+       /* let redeemedDateString = redeemInfo.redeemDatetime!//"2018-10-03 00:00:00"
         let serverDateString = redeemInfo.currentServerDatetime! //"2018-10-09 00:00:00"
         
         let formater = DateFormatter()
@@ -126,9 +125,11 @@ class ReloadViewController: UITableViewController {
         
         //Difference
         let interval = reloadEndDateTime.timeIntervalSince(serverCurrentDateTime!)
+        seconds = Int(interval)*/
+        
+        let interval =  TimeInterval(redeemInfo.remainingSeconds!)
         seconds = Int(interval)
-
-        return (Utility.shared.checkTimerEnd(time: interval))
+        return (Utility.shared.checkTimerEnd(time:interval))
       
     }
     

@@ -14,6 +14,7 @@ class RedeemInfo: Mappable {
     var isFirstRedeem: Bool = false
     var redeemDatetime: String!
     var currentServerDatetime: String!
+    var remainingSeconds : Int!
     
     required convenience init?( map: Map) {
         self.init()
@@ -21,6 +22,7 @@ class RedeemInfo: Mappable {
     
     func mapping(map: Map) {
         isFirstRedeem <- map["is_first_redeem"]
+
         //TODO
         let redeemdateObj = map["redeem_datetime"].currentValue as! [String:Any]
         let redeemTime = redeemdateObj["date"]
@@ -29,6 +31,8 @@ class RedeemInfo: Mappable {
         let serverTimeObj = map["current_server_datetime"].currentValue as! [String:Any]
         let serverTime = serverTimeObj["date"]
         currentServerDatetime = serverTime! as? String
+        
+        remainingSeconds <- map["remaining_seconds"]
     }
     
     func canShowTimer() -> Bool {

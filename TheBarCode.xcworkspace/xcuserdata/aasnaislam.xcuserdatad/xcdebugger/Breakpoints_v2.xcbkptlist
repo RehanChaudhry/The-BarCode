@@ -26,7 +26,7 @@
                   moduleName = "TheBarCode"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561642991.94475"
+                  timestampString = "561827960.702374"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "80"
@@ -41,7 +41,7 @@
                   moduleName = "TheBarCode"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561642991.947713"
+                  timestampString = "561827960.706692"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "82"
@@ -59,6 +59,38 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/More/ReloadViewController.swift"
+            timestampString = "561827960.382185"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "checkTimer()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/More/ReloadViewController.swift"
+            timestampString = "561827960.382622"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "checkTimer()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
