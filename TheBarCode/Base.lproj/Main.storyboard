@@ -1259,20 +1259,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="44" width="343" height="54"/>
+                                <rect key="frame" x="16" y="88" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="122" width="343" height="1"/>
+                                <rect key="frame" x="16" y="166" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="242" width="343" height="44"/>
+                                <rect key="frame" x="16" y="286" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1290,7 +1290,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -4108,7 +4108,7 @@ Cg
                                         </constraints>
                                         <state key="normal" image="close"/>
                                         <connections>
-                                            <action selector="closeButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="LPN-14-Sqz"/>
+                                            <action selector="closeButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="0xV-8V-hBa"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8K-It-B8W">
@@ -4148,7 +4148,7 @@ Cg
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="barTenderReadyButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="8eI-aG-ils"/>
+                                            <action selector="barTenderReadyButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="3oQ-9E-iZm"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8U-xz-gSi">
@@ -4161,7 +4161,7 @@ Cg
                                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="takeMeBackButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="KYh-xJ-AW0"/>
+                                            <action selector="closeButtonTapped:" destination="cl3-8W-ZVR" eventType="touchUpInside" id="k5e-Iq-dHl"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -4206,6 +4206,11 @@ Cg
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rkP-HO-SnY"/>
                     </view>
+                    <connections>
+                        <outlet property="actionButton" destination="W95-ku-uhd" id="Hay-id-Pbz"/>
+                        <outlet property="bartenderLabel" destination="dbl-Oh-XRB" id="08i-iG-OBt"/>
+                        <outlet property="detailLabel" destination="xh8-62-wnO" id="YWd-UC-ACh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hsd-5B-3JA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

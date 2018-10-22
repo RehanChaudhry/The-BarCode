@@ -10,7 +10,7 @@ import UIKit
 import SJSegmentedScrollView
 import PureLayout
 
-class BarDetailViewController: UIViewController {
+class BarDetailViewController: UIViewController, RedeemStartViewControllerDelegate {
     
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var standardRedeemButton: GradientButton!
@@ -32,10 +32,6 @@ class BarDetailViewController: UIViewController {
         
         self.setUpSegmentedController()
         self.addBackButton()
-        
-        if selectedBar.canRedeemOffer.value {
-            
-        }
         
         viewProfile()
         
@@ -117,7 +113,15 @@ class BarDetailViewController: UIViewController {
     @IBAction func getOffButtonTapped(_ sender: Any) {
     
         if self.selectedBar.canRedeemOffer.value {
-            redeemStandardDeal()
+            let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+            redeemStartViewController.delegate = self
+            redeemStartViewController.type = .standard
+            redeemStartViewController.bar = self.selectedBar
+            redeemStartViewController.modalPresentationStyle = .overCurrentContext
+            redeemStartViewController.redeemWithCredit = false
+            self.present(redeemStartViewController, animated: true, completion: nil)
+            
+            //redeemStandardDeal()
         } else {
             //Standard offer cannot be redeem again
             let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
@@ -151,6 +155,12 @@ class BarDetailViewController: UIViewController {
     }
     
     
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
 }
 
 //MARK: SJSegmentedViewControllerDelegate
@@ -179,6 +189,15 @@ extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
         self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: offer)
     }
 }
+/*
+//MARK: RedeemStartViewControllerDelegate
+extension BarDealsViewController: RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {        
+    }
+}*/
 
 //MARK: WebService Method
 extension BarDetailViewController {

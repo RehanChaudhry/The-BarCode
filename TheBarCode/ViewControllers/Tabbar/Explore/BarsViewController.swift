@@ -29,15 +29,11 @@ class BarsViewController: ExploreBaseViewController {
         
         self.searchBar.delegate = self
         
-        
-        
-        
         if self.canReload {
             self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         } else {
             self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
         }
-        
         
         self.statefulTableView.triggerInitialLoad()
     }

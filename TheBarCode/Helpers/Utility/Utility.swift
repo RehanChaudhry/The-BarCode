@@ -141,4 +141,22 @@ class Utility: NSObject {
         let seconds = Int((timeInt % 3600) % 60)
         return (days == 0 && hours == 0 && minutes == 0 && seconds == 0 )
     }
+    
+    
+    func checkDealType(offerTypeID: String) -> OfferType {
+        switch offerTypeID {
+        case "1":
+            return OfferType.live
+        case "2":
+            return OfferType.fiveADay
+        case "3":
+            return OfferType.exclusive
+        case "4":
+            return OfferType.bannerAds
+        case "5":
+            return OfferType.standard
+        default:
+            return OfferType.unknown
+        }
+    }
 }

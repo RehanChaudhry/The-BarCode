@@ -207,7 +207,17 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
         let deal = self.deals[index]
         if let bar = deal.establishment.value {
             if bar.canRedeemOffer.value {
-                self.redeemFiveADayDeal(deal: deal, cell: cell, redeemWithCredit: false)
+                self.pagerView.automaticSlidingInterval = 0.0
+
+                let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+                redeemStartViewController.deal = deal
+                redeemStartViewController.delegate = self
+                redeemStartViewController.modalPresentationStyle = .overCurrentContext
+                redeemStartViewController.redeemWithCredit = false
+                self.present(redeemStartViewController, animated: true, completion: nil)
+                
+                
+               // self.redeemFiveADayDeal(deal: deal, cell: cell, redeemWithCredit: false)
             } else {
                 if bar.credit.value > 0 {
                     self.pagerView.automaticSlidingInterval = 0.0
@@ -277,6 +287,17 @@ extension FiveADayViewController: ReloadViewControllerDelegate {
 //MARK: InviteViewControllerDelegate
 extension FiveADayViewController: InviteViewControllerDelegate {
     func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+}
+
+//MARK: RedeemStartViewControllerDelegate
+extension FiveADayViewController : RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
 }

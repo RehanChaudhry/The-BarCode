@@ -45,7 +45,7 @@ class OfferDetailViewController: UIViewController {
         
         self.images = [deal.image.value]
        
-        self.offerType = checkDealType()
+        self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         if self.offerType == .bannerAds {
             self.redeemButton.isHidden = true
         } else {
@@ -75,42 +75,24 @@ class OfferDetailViewController: UIViewController {
         self.headerView.frame = headerFrame
     }
     
-    func checkDealType() -> OfferType {
-        switch deal.offerTypeId.value {
-        case "1":
-            return OfferType.live
-        case "2":
-            return OfferType.standard
-        case "3":
-            return OfferType.exclusive
-        case "4":
-            return OfferType.bannerAds
-        case "5":
-            return OfferType.fiveADay
-        default:
-            return OfferType.unknown
-
-        }
-    }
-    
-    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
         let bar = self.deal.establishment.value!
         if bar.canRedeemOffer.value {
-            if self.offerType == .exclusive {
+//            if self.offerType == .exclusive {
                 //for exclusive
                 let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
                 redeemStartViewController.deal = self.deal
+                redeemStartViewController.delegate = self
                 redeemStartViewController.modalPresentationStyle = .overCurrentContext
                 redeemStartViewController.redeemWithCredit = false
                 self.present(redeemStartViewController, animated: true, completion: nil)
 
-            } else if self.offerType == .live {
-                //for live offer deals
-                redeemDeal(redeemWithCredit: false)
-            }
+//            } else if self.offerType == .live {
+//                //for live offer deals
+//                redeemDeal(redeemWithCredit: false)
+//            }
 
         } else {
             if bar.credit.value > 0 {
@@ -168,6 +150,25 @@ extension OfferDetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension OfferDetailViewController : RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+        
+        if self.offerType == .exclusive {
+            //for exclusive
+            let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+            redeemDealViewController.deal = self.deal
+            redeemDealViewController.redeemWithCredit = false
+            redeemDealViewController.modalPresentationStyle = .overCurrentContext
+            self.present(redeemDealViewController, animated: true, completion: nil)
+        } else {
+            
+        }        
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+}
+
 
 extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -177,6 +178,7 @@ extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
             let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
             redeemStartViewController.deal = self.deal
             redeemStartViewController.redeemWithCredit = true
+            redeemStartViewController.delegate = self
             redeemStartViewController.modalPresentationStyle = .overCurrentContext
             self.present(redeemStartViewController, animated: true, completion: nil)
         } else if self.offerType == .live {
@@ -186,6 +188,7 @@ extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
+        
     }
 }
 
@@ -202,6 +205,8 @@ extension OfferDetailViewController: OutOfCreditViewControllerDelegate {
         
     }
 }
+
+
 
 //MARK: WebService Method
 extension OfferDetailViewController {
