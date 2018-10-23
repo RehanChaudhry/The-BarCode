@@ -10,6 +10,9 @@ import UIKit
 import HTTPStatusCodes
 import Alamofire
 import ObjectMapper
+import StoreKit
+
+let kProductIdReload = "com.cygnismedia.TheBarCode.reload"
 
 @objc protocol ReloadViewControllerDelegate: class {
     @objc optional func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
@@ -34,11 +37,17 @@ class ReloadViewController: UITableViewController {
     var dataRequest: DataRequest?
     
     var canReload: Bool = true
-    var redeemInfo: RedeemInfo!
     
+    var redeemInfo: RedeemInfo!
+
     //Timer
     var timer = Timer()
     var seconds = 0
+    
+    //In-app
+    var transactionInProgress: Bool = false
+    var productIDs: [String] = []
+    var products: [SKProduct] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,13 +81,40 @@ class ReloadViewController: UITableViewController {
         let user = Utility.shared.getCurrentUser()
         self.creditsLabel.text = "\(user!.credit)"
         
+        self.productIDs = [kProductIdReload]
+        self.requestProductInfo()
+        SKPaymentQueue.default().add(self)
+        
     }
 
+    deinit {
+        SKPaymentQueue.default().remove(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: In-APP
+    func requestProductInfo() {
+        if SKPaymentQueue.canMakePayments() {
+            let productIdentifiers = NSSet(array: self.productIDs)
+            let productRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
+            productRequest.delegate = self
+            productRequest.start()
+        } else {
+            debugPrint("cannot make payment")
+        }
+    }
+    
+    func buyProduct(_ product: SKProduct) {
+        debugPrint("Buying \(product.productIdentifier)...")
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
+    }
+    
+    //MARK: My Methods
     func getAttributedTimerString(timer:String) -> NSMutableAttributedString {
         
         let font = UIFont.appRegularFontOf(size: 12.0)
@@ -158,17 +194,22 @@ class ReloadViewController: UITableViewController {
             //otherwise show timer
             //on tap show alert you cannot redeem these deals at this time try after
             
-            if canTimerReload(redeemInfo: self.redeemInfo) { //Timer finished
+          //  if canTimerReload(redeemInfo: self.redeemInfo) { //Timer finished
                 //can reload API
-                
-            } else {
-                //Timer Running show Error
-                let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-                cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
-                cannotRedeemViewController.titleText = "Alert"
-                cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-                self.present(cannotRedeemViewController, animated: true, completion: nil)
+            
+            if self.products.count > 0 {
+                self.buyProduct(self.products.first!)
             }
+            
+                
+//
+//            } else {
+//                //Timer Running show Error
+//                let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+//                cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
+//                cannotRedeemViewController.titleText = "Alert"
+//                cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+//                self.present(cannotRedeemViewController, animated: true, completion: nil)
         }
         
         //self.dismiss(animated: true, completion: nil)
@@ -209,6 +250,9 @@ extension ReloadViewController {
                     //Show alert when tap on reload
                     //All your deals are already unlocked no need to reload
                     self.canReload = false
+                    self.statefulView.isHidden = true
+                    self.statefulView.showNothing()
+                    
                 } else {
                     self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Reload")
                 }
@@ -225,6 +269,8 @@ extension ReloadViewController {
                 debugPrint("redeem time \(self.redeemInfo .redeemDatetime!)!")
 
                 self.checkTimer()
+                self.statefulView.isHidden = true
+                self.statefulView.showNothing()
     
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -234,12 +280,12 @@ extension ReloadViewController {
         }
     }
     
-    func reloadRedeems() {
+    func reloadRedeems(transactionID: String) {
         
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let params: [String:Any] = ["token": "tok_1D7FzjAbuCSX1h8ZfrS63DFW"]
+        let params: [String:Any] = ["token": transactionID]
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathReload, method: .post) { (response, serverError, error) in
             
@@ -256,6 +302,12 @@ extension ReloadViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
                 //if yes allow reload --> Allow in app purchase -> Hit subscription service after in app purchase
+                debugPrint("responseReloadStatusDict == \(responseReloadStatusDict)")
+                
+                self.statefulView.isHidden = true
+                self.statefulView.showNothing()
+                self.canReload = false
+                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Reload")
@@ -269,17 +321,68 @@ extension ReloadViewController {
 
 extension ReloadViewController {
     
-        func runTimer() {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ReloadViewController.updateTimer)), userInfo: nil, repeats: true)
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ReloadViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+        
+    @objc func updateTimer() {
+        seconds -= 1
+        if seconds < 0 {
+            timer.invalidate()
+        }
+        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
+        self.timerWithTextLabel.attributedText = getAttributedTimerString(timer:timerString)
+    }
+}
+
+
+extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    
+    func productsRequest (_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        
+        if response.products.count != 0 {
+            for product in response.products {
+                products.append(product)
+                debugPrint("product title == \(product.localizedTitle)")
+                debugPrint("product desc == \(product.localizedDescription)")
+                debugPrint("product price == \(product.priceLocale)")
+            }
+        } else {
+            debugPrint("zero products fetched")
         }
         
-        @objc func updateTimer() {
-            seconds -= 1
-            if seconds < 0 {
-                timer.invalidate()
-            }
-            
-            let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
-            self.timerWithTextLabel.attributedText = getAttributedTimerString(timer:timerString)
+        if response.invalidProductIdentifiers.count != 0 {
+            debugPrint("invalidate product identifier \(response.invalidProductIdentifiers.description)")
         }
+        
+    }
+    
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        debugPrint("Error Fetching product information")
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        debugPrint("Received Payment Transaction Response from Apple");
+        for transaction:AnyObject in transactions {
+            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
+                switch trans.transactionState {
+                case .purchased:
+                    debugPrint("Product Purchased");
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    reloadRedeems(transactionID: trans.transactionIdentifier!)
+                    break;
+                case .failed:
+                    debugPrint("Purchased Failed");
+                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    break;
+                case .restored:
+                    debugPrint("Already Purchased");
+                    SKPaymentQueue.default().restoreCompletedTransactions()
+                default:
+                    break;
+                }
+            }
+        }
+    }
+
 }

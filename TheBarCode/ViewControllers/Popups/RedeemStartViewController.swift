@@ -34,9 +34,6 @@ class RedeemStartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let bar = self.deal.establishment.value
-        debugPrint("code = \(String(describing: bar?.code.value))")
         
         // Do any additional setup after loading the view.
         if type == .standard {
