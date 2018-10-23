@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-iG-heo">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-iG-heo">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GET 25% OFF YOUR FIRST ROUND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3tj-SJ-3Lz">
@@ -45,7 +45,7 @@
                         <constraint firstItem="3tj-SJ-3Lz" firstAttribute="leading" secondItem="qbW-iG-heo" secondAttribute="leading" constant="16" id="sEz-kF-Jbb"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-VG-QdE">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXT-VG-QdE">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="RELOAD IN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knP-zz-RAM">
@@ -79,7 +79,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:08:20:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
                             <rect key="frame" x="108.5" y="8" width="206.5" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                             <nil key="textColor"/>
@@ -99,23 +99,30 @@
                         <constraint firstAttribute="bottom" secondItem="knP-zz-RAM" secondAttribute="bottom" constant="8" id="xeg-d9-weD"/>
                     </constraints>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QCd-xG-IdA">
+                    <rect key="frame" x="177.5" y="12" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="hXT-VG-QdE" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="31I-Aw-A1Z"/>
                 <constraint firstItem="hXT-VG-QdE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="5a3-Jg-igg"/>
                 <constraint firstItem="qbW-iG-heo" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="8dg-VV-Ys2"/>
+                <constraint firstItem="QCd-xG-IdA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="G2L-Xg-8oT"/>
                 <constraint firstItem="hXT-VG-QdE" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="H1q-Rl-vsd"/>
                 <constraint firstItem="qbW-iG-heo" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="OcQ-Zf-O3A"/>
                 <constraint firstItem="qbW-iG-heo" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Qex-cp-BMk"/>
                 <constraint firstItem="qbW-iG-heo" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="XcG-Zg-2q3"/>
                 <constraint firstItem="hXT-VG-QdE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="yho-bb-aM4"/>
+                <constraint firstItem="QCd-xG-IdA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yi2-ib-1OL"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="creditsLeftLabel" destination="CeR-92-G68" id="Lw5-7I-jyU"/>
-                <outlet property="creditsLeftView" destination="Oax-Ey-lOP" id="xxt-RZ-arJ"/>
+                <outlet property="activitySpinner" destination="QCd-xG-IdA" id="cqU-7e-3N4"/>
+                <outlet property="creditsLeftLabel" destination="CeR-92-G68" id="E4u-Gd-BPo"/>
+                <outlet property="creditsLeftView" destination="Oax-Ey-lOP" id="LXQ-aI-f3i"/>
                 <outlet property="discountInfoLabel" destination="3tj-SJ-3Lz" id="IpX-f0-dfW"/>
                 <outlet property="discountInfoView" destination="qbW-iG-heo" id="26o-6r-utz"/>
                 <outlet property="reloadInfoLabel" destination="knP-zz-RAM" id="gnt-fr-DMz"/>

@@ -27,7 +27,8 @@ class BarsWithDealsViewController: ExploreBaseViewController {
         
         self.searchBar.delegate = self
         
-        self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
+        //self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
+        
         self.statefulTableView.triggerInitialLoad()
     }
 

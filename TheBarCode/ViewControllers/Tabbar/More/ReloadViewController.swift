@@ -142,7 +142,7 @@ class ReloadViewController: UITableViewController {
         
     }
 
-    func canTimerReload(redeemInfo: RedeemInfo) -> Bool {
+   /* func canTimerReload(redeemInfo: RedeemInfo) -> Bool {
 
        /* let redeemedDateString = redeemInfo.redeemDatetime!//"2018-10-03 00:00:00"
         let serverDateString = redeemInfo.currentServerDatetime! //"2018-10-09 00:00:00"
@@ -163,18 +163,20 @@ class ReloadViewController: UITableViewController {
         let interval = reloadEndDateTime.timeIntervalSince(serverCurrentDateTime!)
         seconds = Int(interval)*/
         
-        let interval =  TimeInterval(redeemInfo.remainingSeconds!)
-        seconds = Int(interval)
-        return (Utility.shared.checkTimerEnd(time:interval))
+        //let interval =  TimeInterval(redeemInfo.remainingSeconds!)
+       // seconds = Int(interval)
+       // return (Utility.shared.checkTimerEnd(time:interval))
       
-    }
+    }*/
+    
     
     func checkTimer() {
- 
-        if canTimerReload(redeemInfo: self.redeemInfo) { //Timer finished
+        
+        if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() { //Timer finished
             self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
         } else {
             //Run Timer
+            self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
             runTimer()
         }
     }
@@ -194,22 +196,20 @@ class ReloadViewController: UITableViewController {
             //otherwise show timer
             //on tap show alert you cannot redeem these deals at this time try after
             
-          //  if canTimerReload(redeemInfo: self.redeemInfo) { //Timer finished
-                //can reload API
-            
-            if self.products.count > 0 {
-                self.buyProduct(self.products.first!)
+            if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() { //Timer finished
+                if self.products.count > 0 {
+                    //can reload API
+                    self.buyProduct(self.products.first!)
+                } else {
+                    debugPrint("product array count zero")
+                }
+            } else {
+                //Timer Running show Error
+                let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+                cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
+                cannotRedeemViewController.titleText = "Alert"
+                cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
             }
-            
-                
-//
-//            } else {
-//                //Timer Running show Error
-//                let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-//                cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
-//                cannotRedeemViewController.titleText = "Alert"
-//                cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-//                self.present(cannotRedeemViewController, animated: true, completion: nil)
         }
         
         //self.dismiss(animated: true, completion: nil)
@@ -249,7 +249,9 @@ extension ReloadViewController {
                 if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
                     //Show alert when tap on reload
                     //All your deals are already unlocked no need to reload
-                    self.canReload = false
+                    
+                    ReedeemInfoManager.shared.canReload = false
+                    self.canReload = ReedeemInfoManager.shared.canReload
                     self.statefulView.isHidden = true
                     self.statefulView.showNothing()
                     
@@ -263,11 +265,14 @@ extension ReloadViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
                 
-                self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
+//
+//                self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
+//
+//                debugPrint("current servertimer \(self.redeemInfo .currentServerDatetime!)")
+               
+                ReedeemInfoManager.shared.canReload = true
+                ReedeemInfoManager.shared.saveRedeemInfo(redeemDic: responseReloadStatusDict)
                 
-                debugPrint("current servertimer \(self.redeemInfo .currentServerDatetime!)")
-                debugPrint("redeem time \(self.redeemInfo .redeemDatetime!)!")
-
                 self.checkTimer()
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
@@ -326,7 +331,7 @@ extension ReloadViewController {
     }
         
     @objc func updateTimer() {
-        seconds -= 1
+        seconds = ReedeemInfoManager.shared.updateRedeemInfo()
         if seconds < 0 {
             timer.invalidate()
         }

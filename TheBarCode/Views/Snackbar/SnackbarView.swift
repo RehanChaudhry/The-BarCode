@@ -11,7 +11,7 @@ import Gradientable
 import Reusable
 
 enum SnackbarType: String {
-    case discount = "discount", reload = "reload", canReload = "canReload"
+    case discount = "discount", reload = "reload", congrates = "congrates"
 }
 
 enum GradientType: String {
@@ -29,15 +29,30 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var reloadTimerLabel: UILabel!
     
     @IBOutlet var creditsLeftView: UIView!
-    @IBOutlet var creditsLeftLabel: UIView!
+    @IBOutlet var creditsLeftLabel: UILabel!
 
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
     
+    var timer = Timer()
+    var seconds = 0
+    
     func updateAppearanceForType(type: SnackbarType, gradientType: GradientType) {
-        
+       
+        self.activitySpinner.isHidden = true
+
         self.type = type
         
+        let user = Utility.shared.getCurrentUser()
+        self.creditsLeftLabel.text = "\(user!.credit)"
+        
+        self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
+        
+        if self.seconds > 0 {
+            runTimer()
+        }
         
         if type == .discount {
             self.reloadInfoView.isHidden = true
@@ -48,7 +63,7 @@ class SnackbarView: GradientView, NibLoadable {
             self.reloadInfoView.isHidden = false
             self.discountInfoView.isHidden = true
             self.reloadInfoLabel.text = "RELOAD IN "
-        } else if type == .canReload {
+        } else if type == .congrates {
             self.reloadInfoView.isHidden = false
             self.discountInfoView.isHidden = true
             self.discountInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
@@ -62,6 +77,29 @@ class SnackbarView: GradientView, NibLoadable {
         }
     }
     
+    func loadingSpinner() {
+        self.activitySpinner.isHidden = false
+        self.activitySpinner.startAnimating()
+        self.reloadInfoView.isHidden = true
+        self.discountInfoView.isHidden = true
+    }
+}
+
+
+extension SnackbarView {
     
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(SnackbarView.updateTimer)), userInfo: nil, repeats: true)
+    }
     
+    @objc func updateTimer() {
+        seconds = ReedeemInfoManager.shared.updateRedeemInfo()
+        if seconds < 0 {
+            timer.invalidate()
+            ReedeemInfoManager.shared.isTimerRunning = false
+            return
+        }
+        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
+        self.reloadTimerLabel.text = timerString
+    }
 }

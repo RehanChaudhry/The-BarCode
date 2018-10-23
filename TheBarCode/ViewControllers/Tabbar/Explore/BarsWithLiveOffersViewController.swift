@@ -27,9 +27,9 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
         // Do any additional setup after loading the view.
         
         self.searchBar.delegate = self
-        
-        self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
+        //self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
         self.statefulTableView.triggerInitialLoad()
+
     }
 
     override func didReceiveMemoryWarning() {

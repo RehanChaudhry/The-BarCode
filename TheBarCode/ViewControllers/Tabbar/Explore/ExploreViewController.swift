@@ -131,6 +131,11 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .bars
         
+        dealsController.invalidateTimer()
+        liveOffersController.invalidateTimer()
+        
+        barsController.updateSnakeBar()
+        
         self.scrollView.scrollToPage(page: 0, animated: true)
     }
     
@@ -142,6 +147,11 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .deals
         
+        barsController.invalidateTimer()
+        liveOffersController.invalidateTimer()
+        
+        dealsController.updateSnakeBar()
+        
         self.scrollView.scrollToPage(page: 1, animated: true)
     }
     
@@ -151,6 +161,10 @@ class ExploreViewController: UIViewController {
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
+        barsController.invalidateTimer()
+        dealsController.invalidateTimer()
+        
+        liveOffersController.updateSnakeBar()
         self.exploreType = .liveOffers
         
         self.scrollView.scrollToPage(page: 2, animated: true)

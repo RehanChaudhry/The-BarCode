@@ -28,12 +28,9 @@ class BarsViewController: ExploreBaseViewController {
         // Do any additional setup after loading the view.
         
         self.searchBar.delegate = self
-        
-        if self.canReload {
-            self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
-        } else {
-            self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
-        }
+        self.snackBar.loadingSpinner()
+
+        checkReloadStatus()
         
         self.statefulTableView.triggerInitialLoad()
     }
@@ -53,6 +50,52 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
+    }
+    
+
+    
+    func checkReloadStatus() {
+
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                self.updateSnakeBar()
+                return
+            }
+            
+            guard serverError == nil else {
+                if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                    //Show alert when tap on reload
+                    //All your deals are already unlocked no need to reload                    
+                    ReedeemInfoManager.shared.canReload = false
+                    self.updateSnakeBar()
+                    
+                } else {
+                    debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+                    self.updateSnakeBar()
+                }
+                
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
+                
+                // let redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
+                
+                // debugPrint("current servertimer \(redeemInfo .currentServerDatetime!)")
+                // debugPrint("redeem time \(redeemInfo .redeemDatetime!)!")
+                ReedeemInfoManager.shared.canReload = true
+                ReedeemInfoManager.shared.saveRedeemInfo(redeemDic: responseReloadStatusDict)
+                self.updateSnakeBar()
+                
+            } else {
+                self.updateSnakeBar()
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -230,6 +273,8 @@ extension BarsViewController: StatefulTableDelegate {
         return loadingView
     }
 }
+
+
 
 
 
