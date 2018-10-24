@@ -20,6 +20,8 @@ class FavouritesViewController: UIViewController {
     
     var dealsRequest: DataRequest?
     var dealsLoadMore = Pagination()
+    let transaction = Utility.inMemoryStack.beginUnsafe()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +87,7 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
+        cell.delegate = self
         cell.setUpCell(bar: self.bars[indexPath.row])
         return cell
     }
@@ -156,6 +159,55 @@ extension FavouritesViewController {
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 completion(genericError)
+            }
+        }
+    }
+    
+    
+    func markFavourite(bar: Bar, cell: BarTableViewCell) {
+        
+        debugPrint("isFav == \(bar.isUserFavourite.value)")
+        let params:[String : Any] = ["establishment_id": bar.id.value, "is_favorite" : !(bar.isUserFavourite.value)]
+        
+        let editedObject = transaction.edit(bar)
+        editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
+        
+        
+        let color =  bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+        
+        cell.favouriteButton.tintColor = color
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("error == \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror == \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            let response = response as! [String : Any]
+            let responseDict = response["response"] as! [String : Any]
+            
+            if let responseID = (responseDict["data"] as? Int) {
+                debugPrint("responseID == \(responseID)")
+                //                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                //                    let editedObject = transaction.edit(self.bar)
+                //                    editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+                //                })
+                //
+                //                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
+                
+                try! self.transaction.commitAndWait()
+                
+                
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
             }
         }
     }
@@ -235,5 +287,13 @@ extension FavouritesViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+extension FavouritesViewController: BarTableViewCellDelegare {
+    func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
+        let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
+        let bar = self.bars[indexPath!.row]
+        markFavourite(bar: bar, cell: cell)
     }
 }

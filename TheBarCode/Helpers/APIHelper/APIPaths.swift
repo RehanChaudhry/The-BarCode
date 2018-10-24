@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 let apiPathAuthenticate = "auth/login"
 let apiPathRegister = "auth/register"
 let apiPathRefreshToken = ""
@@ -39,3 +40,7 @@ let apiPathReloadStatus = "subscription/detail"
 let apiPathReload = "subscription"
 
 let apiPathView = "view"
+
+
+//MARK NOTIFICATIONS
+let checkReloadStatusNotification = "CheckReloadStatusNotification"

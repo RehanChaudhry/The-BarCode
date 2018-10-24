@@ -68,7 +68,6 @@ class ReedeemInfoManager {
     func updateRedeemInfo() -> Int {
         if let remainingSeconds = self.redeemInfo!.remainingSeconds {
             self.redeemInfo!.remainingSeconds = remainingSeconds - 1
-            debugPrint("\(self.redeemInfo!.remainingSeconds)")
             return self.redeemInfo!.remainingSeconds
         }
         return -1

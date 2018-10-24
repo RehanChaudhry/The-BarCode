@@ -17,38 +17,6 @@
             endingLineNumber = "80"
             landmarkName = "barTenderRedeemDeal()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TheBarCode.RedeemStartViewController.barTenderRedeemDeal() -&gt; ()"
-                  moduleName = "TheBarCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561827960.702374"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "80"
-                  endingLineNumber = "80"
-                  offsetFromSymbolStart = "1477">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;TheBarCode.ServerError&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in TheBarCode.RedeemStartViewController.barTenderRedeemDeal() -&gt; ()"
-                  moduleName = "TheBarCode"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Popups/RedeemStartViewController.swift"
-                  timestampString = "561827960.706692"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "80">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -73,7 +41,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
             endingLineNumber = "139"
-            landmarkName = "checkTimer()"
+            landmarkName = "getAttributedTimerString(timer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,7 +57,199 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "142"
             endingLineNumber = "142"
-            landmarkName = "checkTimer()"
+            landmarkName = "getAttributedTimerString(timer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Explore/BarDetailHeaderViewController.swift"
+            timestampString = "561993341.909209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "markFavourite()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.909327"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "statefulTableViewWillBeginInitialLoad(tvc:handler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheBarCode.FavouritesViewController.statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView.StatefulTableView, handler: (Swift.Bool, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+                  timestampString = "562050024.998843"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219"
+                  offsetFromSymbolStart = "98">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSError&gt;) -&gt; () in TheBarCode.FavouritesViewController.statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView.StatefulTableView, handler: (Swift.Bool, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+                  timestampString = "562050025.00261"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219"
+                  offsetFromSymbolStart = "38">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.909797"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "statefulTableViewWillBeginLoadingFromRefresh(tvc:handler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TheBarCode.FavouritesViewController.statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView.StatefulTableView, handler: (Swift.Bool, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+                  timestampString = "562050025.009797"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "234"
+                  endingLineNumber = "234"
+                  offsetFromSymbolStart = "98">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSError&gt;) -&gt; () in TheBarCode.FavouritesViewController.statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView.StatefulTableView, handler: (Swift.Bool, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "TheBarCode"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aasnaislam/Desktop/iOS%20Project/thebarcode-ios/TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+                  timestampString = "562050025.012535"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "234"
+                  endingLineNumber = "234"
+                  offsetFromSymbolStart = "38">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.910131"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "statefulTableViewViewForInitialLoad(tvc:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.910512"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "statefulTableViewInitialErrorView(tvc:forInitialLoadError:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.910844"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "statefulTableViewWillBeginLoadingMore(tvc:handler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Favourite/FavouritesViewController.swift"
+            timestampString = "561993341.911164"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "statefulTableViewLoadMoreErrorView(tvc:forLoadMoreError:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheBarCode/ViewControllers/Tabbar/Explore/BarsViewController.swift"
+            timestampString = "562050072.533168"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "checkReloadStatus()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

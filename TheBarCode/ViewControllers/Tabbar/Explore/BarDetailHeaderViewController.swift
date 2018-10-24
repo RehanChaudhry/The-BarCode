@@ -32,7 +32,7 @@ class BarDetailHeaderViewController: UIViewController {
         // Do any additional setup after loading the view.
         
 //        self.pageControl.numberOfPages = self.images.count
-        let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
+        let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
     }
@@ -53,14 +53,14 @@ class BarDetailHeaderViewController: UIViewController {
 //MARK: Webservices Methods
 extension BarDetailHeaderViewController {
     func markFavourite() {
-        
+        debugPrint("isFav == \(self.bar.isUserFavourite.value)")
         let params:[String : Any] = ["establishment_id": self.bar.id.value, "is_favorite" : !(self.bar.isUserFavourite.value)]
         
         let editedObject = transaction.edit(self.bar)
         editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
         
         
-        let color =  self.bar.isUserFavourite.value == true ? UIColor.appLightGrayColor() : UIColor.appBlueColor()
+        let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
@@ -75,9 +75,10 @@ extension BarDetailHeaderViewController {
                 return
             }
             
-            let responseDict = (response as? [String : Any])
-            debugPrint("responseDict == \(responseDict)")
-            if let responseID = (responseDict?["data"] as? Int) {
+            let response = response as! [String : Any]
+            let responseDict = response["response"] as! [String : Any]
+
+            if let responseID = (responseDict["data"] as? Int) {
                 debugPrint("responseID == \(responseID)")
 //                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
 //                    let editedObject = transaction.edit(self.bar)

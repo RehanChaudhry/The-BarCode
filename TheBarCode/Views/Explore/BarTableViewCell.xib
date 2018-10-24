@@ -61,6 +61,9 @@
                         </constraints>
                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                         <state key="normal" image="icon_tab_fav"/>
+                        <connections>
+                            <action selector="favouriteButtonTapped:" destination="suM-Yq-PQ4" eventType="touchUpInside" id="uzP-m4-noc"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>

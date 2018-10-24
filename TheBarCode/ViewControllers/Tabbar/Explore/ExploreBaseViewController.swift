@@ -42,6 +42,7 @@ class ExploreBaseViewController: UIViewController {
     var loadMore = Pagination()
     
     var bars: [Bar] = []
+    var filteredBars: [Bar] = []
 
     var canReload: Bool = true
     var redeemInfo: RedeemInfo!

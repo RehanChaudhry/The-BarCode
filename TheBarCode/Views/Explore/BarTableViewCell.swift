@@ -9,10 +9,16 @@
 import UIKit
 import Reusable
 
+protocol BarTableViewCellDelegare: class {
+    func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton)
+}
+
 class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
 
     @IBOutlet var favouriteButton: UIButton!
     
+    weak var delegate : BarTableViewCellDelegare!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,4 +38,12 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
         super.setUpCell(explore: bar)
        self.favouriteButton.tintColor = bar.isUserFavourite.value ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
     }
+    
+    //MARK: IBAction
+    
+    @IBAction func favouriteButtonTapped(_ sender: UIButton) {
+        self.delegate!.barTableViewCell(cell: self, favouriteButton: sender)
+    }
 }
+
+

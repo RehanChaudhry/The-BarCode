@@ -248,6 +248,12 @@ extension OfferDetailViewController {
                         Utility.shared.userCreditUpdate()
                     }
                     
+                    
+                    if !ReedeemInfoManager.shared.canReload {
+                       //Todo post notification from here to run timer
+
+                    }
+                    
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
                     self.showAlertController(title: "", msg: genericError.localizedDescription)
@@ -292,4 +298,6 @@ extension OfferDetailViewController {
             }
         }
     }
+    
+    
 }
