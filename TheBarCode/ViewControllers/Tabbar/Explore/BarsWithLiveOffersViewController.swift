@@ -60,19 +60,30 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isSearching {
+            return self.filteredBars.count
+        }
         return self.bars.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        cell.setUpCell(explore: self.bars[indexPath.row])
+        
+        let bar = self.isSearching
+            ? self.filteredBars[indexPath.row]
+            : self.bars[indexPath.row]
+        
+        cell.setUpCell(explore: bar)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: self.bars[indexPath.row])
+        let bar = self.isSearching ? self.filteredBars[indexPath.row]
+            : self.bars[indexPath.row]
+        
+        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
     }
 }
 
@@ -81,6 +92,24 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
 extension BarsWithLiveOffersViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
+        if searchBar.text == "" {
+            self.searchText = searchBar.text!
+            self.isSearching = false
+            self.statefulTableView.innerTable.reloadData()
+        } else {
+            self.isSearching = true
+            self.filteredBars.removeAll()
+            self.statefulTableView.innerTable.reloadData()
+            self.searchText = searchBar.text!
+            self.statefulTableView.triggerInitialLoad()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchText = searchBar.text!
+        self.isSearching = false
+        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -93,9 +122,17 @@ extension BarsWithLiveOffersViewController {
             self.loadMore = Pagination()
         }
         
-        let params:[String : Any] = ["type": ExploreType.liveOffers.rawValue,
-                                     "pagination" : true,
-                                     "page": self.loadMore.next]
+        var params:[String : Any] =  ["type": ExploreType.liveOffers.rawValue]
+        
+        if self.isSearching {
+            params["pagination"] = false
+            params["keyword"] = self.searchText
+            
+        } else {
+            params["pagination"] = true
+            params["page"] = self.loadMore.next
+        }
+        
         self.loadMore.isLoading = true
 
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
@@ -123,22 +160,36 @@ extension BarsWithLiveOffersViewController {
                     self.bars.removeAll()
                 }
                 
+                if self.isSearching {
+                    self.filteredBars.removeAll()
+                }
+                
                 var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
                     let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
                     importedObjects.append(contentsOf: objects)
                 })
                 
+                var resultBars: [Bar] = []
                 for object in importedObjects {
                     let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-                    self.bars.append(fetchedObject!)
+                    resultBars.append(fetchedObject!)
                 }
                 
-                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
-                self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                self.statefulTableView.innerTable.reloadData()
-                completion(nil)
                 
+                if self.isSearching {
+                    self.filteredBars = resultBars
+                    self.statefulTableView.canLoadMore = false
+                    self.statefulTableView.innerTable.reloadData()
+                    self.statefulTableView.reloadData()
+                    completion(nil)
+                } else {
+                    self.bars = resultBars
+                    self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                    self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
+                    self.statefulTableView.innerTable.reloadData()
+                    completion(nil)
+                }
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -151,7 +202,8 @@ extension BarsWithLiveOffersViewController {
 extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getBars(isRefreshing: false) {  [unowned self] (error) in
+        let refreshing = self.isSearching ? false : true
+        self.getBars(isRefreshing: refreshing) {  [unowned self] (error) in
             handler(self.bars.count == 0, error)
         }
     }
@@ -180,7 +232,7 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Live Offers Available"
+            let title = isSearching ? "No Search Result Found" : "No Live Offers Available"
             let subTitle = "Tap to reload"
             
             let emptyDataView = EmptyDataView.loadFromNib()
