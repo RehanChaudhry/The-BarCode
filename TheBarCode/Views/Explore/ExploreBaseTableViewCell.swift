@@ -50,6 +50,13 @@ class ExploreBaseTableViewCell: UITableViewCell {
 
         }
         titleLabel.text = explore.title.value
-        distanceLabel.text = explore.distance.value
+        
+       // if let distanceText = explore.distance.value {
+            distanceLabel.text = "\(explore.distance.value) miles away"
+            locationIconImageView.isHidden = false
+//        } else {
+//            distanceLabel.text = ""
+//            locationIconImageView.isHidden = true
+//        }
     }
 }

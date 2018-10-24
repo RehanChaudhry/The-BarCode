@@ -16,6 +16,12 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet var pageControl: UIPageControl!
     
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var mapIconImageView: UIImageView!
+    
+    @IBOutlet weak var distanceLabel: UILabel!
+    
     @IBOutlet var favouriteButton: UIButton!
     
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
@@ -31,7 +37,10 @@ class BarDetailHeaderViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-//        self.pageControl.numberOfPages = self.images.count
+        self.titleLabel.text = self.bar.title.value
+        self.mapIconImageView.isHidden = false
+        self.distanceLabel.text = "\(self.bar.distance.value) miles away"
+      
         let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
@@ -46,7 +55,6 @@ class BarDetailHeaderViewController: UIViewController {
     @IBAction func favouriteButtonTapped(_ sender: Any) {
         markFavourite()
     }
-    
     
 }
 

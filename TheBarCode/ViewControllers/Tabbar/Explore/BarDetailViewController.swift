@@ -29,6 +29,7 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.title = self.selectedBar.title.value
         
         self.setUpSegmentedController()
         self.addBackButton()
@@ -247,7 +248,7 @@ extension BarDetailViewController {
     //View for statistics
     func viewProfile() {
         
-        let params: [String: Any] = ["view": self.selectedBar.id.value,
+        let params: [String: Any] = ["value": self.selectedBar.id.value,
                                      "type":"profile_view"]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in

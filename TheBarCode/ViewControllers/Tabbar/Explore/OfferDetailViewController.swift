@@ -45,6 +45,9 @@ class OfferDetailViewController: UIViewController {
         
         self.images = [deal.image.value]
        
+        self.titleLabel.text = self.deal.title.value
+        self.descriptionLabel.text = self.deal.subTitle.value
+        
         self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         if self.offerType == .bannerAds {
             self.redeemButton.isHidden = true
@@ -111,7 +114,11 @@ class OfferDetailViewController: UIViewController {
         }
     
     }
-
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource
@@ -196,16 +203,40 @@ extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
 extension OfferDetailViewController: OutOfCreditViewControllerDelegate {
     func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
     }
-    
+ 
     func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
-        
+        let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.isRedeemingDeal = true
+        reloadController.delegate = self
+        reloadController.selectedIndex = selectedIndex
+        self.present(reloadNavigation, animated: true, completion: nil)
     }
     
     func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int) {
+        let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.shouldShowCancelBarButton = true
+        inviteController.isRedeemingDeal = true
+        inviteController.delegate = self
+        inviteController.selectedIndex = selectedIndex
+        self.present(inviteNavigation, animated: true, completion: nil)
+    }
+}
+
+//MARK: ReloadViewControllerDelegate
+extension OfferDetailViewController: ReloadViewControllerDelegate {
+    func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
         
     }
 }
 
+//MARK: InviteViewControllerDelegate
+extension OfferDetailViewController: InviteViewControllerDelegate{
+    func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int) {
+        
+    }
+}
 
 
 //MARK: WebService Method
@@ -251,6 +282,7 @@ extension OfferDetailViewController {
                     
                     if !ReedeemInfoManager.shared.canReload {
                        //Todo post notification from here to run timer
+//                        NotificationCenter.default.post(name: checkReloadStatusNotification, object: nil)
 
                     }
                     
@@ -268,7 +300,7 @@ extension OfferDetailViewController {
     //viewOffer
     func viewOffer() {
         
-        let params: [String: Any] = ["view": self.deal.id.value,
+        let params: [String: Any] = ["value": self.deal.id.value,
                                      "type":"offer_view"]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in

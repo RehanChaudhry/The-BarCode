@@ -58,7 +58,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
         if let distance = deal.establishment.value?.distance {
             self.distanceLabel.isHidden = false
-            self.distanceLabel.text = distance.value
+            self.distanceLabel.text = "\(distance.value) miles away"
         } else {
             self.distanceLabel.isHidden = true
             self.distanceLabel.text = ""

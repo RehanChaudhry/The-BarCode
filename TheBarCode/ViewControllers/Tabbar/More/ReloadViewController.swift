@@ -172,12 +172,13 @@ class ReloadViewController: UITableViewController {
     
     func checkTimer() {
         
-        if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() { //Timer finished
-            self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
-        } else {
+        if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() {
             //Run Timer
             self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
             runTimer()
+        } else {
+            //Timer finished
+            self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
         }
     }
     

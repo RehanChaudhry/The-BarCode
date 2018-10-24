@@ -54,7 +54,7 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         self.barNameLabel.text = deal.establishment.value?.title.value
         
         if let distance = deal.establishment.value?.distance.value {
-            self.distanceLabel.text = distance
+            self.distanceLabel.text = "\(distance) miles away"
         } else {
             self.distanceLabel.isHidden = true
         }

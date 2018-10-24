@@ -3683,7 +3683,7 @@ Cg
             </objects>
             <point key="canvasLocation" x="5438" y="1984"/>
         </scene>
-        <!--Albert's Schloss-->
+        <!--Bar Detail View Controller-->
         <scene sceneID="m1g-6A-x0B">
             <objects>
                 <viewController storyboardIdentifier="BarDetailViewController" id="Eeg-kR-SY4" customClass="BarDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
@@ -3739,7 +3739,7 @@ Cg
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kYt-Oe-Ir0"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Albert's Schloss" id="jT5-4J-5OE">
+                    <navigationItem key="navigationItem" id="jT5-4J-5OE">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="2IP-A9-2Hv">
                             <connections>
                                 <action selector="cancelBarButtonTappedWithSender:" destination="Eeg-kR-SY4" id="RLN-1X-QcL"/>
@@ -3832,7 +3832,10 @@ Cg
                     <connections>
                         <outlet property="collectionView" destination="uO6-Jj-ct7" id="LGg-Ft-IZJ"/>
                         <outlet property="collectionViewHeight" destination="sLo-1Q-2jU" id="rOC-4y-Xya"/>
+                        <outlet property="distanceLabel" destination="UJK-RA-LqE" id="5JJ-3H-DLV"/>
                         <outlet property="favouriteButton" destination="6r9-aI-D3c" id="ew7-Oz-AbP"/>
+                        <outlet property="mapIconImageView" destination="cyn-Wx-4Sv" id="rVv-7E-sf2"/>
+                        <outlet property="titleLabel" destination="b9e-OY-zML" id="tIk-vk-b9c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-ld-8aO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3876,7 +3879,7 @@ Cg
                                                 <outlet property="delegate" destination="N9K-9o-Gsw" id="RjR-zf-z0g"/>
                                             </connections>
                                         </collectionView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIG OFF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-0o-YdM">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-0o-YdM">
                                             <rect key="frame" x="16" y="217" width="343" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="llz-sc-nKP"/>
@@ -3958,7 +3961,14 @@ Cg
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fAV-e9-Y9d"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Deal Details" id="tOb-sf-f0n"/>
+                    <navigationItem key="navigationItem" title="Deal Details" id="tOb-sf-f0n">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Sxi-hY-nl6">
+                            <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="N9K-9o-Gsw" id="bpQ-TF-F0y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Teg-RX-Qpg" id="coF-DA-zWI"/>
                         <outlet property="collectionViewHeight" destination="vf7-Z1-hIz" id="pJf-y2-E3t"/>
@@ -4131,7 +4141,7 @@ Cg
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The next screen is for the bartender." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Oh-XRB">
                                         <rect key="frame" x="24" y="150.5" width="295" height="17"/>
-                                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>

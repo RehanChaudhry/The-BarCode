@@ -61,6 +61,7 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         websiteButton.setTitle(explore.website.value, for: .normal)
         phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
         addressLabel.text = explore.address.value
+        emailButton.setTitle(explore.contactEmail.value, for: .normal)
         
     }
 }

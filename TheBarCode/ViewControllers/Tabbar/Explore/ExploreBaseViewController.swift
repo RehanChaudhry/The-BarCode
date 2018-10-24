@@ -66,6 +66,8 @@ class ExploreBaseViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -36,7 +36,7 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         
         if let distance = deal.establishment.value?.distance {
             self.locationLabel.isHidden = false
-            self.locationLabel.text = distance.value
+            self.locationLabel.text = "\(distance.value) miles away"
         } else {
             self.locationLabel.isHidden = true
         }

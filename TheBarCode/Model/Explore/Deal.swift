@@ -103,7 +103,7 @@ extension Deal: ImportableUniqueObject {
         self.imageUrl.value = source["image_url"] as? String
         self.starDateTime.value = source["start_date_time"]! as! String
         self.endDateTime.value = source["end_date_time"]! as! String
-        
+        self.statusText.value = source["status_text"] as! String
         
         if let item = source["establishments"] as? [String : Any] {
             let importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: item)
