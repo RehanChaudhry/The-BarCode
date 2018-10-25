@@ -8,7 +8,8 @@
 
 import UIKit
 import PureLayout
-
+import HTTPStatusCodes
+import ObjectMapper
 
 enum ExploreType: String {
     case bars = "bars", deals = "deals", liveOffers = "live_offers"
@@ -42,8 +43,11 @@ class ExploreViewController: UIViewController {
     
     var defaultButtonTitleColor: UIColor!
     
+    var reloadTimer: Timer?
+    var redeemInfo: RedeemInfo?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -57,6 +61,8 @@ class ExploreViewController: UIViewController {
         
         self.barsButton.sendActions(for: .touchUpInside)
         
+        self.getReloadStatus()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,6 +75,11 @@ class ExploreViewController: UIViewController {
         
         self.updateNavigationBarAppearance()
         self.navigationController?.navigationBar.isUserInteractionEnabled = false
+    }
+    
+    deinit {
+        self.reloadTimer?.invalidate()
+        self.reloadTimer = nil
     }
     
     //MARK: My Methods
@@ -118,8 +129,68 @@ class ExploreViewController: UIViewController {
         barDetailController.selectedBar = bar
         self.present(barDetailNav, animated: true, completion: nil)
     }
-
-
+    
+    func updateSnackBarForType(type: SnackbarType) {
+        if type == .discount {
+            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+        } else if type == .reload {
+            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+            
+            self.startReloadTimer()
+        } else if type == .congrates {
+            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
+            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
+            self.liveOffersController.snackBar.updateAppearanceForType(type: .discount, gradientType: .orange)
+        }
+    }
+    
+    func startReloadTimer() {
+        self.reloadTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
+            self.updateReloadTimer(sender: sender)
+        })
+    }
+    
+    func updateReloadTimer(sender: Timer) {
+        
+        guard let redeemInfo = self.redeemInfo else {
+            debugPrint("Redeem info not available to update timer")
+            return
+        }
+        
+        if redeemInfo.remainingSeconds > 0 {
+            self.redeemInfo!.remainingSeconds -= 1
+            
+            self.dealsController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
+            self.barsController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
+            self.liveOffersController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
+        } else {
+            self.reloadTimer?.invalidate()
+            self.updateSnackBarForType(type: .congrates)
+        }
+        
+    }
+    
+    func showSnackBarSpinner() {
+        self.dealsController.snackBar.showLoading()
+        self.barsController.snackBar.showLoading()
+        self.liveOffersController.snackBar.showLoading()
+    }
+    
+    func finishLoading() {
+        self.dealsController.snackBar.hideLoading()
+        self.barsController.snackBar.hideLoading()
+        self.liveOffersController.snackBar.hideLoading()
+    }
+    
+    func showError(msg: String) {
+        self.dealsController.snackBar.showError(msg: msg)
+        self.barsController.snackBar.showError(msg: msg)
+        self.liveOffersController.snackBar.showError(msg: msg)
+    }
     
     //MARK: My IBActions
     
@@ -130,11 +201,6 @@ class ExploreViewController: UIViewController {
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .bars
-        
-        dealsController.invalidateTimer()
-        liveOffersController.invalidateTimer()
-        
-        barsController.updateSnackBar()
         
         self.scrollView.scrollToPage(page: 0, animated: true)
     }
@@ -147,11 +213,6 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .deals
         
-        barsController.invalidateTimer()
-        liveOffersController.invalidateTimer()
-        
-        dealsController.updateSnackBar()
-        
         self.scrollView.scrollToPage(page: 1, animated: true)
     }
     
@@ -161,13 +222,63 @@ class ExploreViewController: UIViewController {
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
-        barsController.invalidateTimer()
-        dealsController.invalidateTimer()
-        
-        liveOffersController.updateSnackBar()
         self.exploreType = .liveOffers
         
         self.scrollView.scrollToPage(page: 2, animated: true)
+    }
+}
+
+//MARK: Webservices Methods
+extension ExploreViewController {
+    func getReloadStatus() {
+        
+        self.showSnackBarSpinner()
+        
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                self.showError(msg: error!.localizedDescription)
+                
+                return
+            }
+            
+            guard serverError == nil else {
+                if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                    //Show alert when tap on reload
+                    //All your deals are already unlocked no need to reload
+                    
+                    self.updateSnackBarForType(type: .discount)
+                    self.finishLoading()
+                    
+                } else {
+                    debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+                    self.showError(msg: serverError!.errorMessages())
+                }
+                
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
+                
+                self.redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
+                self.redeemInfo!.canReload = true
+                
+                if self.redeemInfo!.remainingSeconds == 0 {
+                    self.updateSnackBarForType(type: .congrates)
+                } else {
+                    self.updateSnackBarForType(type: .reload)
+                }
+                
+                self.finishLoading()
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showError(msg: genericError.localizedDescription)
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -191,4 +302,5 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
         self.moveToBarDetail(bar: bar)
     }
 }
+
 

@@ -102,7 +102,7 @@ extension LiveOfferTableViewCell {
             timer.invalidate()
         }
         
-        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
+        let timerString = Utility.shared.getFormattedRemainingTime(time: TimeInterval(seconds))
 //        self.timerWithTextLabel.attributedText = getAttributedString(endTime:timerString)
         
     }

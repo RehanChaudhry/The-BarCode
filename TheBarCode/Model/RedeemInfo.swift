@@ -12,9 +12,8 @@ import ObjectMapper
 class RedeemInfo: Mappable {
     
     var isFirstRedeem: Bool = false
-    var redeemDatetime: String!
-    var currentServerDatetime: String!
     var remainingSeconds : Int!
+    var canReload: Bool = false
     
     required convenience init?( map: Map) {
         self.init()
@@ -22,16 +21,6 @@ class RedeemInfo: Mappable {
     
     func mapping(map: Map) {
         isFirstRedeem <- map["is_first_redeem"]
-
-        //TODO
-//        let redeemdateObj = map["redeem_datetime"].currentValue as! [String:Any]
-//        let redeemTime = redeemdateObj["date"]
-//        redeemDatetime = redeemTime! as? String
-//
-//        let serverTimeObj = map["current_server_datetime"].currentValue as! [String:Any]
-//        let serverTime = serverTimeObj["date"]
-//        currentServerDatetime = serverTime! as? String
-        
         remainingSeconds <- map["remaining_seconds"]
     }
     
@@ -41,6 +30,7 @@ class RedeemInfo: Mappable {
     
 }
 
+/*
 class ReedeemInfoManager {
     
     static let shared = ReedeemInfoManager()
@@ -73,4 +63,4 @@ class ReedeemInfoManager {
         return -1
     }
 }
-
+*/

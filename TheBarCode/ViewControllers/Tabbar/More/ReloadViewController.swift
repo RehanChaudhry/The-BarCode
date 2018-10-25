@@ -18,13 +18,18 @@ let kProductIdReload = "com.cygnismedia.TheBarCode.reload"
     @objc optional func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
 }
 
+enum ReloadState: String {
+    case noOfferRedeemed, offerRedeemed, reloadTimerExpire
+}
+
 class ReloadViewController: UITableViewController {
 
     @IBOutlet var headerView: UIView!
     
     @IBOutlet var creditsLabel: UILabel!
     
-    @IBOutlet weak var timerWithTextLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+//    @IBOutlet var timerWithTextLabel: UILabel!
     
     var isRedeemingDeal: Bool = false
     
@@ -36,13 +41,9 @@ class ReloadViewController: UITableViewController {
     
     var dataRequest: DataRequest?
     
-    var canReload: Bool = true
-    
-    var redeemInfo: RedeemInfo!
-
-    //Timer
-    var timer = Timer()
-    var seconds = 0
+    var reloadTimer: Timer?
+    var redeemInfo: RedeemInfo?
+    var type: ReloadState!
     
     //In-app
     var transactionInProgress: Bool = false
@@ -76,19 +77,21 @@ class ReloadViewController: UITableViewController {
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
         
-        self.checkReloadStatus()
+        self.getReloadStatus()
         
         let user = Utility.shared.getCurrentUser()
         self.creditsLabel.text = "\(user!.credit)"
         
         self.productIDs = [kProductIdReload]
-        self.requestProductInfo()
         SKPaymentQueue.default().add(self)
         
     }
 
     deinit {
         SKPaymentQueue.default().remove(self)
+        
+        self.reloadTimer?.invalidate()
+        self.reloadTimer = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,123 +118,89 @@ class ReloadViewController: UITableViewController {
     }
     
     //MARK: My Methods
-    func getAttributedTimerString(timer:String) -> NSMutableAttributedString {
+    
+    func setUpRedeemInfoView(type: ReloadState) {
+        
+        self.type = type
         
         let font = UIFont.appRegularFontOf(size: 12.0)
-        
-        let attributesWhite: [NSAttributedStringKey: Any] = [
-            .font: font,
+        let attributesNormal: [NSAttributedStringKey: Any] = [.font: font,
             .foregroundColor: UIColor.white]
         
-        let attributesBlue: [NSAttributedStringKey: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.appBlueColor()]
-        
-        let description = "Available Credits: \n You are out of credit. You can reload previous offers after ."
-        let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
-    
-        let description1 = " \(timer) "
-        let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
-        
-        let description2 = "."
-        let text2 = NSMutableAttributedString(string: description2, attributes: attributesWhite)
-        
-        text.append(text1)
-        text.append(text2)
-        return text
-        
-    }
-
-   /* func canTimerReload(redeemInfo: RedeemInfo) -> Bool {
-
-       /* let redeemedDateString = redeemInfo.redeemDatetime!//"2018-10-03 00:00:00"
-        let serverDateString = redeemInfo.currentServerDatetime! //"2018-10-09 00:00:00"
-        
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-        
-        let reloadDateTime = formater.date(from: redeemedDateString)
-        let serverCurrentDateTime = formater.date(from: serverDateString)
-        
-        //Add 7 days to reload time
-        var timeInterval = DateComponents()
-        timeInterval.day = 7
-        let reloadEndDateTime = Calendar.current.date(byAdding: timeInterval, to: reloadDateTime!)!
-        debugPrint("reloadEndDateTime \(reloadEndDateTime)")
-        
-        //Difference
-        let interval = reloadEndDateTime.timeIntervalSince(serverCurrentDateTime!)
-        seconds = Int(interval)*/
-        
-        //let interval =  TimeInterval(redeemInfo.remainingSeconds!)
-       // seconds = Int(interval)
-       // return (Utility.shared.checkTimerEnd(time:interval))
-      
-    }*/
-    
-    
-    func checkTimer() {
-        
-        if let redeemInfo = ReedeemInfoManager.shared.redeemInfo {
+        if type == .noOfferRedeemed {
+            let attributedTitle = NSAttributedString(string: "Available Credits: \nYou are eligible for redeem of all type of offer of any bar/establishment.", attributes: attributesNormal)
+            self.titleLabel.attributedText = attributedTitle
+        } else if type == .offerRedeemed {
             
-            if redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
-                // Discount
-                
-            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
-                //Congrates
-                self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
-            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds > 0 {
-                //reload in
-                self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
-                runTimer()
+            guard let redeemInfo = self.redeemInfo else {
+                debugPrint("Redeem info unavailable")
+                return
             }
-        } else {
             
+            let timerAttributed: [NSAttributedStringKey: Any] = [
+                .font: font,
+                .foregroundColor: UIColor.appBlueColor()]
+            
+            let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
+            let finalText = "Available Credits: \n You are out of credit. You can reload previous offers after \(timerText)."
+            
+            let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
+            attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
+            
+            self.titleLabel.attributedText = attributedTitle
+            
+        } else if type == .reloadTimerExpire {
+            let attributedTitle = NSAttributedString(string: "Available Credits: \nCongrats you are able to reload.", attributes: attributesNormal)
+            self.titleLabel.attributedText = attributedTitle
+            
+        } else {
+            debugPrint("Unknown reload state")
+        }
+    }
+    
+    func startReloadTimer() {
+        self.reloadTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
+            self.updateReloadTimer(sender: sender)
+        })
+    }
+    
+    func updateReloadTimer(sender: Timer) {
+        
+        guard let redeemInfo = self.redeemInfo else {
+            debugPrint("Redeem info not available to update timer")
+            return
         }
         
-       /*
-        if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() {
-            //Run Timer
-            self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
-            runTimer()
+        if redeemInfo.remainingSeconds > 0 {
+            self.redeemInfo!.remainingSeconds -= 1
+            self.setUpRedeemInfoView(type: .offerRedeemed)
         } else {
-            //Timer finished
-            self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
-        }*/
+            self.reloadTimer?.invalidate()
+            self.setUpRedeemInfoView(type: .reloadTimerExpire)
+        }
+        
     }
     
     //MARK: My IBActions
     @IBAction func reloadButtonTapped(_ sender: Any) {
         
-        if !canReload {
+        if self.type == ReloadState.noOfferRedeemed {
             let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
             cannotRedeemViewController.messageText = "All your deals are already unlocked. You cannot reload please redeem first."
             cannotRedeemViewController.titleText = "Alert"
             cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
             self.present(cannotRedeemViewController, animated: true, completion: nil)
+        } else if self.type == ReloadState.offerRedeemed {
+            let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+            cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
+            cannotRedeemViewController.titleText = "Alert"
+            cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+            self.present(cannotRedeemViewController, animated: true, completion: nil)
+        } else if self.type == ReloadState.reloadTimerExpire {
+            self.requestProductInfo()
         } else {
-            //check if redeemed deal ko 1 week hogya hai?
-            //if yes allow reload --> Allow in app purchase -> Hit subscription service after in app purchase
-            //otherwise show timer
-            //on tap show alert you cannot redeem these deals at this time try after
-            
-            if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() { //Timer finished
-                if self.products.count > 0 {
-                    //can reload API
-                    self.buyProduct(self.products.first!)
-                } else {
-                    debugPrint("product array count zero")
-                }
-            } else {
-                //Timer Running show Error
-                let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-                cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
-                cannotRedeemViewController.titleText = "Alert"
-                cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-            }
+            debugPrint("Unknown reload state")
         }
-        
-        //self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
@@ -252,7 +221,7 @@ extension ReloadViewController {
 
 //MARK: Webservices Methods
 extension ReloadViewController {
-    func checkReloadStatus() {
+    func getReloadStatus() {
         
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
@@ -269,8 +238,7 @@ extension ReloadViewController {
                     //Show alert when tap on reload
                     //All your deals are already unlocked no need to reload
                     
-                    ReedeemInfoManager.shared.canReload = false
-                    self.canReload = ReedeemInfoManager.shared.canReload
+                    self.setUpRedeemInfoView(type: .noOfferRedeemed)
                     self.statefulView.isHidden = true
                     self.statefulView.showNothing()
                     
@@ -284,15 +252,14 @@ extension ReloadViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
                 
-//
-//                self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
-//
-//                debugPrint("current servertimer \(self.redeemInfo .currentServerDatetime!)")
-               
-                ReedeemInfoManager.shared.canReload = true
-                ReedeemInfoManager.shared.saveRedeemInfo(redeemDic: responseReloadStatusDict)
+                self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
+                if self.redeemInfo!.remainingSeconds > 0 {
+                    self.setUpRedeemInfoView(type: .offerRedeemed)
+                    self.startReloadTimer()
+                } else {
+                    self.setUpRedeemInfoView(type: .reloadTimerExpire)
+                }
                 
-                self.checkTimer()
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
     
@@ -330,14 +297,17 @@ extension ReloadViewController {
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
-                self.canReload = false
                 
+                
+                /*
                 ReedeemInfoManager.shared.redeemInfo?.isFirstRedeem = true
                 ReedeemInfoManager.shared.redeemInfo?.remainingSeconds = 0
+ 
                 
                 //Todo post notification from here to run/stop timer
                 let notification = Notification.Name.checkReloadStatusNotification
                     NotificationCenter.default.post(name: notification, object: true)
+                */
                 
                 
             } else {
@@ -349,40 +319,20 @@ extension ReloadViewController {
     }
 }
 
-
-
-extension ReloadViewController {
-    
-    func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(ReloadViewController.updateTimer)), userInfo: nil, repeats: true)
-    }
-        
-    @objc func updateTimer() {
-        seconds = ReedeemInfoManager.shared.updateRedeemInfo()
-        if seconds < 0 {
-            timer.invalidate()
-        }
-        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
-        self.timerWithTextLabel.attributedText = getAttributedTimerString(timer:timerString)
-    }
-}
-
-
+//MARK: InApp Purchase
 extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
     func productsRequest (_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         
-        if response.products.count != 0 {
-            for product in response.products {
-                products.append(product)
-                debugPrint("product title == \(product.localizedTitle)")
-                debugPrint("product desc == \(product.localizedDescription)")
-                debugPrint("product price == \(product.priceLocale)")
-            }
+        if let product = response.products.first {
+            debugPrint("product title == \(product.localizedTitle)")
+            debugPrint("product desc == \(product.localizedDescription)")
+            debugPrint("product price == \(product.priceLocale)")
+            self.buyProduct(product)
         } else {
             debugPrint("zero products fetched")
         }
-        
+
         if response.invalidProductIdentifiers.count != 0 {
             debugPrint("invalidate product identifier \(response.invalidProductIdentifiers.description)")
         }

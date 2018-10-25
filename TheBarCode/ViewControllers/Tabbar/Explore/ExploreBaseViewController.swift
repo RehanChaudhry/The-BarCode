@@ -136,6 +136,7 @@ class ExploreBaseViewController: UIViewController {
         
     }
     
+    /*
     func updateSnackBar() {
         
         if let redeemInfo = ReedeemInfoManager.shared.redeemInfo {
@@ -169,7 +170,7 @@ class ExploreBaseViewController: UIViewController {
     func invalidateTimer(){
         self.snackBar.timer.invalidate()
     }
-    
+    */
   
 
     //MARK: My IBActions

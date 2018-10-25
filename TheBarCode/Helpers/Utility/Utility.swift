@@ -119,8 +119,7 @@ class Utility: NSObject {
         })
     }
     
-    
-    func timeString(time:TimeInterval) -> String {
+    func getFormattedRemainingTime(time: TimeInterval) -> String {
         
         let timeInt = Int(time)
         
@@ -128,20 +127,9 @@ class Utility: NSObject {
         let hours = Int((timeInt % 86400) / 3600)
         let minutes = Int((timeInt % 3600) / 60)
         let seconds = Int((timeInt % 3600) % 60)
-        return String(format: "%d : %d  : %d : %d",days, hours, minutes,seconds)
+        
+        return String(format: "%02d : %02d  : %02d : %02d", days, hours, minutes, seconds)
     }
-    
-    func checkTimerEnd(time:TimeInterval) -> Bool {
-
-        let timeInt = Int(time)
-
-        let days = Int(timeInt / 86400)
-        let hours = Int((timeInt % 86400) / 3600)
-        let minutes = Int((timeInt % 3600) / 60)
-        let seconds = Int((timeInt % 3600) % 60)
-        return (days == 0 && hours == 0 && minutes == 0 && seconds == 0 )
-    }
-    
     
     func checkDealType(offerTypeID: String) -> OfferType {
         switch offerTypeID {

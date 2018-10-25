@@ -31,28 +31,40 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var creditsLeftView: UIView!
     @IBOutlet var creditsLeftLabel: UILabel!
 
-    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+//    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
     
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
     
-    var timer = Timer()
-    var seconds = 0
+    var loadingView: LoadingAndErrorView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.loadingView = LoadingAndErrorView.loadFromNib()
+        self.loadingView.activityIndicator.activityIndicatorViewStyle = .gray
+        self.loadingView.activityIndicator.color = .black
+        
+        self.addSubview(self.loadingView)
+        
+        self.loadingView.autoPinEdgesToSuperviewEdges()
+        
+        
+        let loadingGradientView = GradientView()
+        loadingGradientView.tag = 100
+        loadingGradientView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
+        self.loadingView.insertSubview(loadingGradientView, at: 0)
+        loadingGradientView.autoPinEdgesToSuperviewEdges()
+        
+    }
+    
     
     func updateAppearanceForType(type: SnackbarType, gradientType: GradientType) {
        
-        self.activitySpinner.isHidden = true
-
         self.type = type
         
         let user = Utility.shared.getCurrentUser()
         self.creditsLeftLabel.text = "\(user!.credit)"
-        
-        self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
-        
-        if self.seconds > 0 {
-            runTimer()
-        }
         
         if type == .discount {
             self.reloadInfoView.isHidden = true
@@ -72,20 +84,42 @@ class SnackbarView: GradientView, NibLoadable {
         self.gradientType = gradientType
         if gradientType == .green {
             self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
+            
+            let loadingGradientView = self.loadingView.viewWithTag(100) as! GradientView
+            loadingGradientView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
+            
         } else if gradientType == .orange {
             
         }
     }
     
-    func loadingSpinner() {
-        self.activitySpinner.isHidden = false
-        self.activitySpinner.startAnimating()
-        self.reloadInfoView.isHidden = true
-        self.discountInfoView.isHidden = true
+    func showLoading() {
+        self.loadingView.isHidden = false
+        self.loadingView.showLoading()
+    }
+    
+    func hideLoading() {
+        self.loadingView.isHidden = true
+        self.loadingView.showNothing()
+    }
+    
+    func showError(msg: String) {
+        self.loadingView.showErrorViewWithRetry(errorMessage: msg, reloadMessage: "")
+    }
+    
+//    func loadingSpinner() {
+//        self.activitySpinner.isHidden = false
+//        self.activitySpinner.startAnimating()
+//        self.reloadInfoView.isHidden = true
+//        self.discountInfoView.isHidden = true
+//    }
+    
+    func updateTimer(remainingSeconds: Int) {
+        self.reloadTimerLabel.text = "\(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))"
     }
 }
 
-
+/*
 extension SnackbarView {
     
     func runTimer() {
@@ -103,4 +137,4 @@ extension SnackbarView {
         let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
         self.reloadTimerLabel.text = timerString
     }
-}
+}*/
