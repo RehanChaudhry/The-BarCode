@@ -142,7 +142,7 @@ class ReloadViewController: UITableViewController {
                 .foregroundColor: UIColor.appBlueColor()]
             
             let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
-            let finalText = "Available Credits: \n You are out of credit. You can reload previous offers after \(timerText)."
+            let finalText = "Available Credits: \nYou are out of credit. You can reload previous offers after \(timerText)."
             
             let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
             attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))

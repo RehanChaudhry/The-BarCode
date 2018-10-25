@@ -36,7 +36,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     override func setUpCell(explore: Explore) {
         
         if let image = explore.images.first {
-            coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false)
+           // coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false)
+            coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         }
         
         titleLabel.text = explore.title.value
@@ -53,8 +54,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         let explore = offer.establishment.value!
         let url = offer.image.value
-        coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
-            
+       // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
+         coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         titleLabel.text = explore.title.value
         locationIconImageView.isHidden = true
         distanceLabel.isHidden = true
