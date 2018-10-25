@@ -291,9 +291,7 @@ extension ReloadViewController {
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let reloadStatusDict = (responseDict?["data"] as? [String : Any]), let userDict = reloadStatusDict["user"] as? [String : Any] {
-                
-                let _ = Utility.shared.saveCurrentUser(userDict: userDict)
+            if let reloadStatusDict = (responseDict?["data"] as? [String : Any]), let _ = reloadStatusDict["user"] as? [String : Any] {
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()

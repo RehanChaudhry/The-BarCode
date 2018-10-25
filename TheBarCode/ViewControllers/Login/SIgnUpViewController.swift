@@ -76,6 +76,7 @@ class SIgnUpViewController: UIViewController {
         
         self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
         self.selectedDob = self.datePicker.date
+        self.datePicker.minimumDate = nil
         
         self.addBackButton()
         

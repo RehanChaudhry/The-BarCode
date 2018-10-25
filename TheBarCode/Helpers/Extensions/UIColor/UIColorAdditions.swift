@@ -62,4 +62,12 @@ extension UIColor {
         return UIColor("#CCCCCC")
     }
     
+    static func appSnackBarOrangeColor() -> UIColor {
+        return UIColor("#FB8900")
+    }
+    
+    static func appSnackBarRedColor() -> UIColor {
+        return UIColor("#FF002C")
+    }
+ 
 }

@@ -40,21 +40,21 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="The white hart" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSE-1m-2ly">
-                        <rect key="frame" x="34" y="179" width="77" height="15"/>
+                        <rect key="frame" x="36" y="179" width="77" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="FLh-bZ-tUK">
-                        <rect key="frame" x="16" y="179" width="10" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-location" translatesAutoresizingMaskIntoConstraints="NO" id="FLh-bZ-tUK">
+                        <rect key="frame" x="16" y="179" width="12" height="15"/>
                         <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="10" id="LjR-Jh-qMM"/>
+                            <constraint firstAttribute="width" constant="12" id="LjR-Jh-qMM"/>
                             <constraint firstAttribute="height" constant="15" id="Sd0-vl-2Ut"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wdj-iC-GK1">
-                        <rect key="frame" x="119" y="179" width="185" height="15"/>
+                        <rect key="frame" x="121" y="179" width="183" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -91,6 +91,6 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_map" width="15" height="20"/>
+        <image name="bar-location" width="28" height="32"/>
     </resources>
 </document>

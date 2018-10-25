@@ -76,8 +76,8 @@ class SnackbarView: GradientView, NibLoadable {
             self.discountInfoView.isHidden = true
             self.reloadInfoLabel.text = "RELOAD IN "
         } else if type == .congrates {
-            self.reloadInfoView.isHidden = false
-            self.discountInfoView.isHidden = true
+            self.reloadInfoView.isHidden = true
+            self.discountInfoView.isHidden = false
             self.discountInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
         }
         
@@ -89,7 +89,10 @@ class SnackbarView: GradientView, NibLoadable {
             loadingGradientView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: GradientableOptionsDirection.right)
             
         } else if gradientType == .orange {
+            self.updateGradient(colors: [UIColor.appSnackBarOrangeColor(), UIColor.appSnackBarRedColor()], locations: nil, direction: GradientableOptionsDirection.right)
             
+            let loadingGradientView = self.loadingView.viewWithTag(100) as! GradientView
+            loadingGradientView.updateGradient(colors: [UIColor.appSnackBarOrangeColor(), UIColor.appSnackBarRedColor()], locations: nil, direction: GradientableOptionsDirection.right)
         }
     }
     
