@@ -11,7 +11,7 @@ import Reusable
 import FSPagerView
 import ObjectMapper
 import CoreStore
-
+import Alamofire
 
 class FiveADayViewController: UIViewController {
 
@@ -22,6 +22,8 @@ class FiveADayViewController: UIViewController {
     var deals : [FiveADayDeal] = []
     
     var statefulView: LoadingAndErrorView!
+    
+    var dataRequest: DataRequest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +44,15 @@ class FiveADayViewController: UIViewController {
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.view.addSubview(statefulView)
         
-        self.statefulView.retryHandler = {(sender: UIButton) in
-            
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
+            self.reloadData()
         }
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
         
-        self.getFiveADayDeals()
+        self.reloadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,6 +67,17 @@ class FiveADayViewController: UIViewController {
         let cellHeight = self.pagerView.frame.size.height
         
         self.pagerView.itemSize = CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    deinit {        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+    }
+    
+    //MARK: My Methods
+    
+    func reloadData() {
+        self.dataRequest?.cancel()
+        self.getFiveADayDeals()
     }
     
 }
@@ -319,4 +334,13 @@ extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
+}
+
+//MARK: Notification Methods
+extension FiveADayViewController {
+    
+    @objc func reloadSuccessfullNotification(notification: Notification) {
+        self.reloadData()
+    }
+    
 }

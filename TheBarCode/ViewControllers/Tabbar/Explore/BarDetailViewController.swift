@@ -208,7 +208,7 @@ extension BarDetailViewController {
         self.standardRedeemButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
 
-        let params: [String: Any] = ["establishment_id": self.selectedBar.id.value,
+        let params: [String: Any] = ["establishment_id" : self.selectedBar.id.value,
                                      "type": OfferType.standard.serverParamValue()]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
@@ -226,18 +226,15 @@ extension BarDetailViewController {
                 return
             }
             
-            if let responseObj = response as? [String : Any] {
-                if  let _ = responseObj["data"] as? [String : Any] {
-                    
-                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                        let editedObject = transaction.edit(self.selectedBar)
-                        editedObject!.canRedeemOffer.value = false
-                    })
-                    
-                } else {
-                    let genericError = APIHelper.shared.getGenericError()
-                    self.showAlertController(title: "", msg: genericError.localizedDescription)
-                }
+            if let responseObj = response as? [String : Any], let _ = responseObj["data"] as? [String : Any] {
+                
+                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                    let editedObject = transaction.edit(self.selectedBar)
+                    editedObject!.canRedeemOffer.value = false
+                })
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)

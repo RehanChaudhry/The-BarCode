@@ -27,6 +27,9 @@ enum RedeemType: String {
     any = "reload"
 }
 
+let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
+let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
+
 class Utility: NSObject {
     
     static let shared = Utility()

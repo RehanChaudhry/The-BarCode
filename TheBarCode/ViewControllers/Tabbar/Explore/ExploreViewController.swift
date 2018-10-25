@@ -10,6 +10,7 @@ import UIKit
 import PureLayout
 import HTTPStatusCodes
 import ObjectMapper
+import Alamofire
 
 enum ExploreType: String {
     case bars = "bars", deals = "deals", liveOffers = "live_offers"
@@ -46,6 +47,8 @@ class ExploreViewController: UIViewController {
     var reloadTimer: Timer?
     var redeemInfo: RedeemInfo?
     
+    var reloadDataRequest: DataRequest?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -63,6 +66,9 @@ class ExploreViewController: UIViewController {
         
         self.getReloadStatus()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dealRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,6 +84,10 @@ class ExploreViewController: UIViewController {
     }
     
     deinit {
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
+        
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
     }
@@ -192,6 +202,24 @@ class ExploreViewController: UIViewController {
         self.liveOffersController.snackBar.showError(msg: msg)
     }
     
+    func reloadData() {
+        self.barsController.dataRequest?.cancel()
+        self.dealsController.dataRequest?.cancel()
+        self.liveOffersController.dataRequest?.cancel()
+        
+        let _ = self.barsController.statefulTableView.triggerPullToRefresh()
+        let _ = self.dealsController.statefulTableView.triggerPullToRefresh()
+        let _ = self.liveOffersController.statefulTableView.triggerPullToRefresh()
+        
+        self.refreshSnackBar()
+        
+    }
+    
+    func refreshSnackBar() {
+        self.reloadDataRequest?.cancel()
+        self.getReloadStatus()
+    }
+    
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
@@ -234,7 +262,7 @@ extension ExploreViewController {
         
         self.showSnackBarSpinner()
         
-        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
@@ -303,4 +331,15 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
     }
 }
 
-
+//MARK: Notification Methods
+extension ExploreViewController {
+    
+    @objc func reloadSuccessfullNotification(notification: Notification) {
+        self.reloadData()
+    }
+    
+    @objc func dealRedeemedNotification(notification: Notification) {
+        self.refreshSnackBar()
+    }
+    
+}
