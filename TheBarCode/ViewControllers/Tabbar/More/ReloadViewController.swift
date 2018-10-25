@@ -79,9 +79,6 @@ class ReloadViewController: UITableViewController {
         
         self.getReloadStatus()
         
-        let user = Utility.shared.getCurrentUser()
-        self.creditsLabel.text = "\(user!.credit)"
-        
         self.productIDs = [kProductIdReload]
         SKPaymentQueue.default().add(self)
         
@@ -120,6 +117,9 @@ class ReloadViewController: UITableViewController {
     //MARK: My Methods
     
     func setUpRedeemInfoView(type: ReloadState) {
+        
+        let user = Utility.shared.getCurrentUser()
+        self.creditsLabel.text = "\(user!.credit)"
         
         self.type = type
         
@@ -276,7 +276,7 @@ extension ReloadViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let params: [String:Any] = ["token": transactionID]
+        let params: [String : Any] = ["token" : transactionID]
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathReload, method: .post) { (response, serverError, error) in
             
@@ -291,24 +291,16 @@ extension ReloadViewController {
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
-                //if yes allow reload --> Allow in app purchase -> Hit subscription service after in app purchase
-                debugPrint("responseReloadStatusDict == \(responseReloadStatusDict)")
+            if let reloadStatusDict = (responseDict?["data"] as? [String : Any]), let userDict = reloadStatusDict["user"] as? [String : Any] {
+                
+                let _ = Utility.shared.saveCurrentUser(userDict: userDict)
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
                 
+                self.setUpRedeemInfoView(type: .noOfferRedeemed)
                 
-                /*
-                ReedeemInfoManager.shared.redeemInfo?.isFirstRedeem = true
-                ReedeemInfoManager.shared.redeemInfo?.remainingSeconds = 0
- 
-                
-                //Todo post notification from here to run/stop timer
-                let notification = Notification.Name.checkReloadStatusNotification
-                    NotificationCenter.default.post(name: notification, object: true)
-                */
-                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil, userInfo: nil)
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()

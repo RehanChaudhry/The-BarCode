@@ -47,12 +47,12 @@ class LoadingAndErrorView: UIView, NibLoadable {
     
     func showErrorViewWithRetry(errorMessage: String, reloadMessage: String) {
         
-        let errorAttributes = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
+        let errorAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white,
                                NSAttributedStringKey.font : UIFont.systemFont(ofSize: 17.0)]
         let attributedError = NSMutableAttributedString(string: errorMessage, attributes: errorAttributes)
         
         
-        let reloadAttributes = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
+        let reloadAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white,
                                 NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14.0)]
         let attributedReload = NSMutableAttributedString(string: reloadMessage, attributes: reloadAttributes)
         

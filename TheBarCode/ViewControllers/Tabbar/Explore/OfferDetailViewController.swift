@@ -279,12 +279,7 @@ extension OfferDetailViewController {
                         Utility.shared.userCreditUpdate()
                     }
                     
-                    /*
-                    if !ReedeemInfoManager.shared.canReload {
-                       //Todo post notification from here to run timer
-                        let notification = Notification.Name.checkReloadStatusNotification
-                        NotificationCenter.default.post(name: notification, object: false)
-                    }*/
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
