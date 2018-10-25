@@ -97,6 +97,7 @@ extension SnackbarView {
         if seconds < 0 {
             timer.invalidate()
             ReedeemInfoManager.shared.isTimerRunning = false
+            self.updateAppearanceForType(type: .congrates, gradientType: .orange)
             return
         }
         let timerString = Utility.shared.timeString(time: TimeInterval(seconds))

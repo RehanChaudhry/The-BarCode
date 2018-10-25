@@ -42,5 +42,4 @@ let apiPathReload = "subscription"
 let apiPathView = "view"
 
 
-//MARK NOTIFICATIONS
-let checkReloadStatusNotification = "CheckReloadStatusNotification"
+

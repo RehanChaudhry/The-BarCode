@@ -67,7 +67,8 @@ class ExploreBaseViewController: UIViewController {
         self.setUpStatefulTableView()
         
         
-        
+    
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,21 +136,41 @@ class ExploreBaseViewController: UIViewController {
         
     }
     
-    func updateSnakeBar() {
-        if ReedeemInfoManager.shared.canReload {
-            if ReedeemInfoManager.shared.redeemInfo?.canShowTimer() ?? false {
-                self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
-            } else {
-                self.snackBar.updateAppearanceForType(type: .congrates, gradientType: .green)
+    func updateSnackBar() {
+        
+        if let redeemInfo = ReedeemInfoManager.shared.redeemInfo {
+            
+            if redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                // Discount
+                self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
+            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                //Congrates
+                self.snackBar.updateAppearanceForType(type: .congrates, gradientType: .orange)
+            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds > 0 {
+                //reload in
+                  self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
             }
         } else {
-            self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
+            self.snackBar.loadingSpinner()
         }
+        
+//
+//        if ReedeemInfoManager.shared.canReload {
+//            if ReedeemInfoManager.shared.redeemInfo?.canShowTimer() ?? false {
+//                self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
+//            } else {
+//                self.snackBar.updateAppearanceForType(type: .congrates, gradientType: .orange)
+//            }
+//        } else {
+//            self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
+//        }
     }
     
     func invalidateTimer(){
         self.snackBar.timer.invalidate()
     }
+    
+  
 
     //MARK: My IBActions
     

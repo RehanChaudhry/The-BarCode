@@ -172,6 +172,24 @@ class ReloadViewController: UITableViewController {
     
     func checkTimer() {
         
+        if let redeemInfo = ReedeemInfoManager.shared.redeemInfo {
+            
+            if redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                // Discount
+                
+            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                //Congrates
+                self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
+            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds > 0 {
+                //reload in
+                self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
+                runTimer()
+            }
+        } else {
+            
+        }
+        
+       /*
         if ReedeemInfoManager.shared.redeemInfo!.canShowTimer() {
             //Run Timer
             self.seconds = ReedeemInfoManager.shared.redeemInfo?.remainingSeconds! ?? 0
@@ -179,7 +197,7 @@ class ReloadViewController: UITableViewController {
         } else {
             //Timer finished
             self.timerWithTextLabel.attributedText = getAttributedTimerString(timer: "00 : 00  : 00 : 00")
-        }
+        }*/
     }
     
     //MARK: My IBActions
@@ -313,6 +331,14 @@ extension ReloadViewController {
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
                 self.canReload = false
+                
+                ReedeemInfoManager.shared.redeemInfo?.isFirstRedeem = true
+                ReedeemInfoManager.shared.redeemInfo?.remainingSeconds = 0
+                
+                //Todo post notification from here to run/stop timer
+                let notification = Notification.Name.checkReloadStatusNotification
+                    NotificationCenter.default.post(name: notification, object: true)
+                
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()

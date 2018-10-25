@@ -156,6 +156,12 @@ extension RedeemStartViewController {
                         })
                     }
                    
+                    if !ReedeemInfoManager.shared.canReload {
+                        //Todo post notification from here to run timer
+                        let notification = Notification.Name.checkReloadStatusNotification
+                        NotificationCenter.default.post(name: notification, object: nil)
+                    }
+                    
                     
                     self.dismiss(animated: true) {
                         self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: self.actionButton, selectedIndex: self.selectedIndex)

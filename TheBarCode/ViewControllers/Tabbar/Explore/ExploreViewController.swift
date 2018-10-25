@@ -134,7 +134,7 @@ class ExploreViewController: UIViewController {
         dealsController.invalidateTimer()
         liveOffersController.invalidateTimer()
         
-        barsController.updateSnakeBar()
+        barsController.updateSnackBar()
         
         self.scrollView.scrollToPage(page: 0, animated: true)
     }
@@ -150,7 +150,7 @@ class ExploreViewController: UIViewController {
         barsController.invalidateTimer()
         liveOffersController.invalidateTimer()
         
-        dealsController.updateSnakeBar()
+        dealsController.updateSnackBar()
         
         self.scrollView.scrollToPage(page: 1, animated: true)
     }
@@ -164,7 +164,7 @@ class ExploreViewController: UIViewController {
         barsController.invalidateTimer()
         dealsController.invalidateTimer()
         
-        liveOffersController.updateSnakeBar()
+        liveOffersController.updateSnackBar()
         self.exploreType = .liveOffers
         
         self.scrollView.scrollToPage(page: 2, animated: true)

@@ -36,6 +36,8 @@ class BarsViewController: ExploreBaseViewController {
         checkReloadStatus()
         
         self.statefulTableView.triggerInitialLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(checkReoadStatusNotification(notfication:)), name: NSNotification.Name.checkReloadStatusNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,13 +56,28 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.statefulDelegate = self
     }
 
+    //MARK: Notification
+    @objc func checkReoadStatusNotification(notfication: NSNotification) {
+        
+        debugPrint("notification Received == \(notfication.name)")
+
+        if let withRefresh = notfication.object as? Bool, withRefresh { //with Refresh or not
+            checkReloadStatus()
+            self.statefulTableView.triggerInitialLoad()
+        } else {
+            checkReloadStatus()
+
+        }
+    }
+    
     func checkReloadStatus() {
+        self.snackBar.loadingSpinner()
 
         let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
-                self.updateSnakeBar()
+                self.updateSnackBar()
                 return
             }
             
@@ -69,11 +86,11 @@ class BarsViewController: ExploreBaseViewController {
                     //Show alert when tap on reload
                     //All your deals are already unlocked no need to reload                    
                     ReedeemInfoManager.shared.canReload = false
-                    self.updateSnakeBar()
+                    self.updateSnackBar()
                     
                 } else {
                     debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
-                    self.updateSnakeBar()
+                    self.updateSnackBar()
                 }
                 
                 return
@@ -88,10 +105,10 @@ class BarsViewController: ExploreBaseViewController {
                 // debugPrint("redeem time \(redeemInfo .redeemDatetime!)!")
                 ReedeemInfoManager.shared.canReload = true
                 ReedeemInfoManager.shared.saveRedeemInfo(redeemDic: responseReloadStatusDict)
-                self.updateSnakeBar()
+                self.updateSnackBar()
                 
             } else {
-                self.updateSnakeBar()
+                self.updateSnackBar()
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("Error while getting reload status \(genericError.localizedDescription)")
             }

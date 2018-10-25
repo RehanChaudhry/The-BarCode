@@ -34,7 +34,6 @@ class Explore: CoreStoreObject {
     var formattedUpdatedAt = Value.Optional<String>("formatted_updated_at")
     var distance = Value.Required<CGFloat>("distance", initial: 0.0)
     var canRedeemOffer = Value.Required<Bool>("is_offer_redeemed", initial: false)
-    var canStandardOfferRedeemed = Value.Required<Bool>("can_redeem_standard_offer", initial: false)
     var deals = Value.Required<Int>("deals", initial: 0)
     var liveOffers = Value.Required<Int>("live_offers", initial: 0)
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
@@ -96,7 +95,6 @@ extension Explore: ImportableUniqueObject {
         self.formattedUpdatedAt.value = source["formatted_updated_at"] as? String
         self.distance.value = source["distance"] as! CGFloat
         self.canRedeemOffer.value = source["can_redeem_offer"] as! Bool
-        self.canStandardOfferRedeemed.value = source["can_redeem_standard_offer"] as! Bool
         self.deals.value = source["deals"] as! Int
         self.liveOffers.value = source["live_offers"] as! Int
         self.isUserFavourite.value = source["is_user_favourite"] as! Bool
