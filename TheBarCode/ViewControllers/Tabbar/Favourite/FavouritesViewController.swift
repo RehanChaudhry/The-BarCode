@@ -246,10 +246,10 @@ extension FavouritesViewController: StatefulTableDelegate {
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
             let title = "No Favourite Bars"
-            let subTitle = "Tap to reload"
+            let subTitle = "Tap to Refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Reload")
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
             
             emptyDataView.actionHandler = { (sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -261,7 +261,7 @@ extension FavouritesViewController: StatefulTableDelegate {
             let initialErrorView = LoadingAndErrorView.loadFromNib()
             initialErrorView.showErrorView(canRetry: true)
             initialErrorView.backgroundColor = .clear
-            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to reload")
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to Refresh")
             
             initialErrorView.retryHandler = {(sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -279,7 +279,7 @@ extension FavouritesViewController: StatefulTableDelegate {
         if forLoadMoreError == nil {
             loadingView.showLoading()
         } else {
-            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to reload")
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to Refresh")
         }
         
         loadingView.retryHandler = {(sender: UIButton) in

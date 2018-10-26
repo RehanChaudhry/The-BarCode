@@ -29,7 +29,7 @@ class CollectionViewLoadMoreView: UICollectionReusableView, NibReusable {
         if loadMore.isLoading {
             loadingView.showLoading()
         } else if let error = loadMore.error {
-            loadingView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to reload")
+            loadingView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to Refresh")
         } else {
             loadingView.showNothing()
         }

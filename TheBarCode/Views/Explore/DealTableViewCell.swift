@@ -46,12 +46,12 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     }
     
     func setUpDealCell(deal: Deal) {
-        let explore = deal.establishment.value!
+       // let explore = deal.establishment.value!
         let url = deal.image.value
        // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
         coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
-        titleLabel.text = explore.title.value
+        titleLabel.text = deal.title.value//explore.title.value
         locationIconImageView.isHidden = true
         distanceLabel.isHidden = true
         detailLabel.isHidden = true

@@ -52,11 +52,11 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func setUpDetailCell(offer: LiveOffer) {
         
-        let explore = offer.establishment.value!
+       // let explore = offer.establishment.value!
         let url = offer.image.value
        // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
          coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        titleLabel.text = explore.title.value
+        titleLabel.text = offer.title.value//explore.title.value
         locationIconImageView.isHidden = true
         distanceLabel.isHidden = true
         detailLabel.isHidden = true

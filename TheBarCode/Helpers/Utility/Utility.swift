@@ -114,7 +114,7 @@ class Utility: NSObject {
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let editedObject = transaction.edit(user)
-            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > -1 {
+            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > 0 {
                 let credit = creditInt - 1
                 editedObject!.creditsRaw.value = "\(credit)"
             }

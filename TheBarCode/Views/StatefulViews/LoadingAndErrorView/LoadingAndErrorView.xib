@@ -17,6 +17,9 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ab-jv-0Yb">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <state key="normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                     <connections>
                         <action selector="retryButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="3d6-Fo-50w"/>
                     </connections>
