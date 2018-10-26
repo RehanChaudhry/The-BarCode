@@ -93,6 +93,7 @@ class OfferDetailViewController: UIViewController {
             let isDateInRange = Date().isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
             let isTimeInRange = currentTimeDate.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
             
+            //Can redeem deal (With in date and time range)
             if isDateInRange && isTimeInRange {
                 debugPrint("Show Redeem deal")
                 self.bottomViewBottom.constant = 0.0
@@ -109,7 +110,18 @@ class OfferDetailViewController: UIViewController {
                 if Date().compare(self.deal.endDateTime) == .orderedDescending {
                     self.bottomViewBottom.constant = self.bottomView.frame.height
                 } else {
-                    self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(Date()))
+                    
+                    let todayDateString = Utility.shared.serverDateFormattedString(date: Date())
+                    let todayDateTimeString = todayDateString + " " + self.deal.startTimeRaw.value
+                    let todayDateTime = Utility.shared.serverFormattedDateTime(date: todayDateTimeString)
+                    
+                    if todayDateTime.compare(self.deal.startDateTime) == .orderedAscending {
+                        self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(todayDateTime))
+                    } else {
+                        let nextDayDateTime = todayDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
+                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSince(self.deal.startDateTime))
+                    }
+                    
                     if self.remainingSeconds > 0 {
                         self.startReloadTimer()
                     } else {

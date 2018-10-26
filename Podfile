@@ -22,6 +22,8 @@ target 'TheBarCode' do
   pod 'SDWebImage', '~> 4.4.2'
   pod 'HTTPStatusCodes', '~> 3.2.0'
   pod 'Firebase/DynamicLinks', '~> 5.10.0'
+  pod 'Fabric', '~> 1.7.13'
+  pod 'Crashlytics', '~> 3.10.9'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

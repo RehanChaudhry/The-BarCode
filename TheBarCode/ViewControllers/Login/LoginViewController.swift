@@ -39,8 +39,10 @@ class LoginViewController: UIViewController {
         self.addBackButton()
         self.setUpFields()
         
+        /*
         self.emailFieldView.textField.text = "mzeeshan+5@cygnismedia.com"
         self.passwordFieldView.textField.text = "12345678"
+         */
     }
     
     override func viewWillAppear(_ animated: Bool) {
