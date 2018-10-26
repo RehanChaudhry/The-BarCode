@@ -2,6 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Fabric</key>
+    <dict>
+        <key>APIKey</key>
+        <string>9f73f9de6e61d92f7f83e60b45e24b2324669767</string>
+        <key>Kits</key>
+        <array>
+            <dict>
+                <key>KitInfo</key>
+                <dict/>
+                <key>KitName</key>
+                <string>Crashlytics</string>
+            </dict>
+        </array>
+    </dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your location will be used to show and notify about the nearby deals and live offers</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

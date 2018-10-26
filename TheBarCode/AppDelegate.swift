@@ -11,6 +11,8 @@ import GoogleMaps
 import FBSDKLoginKit
 import Firebase
 import FirebaseDynamicLinks
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = theBarCodeInviteScheme
         FirebaseApp.configure()
+        
+        Fabric.with([Crashlytics.self])
         
         return true
     }
