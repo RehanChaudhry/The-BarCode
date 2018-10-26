@@ -139,16 +139,20 @@ extension FavouritesViewController {
                     self.bars.removeAll()
                 }
                 
+                var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let bars = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    
-                    if !bars.isEmpty {
-                        let ids = bars.map{$0.uniqueIDValue}
-                        transaction.deleteAll(From<Bar>(), Where<Bar>("NOT(%K in %@)", Bar.uniqueIDKeyPath, ids))
-                    }
+                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
+                    importedObjects.append(contentsOf: objects)
                 })
                 
-                self.bars.append(contentsOf: Utility.inMemoryStack.fetchAll(From<Bar>()) ?? [])
+                var resultBars: [Bar] = []
+                for object in importedObjects {
+                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    //self.bars.append(fetchedObject!)
+                    resultBars.append(fetchedObject!)
+                }
+                
+                self.bars.append(contentsOf: resultBars)
                 
                 self.dealsLoadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.dealsLoadMore.canLoadMore()
