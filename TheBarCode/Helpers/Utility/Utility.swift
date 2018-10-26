@@ -142,7 +142,7 @@ class Utility: NSObject {
     }
     
     //decrement credit by 1 
-    func userCreditUpdate() {
+    func userCreditConsumed() {
         let user = CoreStore.fetchOne(From<User>())
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
@@ -151,8 +151,23 @@ class Utility: NSObject {
                 let credit = creditInt - 1
                 editedObject!.creditsRaw.value = "\(credit)"
             }
-
         })
+        
+        debugPrint("User Credit Consumed in local db")
+    }
+    
+    func userCreditUpdate(creditValue: Int) {
+        let user = CoreStore.fetchOne(From<User>())
+        
+        try! CoreStore.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(user)
+            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > 0 {
+                editedObject!.creditsRaw.value = "\(creditValue)"
+            }
+        })
+        
+        debugPrint("User Credit Update in local db")
+
     }
     
     func getFormattedRemainingTime(time: TimeInterval) -> String {

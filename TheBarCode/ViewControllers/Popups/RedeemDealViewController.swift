@@ -81,7 +81,7 @@ extension RedeemDealViewController {
                     self.dismiss(animated: true, completion: nil)
                     
                     if redeemWithCredit {
-                        Utility.shared.userCreditUpdate()
+                        Utility.shared.userCreditConsumed()
                     }
                     
                 } else {

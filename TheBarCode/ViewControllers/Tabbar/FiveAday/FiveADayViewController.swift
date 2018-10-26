@@ -200,7 +200,7 @@ extension FiveADayViewController {
                     })
                     
                     if redeemWithCredit {
-                        Utility.shared.userCreditUpdate()
+                        Utility.shared.userCreditConsumed()
                     }
                     
                 } else {
