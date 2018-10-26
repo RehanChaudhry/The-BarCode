@@ -12,7 +12,7 @@ import ObjectMapper
 import RNCryptor
 import SwiftyJSON
 
-let barCodeDomainURLString = "https://thebarcode.cygnismedia.com/"
+let barCodeDomainURLString = "https://thebarcode-qa.cygnismedia.com/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
 let clientScret = "a7024f16e0c8d6475c2f82c66a8f6d9d85380e63"

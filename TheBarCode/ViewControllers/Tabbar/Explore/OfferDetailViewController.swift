@@ -111,6 +111,7 @@ class OfferDetailViewController: UIViewController {
                     self.bottomViewBottom.constant = self.bottomView.frame.height
                 } else {
                     
+                    //TODO: This logic needs to be updated
                     let todayDateString = Utility.shared.serverDateFormattedString(date: Date())
                     let todayDateTimeString = todayDateString + " " + self.deal.startTimeRaw.value
                     let todayDateTime = Utility.shared.serverFormattedDateTime(date: todayDateTimeString)

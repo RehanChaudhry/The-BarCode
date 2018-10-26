@@ -203,7 +203,7 @@ extension BarsViewController {
                     self.statefulTableView.reloadData()
                     completion(nil)
                 } else {
-                    self.bars = resultBars
+                    self.bars.append(contentsOf: resultBars)
                     self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                     self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                     self.statefulTableView.canPullToRefresh = true
