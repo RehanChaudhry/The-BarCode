@@ -21,7 +21,8 @@ protocol BarsViewControllerDelegate: class {
 class BarsViewController: ExploreBaseViewController {
     
     weak var delegate: BarsViewControllerDelegate!
-    
+    var isClearingSearch: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -118,6 +119,9 @@ extension BarsViewController: UISearchBarDelegate {
             self.searchText = searchBar.text!
             self.isSearching = false
             self.statefulTableView.innerTable.reloadData()
+            
+            self.isClearingSearch = true
+            self.statefulTableView.triggerInitialLoad()
         } else {
             self.isSearching = true
             self.filteredBars.removeAll()
@@ -138,7 +142,7 @@ extension BarsViewController: UISearchBarDelegate {
 extension BarsViewController {
     func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
 
-        if isRefreshing {
+        if isRefreshing && !self.isSearching {
             self.loadMore = Pagination()
         }
         
@@ -177,12 +181,10 @@ extension BarsViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                
-                if isRefreshing {
-                    self.bars.removeAll()
-                }
-                
                 if self.isSearching {
                     self.filteredBars.removeAll()
+                } else if isRefreshing {
+                    self.bars.removeAll()
                 }
 
                 var importedObjects: [Bar] = []
@@ -194,7 +196,6 @@ extension BarsViewController {
                 var resultBars: [Bar] = []
                 for object in importedObjects {
                     let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-                    //self.bars.append(fetchedObject!)
                     resultBars.append(fetchedObject!)
                 }
                 
@@ -203,6 +204,7 @@ extension BarsViewController {
                     self.filteredBars = resultBars
                     self.statefulTableView.canLoadMore = false
                     self.statefulTableView.innerTable.reloadData()
+                    self.statefulTableView.canPullToRefresh = true
                     self.statefulTableView.reloadData()
                     completion(nil)
                 } else {
@@ -265,9 +267,19 @@ extension BarsViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         
-        let refreshing  = self.isSearching ? false : true
-        self.getBars(isRefreshing: refreshing) {  [unowned self] (error) in
-            handler(self.bars.count == 0, error)
+        if self.isClearingSearch {
+            self.isClearingSearch = false
+            handler(self.bars.count == 0, nil)
+        } else {
+            let refreshing  = self.isSearching ? false : true
+            self.getBars(isRefreshing: refreshing) {  [unowned self] (error) in
+                // handler(self.bars.count == 0, error)
+                if self.isSearching {
+                    handler(self.filteredBars.count == 0, error)
+                } else {
+                    handler(self.bars.count == 0, error)
+                }
+            }
         }
     }
     
@@ -282,7 +294,12 @@ extension BarsViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getBars(isRefreshing: true) { [unowned self] (error) in
-            handler(self.bars.count == 0, error)
+            if self.isSearching {
+                handler(self.filteredBars.count == 0, error)
+
+            } else {
+                handler(self.bars.count == 0, error)
+            }
         }
     }
     
@@ -343,7 +360,7 @@ extension BarsViewController: StatefulTableDelegate {
 extension BarsViewController: BarTableViewCellDelegare {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
-        let bar = self.bars[indexPath!.row]
+        let bar = self.isSearching ? self.filteredBars[indexPath!.row] : self.bars[indexPath!.row]
         markFavourite(bar: bar, cell: cell)
     }
 }
