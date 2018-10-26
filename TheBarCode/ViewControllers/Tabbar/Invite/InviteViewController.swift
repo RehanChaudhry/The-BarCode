@@ -18,6 +18,8 @@ class InviteViewController: UITableViewController {
 
     @IBOutlet var headerView: UIView!
     
+    @IBOutlet weak var codeLabel: UILabel!
+    
     var shouldShowCancelBarButton: Bool = false
     
     var isRedeemingDeal: Bool = false
@@ -47,6 +49,9 @@ class InviteViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 500.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        let user = Utility.shared.getCurrentUser()
+        codeLabel.text = user!.ownReferralCode.value
     }
 
     override func didReceiveMemoryWarning() {
