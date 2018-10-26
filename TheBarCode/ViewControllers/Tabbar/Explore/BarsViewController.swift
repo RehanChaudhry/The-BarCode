@@ -22,9 +22,6 @@ class BarsViewController: ExploreBaseViewController {
     
     weak var delegate: BarsViewControllerDelegate!
     
-    let transaction = Utility.inMemoryStack.beginUnsafe()
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +30,12 @@ class BarsViewController: ExploreBaseViewController {
         self.searchBar.delegate = self
         
         self.statefulTableView.triggerInitialLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.statefulTableView.innerTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -222,15 +225,16 @@ extension BarsViewController {
     func markFavourite(bar: Bar, cell: BarTableViewCell) {
         
         debugPrint("isFav == \(bar.isUserFavourite.value)")
-        let params:[String : Any] = ["establishment_id": bar.id.value, "is_favorite" : !(bar.isUserFavourite.value)]
         
-        let editedObject = transaction.edit(bar)
-        editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
+        let params:[String : Any] = ["establishment_id": bar.id.value,
+                                     "is_favorite" : !(bar.isUserFavourite.value)]
         
+        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(bar)
+            editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+        })
         
-        let color =  bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
-        
-        cell.favouriteButton.tintColor = color
+        cell.setUpCell(bar: bar)
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
             
@@ -249,17 +253,6 @@ extension BarsViewController {
             
             if let responseID = (responseDict["data"] as? Int) {
                 debugPrint("responseID == \(responseID)")
-                //                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                //                    let editedObject = transaction.edit(self.bar)
-                //                    editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
-                //                })
-                //
-                //                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
-                
-                try! self.transaction.commitAndWait()
-                
-                
-                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")

@@ -119,9 +119,11 @@ class AsyncImageView: UIImageView {
             }
             
         }) { (image: UIImage?, error: Error?, cacheType: SDImageCacheType, url: URL?) in
+            
+            self.activityIndicatorView.stopAnimating()
+            
             if let _ = image {
                 self.progressView.isHidden = true
-                self.activityIndicatorView.stopAnimating()
             } else {
                 self.retryButton.isHidden = !show
             }

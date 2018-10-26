@@ -32,7 +32,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qz-SW-h0E">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qz-SW-h0E" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                     <rect key="frame" x="213.5" y="215.5" width="240" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="240" id="9lz-Ox-XOC"/>

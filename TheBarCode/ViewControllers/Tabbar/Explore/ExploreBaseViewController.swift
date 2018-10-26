@@ -65,9 +65,6 @@ class ExploreBaseViewController: UIViewController {
         self.listButton.tintColor = UIColor.appBlueColor()
         
         self.setUpStatefulTableView()
-        
-        
-    
 
     }
 

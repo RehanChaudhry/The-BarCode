@@ -20,8 +20,8 @@ class FavouritesViewController: UIViewController {
     
     var dealsRequest: DataRequest?
     var dealsLoadMore = Pagination()
-    let transaction = Utility.inMemoryStack.beginUnsafe()
-
+    
+    var shouldShowEmptyDataView = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +36,7 @@ class FavouritesViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         
         self.setUpStatefulTableView()
+        
         self.statefulTableView.triggerInitialLoad()
     }
 
@@ -155,6 +156,7 @@ extension FavouritesViewController {
                 self.bars.append(contentsOf: resultBars)
                 
                 self.dealsLoadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.canLoadMore = self.dealsLoadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
@@ -171,15 +173,15 @@ extension FavouritesViewController {
     func markFavourite(bar: Bar, cell: BarTableViewCell) {
         
         debugPrint("isFav == \(bar.isUserFavourite.value)")
-        let params:[String : Any] = ["establishment_id": bar.id.value, "is_favorite" : !(bar.isUserFavourite.value)]
+        let params:[String : Any] = ["establishment_id": bar.id.value,
+                                     "is_favorite" : !(bar.isUserFavourite.value)]
         
-        let editedObject = transaction.edit(bar)
-        editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
+        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(bar)
+            editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+        })
         
-        
-        let color =  bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
-        
-        cell.favouriteButton.tintColor = color
+        cell.setUpCell(bar: bar)
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
             
@@ -198,21 +200,23 @@ extension FavouritesViewController {
             
             if let responseID = (responseDict["data"] as? Int) {
                 debugPrint("responseID == \(responseID)")
-                //                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                //                    let editedObject = transaction.edit(self.bar)
-                //                    editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
-                //                })
-                //
-                //                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
-                
-                try! self.transaction.commitAndWait()
-                
-                
-                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
             }
+        }
+        
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("indexPath not found")
+            return
+        }
+        
+        self.bars.remove(at: indexPath.row)
+        self.statefulTableView.innerTable.deleteRows(at: [indexPath], with: .fade)
+        
+        if !self.dealsLoadMore.isLoading && self.bars.count == 0 {
+            self.shouldShowEmptyDataView = true
+            self.statefulTableView.triggerInitialLoad()
         }
     }
 }
@@ -220,8 +224,13 @@ extension FavouritesViewController {
 extension FavouritesViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getFavourites(isRefreshing: false) {  [unowned self] (error) in
-            handler(self.bars.count == 0, error)
+        if self.shouldShowEmptyDataView {
+            self.shouldShowEmptyDataView = false
+            handler(self.bars.count == 0, nil)
+        } else {
+            self.getFavourites(isRefreshing: false) {  [unowned self] (error) in
+                handler(self.bars.count == 0, error)
+            }
         }
     }
     

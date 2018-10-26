@@ -14,7 +14,7 @@ class EmptyDataView: UIView, NibLoadable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     
-    @IBOutlet var actionButton: UIButton!
+    @IBOutlet var actionButton: GradientButton!
     
     var actionHandler: ((_ sender: UIButton) -> Void)?
     

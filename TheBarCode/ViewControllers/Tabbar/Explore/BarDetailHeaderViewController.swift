@@ -30,25 +30,28 @@ class BarDetailHeaderViewController: UIViewController {
     
     var images: [String] = ["cover_detail", "cover_detail", "cover_detail"]
     
-    let transaction = Utility.inMemoryStack.beginUnsafe()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.titleLabel.text = self.bar.title.value
-        self.mapIconImageView.isHidden = false
-        self.distanceLabel.text = "\(self.bar.distance.value) miles away"
-      
-        let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
-        self.favouriteButton.tintColor = color
+        self.setUpHeader()
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: My Methods
+    func setUpHeader() {
+        self.titleLabel.text = self.bar.title.value
+        self.mapIconImageView.isHidden = false
+        self.distanceLabel.text = "\(self.bar.distance.value) miles away"
+        
+        let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+        self.favouriteButton.tintColor = color
     }
     
     //MARK: IBActions
@@ -62,14 +65,15 @@ class BarDetailHeaderViewController: UIViewController {
 extension BarDetailHeaderViewController {
     func markFavourite() {
         debugPrint("isFav == \(self.bar.isUserFavourite.value)")
-        let params:[String : Any] = ["establishment_id": self.bar.id.value, "is_favorite" : !(self.bar.isUserFavourite.value)]
+        let params:[String : Any] = ["establishment_id": self.bar.id.value,
+                                     "is_favorite" : !(self.bar.isUserFavourite.value)]
         
-        let editedObject = transaction.edit(self.bar)
-        editedObject!.isUserFavourite.value = !(editedObject!.isUserFavourite.value)
+        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(bar)
+            editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+        })
         
-        
-        let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
-        self.favouriteButton.tintColor = color
+        self.setUpHeader()
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
             
@@ -87,18 +91,7 @@ extension BarDetailHeaderViewController {
             let responseDict = response["response"] as! [String : Any]
 
             if let responseID = (responseDict["data"] as? Int) {
-                debugPrint("responseID == \(responseID)")
-//                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-//                    let editedObject = transaction.edit(self.bar)
-//                    editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
-//                })
-//
-//                self.bar.isUserFavourite.value = !(self.bar.isUserFavourite.value)
-                
-                try! self.transaction.commitAndWait()
-
-         
-                
+                debugPrint("responseID == \(responseID)")                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
