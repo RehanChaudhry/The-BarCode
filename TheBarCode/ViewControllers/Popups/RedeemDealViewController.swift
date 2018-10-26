@@ -23,7 +23,7 @@ class RedeemDealViewController: CodeVerificationViewController {
     
     func showAlertAndDismiss(msg: String){
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "", style: .cancel) { (alert) in
+        let okAction = UIAlertAction(title: "OK", style: .cancel) { (alert) in
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(okAction)
