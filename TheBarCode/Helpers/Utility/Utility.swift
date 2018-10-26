@@ -108,20 +108,6 @@ class Utility: NSObject {
         return dateFormatter.string(from: date)
     }
     
-    func serverFormattedDate(date: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return dateFormatter.date(from: date)!
-    }
-    
-    func serverFormattedTime(date: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return dateFormatter.date(from: date)!
-    }
-    
     func serverFormattedTimeString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
@@ -134,6 +120,12 @@ class Utility: NSObject {
         return dateFormatter.string(from: date)
     }
     
+    func shortFormattedDateString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd  hh:mm a"
+        return dateFormatter.string(from: date)
+    }
+    
     func serverFormattedDateTime(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -141,6 +133,27 @@ class Utility: NSObject {
         return dateFormatter.date(from: date)!
     }
     
+    func serverFormattedTime(date: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter.date(from: date)!
+    }
+    
+    func serverFormattedDate(date: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter.date(from: date)!
+    }
+    
+    func shortFormattedDate(date: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd  hh:mm a"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter.date(from: date)!
+    }
+
     //decrement credit by 1 
     func userCreditConsumed() {
         let user = CoreStore.fetchOne(From<User>())

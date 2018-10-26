@@ -56,8 +56,11 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceLabel.isHidden = true
         detailLabel.isHidden = true
         
-        let startDateTime = Date.getFormattedDate(string: deal.startDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
-        let endDateTime = Date.getFormattedDate(string: deal.endDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
+        let startDateTime = Utility.shared.shortFormattedDateString(date: deal.startDateTime)
+        let endDateTime = Utility.shared.shortFormattedDateString(date: deal.endDateTime)
+        
+//        let startDateTime = Date.getFormattedDate(string: deal.startDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
+//        let endDateTime = Date.getFormattedDate(string: deal.endDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
         validityLabel.attributedText = getAttributedString(startTime: startDateTime, endTime: endDateTime, status: deal.statusText.value)
     }
     

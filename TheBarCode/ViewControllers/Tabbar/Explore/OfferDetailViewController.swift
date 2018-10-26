@@ -87,11 +87,16 @@ class OfferDetailViewController: UIViewController {
             self.bottomViewBottom.constant = self.bottomView.frame.height
         } else {
             
-            let currentTime = Utility.shared.serverFormattedTimeString(date: Date())
-            let currentTimeDate = Utility.shared.serverFormattedTime(date: currentTime)
+            let currentUTCDate = Utility.shared.serverFormattedDateTime(date: Utility.shared.serverFormattedDateTimeString(date: Date()))
+
+            let currentUTCTime = Utility.shared.serverFormattedTime(date: Utility.shared.serverFormattedTimeString(date: currentUTCDate))
             
-            let isDateInRange = Date().isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
-            let isTimeInRange = currentTimeDate.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
+//            let currentTime = Utility.shared.serverFormattedTimeString(date: Date())
+//            let currentTimeDate = Utility.shared.serverFormattedTime(date: currentTime)
+            
+            let isDateInRange = currentUTCDate.isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
+            
+            let isTimeInRange = currentUTCTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
             
             //Can redeem deal (With in date and time range)
             if isDateInRange && isTimeInRange {
@@ -108,6 +113,7 @@ class OfferDetailViewController: UIViewController {
                 
                 //Deal expired
                 if Date().compare(self.deal.endDateTime) == .orderedDescending {
+                    debugPrint("Deal expired")
                     self.bottomViewBottom.constant = self.bottomView.frame.height
                 } else {
                     

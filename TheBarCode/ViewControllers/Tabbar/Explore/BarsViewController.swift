@@ -343,7 +343,14 @@ extension BarsViewController: StatefulTableDelegate {
 extension BarsViewController: BarTableViewCellDelegare {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
-        let bar = self.bars[indexPath!.row]
+        
+        var bar: Bar!
+        if self.isSearching {
+            bar = self.filteredBars[indexPath!.row]
+        } else {
+            bar = self.bars[indexPath!.row]
+        }
+        
         markFavourite(bar: bar, cell: cell)
     }
 }
