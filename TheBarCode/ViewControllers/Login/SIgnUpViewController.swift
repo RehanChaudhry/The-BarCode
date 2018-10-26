@@ -275,6 +275,14 @@ class SIgnUpViewController: UIViewController {
         self.present(verificationController, animated: true, completion: nil)
     }
     
+    func presentTabBarController() {
+        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+        self.navigationController?.present(tabbarController!, animated: true, completion: {
+            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+            self.navigationController?.popToViewController(loginOptions, animated: false)
+        })
+    }
+    
     //MARK: My IBActions
     
     @IBAction func fbSignUpButtonTapped(sender: UIButton) {
@@ -407,11 +415,7 @@ extension SIgnUpViewController: EmailVerificationViewControllerDelegate {
             } else if CLLocationManager.authorizationStatus() == .notDetermined {
                 self.performSegue(withIdentifier: "SignUpToPermissionSegue", sender: nil)
             } else {
-                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-                self.navigationController?.present(tabbarController!, animated: true, completion: {
-                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-                    self.navigationController?.popToViewController(loginOptions, animated: false)
-                })
+                self.presentTabBarController()
             }
             
         case .pending:
@@ -528,5 +532,4 @@ extension SIgnUpViewController {
             
         }
     }
-    
 }

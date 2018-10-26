@@ -3920,6 +3920,12 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wU2-C0-YJI">
                                 <rect key="frame" x="0.0" y="575" width="375" height="92"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem in 00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t0-2S-nsR">
+                                        <rect key="frame" x="16" y="24" width="343" height="44"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOb-hl-dbH" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
                                         <constraints>
@@ -3941,11 +3947,15 @@ Cg
                                 </subviews>
                                 <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="4t0-2S-nsR" secondAttribute="trailing" constant="16" id="2Zc-QZ-HK2"/>
                                     <constraint firstItem="aOb-hl-dbH" firstAttribute="centerX" secondItem="wU2-C0-YJI" secondAttribute="centerX" id="8YU-Mp-TUe"/>
+                                    <constraint firstAttribute="bottom" secondItem="4t0-2S-nsR" secondAttribute="bottom" constant="24" id="JBZ-Gx-n3J"/>
                                     <constraint firstAttribute="height" constant="92" id="LmW-Ii-BRo"/>
+                                    <constraint firstItem="4t0-2S-nsR" firstAttribute="top" secondItem="wU2-C0-YJI" secondAttribute="top" constant="24" id="TMN-IT-Mq2"/>
                                     <constraint firstItem="aOb-hl-dbH" firstAttribute="centerY" secondItem="wU2-C0-YJI" secondAttribute="centerY" id="Zku-09-xNE"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="aOb-hl-dbH" secondAttribute="trailing" constant="16" id="m6i-FO-1O5"/>
                                     <constraint firstItem="aOb-hl-dbH" firstAttribute="leading" relation="lessThanOrEqual" secondItem="wU2-C0-YJI" secondAttribute="leading" constant="16" id="uWi-fT-tXs"/>
+                                    <constraint firstItem="4t0-2S-nsR" firstAttribute="leading" secondItem="wU2-C0-YJI" secondAttribute="leading" constant="16" id="y16-iB-ZF5"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -3970,12 +3980,15 @@ Cg
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomView" destination="wU2-C0-YJI" id="Gnb-G3-NZE"/>
+                        <outlet property="bottomViewBottom" destination="FIM-fh-aO9" id="Y1Y-bU-1vV"/>
                         <outlet property="collectionView" destination="Teg-RX-Qpg" id="coF-DA-zWI"/>
                         <outlet property="collectionViewHeight" destination="vf7-Z1-hIz" id="pJf-y2-E3t"/>
                         <outlet property="descriptionLabel" destination="h0L-PY-Vmc" id="Rsy-K9-sx8"/>
                         <outlet property="headerView" destination="OuJ-XT-xdX" id="Nuc-Fa-yHb"/>
                         <outlet property="redeemButton" destination="aOb-hl-dbH" id="Dh7-iH-F21"/>
                         <outlet property="tableView" destination="Ovn-A3-wEN" id="rb4-Um-4jd"/>
+                        <outlet property="timerLabel" destination="4t0-2S-nsR" id="KT6-Bi-vju"/>
                         <outlet property="titleLabel" destination="DzR-0o-YdM" id="uBA-8Z-1KW"/>
                     </connections>
                 </viewController>
@@ -4801,7 +4814,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22" height="15"/>
+        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4812,7 +4825,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="46" height="46"/>
+        <image name="profile_image" width="138" height="138"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>

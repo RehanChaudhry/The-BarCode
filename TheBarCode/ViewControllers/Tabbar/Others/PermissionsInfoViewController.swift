@@ -187,9 +187,11 @@ extension PermissionsInfoViewController {
             }
             
         } else {
-            let params = ["latitude" : "\(location?.coordinate.latitude ?? -1.0)",
-                "longitude" : "\(location?.coordinate.longitude ?? -1.0)",
-                "send_five_day_notification" : user.isLocationUpdated.value] as [String : Any]
+            var params: [String : Any] = ["latitude" : "\(location?.coordinate.latitude ?? -1.0)",
+                "longitude" : "\(location?.coordinate.longitude ?? -1.0)"]
+            if !Utility.shared.getCurrentUser()!.isLocationUpdated.value {
+                params["send_five_day_notification"] = true
+            }
             
             let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
                 

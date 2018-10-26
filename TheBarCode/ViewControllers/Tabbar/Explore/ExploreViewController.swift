@@ -293,10 +293,14 @@ extension ExploreViewController {
                 self.redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
                 self.redeemInfo!.canReload = true
                 
-                if self.redeemInfo!.remainingSeconds == 0 {
+                if self.redeemInfo!.isFirstRedeem {
+                    self.updateSnackBarForType(type: .discount)
+                } else if (!self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds == 0) {
                     self.updateSnackBarForType(type: .congrates)
-                } else {
+                } else if (!self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds > 0) {
                     self.updateSnackBarForType(type: .reload)
+                } else {
+                    self.showError(msg: "Tap To Retry")
                 }
                 
                 self.finishLoading()

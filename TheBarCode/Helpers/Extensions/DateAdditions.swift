@@ -20,4 +20,13 @@ extension Date {
         let date = dateFormatterGet.date(from: string)
         return dateFormatter.string(from: date!);
     }
+    
+    func isDate (inRange fromDate: Date, toDate: Date, inclusive: Bool) -> Bool {
+        if inclusive {
+            return !(self.compare (fromDate) == .orderedAscending) && !(self.compare (toDate) == .orderedDescending)
+        } else {
+            return self.compare (fromDate) == .orderedDescending && self.compare (toDate) == .orderedAscending
+        }
+        
+    }
 }

@@ -33,6 +33,8 @@ class SplashViewController: UIViewController {
         
         try! dataStack.addStorageAndWait(InMemoryStore())
         
+        self.setupAuthIfNeeded()
+        
         self.updateLocationIfNeed()
     }
     
@@ -49,6 +51,15 @@ class SplashViewController: UIViewController {
 
 
     //MARK: My Methods
+    
+    func setupAuthIfNeeded() {
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("User not found for auth setup")
+            return
+        }
+        
+        APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+    }
     
     @objc func moveToNextController() {
         self.performSegue(withIdentifier: "SplashToLoginOptions", sender: nil)
