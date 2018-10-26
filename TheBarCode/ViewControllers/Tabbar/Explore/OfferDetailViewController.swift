@@ -354,7 +354,7 @@ extension OfferDetailViewController {
                     })
                     
                     if redeemWithCredit {
-                        Utility.shared.userCreditUpdate()
+                        Utility.shared.userCreditConsumed()
                     }
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)

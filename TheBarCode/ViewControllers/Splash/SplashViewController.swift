@@ -123,11 +123,22 @@ extension SplashViewController {
                 }
                 
                 debugPrint("Location update successfully")
+
+                let responseDict = response as? [String : Any]
+                if let responseData = (responseDict?["data"] as? [String : Any])
+                {
+                    if let creditValue = responseData["credit"] as? Int {
+                        debugPrint("credit == \(creditValue)")
+                        Utility.shared.userCreditUpdate(creditValue: creditValue)
+                    }
+
+                }
                 
                 try! CoreStore.perform(synchronous: { (transaction) -> Void in
                     let edittedUser = transaction.edit(user)
                     edittedUser?.isLocationUpdated.value = true
                 })
+                
                 
             })
             
