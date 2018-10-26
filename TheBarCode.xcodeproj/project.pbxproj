@@ -152,14 +152,12 @@
 		832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832FD1CF216B29AD008516F4 /* FiveADayDetailViewController.swift */; };
 		832FD1D2216B2BC1008516F4 /* DealDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832FD1D1216B2BC1008516F4 /* DealDetailTableViewCell.swift */; };
 		832FD1D4216B2BE5008516F4 /* DealDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832FD1D3216B2BE5008516F4 /* DealDetailTableViewCell.xib */; };
-		8332C5EA21807CA600FB25BF /* NotificationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8332C5E921807CA500FB25BF /* NotificationAdditions.swift */; };
 		8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E297216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift */; };
 		8344E29A216760BD00CB8BD2 /* FiveADayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8344E298216760BC00CB8BD2 /* FiveADayCollectionViewCell.xib */; };
 		8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29B216760DA00CB8BD2 /* FiveADayDeal.swift */; };
 		8344E2A02167678100CB8BD2 /* OutOfCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29D2167678000CB8BD2 /* OutOfCreditViewController.swift */; };
 		8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */; };
 		8372F62B217784D7005F3E6D /* DateAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372F62A217784D7005F3E6D /* DateAdditions.swift */; };
-		8372F62E21779415005F3E6D /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372F62D21779415005F3E6D /* Timer.swift */; };
 		837B48B32175FB2C00841419 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B48B22175FB2C00841419 /* Pagination.swift */; };
 		83825234217E23C300567388 /* FavouritButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83825233217E23C300567388 /* FavouritButton.swift */; };
 		838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C56A621789C1100E47678 /* CannotRedeemViewController.swift */; };
@@ -342,14 +340,12 @@
 		832FD1CF216B29AD008516F4 /* FiveADayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveADayDetailViewController.swift; sourceTree = "<group>"; };
 		832FD1D1216B2BC1008516F4 /* DealDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealDetailTableViewCell.swift; sourceTree = "<group>"; };
 		832FD1D3216B2BE5008516F4 /* DealDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DealDetailTableViewCell.xib; sourceTree = "<group>"; };
-		8332C5E921807CA500FB25BF /* NotificationAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAdditions.swift; sourceTree = "<group>"; };
 		8344E297216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveADayCollectionViewCell.swift; sourceTree = "<group>"; };
 		8344E298216760BC00CB8BD2 /* FiveADayCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiveADayCollectionViewCell.xib; sourceTree = "<group>"; };
 		8344E29B216760DA00CB8BD2 /* FiveADayDeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveADayDeal.swift; sourceTree = "<group>"; };
 		8344E29D2167678000CB8BD2 /* OutOfCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutOfCreditViewController.swift; sourceTree = "<group>"; };
 		8344E29E2167678100CB8BD2 /* RedeemStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedeemStartViewController.swift; sourceTree = "<group>"; };
 		8372F62A217784D7005F3E6D /* DateAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAdditions.swift; sourceTree = "<group>"; };
-		8372F62D21779415005F3E6D /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		837B48B22175FB2C00841419 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		83825233217E23C300567388 /* FavouritButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritButton.swift; sourceTree = "<group>"; };
 		838C56A621789C1100E47678 /* CannotRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotRedeemViewController.swift; sourceTree = "<group>"; };
@@ -489,7 +485,6 @@
 				0C23A8B62146874E00DFB281 /* UIColor */,
 				83FD60422167726D0069A90A /* UIApplicationAdditions.swift */,
 				8372F62A217784D7005F3E6D /* DateAdditions.swift */,
-				8332C5E921807CA500FB25BF /* NotificationAdditions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -497,7 +492,6 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				8372F62C21779403005F3E6D /* Timer */,
 				0CC81FB22174A9BC00FDB92D /* LocationManager */,
 				0CC81FA5216DD3DC00FDB92D /* Utility */,
 				0CC81F9B216DCC6900FDB92D /* APIHelper */,
@@ -1041,14 +1035,6 @@
 			path = FiveADay;
 			sourceTree = "<group>";
 		};
-		8372F62C21779403005F3E6D /* Timer */ = {
-			isa = PBXGroup;
-			children = (
-				8372F62D21779415005F3E6D /* Timer.swift */,
-			);
-			path = Timer;
-			sourceTree = "<group>";
-		};
 		83B2BE4B216358BF003ACA78 /* Popups */ = {
 			isa = PBXGroup;
 			children = (
@@ -1417,7 +1403,6 @@
 				0C5A88F321647FEE00F16851 /* Contact.swift in Sources */,
 				0C955DD82147F20E00F9385B /* PrivacyPolicyViewController.swift in Sources */,
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
-				8332C5EA21807CA600FB25BF /* NotificationAdditions.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,
 				0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */,
 				0C478A91215C9D7F002C51FA /* BarDetailAboutViewController.swift in Sources */,
@@ -1449,7 +1434,6 @@
 				0C955E0B2149362900F9385B /* LoadMore.swift in Sources */,
 				837B48B32175FB2C00841419 /* Pagination.swift in Sources */,
 				83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */,
-				8372F62E21779415005F3E6D /* Timer.swift in Sources */,
 				0C955DC92147CB5200F9385B /* UIImageAdditions.swift in Sources */,
 				0C8BDCE12150D79B00D5117B /* LiveOffer.swift in Sources */,
 				0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */,

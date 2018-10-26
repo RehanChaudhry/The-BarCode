@@ -61,7 +61,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceLabel.isHidden = true
         detailLabel.isHidden = true
         
-        validityLabel.attributedText = getAttributedString(endTime: offer.endTime.value)
+        validityLabel.attributedText = getAttributedString(endTime: offer.endTimeRaw.value)
         
        // runTimer()
     }

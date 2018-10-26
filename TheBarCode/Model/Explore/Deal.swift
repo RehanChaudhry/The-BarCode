@@ -45,18 +45,54 @@ class Deal: CoreStoreObject {
     var subTitle =  Value.Required<String>("sub_title", initial: "")
     var image = Value.Required<String>("image", initial: "")
     var detail = Value.Required<String>("detail", initial: "")
-    var startDate =  Value.Required<String>("start_date", initial: "")
-    var endDate = Value.Required<String>("end_date", initial: "")
-    var startTime = Value.Required<String>("start_time", initial: "")
-    var endTime = Value.Required<String>("end_time", initial: "")
+    var startDateRaw =  Value.Required<String>("start_date", initial: "")
+    var endDateRaw = Value.Required<String>("end_date", initial: "")
+    var startTimeRaw = Value.Required<String>("start_time", initial: "")
+    var endTimeRaw = Value.Required<String>("end_time", initial: "")
     var status = Value.Required<Bool>("status", initial: false)
     var isNotified = Value.Required<Bool>("is_notified", initial: false)
     var imageUrl = Value.Optional<String>("image_url")
     var statusText = Value.Required<String>("status_text", initial: "")
-    var starDateTime = Value.Required<String>("start_date_time", initial: "")
-    var endDateTime = Value.Required<String>("end_date_time", initial: "")
+    var startDateTimeRaw = Value.Required<String>("start_date_time", initial: "")
+    var endDateTimeRaw = Value.Required<String>("end_date_time", initial: "")
     var establishment = Relationship.ToOne<Bar>("establishment")
     var offer = Relationship.ToOne<Offer>("offer")
+    
+    var startDate: Date {
+        get {
+            return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
+        }
+    }
+    
+    var endDate: Date {
+        get {
+            return Utility.shared.serverFormattedDate(date: self.endDateRaw.value)
+        }
+    }
+    
+    var startTime: Date {
+        get {
+            return Utility.shared.serverFormattedTime(date: self.startTimeRaw.value)
+        }
+    }
+    
+    var endTime: Date {
+        get {
+            return Utility.shared.serverFormattedTime(date: self.endTimeRaw.value)
+        }
+    }
+    
+    var startDateTime: Date {
+        get {
+            return Utility.shared.serverFormattedDateTime(date: self.startDateTimeRaw.value)
+        }
+    }
+    
+    var endDateTime: Date {
+        get {
+            return Utility.shared.serverFormattedDateTime(date: self.endDateTimeRaw.value)
+        }
+    }
 }
 
 
@@ -94,15 +130,15 @@ extension Deal: ImportableUniqueObject {
         self.subTitle.value = source["sub_title"]! as! String
         self.image.value = source["image"]! as! String
         self.detail.value = source["description"]! as! String
-        self.startDate.value = source["start_date"]! as! String
-        self.endDate.value = source["end_date"]! as! String
-        self.startTime.value = source["start_time"]! as! String
-        self.endTime.value = source["end_time"]! as! String
+        self.startDateRaw.value = source["start_date"]! as! String
+        self.endDateRaw.value = source["end_date"]! as! String
+        self.startTimeRaw.value = source["start_time"]! as! String
+        self.endTimeRaw.value = source["end_time"]! as! String
         self.status.value = source["status"]! as! Bool
         self.isNotified.value = source["is_notified"]! as! Bool
         self.imageUrl.value = source["image_url"] as? String
-        self.starDateTime.value = source["start_date_time"]! as! String
-        self.endDateTime.value = source["end_date_time"]! as! String
+        self.startDateTimeRaw.value = source["start_date_time"]! as! String
+        self.endDateTimeRaw.value = source["end_date_time"]! as! String
         self.statusText.value = source["status_text"] as! String
         
         if let item = source["establishments"] as? [String : Any] {

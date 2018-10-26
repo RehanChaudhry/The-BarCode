@@ -12,6 +12,7 @@ import CoreLocation
 import HTTPStatusCodes
 import FBSDKLoginKit
 import FBSDKCoreKit
+import CoreStore
 
 class LoginViewController: UIViewController {
 
@@ -26,6 +27,8 @@ class LoginViewController: UIViewController {
     
     var emailFieldView: FieldView!
     var passwordFieldView: FieldView!
+    
+    var locationManager: MyLocationManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +118,14 @@ class LoginViewController: UIViewController {
         self.present(verificationController, animated: true, completion: nil)
     }
     
+    func presentTabbarController() {
+        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+        self.navigationController?.present(tabbarController!, animated: true, completion: {
+            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+            self.navigationController?.popToViewController(loginOptions, animated: false)
+        })
+    }
+    
     //MARK: My IBActions
     
     @IBAction func fbSignInButtonTapped(sender: UIButton) {
@@ -148,11 +159,7 @@ extension LoginViewController: EmailVerificationViewControllerDelegate {
             } else if CLLocationManager.authorizationStatus() == .notDetermined {
                 self.performSegue(withIdentifier: "SignInToPermissionSegue", sender: nil)
             } else {
-                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-                self.navigationController?.present(tabbarController!, animated: true, completion: {
-                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-                    self.navigationController?.popToViewController(loginOptions, animated: false)
-                })
+                self.getLocation(requestAlwaysAccess: CLLocationManager.authorizationStatus() == .authorizedAlways)
             }
             
         case .pending:
@@ -322,6 +329,81 @@ extension LoginViewController {
                 }
             })
             
+        }
+    }
+    
+    func getLocation(requestAlwaysAccess: Bool) {
+        
+        debugPrint("Getting location")
+        
+        self.signInButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        self.locationManager = MyLocationManager()
+        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+            
+            debugPrint("Getting location finished")
+            
+            if let error = error {
+                debugPrint("Error while getting location: \(error.localizedDescription)")
+            }
+            
+            self.updateLocation(location: location)
+            
+        }
+    }
+    
+    func updateLocation(location: CLLocation?) {
+        
+        debugPrint("Updating location")
+        
+        let user = Utility.shared.getCurrentUser()!
+        
+        //Unable to get location and it never called location update before
+        if location == nil && user.isLocationUpdated.value {
+            debugPrint("Preventing -1, -1 location update")
+            self.signInButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            self.presentTabbarController()
+            
+        } else {
+            var params: [String : Any] = ["latitude" : "\(location?.coordinate.latitude ?? -1.0)",
+                "longitude" : "\(location?.coordinate.longitude ?? -1.0)"]
+            if !user.isLocationUpdated.value {
+                params["send_five_day_notification"] = true
+            }
+            
+            let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
+                
+                debugPrint("Updating location finished")
+                
+                self.signInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                
+                guard error == nil else {
+                    debugPrint("Error while updating location: \(error!.localizedDescription)")
+                    self.showAlertController(title: "", msg: error!.localizedDescription)
+                    return
+                }
+                
+                guard serverError == nil else {
+                    debugPrint("Server error while updating location: \(serverError!.errorMessages())")
+                    self.showAlertController(title: "", msg: serverError!.errorMessages())
+                    return
+                }
+                
+                debugPrint("Location update successfully")
+                
+                try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                    let edittedUser = transaction.edit(user)
+                    edittedUser?.isLocationUpdated.value = true
+                })
+                
+                self.presentTabbarController()
+                
+            })
         }
     }
     

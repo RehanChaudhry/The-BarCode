@@ -69,7 +69,7 @@ class FiveADayViewController: UIViewController {
         self.pagerView.itemSize = CGSize(width: cellWidth, height: cellHeight)
     }
     
-    deinit {        
+    deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
     }
     
@@ -130,7 +130,6 @@ extension FiveADayViewController {
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
-                
                 
                 var importedObjects: [FiveADayDeal] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in

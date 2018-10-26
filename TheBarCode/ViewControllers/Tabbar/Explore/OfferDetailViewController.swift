@@ -18,6 +18,11 @@ class OfferDetailViewController: UIViewController {
     @IBOutlet var headerView: UIView!
     
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet var bottomViewBottom: NSLayoutConstraint!
+    
+    @IBOutlet var timerLabel: UILabel!
+    
+    @IBOutlet var bottomView: UIView!
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
@@ -28,6 +33,9 @@ class OfferDetailViewController: UIViewController {
     var deal: Deal!
     
     var offerType : OfferType = .unknown
+    
+    var redeemTimer: Timer?
+    var remainingSeconds = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,22 +56,9 @@ class OfferDetailViewController: UIViewController {
         self.titleLabel.text = self.deal.title.value
         self.descriptionLabel.text = self.deal.subTitle.value
         
-        self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
-        if self.offerType == .bannerAds {
-            self.redeemButton.isHidden = true
-        } else {
-            self.redeemButton.isHidden = false
-        }
-        
-        //TODO
-//        if let offer = self.deal.offer.value {
-//            if offer.type == .bannerAds {
-//                self.redeemButton.isHidden = true
-//            }
-//        }
-        
-        viewOffer()
-        
+        self.setUpBottomView()
+
+        self.viewOffer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,6 +71,75 @@ class OfferDetailViewController: UIViewController {
         headerFrame.size.width = self.view.frame.width
         headerFrame.size.height = headerViewHeight
         self.headerView.frame = headerFrame
+    }
+    
+    deinit {
+        self.redeemTimer?.invalidate()
+        self.redeemTimer = nil
+    }
+    
+    //MARK: My Methods
+    func setUpBottomView() {
+        self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
+        if self.offerType == .bannerAds {
+            self.redeemButton.isHidden = true
+            self.timerLabel.isHidden = true
+            self.bottomViewBottom.constant = self.bottomView.frame.height
+        } else {
+            
+            let currentTime = Utility.shared.serverFormattedTimeString(date: Date())
+            let currentTimeDate = Utility.shared.serverFormattedTime(date: currentTime)
+            
+            let isDateInRange = Date().isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
+            let isTimeInRange = currentTimeDate.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
+            
+            if isDateInRange && isTimeInRange {
+                debugPrint("Show Redeem deal")
+                self.bottomViewBottom.constant = 0.0
+                
+                self.redeemButton.isHidden = false
+                self.timerLabel.isHidden = true
+                
+            } else {
+                
+                self.redeemButton.isHidden = true
+                self.timerLabel.isHidden = false
+                
+                //Deal expired
+                if Date().compare(self.deal.endDateTime) == .orderedDescending {
+                    self.bottomViewBottom.constant = self.bottomView.frame.height
+                } else {
+                    self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(Date()))
+                    if self.remainingSeconds > 0 {
+                        self.startReloadTimer()
+                    } else {
+                        debugPrint("cannot start timer")
+                    }
+                }
+                
+                debugPrint("Hide Redeem deal")
+            }
+        }
+        
+        self.view.layoutIfNeeded()
+    }
+    
+    func startReloadTimer() {
+        self.redeemTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
+            self.updateRedeemTimer(sender: sender)
+        })
+    }
+    
+    func updateRedeemTimer(sender: Timer) {
+
+        if self.remainingSeconds > 0 {
+            self.remainingSeconds -= 1
+            self.timerLabel.text = "Redeem in \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(self.remainingSeconds)))"
+        } else {
+            self.redeemTimer?.invalidate()
+            self.setUpBottomView()
+        }
+        
     }
     
     //MARK: IBAction
@@ -132,6 +196,7 @@ extension OfferDetailViewController: UITableViewDelegate, UITableViewDataSource 
         cell.configCell(deal: self.deal)
         return cell
     }
+    
 }
 
 
@@ -248,8 +313,8 @@ extension OfferDetailViewController {
         
         let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
         
-        let params: [String: Any] = ["establishment_id": deal.establishmentId.value,
-                                     "type": redeemType.rawValue,
+        let params: [String: Any] = ["establishment_id" : deal.establishmentId.value,
+                                     "type" : redeemType.rawValue,
                                      "offer_id" : deal.id.value]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
