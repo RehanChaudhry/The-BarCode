@@ -36,7 +36,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
         }
         titleLabel.text = explore.title.value
-        distanceLabel.text = "\(explore.distance.value) miles away"
+        distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
         detailLabel.text = "\(explore.deals.value) deals available"
         
         locationIconImageView.isHidden = false

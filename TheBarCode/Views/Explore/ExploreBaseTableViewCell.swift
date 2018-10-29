@@ -52,13 +52,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
 
         }
         titleLabel.text = explore.title.value
-        
-       // if let distanceText = explore.distance.value {
-            distanceLabel.text = "\(explore.distance.value) miles away"
-            locationIconImageView.isHidden = false
-//        } else {
-//            distanceLabel.text = ""
-//            locationIconImageView.isHidden = true
-//        }
+        distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
+        locationIconImageView.isHidden = false
     }
 }

@@ -157,6 +157,11 @@ class Utility: NSObject {
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.date(from: date)!
     }
+    
+    func getformattedDistance(distance: CGFloat) -> String {
+        let formattedDistance = distance == 0 ? "0" : String(format: "%.2f", distance)
+        return String(format: "%@ mile%@ away", formattedDistance, (distance > 1 ? "s" : ""))
+    }
 
     //decrement credit by 1 
     func userCreditConsumed() {

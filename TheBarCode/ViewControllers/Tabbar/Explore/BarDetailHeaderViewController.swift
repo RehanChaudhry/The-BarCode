@@ -48,8 +48,7 @@ class BarDetailHeaderViewController: UIViewController {
     func setUpHeader() {
         self.titleLabel.text = self.bar.title.value
         self.mapIconImageView.isHidden = false
-        self.distanceLabel.text = "\(self.bar.distance.value) miles away"
-        
+        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: self.bar.distance.value)
         let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
     }
