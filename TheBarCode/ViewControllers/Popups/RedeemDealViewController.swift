@@ -78,11 +78,17 @@ extension RedeemDealViewController {
                         editedObject!.establishment.value!.canRedeemOffer.value = false
                     })
                     
-                    self.dismiss(animated: true, completion: nil)
                     
                     if redeemWithCredit {
                         Utility.shared.userCreditConsumed()
                     }
+             
+                    let msg = responseObj["message"] as! String
+                    let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+                        self.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alertController, animated: true, completion: nil)
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()

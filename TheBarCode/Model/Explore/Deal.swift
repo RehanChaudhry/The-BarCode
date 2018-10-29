@@ -93,6 +93,9 @@ class Deal: CoreStoreObject {
             return Utility.shared.serverFormattedDateTime(date: self.endDateTimeRaw.value)
         }
     }
+    
+    var showLoader: Bool = false
+    
 }
 
 

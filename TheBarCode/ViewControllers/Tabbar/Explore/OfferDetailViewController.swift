@@ -365,6 +365,9 @@ extension OfferDetailViewController {
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                     
+                    let msg = responseObj["message"] as! String
+                    self.showAlertController(title: "", msg: msg)
+                    
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
                     self.showAlertController(title: "", msg: genericError.localizedDescription)

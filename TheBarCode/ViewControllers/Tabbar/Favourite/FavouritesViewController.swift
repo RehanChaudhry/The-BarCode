@@ -37,12 +37,18 @@ class FavouritesViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
-        self.statefulTableView.triggerInitialLoad()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.bars.removeAll()
+        self.statefulTableView.innerTable.reloadData()
+        self.statefulTableView.triggerInitialLoad()
     }
     
     func setUpStatefulTableView() {

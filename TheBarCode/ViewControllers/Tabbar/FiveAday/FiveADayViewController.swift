@@ -167,7 +167,8 @@ extension FiveADayViewController {
         
         self.pagerView.automaticSlidingInterval = 0.0
         UIApplication.shared.beginIgnoringInteractionEvents()
-        cell.redeemButton.showLoader()
+        deal.showLoader = true
+        self.pagerView.reloadData()
         
         let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
         
@@ -178,7 +179,8 @@ extension FiveADayViewController {
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
             self.pagerView.automaticSlidingInterval = 4.0
-            cell.redeemButton.hideLoader()
+            deal.showLoader = false
+            self.pagerView.reloadData()
             UIApplication.shared.endIgnoringInteractionEvents()
             
             guard error == nil else {
@@ -202,6 +204,9 @@ extension FiveADayViewController {
                     if redeemWithCredit {
                         Utility.shared.userCreditConsumed()
                     }
+                    
+                    let msg = responseObj["message"] as! String
+                    self.showAlertController(title: "", msg: msg)
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()

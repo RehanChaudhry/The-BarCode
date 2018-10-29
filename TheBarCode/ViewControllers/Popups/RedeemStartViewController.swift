@@ -120,9 +120,9 @@ extension RedeemStartViewController {
                       "type" :"reload",
                       "offer_id" :self.deal.id.value ]
         }
-        
-        UIApplication.shared.beginIgnoringInteractionEvents()
+
         self.actionButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
@@ -158,9 +158,15 @@ extension RedeemStartViewController {
                    
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                     
-                    self.dismiss(animated: true) {
-                        self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: self.actionButton, selectedIndex: self.selectedIndex)
-                    }
+                    let msg = responseObj["message"] as! String
+                    let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+                        self.dismiss(animated: true) {
+                            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: self.actionButton, selectedIndex: self.selectedIndex)
+                        }
+                    }))
+                    self.present(alertController, animated: true, completion: nil)
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
