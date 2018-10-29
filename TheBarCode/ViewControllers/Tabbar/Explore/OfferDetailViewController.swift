@@ -51,10 +51,10 @@ class OfferDetailViewController: UIViewController {
         self.tableView.estimatedRowHeight = 250.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.images = [deal.image.value]
+        self.images = [deal.imageUrl.value]
        
-        self.titleLabel.text = self.deal.title.value
-        self.descriptionLabel.text = self.deal.subTitle.value
+        self.titleLabel.text = self.deal.subTitle.value
+        self.descriptionLabel.text = self.deal.title.value
         
         self.setUpBottomView()
 

@@ -36,7 +36,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
         }
         titleLabel.text = explore.title.value
-        distanceLabel.text = "\(explore.distance.value) miles away"
+        distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
         detailLabel.text = "\(explore.deals.value) deals available"
         
         locationIconImageView.isHidden = false
@@ -46,10 +46,8 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     }
     
     func setUpDealCell(deal: Deal) {
-       // let explore = deal.establishment.value!
-        let url = deal.image.value
-       // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
-        coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        let url = URL(string: deal.imageUrl.value)
+        coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
         titleLabel.text = deal.title.value//explore.title.value
         locationIconImageView.isHidden = true
