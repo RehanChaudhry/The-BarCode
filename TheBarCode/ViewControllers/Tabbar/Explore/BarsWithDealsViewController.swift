@@ -20,6 +20,8 @@ class BarsWithDealsViewController: ExploreBaseViewController {
 
     weak var delegate: BarsWithDealsViewControllerDelegate!
     
+    var isClearingSearch: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,6 +96,10 @@ extension BarsWithDealsViewController: UISearchBarDelegate {
             self.searchText = searchBar.text!
             self.isSearching = false
             self.statefulTableView.innerTable.reloadData()
+            
+            self.isClearingSearch = true
+            self.statefulTableView.triggerInitialLoad()
+            
         } else {
             self.isSearching = true
             self.filteredBars.removeAll()
@@ -115,7 +121,7 @@ extension BarsWithDealsViewController: UISearchBarDelegate {
 extension BarsWithDealsViewController {
     func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
-        if isRefreshing {
+        if isRefreshing && !self.isSearching {
             self.loadMore = Pagination()
         }
         
@@ -153,12 +159,10 @@ extension BarsWithDealsViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                
-                if isRefreshing {
-                    self.bars.removeAll()
-                }
-                
                 if self.isSearching {
                     self.filteredBars.removeAll()
+                } else if isRefreshing {
+                    self.bars.removeAll()
                 }
                 
                 var importedObjects: [Bar] = []
@@ -177,6 +181,7 @@ extension BarsWithDealsViewController {
                     self.filteredBars = resultBars
                     self.statefulTableView.canLoadMore = false
                     self.statefulTableView.innerTable.reloadData()
+                    self.statefulTableView.canPullToRefresh = true
                     self.statefulTableView.reloadData()
                     completion(nil)
                 } else {
@@ -199,9 +204,20 @@ extension BarsWithDealsViewController {
 extension BarsWithDealsViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        let refreshing = self.isSearching ? false : true
-        self.getBars(isRefreshing: refreshing) {  [unowned self] (error) in
-            handler(self.bars.count == 0, error)
+        
+        if self.isClearingSearch {
+            self.isClearingSearch = false
+            handler(self.bars.count == 0, nil)
+        } else {
+            let refreshing = self.isSearching ? false : true
+            self.getBars(isRefreshing: refreshing) {  [unowned self] (error) in
+                //handler(self.bars.count == 0, error)
+                if self.isSearching {
+                    handler(self.filteredBars.count == 0, error)
+                } else {
+                    handler(self.bars.count == 0, error)
+                }
+            }
         }
     }
     
@@ -216,7 +232,12 @@ extension BarsWithDealsViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getBars(isRefreshing: true) { [unowned self] (error) in
-            handler(self.bars.count == 0, error)
+            //handler(self.bars.count == 0, error)
+            if self.isSearching {
+                handler(self.filteredBars.count == 0, error)
+            } else {
+                handler(self.bars.count == 0, error)
+            }
         }
     }
     
