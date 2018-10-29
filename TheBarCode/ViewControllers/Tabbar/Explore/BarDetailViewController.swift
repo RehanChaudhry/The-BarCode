@@ -122,7 +122,6 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
             redeemStartViewController.redeemWithCredit = false
             self.present(redeemStartViewController, animated: true, completion: nil)
             
-            //redeemStandardDeal()
         } else {
             //Standard offer cannot be redeem again
             let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
@@ -130,21 +129,6 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
             cannotRedeemViewController.titleText = "Alert"
             cannotRedeemViewController.messageText = "You have already redeem standard offer. To redeem Standard Offer reload first."
             self.present(cannotRedeemViewController, animated: true, completion: nil)
-            
-            
-//            if self.selectedBar.credit.value > 0 {
-//                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-//                creditConsumptionController.delegate = self
-//                creditConsumptionController.modalPresentationStyle = .overCurrentContext
-//                self.present(creditConsumptionController, animated: true, completion: nil)
-//
-//
-//            } else {
-//                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
-//                outOfCreditViewController.delegate = self
-//                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
-//                self.present(outOfCreditViewController, animated: true, completion: nil)
-//            }
         }
     }
     
@@ -155,7 +139,7 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
         }
     }
     
-    
+    //RedeemStartViewControllerDelegate
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
     }
     
@@ -234,6 +218,9 @@ extension BarDetailViewController {
                 })
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                
+                let msg = responseObj["message"] as! String
+                self.showAlertController(title: "", msg: msg)
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()

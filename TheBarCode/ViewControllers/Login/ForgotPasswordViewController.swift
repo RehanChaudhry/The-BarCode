@@ -119,7 +119,7 @@ extension ForgotPasswordViewController {
             }
             
             let alertController = UIAlertController(title: "Forgot Password", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel) { (action) in
+            alertController.addAction(UIAlertAction(title: "OK", style: .cancel) { (action) in
                 self.navigationController?.popViewController(animated: true)
             })
             self.present(alertController, animated: true, completion: nil)
