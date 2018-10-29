@@ -30,6 +30,10 @@ enum RedeemType: String {
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
 let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
 
+let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
+let serverTimeFormat = "HH:mm:ss"
+let serverDateFormat = "yyyy-MM-dd"
+
 class Utility: NSObject {
     
     static let shared = Utility()
@@ -104,19 +108,19 @@ class Utility: NSObject {
     
     func serverDateFormattedString(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = serverDateFormat
         return dateFormatter.string(from: date)
     }
     
     func serverFormattedTimeString(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.dateFormat = serverTimeFormat
         return dateFormatter.string(from: date)
     }
     
     func serverFormattedDateTimeString(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = serverDateTimeFormat
         return dateFormatter.string(from: date)
     }
     
@@ -128,21 +132,21 @@ class Utility: NSObject {
     
     func serverFormattedDateTime(date: String) -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = serverDateTimeFormat
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.date(from: date)!
     }
     
     func serverFormattedTime(date: String) -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.dateFormat = serverTimeFormat
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.date(from: date)!
     }
     
     func serverFormattedDate(date: String) -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = serverDateFormat
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.date(from: date)!
     }

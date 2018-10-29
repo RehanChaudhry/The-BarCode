@@ -87,16 +87,17 @@ class OfferDetailViewController: UIViewController {
             self.bottomViewBottom.constant = self.bottomView.frame.height
         } else {
             
-            let currentUTCDate = Utility.shared.serverFormattedDateTime(date: Utility.shared.serverFormattedDateTimeString(date: Date()))
+            let currentDate = Date()
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = serverTimeFormat
+            
+            let currentTime = dateFormatter.date(from: dateFormatter.string(from: currentDate))!
+                
 
-            let currentUTCTime = Utility.shared.serverFormattedTime(date: Utility.shared.serverFormattedTimeString(date: currentUTCDate))
+            let isDateInRange = currentDate.isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
             
-//            let currentTime = Utility.shared.serverFormattedTimeString(date: Date())
-//            let currentTimeDate = Utility.shared.serverFormattedTime(date: currentTime)
-            
-            let isDateInRange = currentUTCDate.isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
-            
-            let isTimeInRange = currentUTCTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
+            let isTimeInRange = currentTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
             
             //Can redeem deal (With in date and time range)
             if isDateInRange && isTimeInRange {
@@ -118,15 +119,23 @@ class OfferDetailViewController: UIViewController {
                 } else {
                     
                     //TODO: This logic needs to be updated
-                    let todayDateString = Utility.shared.serverDateFormattedString(date: Date())
-                    let todayDateTimeString = todayDateString + " " + self.deal.startTimeRaw.value
-                    let todayDateTime = Utility.shared.serverFormattedDateTime(date: todayDateTimeString)
                     
-                    if todayDateTime.compare(self.deal.startDateTime) == .orderedAscending {
-                        self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(todayDateTime))
+                    dateFormatter.dateFormat = serverDateFormat
+                    let todayDateString = dateFormatter.string(from: Date())
+                    
+                    dateFormatter.dateFormat = serverTimeFormat
+                    let dealStartTime = dateFormatter.string(from: self.deal.startTime)
+                    
+                    let todayDealDateTimeString = todayDateString + " " + dealStartTime
+                    
+                    dateFormatter.dateFormat = serverDateTimeFormat
+                    let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
+                    
+                    if currentTime.compare(self.deal.startDateTime) == .orderedAscending {
+                        self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow)
                     } else {
-                        let nextDayDateTime = todayDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
-                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSince(self.deal.startDateTime))
+                        let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
+                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow)
                     }
                     
                     if self.remainingSeconds > 0 {
