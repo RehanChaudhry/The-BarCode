@@ -85,6 +85,16 @@ extension BarLiveOffersViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let offerCell = cell as! LiveOfferTableViewCell
+        offerCell.startTimer(deal: self.offers[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let offerCell = cell as! LiveOfferTableViewCell
+        offerCell.stopTimer()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         

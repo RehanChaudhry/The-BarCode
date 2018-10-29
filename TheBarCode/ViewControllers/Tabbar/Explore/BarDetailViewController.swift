@@ -10,10 +10,13 @@ import UIKit
 import SJSegmentedScrollView
 import PureLayout
 
-class BarDetailViewController: UIViewController, RedeemStartViewControllerDelegate {
+class BarDetailViewController: UIViewController {
     
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var standardRedeemButton: GradientButton!
+    
+    @IBOutlet var bottomView: UIView!
+    @IBOutlet var bottomViewBottom: NSLayoutConstraint!
 
     var headerController: BarDetailHeaderViewController!
     
@@ -33,6 +36,8 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
         
         self.setUpSegmentedController()
         self.addBackButton()
+        
+        self.setUpBottomView()
         
         viewProfile()
         
@@ -104,6 +109,14 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
         self.segmentedController.view.autoPinEdgesToSuperviewEdges()
         
     }
+    
+    func setUpBottomView() {
+        if self.selectedBar.canRedeemOffer.value {
+            self.bottomViewBottom.constant = 0
+        } else {
+            self.bottomViewBottom.constant = self.bottomView.frame.height
+        }
+    }
 
     //MARK: My IBActions
     
@@ -138,14 +151,6 @@ class BarDetailViewController: UIViewController, RedeemStartViewControllerDelega
             vc.deal = sender as? Deal
         }
     }
-    
-    //RedeemStartViewControllerDelegate
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
-    }
-    
-    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
-    }
-    
 }
 
 //MARK: SJSegmentedViewControllerDelegate
@@ -174,15 +179,21 @@ extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
         self.performSegue(withIdentifier: "ExploreDetailToOfferDetailSegue", sender: offer)
     }
 }
-/*
+
 //MARK: RedeemStartViewControllerDelegate
-extension BarDealsViewController: RedeemStartViewControllerDelegate {
+extension BarDetailViewController: RedeemStartViewControllerDelegate {
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {        
     }
-}*/
+    
+    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        if error == nil {
+            self.setUpBottomView()
+        }
+    }
+}
 
 //MARK: WebService Method
 extension BarDetailViewController {

@@ -317,7 +317,13 @@ extension FiveADayViewController : RedeemStartViewControllerDelegate {
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
-        self.pagerView.automaticSlidingInterval = 4.0
+        
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        if error == nil {
+            self.pagerView.automaticSlidingInterval = 4.0
+        }
     }
 }
 

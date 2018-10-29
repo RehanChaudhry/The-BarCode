@@ -20,7 +20,7 @@ class OfferDetailViewController: UIViewController {
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet var bottomViewBottom: NSLayoutConstraint!
     
-    @IBOutlet var timerLabel: UILabel!
+    @IBOutlet var timerButton: UIButton!
     
     @IBOutlet var bottomView: UIView!
     
@@ -83,7 +83,7 @@ class OfferDetailViewController: UIViewController {
         self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         if self.offerType == .bannerAds {
             self.redeemButton.isHidden = true
-            self.timerLabel.isHidden = true
+            self.timerButton.isHidden = true
             self.bottomViewBottom.constant = self.bottomView.frame.height
         } else {
             
@@ -105,12 +105,12 @@ class OfferDetailViewController: UIViewController {
                 self.bottomViewBottom.constant = 0.0
                 
                 self.redeemButton.isHidden = false
-                self.timerLabel.isHidden = true
+                self.timerButton.isHidden = true
                 
             } else {
                 
                 self.redeemButton.isHidden = true
-                self.timerLabel.isHidden = false
+                self.timerButton.isHidden = false
                 
                 //Deal expired
                 if Date().compare(self.deal.endDateTime) == .orderedDescending {
@@ -162,7 +162,11 @@ class OfferDetailViewController: UIViewController {
 
         if self.remainingSeconds > 0 {
             self.remainingSeconds -= 1
-            self.timerLabel.text = "Redeem in \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(self.remainingSeconds)))"
+            UIView.performWithoutAnimation {
+                self.timerButton.setTitle("Starts in \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(self.remainingSeconds)))", for: .normal)
+                self.timerButton.layoutIfNeeded()
+            }
+            
         } else {
             self.redeemTimer?.invalidate()
             self.setUpBottomView()
@@ -260,12 +264,14 @@ extension OfferDetailViewController : RedeemStartViewControllerDelegate {
             redeemDealViewController.redeemWithCredit = false
             redeemDealViewController.modalPresentationStyle = .overCurrentContext
             self.present(redeemDealViewController, animated: true, completion: nil)
-        } else {
-            
-        }        
+        }
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        
     }
 }
 

@@ -1260,20 +1260,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="44" width="343" height="54"/>
+                                <rect key="frame" x="16" y="88" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="122" width="343" height="1"/>
+                                <rect key="frame" x="16" y="166" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="242" width="343" height="44"/>
+                                <rect key="frame" x="16" y="286" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1291,7 +1291,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -3749,6 +3749,8 @@ Cg
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="bottomView" destination="kxH-ba-xMg" id="I0g-47-q4K"/>
+                        <outlet property="bottomViewBottom" destination="yC3-Aq-SVv" id="hGs-PD-8zz"/>
                         <outlet property="containerView" destination="QNE-Mn-wYt" id="dYX-y5-7IY"/>
                         <outlet property="standardRedeemButton" destination="yva-g0-Krv" id="ch6-ny-dNr"/>
                         <segue destination="N9K-9o-Gsw" kind="show" identifier="ExploreDetailToOfferDetailSegue" id="LZd-5y-dbT"/>
@@ -3921,12 +3923,21 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wU2-C0-YJI">
                                 <rect key="frame" x="0.0" y="575" width="375" height="92"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem in 00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t0-2S-nsR">
+                                    <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGU-3a-HuI" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
-                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="N2m-c6-nPi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                        <state key="normal" title="Redeem in 00:00:00:00">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOb-hl-dbH" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                         <rect key="frame" x="16" y="24" width="343" height="44"/>
                                         <constraints>
@@ -3948,15 +3959,13 @@ Cg
                                 </subviews>
                                 <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="4t0-2S-nsR" secondAttribute="trailing" constant="16" id="2Zc-QZ-HK2"/>
-                                    <constraint firstItem="aOb-hl-dbH" firstAttribute="centerX" secondItem="wU2-C0-YJI" secondAttribute="centerX" id="8YU-Mp-TUe"/>
-                                    <constraint firstAttribute="bottom" secondItem="4t0-2S-nsR" secondAttribute="bottom" constant="24" id="JBZ-Gx-n3J"/>
+                                    <constraint firstItem="wGU-3a-HuI" firstAttribute="leading" secondItem="wU2-C0-YJI" secondAttribute="leading" constant="16" id="4he-AT-W5X"/>
+                                    <constraint firstItem="wGU-3a-HuI" firstAttribute="centerY" secondItem="wU2-C0-YJI" secondAttribute="centerY" id="9xf-fT-17t"/>
                                     <constraint firstAttribute="height" constant="92" id="LmW-Ii-BRo"/>
-                                    <constraint firstItem="4t0-2S-nsR" firstAttribute="top" secondItem="wU2-C0-YJI" secondAttribute="top" constant="24" id="TMN-IT-Mq2"/>
+                                    <constraint firstAttribute="trailing" secondItem="wGU-3a-HuI" secondAttribute="trailing" constant="16" id="Yjv-PM-g0g"/>
                                     <constraint firstItem="aOb-hl-dbH" firstAttribute="centerY" secondItem="wU2-C0-YJI" secondAttribute="centerY" id="Zku-09-xNE"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="aOb-hl-dbH" secondAttribute="trailing" constant="16" id="m6i-FO-1O5"/>
                                     <constraint firstItem="aOb-hl-dbH" firstAttribute="leading" relation="lessThanOrEqual" secondItem="wU2-C0-YJI" secondAttribute="leading" constant="16" id="uWi-fT-tXs"/>
-                                    <constraint firstItem="4t0-2S-nsR" firstAttribute="leading" secondItem="wU2-C0-YJI" secondAttribute="leading" constant="16" id="y16-iB-ZF5"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -3989,7 +3998,7 @@ Cg
                         <outlet property="headerView" destination="OuJ-XT-xdX" id="Nuc-Fa-yHb"/>
                         <outlet property="redeemButton" destination="aOb-hl-dbH" id="Dh7-iH-F21"/>
                         <outlet property="tableView" destination="Ovn-A3-wEN" id="rb4-Um-4jd"/>
-                        <outlet property="timerLabel" destination="4t0-2S-nsR" id="KT6-Bi-vju"/>
+                        <outlet property="timerButton" destination="wGU-3a-HuI" id="K7Q-k3-QJl"/>
                         <outlet property="titleLabel" destination="DzR-0o-YdM" id="uBA-8Z-1KW"/>
                     </connections>
                 </viewController>
@@ -4815,7 +4824,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22" height="15"/>
+        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4826,7 +4835,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="46" height="46"/>
+        <image name="profile_image" width="138" height="138"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>
