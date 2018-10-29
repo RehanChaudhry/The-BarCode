@@ -199,6 +199,17 @@ class Utility: NSObject {
         return String(format: "%02d : %02d : %02d : %02d", days, hours, minutes, seconds)
     }
     
+    func getFormattedRemainingTimeInHours(time: TimeInterval) -> String {
+        
+        let timeInt = Int(time)
+        
+        let hours = Int((timeInt % 86400) / 3600)
+        let minutes = Int((timeInt % 3600) / 60)
+        let seconds = Int((timeInt % 3600) % 60)
+        
+        return String(format: "%02d : %02d : %02d", hours, minutes, seconds)
+    }
+    
     func checkDealType(offerTypeID: String) -> OfferType {
         switch offerTypeID {
         case "1":

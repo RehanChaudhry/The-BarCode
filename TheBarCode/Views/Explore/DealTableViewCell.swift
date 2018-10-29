@@ -56,64 +56,93 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceLabel.isHidden = true
         detailLabel.isHidden = true
         
-        let startDateTime = Utility.shared.shortFormattedDateString(date: deal.startDateTime)
-        let endDateTime = Utility.shared.shortFormattedDateString(date: deal.endDateTime)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
         
-//        let startDateTime = Date.getFormattedDate(string: deal.startDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
-//        let endDateTime = Date.getFormattedDate(string: deal.endDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
-        validityLabel.attributedText = getAttributedString(startTime: startDateTime, endTime: endDateTime, status: deal.statusText.value)
-    }
-    
-    
-    func getAttributedString(startTime:String, endTime:String, status: String) -> NSMutableAttributedString {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "hh:mm:a"
         
-        let font = UIFont.appRegularFontOf(size: 12.0)
+        let validtyPlaceHodler = "Validity period: "
         
-        let attributesWhite: [NSAttributedStringKey: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.white]
-        
-        let attributesBlue: [NSAttributedStringKey: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.appBlueColor()]
-        
-        let attributesRed: [NSAttributedStringKey: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.appRedColor()]
-        
-        let description = "Validity Period"
-        let text = NSMutableAttributedString(string: description, attributes: attributesWhite)
-        
-        if status.lowercased() == "active".lowercased() {
-            let description1 = " \(startTime)"
-            let text1 = NSMutableAttributedString(string: description1, attributes: attributesBlue)
+        if deal.statusText.value.lowercased() == "active".lowercased() {
             
-            let description2 = " to "
-            let text2 = NSMutableAttributedString(string: description2, attributes: attributesWhite)
+            let fromDate = dateFormatter.string(from: deal.startDate)
+            let toDate = dateFormatter.string(from: deal.endDate)
+            let to = " to "
+            let from = " from "
             
-            let description3 = "\(endTime)"
-            let text3 = NSMutableAttributedString(string: description3, attributes: attributesBlue)
+            let fromTime = timeFormatter.string(from: deal.startTime)
+            let toTime = timeFormatter.string(from: deal.endTime)
             
-            text.append(text1)
-            text.append(text2)
-            text.append(text3)
+            let blueAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                                  NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()]
             
-        } else if status.lowercased() == "Expired".lowercased() {
-        
-            let description1 = " Expired "
-            let text1 = NSMutableAttributedString(string: description1, attributes: attributesRed)
-            text.append(text1)
+            let whiteAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                                   NSAttributedStringKey.foregroundColor : UIColor.white]
             
-        } else if status.lowercased() == "In-active".lowercased() {
-        
-            let description1 = " In-Active "
-            let text1 = NSMutableAttributedString(string: description1, attributes: attributesRed)
-            text.append(text1)
+            let attributedTo = NSAttributedString(string: to, attributes: whiteAttributes)
+            let attributedFrom = NSAttributedString(string: from, attributes: whiteAttributes)
             
+            let attributedPlaceholder = NSAttributedString(string: validtyPlaceHodler, attributes: whiteAttributes)
+            let attributedFromDate = NSAttributedString(string: fromDate, attributes: blueAttributes)
+            let attributedToDate = NSAttributedString(string: toDate, attributes: blueAttributes)
+            
+            let attributedFromTime = NSAttributedString(string: fromTime, attributes: blueAttributes)
+            let attributedToTime = NSAttributedString(string: toTime, attributes: blueAttributes)
+            
+            let finalAttributedText = NSMutableAttributedString()
+            finalAttributedText.append(attributedPlaceholder)
+            finalAttributedText.append(attributedFromDate)
+            finalAttributedText.append(attributedTo)
+            finalAttributedText.append(attributedToDate)
+            finalAttributedText.append(attributedFrom)
+            finalAttributedText.append(attributedFromTime)
+            finalAttributedText.append(attributedTo)
+            finalAttributedText.append(attributedToTime)
+            
+            self.validityLabel.attributedText = finalAttributedText
+            
+        } else if deal.statusText.value.lowercased() == "Expired".lowercased() {
+            
+            let attributesWhite: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.white]
+            
+            let attributesRed: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.appRedColor()]
+            
+            let expiredString = "Expired"
+
+            let validityAttributedString = NSAttributedString(string: validtyPlaceHodler, attributes: attributesWhite)
+            let expiredAttributedString = NSAttributedString(string: expiredString, attributes: attributesRed)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(validityAttributedString)
+            finalAttributedString.append(expiredAttributedString)
+            
+            self.validityLabel.attributedText = finalAttributedString
+            
+            
+        } else {
+            let attributesWhite: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.white]
+            
+            let attributesRed: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.appRedColor()]
+            
+            let inActiveString = "In-Active"
+            
+            let validityAttributedString = NSAttributedString(string: validtyPlaceHodler, attributes: attributesWhite)
+            let inActiveAttributedString = NSAttributedString(string: inActiveString, attributes: attributesRed)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(validityAttributedString)
+            finalAttributedString.append(inActiveAttributedString)
+            
+            self.validityLabel.attributedText = finalAttributedString
         }
-        
-        return text
-        
     }
-    
 }
