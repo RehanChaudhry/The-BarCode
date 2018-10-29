@@ -57,7 +57,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.redeemButton.hideLoader()
         }
         
-        self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value!), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
 
         self.dealTitleLabel.text = deal.title.value
         self.dealSubTitleLabel.text =  deal.subTitle.value

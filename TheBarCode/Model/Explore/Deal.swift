@@ -51,7 +51,7 @@ class Deal: CoreStoreObject {
     var endTimeRaw = Value.Required<String>("end_time", initial: "")
     var status = Value.Required<Bool>("status", initial: false)
     var isNotified = Value.Required<Bool>("is_notified", initial: false)
-    var imageUrl = Value.Optional<String>("image_url")
+    var imageUrl = Value.Required<String>("image_url", initial: "")
     var statusText = Value.Required<String>("status_text", initial: "")
     var startDateTimeRaw = Value.Required<String>("start_date_time", initial: "")
     var endDateTimeRaw = Value.Required<String>("end_date_time", initial: "")
@@ -139,7 +139,7 @@ extension Deal: ImportableUniqueObject {
         self.endTimeRaw.value = source["end_time"]! as! String
         self.status.value = source["status"]! as! Bool
         self.isNotified.value = source["is_notified"]! as! Bool
-        self.imageUrl.value = source["image_url"] as? String
+        self.imageUrl.value = source["image_url"] as! String
         self.startDateTimeRaw.value = source["start_date_time"]! as! String
         self.endDateTimeRaw.value = source["end_date_time"]! as! String
         self.statusText.value = source["status_text"] as! String

@@ -46,10 +46,8 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     }
     
     func setUpDealCell(deal: Deal) {
-       // let explore = deal.establishment.value!
-        let url = deal.image.value
-       // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
-        coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        let url = URL(string: deal.imageUrl.value)
+        coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
         titleLabel.text = deal.title.value//explore.title.value
         locationIconImageView.isHidden = true
@@ -59,8 +57,6 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         let startDateTime = Utility.shared.shortFormattedDateString(date: deal.startDateTime)
         let endDateTime = Utility.shared.shortFormattedDateString(date: deal.endDateTime)
         
-//        let startDateTime = Date.getFormattedDate(string: deal.startDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
-//        let endDateTime = Date.getFormattedDate(string: deal.endDateTimeRaw.value, formatter: "MMM dd  hh:mm a")
         validityLabel.attributedText = getAttributedString(startTime: startDateTime, endTime: endDateTime, status: deal.statusText.value)
     }
     
