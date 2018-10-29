@@ -131,7 +131,7 @@ class OfferDetailViewController: UIViewController {
                     dateFormatter.dateFormat = serverDateTimeFormat
                     let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
                     
-                    if currentTime.compare(self.deal.startDateTime) == .orderedAscending {
+                    if Date().compare(todayDealDateTime) == .orderedAscending {
                         self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow)
                     } else {
                         let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
