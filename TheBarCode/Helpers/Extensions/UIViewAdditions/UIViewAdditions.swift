@@ -104,3 +104,12 @@ extension UIView {
         return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
     }
 }
+
+extension UIView {
+    func clearConstraints() {
+        for subview in self.subviews {
+            subview.clearConstraints()
+        }
+        self.removeConstraints(self.constraints)
+    }
+}
