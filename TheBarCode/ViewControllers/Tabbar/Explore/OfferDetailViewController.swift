@@ -264,12 +264,14 @@ extension OfferDetailViewController : RedeemStartViewControllerDelegate {
             redeemDealViewController.redeemWithCredit = false
             redeemDealViewController.modalPresentationStyle = .overCurrentContext
             self.present(redeemDealViewController, animated: true, completion: nil)
-        } else {
-            
-        }        
+        }
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        
     }
 }
 

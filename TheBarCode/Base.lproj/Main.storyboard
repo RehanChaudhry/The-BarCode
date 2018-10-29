@@ -3749,6 +3749,8 @@ Cg
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="bottomView" destination="kxH-ba-xMg" id="I0g-47-q4K"/>
+                        <outlet property="bottomViewBottom" destination="yC3-Aq-SVv" id="hGs-PD-8zz"/>
                         <outlet property="containerView" destination="QNE-Mn-wYt" id="dYX-y5-7IY"/>
                         <outlet property="standardRedeemButton" destination="yva-g0-Krv" id="ch6-ny-dNr"/>
                         <segue destination="N9K-9o-Gsw" kind="show" identifier="ExploreDetailToOfferDetailSegue" id="LZd-5y-dbT"/>
