@@ -12,6 +12,7 @@ import SJSegmentedScrollView
 import CoreStore
 import Alamofire
 import ObjectMapper
+import PureLayout
 
 protocol BarDealsViewControllerDelegate: class {
     func barDealsController(controller: BarDealsViewController, didSelectRowAt deal: Deal)
@@ -197,8 +198,23 @@ extension BarDealsViewController: StatefulTableDelegate {
             let subTitle = "Tap to Refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
+            emptyDataView.clearConstraints()
             
+            emptyDataView.titleLabel.autoPinEdge(ALEdge.top, to: ALEdge.top, of: emptyDataView, withOffset: 20.0)
+            emptyDataView.titleLabel.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 16.0)
+            emptyDataView.titleLabel.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -16.0)
+            
+            emptyDataView.descriptionLabel.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: emptyDataView.titleLabel, withOffset: 16.0)
+            emptyDataView.descriptionLabel.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 16.0)
+            emptyDataView.descriptionLabel.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -16.0)
+            
+            emptyDataView.actionButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: emptyDataView.descriptionLabel, withOffset: 16.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 30.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -30.0)
+            emptyDataView.actionButton.autoSetDimension(ALDimension.height, toSize: 44.0)
+            emptyDataView.actionButton.autoSetDimension(ALDimension.width, toSize: 120.0)
+            
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
             emptyDataView.actionHandler = { (sender: UIButton) in
                 tvc.triggerInitialLoad()
             }
