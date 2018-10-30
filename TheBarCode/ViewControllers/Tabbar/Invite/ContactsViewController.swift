@@ -82,7 +82,7 @@ class ContactsViewController: UIViewController {
                 } catch {
                     debugPrint("Contacts error: \(error.localizedDescription)")
                     
-                    self.statefulView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to Refresh")
+                    self.statefulView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to refresh")
                     self.statefulView.isHidden = false
                 }
                 
@@ -90,7 +90,7 @@ class ContactsViewController: UIViewController {
         } catch {
             debugPrint("Container error while getting contacts: \(error.localizedDescription)")
             
-            self.statefulView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to Refresh")
+            self.statefulView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to refresh")
             self.statefulView.isHidden = false
         }
     }

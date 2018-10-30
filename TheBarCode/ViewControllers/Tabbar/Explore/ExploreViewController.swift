@@ -220,38 +220,44 @@ class ExploreViewController: UIViewController {
         self.getReloadStatus()
     }
     
+    func resetSearchBar(){
+        self.barsController.searchBar.resignFirstResponder()
+        self.dealsController.searchBar.resignFirstResponder()
+        self.liveOffersController.searchBar.resignFirstResponder()
+    }
+    
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
         self.resetSegmentedButton()
-        
+        self.resetSearchBar()
+
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .bars
-        
         self.scrollView.scrollToPage(page: 0, animated: true)
     }
     
     @IBAction func dealsButtonTapped(sender: UIButton) {
         self.resetSegmentedButton()
+        self.resetSearchBar()
         
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .deals
-        
         self.scrollView.scrollToPage(page: 1, animated: true)
     }
     
     @IBAction func liveOffersButtonTapped(sender: UIButton) {
         self.resetSegmentedButton()
+        self.resetSearchBar()
         
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.exploreType = .liveOffers
-        
         self.scrollView.scrollToPage(page: 2, animated: true)
     }
 }
@@ -300,7 +306,7 @@ extension ExploreViewController {
                 } else if (!self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds > 0) {
                     self.updateSnackBarForType(type: .reload)
                 } else {
-                    self.showError(msg: "Tap To Retry")
+                    self.showError(msg: "Tap To refresh")
                 }
                 
                 self.finishLoading()

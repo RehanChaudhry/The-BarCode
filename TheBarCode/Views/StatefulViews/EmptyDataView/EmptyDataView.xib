@@ -32,18 +32,11 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qz-SW-h0E" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                    <rect key="frame" x="213.5" y="215.5" width="240" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="240" id="9lz-Ox-XOC"/>
-                        <constraint firstAttribute="height" constant="40" id="d89-P8-Oea"/>
-                    </constraints>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qz-SW-h0E">
+                    <rect key="frame" x="20" y="135.5" width="627" height="70"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                    <state key="normal" title="Invite Friends" image="icon_loading">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="22"/>
@@ -57,25 +50,25 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="nzq-eH-Lsl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="0xW-YF-tXm"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="trailing" secondItem="qjf-Kl-1hN" secondAttribute="trailing" id="5h7-um-BGj"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="leading" secondItem="qjf-Kl-1hN" secondAttribute="leading" id="CBn-au-aG1"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="top" secondItem="qjf-Kl-1hN" secondAttribute="top" id="CSr-xC-4qa"/>
                 <constraint firstItem="qjf-Kl-1hN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="LrQ-PK-pgP"/>
-                <constraint firstItem="3qz-SW-h0E" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="M19-xM-LNs"/>
                 <constraint firstItem="nzq-eH-Lsl" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="R2D-AD-Dju"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="bottom" secondItem="nzq-eH-Lsl" secondAttribute="bottom" id="RnS-dT-7oc"/>
                 <constraint firstAttribute="trailing" secondItem="qjf-Kl-1hN" secondAttribute="trailing" constant="20" id="VSw-RG-TsK"/>
                 <constraint firstItem="nzq-eH-Lsl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ccg-Mc-rFS"/>
-                <constraint firstItem="3qz-SW-h0E" firstAttribute="top" secondItem="nzq-eH-Lsl" secondAttribute="bottom" constant="10" id="gS0-v9-jUM"/>
                 <constraint firstItem="nzq-eH-Lsl" firstAttribute="top" secondItem="qjf-Kl-1hN" secondAttribute="bottom" constant="10" id="m3D-Dh-bbs"/>
                 <constraint firstAttribute="trailing" secondItem="nzq-eH-Lsl" secondAttribute="trailing" constant="20" id="o7w-pY-RwD"/>
                 <constraint firstItem="qjf-Kl-1hN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oNc-pp-iKh"/>
+                <constraint firstItem="3qz-SW-h0E" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rrG-9t-WJM"/>
             </constraints>
             <connections>
                 <outlet property="actionButton" destination="3qz-SW-h0E" id="i8Q-ga-koh"/>
                 <outlet property="descriptionLabel" destination="nzq-eH-Lsl" id="x6D-23-r1s"/>
                 <outlet property="titleLabel" destination="qjf-Kl-1hN" id="BNG-YZ-u52"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="53.5"/>
+            <point key="canvasLocation" x="32.833583208395808" y="52"/>
         </view>
     </objects>
-    <resources>
-        <image name="icon_loading" width="21" height="21"/>
-    </resources>
 </document>

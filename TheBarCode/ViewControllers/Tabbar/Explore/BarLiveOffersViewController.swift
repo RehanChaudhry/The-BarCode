@@ -207,14 +207,14 @@ extension BarLiveOffersViewController: StatefulTableDelegate {
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
             let title = "No Live Offers Available"
-            let subTitle = "Tap to Refresh"
+            let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
            
             emptyDataView.clearConstraints()
             
-            emptyDataView.titleLabel.autoPinEdge(ALEdge.top, to: ALEdge.top, of: emptyDataView, withOffset: 20.0)
+            emptyDataView.titleLabel.autoPinEdge(ALEdge.top, to: ALEdge.top, of: emptyDataView, withOffset: 26.0)
             emptyDataView.titleLabel.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 16.0)
             emptyDataView.titleLabel.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -16.0)
             
@@ -222,11 +222,10 @@ extension BarLiveOffersViewController: StatefulTableDelegate {
             emptyDataView.descriptionLabel.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 16.0)
             emptyDataView.descriptionLabel.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -16.0)
             
-            emptyDataView.actionButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: emptyDataView.descriptionLabel, withOffset: 16.0)
-            emptyDataView.actionButton.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 30.0)
-            emptyDataView.actionButton.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: -30.0)
-            emptyDataView.actionButton.autoSetDimension(ALDimension.height, toSize: 44.0)
-            emptyDataView.actionButton.autoSetDimension(ALDimension.width, toSize: 120.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.top, to: ALEdge.top, of: emptyDataView.titleLabel, withOffset: 0.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: emptyDataView.descriptionLabel, withOffset: 0.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.leading, to: ALEdge.leading, of: emptyDataView, withOffset: 0.0)
+            emptyDataView.actionButton.autoPinEdge(ALEdge.trailing, to: ALEdge.trailing, of: emptyDataView, withOffset: 0.0)
 
             emptyDataView.actionHandler = { (sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -238,7 +237,7 @@ extension BarLiveOffersViewController: StatefulTableDelegate {
             let initialErrorView = LoadingAndErrorView.loadFromNib()
             initialErrorView.showErrorView(canRetry: true)
             initialErrorView.backgroundColor = .clear
-            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
             
             initialErrorView.retryHandler = {(sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -256,7 +255,7 @@ extension BarLiveOffersViewController: StatefulTableDelegate {
         if forLoadMoreError == nil {
             loadingView.showLoading()
         } else {
-            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
         }
         
         loadingView.retryHandler = {(sender: UIButton) in
