@@ -16,6 +16,7 @@ let apiPathSocialLogin = "social/login"
 let apiPathEmailVerification = "user/customer-activate"
 let apiPathResendVerificationEmail = "user/resend-activation-email"
 let apiPathForgotPassword = "auth/password/email"
+let apiPathUserProfileUpdate = "user"
 
 let apiPathReferral = "user/update-referral-code"
 
@@ -40,6 +41,7 @@ let apiPathReloadStatus = "subscription/detail"
 let apiPathReload = "subscription"
 
 let apiPathView = "view"
+
 
 
 

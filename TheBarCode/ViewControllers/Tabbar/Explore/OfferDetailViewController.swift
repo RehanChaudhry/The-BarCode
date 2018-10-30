@@ -93,9 +93,11 @@ class OfferDetailViewController: UIViewController {
             dateFormatter.dateFormat = serverTimeFormat
             
             let currentTime = dateFormatter.date(from: dateFormatter.string(from: currentDate))!
-                
-
-            let isDateInRange = currentDate.isDate(inRange: self.deal.startDate, toDate: self.deal.endDate, inclusive: true)
+            
+            let dealStartTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.startDateTime))!
+            let dealEndTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.endDateTime))!
+            
+            let isDateInRange = currentDate.isDate(inRange: self.deal.startDateTime, toDate: self.deal.endDateTime, inclusive: true)
             
             let isTimeInRange = currentTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
             
@@ -124,7 +126,7 @@ class OfferDetailViewController: UIViewController {
                     let todayDateString = dateFormatter.string(from: Date())
                     
                     dateFormatter.dateFormat = serverTimeFormat
-                    let dealStartTime = dateFormatter.string(from: self.deal.startTime)
+                    let dealStartTime = dateFormatter.string(from: dealStartTime)
                     
                     let todayDealDateTimeString = todayDateString + " " + dealStartTime
                     

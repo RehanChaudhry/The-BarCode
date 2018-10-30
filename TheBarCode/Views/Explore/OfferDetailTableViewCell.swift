@@ -69,13 +69,13 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         
         if deal.statusText.value.lowercased() == "active".lowercased() {
             
-            let fromDate = dateFormatter.string(from: deal.startDate)
-            let toDate = dateFormatter.string(from: deal.endDate)
+            let fromDate = dateFormatter.string(from: deal.startDateTime)
+            let toDate = dateFormatter.string(from: deal.endDateTime)
             let to = " to "
             let from = " from "
             
-            let fromTime = timeFormatter.string(from: deal.startTime)
-            let toTime = timeFormatter.string(from: deal.endTime)
+            let fromTime = timeFormatter.string(from: deal.startDateTime)
+            let toTime = timeFormatter.string(from: deal.endDateTime)
             
             let blueAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
                                   NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()]

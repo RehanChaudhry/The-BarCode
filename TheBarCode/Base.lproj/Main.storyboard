@@ -579,7 +579,7 @@
                                                 <rect key="frame" x="0.0" y="421" width="375" height="182"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7G-gb-goB">
-                                                        <rect key="frame" x="94.5" y="128" width="186" height="31"/>
+                                                        <rect key="frame" x="92.5" y="128" width="190" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="31" id="9w0-6Z-Xej"/>
                                                         </constraints>
@@ -1260,20 +1260,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="88" width="343" height="54"/>
+                                <rect key="frame" x="16" y="44" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="166" width="343" height="1"/>
+                                <rect key="frame" x="16" y="122" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="286" width="343" height="44"/>
+                                <rect key="frame" x="16" y="242" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1291,7 +1291,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -2156,7 +2156,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A5M-Ic-MEO">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="ROA-hi-S6T">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="ROA-hi-S6T" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="16" width="62" height="62"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="62" id="NXX-PJ-t5J"/>
@@ -2200,6 +2200,9 @@
                                                                 </fragment>
                                                             </attributedString>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="socialLogoutButtonTappedWithSender:" destination="peb-EV-3zL" eventType="touchUpInside" id="VMs-Yp-gnO"/>
+                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dD-4t-yr1">
                                                         <rect key="frame" x="0.0" y="93" width="375" height="1"/>
@@ -2268,12 +2271,14 @@
                         <outlet property="contentView" destination="Awh-44-EuH" id="Foh-Ku-uP6"/>
                         <outlet property="dateInputView" destination="D6A-q8-egE" id="q6W-fU-xGt"/>
                         <outlet property="datePicker" destination="rvu-mB-CaB" id="kFZ-3l-smJ"/>
+                        <outlet property="loginInfoLabel" destination="Fpe-8Q-ftB" id="fry-XL-4gW"/>
                         <outlet property="passwordSectionHeaderView" destination="d5u-HI-Wj7" id="ovX-1R-gnO"/>
                         <outlet property="pickerInputView" destination="wSW-aC-UQZ" id="eS7-qR-Xyc"/>
                         <outlet property="pickerView" destination="Le5-ir-INX" id="oDj-nG-4nW"/>
-                        <outlet property="profileImageView" destination="ROA-hi-S6T" id="m2b-DL-88w"/>
+                        <outlet property="profileImageView" destination="ROA-hi-S6T" id="T7i-D3-7h6"/>
                         <outlet property="profileInfoView" destination="A5M-Ic-MEO" id="76u-cz-akE"/>
                         <outlet property="scrollView" destination="wZi-o5-OGw" id="HpU-1u-gfD"/>
+                        <outlet property="socialLogoutButton" destination="pdS-Yb-e2E" id="96x-Yg-hiV"/>
                         <outlet property="updateButton" destination="exJ-mv-qS1" id="5eE-0x-PXO"/>
                     </connections>
                 </viewController>

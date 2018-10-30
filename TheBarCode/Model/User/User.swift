@@ -41,6 +41,12 @@ class User: CoreStoreObject {
     
     var creditsRaw = Value.Optional<String>("credits_raw")
     
+    var gender: Gender {
+        get {
+            return Gender(rawValue: self.genderString.value.lowercased()) ?? .other
+        }
+    }
+    
     var credit: Int {
         get {
             return Int(creditsRaw.value!) ?? 0
