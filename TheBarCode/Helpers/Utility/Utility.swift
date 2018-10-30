@@ -9,6 +9,7 @@
 import UIKit
 import KeychainAccess
 import CoreStore
+import GoogleMaps
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.cygnismedia.thebarcode"
@@ -33,6 +34,7 @@ let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
+let defaultUKLocation =  CLLocationCoordinate2D(latitude: 55.3781, longitude: 3.4360)
 
 class Utility: NSObject {
     

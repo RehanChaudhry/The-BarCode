@@ -11,6 +11,7 @@ import StatefulTableView
 import CoreStore
 import Alamofire
 import ObjectMapper
+import GoogleMaps
 
 protocol BarsWithDealsViewControllerDelegate: class {
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar)
@@ -114,6 +115,7 @@ extension BarsWithDealsViewController: UISearchBarDelegate {
         self.statefulTableView.innerTable.reloadData()
         self.isClearingSearch = true
         self.statefulTableView.triggerInitialLoad()
+        self.refreshMap()
     }
 }
 
@@ -181,18 +183,18 @@ extension BarsWithDealsViewController {
                 if self.isSearching {
                     self.filteredBars = resultBars
                     self.statefulTableView.canLoadMore = false
-                    self.statefulTableView.innerTable.reloadData()
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.reloadData()
-                    completion(nil)
+                 
                 } else {
                     self.bars.append(contentsOf: resultBars) 
                     self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                     self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.innerTable.reloadData()
-                    completion(nil)
                 }
+                
+                self.statefulTableView.innerTable.reloadData()
+                self.statefulTableView.canPullToRefresh = true
+                self.statefulTableView.reloadData()
+                self.refreshMap()
+                completion(nil)
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -297,6 +299,14 @@ extension BarsWithDealsViewController: StatefulTableDelegate {
     }
 }
 
+extension BarsWithDealsViewController  {
+    
+    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let bar = marker.userData as! Bar
+        self.delegate.barsWithDealsController(controller: self, didSelect: bar)
+        return false
+    }
+}
 
 
 

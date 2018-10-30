@@ -11,7 +11,7 @@ import CoreStore
 import Alamofire
 import ObjectMapper
 import StatefulTableView
-
+import GoogleMaps
 
 protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
@@ -115,6 +115,7 @@ extension BarsWithLiveOffersViewController: UISearchBarDelegate {
         self.statefulTableView.innerTable.reloadData()
         self.isClearingSearch = true
         self.statefulTableView.triggerInitialLoad()
+        self.refreshMap()
     }
 }
 
@@ -183,19 +184,18 @@ extension BarsWithLiveOffersViewController {
                 if self.isSearching {
                     self.filteredBars = resultBars
                     self.statefulTableView.canLoadMore = false
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.innerTable.reloadData()
-                    self.statefulTableView.reloadData()
-                    completion(nil)
                 } else {
                     self.bars.append(contentsOf: resultBars)
                     self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                     self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.innerTable.reloadData()
-                    completion(nil)
                 }
                 
+                self.statefulTableView.canPullToRefresh = true
+                self.statefulTableView.innerTable.reloadData()
+                self.statefulTableView.reloadData()
+                self.refreshMap()
+                completion(nil)
+            
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 completion(genericError)
@@ -298,6 +298,14 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     }
 }
 
+extension BarsWithLiveOffersViewController  {
+    
+    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let bar = marker.userData as! Bar
+        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
+        return false
+    }
+}
 
 
 

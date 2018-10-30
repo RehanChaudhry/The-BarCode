@@ -41,6 +41,9 @@ class User: CoreStoreObject {
     
     var creditsRaw = Value.Optional<String>("credits_raw")
     
+    var latitude = Value.Required<CGFloat>("latitude", initial: 0.0)
+    var longitude = Value.Required<CGFloat>("longitude", initial: 0.0)
+
     var credit: Int {
         get {
             return Int(creditsRaw.value!) ?? 0
@@ -104,6 +107,8 @@ extension User: ImportableUniqueObject {
         
         self.profileImage.value = source["profile_image"] as? String
         
+        self.latitude.value = source["latitude"] as! CGFloat
+        self.longitude.value = source["longitude"] as! CGFloat
         
         if let isLocationUpdated = source["is_location_updated"] as? Bool {
             self.isLocationUpdated.value = isLocationUpdated
