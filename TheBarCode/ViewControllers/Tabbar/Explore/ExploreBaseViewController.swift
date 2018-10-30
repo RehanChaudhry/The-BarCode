@@ -65,6 +65,7 @@ class ExploreBaseViewController: UIViewController {
         self.listButton.tintColor = UIColor.appBlueColor()
         
         self.setUpStatefulTableView()
+        self.mapView.delegate = self
 
     }
 
@@ -98,77 +99,51 @@ class ExploreBaseViewController: UIViewController {
         self.statefulTableView.innerTable.separatorStyle = .none
     }
     
-    func createMapMarker(explore: Bar) -> GMSMarker {
-        
-        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
-        
+    func createMapMarker(location: CLLocation) -> GMSMarker {
         let marker = GMSMarker(position: location.coordinate)
-        marker.title = explore.title.value
-        marker.snippet = explore.address.value
-
+        let iconImage =  UIImage(named: "Pins")
+        let markerView = UIImageView(image: iconImage)
+        marker.iconView = markerView
         return marker
     }
     
     func setUpBarMarkers(bars: [Bar]) {
     
         mapView.clear()
-        mapView.isMyLocationEnabled = true
-        
         var bounds = GMSCoordinateBounds()
         for explore in bars {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
-            let marker = self.createMapMarker(explore: explore)
-            
-            let iconImage =  UIImage(named: "Pins")
-            let markerView = UIImageView(image: iconImage)
-            marker.iconView = markerView
-
+            let marker = self.createMapMarker(location: location)
+            marker.userData = explore
             marker.map = mapView
         }
         
-        let update = GMSCameraUpdate.fit(bounds, withPadding: 60.0)
-        mapView.animate(with: update)
-        
+//        let update = GMSCameraUpdate.fit(bounds, withPadding: 60.0)
+//        mapView.animate(with: update)
+     
+        let user = Utility.shared.getCurrentUser()!
+        let corrdinate = user.isLocationUpdated.value ?
+                         CLLocationCoordinate2D(latitude: CLLocationDegrees(user.latitude.value), longitude: CLLocationDegrees(user.longitude.value))
+                        : defaultUKLocation
+        setupMapCamera(withcordinate: corrdinate)
+
     }
     
-    /*
-    func updateSnackBar() {
-        
-        if let redeemInfo = ReedeemInfoManager.shared.redeemInfo {
-            
-            if redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
-                // Discount
-                self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
-            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
-                //Congrates
-                self.snackBar.updateAppearanceForType(type: .congrates, gradientType: .orange)
-            } else if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds > 0 {
-                //reload in
-                  self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
-            }
-        } else {
-            self.snackBar.loadingSpinner()
-        }
-        
-//
-//        if ReedeemInfoManager.shared.canReload {
-//            if ReedeemInfoManager.shared.redeemInfo?.canShowTimer() ?? false {
-//                self.snackBar.updateAppearanceForType(type: .reload, gradientType: .green)
-//            } else {
-//                self.snackBar.updateAppearanceForType(type: .congrates, gradientType: .orange)
-//            }
-//        } else {
-//            self.snackBar.updateAppearanceForType(type: .discount, gradientType: .green)
-//        }
+    func setupMapCamera(withcordinate: CLLocationCoordinate2D){
+        let cameraPosition = GMSCameraPosition.camera(withLatitude: withcordinate.latitude, longitude: withcordinate.longitude, zoom: 5.0)
+        let cameraUpdate = GMSCameraUpdate.setCamera(cameraPosition)
+        self.mapView.moveCamera(cameraUpdate)
+        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+        self.mapView.settings.myLocationButton = true
+        self.mapView.isMyLocationEnabled = true
     }
     
-    func invalidateTimer(){
-        self.snackBar.timer.invalidate()
+    func refreshMap(){
+        let bars = self.isSearching ? self.filteredBars : self.bars
+        self.setUpBarMarkers(bars: bars)
     }
-    */
-  
 
     //MARK: My IBActions
     
@@ -193,8 +168,13 @@ class ExploreBaseViewController: UIViewController {
         
         self.scrollView.scrollToPage(page: 1, animated: true)
         
-        self.setUpBarMarkers(bars: self.bars)
-                
+        self.refreshMap()
+    }
+}
+
+extension ExploreBaseViewController : GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        return false
     }
 }
 

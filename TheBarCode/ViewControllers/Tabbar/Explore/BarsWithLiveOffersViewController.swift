@@ -11,7 +11,7 @@ import CoreStore
 import Alamofire
 import ObjectMapper
 import StatefulTableView
-
+import GoogleMaps
 
 protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
@@ -88,17 +88,12 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
 }
 
 //MARK: UISearchBarDelegate
-
 extension BarsWithLiveOffersViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
         if searchBar.text == "" {
-            self.searchText = searchBar.text!
-            self.isSearching = false
-            self.statefulTableView.innerTable.reloadData()
-            self.isClearingSearch = true
-            self.statefulTableView.triggerInitialLoad()
+            self.resetSearchBar()
         } else {
             self.isSearching = true
             self.filteredBars.removeAll()
@@ -108,10 +103,19 @@ extension BarsWithLiveOffersViewController: UISearchBarDelegate {
         }
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchText = searchBar.text!
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == "" {
+            searchBar.resignFirstResponder()
+            self.resetSearchBar()
+        }
+    }
+    
+    func resetSearchBar() {
         self.isSearching = false
         self.statefulTableView.innerTable.reloadData()
+        self.isClearingSearch = true
+        self.statefulTableView.triggerInitialLoad()
+        self.refreshMap()
     }
 }
 
@@ -180,19 +184,18 @@ extension BarsWithLiveOffersViewController {
                 if self.isSearching {
                     self.filteredBars = resultBars
                     self.statefulTableView.canLoadMore = false
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.innerTable.reloadData()
-                    self.statefulTableView.reloadData()
-                    completion(nil)
                 } else {
                     self.bars.append(contentsOf: resultBars)
                     self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                     self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                    self.statefulTableView.canPullToRefresh = true
-                    self.statefulTableView.innerTable.reloadData()
-                    completion(nil)
                 }
                 
+                self.statefulTableView.canPullToRefresh = true
+                self.statefulTableView.innerTable.reloadData()
+                self.statefulTableView.reloadData()
+                self.refreshMap()
+                completion(nil)
+            
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 completion(genericError)
@@ -251,10 +254,10 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
             let title = isSearching ? "No Search Result Found" : "No Live Offers Available"
-            let subTitle = "Tap to Refresh"
+            let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
             
             emptyDataView.actionHandler = { (sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -266,7 +269,7 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
             let initialErrorView = LoadingAndErrorView.loadFromNib()
             initialErrorView.showErrorView(canRetry: true)
             initialErrorView.backgroundColor = .clear
-            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
             
             initialErrorView.retryHandler = {(sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -284,7 +287,7 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
         if forLoadMoreError == nil {
             loadingView.showLoading()
         } else {
-            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
         }
         
         loadingView.retryHandler = {(sender: UIButton) in
@@ -295,6 +298,14 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     }
 }
 
+extension BarsWithLiveOffersViewController  {
+    
+    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let bar = marker.userData as! Bar
+        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
+        return false
+    }
+}
 
 
 

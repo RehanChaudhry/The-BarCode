@@ -229,7 +229,7 @@ extension ReloadViewController {
         self.dataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
                 return
             }
             
@@ -243,7 +243,7 @@ extension ReloadViewController {
                     self.statefulView.showNothing()
                     
                 } else {
-                    self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Refresh")
+                    self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
                 }
 
                 return
@@ -265,7 +265,7 @@ extension ReloadViewController {
     
             } else {
                 let genericError = APIHelper.shared.getGenericError()
-                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To refresh")
             }
             
         }
@@ -281,12 +281,12 @@ extension ReloadViewController {
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathReload, method: .post) { (response, serverError, error) in
             
             guard error == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
                 return
             }
             
             guard serverError == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
                 return
             }
             
@@ -302,7 +302,7 @@ extension ReloadViewController {
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
-                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To refresh")
             }
             
         }

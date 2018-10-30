@@ -119,12 +119,12 @@ extension FiveADayViewController {
         let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathFiveADayDeals, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
                 return
             }
             
             guard serverError == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
                 return
             }
             
@@ -144,7 +144,7 @@ extension FiveADayViewController {
                 }
                 
                 if self.deals.isEmpty {
-                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To Refresh")
+                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To refresh")
                 } else {
                     self.statefulView.isHidden = true
                     self.statefulView.showNothing()
@@ -155,7 +155,7 @@ extension FiveADayViewController {
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
-                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To Refresh")
+                self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To refresh")
             }
         }
     }

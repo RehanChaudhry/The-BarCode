@@ -264,11 +264,11 @@ extension FavouritesViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Favourite Bars"
-            let subTitle = "Tap to Refresh"
+            let title = "No Favorite Bar"
+            let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "Refresh")
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
             
             emptyDataView.actionHandler = { (sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -280,7 +280,7 @@ extension FavouritesViewController: StatefulTableDelegate {
             let initialErrorView = LoadingAndErrorView.loadFromNib()
             initialErrorView.showErrorView(canRetry: true)
             initialErrorView.backgroundColor = .clear
-            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
             
             initialErrorView.retryHandler = {(sender: UIButton) in
                 tvc.triggerInitialLoad()
@@ -298,7 +298,7 @@ extension FavouritesViewController: StatefulTableDelegate {
         if forLoadMoreError == nil {
             loadingView.showLoading()
         } else {
-            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to Refresh")
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
         }
         
         loadingView.retryHandler = {(sender: UIButton) in

@@ -35,7 +35,7 @@ class TableViewLoadMoreCell: UITableViewCell, NibReusable {
         if loadMore.isLoading {
             loadingView.showLoading()
         } else if let error = loadMore.error {
-            loadingView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to Refresh")
+            loadingView.showErrorViewWithRetry(errorMessage: error.localizedDescription, reloadMessage: "Tap to refresh")
         } else {
             loadingView.showNothing()
             loadingView.retryButton.setTitle("Load more", for: .normal)
