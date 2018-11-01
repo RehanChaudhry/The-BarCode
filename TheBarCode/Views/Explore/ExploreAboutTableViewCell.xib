@@ -99,6 +99,9 @@ Sunday - 12:00 - 22:00</string>
                         <state key="normal" title="yeoldefightingcocks.co.uk">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="websiteButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cLk-nM-R2g"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="yeoldefightingcocks.co.uk" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vd-yV-E3a">
                         <rect key="frame" x="137" y="351.5" width="167" height="17"/>
@@ -116,6 +119,9 @@ Sunday - 12:00 - 22:00</string>
                         <state key="normal" title="01727 869152">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="callButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0eG-m6-m3K"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="01727 869152" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHh-cy-EnE">
                         <rect key="frame" x="138" y="383" width="166" height="17"/>
@@ -157,6 +163,9 @@ Sunday - 12:00 - 22:00</string>
                         <state key="normal" title="reservations@yofcltd.com">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="emailButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jY7-a7-Cbh"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="reservations@yofcltd.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VtQ-gi-lNY">
                         <rect key="frame" x="138" y="415" width="166" height="17"/>
@@ -174,6 +183,9 @@ Sunday - 12:00 - 22:00</string>
                         <state key="normal" title="Get Driving Directions">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="directionsButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H01-Bi-nlU"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8k-WQ-Yey">
                         <rect key="frame" x="130" y="344" width="1" height="170"/>

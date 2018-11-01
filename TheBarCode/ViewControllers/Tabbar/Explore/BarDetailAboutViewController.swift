@@ -9,6 +9,7 @@
 import UIKit
 import Reusable
 import SJSegmentedScrollView
+import MessageUI
 
 class BarDetailAboutViewController: UIViewController {
 
@@ -41,6 +42,7 @@ extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
         cell.setUpCell(explore: self.bar)
+        cell.delegate = self
         return cell
     }
     
@@ -56,3 +58,46 @@ extension BarDetailAboutViewController: SJSegmentedViewControllerViewSource {
         return self.tableView
     }
 }
+
+//MARK: ExploreAboutTableViewCellDelegate
+extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, websiteButtonTapped sender: UIButton) {
+        let urlString = self.bar.website.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let url = URL(string: urlString)!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, callButtonTapped sender: UIButton) {
+        let phoneNumber: String = "tel://\(self.bar.contactNumber.value)"
+        let url = URL(string: phoneNumber)!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, directionsButtonTapped sender: UIButton) {
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=,&directionsmode=driving", self.bar.latitude.value, self.bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, emailButtonTapped sender: UIButton) {
+        let mailComposerController = MFMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            mailComposerController.delegate = self
+            mailComposerController.setToRecipients([self.bar.contactEmail.value])
+            present(mailComposerController, animated: true, completion: nil)
+        }
+    }
+}
+
+//MARK: MFMailComposeViewControllerDelegate
+extension BarDetailAboutViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
