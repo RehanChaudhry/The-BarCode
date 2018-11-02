@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OneSignal
 
 class TabBarController: UITabBarController {
 
@@ -14,6 +15,8 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.registerTagForPushNotification()
         
         let tabbarItems = self.tabBar.items!
         let explore = tabbarItems[2]
@@ -28,15 +31,17 @@ class TabBarController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: My Methods
+    func registerTagForPushNotification() {
+        
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("Unable to get user for push notification tag registration")
+            return
+        }
+        
+        debugPrint("User access token: \(user.accessToken.value)")
+        
+        OneSignal.sendTags(["user_id" : user.userId.value])
     }
-    */
-
+    
 }

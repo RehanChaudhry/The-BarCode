@@ -1,7 +1,8 @@
 platform :ios, '10.0'
+use_frameworks!
 
 target 'TheBarCode' do
-  use_frameworks!
+  
   
   pod 'Alamofire', '~> 4.7.3'
   pod 'ObjectMapper', '~> 3.3.0'
@@ -26,6 +27,8 @@ target 'TheBarCode' do
   pod 'Crashlytics', '~> 3.10.9'
   pod 'OneSignal', '~> 2.9.0'
 
+  
+  
   target 'TheBarCodeTests' do
     inherit! :search_paths
     
@@ -36,4 +39,8 @@ target 'TheBarCode' do
     
   end
 
+end
+
+target 'OneSignalNotificationServiceExtension' do
+    pod 'OneSignal', '~> 2.9.0'
 end

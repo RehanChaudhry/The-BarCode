@@ -13,6 +13,7 @@ import Firebase
 import FirebaseDynamicLinks
 import Fabric
 import Crashlytics
+import OneSignal
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +34,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         Fabric.with([Crashlytics.self])
+        
+        let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
+            // This block gets called when the user reacts to a notification received
+            let payload: OSNotificationPayload? = result?.notification.payload
+            
+            debugPrint("push message = \(String(describing: payload!.body))")
+            debugPrint("push badge number = \(payload?.badge ?? 0)")
+            debugPrint("push notification sound = \(payload?.sound ?? "None")")
+            
+            if let additionalData = result!.notification.payload!.additionalData {
+                debugPrint("additionalData = \(additionalData)")
+
+                if let actionSelected = payload?.actionButtons {
+                    debugPrint("actionSelected = \(actionSelected)")
+                }
+                
+                // DEEP LINK from action buttons
+                if let actionID = result?.action.actionID {
+                    
+                    debugPrint("actionID = \(actionID)")
+                    
+                    if actionID == "id2" {
+                        
+                    } else if actionID == "id1" {
+                        
+                    }
+                }
+            }
+        }
+        
+        let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
+        
+        OneSignal.setRequiresUserPrivacyConsent(false)
+        OneSignal.initWithLaunchOptions(launchOptions,
+                                        appId: "87a21c8e-cfee-4b79-8eef-23e692c64eca",
+                                        handleNotificationAction: notificationOpenedBlock,
+                                        settings: onesignalInitSettings)
         
         return true
     }
