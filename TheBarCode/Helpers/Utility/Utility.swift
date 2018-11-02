@@ -18,7 +18,7 @@ let theBarCodeInviteScheme = "theBarCodeInviteScheme"
 
 let deviceIdKey = "deviceIdKey"
 
-let kAppStoreId = ""
+let kAppStoreId = "1441084506"
 
 let genericErrorMessage = "Opps! Something went wrong"
 

@@ -2,48 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Fabric</key>
-    <dict>
-        <key>APIKey</key>
-        <string>9f73f9de6e61d92f7f83e60b45e24b2324669767</string>
-        <key>Kits</key>
-        <array>
-            <dict>
-                <key>KitInfo</key>
-                <dict/>
-                <key>KitName</key>
-                <string>Crashlytics</string>
-            </dict>
-        </array>
-    </dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your location will be used to show and notify about the nearby deals and live offers</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location will be used to show  the nearby deals and live offers</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>theBarCodeInviteScheme</string>
-		<string>fbapi</string>
-		<string>fb-messenger-share-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>theBarCodeInviteScheme</string>
-				<string>fb182951649264383</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>182951649264383</string>
-	<key>FacebookDisplayName</key>
-	<string>TheBarCode</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Contact access is required to send invitations via email</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -58,10 +16,52 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>theBarCodeInviteScheme</string>
+				<string>fb182951649264383</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>9f73f9de6e61d92f7f83e60b45e24b2324669767</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
+	<key>FacebookAppID</key>
+	<string>182951649264383</string>
+	<key>FacebookDisplayName</key>
+	<string>TheBarCode</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>theBarCodeInviteScheme</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Contact access is required to send invitations via email</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location will be used to show and notify about the nearby deals and live offers</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location will be used to show  the nearby deals and live offers</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Black.ttf</string>

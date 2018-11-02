@@ -12,7 +12,7 @@ import Alamofire
 import ObjectMapper
 import StoreKit
 
-let kProductIdReload = "com.cygnismedia.TheBarCode.reload"
+let kProductIdReload = bundleId + ".reload"
 
 @objc protocol ReloadViewControllerDelegate: class {
     @objc optional func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)

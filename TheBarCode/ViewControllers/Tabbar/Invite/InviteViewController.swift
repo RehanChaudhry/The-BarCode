@@ -20,6 +20,8 @@ class InviteViewController: UITableViewController {
     
     @IBOutlet weak var codeLabel: UILabel!
     
+    @IBOutlet var shareInviteCodeButton: GradientButton!
+    
     var shouldShowCancelBarButton: Bool = false
     
     var isRedeemingDeal: Bool = false
@@ -117,13 +119,15 @@ extension InviteViewController {
 extension InviteViewController {
     func generateAndShareDynamicLink() {
         
+        self.shareInviteCodeButton.showLoader()
+        
         let user = Utility.shared.getCurrentUser()!
         let ownReferralCode = user.ownReferralCode.value
         let inviteUrlString = barCodeDomainURLString + "referral=" + ownReferralCode
         
         let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
-        let dynamicLinkInviteDomain = "thebarcode.page.link"
+        let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
         
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
         linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
@@ -145,6 +149,7 @@ extension InviteViewController {
         linkComponents.shorten { (shortUrl, warnings, error) in
             
             guard error == nil else {
+                self.shareInviteCodeButton.hideLoader()
                 self.showAlertController(title: "Invite", msg: error!.localizedDescription)
                 return
             }
@@ -155,8 +160,9 @@ extension InviteViewController {
             
             let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view
-            self.present(activityViewController, animated: true, completion: nil)
-            
+            self.present(activityViewController, animated: true, completion: {
+                self.shareInviteCodeButton.hideLoader()
+            })
         }
         
     }

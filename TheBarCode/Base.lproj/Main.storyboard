@@ -208,6 +208,7 @@
                     <connections>
                         <outlet property="codeLabel" destination="lYm-S6-wXt" id="F93-5O-c0I"/>
                         <outlet property="headerView" destination="9eU-7j-0RW" id="DB8-wX-6FV"/>
+                        <outlet property="shareInviteCodeButton" destination="4pa-1v-FQE" id="v6a-aa-ihc"/>
                         <segue destination="cno-zB-d4w" kind="show" identifier="InviteToContactsSegue" id="ncT-K6-Uov"/>
                     </connections>
                 </tableViewController>
@@ -579,7 +580,7 @@
                                                 <rect key="frame" x="0.0" y="421" width="375" height="182"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F7G-gb-goB">
-                                                        <rect key="frame" x="92.5" y="128" width="190" height="31"/>
+                                                        <rect key="frame" x="94.5" y="128" width="186" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="31" id="9w0-6Z-Xej"/>
                                                         </constraints>

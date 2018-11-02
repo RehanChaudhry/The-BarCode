@@ -24,6 +24,7 @@ target 'TheBarCode' do
   pod 'Firebase/DynamicLinks', '~> 5.10.0'
   pod 'Fabric', '~> 1.7.13'
   pod 'Crashlytics', '~> 3.10.9'
+  pod 'OneSignal', '~> 2.9.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

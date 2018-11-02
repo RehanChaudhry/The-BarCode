@@ -78,6 +78,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - ObjectMapper (3.3.0)
+  - OneSignal (2.9.3)
   - PureLayout (3.1.2)
   - Reusable (4.0.3):
     - Reusable/Storyboard (= 4.0.3)
@@ -107,6 +108,7 @@ DEPENDENCIES:
   - HTTPStatusCodes (~> 3.2.0)
   - KeychainAccess (~> 3.1.2)
   - ObjectMapper (~> 3.3.0)
+  - OneSignal (~> 2.9.0)
   - PureLayout (~> 3.1.2)
   - Reusable (~> 4.0.3)
   - RNCryptor (~> 5.0.3)
@@ -141,6 +143,7 @@ SPEC REPOS:
     - KeychainAccess
     - nanopb
     - ObjectMapper
+    - OneSignal
     - PureLayout
     - Reusable
     - RNCryptor
@@ -174,6 +177,7 @@ SPEC CHECKSUMS:
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  OneSignal: a506e3bc61d2030f0757faf9bd783a9b211c6e3c
   PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
   RNCryptor: c93d19029dcf7ff160aca0f24d6c9e7b0d82f664
@@ -184,6 +188,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 27b0faaaafbe4003d353bd4aa75f627b6d247686
+PODFILE CHECKSUM: 4e6eaf7bf1224377723ac65cda729a7641e46715
 
 COCOAPODS: 1.5.3
