@@ -76,6 +76,7 @@ class FavouritesViewController: UIViewController {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
+        barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }
 }
@@ -314,5 +315,11 @@ extension FavouritesViewController: BarTableViewCellDelegare {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
         let bar = self.bars[indexPath!.row]
         markFavourite(bar: bar, cell: cell)
+    }
+}
+
+//MARK: BarDetailViewControllerDelegate
+extension FavouritesViewController: BarDetailViewControllerDelegate {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
     }
 }

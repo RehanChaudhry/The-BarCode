@@ -74,8 +74,11 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
     }
     
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, directionsButtonTapped sender: UIButton) {
+        
+        let user = Utility.shared.getCurrentUser()
+        
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=,&directionsmode=driving", self.bar.latitude.value, self.bar.longitude.value)
+            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",user!.latitude.value,user!.longitude.value, self.bar.latitude.value, self.bar.longitude.value)
             let url = URL(string: urlString)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         } else {

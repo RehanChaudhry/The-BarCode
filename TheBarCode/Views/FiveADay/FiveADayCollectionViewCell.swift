@@ -14,6 +14,8 @@ import Gradientable
 protocol FiveADayCollectionViewCellDelegate: class {
     func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton)
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton)
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewBarDetailButtonTapped sender: UIButton)
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewDirectionButtonTapped sender: UIButton)
 }
 
 class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
@@ -22,10 +24,12 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var coverImageView: AsyncImageView!
     
-    @IBOutlet var dealTitleLabel: UILabel!
-    @IBOutlet var dealSubTitleLabel: UILabel!
+    @IBOutlet var dealTitleButton: UIButton!
+    @IBOutlet var dealSubTitleButton: UIButton!
+    
     @IBOutlet var dealDetailLabel: UILabel!
-    @IBOutlet var locationLabel: UILabel!
+    
+    @IBOutlet var barNameButton: UIButton!
     @IBOutlet var distanceLabel: UILabel!
     
     @IBOutlet var redeemButton: GradientButton!
@@ -58,11 +62,11 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         }
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-
-        self.dealTitleLabel.text = deal.title.value
-        self.dealSubTitleLabel.text =  deal.subTitle.value
+        
+        self.dealTitleButton.setTitle(deal.title.value, for: .normal)
+        self.dealSubTitleButton.setTitle(deal.subTitle.value, for: .normal)
         self.dealDetailLabel.text =  deal.detail.value
-        self.locationLabel.text = deal.establishment.value!.title.value
+        self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
         
         if let distance = deal.establishment.value?.distance {
             self.distanceLabel.isHidden = false
@@ -84,12 +88,10 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         if self.dealDetailLabel.isTruncated {
             self.dealDetailLabel.isHidden = true
             self.detailVerticalSpacing.constant = 8.0 + 29.0
-            
             self.detailButton.isHidden = false
         } else {
             self.dealDetailLabel.isHidden = false
             self.detailVerticalSpacing.constant = 8.0
-            
             self.detailButton.isHidden = true
         }
         
@@ -102,5 +104,13 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBAction func viewDetailButtonTapped(_ sender: UIButton) {
         self.delegate.fiveADayCell(cell: self, viewDetailButtonTapped: sender)
+    }
+    
+    @IBAction func viewBarDetailButtonTapped(_ sender: UIButton) {
+        self.delegate.fiveADayCell(cell: self, viewBarDetailButtonTapped: sender)
+    }
+    
+    @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
+        self.delegate.fiveADayCell(cell: self, viewDirectionButtonTapped: sender)
     }
 }

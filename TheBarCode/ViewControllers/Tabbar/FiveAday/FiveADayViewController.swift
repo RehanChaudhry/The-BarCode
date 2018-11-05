@@ -80,6 +80,34 @@ class FiveADayViewController: UIViewController {
         self.getFiveADayDeals()
     }
     
+    func showBarDetail(bar: Bar){
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = bar
+        barDetailController.delegate = self
+        self.present(barDetailNav, animated: true, completion: nil)
+    }
+    
+    func showDirection(bar: Bar){
+        let user = Utility.shared.getCurrentUser()
+
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",user!.latitude.value,user!.longitude.value,bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func showDealDetail(deal: FiveADayDeal) {
+        let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
+        fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
+        fiveADayDetailViewController.deal = deal
+        self.present(fiveADayDetailViewController, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -220,6 +248,7 @@ extension FiveADayViewController {
     }
 }
 
+//MARK: FiveADayCollectionViewCellDelegate
 extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
     func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton) {
         let index = self.pagerView.index(for: cell)
@@ -262,15 +291,41 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
     }
     
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton) {
-        let index = self.pagerView.index(for: cell)
         
-        let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
-        fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
-        fiveADayDetailViewController.deal = self.deals[index]
-        self.present(fiveADayDetailViewController, animated: true, completion: nil)
+        self.pagerView.automaticSlidingInterval = 0.0
+
+        let index = self.pagerView.index(for: cell)
+        let deal = self.deals[index]
+        self.showDealDetail(deal: deal)
+      
+    }
+    
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewBarDetailButtonTapped sender: UIButton) {
+
+        self.pagerView.automaticSlidingInterval = 0.0
+
+        let index = self.pagerView.index(for: cell)
+        if let bar = self.deals[index].establishment.value {
+            self.showBarDetail(bar: bar)
+        } else {
+            debugPrint("deals establishment value not found")
+        }
+    }
+    
+    func fiveADayCell(cell: FiveADayCollectionViewCell, viewDirectionButtonTapped sender: UIButton) {
+
+        self.pagerView.automaticSlidingInterval = 0.0
+
+        let index = self.pagerView.index(for: cell)
+        if let bar = self.deals[index].establishment.value {
+            self.showDirection(bar: bar)
+        } else {
+            debugPrint("deals establishment value not found")
+        }
     }
 }
 
+//MARK: OutOfCreditViewControllerDelegate
 extension FiveADayViewController: OutOfCreditViewControllerDelegate {
     func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0
@@ -353,4 +408,11 @@ extension FiveADayViewController {
         self.reloadData()
     }
     
+}
+
+//MARK: BarDetailViewControllerDelegate
+extension FiveADayViewController : BarDetailViewControllerDelegate {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
 }

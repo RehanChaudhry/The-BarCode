@@ -39,20 +39,34 @@
                                     <constraint firstAttribute="height" constant="205" id="uZ1-Ap-xIM"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Green Bean" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuZ-qk-aBk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Vk-me-Vwd">
                                 <rect key="frame" x="16" y="225" width="250" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="eQ2-wE-ooN"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="2 smoothies for the price of 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVV-9r-T4H">
-                                <rect key="frame" x="16" y="248" width="250" height="19.5"/>
+                                <state key="normal" title="Green Bean">
+                                    <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewBarDetailButtonTapped:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="8oJ-Mv-LG7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORN-dS-uJi">
+                                <rect key="frame" x="16" y="248" width="250" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="sxP-jf-4Ut"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="2 smoothies for the price of 1">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewBarDetailButtonTapped:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="2s8-B1-Kdb"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lunch and get 2 for 1 on smoothies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXk-Tx-yH5">
-                                <rect key="frame" x="16" y="275.5" width="250" height="67.5"/>
+                                <rect key="frame" x="16" y="276" width="250" height="67.5"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -64,12 +78,19 @@
                                     <constraint firstAttribute="width" constant="14" id="zJP-gL-1mw"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The White Hart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJt-Tz-ZDt">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbM-75-8dd">
                                 <rect key="frame" x="35" y="405" width="145" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="0YD-5h-gGk"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="The White Hart">
+                                    <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewDirectionButtonTapped:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="yf3-Tf-LSw"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4G-R3-o4K">
                                 <rect key="frame" x="188" y="404.5" width="78" height="15"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
@@ -96,7 +117,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4n-qH-Kz9">
-                                <rect key="frame" x="107.5" y="267.5" width="67" height="27"/>
+                                <rect key="frame" x="107.5" y="276" width="67" height="27"/>
                                 <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
                                 <state key="normal" title="View Details">
                                     <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -111,28 +132,28 @@
                             <constraint firstItem="I4n-qH-Kz9" firstAttribute="centerX" secondItem="IL0-Y3-8n3" secondAttribute="centerX" id="0mU-c2-U4P"/>
                             <constraint firstItem="MZg-ZB-KGl" firstAttribute="top" secondItem="rMz-d8-cg0" secondAttribute="bottom" constant="16" id="1Vh-A6-STr"/>
                             <constraint firstAttribute="trailing" secondItem="V4G-R3-o4K" secondAttribute="trailing" constant="16" id="2u0-32-OcC"/>
-                            <constraint firstItem="I4n-qH-Kz9" firstAttribute="top" secondItem="IVV-9r-T4H" secondAttribute="bottom" id="3iU-Qe-ghH"/>
                             <constraint firstItem="6ma-Xw-PYc" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" id="7BB-mi-chd"/>
                             <constraint firstItem="rMz-d8-cg0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IXk-Tx-yH5" secondAttribute="bottom" constant="8" id="7Wg-wq-Qud"/>
-                            <constraint firstItem="IVV-9r-T4H" firstAttribute="top" secondItem="uuZ-qk-aBk" secondAttribute="bottom" constant="8" id="BAw-XW-NiY"/>
                             <constraint firstAttribute="trailing" secondItem="MZg-ZB-KGl" secondAttribute="trailing" constant="16" id="D4l-K0-wjc"/>
-                            <constraint firstItem="IVV-9r-T4H" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="Ehx-gk-gY1"/>
-                            <constraint firstItem="uuZ-qk-aBk" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="Jl2-of-k6p"/>
+                            <constraint firstItem="V4G-R3-o4K" firstAttribute="leading" secondItem="WbM-75-8dd" secondAttribute="trailing" constant="8" id="ElT-XZ-kOA"/>
+                            <constraint firstItem="ORN-dS-uJi" firstAttribute="top" secondItem="8Vk-me-Vwd" secondAttribute="bottom" constant="8" id="G1D-sy-BY1"/>
+                            <constraint firstItem="8Vk-me-Vwd" firstAttribute="top" secondItem="6ma-Xw-PYc" secondAttribute="bottom" constant="20" id="H6q-zm-IYM"/>
                             <constraint firstItem="MZg-ZB-KGl" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="Pef-Nl-MpP"/>
-                            <constraint firstAttribute="trailing" secondItem="uuZ-qk-aBk" secondAttribute="trailing" constant="16" id="TGR-ny-anP"/>
+                            <constraint firstAttribute="trailing" secondItem="ORN-dS-uJi" secondAttribute="trailing" constant="16" id="RED-yZ-ZdV"/>
+                            <constraint firstItem="MZg-ZB-KGl" firstAttribute="top" secondItem="WbM-75-8dd" secondAttribute="bottom" constant="16" id="TgJ-Ic-SNA"/>
+                            <constraint firstItem="WbM-75-8dd" firstAttribute="leading" secondItem="rMz-d8-cg0" secondAttribute="trailing" constant="5" id="Wvo-rn-M0w"/>
                             <constraint firstItem="6ma-Xw-PYc" firstAttribute="top" secondItem="IL0-Y3-8n3" secondAttribute="top" id="edf-Fq-vjw"/>
-                            <constraint firstItem="V4G-R3-o4K" firstAttribute="leading" secondItem="dJt-Tz-ZDt" secondAttribute="trailing" constant="8" id="egD-GC-opV"/>
                             <constraint firstAttribute="trailing" secondItem="IXk-Tx-yH5" secondAttribute="trailing" constant="16" id="ege-Aw-cBX"/>
+                            <constraint firstItem="ORN-dS-uJi" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="ewN-b5-TBk"/>
                             <constraint firstAttribute="bottom" secondItem="MZg-ZB-KGl" secondAttribute="bottom" constant="24" id="hLe-VJ-CLA"/>
+                            <constraint firstAttribute="trailing" secondItem="8Vk-me-Vwd" secondAttribute="trailing" constant="16" id="icb-Ky-bpF"/>
                             <constraint firstItem="rMz-d8-cg0" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="qX2-pD-vjf"/>
+                            <constraint firstItem="8Vk-me-Vwd" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="r8k-jx-XAK"/>
                             <constraint firstItem="MZg-ZB-KGl" firstAttribute="top" secondItem="V4G-R3-o4K" secondAttribute="bottom" constant="16.5" id="rH3-gY-UnM"/>
-                            <constraint firstItem="dJt-Tz-ZDt" firstAttribute="leading" secondItem="rMz-d8-cg0" secondAttribute="trailing" constant="5" id="s3u-V9-14z"/>
-                            <constraint firstItem="uuZ-qk-aBk" firstAttribute="top" secondItem="6ma-Xw-PYc" secondAttribute="bottom" constant="20" id="sLo-9P-3or"/>
-                            <constraint firstItem="MZg-ZB-KGl" firstAttribute="top" secondItem="dJt-Tz-ZDt" secondAttribute="bottom" constant="16" id="t9Q-fm-BaH"/>
-                            <constraint firstAttribute="trailing" secondItem="IVV-9r-T4H" secondAttribute="trailing" constant="16" id="til-5J-FKx"/>
                             <constraint firstItem="IXk-Tx-yH5" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="utc-NN-559"/>
                             <constraint firstAttribute="trailing" secondItem="6ma-Xw-PYc" secondAttribute="trailing" id="vjh-Cg-xY8"/>
-                            <constraint firstItem="IXk-Tx-yH5" firstAttribute="top" secondItem="IVV-9r-T4H" secondAttribute="bottom" constant="8" id="xQI-T5-1HO"/>
+                            <constraint firstItem="IXk-Tx-yH5" firstAttribute="top" secondItem="ORN-dS-uJi" secondAttribute="bottom" constant="8" id="xJt-YW-rpv"/>
+                            <constraint firstItem="I4n-qH-Kz9" firstAttribute="top" secondItem="ORN-dS-uJi" secondAttribute="bottom" constant="8" id="yJt-LX-xHO"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -158,15 +179,15 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="8Yo-mk-xlF"/>
             <connections>
+                <outlet property="barNameButton" destination="WbM-75-8dd" id="lpg-nQ-Tyi"/>
                 <outlet property="coverImageHeight" destination="uZ1-Ap-xIM" id="NCG-Y4-GFi"/>
                 <outlet property="coverImageView" destination="6ma-Xw-PYc" id="Ic9-Vu-HfZ"/>
                 <outlet property="dealDetailLabel" destination="IXk-Tx-yH5" id="3IC-dv-6sJ"/>
-                <outlet property="dealSubTitleLabel" destination="IVV-9r-T4H" id="WVF-Bc-DXJ"/>
-                <outlet property="dealTitleLabel" destination="uuZ-qk-aBk" id="Scf-y3-sZC"/>
+                <outlet property="dealSubTitleButton" destination="ORN-dS-uJi" id="xWr-BB-Szm"/>
+                <outlet property="dealTitleButton" destination="8Vk-me-Vwd" id="14f-nV-2eb"/>
                 <outlet property="detailButton" destination="I4n-qH-Kz9" id="rwT-ch-WTF"/>
                 <outlet property="detailVerticalSpacing" destination="7Wg-wq-Qud" id="wVv-pY-IxY"/>
                 <outlet property="distanceLabel" destination="V4G-R3-o4K" id="kIc-NZ-hds"/>
-                <outlet property="locationLabel" destination="dJt-Tz-ZDt" id="nNi-6R-i2R"/>
                 <outlet property="redeemButton" destination="MZg-ZB-KGl" id="ogI-UY-R13"/>
                 <outlet property="shadowView" destination="IL0-Y3-8n3" id="03x-OO-jKu"/>
             </connections>
