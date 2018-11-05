@@ -10,6 +10,10 @@ import UIKit
 import SJSegmentedScrollView
 import PureLayout
 
+protocol BarDetailViewControllerDelegate: class {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem)
+}
+
 class BarDetailViewController: UIViewController {
     
     @IBOutlet var containerView: UIView!
@@ -17,6 +21,8 @@ class BarDetailViewController: UIViewController {
     
     @IBOutlet var bottomView: UIView!
     @IBOutlet var bottomViewBottom: NSLayoutConstraint!
+    
+    weak var delegate: BarDetailViewControllerDelegate!
 
     var headerController: BarDetailHeaderViewController!
     
@@ -121,7 +127,9 @@ class BarDetailViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            self.delegate.barDetailViewController(controller: self, cancelButtonTapped: sender)
+        }        
     }
     
     @IBAction func getOffButtonTapped(_ sender: Any) {

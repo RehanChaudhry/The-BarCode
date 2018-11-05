@@ -139,6 +139,7 @@ class ExploreViewController: UIViewController {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
+        barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
@@ -354,4 +355,10 @@ extension ExploreViewController {
         self.refreshSnackBar()
     }
     
+}
+
+//MARK: BarDetailViewControllerDelegate
+extension ExploreViewController: BarDetailViewControllerDelegate {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+    }
 }

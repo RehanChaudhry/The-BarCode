@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,20 +29,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="371" height="159.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Green Bean" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bR-bf-TmJ">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8p-8P-fFs">
                         <rect key="frame" x="20" y="10" width="331" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="cL1-4J-Whr"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="2 smoothies for the price of 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYA-HF-62M">
-                        <rect key="frame" x="20" y="33" width="331" height="19.5"/>
+                        <state key="normal" title="Green Bean">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="viewBarDetailButtonTapped:" destination="W90-3m-imA" eventType="touchUpInside" id="Ln6-Zs-Y62"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nao-9k-Q4p">
+                        <rect key="frame" x="20" y="33" width="331" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="H2s-uj-6wL"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="2 smoothies for the price of 1">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="viewBarDetailButtonTapped:" destination="W90-3m-imA" eventType="touchUpInside" id="Jz3-pb-0kW"/>
+                        </connections>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lunch and get 2 for 1 on smoothies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwW-dp-hX8">
-                        <rect key="frame" x="20" y="60" width="331" height="50.5"/>
+                        <rect key="frame" x="20" y="61" width="331" height="50.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -54,12 +68,19 @@
                             <constraint firstAttribute="width" constant="14" id="LAD-rf-Hj4"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The White Hart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Fg-fx-FuP">
-                        <rect key="frame" x="39" y="123.5" width="226" height="16"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imx-qr-Q7z">
+                        <rect key="frame" x="39" y="124.5" width="226" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="b8n-Xi-PCc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
+                        <state key="normal" title="The White Hart">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="viewDirectionButtonTapped:" destination="W90-3m-imA" eventType="touchUpInside" id="7Uv-2o-Xoe"/>
+                        </connections>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIE-uK-WlY">
                         <rect key="frame" x="273" y="123.5" width="78" height="16"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
@@ -69,33 +90,32 @@
                 </subviews>
                 <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="7bR-bf-TmJ" secondAttribute="trailing" constant="20" id="6Ze-hd-ljR"/>
+                    <constraint firstItem="qwW-dp-hX8" firstAttribute="top" secondItem="Nao-9k-Q4p" secondAttribute="bottom" constant="8" id="2jB-DN-SMl"/>
                     <constraint firstAttribute="trailing" secondItem="qwW-dp-hX8" secondAttribute="trailing" constant="20" id="6kp-Rc-26j"/>
                     <constraint firstItem="pIE-uK-WlY" firstAttribute="top" secondItem="XZi-cw-nKK" secondAttribute="top" id="6r8-Lk-K8d"/>
-                    <constraint firstItem="vYA-HF-62M" firstAttribute="top" secondItem="7bR-bf-TmJ" secondAttribute="bottom" constant="8" id="9sc-wu-xXW"/>
-                    <constraint firstItem="pIE-uK-WlY" firstAttribute="leading" secondItem="6Fg-fx-FuP" secondAttribute="trailing" constant="8" id="CmE-xC-f39"/>
                     <constraint firstAttribute="trailing" secondItem="pIE-uK-WlY" secondAttribute="trailing" constant="20" id="DTd-eF-rGw"/>
-                    <constraint firstItem="6Fg-fx-FuP" firstAttribute="leading" secondItem="XZi-cw-nKK" secondAttribute="trailing" constant="5" id="ExV-To-6Yb"/>
-                    <constraint firstItem="6Fg-fx-FuP" firstAttribute="top" secondItem="XZi-cw-nKK" secondAttribute="top" id="IZ7-yl-JOg"/>
                     <constraint firstItem="qwW-dp-hX8" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="Jsf-ma-Ds4"/>
                     <constraint firstAttribute="bottom" secondItem="pIE-uK-WlY" secondAttribute="bottom" constant="20" id="LIG-eq-sT8"/>
-                    <constraint firstItem="qwW-dp-hX8" firstAttribute="top" secondItem="vYA-HF-62M" secondAttribute="bottom" constant="8" id="Pmo-J7-pun"/>
-                    <constraint firstItem="7bR-bf-TmJ" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="UV6-Lo-3Cx"/>
-                    <constraint firstItem="vYA-HF-62M" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="X4K-cc-MWM"/>
-                    <constraint firstItem="7bR-bf-TmJ" firstAttribute="top" secondItem="uHi-Q2-J2c" secondAttribute="top" constant="10" id="bhV-8Z-ORC"/>
+                    <constraint firstItem="f8p-8P-fFs" firstAttribute="top" secondItem="uHi-Q2-J2c" secondAttribute="top" constant="10" id="M1e-3n-eze"/>
+                    <constraint firstItem="pIE-uK-WlY" firstAttribute="leading" secondItem="imx-qr-Q7z" secondAttribute="trailing" constant="8" id="O0N-9a-7Hg"/>
+                    <constraint firstAttribute="bottom" secondItem="imx-qr-Q7z" secondAttribute="bottom" constant="20" id="U0w-zM-2FP"/>
                     <constraint firstAttribute="bottom" secondItem="XZi-cw-nKK" secondAttribute="bottom" constant="20" id="dYb-fZ-jOt"/>
-                    <constraint firstAttribute="bottom" secondItem="6Fg-fx-FuP" secondAttribute="bottom" constant="20" id="l5d-Re-dI9"/>
+                    <constraint firstItem="Nao-9k-Q4p" firstAttribute="top" secondItem="f8p-8P-fFs" secondAttribute="bottom" constant="8" id="eE3-ot-QwX"/>
+                    <constraint firstItem="f8p-8P-fFs" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="eeR-hg-OYv"/>
+                    <constraint firstAttribute="trailing" secondItem="f8p-8P-fFs" secondAttribute="trailing" constant="20" id="n3A-7d-f3f"/>
                     <constraint firstItem="XZi-cw-nKK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qwW-dp-hX8" secondAttribute="bottom" constant="8" id="nAO-hO-8xU"/>
-                    <constraint firstAttribute="trailing" secondItem="vYA-HF-62M" secondAttribute="trailing" constant="20" id="nxT-5Z-EQo"/>
+                    <constraint firstAttribute="trailing" secondItem="Nao-9k-Q4p" secondAttribute="trailing" constant="20" id="qIN-mo-74M"/>
+                    <constraint firstItem="imx-qr-Q7z" firstAttribute="leading" secondItem="XZi-cw-nKK" secondAttribute="trailing" constant="5" id="rDE-Aw-gqb"/>
+                    <constraint firstItem="Nao-9k-Q4p" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="t5D-Lz-3cn"/>
                     <constraint firstItem="XZi-cw-nKK" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="tQ2-2V-mYg"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="barNameLabel" destination="6Fg-fx-FuP" id="C0O-AM-eSS"/>
+                <outlet property="barNameButton" destination="imx-qr-Q7z" id="tlO-g9-arb"/>
                 <outlet property="detailLabel" destination="qwW-dp-hX8" id="tA6-hw-q94"/>
                 <outlet property="locationLabel" destination="pIE-uK-WlY" id="Rg6-1A-rAY"/>
-                <outlet property="subTitleLabel" destination="vYA-HF-62M" id="77G-Z0-fIn"/>
-                <outlet property="titleLabel" destination="7bR-bf-TmJ" id="QJG-Kh-Pwj"/>
+                <outlet property="subTitleButton" destination="Nao-9k-Q4p" id="CZ1-8q-wLD"/>
+                <outlet property="titleButton" destination="f8p-8P-fFs" id="QK8-f3-2ry"/>
             </connections>
             <point key="canvasLocation" x="42.5" y="0.0"/>
         </tableViewCell>
