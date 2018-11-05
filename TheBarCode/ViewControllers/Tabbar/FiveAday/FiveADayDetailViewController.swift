@@ -9,10 +9,16 @@
 import UIKit
 import Reusable
 
+
+protocol FiveADayDetailViewControllerDelegate: class {
+    func fiveADayDetailViewController(controller: FiveADayDetailViewController, cancelButtonTapped sender: UIButton)
+}
+
 class FiveADayDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
+    weak var delegate: FiveADayDetailViewControllerDelegate!
+
     var deal : FiveADayDeal!
     
     override func viewDidLoad() {
@@ -66,8 +72,10 @@ class FiveADayDetailViewController: UIViewController {
     }
     
     //MARK: IBAction
-    @IBAction func cancelButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true) {
+            self.delegate.fiveADayDetailViewController(controller: self, cancelButtonTapped: sender)
+        }
     }
     
 }

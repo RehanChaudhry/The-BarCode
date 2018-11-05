@@ -107,6 +107,7 @@ class FiveADayViewController: UIViewController {
         let fiveADayDetailViewController = (self.storyboard?.instantiateViewController(withIdentifier: "FiveADayDetailViewController") as! FiveADayDetailViewController)
         fiveADayDetailViewController.modalPresentationStyle = .overCurrentContext
         fiveADayDetailViewController.deal = deal
+        fiveADayDetailViewController.delegate = self
         self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
     
@@ -412,8 +413,15 @@ extension FiveADayViewController {
 }
 
 //MARK: BarDetailViewControllerDelegate
-extension FiveADayViewController : BarDetailViewControllerDelegate {
+extension FiveADayViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+}
+
+//MARK: BarDetailViewControllerDelegate
+extension FiveADayViewController: FiveADayDetailViewControllerDelegate {
+    func fiveADayDetailViewController(controller: FiveADayDetailViewController, cancelButtonTapped sender: UIButton) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
 }
