@@ -14,6 +14,7 @@ import FirebaseDynamicLinks
 import Fabric
 import Crashlytics
 import OneSignal
+import CoreStore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var inviteUrlString: String?
     
-    var liveOfferBar: Bar?
+    var liveOfferBarDict: [String : Any]?
     var refreshFiveADay: Bool?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -49,8 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let additionalData = result!.notification.payload!.additionalData, let notificationTypeRaw: String = additionalData["type"] as? String, let notificationType = NotificationType(rawValue: notificationTypeRaw) {
                 debugPrint("additionalData = \(additionalData)")
 
-                if notificationType == NotificationType.liveOffer {
-                    
+                if notificationType == NotificationType.liveOffer, let barDict = additionalData["bar"] as? [String : Any] {
+                    self.liveOfferBarDict = barDict
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
                 } else if notificationType == NotificationType.fiveADay {
                     self.refreshFiveADay = true
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
