@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var inviteUrlString: String?
     
+    var liveOfferBar: Bar?
+    var refreshFiveADay: Bool?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -43,23 +46,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             debugPrint("push badge number = \(payload?.badge ?? 0)")
             debugPrint("push notification sound = \(payload?.sound ?? "None")")
             
-            if let additionalData = result!.notification.payload!.additionalData {
+            if let additionalData = result!.notification.payload!.additionalData, let notificationTypeRaw: String = additionalData["type"] as? String, let notificationType = NotificationType(rawValue: notificationTypeRaw) {
                 debugPrint("additionalData = \(additionalData)")
 
-                if let actionSelected = payload?.actionButtons {
-                    debugPrint("actionSelected = \(actionSelected)")
-                }
-                
-                // DEEP LINK from action buttons
-                if let actionID = result?.action.actionID {
+                if notificationType == NotificationType.liveOffer {
                     
-                    debugPrint("actionID = \(actionID)")
+                } else if notificationType == NotificationType.fiveADay {
+                    self.refreshFiveADay = true
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
+                } else {
                     
-                    if actionID == "id2" {
-                        
-                    } else if actionID == "id1" {
-                        
-                    }
                 }
             }
         }
@@ -67,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
         
         OneSignal.setRequiresUserPrivacyConsent(false)
+        OneSignal.inFocusDisplayType = .notification
         OneSignal.initWithLaunchOptions(launchOptions,
                                         appId: "87a21c8e-cfee-4b79-8eef-23e692c64eca",
                                         handleNotificationAction: notificationOpenedBlock,

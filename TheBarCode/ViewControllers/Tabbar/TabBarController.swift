@@ -23,12 +23,24 @@ class TabBarController: UITabBarController {
         
         explore.selectedImage = #imageLiteral(resourceName: "icon_tab_explore_selected").withRenderingMode(.alwaysOriginal)
         
-        self.selectedIndex = 2
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
+            appDelegate.refreshFiveADay = false
+            self.selectedIndex = 1
+        } else {
+            self.selectedIndex = 2
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
     }
     
     //MARK: My Methods
@@ -44,4 +56,26 @@ class TabBarController: UITabBarController {
         OneSignal.sendTags(["user_id" : user.userId.value])
     }
     
+}
+
+//MARK: Notification Methods
+extension TabBarController {
+    @objc func refreshFiveADayNotification(notification: Notification) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
+            appDelegate.refreshFiveADay = false
+            
+            let fiveADayController = ((self.viewControllers![1] as! UINavigationController).viewControllers[0] as! FiveADayViewController)
+            if fiveADayController.isViewLoaded {
+                fiveADayController.reloadData()
+            } else {
+                let _ = fiveADayController.view
+            }
+            
+            fiveADayController.dismiss(animated: false, completion: nil)
+            self.presentedViewController?.dismiss(animated: false, completion: nil)
+            
+            self.selectedIndex = 1
+        }
+    }
 }

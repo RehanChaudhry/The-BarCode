@@ -55,6 +55,8 @@ class ExploreViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.definesPresentationContext = true
+        
         self.view.backgroundColor = UIColor.appNavBarGrayColor()
         self.segmentContainerView.backgroundColor = UIColor.clear
         
