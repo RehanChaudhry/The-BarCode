@@ -11,7 +11,6 @@ import UIKit
 protocol RedeemStartViewControllerDelegate: class {
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int)
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int)
-    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int)
 }
 
 class RedeemStartViewController: UIViewController {
@@ -27,7 +26,6 @@ class RedeemStartViewController: UIViewController {
     var selectedIndex: Int = NSNotFound
 
     var deal : Deal! //for all offers except standard
-
     var type: OfferType = .unknown
     var bar: Bar! //for standard offer
     
@@ -81,12 +79,8 @@ class RedeemStartViewController: UIViewController {
     
     @IBAction func barTenderReadyButtonTapped(_ sender: UIButton) {
         
-        if type == .exclusive {
-            self.dismiss(animated: true) {
-                self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex)
-            }
-        } else {
-            self.barTenderRedeemDeal()
+        self.dismiss(animated: true) {
+            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex)
         }
     }
     
@@ -97,74 +91,4 @@ class RedeemStartViewController: UIViewController {
     }
 }
 
-
-//MARK: Webservices Methods
-extension RedeemStartViewController {
-    func barTenderRedeemDeal() {
-        
-        var params : [String : Any] = [:]
-        if type == .standard {
-             params = ["establishment_id" :  self.bar.id.value,
-                        "type" : "standard"]
-        } else {
-            params = ["establishment_id" : self.deal.establishmentId.value,
-                      "type" :"reload",
-                      "offer_id" :self.deal.id.value ]
-        }
-
-        self.actionButton.showLoader()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
-            
-            UIApplication.shared.endIgnoringInteractionEvents()
-            self.actionButton.hideLoader()
-
-            guard error == nil else {
-                self.showAlertController(title: "", msg: error!.localizedDescription)
-                self.delegate.redeemStartViewController(controller: self, dealRedeemed: error! as NSError, selectedIndex: self.selectedIndex)
-                return
-            }
-            
-            guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError!.errorMessages())
-                self.delegate.redeemStartViewController(controller: self, dealRedeemed: serverError!.nsError(), selectedIndex: self.selectedIndex)
-                return
-            }
-            
-            if let responseObj = response as? [String : Any], let _ = responseObj["data"] as? [String : Any] {
-                if self.deal != nil {
-                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                        let editedObject = transaction.edit(self.deal)
-                        editedObject!.establishment.value!.canRedeemOffer.value = false
-                    })
-                } else {
-                    //standard handling
-                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                        let editedObject = transaction.edit(self.bar)
-                        editedObject!.canRedeemOffer.value = false
-                    })
-                }
-                
-                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
-                
-                let msg = responseObj["message"] as! String
-                let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
-                
-                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-                    self.dismiss(animated: true) {
-                        self.delegate.redeemStartViewController(controller: self, dealRedeemed: nil, selectedIndex: self.selectedIndex)
-                        
-                        //                            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: self.actionButton, selectedIndex: self.selectedIndex)
-                    }
-                }))
-                self.present(alertController, animated: true, completion: nil)
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                self.showAlertController(title: "", msg: genericError.localizedDescription)
-                self.delegate.redeemStartViewController(controller: self, dealRedeemed: genericError, selectedIndex: self.selectedIndex)
-            }
-        }
-    }
-}
 

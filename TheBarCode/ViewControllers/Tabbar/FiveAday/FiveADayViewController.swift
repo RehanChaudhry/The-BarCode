@@ -111,6 +111,23 @@ class FiveADayViewController: UIViewController {
         self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
     
+    func moveToRedeemDealViewController(withCredit: Bool, selectedIndex: Int) {
+        
+        guard selectedIndex != NSNotFound else {
+            debugPrint("Index not found for deal redumtion")
+            return
+        }
+        
+        let deal = self.deals[selectedIndex]
+        
+        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+        redeemDealViewController.deal = deal
+        redeemDealViewController.redeemWithCredit = withCredit
+        redeemDealViewController.delegate = self
+        redeemDealViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemDealViewController, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -192,64 +209,6 @@ extension FiveADayViewController {
     }
 }
 
-//MARK: WebService Method
-extension FiveADayViewController {
-    func redeemFiveADayDeal(deal: FiveADayDeal, cell: FiveADayCollectionViewCell, redeemWithCredit: Bool) {
-        
-        self.pagerView.automaticSlidingInterval = 0.0
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        deal.showLoader = true
-        self.pagerView.reloadData()
-        
-        let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
-        
-        let params: [String: Any] = ["establishment_id": deal.establishmentId.value,
-                      "type": redeemType.rawValue,
-                      "offer_id" : deal.id.value]
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
-            
-            self.pagerView.automaticSlidingInterval = 4.0
-            deal.showLoader = false
-            self.pagerView.reloadData()
-            UIApplication.shared.endIgnoringInteractionEvents()
-            
-            guard error == nil else {
-                self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
-                return
-            }
-            
-            guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError?.errorMessages() ?? genericErrorMessage)
-                return
-            }
-            
-            if let responseObj = response as? [String : Any] {
-                if  let _ = responseObj["data"] as? [String : Any] {
-                    
-                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                        let editedObject = transaction.edit(deal)
-                        editedObject!.establishment.value!.canRedeemOffer.value = false
-                    })
-                    
-                    if redeemWithCredit {
-                        Utility.shared.userCreditConsumed()
-                    }
-                    
-                    let msg = responseObj["message"] as! String
-                    self.showAlertController(title: "", msg: msg)
-                    
-                } else {
-                    let genericError = APIHelper.shared.getGenericError()
-                    self.showAlertController(title: "", msg: genericError.localizedDescription)
-                }
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                self.showAlertController(title: "", msg: genericError.localizedDescription)
-            }
-        }
-    }
-}
 
 //MARK: FiveADayCollectionViewCellDelegate
 extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
@@ -263,12 +222,11 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                 let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
                 redeemStartViewController.deal = deal
                 redeemStartViewController.delegate = self
+                redeemStartViewController.selectedIndex = index
                 redeemStartViewController.modalPresentationStyle = .overCurrentContext
                 redeemStartViewController.redeemWithCredit = false
                 self.present(redeemStartViewController, animated: true, completion: nil)
                 
-                
-               // self.redeemFiveADayDeal(deal: deal, cell: cell, redeemWithCredit: false)
             } else {
                 if bar.credit.value > 0 {
                     self.pagerView.automaticSlidingInterval = 0.0
@@ -277,7 +235,6 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                     creditConsumptionController.modalPresentationStyle = .overCurrentContext
                     creditConsumptionController.selectedIndex = index
                     self.present(creditConsumptionController, animated: true, completion: nil)
-                    
                     
                 } else {
                     self.pagerView.automaticSlidingInterval = 0.0
@@ -371,32 +328,18 @@ extension FiveADayViewController: InviteViewControllerDelegate {
 //MARK: RedeemStartViewControllerDelegate
 extension FiveADayViewController : RedeemStartViewControllerDelegate {
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
-        self.pagerView.automaticSlidingInterval = 4.0
+        self.pagerView.automaticSlidingInterval = 4.0     
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
-        
-    }
-    
-    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
-        if error == nil {
-            self.pagerView.automaticSlidingInterval = 4.0
-        }
+        self.moveToRedeemDealViewController(withCredit: false, selectedIndex: selectedIndex)
     }
 }
 
 extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
         
-        guard selectedIndex != NSNotFound else {
-            debugPrint("Index not found for deal redumtion")
-            return
-        }
-        
-        let cell = self.pagerView(self.pagerView, cellForItemAt: selectedIndex)
-        let deal = self.deals[selectedIndex]
-        self.redeemFiveADayDeal(deal: deal, cell: cell as! FiveADayCollectionViewCell, redeemWithCredit: true)
-        
+        self.moveToRedeemDealViewController(withCredit: true, selectedIndex:selectedIndex)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -424,4 +367,20 @@ extension FiveADayViewController: FiveADayDetailViewControllerDelegate {
     func fiveADayDetailViewController(controller: FiveADayDetailViewController, cancelButtonTapped sender: UIButton) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
+}
+
+//MARK: RedeemDealViewControllerDelegate
+extension FiveADayViewController: RedeemDealViewControllerDelegate {
+    func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
+    
+    func redeemDealViewController(controller: RedeemDealViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        self.pagerView.automaticSlidingInterval = 4.0
+       
+        if error == nil {
+            self.pagerView.reloadData()
+        }
+
+    }    
 }

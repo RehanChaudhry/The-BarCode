@@ -117,11 +117,21 @@ class BarDetailViewController: UIViewController {
     }
     
     func setUpBottomView() {
-        if self.selectedBar.canRedeemOffer.value {
-            self.bottomViewBottom.constant = 0
+        if !self.selectedBar.canRedeemOffer.value {
+            self.standardRedeemButton.setGreyGradientColor()
         } else {
-            self.bottomViewBottom.constant = self.bottomView.frame.height
+            self.standardRedeemButton.layoutSubviews()
         }
+    }
+    
+    func moveToRedeemDealViewController(withCredit: Bool){
+        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+        redeemDealViewController.bar = self.selectedBar
+        redeemDealViewController.redeemWithCredit = withCredit
+        redeemDealViewController.type = .standard
+        redeemDealViewController.delegate = self
+        redeemDealViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemDealViewController, animated: true, completion: nil)
     }
 
     //MARK: My IBActions
@@ -129,12 +139,13 @@ class BarDetailViewController: UIViewController {
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true) {
             self.delegate.barDetailViewController(controller: self, cancelButtonTapped: sender)
-        }        
+        }
     }
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
     
         if self.selectedBar.canRedeemOffer.value {
+            
             let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
             redeemStartViewController.delegate = self
             redeemStartViewController.type = .standard
@@ -144,13 +155,21 @@ class BarDetailViewController: UIViewController {
             self.present(redeemStartViewController, animated: true, completion: nil)
             
         } else {
-            //Standard offer cannot be redeem again
-            let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-            cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-            cannotRedeemViewController.titleText = "Alert"
-            cannotRedeemViewController.messageText = "You have already redeem standard offer. To redeem Standard Offer reload first."
-            self.present(cannotRedeemViewController, animated: true, completion: nil)
+            
+            if self.selectedBar.credit.value > 0 {
+                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+                creditConsumptionController.delegate = self
+                creditConsumptionController.modalPresentationStyle = .overCurrentContext
+                self.present(creditConsumptionController, animated: true, completion: nil)
+                
+            } else {
+                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+                outOfCreditViewController.delegate = self
+                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+                self.present(outOfCreditViewController, animated: true, completion: nil)
+            }
         }
+     
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -191,62 +210,16 @@ extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
 //MARK: RedeemStartViewControllerDelegate
 extension BarDetailViewController: RedeemStartViewControllerDelegate {
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    
+        self.moveToRedeemDealViewController(withCredit: false)
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {        
-    }
-    
-    func redeemStartViewController(controller: RedeemStartViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
-        if error == nil {
-            self.setUpBottomView()
-        }
     }
 }
 
 //MARK: WebService Method
 extension BarDetailViewController {
-    
-    func redeemStandardDeal() {
-       
-        self.standardRedeemButton.showLoader()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-
-        let params: [String: Any] = ["establishment_id" : self.selectedBar.id.value,
-                                     "type": OfferType.standard.serverParamValue()]
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
-            
-            self.standardRedeemButton.hideLoader()
-            UIApplication.shared.endIgnoringInteractionEvents()
-           
-            guard error == nil else {
-                self.showAlertController(title: "", msg: error?.localizedDescription ?? genericErrorMessage)
-                return
-            }
-            
-            guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError?.errorMessages() ?? genericErrorMessage)
-                return
-            }
-            
-            if let responseObj = response as? [String : Any], let _ = responseObj["data"] as? [String : Any] {
-                
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let editedObject = transaction.edit(self.selectedBar)
-                    editedObject!.canRedeemOffer.value = false
-                })
-                
-                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
-                
-                let msg = responseObj["message"] as! String
-                self.showAlertController(title: "", msg: msg)
-                
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                self.showAlertController(title: "", msg: genericError.localizedDescription)
-            }
-        }
-    }
     
     //View for statistics
     func viewProfile() {
@@ -288,6 +261,7 @@ extension BarDetailViewController {
 extension BarDetailViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
         
+        self.moveToRedeemDealViewController(withCredit: true)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -295,7 +269,7 @@ extension BarDetailViewController: CreditCosumptionViewControllerDelegate {
     }    
 }
 
-
+//MARK: OutOfCreditViewControllerDelegate
 extension BarDetailViewController: OutOfCreditViewControllerDelegate {
     func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
         
@@ -336,4 +310,17 @@ extension BarDetailViewController : InviteViewControllerDelegate {
         
     }
 
+}
+
+//MARK: RedeemDealViewControllerDelegate
+extension BarDetailViewController: RedeemDealViewControllerDelegate {
+    func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
+    }
+    
+    func redeemDealViewController(controller: RedeemDealViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
+        
+        if error == nil {
+            self.setUpBottomView()
+        }
+    }
 }
