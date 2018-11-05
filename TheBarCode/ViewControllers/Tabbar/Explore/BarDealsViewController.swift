@@ -36,7 +36,7 @@ class BarDealsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.setUpStatefulTableView()
-        self.statefulTableView.triggerInitialLoad()
+        self.resetDeals()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +45,14 @@ class BarDealsViewController: UIViewController {
     }
 
     //MARK: My Methods
+    
+    func resetDeals() {
+        self.dataRequest?.cancel()
+        self.loadMore = Pagination()
+        self.deals.removeAll()
+        self.statefulTableView.reloadData()
+        self.statefulTableView.triggerInitialLoad()
+    }
     
     func setUpStatefulTableView() {
         
@@ -151,7 +159,6 @@ extension BarDealsViewController {
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
                 

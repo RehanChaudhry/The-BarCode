@@ -36,7 +36,7 @@ class BarLiveOffersViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.setUpStatefulTableView()
-        self.statefulTableView.triggerInitialLoad()
+        self.resetOffers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +45,14 @@ class BarLiveOffersViewController: UIViewController {
     }
     
     //MARK: My Methods
+    
+    func resetOffers() {
+        self.dataRequest?.cancel()
+        self.loadMore = Pagination()
+        self.offers.removeAll()
+        self.statefulTableView.reloadData()
+        self.statefulTableView.triggerInitialLoad()
+    }
     
     func setUpStatefulTableView() {
         

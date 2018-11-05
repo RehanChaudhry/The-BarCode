@@ -14,6 +14,7 @@ import MessageUI
 class BarDetailAboutViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
+    
     var bar : Bar!
 
     override func viewDidLoad() {
@@ -29,6 +30,11 @@ class BarDetailAboutViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func reloadData(bar: Bar) {
+        self.bar = bar
+        self.tableView.reloadData()
     }
 
 }
