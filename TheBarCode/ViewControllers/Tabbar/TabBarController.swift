@@ -8,9 +8,12 @@
 
 import UIKit
 import OneSignal
+import CoreStore
 
 class TabBarController: UITabBarController {
 
+    var shouldPresentBarDetail: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,13 +30,26 @@ class TabBarController: UITabBarController {
         if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
             appDelegate.refreshFiveADay = false
             self.selectedIndex = 1
+        } else if appDelegate.liveOfferBarDict != nil {
+            self.selectedIndex = 2
+            self.shouldPresentBarDetail = true
         } else {
             self.selectedIndex = 2
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.shouldPresentBarDetail {
+            self.shouldPresentBarDetail = false
+            self.showBarDetailForLiveOfferNotification()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -41,6 +57,7 @@ class TabBarController: UITabBarController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
     }
     
     //MARK: My Methods
@@ -54,6 +71,24 @@ class TabBarController: UITabBarController {
         debugPrint("User access token: \(user.accessToken.value)")
         
         OneSignal.sendTags(["user_id" : user.userId.value])
+    }
+    
+    @objc func showBarDetailForLiveOfferNotification() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let bar = appDelegate.liveOfferBarDict {
+            
+            var importedObject: Bar!
+            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: bar)
+            })
+            
+            let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
+            
+            let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+            let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+            barDetailController.selectedBar = fetchedObject
+            self.topMostViewController().present(barDetailNav, animated: true, completion: nil)
+        }
     }
     
 }
@@ -77,5 +112,9 @@ extension TabBarController {
             
             self.selectedIndex = 1
         }
+    }
+    
+    @objc func liveOfferNotification(notification: Notification) {
+        self.showBarDetailForLiveOfferNotification()
     }
 }

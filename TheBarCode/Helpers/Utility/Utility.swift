@@ -38,6 +38,7 @@ let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
 let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
 
 let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
+let notificationNameLiveOffer: String = "notificationNameLiveOffer"
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
