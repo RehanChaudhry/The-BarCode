@@ -48,6 +48,7 @@ class FiveADayDetailViewController: UIViewController {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
+        barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
@@ -119,5 +120,5 @@ extension FiveADayDetailViewController : DealDetailTableViewCellDelegate {
 //MARK: BarDetailViewControllerDelegate
 extension FiveADayDetailViewController : BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
-    }    
+    }
 }
