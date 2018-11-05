@@ -32,6 +32,8 @@ class FiveADayViewController: UIViewController {
         
         //self.deals = FiveADayDeal.getDummyList()
         
+        self.definesPresentationContext = true
+        
         self.pageControl.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         
         self.pageControl.numberOfPages = deals.count
@@ -407,7 +409,6 @@ extension FiveADayViewController {
     @objc func reloadSuccessfullNotification(notification: Notification) {
         self.reloadData()
     }
-    
 }
 
 //MARK: BarDetailViewControllerDelegate

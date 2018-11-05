@@ -28,8 +28,16 @@ enum RedeemType: String {
     any = "reload"
 }
 
+enum NotificationType: String {
+    case general = "admin",
+    fiveADay = "five_a_day",
+    liveOffer = "live_offer"
+}
+
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
 let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
+
+let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
