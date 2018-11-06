@@ -228,7 +228,8 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                 self.present(redeemStartViewController, animated: true, completion: nil)
                 
             } else {
-                if bar.credit.value > 0 {
+                let user = Utility.shared.getCurrentUser()
+                if user!.credit > 0 {
                     self.pagerView.automaticSlidingInterval = 0.0
                     let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
                     creditConsumptionController.delegate = self
