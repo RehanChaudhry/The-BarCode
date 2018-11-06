@@ -267,6 +267,8 @@ extension ReloadViewController {
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
     
             } else {
                 let genericError = APIHelper.shared.getGenericError()
