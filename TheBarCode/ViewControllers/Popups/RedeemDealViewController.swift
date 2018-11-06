@@ -115,7 +115,7 @@ extension RedeemDealViewController {
                     
                     
                     if redeemWithCredit {
-                        Utility.shared.userCreditConsumed()
+                       // Utility.shared.userCreditConsumed()
                     }
              
                     let msg = responseObj["message"] as! String
@@ -128,6 +128,9 @@ extension RedeemDealViewController {
                         
                     }))
                     self.present(alertController, animated: true, completion: nil)
+                    
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()

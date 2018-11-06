@@ -302,6 +302,9 @@ extension ExploreViewController {
                 self.redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
                 self.redeemInfo!.canReload = true
                 
+                let credit = redeemInfoDict["credit"] as! Int
+                Utility.shared.userCreditUpdate(creditValue: credit)
+                
                 if self.redeemInfo!.isFirstRedeem {
                     self.updateSnackBarForType(type: .discount)
                 } else if (!self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds == 0) {

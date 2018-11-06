@@ -153,12 +153,30 @@ class ReloadViewController: UITableViewController {
             let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
            
-            let finalText = user!.credit > 0 ? "Available Credits: \nYou can reload all used offers in \(timerText)." : "Available Credits: \nYou are out of credits. You can reload all used offers in \(timerText)"
-            
-            let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
-            attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
-            
-            self.titleLabel.attributedText = attributedTitle
+            if user!.credit > 0 {
+              
+                let finalText = "Available Credits: \nYou can reload all used offers in \(timerText)."
+                
+                let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
+                attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
+                
+                self.titleLabel.attributedText = attributedTitle
+                
+            } else {
+                let text = "You are out of credits."
+                let finalText = "\(text) \nYou can reload all used offers in \(timerText)"
+                
+                let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
+                attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
+                
+                let attributesBold: [NSAttributedStringKey: Any] =
+                                    [.font: UIFont.appBoldFontOf(size: 12.0),
+                                     .foregroundColor: UIColor.white]
+                attributedTitle.addAttributes(attributesBold, range: (finalText as NSString).range(of: text))
+
+                
+                self.titleLabel.attributedText = attributedTitle
+            }
             
         } else if type == .reloadTimerExpire {
             let attributedTitle = NSAttributedString(string: "Available Credits: \nCongrats you are able to reload.", attributes: attributesNormal)
@@ -276,6 +294,8 @@ extension ReloadViewController {
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
     
             } else {
                 let genericError = APIHelper.shared.getGenericError()

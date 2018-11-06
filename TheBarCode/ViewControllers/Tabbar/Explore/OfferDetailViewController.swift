@@ -210,7 +210,8 @@ class OfferDetailViewController: UIViewController {
             self.present(redeemStartViewController, animated: true, completion: nil)
 
         } else {
-            if bar.credit.value > 0 {
+            let user = Utility.shared.getCurrentUser()
+            if user!.credit > 0 {
                 let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
                 creditConsumptionController.delegate = self
                 creditConsumptionController.modalPresentationStyle = .overCurrentContext
