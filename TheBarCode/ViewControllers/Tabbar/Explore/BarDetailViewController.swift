@@ -9,6 +9,7 @@
 import UIKit
 import SJSegmentedScrollView
 import PureLayout
+import CoreStore
 
 protocol BarDetailViewControllerDelegate: class {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem)
@@ -34,11 +35,16 @@ class BarDetailViewController: UIViewController {
     
     var selectedBar: Bar!
     
+    var refreshControl: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = self.selectedBar.title.value
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(didTriggerPullToRefresh(sender:)), for: .valueChanged)
         
         self.setUpSegmentedController()
         self.addBackButton()
@@ -114,6 +120,12 @@ class BarDetailViewController: UIViewController {
         
         self.segmentedController.view.autoPinEdgesToSuperviewEdges()
         
+        if let scrollView = self.segmentedController.view.subviews.first as? UIScrollView {
+            scrollView.bounces = true
+            scrollView.refreshControl = self.refreshControl
+            scrollView.backgroundColor = self.view.backgroundColor
+        }
+        
     }
     
     func setUpBottomView() {
@@ -124,7 +136,13 @@ class BarDetailViewController: UIViewController {
         }
     }
     
-    func moveToRedeemDealViewController(withCredit: Bool){
+    @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
+        self.getBarDetails()
+        self.dealsController.resetDeals()
+        self.offersController.resetOffers()
+    }
+
+    func moveToRedeemDealViewController(withCredit: Bool) {
         let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
         redeemDealViewController.bar = self.selectedBar
         redeemDealViewController.redeemWithCredit = withCredit
@@ -220,6 +238,42 @@ extension BarDetailViewController: RedeemStartViewControllerDelegate {
 
 //MARK: WebService Method
 extension BarDetailViewController {
+    
+    func getBarDetails() {
+        let apiPath = apiPathGetBarDetail + "/" + self.selectedBar.id.value
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPath, method: .get) { (response, serverError, error) in
+            
+            self.refreshControl.endRefreshing()
+            
+            guard error == nil else {
+                debugPrint("Error while refreshing establishment: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Error while refreshing establishment: \(serverError!.errorMessages())")
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseData = (responseDict?["data"] as? [String : Any]) {
+                var importedObject: Bar!
+                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                    importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: responseData)
+                })
+                
+                let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
+                
+                self.selectedBar = fetchedObject
+                self.aboutController.reloadData(bar: self.selectedBar)
+                self.headerController.reloadData(bar: self.selectedBar)
+                
+            } else {
+                debugPrint("Unexpected response received while getting establishment")
+            }
+            
+        }
+    }
     
     //View for statistics
     func viewProfile() {

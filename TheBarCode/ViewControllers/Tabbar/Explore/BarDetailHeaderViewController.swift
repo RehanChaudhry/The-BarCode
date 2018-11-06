@@ -45,6 +45,13 @@ class BarDetailHeaderViewController: UIViewController {
     }
     
     //MARK: My Methods
+    
+    func reloadData(bar: Bar) {
+        self.bar = bar
+        self.setUpHeader()
+        self.collectionView.reloadData()
+    }
+    
     func setUpHeader() {
         self.titleLabel.text = self.bar.title.value
         self.mapIconImageView.isHidden = false

@@ -42,6 +42,8 @@ let apiPathReload = "subscription"
 
 let apiPathView = "view"
 
+let apiPathGetBarDetail = "establishment"
+
 
 
 
