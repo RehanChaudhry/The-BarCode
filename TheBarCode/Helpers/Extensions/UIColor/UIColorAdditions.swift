@@ -69,5 +69,10 @@ extension UIColor {
     static func appSnackBarRedColor() -> UIColor {
         return UIColor("#FF002C")
     }
+    
+    static func appRedeemedGreyColor() -> UIColor {
+        return UIColor("#DCDCDC")
+    }
+
  
 }

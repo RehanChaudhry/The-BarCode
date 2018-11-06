@@ -142,7 +142,9 @@ class ReloadViewController: UITableViewController {
                 .foregroundColor: UIColor.appBlueColor()]
             
             let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
-            let finalText = "Available Credits: \nYou are out of credit. You can reload previous offers after \(timerText)."
+            
+           
+            let finalText = user!.credit > 0 ? "Available Credits: \nYou can reload all used offers in \(timerText)." : "Available Credits: \nYou are out of credits. You can reload all used offers in \(timerText)"
             
             let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
             attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
@@ -251,6 +253,9 @@ extension ReloadViewController {
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseReloadStatusDict = (responseDict?["data"] as? [String : Any]) {
+                
+                let credit = responseReloadStatusDict["credit"] as! Int
+                Utility.shared.userCreditUpdate(creditValue: credit)
                 
                 self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
                 if self.redeemInfo!.remainingSeconds > 0 {

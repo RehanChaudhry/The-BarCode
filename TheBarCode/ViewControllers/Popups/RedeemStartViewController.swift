@@ -35,6 +35,17 @@ class RedeemStartViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+  
+       //self.setupInitialView()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+   /* func setupInitialView() {
+       
         if type == .standard {
             detailLabel.text = "Are you sure you would like to redeem this deal?"
             actionButton.setTitle("Redeem deal", for: .normal)
@@ -53,14 +64,7 @@ class RedeemStartViewController: UIViewController {
                 bartenderLabel.isHidden = true
             }
         }
-       
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    }*/
 
     /*
     // MARK: - Navigation

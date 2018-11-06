@@ -68,9 +68,15 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
     }
     
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, callButtonTapped sender: UIButton) {
+        
         let phoneNumber: String = "tel://\(self.bar.contactNumber.value)"
-        let url = URL(string: phoneNumber)!
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        let urlString = phoneNumber.replacingOccurrences(of: " ", with: "")
+        
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            debugPrint("Phone number url nil")
+        }
     }
     
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, directionsButtonTapped sender: UIButton) {

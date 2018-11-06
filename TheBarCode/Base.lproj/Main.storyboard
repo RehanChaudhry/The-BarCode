@@ -2878,7 +2878,7 @@ Cg
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Reload" id="V2T-05-Rb0">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wEJ-ny-5Ya">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="wEJ-ny-5Ya">
                             <connections>
                                 <action selector="cancelBarButtonTappedWithSender:" destination="GYQ-Vt-p8e" id="cQB-iR-cQI"/>
                             </connections>
@@ -3758,7 +3758,7 @@ Cg
                         <viewLayoutGuide key="safeArea" id="kYt-Oe-Ir0"/>
                     </view>
                     <navigationItem key="navigationItem" id="jT5-4J-5OE">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="2IP-A9-2Hv">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="2IP-A9-2Hv">
                             <connections>
                                 <action selector="cancelBarButtonTappedWithSender:" destination="Eeg-kR-SY4" id="RLN-1X-QcL"/>
                             </connections>
@@ -3999,7 +3999,7 @@ Cg
                         <viewLayoutGuide key="safeArea" id="fAV-e9-Y9d"/>
                     </view>
                     <navigationItem key="navigationItem" title="Deal Details" id="tOb-sf-f0n">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Sxi-hY-nl6">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Sxi-hY-nl6">
                             <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="N9K-9o-Gsw" id="bpQ-TF-F0y"/>
