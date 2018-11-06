@@ -29,9 +29,7 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var reloadTimerLabel: UILabel!
     
     @IBOutlet var creditsLeftView: UIView!
-    @IBOutlet var creditsLeftLabel: UILabel!
-
-//    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    @IBOutlet var creditsLeftButton: UIButton!
     
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
@@ -58,13 +56,13 @@ class SnackbarView: GradientView, NibLoadable {
         
     }
     
-    
+    //MARK: My Methods
     func updateAppearanceForType(type: SnackbarType, gradientType: GradientType) {
        
         self.type = type
         
         let user = Utility.shared.getCurrentUser()
-        self.creditsLeftLabel.text = "\(user!.credit)"
+        self.creditsLeftButton.setTitle("\(user!.credit)", for: .normal)
         
         if type == .discount {
             self.reloadInfoView.isHidden = true
@@ -110,15 +108,17 @@ class SnackbarView: GradientView, NibLoadable {
         self.loadingView.showErrorViewWithRetry(errorMessage: msg, reloadMessage: "")
     }
     
-//    func loadingSpinner() {
-//        self.activitySpinner.isHidden = false
-//        self.activitySpinner.startAnimating()
-//        self.reloadInfoView.isHidden = true
-//        self.discountInfoView.isHidden = true
-//    }
-    
     func updateTimer(remainingSeconds: Int) {
         self.reloadTimerLabel.text = "\(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))"
+    }
+    
+    //MARK: My IBActions
+    
+    @IBAction func creditButtonTapped(sender: UIButton) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let rootController = appDelegate.window!.rootViewController!
+        let topMostVC = rootController.topMostViewController()
+        topMostVC.showAlertController(title: "Credits", msg: "When you send invitation to your friends and family and they sign up by using your referral code and they redeem their first deal you will get 1 credit.")
     }
 }
 

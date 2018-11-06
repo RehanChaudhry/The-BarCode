@@ -29,7 +29,8 @@ class ReloadViewController: UITableViewController {
     @IBOutlet var creditsLabel: UILabel!
     
     @IBOutlet var titleLabel: UILabel!
-//    @IBOutlet var timerWithTextLabel: UILabel!
+    
+    @IBOutlet var reloadButton: GradientButton!
     
     var isRedeemingDeal: Bool = false
     
@@ -69,19 +70,16 @@ class ReloadViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
-        self.view.addSubview(statefulView)
+        self.tableView.addSubview(self.statefulView)
         
-        self.statefulView.retryHandler = {(sender: UIButton) in
-            
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
+            self.getReloadStatus()
         }
-        
-        self.statefulView.autoPinEdgesToSuperviewEdges()
         
         self.getReloadStatus()
         
         self.productIDs = [kProductIdReload]
         SKPaymentQueue.default().add(self)
-        
     }
 
     deinit {
@@ -96,14 +94,25 @@ class ReloadViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.statefulView.frame = self.view.bounds
+    }
+    
     //MARK: In-APP
     func requestProductInfo() {
         if SKPaymentQueue.canMakePayments() {
+            
+            self.reloadButton.showLoader()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            
             let productIdentifiers = NSSet(array: self.productIDs)
             let productRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
             productRequest.delegate = self
             productRequest.start()
         } else {
+            self.showAlertController(title: "In App Purchase", msg: "Currently this device is not authorized to make payments. Please check your payment authorization settings and try again")
             debugPrint("cannot make payment")
         }
     }
@@ -278,28 +287,25 @@ extension ReloadViewController {
     
     func reloadRedeems(transactionID: String) {
         
-        self.statefulView.showLoading()
-        self.statefulView.isHidden = false
-        
         let params: [String : Any] = ["token" : transactionID]
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathReload, method: .post) { (response, serverError, error) in
             
+            self.reloadButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
             guard error == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
+                self.showAlertController(title: "Reload", msg: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
-                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
+                self.showAlertController(title: "Reload", msg: serverError!.errorMessages())
                 return
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let reloadStatusDict = (responseDict?["data"] as? [String : Any]), let _ = reloadStatusDict["user"] as? [String : Any] {
-                
-                self.statefulView.isHidden = true
-                self.statefulView.showNothing()
                 
                 self.setUpRedeemInfoView(type: .noOfferRedeemed)
                 
@@ -325,6 +331,9 @@ extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransaction
             debugPrint("product price == \(product.priceLocale)")
             self.buyProduct(product)
         } else {
+            self.reloadButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            self.showAlertController(title: "Reload", msg: "Unable to fetch product from itunes. Please try again.")
             debugPrint("zero products fetched")
         }
 
@@ -336,12 +345,15 @@ extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransaction
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
         debugPrint("Error Fetching product information")
+        self.reloadButton.hideLoader()
+        UIApplication.shared.endIgnoringInteractionEvents()
+        self.showAlertController(title: "Reload", msg: error.localizedDescription)
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         debugPrint("Received Payment Transaction Response from Apple");
         for transaction:AnyObject in transactions {
-            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
+            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction {
                 switch trans.transactionState {
                 case .purchased:
                     debugPrint("Product Purchased");
@@ -351,10 +363,17 @@ extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransaction
                 case .failed:
                     debugPrint("Purchased Failed");
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    
+                    self.reloadButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    self.showAlertController(title: "Reload", msg: trans.error?.localizedDescription ?? genericErrorMessage)
                     break;
                 case .restored:
                     debugPrint("Already Purchased");
                     SKPaymentQueue.default().restoreCompletedTransactions()
+                    
+                    self.reloadButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
                 default:
                     break;
                 }
