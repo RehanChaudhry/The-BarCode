@@ -115,7 +115,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="creditsLeftButton" destination="GrB-g4-NoO" id="Pqa-YI-jfW"/>
+                <outlet property="creditsLeftButton" destination="GrB-g4-NoO" id="GSr-Gv-kwr"/>
                 <outlet property="creditsLeftView" destination="Oax-Ey-lOP" id="LXQ-aI-f3i"/>
                 <outlet property="discountInfoLabel" destination="3tj-SJ-3Lz" id="IpX-f0-dfW"/>
                 <outlet property="discountInfoView" destination="qbW-iG-heo" id="26o-6r-utz"/>

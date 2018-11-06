@@ -29,8 +29,7 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var reloadTimerLabel: UILabel!
     
     @IBOutlet var creditsLeftView: UIView!
-    @IBOutlet var creditsLeftLabel: UILabel!
-
+    @IBOutlet var creditsLeftButton: UIButton!
     
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
