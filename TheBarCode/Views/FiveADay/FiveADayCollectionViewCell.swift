@@ -54,11 +54,12 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     //MARK: My Methods
     
     func setUpCell(deal: Deal) {
-        
-        if deal.showLoader {
-            self.redeemButton.showLoader()
+    
+        let bar = deal.establishment.value
+        if !bar!.canRedeemOffer.value {
+            self.redeemButton.setGreyGradientColor()
         } else {
-            self.redeemButton.hideLoader()
+            self.redeemButton.layoutSubviews()
         }
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)

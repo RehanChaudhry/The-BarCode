@@ -72,6 +72,13 @@ class BarLiveOffersViewController: UIViewController {
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
+        
+        for aView in self.statefulTableView.innerTable.subviews {
+            if aView.isMember(of: UIRefreshControl.self) {
+                aView.removeFromSuperview()
+                break
+            }
+        }
     }
 }
 
