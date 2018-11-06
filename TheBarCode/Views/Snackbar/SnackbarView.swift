@@ -31,7 +31,6 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var creditsLeftView: UIView!
     @IBOutlet var creditsLeftLabel: UILabel!
 
-//    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
     
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
@@ -110,34 +109,8 @@ class SnackbarView: GradientView, NibLoadable {
         self.loadingView.showErrorViewWithRetry(errorMessage: msg, reloadMessage: "")
     }
     
-//    func loadingSpinner() {
-//        self.activitySpinner.isHidden = false
-//        self.activitySpinner.startAnimating()
-//        self.reloadInfoView.isHidden = true
-//        self.discountInfoView.isHidden = true
-//    }
-    
     func updateTimer(remainingSeconds: Int) {
         self.reloadTimerLabel.text = "\(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))"
     }
 }
 
-/*
-extension SnackbarView {
-    
-    func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(SnackbarView.updateTimer)), userInfo: nil, repeats: true)
-    }
-    
-    @objc func updateTimer() {
-        seconds = ReedeemInfoManager.shared.updateRedeemInfo()
-        if seconds < 0 {
-            timer.invalidate()
-            ReedeemInfoManager.shared.isTimerRunning = false
-            self.updateAppearanceForType(type: .congrates, gradientType: .orange)
-            return
-        }
-        let timerString = Utility.shared.timeString(time: TimeInterval(seconds))
-        self.reloadTimerLabel.text = timerString
-    }
-}*/

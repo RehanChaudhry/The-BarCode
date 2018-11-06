@@ -162,6 +162,8 @@ class ExploreViewController: UIViewController {
     }
     
     func startReloadTimer() {
+        self.reloadTimer?.invalidate()
+        self.reloadTimer = nil
         self.reloadTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
             self.updateReloadTimer(sender: sender)
         })

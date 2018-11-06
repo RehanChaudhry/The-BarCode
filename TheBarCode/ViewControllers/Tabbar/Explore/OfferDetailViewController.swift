@@ -156,6 +156,8 @@ class OfferDetailViewController: UIViewController {
     }
     
     func startReloadTimer() {
+        self.redeemTimer?.invalidate()
+        self.redeemTimer = nil
         self.redeemTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
             self.updateRedeemTimer(sender: sender)
         })

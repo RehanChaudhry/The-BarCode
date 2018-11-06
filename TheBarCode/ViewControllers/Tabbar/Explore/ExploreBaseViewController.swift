@@ -49,6 +49,8 @@ class ExploreBaseViewController: UIViewController {
     var canReload: Bool = true
     var redeemInfo: RedeemInfo!
 
+    let locationManager = MyLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,6 +68,8 @@ class ExploreBaseViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.mapView.delegate = self
+        
+        self.setUserLocation()
 
     }
 
@@ -120,21 +124,11 @@ class ExploreBaseViewController: UIViewController {
             marker.map = mapView
         }
         
-//        let update = GMSCameraUpdate.fit(bounds, withPadding: 60.0)
-//        mapView.animate(with: update)
-     
-        let user = Utility.shared.getCurrentUser()!
-        let corrdinate = user.isLocationUpdated.value ?
-                         CLLocationCoordinate2D(latitude: CLLocationDegrees(user.latitude.value), longitude: CLLocationDegrees(user.longitude.value))
-                        : defaultUKLocation
-        setupMapCamera(withcordinate: corrdinate)
-
     }
     
-    func setupMapCamera(withcordinate: CLLocationCoordinate2D){
-        let cameraPosition = GMSCameraPosition.camera(withLatitude: withcordinate.latitude, longitude: withcordinate.longitude, zoom: 5.0)
-        let cameraUpdate = GMSCameraUpdate.setCamera(cameraPosition)
-        self.mapView.moveCamera(cameraUpdate)
+    func setupMapCamera(cordinate: CLLocationCoordinate2D){
+        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
+        self.mapView.animate(to: position)
         self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
         self.mapView.settings.myLocationButton = true
         self.mapView.isMyLocationEnabled = true
@@ -143,6 +137,39 @@ class ExploreBaseViewController: UIViewController {
     func refreshMap(){
         let bars = self.isSearching ? self.filteredBars : self.bars
         self.setUpBarMarkers(bars: bars)
+    }
+    
+    func setUserLocation() {
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        var canContinue: Bool? = nil
+        if authorizationStatus == .authorizedAlways {
+            canContinue = true
+        } else if authorizationStatus == .authorizedWhenInUse {
+            canContinue = false
+        }
+        
+        guard let requestAlwaysAccess = canContinue else {
+            debugPrint("Location permission not authorized")
+            self.setupMapCamera(cordinate: defaultUKLocation)
+            return
+        }
+        
+        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting location: \(error!.localizedDescription)")
+                self.setupMapCamera(cordinate: defaultUKLocation)
+                return
+            }
+            
+            if let location = location {
+                self.setupMapCamera(cordinate: location.coordinate)
+            }
+        }
+        
+   
     }
 
     //MARK: My IBActions

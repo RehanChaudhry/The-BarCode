@@ -15,5 +15,11 @@ class IntroOption {
     
     var image: String = ""
     
+    init(title: String, detail: String, image: String) {
+        self.title = title
+        self.detail = detail
+        self.image = image
+    }
+    
     
 }

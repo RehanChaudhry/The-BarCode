@@ -43,7 +43,7 @@ let notificationNameLiveOffer: String = "notificationNameLiveOffer"
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
-let defaultUKLocation =  CLLocationCoordinate2D(latitude: 55.3781, longitude: 3.4360)
+let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: -2.480438)
 
 class Utility: NSObject {
     

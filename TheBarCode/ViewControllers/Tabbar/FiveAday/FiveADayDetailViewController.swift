@@ -102,6 +102,13 @@ extension FiveADayDetailViewController : UITableViewDelegate , UITableViewDataSo
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let bar = self.deal.establishment.value {
+            self.showBarDetail(bar: bar)
+        } else {
+            debugPrint("Deal establishment not found")
+        }
+    }    
 }
 
 extension FiveADayDetailViewController : DealDetailTableViewCellDelegate {

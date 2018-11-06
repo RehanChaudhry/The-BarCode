@@ -41,8 +41,10 @@ class FiveADayViewController: UIViewController {
         self.pageControl.currentPage = 0
         self.pagerView.automaticSlidingInterval = 4.0
         self.pagerView.backgroundColor = .clear
-        self.pagerView.register(FiveADayCollectionViewCell.nib, forCellWithReuseIdentifier: FiveADayCollectionViewCell.reuseIdentifier)
+        self.pagerView.delegate = self
+        self.pagerView.dataSource = self
         
+        self.pagerView.register(FiveADayCollectionViewCell.nib, forCellWithReuseIdentifier: FiveADayCollectionViewCell.reuseIdentifier)
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.view.addSubview(statefulView)
         
@@ -155,8 +157,27 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     }
     
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
-        
+      
+        self.pagerView.automaticSlidingInterval = 0.0
+        let deal = self.deals[index]
+        if let bar = deal.establishment.value {
+            self.showBarDetail(bar: bar)
+        } else {
+            debugPrint("Bar of FiveADayDeal not found")
+        }
     }
+    
+    func pagerView(_ pagerView: FSPagerView, didHighlightItemAt index: Int) {
+        self.pagerView.automaticSlidingInterval = 0.0
+
+        let deal = self.deals[index]
+        if let bar = deal.establishment.value {
+            self.showBarDetail(bar: bar)
+        } else {
+            debugPrint("Bar of FiveADayDeal not found")
+        }
+    }
+
 }
 
 //MARK: Webservices Methods

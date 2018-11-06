@@ -20,7 +20,7 @@ class LoginOptionsViewController: UIViewController {
     
     @IBOutlet var pageControl: UIPageControl!
     
-    var introOptions: [IntroOption] = [IntroOption(), IntroOption(), IntroOption()]
+    var introOptions: [IntroOption] = []
     
     var avPlayer: AVPlayer!
     
@@ -53,8 +53,7 @@ class LoginOptionsViewController: UIViewController {
         self.pagerView.automaticSlidingInterval = 4.0
         
         self.pageControl.transform = CGAffineTransform.init(scaleX: 1.2, y: 1.2)
-        self.pageControl.numberOfPages = self.introOptions.count
-        self.pageControl.currentPage = 0
+        self.setupInitialData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,6 +91,19 @@ class LoginOptionsViewController: UIViewController {
     }
 
     //MARK: My Methods
+    func setupInitialData(){
+
+        let option1 = IntroOption(title: "5 A Day", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
+        let option2 = IntroOption(title: "Live Offers", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
+        let option3 = IntroOption(title: "Bar finder", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
+        let option4 = IntroOption(title: "Invite Friends Get Credits", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
+        let option5 = IntroOption(title: "Reload & Get Discounts", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
+        introOptions = [option1, option2, option3, option4, option5]
+        
+        self.pageControl.numberOfPages = self.introOptions.count
+        self.pageControl.currentPage = 0
+        self.pagerView.reloadData()
+    }
     
     func moveToNextControllerIfNeeded() {
         
@@ -149,7 +161,8 @@ extension LoginOptionsViewController: FSPagerViewDataSource, FSPagerViewDelegate
     
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let identifier = LoginIntroCollectionViewCell.reuseIdentifier
-        let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index)
+        let cell = self.pagerView.dequeueReusableCell(withReuseIdentifier: identifier, at: index) as! LoginIntroCollectionViewCell
+        cell.setUpCell(option: self.introOptions[index])
         return cell
     }
     
