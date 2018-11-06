@@ -13,9 +13,6 @@
         <array key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
         </array>
-        <array key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
-        </array>
         <array key="Lato-Semibold.ttf">
             <string>Lato-Semibold</string>
         </array>
@@ -57,20 +54,24 @@
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-Ey-lOP">
                             <rect key="frame" x="325" y="5" width="34" height="34"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CeR-92-G68">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GrB-g4-NoO">
                                     <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
-                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
-                                    <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                    <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                    <state key="normal" title="5">
+                                        <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="creditButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="btv-DX-sGz"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="CeR-92-G68" secondAttribute="trailing" id="BYE-Uu-8n0"/>
+                                <constraint firstItem="GrB-g4-NoO" firstAttribute="leading" secondItem="Oax-Ey-lOP" secondAttribute="leading" id="Ddu-J7-fBu"/>
                                 <constraint firstAttribute="width" constant="34" id="FwO-fi-S2h"/>
-                                <constraint firstAttribute="bottom" secondItem="CeR-92-G68" secondAttribute="bottom" id="d71-wT-fHR"/>
-                                <constraint firstItem="CeR-92-G68" firstAttribute="leading" secondItem="Oax-Ey-lOP" secondAttribute="leading" id="kjj-r2-ef8"/>
-                                <constraint firstItem="CeR-92-G68" firstAttribute="top" secondItem="Oax-Ey-lOP" secondAttribute="top" id="sGf-rN-OPs"/>
+                                <constraint firstAttribute="trailing" secondItem="GrB-g4-NoO" secondAttribute="trailing" id="Rc8-ep-ZBl"/>
+                                <constraint firstAttribute="bottom" secondItem="GrB-g4-NoO" secondAttribute="bottom" id="U2V-1L-yKx"/>
+                                <constraint firstItem="GrB-g4-NoO" firstAttribute="top" secondItem="Oax-Ey-lOP" secondAttribute="top" id="hG2-R8-zWZ"/>
                                 <constraint firstAttribute="height" constant="34" id="tdQ-3U-TKb"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -114,7 +115,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="creditsLeftLabel" destination="CeR-92-G68" id="E4u-Gd-BPo"/>
+                <outlet property="creditsLeftButton" destination="GrB-g4-NoO" id="Pqa-YI-jfW"/>
                 <outlet property="creditsLeftView" destination="Oax-Ey-lOP" id="LXQ-aI-f3i"/>
                 <outlet property="discountInfoLabel" destination="3tj-SJ-3Lz" id="IpX-f0-dfW"/>
                 <outlet property="discountInfoView" destination="qbW-iG-heo" id="26o-6r-utz"/>

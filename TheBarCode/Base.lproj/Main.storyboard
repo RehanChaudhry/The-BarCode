@@ -2887,6 +2887,7 @@ Cg
                     <connections>
                         <outlet property="creditsLabel" destination="Rxg-YR-ZwN" id="2Ay-Ek-LVK"/>
                         <outlet property="headerView" destination="XoL-km-z5W" id="auN-Ok-WiE"/>
+                        <outlet property="reloadButton" destination="pqD-qm-c4v" id="T0o-mA-jP2"/>
                         <outlet property="titleLabel" destination="Axy-hU-CQm" id="2jE-TF-vce"/>
                     </connections>
                 </tableViewController>
@@ -4841,7 +4842,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22" height="15"/>
+        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4852,7 +4853,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="46" height="46"/>
+        <image name="profile_image" width="138" height="138"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>
