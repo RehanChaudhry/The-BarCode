@@ -57,9 +57,17 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
         let bar = deal.establishment.value
         if !bar!.canRedeemOffer.value {
-            self.redeemButton.setGreyGradientColor()
+            debugPrint("deal bar name == \(bar!.title.value)")
+            debugPrint("bar!.canRedeemOffer.value == \(bar!.canRedeemOffer.value)")
+            debugPrint("button == grey")
+
+            self.redeemButton.updateColor(withGrey: true)
         } else {
-            self.redeemButton.layoutSubviews()
+            debugPrint("deal bar name == \(bar!.title.value)")
+            debugPrint("bar!.canRedeemOffer.value == \(bar!.canRedeemOffer.value)")
+            debugPrint("button == gradient")
+
+            self.redeemButton.updateColor(withGrey: false)
         }
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)

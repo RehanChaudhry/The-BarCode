@@ -152,7 +152,7 @@ class ReloadViewController: UITableViewController {
                 self.titleLabel.attributedText = attributedTitle
                 
             } else {
-
+                
                 let attributedTitle = getAttributeText(prefixText: "You are out of credits.", descText: "You can reload previous offers after:", timerText: timerText)
                 self.titleLabel.attributedText = attributedTitle
             }
@@ -224,8 +224,8 @@ class ReloadViewController: UITableViewController {
     
     func getAttributeText(prefixText: String, descText: String, timerText: String) -> NSMutableAttributedString {
        
-        let fontRegular = UIFont.appRegularFontOf(size: 12.0)
-        let fontBold = UIFont.appBoldFontOf(size: 12.0)
+        let fontRegular = UIFont.appRegularFontOf(size: 14.0)
+        let fontBold = UIFont.appBoldFontOf(size: 14.0)
         
         let attributesNormal: [NSAttributedStringKey: Any] = [.font: fontRegular,
                                                               .foregroundColor: UIColor.white]
@@ -236,13 +236,16 @@ class ReloadViewController: UITableViewController {
         let timerAttributed: [NSAttributedStringKey: Any] = [.font: fontBold,
                                                              .foregroundColor: UIColor.appBlueColor()]
         
-        let finalText = "\(prefixText)\n\(descText) \(timerText)"
+        let attributedPrefix = NSMutableAttributedString(string: prefixText, attributes: attributesBold)
+        let attributedDesc = NSMutableAttributedString(string: "\n" + descText, attributes: attributesNormal)
+        let attributedTimer = NSMutableAttributedString(string: " " + timerText, attributes: timerAttributed)
         
-        let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
-        attributedTitle.addAttributes(attributesBold, range: (finalText as NSString).range(of: prefixText))
-        attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
+        let finalAttributedString = NSMutableAttributedString()
+        finalAttributedString.append(attributedPrefix)
+        finalAttributedString.append(attributedDesc)
+        finalAttributedString.append(attributedTimer)
         
-        return attributedTitle
+        return finalAttributedString
         
     }
     
@@ -297,17 +300,7 @@ extension ReloadViewController {
             }
             
             guard serverError == nil else {
-                if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
-                    //Show alert when tap on reload
-                    //All your deals are already unlocked no need to reload
-                    
-                    self.setUpRedeemInfoView(type: .noOfferRedeemed)
-                    self.statefulView.isHidden = true
-                    self.statefulView.showNothing()
-                    
-                } else {
-                    self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
-                }
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap To refresh")
 
                 return
             }
@@ -319,11 +312,13 @@ extension ReloadViewController {
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
                 self.redeemInfo = Mapper<RedeemInfo>().map(JSON: responseReloadStatusDict)!
-                if self.redeemInfo!.remainingSeconds > 0 {
-                    self.setUpRedeemInfoView(type: .offerRedeemed)
-                    self.startReloadTimer()
-                } else {
+               
+                if self.redeemInfo!.isFirstRedeem {
+                    self.setUpRedeemInfoView(type: .noOfferRedeemed)
+                } else if !self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds == 0 {
                     self.setUpRedeemInfoView(type: .reloadTimerExpire)
+                } else if !self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds > 0 {
+                    self.setUpRedeemInfoView(type: .offerRedeemed)
                 }
                 
                 self.statefulView.isHidden = true

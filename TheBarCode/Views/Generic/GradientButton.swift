@@ -66,8 +66,12 @@ class GradientButton: LoadingButton, Gradientable {
     }
     
     
-    func setGreyGradientColor(){
-        self.updateGradient(colors: [UIColor.appRedeemedGreyColor(), UIColor.appRedeemedGreyColor()], locations: self.locations, direction: directions)
+    func updateColor(withGrey: Bool){
+        if withGrey {
+            self.updateGradient(colors: [UIColor.appRedeemedGreyColor(), UIColor.appRedeemedGreyColor()], locations: self.locations, direction: directions)
+        } else {
+            self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: self.locations, direction: directions)
+        }
     }
 
 }

@@ -130,9 +130,9 @@ class BarDetailViewController: UIViewController {
     
     func setUpBottomView() {
         if !self.selectedBar.canRedeemOffer.value {
-            self.standardRedeemButton.setGreyGradientColor()
+            self.standardRedeemButton.updateColor(withGrey: true)
         } else {
-            self.standardRedeemButton.layoutSubviews()
+            self.standardRedeemButton.updateColor(withGrey: false)
         }
     }
     

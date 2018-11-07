@@ -4016,7 +4016,7 @@ Cg
                         <outlet property="headerView" destination="OuJ-XT-xdX" id="Nuc-Fa-yHb"/>
                         <outlet property="redeemButton" destination="aOb-hl-dbH" id="Dh7-iH-F21"/>
                         <outlet property="tableView" destination="Ovn-A3-wEN" id="rb4-Um-4jd"/>
-                        <outlet property="timerButton" destination="wGU-3a-HuI" id="K7Q-k3-QJl"/>
+                        <outlet property="timerButton" destination="wGU-3a-HuI" id="g1O-Uf-gUk"/>
                         <outlet property="titleLabel" destination="DzR-0o-YdM" id="uBA-8Z-1KW"/>
                     </connections>
                 </viewController>

@@ -82,7 +82,7 @@
                                 <rect key="frame" x="35" y="405" width="140" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="0YD-5h-gGk"/>
-                                    <constraint firstAttribute="width" constant="140" id="WxP-LY-qhF"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="WxP-LY-qhF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <state key="normal" title="The White Hart">

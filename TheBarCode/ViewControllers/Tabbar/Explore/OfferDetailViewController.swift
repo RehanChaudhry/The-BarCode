@@ -20,7 +20,7 @@ class OfferDetailViewController: UIViewController {
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet var bottomViewBottom: NSLayoutConstraint!
     
-    @IBOutlet var timerButton: UIButton!
+    @IBOutlet var timerButton: GradientButton!
     
     @IBOutlet var bottomView: UIView!
     
@@ -57,6 +57,7 @@ class OfferDetailViewController: UIViewController {
         self.descriptionLabel.text = self.deal.title.value
         
         self.setUpBottomView()
+        
 
         self.viewOffer()
     }
@@ -80,6 +81,10 @@ class OfferDetailViewController: UIViewController {
     
     //MARK: My Methods
     func setUpBottomView() {
+        
+        self.redeemButton.updateColor(withGrey: !self.deal.establishment.value!.canRedeemOffer.value)
+        self.timerButton.updateColor(withGrey: !self.deal.establishment.value!.canRedeemOffer.value)
+        
         self.setUpRedeemButtonView()
         self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         if self.offerType == .bannerAds {
@@ -191,9 +196,9 @@ class OfferDetailViewController: UIViewController {
     func setUpRedeemButtonView() {
         let bar = self.deal.establishment.value
         if !bar!.canRedeemOffer.value {
-            self.redeemButton.setGreyGradientColor()
+            self.redeemButton.updateColor(withGrey: true)
         } else {
-            self.redeemButton.layoutSubviews()
+            self.redeemButton.updateColor(withGrey: false)
         }
     }
     
