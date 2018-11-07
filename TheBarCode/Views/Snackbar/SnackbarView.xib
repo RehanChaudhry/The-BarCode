@@ -33,12 +33,22 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wi-ar-GVo">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <connections>
+                                <action selector="bannerButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="tnF-AF-wpa"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="3tj-SJ-3Lz" secondAttribute="bottom" constant="8" id="0WE-hO-5WZ"/>
                         <constraint firstAttribute="trailing" secondItem="3tj-SJ-3Lz" secondAttribute="trailing" constant="16" id="6nE-uG-8BC"/>
                         <constraint firstItem="3tj-SJ-3Lz" firstAttribute="top" secondItem="qbW-iG-heo" secondAttribute="top" constant="8" id="8ar-R2-YOW"/>
+                        <constraint firstItem="5wi-ar-GVo" firstAttribute="leading" secondItem="qbW-iG-heo" secondAttribute="leading" id="Il3-jS-XIU"/>
+                        <constraint firstAttribute="bottom" secondItem="5wi-ar-GVo" secondAttribute="bottom" id="Pde-eV-bnf"/>
+                        <constraint firstAttribute="trailing" secondItem="5wi-ar-GVo" secondAttribute="trailing" id="h3s-UO-SJR"/>
+                        <constraint firstItem="5wi-ar-GVo" firstAttribute="top" secondItem="qbW-iG-heo" secondAttribute="top" id="m7s-Da-mCt"/>
                         <constraint firstItem="3tj-SJ-3Lz" firstAttribute="leading" secondItem="qbW-iG-heo" secondAttribute="leading" constant="16" id="sEz-kF-Jbb"/>
                     </constraints>
                 </view>
@@ -51,6 +61,19 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
+                            <rect key="frame" x="108.5" y="8" width="206.5" height="28"/>
+                            <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsr-w4-CL3">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="bannerButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="sbG-fp-ybx"/>
+                            </connections>
+                        </button>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-Ey-lOP">
                             <rect key="frame" x="325" y="5" width="34" height="34"/>
                             <subviews>
@@ -80,12 +103,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
-                            <rect key="frame" x="108.5" y="8" width="206.5" height="28"/>
-                            <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>

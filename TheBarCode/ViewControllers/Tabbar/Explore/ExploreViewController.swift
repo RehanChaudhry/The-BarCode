@@ -115,14 +115,17 @@ class ExploreViewController: UIViewController {
     func setUpContainerViews() {
         self.barsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsViewController") as! BarsViewController)
         self.barsController.delegate = self
+        self.barsController.snackBar.delegate = self
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
         
         self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithDealsViewController") as! BarsWithDealsViewController)
         self.dealsController.delegate = self
+        self.dealsController.snackBar.delegate = self
         self.addViewController(controller: self.dealsController, parent: self.dealsContainerView)
         
         self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithLiveOffersViewController") as! BarsWithLiveOffersViewController)
         self.liveOffersController.delegate = self
+        self.liveOffersController.snackBar.delegate = self
         self.addViewController(controller: self.liveOffersController, parent: self.liveOffersContainerView)
     }
     
@@ -159,6 +162,27 @@ class ExploreViewController: UIViewController {
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
             self.liveOffersController.snackBar.updateAppearanceForType(type: .discount, gradientType: .orange)
         }
+    }
+    
+    func showCustomAlert(title: String, message: String){
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.redeemInfo = self.redeemInfo
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
+    func getBannerAlertText() -> String {
+        let type = barsController.snackBar.type
+        if type == .discount {
+            return "Discount Text"
+        } else if type == .reload {
+            return "Reload Text"
+        } else if type == .congrates {
+            return "Congrates Text"
+        }
+        return "SOME TEXT"
     }
     
     func startReloadTimer() {
@@ -366,4 +390,18 @@ extension ExploreViewController {
 extension ExploreViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
     }
+}
+
+
+extension ExploreViewController:  SnackbarViewDelegate {
+    func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
+        self.showCustomAlert(title: "Credits", message: "When you send invitation to your friends and family and they sign up by using your referral code and they redeem their first deal you will get 1 credit.")
+    }
+    
+    func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {
+        let title = "Alert"
+        let message = self.getBannerAlertText()
+        self.showCustomAlert(title: title, message: message)
+    }
+
 }

@@ -92,13 +92,15 @@ class LoginOptionsViewController: UIViewController {
 
     //MARK: My Methods
     func setupInitialData(){
-
-        let option1 = IntroOption(title: "5 A Day", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
-        let option2 = IntroOption(title: "Live Offers", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
-        let option3 = IntroOption(title: "Bar finder", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
-        let option4 = IntroOption(title: "Invite Friends Get Credits", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
-        let option5 = IntroOption(title: "Reload & Get Discounts", detail: "Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.", image: "login_intro_1")
-        introOptions = [option1, option2, option3, option4, option5]
+        
+        let option1 = IntroOption(title: "5 a day", detail: "5 amazing offers for you. Every day!", image: "login_intro_1")
+        let option2 = IntroOption(title: "Live Offers", detail: "Do not miss out on the limited time offers!", image: "login_intro_1")
+        let option3 = IntroOption(title: "Bar finder", detail: "Find bars near to you and what they offer.", image: "login_intro_1")
+        let option4 = IntroOption(title: "Invite Friends, Get Credits", detail: "Get rewarded when your friends redeem offers!", image: "login_intro_1")
+        let option5 = IntroOption(title: "Reload", detail: "Weekly recharge to keep redeeming the best offers from the best bars in town!", image: "login_intro_1")
+        let option6 = IntroOption(title: "Get Discounts", detail: "Amazing discounts now at your fingertips!", image: "login_intro_1")
+        
+        introOptions = [option1, option2, option3, option4, option5, option6]
         
         self.pageControl.numberOfPages = self.introOptions.count
         self.pageControl.currentPage = 0

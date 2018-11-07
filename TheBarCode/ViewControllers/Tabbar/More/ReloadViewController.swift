@@ -212,23 +212,29 @@ class ReloadViewController: UITableViewController {
         
     }
     
+    func showCustomAlert(title: String, message: String){
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     @IBAction func reloadButtonTapped(_ sender: Any) {
         
         if self.type == ReloadState.noOfferRedeemed {
-            let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-            cannotRedeemViewController.messageText = "All your deals are already unlocked. You cannot reload please redeem first."
-            cannotRedeemViewController.titleText = "Alert"
-            cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-            self.present(cannotRedeemViewController, animated: true, completion: nil)
+            
+            self.showCustomAlert(title: "Alert", message: "All your deals are already unlocked. You cannot reload please redeem first.")
+            
         } else if self.type == ReloadState.offerRedeemed {
-            let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-            cannotRedeemViewController.messageText = "you cannot reload deals at this time try after timer finished."
-            cannotRedeemViewController.titleText = "Alert"
-            cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-            self.present(cannotRedeemViewController, animated: true, completion: nil)
+           
+            self.showCustomAlert(title: "Alert", message: "you cannot reload deals at this time try after timer finished.")
+            
         } else if self.type == ReloadState.reloadTimerExpire {
+           
             self.requestProductInfo()
+            
         } else {
             debugPrint("Unknown reload state")
         }

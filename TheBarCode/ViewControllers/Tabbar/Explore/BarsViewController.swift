@@ -28,7 +28,6 @@ class BarsViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
     }
@@ -53,23 +52,7 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
-    }
-
-    /*
-    //MARK: Notification
-    @objc func checkReoadStatusNotification(notfication: NSNotification) {
-        
-        debugPrint("notification Received == \(notfication.name)")
-
-        if let withRefresh = notfication.object as? Bool, withRefresh { //with Refresh or not
-            checkReloadStatus()
-            self.statefulTableView.triggerInitialLoad()
-        } else {
-            checkReloadStatus()
-
-        }
-    }*/
-    
+    }    
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -370,10 +353,10 @@ extension BarsViewController: BarTableViewCellDelegare {
 
 
 extension BarsViewController  {
-    
    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let bar = marker.userData as! Bar
         self.delegate.barsController(controller: self, didSelectBar: bar)
         return false
     }
 }
+

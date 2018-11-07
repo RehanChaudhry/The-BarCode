@@ -103,6 +103,7 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
         let mailComposerController = MFMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             mailComposerController.delegate = self
+            mailComposerController.mailComposeDelegate = self
             mailComposerController.setToRecipients([self.bar.contactEmail.value])
             present(mailComposerController, animated: true, completion: nil)
         }

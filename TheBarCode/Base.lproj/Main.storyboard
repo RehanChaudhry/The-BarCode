@@ -4770,6 +4770,12 @@ Cg
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00 : 00 : 00 : 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07W-Wy-fTn">
+                                        <rect key="frame" x="24" y="134" width="295" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-WC-xng" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                         <rect key="frame" x="16" y="151" width="311" height="44"/>
                                         <constraints>
@@ -4797,8 +4803,11 @@ Cg
                                     <constraint firstAttribute="trailing" secondItem="mYc-WC-xng" secondAttribute="trailing" constant="16" id="1QZ-QN-icF"/>
                                     <constraint firstAttribute="trailing" secondItem="P17-Ni-BjD" secondAttribute="trailing" constant="24" id="2JO-vL-NRZ"/>
                                     <constraint firstItem="Z2t-CI-cw1" firstAttribute="top" secondItem="31w-ht-si8" secondAttribute="bottom" constant="24" id="2sF-am-R81"/>
+                                    <constraint firstItem="07W-Wy-fTn" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" constant="24" id="FGZ-V0-frJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="07W-Wy-fTn" secondAttribute="trailing" constant="24" id="Fgg-bF-1ft"/>
                                     <constraint firstAttribute="height" constant="219" id="Jk4-5G-ddN"/>
                                     <constraint firstAttribute="trailing" secondItem="Z2t-CI-cw1" secondAttribute="trailing" id="PD2-d4-WEd"/>
+                                    <constraint firstItem="07W-Wy-fTn" firstAttribute="top" secondItem="P17-Ni-BjD" secondAttribute="bottom" constant="8" id="Q3c-hY-IAc"/>
                                     <constraint firstItem="mYc-WC-xng" firstAttribute="leading" secondItem="xmB-V3-hBj" secondAttribute="leading" constant="16" id="R1m-KD-ahs"/>
                                     <constraint firstItem="P17-Ni-BjD" firstAttribute="top" secondItem="Z2t-CI-cw1" secondAttribute="bottom" constant="24" id="byY-M0-ye0"/>
                                     <constraint firstItem="mYc-WC-xng" firstAttribute="centerX" secondItem="xmB-V3-hBj" secondAttribute="centerX" id="oaC-0h-bwZ"/>
@@ -4827,7 +4836,9 @@ Cg
                         <viewLayoutGuide key="safeArea" id="WpS-Gc-QxU"/>
                     </view>
                     <connections>
+                        <outlet property="mainViewHeightConstraint" destination="Jk4-5G-ddN" id="z8U-bG-7ae"/>
                         <outlet property="messageLabel" destination="P17-Ni-BjD" id="i3t-f1-Fdg"/>
+                        <outlet property="reloadTimerLabel" destination="07W-Wy-fTn" id="TAQ-Dz-38p"/>
                         <outlet property="titleLabel" destination="31w-ht-si8" id="94v-wM-Ivv"/>
                     </connections>
                 </viewController>
@@ -4842,7 +4853,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
+        <image name="icon_list" width="22" height="15"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4853,7 +4864,7 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="138" height="138"/>
+        <image name="profile_image" width="46" height="46"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>

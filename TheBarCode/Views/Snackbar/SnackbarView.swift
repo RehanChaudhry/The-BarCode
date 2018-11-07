@@ -18,6 +18,12 @@ enum GradientType: String {
     case green = "green", orange = "orange"
 }
 
+
+protocol SnackbarViewDelegate: class {
+    func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton)
+    func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton)
+}
+
 class SnackbarView: GradientView, NibLoadable {
 
     @IBOutlet var discountInfoView: UIView!
@@ -31,6 +37,8 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet var creditsLeftView: UIView!
     @IBOutlet var creditsLeftButton: UIButton!
     
+    weak var delegate: SnackbarViewDelegate!
+
     var type: SnackbarType = .discount
     var gradientType: GradientType = .green
     
@@ -115,10 +123,12 @@ class SnackbarView: GradientView, NibLoadable {
     //MARK: My IBActions
     
     @IBAction func creditButtonTapped(sender: UIButton) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let rootController = appDelegate.window!.rootViewController!
-        let topMostVC = rootController.topMostViewController()
-        topMostVC.showAlertController(title: "Credits", msg: "When you send invitation to your friends and family and they sign up by using your referral code and they redeem their first deal you will get 1 credit.")
+        self.delegate.snackbarView(view: self, creditButtonTapped: sender)
     }
+    
+    @IBAction func bannerButtonTapped(_ sender: UIButton) {
+        self.delegate.snackbarView(view: self, bannerButtonTapped: sender)
+    }
+    
 }
 
