@@ -173,16 +173,17 @@ class ExploreViewController: UIViewController {
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     
-    func getBannerAlertText() -> String {
+    func getBannerAlertText() -> (title: String, message: String) {
+        
         let type = barsController.snackBar.type
         if type == .discount {
-            return "Discount Text"
+            return (title: "Discount" , message: "Avail discounts from bars by clicking on this banner.")
         } else if type == .reload {
-            return "Reload Text"
+            return (title: "Reloads in" , message: "You will be able to reload when the timer ends. It will allow you then redeem an offer from the same establishment again")
         } else if type == .congrates {
-            return "Congrates Text"
+            return (title: "" , message: "Congrates Text")
         }
-        return "SOME TEXT"
+        return (title: "" , message: "")
     }
     
     func startReloadTimer() {
@@ -395,13 +396,12 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
 
 extension ExploreViewController:  SnackbarViewDelegate {
     func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
-        self.showCustomAlert(title: "Credits", message: "When you send invitation to your friends and family and they sign up by using your referral code and they redeem their first deal you will get 1 credit.")
+        self.showCustomAlert(title: "Credits", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.")
     }
     
     func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {
-        let title = "Alert"
-        let message = self.getBannerAlertText()
-        self.showCustomAlert(title: title, message: message)
+        let text = self.getBannerAlertText()
+        self.showCustomAlert(title: text.title, message: text.message)
     }
 
 }

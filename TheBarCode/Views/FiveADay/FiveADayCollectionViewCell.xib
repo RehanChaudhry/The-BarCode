@@ -78,10 +78,11 @@
                                     <constraint firstAttribute="width" constant="14" id="zJP-gL-1mw"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbM-75-8dd">
-                                <rect key="frame" x="35" y="405" width="145" height="15"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbM-75-8dd">
+                                <rect key="frame" x="35" y="405" width="140" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="0YD-5h-gGk"/>
+                                    <constraint firstAttribute="width" constant="140" id="WxP-LY-qhF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <state key="normal" title="The White Hart">
@@ -92,7 +93,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4G-R3-o4K">
-                                <rect key="frame" x="188" y="404.5" width="78" height="15"/>
+                                <rect key="frame" x="180" y="404.5" width="86" height="15"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -135,7 +136,7 @@
                             <constraint firstItem="6ma-Xw-PYc" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" id="7BB-mi-chd"/>
                             <constraint firstItem="rMz-d8-cg0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IXk-Tx-yH5" secondAttribute="bottom" constant="8" id="7Wg-wq-Qud"/>
                             <constraint firstAttribute="trailing" secondItem="MZg-ZB-KGl" secondAttribute="trailing" constant="16" id="D4l-K0-wjc"/>
-                            <constraint firstItem="V4G-R3-o4K" firstAttribute="leading" secondItem="WbM-75-8dd" secondAttribute="trailing" constant="8" id="ElT-XZ-kOA"/>
+                            <constraint firstItem="V4G-R3-o4K" firstAttribute="leading" secondItem="WbM-75-8dd" secondAttribute="trailing" constant="5" id="ElT-XZ-kOA"/>
                             <constraint firstItem="ORN-dS-uJi" firstAttribute="top" secondItem="8Vk-me-Vwd" secondAttribute="bottom" constant="8" id="G1D-sy-BY1"/>
                             <constraint firstItem="8Vk-me-Vwd" firstAttribute="top" secondItem="6ma-Xw-PYc" secondAttribute="bottom" constant="20" id="H6q-zm-IYM"/>
                             <constraint firstItem="MZg-ZB-KGl" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="Pef-Nl-MpP"/>

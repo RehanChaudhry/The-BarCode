@@ -40,6 +40,15 @@ class NotificationSettingsViewController: UIViewController {
         self.liveOfferSwitch.isOn = user.liveOfferNotificationEnabled.value
     }
 
+    
+    func showCustomAlert(title: String, message: String){
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func updateButtonTapped(sender: UIButton) {
@@ -52,13 +61,13 @@ class NotificationSettingsViewController: UIViewController {
     
     @IBAction func fiveADaySwitchValueChanged(sender: UISwitch) {
         if !sender.isOn {
-            self.showAlertController(title: "Confirm", msg: "Are you sure you want to switch these notifications off. If you switch them off you will not be able to receive great offers or pass them onto friends and receive credits?")
+            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
         }
     }
     
     @IBAction func liveOfferSwitchValueChanged(sender: UISwitch) {
         if !sender.isOn {
-            self.showAlertController(title: "Confirm", msg: "Are you sure you want to switch these notifications off. If you switch them off you will not be able to receive great offers or pass them onto friends and receive credits?")
+            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
         }
     }
 

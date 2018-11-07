@@ -31,10 +31,11 @@ class CannotRedeemViewController: UIViewController {
         
         let heightOfMessage = messageText.heightWithConstrainedWidth(width: (self.view.frame.width - 80), font: UIFont.appRegularFontOf(size: 14.0))
 
-        if self.redeemInfo?.remainingSeconds ?? 0 > 0 {
+        if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {
             self.mainViewHeightConstraint.constant = heightOfMessage + 217.0
             startReloadTimer()
         } else {
+            self.reloadTimerLabel.text = ""
             self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
         }
    

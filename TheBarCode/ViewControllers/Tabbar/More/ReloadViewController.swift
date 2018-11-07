@@ -132,13 +132,11 @@ class ReloadViewController: UITableViewController {
         
         self.type = type
         
-        let font = UIFont.appRegularFontOf(size: 12.0)
-        let attributesNormal: [NSAttributedStringKey: Any] = [.font: font,
-            .foregroundColor: UIColor.white]
-        
         if type == .noOfferRedeemed {
-            let attributedTitle = NSAttributedString(string: "Available Credits: \nYou are eligible for redeem of all type of offer of any bar/establishment.", attributes: attributesNormal)
+            
+            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are eligible to redeem all type of offers of any bar/establishment.", timerText: "")
             self.titleLabel.attributedText = attributedTitle
+            
         } else if type == .offerRedeemed {
             
             guard let redeemInfo = self.redeemInfo else {
@@ -146,42 +144,46 @@ class ReloadViewController: UITableViewController {
                 return
             }
             
-            let timerAttributed: [NSAttributedStringKey: Any] = [
-                .font: font,
-                .foregroundColor: UIColor.appBlueColor()]
-            
             let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
-           
             if user!.credit > 0 {
-              
-                let finalText = "Available Credits: \nYou can reload all used offers in \(timerText)."
                 
-                let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
-                attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
-                
+                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment OR you can reload previous offers after:", timerText: timerText)
                 self.titleLabel.attributedText = attributedTitle
                 
             } else {
-                let text = "You are out of credits."
-                let finalText = "\(text) \nYou can reload all used offers in \(timerText)"
-                
-                let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
-                attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
-                
-                let attributesBold: [NSAttributedStringKey: Any] =
-                                    [.font: UIFont.appBoldFontOf(size: 12.0),
-                                     .foregroundColor: UIColor.white]
-                attributedTitle.addAttributes(attributesBold, range: (finalText as NSString).range(of: text))
 
-                
+                let attributedTitle = getAttributeText(prefixText: "You are out of credits.", descText: "You can reload previous offers after:", timerText: timerText)
                 self.titleLabel.attributedText = attributedTitle
             }
             
         } else if type == .reloadTimerExpire {
-            let attributedTitle = NSAttributedString(string: "Available Credits: \nCongrats you are able to reload.", attributes: attributesNormal)
-            self.titleLabel.attributedText = attributedTitle
-            
+          
+            let fontBold = UIFont.appBoldFontOf(size: 12.0)
+            let attributesBold: [NSAttributedStringKey: Any] = [.font: fontBold,
+                                                                .foregroundColor: UIColor.white]
+            let desc = "Congrats you are able to reload."
+
+            if user!.credit > 0 {
+                
+                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment.", timerText: "")
+                
+                let attributedDesc = NSMutableAttributedString(string: desc, attributes: attributesBold)
+                
+                attributedTitle.append(attributedDesc)
+                
+                self.titleLabel.attributedText = attributedTitle
+                
+            } else {
+                let attributedTitle = getAttributeText(prefixText: "You are out of credits.", descText: "", timerText: "")
+                
+                let attributedDesc = NSMutableAttributedString(string: desc, attributes: attributesBold)
+                
+                attributedTitle.append(attributedDesc)
+                
+                self.titleLabel.attributedText = attributedTitle
+                
+            }
         } else {
             debugPrint("Unknown reload state")
         }
@@ -218,6 +220,30 @@ class ReloadViewController: UITableViewController {
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
+    func getAttributeText(prefixText: String, descText: String, timerText: String) -> NSMutableAttributedString {
+       
+        let fontRegular = UIFont.appRegularFontOf(size: 12.0)
+        let fontBold = UIFont.appBoldFontOf(size: 12.0)
+        
+        let attributesNormal: [NSAttributedStringKey: Any] = [.font: fontRegular,
+                                                              .foregroundColor: UIColor.white]
+        
+        let attributesBold: [NSAttributedStringKey: Any] = [.font: fontBold,
+                                                            .foregroundColor: UIColor.white]
+        
+        let timerAttributed: [NSAttributedStringKey: Any] = [.font: fontBold,
+                                                             .foregroundColor: UIColor.appBlueColor()]
+        
+        let finalText = "\(prefixText)\n\(descText) \(timerText)"
+        
+        let attributedTitle = NSMutableAttributedString(string: finalText, attributes: attributesNormal)
+        attributedTitle.addAttributes(attributesBold, range: (finalText as NSString).range(of: prefixText))
+        attributedTitle.addAttributes(timerAttributed, range: (finalText as NSString).range(of: timerText))
+        
+        return attributedTitle
+        
     }
     
     //MARK: My IBActions

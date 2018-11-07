@@ -84,7 +84,7 @@ class CategoriesViewController: UIViewController {
     
     func getItemSize() -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        let noOfItemsPerRow = UInt(screenWidth / 100.0)
+        let noOfItemsPerRow = UInt(screenWidth / 120.0)
         
         let layout = collectionView.innerCollection.collectionViewLayout as? UICollectionViewFlowLayout
         
