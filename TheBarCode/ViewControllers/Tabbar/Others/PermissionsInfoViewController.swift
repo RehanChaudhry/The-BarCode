@@ -75,11 +75,13 @@ class PermissionsInfoViewController: UIViewController {
     }
     
     func forcefullyPresentTabbarController() {
-        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-        self.navigationController?.present(tabbarController!, animated: true, completion: {
-            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-            self.navigationController?.popToViewController(loginOptions, animated: false)
-        })
+        DispatchQueue.main.async {
+            let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+            self.navigationController?.present(tabbarController!, animated: true, completion: {
+                let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                self.navigationController?.popToViewController(loginOptions, animated: false)
+            })
+        }
     }
     
     func askForPushNotificationPermissions() {
