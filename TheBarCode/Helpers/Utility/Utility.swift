@@ -10,6 +10,7 @@ import UIKit
 import KeychainAccess
 import CoreStore
 import GoogleMaps
+import Firebase
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.cygnismedia.thebarcode"
@@ -44,6 +45,9 @@ let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
 let defaultUKLocation =  CLLocationCoordinate2D(latitude: 55.3781, longitude: 3.4360)
+
+let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
+let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
 
 class Utility: NSObject {
     
@@ -241,5 +245,68 @@ class Utility: NSObject {
         default:
             return OfferType.unknown
         }
+    }
+    
+    func getReferralCodeFromUrlString(urlString: String) -> String? {
+        
+        var referralCode: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "referral" {
+                    referralCode = queryItem.value
+                    break
+                }
+            }
+        }
+        
+        return referralCode
+    }
+    
+    func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, completion: @escaping (() -> Void)) {
+        
+        let user = Utility.shared.getCurrentUser()!
+        let ownReferralCode = user.ownReferralCode.value
+        let offerShareUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode + "&offer_id=" + deal.id.value + "&shared_by=" + user.userId.value
+        
+        let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
+        linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
+        linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
+        linkComponents.iOSParameters?.appStoreID = kAppStoreId
+        linkComponents.iOSParameters?.fallbackURL = URL(string: barCodeDomainURLString)
+        linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
+        
+        linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
+        
+        linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkComponents.socialMetaTagParameters?.title = "The Barcode "
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has shared an offer with you. With The Barcode you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        
+        linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+        linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
+        
+        linkComponents.shorten { (shortUrl, warnings, error) in
+            
+            guard error == nil else {
+                completion()
+                controller.showAlertController(title: "Invite", msg: error!.localizedDescription)
+                return
+            }
+            
+            if let warnings = warnings {
+                debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = controller.view
+            controller.present(activityViewController, animated: true, completion: {
+                completion()
+            })
+        }
+        
     }
 }

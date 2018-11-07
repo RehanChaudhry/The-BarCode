@@ -33,22 +33,9 @@ class ReferralViewController: UIViewController {
         self.setUpFields()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let inviteUrl = appDelegate.inviteUrlString {
-            
-            let urlComponents = URLComponents(string: inviteUrl)
-            if let queryItems = urlComponents?.queryItems {
-                for queryItem in queryItems {
-                    if queryItem.name == "referral" {
-                        self.codeFieldView.textField.text = queryItem.value
-                        break
-                    }
-                }
-                
-                appDelegate.inviteUrlString = nil
-                
-            } else {
-                debugPrint("Invitation url query param not available")
-            }
+        if let referralCode = appDelegate.referralCode {
+            self.codeFieldView.textField.text = referralCode
+            appDelegate.referralCode = nil
         }
     }
 

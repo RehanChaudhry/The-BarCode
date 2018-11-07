@@ -9,12 +9,20 @@
 import UIKit
 import Reusable
 
+protocol LiveOfferTableViewCellDelegate: class {
+    func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton)
+}
+
 class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
 
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet weak var validityLabel: UILabel!
     
+    @IBOutlet var shareButton: UIButton!
+    
     var expirationTimer: Timer?
+    
+    weak var delegate: LiveOfferTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,30 +46,31 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     override func setUpCell(explore: Explore) {
         
         if let image = explore.images.first {
-           // coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false)
-            coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+            self.coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        } else {
+            self.coverImageView.image = nil
         }
         
-        titleLabel.text = explore.title.value
-        distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
-        detailLabel.text = "\(explore.deals.value) live offer"
-        locationIconImageView.isHidden = false
-        distanceLabel.isHidden = false
-        detailLabel.isHidden = false
-        validityLabel.isHidden = true
-        
+        self.titleLabel.text = explore.title.value
+        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
+        self.detailLabel.text = "\(explore.deals.value) live offer"
+        self.locationIconImageView.isHidden = false
+        self.distanceLabel.isHidden = false
+        self.detailLabel.isHidden = false
+        self.validityLabel.isHidden = true
+     
+        self.shareButton.isHidden = true
     }
     
     func setUpDetailCell(offer: LiveOffer) {
         
-       // let explore = offer.establishment.value!
         let url = offer.image.value
-       // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
-         coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        titleLabel.text = offer.title.value//explore.title.value
-        locationIconImageView.isHidden = true
-        distanceLabel.isHidden = true
-        detailLabel.isHidden = true
+        self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        self.titleLabel.text = offer.title.value
+        self.locationIconImageView.isHidden = true
+        self.distanceLabel.isHidden = true
+        self.detailLabel.isHidden = true
+        self.shareButton.isHidden = false
         
         let endDate = offer.endDateTime
         let remainingSeconds = Int(endDate.timeIntervalSinceNow)
@@ -138,6 +147,12 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
             self.validityLabel.attributedText = finalAttributedString
         }
+    }
+    
+    //MARK: My IBActions
+    
+    @IBAction func shareOfferButtonTapped(sender: UIButton) {
+        self.delegate?.liveOfferCell(cell: self, shareButtonTapped: sender)
     }
     
 }

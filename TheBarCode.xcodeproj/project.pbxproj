@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */; };
 		0C0E58E2218C27C600796497 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C0E58E1218C27C600796497 /* StoreKit.framework */; };
-		0C0E58E4218C2BEF00796497 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C0E58E3218C2BEE00796497 /* GoogleService-Info.plist */; };
 		0C0E58EC218C3A7D00796497 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E58EB218C3A7D00796497 /* NotificationService.swift */; };
 		0C0E58F0218C3A7D00796497 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0C0E58E9218C3A7C00796497 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84B214654FD00DFB281 /* AppDelegate.swift */; };
@@ -63,6 +62,9 @@
 		0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */; };
 		0C478A99215C9E39002C51FA /* ExploreAboutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */; };
 		0C478A9B215CC3DD002C51FA /* BarDetailHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C478A9A215CC3DD002C51FA /* BarDetailHeaderViewController.swift */; };
+		0C48E1652191ADFA00B81ADD /* ShareOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48E1642191ADFA00B81ADD /* ShareOfferViewController.swift */; };
+		0C48E1692191BAC100B81ADD /* ShareOfferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48E1672191BAC100B81ADD /* ShareOfferCell.swift */; };
+		0C48E16A2191BAC100B81ADD /* ShareOfferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C48E1682191BAC100B81ADD /* ShareOfferCell.xib */; };
 		0C5A88EB21647E8200F16851 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88EA21647E8200F16851 /* ContactsViewController.swift */; };
 		0C5A88EF21647F8A00F16851 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88ED21647F8A00F16851 /* ContactTableViewCell.swift */; };
 		0C5A88F021647F8A00F16851 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88EE21647F8A00F16851 /* ContactTableViewCell.xib */; };
@@ -70,6 +72,8 @@
 		0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */; };
 		0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */; };
 		0C5A88FB2164D91C00F16851 /* OfferDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */; };
+		0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */; };
+		0C7B6E402192F2F40052D02C /* SharedOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */; };
 		0C8848652167370500DB222F /* UILableAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8848642167370500DB222F /* UILableAdditions.swift */; };
 		0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */; };
 		0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCC92150C4E500D5117B /* ExploreBaseTableViewCell.swift */; };
@@ -212,7 +216,6 @@
 /* Begin PBXFileReference section */
 		0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCosumptionViewController.swift; sourceTree = "<group>"; };
 		0C0E58E1218C27C600796497 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		0C0E58E3218C2BEE00796497 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C0E58E9218C3A7C00796497 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C0E58EB218C3A7D00796497 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		0C0E58ED218C3A7D00796497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -273,6 +276,9 @@
 		0C478A96215C9E39002C51FA /* ExploreAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreAboutTableViewCell.swift; sourceTree = "<group>"; };
 		0C478A97215C9E39002C51FA /* ExploreAboutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreAboutTableViewCell.xib; sourceTree = "<group>"; };
 		0C478A9A215CC3DD002C51FA /* BarDetailHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDetailHeaderViewController.swift; sourceTree = "<group>"; };
+		0C48E1642191ADFA00B81ADD /* ShareOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOfferViewController.swift; sourceTree = "<group>"; };
+		0C48E1672191BAC100B81ADD /* ShareOfferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareOfferCell.swift; sourceTree = "<group>"; };
+		0C48E1682191BAC100B81ADD /* ShareOfferCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareOfferCell.xib; sourceTree = "<group>"; };
 		0C5A88EA21647E8200F16851 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		0C5A88ED21647F8A00F16851 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88EE21647F8A00F16851 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
@@ -280,6 +286,8 @@
 		0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferDetailTableViewCell.xib; sourceTree = "<group>"; };
+		0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOffersViewController.swift; sourceTree = "<group>"; };
 		0C8848642167370500DB222F /* UILableAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILableAdditions.swift; sourceTree = "<group>"; };
 		0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewAdditions.swift; sourceTree = "<group>"; };
 		0C8BDCC92150C4E500D5117B /* ExploreBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -471,8 +479,8 @@
 				0C23A84F214654FD00DFB281 /* Main.storyboard */,
 				0C23A8522146550000DFB281 /* Assets.xcassets */,
 				0C23A8542146550000DFB281 /* LaunchScreen.storyboard */,
-				0C0E58E3218C2BEE00796497 /* GoogleService-Info.plist */,
 				0C23A8572146550000DFB281 /* Info.plist */,
+				0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */,
 				0CE4618521522C6000124E7F /* splash.mp4 */,
 				0C23A8792146562200DFB281 /* ViewControllers */,
 				0C955DB32147823400F9385B /* Views */,
@@ -674,6 +682,7 @@
 				0C8E9A96214A8A8800224720 /* ReloadViewController.swift */,
 				0C8E9A98214A908800224720 /* FaqsViewController.swift */,
 				0C8E9A9A214A909E00224720 /* RulesViewController.swift */,
+				0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -701,6 +710,15 @@
 				0C44DD36214A7F9F000F5D64 /* MenuCell.xib */,
 			);
 			path = MoreMenu;
+			sourceTree = "<group>";
+		};
+		0C48E1662191BAA600B81ADD /* ShareOffer */ = {
+			isa = PBXGroup;
+			children = (
+				0C48E1672191BAC100B81ADD /* ShareOfferCell.swift */,
+				0C48E1682191BAC100B81ADD /* ShareOfferCell.xib */,
+			);
+			path = ShareOffer;
 			sourceTree = "<group>";
 		};
 		0C5A88EC21647F7400F16851 /* Invite */ = {
@@ -808,6 +826,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0C48E1662191BAA600B81ADD /* ShareOffer */,
 				0C302E2A21762A9B00FA993F /* LoadingButton */,
 				0CC81FAB216F21AF00FDB92D /* AsyncImageView */,
 				0C5A88EC21647F7400F16851 /* Invite */,
@@ -934,6 +953,7 @@
 			children = (
 				0C955DD52147F20100F9385B /* TermsViewController.swift */,
 				0C955DD72147F20E00F9385B /* PrivacyPolicyViewController.swift */,
+				0C48E1642191ADFA00B81ADD /* ShareOfferViewController.swift */,
 			);
 			path = OtherControllers;
 			sourceTree = "<group>";
@@ -1285,6 +1305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C23A8AF2146873400DFB281 /* Lato-Light.ttf in Resources */,
+				0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */,
 				0C23A8A72146873400DFB281 /* Lato-Heavy.ttf in Resources */,
 				0C955DD02147D18400F9385B /* FieldView.xib in Resources */,
 				0C955DF92149319200F9385B /* TableViewLoadMoreCell.xib in Resources */,
@@ -1308,6 +1329,7 @@
 				0C8BDCD82150D0CD00D5117B /* LiveOfferTableViewCell.xib in Resources */,
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
+				0C48E16A2191BAC100B81ADD /* ShareOfferCell.xib in Resources */,
 				0C23A8A82146873400DFB281 /* Lato-Regular.ttf in Resources */,
 				0C23A8B02146873400DFB281 /* Lato-Medium.ttf in Resources */,
 				0C44DD38214A7F9F000F5D64 /* MenuCell.xib in Resources */,
@@ -1317,7 +1339,6 @@
 				0C955DFE214931A500F9385B /* EmptyDataView.xib in Resources */,
 				0C23A851214654FD00DFB281 /* Main.storyboard in Resources */,
 				0C23A8B12146873400DFB281 /* Lato-Semibold.ttf in Resources */,
-				0C0E58E4218C2BEF00796497 /* GoogleService-Info.plist in Resources */,
 				0C955E08214931D500F9385B /* LoadingAndErrorView.xib in Resources */,
 				0C23A8A92146873400DFB281 /* Lato-Hairline.ttf in Resources */,
 				0C23A8A42146873400DFB281 /* Lato-Bold.ttf in Resources */,
@@ -1557,6 +1578,7 @@
 				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
+				0C48E1652191ADFA00B81ADD /* ShareOfferViewController.swift in Sources */,
 				83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */,
 				0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */,
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
@@ -1599,6 +1621,7 @@
 				8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */,
 				0C23A88F2146732000DFB281 /* UIColorAdditions.swift in Sources */,
 				0C955DB52147824C00F9385B /* GradientButton.swift in Sources */,
+				0C48E1692191BAC100B81ADD /* ShareOfferCell.swift in Sources */,
 				0C8848652167370500DB222F /* UILableAdditions.swift in Sources */,
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
 				838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */,
@@ -1613,6 +1636,7 @@
 				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
 				0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */,
 				0C955DD62147F20100F9385B /* TermsViewController.swift in Sources */,
+				0C7B6E402192F2F40052D02C /* SharedOffersViewController.swift in Sources */,
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
 				0C8E9AA0214B9CD300224720 /* FAQHeaderView.swift in Sources */,
 				0C478A9B215CC3DD002C51FA /* BarDetailHeaderViewController.swift in Sources */,

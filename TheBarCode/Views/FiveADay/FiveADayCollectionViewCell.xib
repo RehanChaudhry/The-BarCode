@@ -126,6 +126,42 @@
                                     <action selector="viewDetailButtonTapped:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="ST7-QV-mMq"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Fh-RL-K3F" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                                <rect key="frame" x="230" y="8" width="44" height="44"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="YTe-jh-ay0">
+                                        <rect key="frame" x="12" y="12" width="20" height="20"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aub-8d-GS8">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="icon_share"/>
+                                        <connections>
+                                            <action selector="shareOfferButtonTappedWithSender:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="UIl-XT-ShD"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Aub-8d-GS8" firstAttribute="leading" secondItem="9Fh-RL-K3F" secondAttribute="leading" id="A8F-aa-bmL"/>
+                                    <constraint firstAttribute="bottom" secondItem="Aub-8d-GS8" secondAttribute="bottom" id="Etf-7e-8ur"/>
+                                    <constraint firstAttribute="width" constant="44" id="VKq-M6-uJ5"/>
+                                    <constraint firstAttribute="height" constant="44" id="Yne-D4-HVK"/>
+                                    <constraint firstItem="YTe-jh-ay0" firstAttribute="centerY" secondItem="9Fh-RL-K3F" secondAttribute="centerY" id="haH-a6-kKE"/>
+                                    <constraint firstAttribute="trailing" secondItem="Aub-8d-GS8" secondAttribute="trailing" id="v8g-6B-JHa"/>
+                                    <constraint firstItem="YTe-jh-ay0" firstAttribute="centerX" secondItem="9Fh-RL-K3F" secondAttribute="centerX" id="vOs-ae-Cc3"/>
+                                    <constraint firstItem="Aub-8d-GS8" firstAttribute="top" secondItem="9Fh-RL-K3F" secondAttribute="top" id="y9T-yo-ETj"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" red="0.14117647058823529" green="0.14117647058823529" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -134,6 +170,7 @@
                             <constraint firstAttribute="trailing" secondItem="V4G-R3-o4K" secondAttribute="trailing" constant="16" id="2u0-32-OcC"/>
                             <constraint firstItem="6ma-Xw-PYc" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" id="7BB-mi-chd"/>
                             <constraint firstItem="rMz-d8-cg0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IXk-Tx-yH5" secondAttribute="bottom" constant="8" id="7Wg-wq-Qud"/>
+                            <constraint firstAttribute="trailing" secondItem="9Fh-RL-K3F" secondAttribute="trailing" constant="8" id="7kP-MC-MCa"/>
                             <constraint firstAttribute="trailing" secondItem="MZg-ZB-KGl" secondAttribute="trailing" constant="16" id="D4l-K0-wjc"/>
                             <constraint firstItem="V4G-R3-o4K" firstAttribute="leading" secondItem="WbM-75-8dd" secondAttribute="trailing" constant="8" id="ElT-XZ-kOA"/>
                             <constraint firstItem="ORN-dS-uJi" firstAttribute="top" secondItem="8Vk-me-Vwd" secondAttribute="bottom" constant="8" id="G1D-sy-BY1"/>
@@ -152,6 +189,7 @@
                             <constraint firstItem="MZg-ZB-KGl" firstAttribute="top" secondItem="V4G-R3-o4K" secondAttribute="bottom" constant="16.5" id="rH3-gY-UnM"/>
                             <constraint firstItem="IXk-Tx-yH5" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="utc-NN-559"/>
                             <constraint firstAttribute="trailing" secondItem="6ma-Xw-PYc" secondAttribute="trailing" id="vjh-Cg-xY8"/>
+                            <constraint firstItem="9Fh-RL-K3F" firstAttribute="top" secondItem="IL0-Y3-8n3" secondAttribute="top" constant="8" id="vpJ-l1-YFf"/>
                             <constraint firstItem="IXk-Tx-yH5" firstAttribute="top" secondItem="ORN-dS-uJi" secondAttribute="bottom" constant="8" id="xJt-YW-rpv"/>
                             <constraint firstItem="I4n-qH-Kz9" firstAttribute="top" secondItem="ORN-dS-uJi" secondAttribute="bottom" constant="8" id="yJt-LX-xHO"/>
                         </constraints>
@@ -190,12 +228,16 @@
                 <outlet property="distanceLabel" destination="V4G-R3-o4K" id="kIc-NZ-hds"/>
                 <outlet property="redeemButton" destination="MZg-ZB-KGl" id="ogI-UY-R13"/>
                 <outlet property="shadowView" destination="IL0-Y3-8n3" id="03x-OO-jKu"/>
+                <outlet property="shareButton" destination="Aub-8d-GS8" id="N6C-oj-1zT"/>
+                <outlet property="shareButtonContainer" destination="9Fh-RL-K3F" id="d7r-Xl-CQD"/>
+                <outlet property="sharingLoader" destination="YTe-jh-ay0" id="rE7-nd-pkq"/>
             </connections>
             <point key="canvasLocation" x="97.599999999999994" y="90.854572713643179"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="bar-location" width="28" height="32"/>
-        <image name="fiveday-deal1" width="302" height="220"/>
+        <image name="fiveday-deal1" width="906" height="660"/>
+        <image name="icon_share" width="51.200000762939453" height="51.200000762939453"/>
     </resources>
 </document>

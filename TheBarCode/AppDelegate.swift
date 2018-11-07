@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var inviteUrlString: String?
+    var referralCode: String?
     
     var liveOfferBarDict: [String : Any]?
     var refreshFiveADay: Bool?
@@ -106,8 +106,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             
-            self.inviteUrlString = dynamicLink!.url!.absoluteString
-            
+            if universalUrl?.host == dynamicLinkInviteDomain {
+                if let code = Utility.shared.getReferralCodeFromUrlString(urlString: dynamicLink!.url!.absoluteString) {
+                    self.referralCode = code
+                } else {
+                    debugPrint("Unable to parse referral code: ")
+                }
+                
+            } else if universalUrl?.host == dynamicLinkShareOfferDomain {
+                
+            } else {
+                debugPrint("Unhandled dynamic link domain")
+            }
         }
         
         return handled
@@ -119,7 +129,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
             return handled ?? false
         } else if url.scheme?.lowercased() == theBarCodeInviteScheme.lowercased() {
-            self.inviteUrlString = url.absoluteString
+            if let code = Utility.shared.getReferralCodeFromUrlString(urlString: url.absoluteString) {
+                self.referralCode = code
+            } else {
+                debugPrint("Unable to parse referral code url scheme: ")
+            }
             return true
         }
         

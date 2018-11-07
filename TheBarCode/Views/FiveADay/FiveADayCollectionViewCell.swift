@@ -16,6 +16,7 @@ protocol FiveADayCollectionViewCellDelegate: class {
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton)
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewBarDetailButtonTapped sender: UIButton)
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewDirectionButtonTapped sender: UIButton)
+    func fiveADayCell(cell: FiveADayCollectionViewCell, shareButtonTapped sender: UIButton)
 }
 
 class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
@@ -34,10 +35,15 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var redeemButton: GradientButton!
     
+    @IBOutlet var shareButtonContainer: ShadowView!
+    @IBOutlet var shareButton: UIButton!
+    
     @IBOutlet var coverImageHeight: NSLayoutConstraint!
     @IBOutlet var detailVerticalSpacing: NSLayoutConstraint!
     
     @IBOutlet var detailButton: UIButton!
+    
+    @IBOutlet var sharingLoader: UIActivityIndicatorView!
     
     weak var delegate : FiveADayCollectionViewCellDelegate!
 
@@ -54,6 +60,14 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     //MARK: My Methods
     
     func setUpCell(deal: Deal) {
+        
+        if deal.showSharingLoader {
+            self.sharingLoader.startAnimating()
+            self.shareButton.isHidden = true
+        } else {
+            self.sharingLoader.stopAnimating()
+            self.shareButton.isHidden = false
+        }
     
         let bar = deal.establishment.value
         if !bar!.canRedeemOffer.value {
@@ -113,5 +127,9 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
         self.delegate.fiveADayCell(cell: self, viewDirectionButtonTapped: sender)
+    }
+    
+    @IBAction func shareOfferButtonTapped(sender: UIButton) {
+        self.delegate.fiveADayCell(cell: self, shareButtonTapped: sender)
     }
 }

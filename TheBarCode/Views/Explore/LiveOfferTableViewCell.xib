@@ -35,11 +35,24 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djc-IT-5qt">
-                        <rect key="frame" x="16" y="206" width="288" height="20"/>
+                        <rect key="frame" x="16" y="206" width="244" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDH-uh-GDT">
+                        <rect key="frame" x="268" y="190" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Hyn-72-Zdd"/>
+                            <constraint firstAttribute="width" constant="44" id="kj3-D4-saq"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="icon_share"/>
+                        <connections>
+                            <action selector="shareOfferButtonTappedWithSender:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="Fc6-hF-4qE"/>
+                        </connections>
+                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="e7T-kn-Jzp">
                         <rect key="frame" x="16" y="234" width="10" height="15"/>
                         <constraints>
@@ -68,15 +81,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="03Q-CP-Jb5"/>
+                    <constraint firstItem="IDH-uh-GDT" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="4" id="2Z0-e0-crI"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="5sD-Sd-NXb"/>
                     <constraint firstAttribute="bottom" secondItem="2jA-pV-ECg" secondAttribute="bottom" constant="0.5" id="92g-9N-mL8"/>
+                    <constraint firstItem="IDH-uh-GDT" firstAttribute="leading" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="8" id="BhS-lD-vX3"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Cgb-jY-vvM"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="leading" secondItem="2jA-pV-ECg" secondAttribute="trailing" constant="8" id="EBz-AP-Fp6"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="Fmn-z5-jYo"/>
                     <constraint firstAttribute="trailing" secondItem="EFD-eR-6bt" secondAttribute="trailing" constant="16" id="FrL-Y8-IMa"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="IO0-Ym-wRy"/>
                     <constraint firstAttribute="trailing" secondItem="wx2-1M-QH6" secondAttribute="trailing" constant="16" id="QNI-gD-B0l"/>
-                    <constraint firstAttribute="trailing" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="16" id="Uf0-UO-kcD"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Wee-Ws-l11"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="top" secondItem="BaG-X9-k2d" secondAttribute="top" constant="24" id="Y0j-fg-8Ws"/>
                     <constraint firstItem="2jA-pV-ECg" firstAttribute="leading" secondItem="e7T-kn-Jzp" secondAttribute="trailing" constant="8" id="ZDL-yx-gXZ"/>
@@ -84,6 +98,7 @@
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="a9h-6m-psl"/>
                     <constraint firstItem="2jA-pV-ECg" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="gC7-3f-eHe"/>
                     <constraint firstAttribute="trailing" secondItem="B9e-ds-BcJ" secondAttribute="trailing" constant="16" id="jSV-uY-zYc"/>
+                    <constraint firstAttribute="trailing" secondItem="IDH-uh-GDT" secondAttribute="trailing" constant="8" id="q6a-uT-UAv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="hee-Tq-Mfk"/>
@@ -92,6 +107,7 @@
                 <outlet property="detailLabel" destination="B9e-ds-BcJ" id="mBe-C2-MA3"/>
                 <outlet property="distanceLabel" destination="2jA-pV-ECg" id="afT-jw-dGT"/>
                 <outlet property="locationIconImageView" destination="e7T-kn-Jzp" id="Fag-89-bs9"/>
+                <outlet property="shareButton" destination="IDH-uh-GDT" id="d46-7G-8YW"/>
                 <outlet property="titleLabel" destination="djc-IT-5qt" id="q1E-fc-PJR"/>
                 <outlet property="validityLabel" destination="EFD-eR-6bt" id="bbv-Wa-pNS"/>
             </connections>
@@ -101,5 +117,6 @@
     <resources>
         <image name="cover_1" width="1029" height="486"/>
         <image name="icon_map" width="15" height="20"/>
+        <image name="icon_share" width="51.200000762939453" height="51.200000762939453"/>
     </resources>
 </document>

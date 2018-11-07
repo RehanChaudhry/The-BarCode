@@ -284,6 +284,19 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
             debugPrint("deals establishment value not found")
         }
     }
+    
+    func fiveADayCell(cell: FiveADayCollectionViewCell, shareButtonTapped sender: UIButton) {
+        let index = self.pagerView.index(for: cell)
+        let deal = self.deals[index]
+        
+        deal.showSharingLoader = true
+        self.pagerView.reloadData()
+        
+        Utility.shared.generateAndShareDynamicLink(deal: deal, controller: self) {
+            deal.showSharingLoader = false
+            self.pagerView.reloadData()
+        }
+    }
 }
 
 //MARK: OutOfCreditViewControllerDelegate

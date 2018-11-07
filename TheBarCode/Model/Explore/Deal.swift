@@ -95,7 +95,7 @@ class Deal: CoreStoreObject {
     }
     
     var showLoader: Bool = false
-    
+    var showSharingLoader: Bool = false
 }
 
 
