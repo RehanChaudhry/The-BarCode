@@ -70,6 +70,9 @@ class ExploreViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dealRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sharedOfferRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+        
+        
         
     }
 
@@ -89,6 +92,7 @@ class ExploreViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
         
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
@@ -401,6 +405,9 @@ extension ExploreViewController {
         self.refreshSnackBar()
     }
     
+    @objc func sharedOfferRedeemedNotification(notification: Notification) {
+        self.refreshSnackBar()
+    }
 }
 
 //MARK: BarDetailViewControllerDelegate

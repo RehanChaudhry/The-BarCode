@@ -44,6 +44,8 @@ let apiPathView = "view"
 
 let apiPathGetBarDetail = "establishment"
 
+let apiPathSharedOffers = "share"
+
 
 
 

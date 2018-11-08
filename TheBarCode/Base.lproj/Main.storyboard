@@ -3861,12 +3861,12 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZv-ld-8aO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7749.6000000000004" y="1016.9415292353824"/>
+            <point key="canvasLocation" x="8688.7999999999993" y="1016.9415292353824"/>
         </scene>
         <!--Deal Details-->
         <scene sceneID="fEC-aq-faN">
             <objects>
-                <viewController id="N9K-9o-Gsw" customClass="OfferDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfferDetailViewController" id="N9K-9o-Gsw" customClass="OfferDetailViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G1r-bX-cyL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4022,7 +4022,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nrt-5U-YTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9197.6000000000004" y="878.41079460269873"/>
+            <point key="canvasLocation" x="10136.799999999999" y="878.41079460269873"/>
         </scene>
         <!--Bar Detail About View Controller-->
         <scene sceneID="UZt-3A-2Vd">
@@ -4727,7 +4727,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6yK-1o-LWD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6153" y="4985"/>
+            <point key="canvasLocation" x="6924" y="4932"/>
         </scene>
         <!--Cannot Redeem View Controller-->
         <scene sceneID="yuF-oG-s98">
@@ -4845,7 +4845,182 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bQ-T6-J28" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6807" y="4985"/>
+            <point key="canvasLocation" x="7577" y="4932"/>
+        </scene>
+        <!--Share Offer-->
+        <scene sceneID="UdQ-tm-cXW">
+            <objects>
+                <viewController storyboardIdentifier="ShareOfferViewController" id="2Ny-YY-WLY" customClass="ShareOfferViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ht4-Dk-CLM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tn8-PJ-Kad" customClass="TPKeyboardAvoidingTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2Ny-YY-WLY" id="1Hw-Mq-lHQ"/>
+                                    <outlet property="delegate" destination="2Ny-YY-WLY" id="w9d-On-rNV"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="tn8-PJ-Kad" secondAttribute="bottom" id="Eb8-Hb-4t1"/>
+                            <constraint firstItem="tn8-PJ-Kad" firstAttribute="trailing" secondItem="aPr-3U-eeD" secondAttribute="trailing" id="VIz-b4-shd"/>
+                            <constraint firstItem="tn8-PJ-Kad" firstAttribute="top" secondItem="Ht4-Dk-CLM" secondAttribute="top" id="XZV-Vs-3tl"/>
+                            <constraint firstItem="tn8-PJ-Kad" firstAttribute="leading" secondItem="aPr-3U-eeD" secondAttribute="leading" id="ocK-TN-yw0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aPr-3U-eeD"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Share Offer" id="58K-Kl-FJu">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dil-SL-4Zx">
+                            <connections>
+                                <action selector="cancelBarButtonTappedWithSender:" destination="2Ny-YY-WLY" id="rnJ-ej-hNO"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="jVG-ut-WYc">
+                            <connections>
+                                <action selector="shareBarButtonTappedWithSender:" destination="2Ny-YY-WLY" id="ZSq-WZ-Qlv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addEmailButton" destination="yXz-3e-Q1w" id="JIl-nY-gmM"/>
+                        <outlet property="fieldContainerView" destination="nDo-vi-58s" id="85g-ag-YYh"/>
+                        <outlet property="tableHeaderView" destination="Sju-if-5e4" id="ESI-aU-hUz"/>
+                        <outlet property="tableView" destination="tn8-PJ-Kad" id="rUO-O9-f8O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IeQ-um-b9q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Sju-if-5e4">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDo-vi-58s">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="103"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXz-3e-Q1w">
+                            <rect key="frame" x="325" y="34.5" width="34" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="34" id="2wl-Pi-0we"/>
+                                <constraint firstAttribute="height" constant="34" id="mOq-nD-C8Z"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="20"/>
+                            <state key="normal" title="+">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="17"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="addEmailButtonTappedWithSender:" destination="2Ny-YY-WLY" eventType="touchUpInside" id="HnM-dL-uTj"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygN-GL-QQj">
+                            <rect key="frame" x="317" y="0.0" width="58" height="103"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="58" id="g8n-Lu-yeI"/>
+                            </constraints>
+                            <connections>
+                                <action selector="addEmailButtonTappedWithSender:" destination="2Ny-YY-WLY" eventType="touchUpInside" id="d4x-2K-tM2"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.14117647058823529" green="0.14117647058823529" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="ygN-GL-QQj" firstAttribute="trailing" secondItem="2Qk-WW-j30" secondAttribute="trailing" id="1ne-px-Ico"/>
+                        <constraint firstItem="nDo-vi-58s" firstAttribute="top" secondItem="2Qk-WW-j30" secondAttribute="top" id="KDc-t2-hsa"/>
+                        <constraint firstItem="2Qk-WW-j30" firstAttribute="trailing" secondItem="yXz-3e-Q1w" secondAttribute="trailing" constant="16" id="MPa-dX-FRV"/>
+                        <constraint firstItem="nDo-vi-58s" firstAttribute="leading" secondItem="2Qk-WW-j30" secondAttribute="leading" id="U4F-Bk-bYE"/>
+                        <constraint firstItem="nDo-vi-58s" firstAttribute="bottom" secondItem="2Qk-WW-j30" secondAttribute="bottom" id="aAf-40-BQG"/>
+                        <constraint firstItem="ygN-GL-QQj" firstAttribute="bottom" secondItem="2Qk-WW-j30" secondAttribute="bottom" id="csY-US-3zu"/>
+                        <constraint firstItem="yXz-3e-Q1w" firstAttribute="centerY" secondItem="Sju-if-5e4" secondAttribute="centerY" id="jOl-gt-hz7"/>
+                        <constraint firstItem="yXz-3e-Q1w" firstAttribute="leading" secondItem="nDo-vi-58s" secondAttribute="trailing" constant="8" id="rHa-Yf-eeD"/>
+                        <constraint firstItem="ygN-GL-QQj" firstAttribute="top" secondItem="2Qk-WW-j30" secondAttribute="top" id="yFy-0g-hn2"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="2Qk-WW-j30"/>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="5592.8000000000002" y="545.57721139430294"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mTQ-0S-zye">
+            <objects>
+                <navigationController storyboardIdentifier="ShareOfferNavigation" automaticallyAdjustsScrollViewInsets="NO" id="Z5n-Tc-WIf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="blackTranslucent" id="epE-yc-MkE">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2Ny-YY-WLY" kind="relationship" relationship="rootViewController" id="9Yg-3l-19m"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B3u-Wb-Qep" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4852" y="545.57721139430294"/>
+        </scene>
+        <!--Shared Offers-->
+        <scene sceneID="0VZ-Fy-hGP">
+            <objects>
+                <viewController storyboardIdentifier="SharedOffersViewController" id="oTR-B3-B1I" customClass="SharedOffersViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IVr-Wn-Yoc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1I-9i-6T0" customClass="StatefulTableView" customModule="StatefulTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Z1I-9i-6T0" firstAttribute="leading" secondItem="TbP-mA-aU3" secondAttribute="leading" id="Dxe-Ie-s2g"/>
+                            <constraint firstItem="Z1I-9i-6T0" firstAttribute="bottom" secondItem="TbP-mA-aU3" secondAttribute="bottom" id="acU-Lx-7Zx"/>
+                            <constraint firstItem="Z1I-9i-6T0" firstAttribute="top" secondItem="IVr-Wn-Yoc" secondAttribute="top" id="lgQ-Yf-WMy"/>
+                            <constraint firstItem="Z1I-9i-6T0" firstAttribute="trailing" secondItem="TbP-mA-aU3" secondAttribute="trailing" id="mcG-Hh-zFl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TbP-mA-aU3"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Shared Offers" id="kCx-nI-iGX">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="B0Z-2r-5uY">
+                            <connections>
+                                <action selector="cancelBarButtonTappedWithSender:" destination="oTR-B3-B1I" id="kaU-XF-0PI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="statefulTableView" destination="Z1I-9i-6T0" id="u2p-kd-CgO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xib-og-WDL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5852" y="4943"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mcA-gg-9ws">
+            <objects>
+                <navigationController storyboardIdentifier="SharedOffersNavigation" automaticallyAdjustsScrollViewInsets="NO" id="prB-kQ-2g5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="qjY-cD-uId">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oTR-B3-B1I" kind="relationship" relationship="rootViewController" id="R3H-lW-Aqi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Akj-iI-Hxu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5063" y="4943"/>
         </scene>
     </scenes>
     <resources>

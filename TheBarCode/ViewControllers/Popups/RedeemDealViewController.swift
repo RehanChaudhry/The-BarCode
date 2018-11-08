@@ -25,6 +25,7 @@ class RedeemDealViewController: CodeVerificationViewController {
     var type: OfferType = .unknown
     var selectedIndex: Int = NSNotFound
 
+    var isRedeemingSharedOffer: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class RedeemDealViewController: CodeVerificationViewController {
       
     }
     
-    func showAlertAndDismiss(msg: String){
+    func showAlertAndDismiss(msg: String) {
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel) { (alert) in
             self.dismiss(animated: true, completion: nil)
@@ -76,6 +77,10 @@ extension RedeemDealViewController {
                                          "offer_id" : deal.id.value,
                                          "code": self.hiddenField.text!]
             
+        }
+        
+        if let shareId = deal.sharedId.value, self.isRedeemingSharedOffer {
+            params["shared_id"] = shareId
         }
         
         UIApplication.shared.beginIgnoringInteractionEvents()

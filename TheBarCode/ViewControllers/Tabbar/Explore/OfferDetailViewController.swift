@@ -41,6 +41,8 @@ class OfferDetailViewController: UIViewController {
     var remainingSeconds = 0
     
     var reloadDataRequest: DataRequest?
+
+    var isSharedOffer: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +193,7 @@ class OfferDetailViewController: UIViewController {
     
     func moveToRedeemDealViewController(withCredit: Bool){
         let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+        redeemDealViewController.isRedeemingSharedOffer = self.isSharedOffer
         redeemDealViewController.deal = self.deal
         redeemDealViewController.redeemWithCredit = withCredit
         redeemDealViewController.delegate = self
