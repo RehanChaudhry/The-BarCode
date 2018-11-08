@@ -16,11 +16,19 @@ class NotificationSettingsViewController: UIViewController {
     
     @IBOutlet var updateButton: GradientButton!
     
+    enum SelectedSwitchType: String {
+        case fiveADay = "fiveADay",
+        liveOfferSwitch = "liveOfferSwitch"
+    }
+    
+    var selectedSwitchType: SelectedSwitchType!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        self.definesPresentationContext = true
         self.setUpNotificationSettings()
     }
 
@@ -46,6 +54,7 @@ class NotificationSettingsViewController: UIViewController {
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.delegate = self
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     
@@ -60,13 +69,21 @@ class NotificationSettingsViewController: UIViewController {
     }
     
     @IBAction func fiveADaySwitchValueChanged(sender: UISwitch) {
+        
+        self.selectedSwitchType = .fiveADay
+        
         if !sender.isOn {
+            sender.isOn = !sender.isOn
             self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
         }
     }
     
     @IBAction func liveOfferSwitchValueChanged(sender: UISwitch) {
+        
+        self.selectedSwitchType = .liveOfferSwitch
+        
         if !sender.isOn {
+            sender.isOn = !sender.isOn
             self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
         }
     }
@@ -113,5 +130,16 @@ extension NotificationSettingsViewController {
             
         }
         
+    }
+}
+
+
+extension NotificationSettingsViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        if self.selectedSwitchType == .fiveADay {
+            self.fiveADaySwitch.isOn = !self.fiveADaySwitch.isOn
+        } else if self.selectedSwitchType == .liveOfferSwitch {
+            self.liveOfferSwitch.isOn = !self.liveOfferSwitch.isOn
+        }
     }
 }

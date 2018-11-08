@@ -31,7 +31,7 @@ enum MenuItemType: String {
         case .reload:
             return ("Reload", "icon_reload", "ReloadNavigation", true, 16.0)
         case .faqs:
-            return ("Frequently Ask Questions", "icon_faqs", "FaqsNavigation", true, 16.0)
+            return ("Frequently Asked Questions", "icon_faqs", "FaqsNavigation", true, 16.0)
         case .rules:
             return ("Rules", "icon_rules", "RulesNavigation", true, 16.0)
         case .privacyPolicy:

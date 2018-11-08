@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CannotRedeemViewControllerDelegate: class {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton)
+}
+
 class CannotRedeemViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
@@ -22,6 +26,8 @@ class CannotRedeemViewController: UIViewController {
     var reloadTimer: Timer?
     var redeemInfo: RedeemInfo?
     
+    weak var delegate: CannotRedeemViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +39,8 @@ class CannotRedeemViewController: UIViewController {
 
         if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {
             self.mainViewHeightConstraint.constant = heightOfMessage + 217.0
-            startReloadTimer()
+            self.reloadTimerLabel.text = ""
+//            startReloadTimer()
         } else {
             self.reloadTimerLabel.text = ""
             self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
@@ -49,6 +56,7 @@ class CannotRedeemViewController: UIViewController {
     //MARK: My Methods
     
     func startReloadTimer() {
+        
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
         self.reloadTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
@@ -82,7 +90,10 @@ class CannotRedeemViewController: UIViewController {
     }
     
     //MARK: IBActions
-    @IBAction func okButtonTapped(_ sender: Any) {
+    @IBAction func okButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true) {
+            self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+        }
         self.dismiss(animated: true, completion: nil)
     }
     

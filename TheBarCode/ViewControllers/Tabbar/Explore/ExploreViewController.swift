@@ -164,7 +164,7 @@ class ExploreViewController: UIViewController {
         }
     }
     
-    func showCustomAlert(title: String, message: String){
+    func showCustomAlert(title: String, message: String) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
