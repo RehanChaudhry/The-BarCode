@@ -238,7 +238,7 @@ class ReloadViewController: UITableViewController {
         
         let attributedPrefix = NSMutableAttributedString(string: prefixText, attributes: attributesBold)
         let attributedDesc = NSMutableAttributedString(string: "\n" + descText, attributes: attributesNormal)
-        let attributedTimer = NSMutableAttributedString(string: " " + timerText, attributes: timerAttributed)
+        let attributedTimer = NSMutableAttributedString(string: "\n" + timerText, attributes: timerAttributed)
         
         let finalAttributedString = NSMutableAttributedString()
         finalAttributedString.append(attributedPrefix)
@@ -318,6 +318,7 @@ extension ReloadViewController {
                 } else if !self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds == 0 {
                     self.setUpRedeemInfoView(type: .reloadTimerExpire)
                 } else if !self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds > 0 {
+                    self.startReloadTimer()
                     self.setUpRedeemInfoView(type: .offerRedeemed)
                 }
                 
