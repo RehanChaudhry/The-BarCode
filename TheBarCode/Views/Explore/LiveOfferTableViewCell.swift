@@ -62,7 +62,29 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.shareButton.isHidden = true
     }
     
-    func setUpDetailCell(offer: LiveOffer) {
+    func setUpDetailForSharedDeal(offer: Deal) {
+        
+        let url = offer.image.value
+        self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        
+        self.titleLabel.text = offer.title.value
+        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value)
+        self.detailLabel.attributedText = self.attributedSharedBy(deal: offer)
+        
+        self.locationIconImageView.isHidden = false
+        self.distanceLabel.isHidden = false
+        self.detailLabel.isHidden = false
+        self.validityLabel.isHidden = true
+        
+        self.shareButton.isHidden = true
+    }
+    
+    func setUpDetailForSharedLiveOffer(offer: LiveOffer) {
+        self.setUpDetailCell(offer: offer, hideShare: true)
+        self.detailLabel.attributedText = self.attributedSharedBy(deal: offer)
+    }
+    
+    func setUpDetailCell(offer: LiveOffer, hideShare: Bool = false) {
         
         let url = offer.image.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
@@ -70,12 +92,28 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.locationIconImageView.isHidden = true
         self.distanceLabel.isHidden = true
         self.detailLabel.isHidden = true
-        self.shareButton.isHidden = false
+        self.shareButton.isHidden = hideShare
         
         let endDate = offer.endDateTime
         let remainingSeconds = Int(endDate.timeIntervalSinceNow)
         
         self.updateExpirationLabel(isExpired: remainingSeconds <= 0, remainingSeconds: remainingSeconds)
+    }
+    
+    func attributedSharedBy(deal: Deal) -> NSMutableAttributedString {
+        let placeholderAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                                     NSAttributedStringKey.foregroundColor : UIColor.white]
+        let nameAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14.0),
+                              NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()]
+        
+        let placeholderAttributedString = NSMutableAttributedString(string: "Shared by: ", attributes: placeholderAttributes)
+        let nameAttributedString = NSMutableAttributedString(string: deal.sharedByName.value ?? "", attributes: nameAttributes)
+        
+        let finalAttributedString = NSMutableAttributedString()
+        finalAttributedString.append(placeholderAttributedString)
+        finalAttributedString.append(nameAttributedString)
+        return finalAttributedString
+        
     }
     
     func startTimer(deal: Deal) {

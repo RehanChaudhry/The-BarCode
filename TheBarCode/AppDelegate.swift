@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var referralCode: String?
+    var sharedOfferParams: SharedOfferParams?
     
     var liveOfferBarDict: [String : Any]?
     var refreshFiveADay: Bool?
@@ -56,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } else if notificationType == NotificationType.fiveADay {
                     self.refreshFiveADay = true
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
+                } else if notificationType == NotificationType.shareOffer {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
                 } else {
                     
                 }
@@ -114,7 +117,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
             } else if universalUrl?.host == dynamicLinkShareOfferDomain {
-                
+                if let sharedOfferParams = Utility.shared.getSharedOfferParams(urlString: dynamicLink!.url!.absoluteString) {
+                    self.sharedOfferParams = sharedOfferParams
+                    self.referralCode = sharedOfferParams.referral!
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
+                } else {
+                    debugPrint("Unable to parse shared offer params: ")
+                }
             } else {
                 debugPrint("Unhandled dynamic link domain")
             }

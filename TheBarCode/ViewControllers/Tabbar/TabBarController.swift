@@ -13,6 +13,7 @@ import CoreStore
 class TabBarController: UITabBarController {
 
     var shouldPresentBarDetail: Bool = false
+    var shouldHandleSharedOffer: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,16 @@ class TabBarController: UITabBarController {
         } else if appDelegate.liveOfferBarDict != nil {
             self.selectedIndex = 2
             self.shouldPresentBarDetail = true
+        } else if appDelegate.sharedOfferParams != nil {
+            self.selectedIndex = 2
+            self.shouldHandleSharedOffer = true
         } else {
             self.selectedIndex = 2
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -47,6 +52,9 @@ class TabBarController: UITabBarController {
         if self.shouldPresentBarDetail {
             self.shouldPresentBarDetail = false
             self.showBarDetailForLiveOfferNotification()
+        } else if self.shouldHandleSharedOffer {
+            self.shouldHandleSharedOffer = false
+            self.acceptSharedOffer()
         }
     }
     
@@ -58,6 +66,7 @@ class TabBarController: UITabBarController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
     }
     
     //MARK: My Methods
@@ -88,9 +97,47 @@ class TabBarController: UITabBarController {
             let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
             barDetailController.selectedBar = fetchedObject
             self.topMostViewController().present(barDetailNav, animated: true, completion: nil)
+        } else {
+            debugPrint("Live offer notification AppDelegate object is nil")
         }
     }
     
+    func acceptSharedOffer() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        guard let sharedOfferParams = appDelegate.sharedOfferParams else {
+            debugPrint("Could not accept shared offer because params not available")
+            return
+        }
+        
+        guard Utility.shared.getCurrentUser()?.userId.value != sharedOfferParams.sharedBy else {
+            self.topMostViewController().showAlertController(title: "Sharing Offer", msg: "You cannot share an offer with your self. Share offer with your friends and family to get and avail credits.")
+            appDelegate.sharedOfferParams = nil
+            appDelegate.referralCode = nil
+            return
+        }
+        
+        let params: [String : Any] = ["shared_by" : sharedOfferParams.sharedBy!,
+                                      "offer_id" : sharedOfferParams.offerId!]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathSharedOffers, method: .post) { (response, serverError, error) in
+            
+            appDelegate.sharedOfferParams = nil
+            appDelegate.referralCode = nil
+            
+            guard error == nil else {
+                self.topMostViewController().showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.topMostViewController().showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            self.topMostViewController().showAlertController(title: "Shared Offer", msg: "Shared offer has been accepted successfully")
+            
+        }
+        
+    }
 }
 
 //MARK: Notification Methods
@@ -116,5 +163,9 @@ extension TabBarController {
     
     @objc func liveOfferNotification(notification: Notification) {
         self.showBarDetailForLiveOfferNotification()
+    }
+    
+    @objc func acceptSharedOfferNotification(notification: Notification) {
+        self.acceptSharedOffer()
     }
 }

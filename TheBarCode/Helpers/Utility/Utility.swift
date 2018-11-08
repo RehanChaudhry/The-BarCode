@@ -32,14 +32,17 @@ enum RedeemType: String {
 enum NotificationType: String {
     case general = "admin",
     fiveADay = "five_a_day",
-    liveOffer = "live_offer"
+    liveOffer = "live_offer",
+    shareOffer = "share_offer"
 }
 
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
 let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
+let notificationNameSharedOfferRedeemed: String = "notificationNameSharedOfferRedeemed"
 
 let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 let notificationNameLiveOffer: String = "notificationNameLiveOffer"
+let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOffer"
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
@@ -198,9 +201,7 @@ class Utility: NSObject {
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let editedObject = transaction.edit(user)
-            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > 0 {
-                editedObject!.creditsRaw.value = "\(creditValue)"
-            }
+            editedObject?.creditsRaw.value = "\(creditValue)"
         })
         
         debugPrint("User Credit Update in local db")
@@ -264,6 +265,34 @@ class Utility: NSObject {
         return referralCode
     }
     
+    func getSharedOfferParams(urlString: String) -> SharedOfferParams? {
+        
+        var referral: String?
+        var offerId: String?
+        var sharedBy: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "referral" {
+                    referral = queryItem.value
+                } else if queryItem.name == "offer_id" {
+                    offerId = queryItem.value
+                } else if queryItem.name == "shared_by" {
+                    sharedBy = queryItem.value
+                }
+            }
+        }
+        
+        if let referral = referral, let offerId = offerId, let sharedBy = sharedBy {
+            let sharedOfferParams = SharedOfferParams(referral: referral, sharedBy: sharedBy, offerId: offerId)
+            return sharedOfferParams
+        } else {
+            return nil
+        }
+        
+    }
+    
     func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, completion: @escaping (() -> Void)) {
         
         let user = Utility.shared.getCurrentUser()!
@@ -272,7 +301,7 @@ class Utility: NSObject {
         
         let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
-        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkShareOfferDomain)
         linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId

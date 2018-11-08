@@ -72,6 +72,7 @@
 		0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */; };
 		0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */; };
 		0C5A88FB2164D91C00F16851 /* OfferDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */; };
+		0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */; };
 		0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */; };
 		0C7B6E402192F2F40052D02C /* SharedOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */; };
 		0C8848652167370500DB222F /* UILableAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8848642167370500DB222F /* UILableAdditions.swift */; };
@@ -286,6 +287,7 @@
 		0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferDetailTableViewCell.xib; sourceTree = "<group>"; };
+		0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOfferParams.swift; sourceTree = "<group>"; };
 		0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOffersViewController.swift; sourceTree = "<group>"; };
 		0C8848642167370500DB222F /* UILableAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILableAdditions.swift; sourceTree = "<group>"; };
@@ -738,6 +740,14 @@
 			path = Invite;
 			sourceTree = "<group>";
 		};
+		0C72AB54219403C700D6CD6B /* SharedOfferParams */ = {
+			isa = PBXGroup;
+			children = (
+				0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */,
+			);
+			path = SharedOfferParams;
+			sourceTree = "<group>";
+		};
 		0C884863216736ED00DB222F /* UILabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -871,6 +881,7 @@
 		0C955DBE214792F500F9385B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0C72AB54219403C700D6CD6B /* SharedOfferParams */,
 				0C302E2D217707D900FA993F /* ServerMessage */,
 				0CC81FA8216DD58300FDB92D /* User */,
 				0CC81FA2216DD03A00FDB92D /* ServerError */,
@@ -1604,6 +1615,7 @@
 				0C955DD32147D3D000F9385B /* UIViewAdditions.swift in Sources */,
 				0C8E9A9B214A909E00224720 /* RulesViewController.swift in Sources */,
 				0C955DC02147935A00F9385B /* IntroOption.swift in Sources */,
+				0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */,
 				0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */,
 				0C8E9A91214A87E600224720 /* AccountSettingsViewController.swift in Sources */,
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,

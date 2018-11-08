@@ -16,7 +16,7 @@ class SharedOffersViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
-    var offers: [Deal] = []
+    var offers: [Any] = []
     
     var dataRequest: DataRequest?
     var loadMore = Pagination()
@@ -25,6 +25,8 @@ class SharedOffersViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        self.addBackButton()
         
         self.setUpStatefulTableView()
         self.resetOffers()
@@ -85,25 +87,41 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        cell.setUpDetailCell(offer: self.offers[indexPath.row])
-        cell.delegate = self
+        if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
+            cell.setUpDetailForSharedLiveOffer(offer: liveOffer)
+        } else if let deal = self.offers[indexPath.row] as? Deal {
+            cell.setUpDetailForSharedDeal(offer: deal)
+        }
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let offerCell = cell as! LiveOfferTableViewCell
-        offerCell.startTimer(deal: self.offers[indexPath.row])
+        if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
+            offerCell.startTimer(deal: liveOffer)
+        } else if let deal = self.offers[indexPath.row] as? Deal {
+            offerCell.setUpDetailForSharedDeal(offer: deal)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let offerCell = cell as! LiveOfferTableViewCell
-        offerCell.stopTimer()
+        if let _ = self.offers[indexPath.row] as? LiveOffer {
+            offerCell.stopTimer()
+        } else if let deal = self.offers[indexPath.row] as? Deal {
+            offerCell.setUpDetailForSharedDeal(offer: deal)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        
+        let offerDetailController = self.storyboard?.instantiateViewController(withIdentifier: "OfferDetailViewController") as! OfferDetailViewController
+        offerDetailController.isSharedOffer = true
+        offerDetailController.deal = (self.offers[indexPath.row] as! Deal)
+        self.navigationController?.pushViewController(offerDetailController, animated: true)
     }
 }
 
@@ -120,7 +138,7 @@ extension SharedOffersViewController {
                                      "page": self.loadMore.next]
         
         self.loadMore.isLoading = true
-        self.dataRequest  = APIHelper.shared.hitApi(params: params, apiPath: apioffer, method: .get) { (response, serverError, error) in
+        self.dataRequest  = APIHelper.shared.hitApi(params: params, apiPath: apiPathSharedOffers, method: .get) { (response, serverError, error) in
             
             self.loadMore.isLoading = false
             
@@ -145,15 +163,30 @@ extension SharedOffersViewController {
                     self.offers.removeAll()
                 }
                 
-                var importedObjects: [LiveOffer] = []
+                var importedObjects: [Any] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<LiveOffer>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
+                    
+                    for responseObject in responseArray {
+                        let offerType = Utility.shared.checkDealType(offerTypeID: "\(responseObject["offer_type_id"]!)")
+                        if offerType == .live {
+                            let object = try! transaction.importUniqueObject(Into<LiveOffer>(), source: responseObject)
+                            importedObjects.append(object as Any)
+                        } else if offerType == .fiveADay {
+                            let object = try! transaction.importUniqueObject(Into<FiveADayDeal>(), source: responseObject)
+                            importedObjects.append(object as Any)
+                        }
+                        
+                    }
                 })
                 
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-                    self.offers.append(fetchedObject!)
+                    if let object = object as? LiveOffer {
+                        let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                        self.offers.append(fetchedObject!)
+                    } else if let object = object as? FiveADayDeal {
+                        let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                        self.offers.append(fetchedObject!)
+                    }
                 }
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
