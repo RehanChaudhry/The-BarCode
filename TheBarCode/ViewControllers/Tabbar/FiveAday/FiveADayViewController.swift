@@ -194,7 +194,7 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
             debugPrint("Bar of FiveADayDeal not found")
         }
     }
-    
+
 }
 
 //MARK: Webservices Methods
@@ -288,6 +288,39 @@ extension FiveADayViewController {
         }
     }
 
+    //viewOffer
+    func viewOffer(deal: FiveADayDeal) {
+        
+        let params: [String: Any] = ["value": deal.id.value,
+                                     "type":"offer_view"]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("error while view api : \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror while view api : \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            if let responseObj = response as? [String : Any] {
+                if  let _ = responseObj["data"] as? [String : Any] {
+                    
+                    
+                } else {
+                    let genericError = APIHelper.shared.getGenericError()
+                    debugPrint("servererror while view api : \(genericError.localizedDescription)")
+                }
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("servererror while view api : \(genericError.localizedDescription)")
+                
+            }
+        }
+    }
     
 }
 

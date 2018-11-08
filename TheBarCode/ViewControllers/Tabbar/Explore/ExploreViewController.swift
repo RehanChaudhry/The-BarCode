@@ -412,7 +412,7 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
 //MARK: SnackbarViewDelegate
 extension ExploreViewController:  SnackbarViewDelegate {
     func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
-        self.showCustomAlert(title: "Credits", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.", typeCredit: true)
+        self.showCustomAlert(title: "Credit", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.", typeCredit: true)
     }
     
     func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {
