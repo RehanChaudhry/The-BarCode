@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum CustomAlertType: String {
+    case normal,
+    credit
+}
+
 protocol CannotRedeemViewControllerDelegate: class {
     func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton)
 }
@@ -17,6 +22,8 @@ class CannotRedeemViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var reloadTimerLabel: UILabel!
+    
+    @IBOutlet var actionButton: GradientButton!
     
     @IBOutlet var mainViewHeightConstraint: NSLayoutConstraint!
     
@@ -28,6 +35,8 @@ class CannotRedeemViewController: UIViewController {
     
     weak var delegate: CannotRedeemViewControllerDelegate?
     
+    var alertType = CustomAlertType.normal
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,16 +45,23 @@ class CannotRedeemViewController: UIViewController {
         self.titleLabel.text = titleText
         
         let heightOfMessage = messageText.heightWithConstrainedWidth(width: (self.view.frame.width - 80), font: UIFont.appRegularFontOf(size: 14.0))
-
-        if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {
+        
+        if alertType == .credit {
+            actionButton.setTitle("Invite Friends & Get Credits", for: .normal)
+        }
+        
+        //as timer not to show
+        self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
+        self.reloadTimerLabel.text = ""
+        
+       /* if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {
             self.mainViewHeightConstraint.constant = heightOfMessage + 217.0
             self.reloadTimerLabel.text = ""
 //            startReloadTimer()
         } else {
             self.reloadTimerLabel.text = ""
             self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
-        }
-   
+        }*/
     }
     
     deinit {
@@ -86,7 +102,7 @@ class CannotRedeemViewController: UIViewController {
     }
     
     func hideTimer() {
-        
+        self.reloadTimerLabel.text = ""
     }
     
     //MARK: IBActions

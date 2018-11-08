@@ -116,6 +116,7 @@ class LoginViewController: UIViewController {
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "EmailVerificationViewController") as! EmailVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
         verificationController.delegate = self
+        verificationController.isFieldsSecure = false
         verificationController.email = self.emailFieldView.textField.text!
         self.present(verificationController, animated: true, completion: nil)
     }

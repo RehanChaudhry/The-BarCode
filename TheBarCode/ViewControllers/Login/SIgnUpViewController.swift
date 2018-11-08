@@ -273,6 +273,7 @@ class SIgnUpViewController: UIViewController {
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "EmailVerificationViewController") as! EmailVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
         verificationController.delegate = self
+        verificationController.isFieldsSecure = false
         verificationController.email = self.emailFieldView.textField.text!
         self.present(verificationController, animated: true, completion: nil)
     }
@@ -443,7 +444,10 @@ extension SIgnUpViewController {
                       "email" : email,
                       "password" : password,
                       "date_of_birth" : dob]
-        if self.selectedGender != Gender.other {
+        
+        if self.selectedGender == Gender.other {
+            params["gender"] = nil
+        } else  {
             params["gender"] = gender
         }
         

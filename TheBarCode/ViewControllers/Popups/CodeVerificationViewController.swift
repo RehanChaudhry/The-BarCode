@@ -32,6 +32,8 @@ class CodeVerificationViewController: UIViewController {
     
     var maxLength = 4
     
+    var isFieldsSecure: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +64,7 @@ class CodeVerificationViewController: UIViewController {
     func setUpFieldViews() {
         self.codeFieldView1 = FieldView.loadFromNib()
         self.codeFieldView1.textField.isEnabled = false
-        self.codeFieldView1.makeSecure(secure: true)
+        self.codeFieldView1.makeSecure(secure: isFieldsSecure)
         self.codeFieldView1.fieldLeft.constant = 0.0
         self.codeFieldView1.fieldRight.constant = 0.0
         self.codeFieldView1.placeholderLabelHeight.constant = 0.0
@@ -74,7 +76,7 @@ class CodeVerificationViewController: UIViewController {
         
         self.codeFieldView2 = FieldView.loadFromNib()
         self.codeFieldView2.textField.isEnabled = false
-        self.codeFieldView2.makeSecure(secure: true)
+        self.codeFieldView2.makeSecure(secure: isFieldsSecure)
         self.codeFieldView2.fieldLeft.constant = 0.0
         self.codeFieldView2.fieldRight.constant = 0.0
         self.codeFieldView2.placeholderLabelHeight.constant = 0.0
@@ -86,7 +88,7 @@ class CodeVerificationViewController: UIViewController {
         
         self.codeFieldView3 = FieldView.loadFromNib()
         self.codeFieldView3.textField.isEnabled = false
-        self.codeFieldView3.makeSecure(secure: true)
+        self.codeFieldView3.makeSecure(secure: isFieldsSecure)
         self.codeFieldView3.fieldLeft.constant = 0.0
         self.codeFieldView3.fieldRight.constant = 0.0
         self.codeFieldView3.placeholderLabelHeight.constant = 0.0
@@ -98,7 +100,7 @@ class CodeVerificationViewController: UIViewController {
         
         self.codeFieldView4 = FieldView.loadFromNib()
         self.codeFieldView4.textField.isEnabled = false
-        self.codeFieldView4.makeSecure(secure: true)
+        self.codeFieldView4.makeSecure(secure: isFieldsSecure)
         self.codeFieldView4.fieldLeft.constant = 0.0
         self.codeFieldView4.fieldRight.constant = 0.0
         self.codeFieldView4.placeholderLabelHeight.constant = 0.0

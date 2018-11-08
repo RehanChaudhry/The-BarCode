@@ -164,10 +164,12 @@ class ExploreViewController: UIViewController {
         }
     }
     
-    func showCustomAlert(title: String, message: String) {
+    func showCustomAlert(title: String, message: String, typeCredit: Bool) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.alertType = typeCredit ? .credit : .normal
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.redeemInfo = self.redeemInfo
         self.present(cannotRedeemViewController, animated: true, completion: nil)
@@ -254,6 +256,20 @@ class ExploreViewController: UIViewController {
         self.barsController.searchBar.resignFirstResponder()
         self.dealsController.searchBar.resignFirstResponder()
         self.liveOffersController.searchBar.resignFirstResponder()
+    }
+    
+    func moveToReloadVC() {
+        let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.isRedeemingDeal = true
+        self.present(reloadNavigation, animated: true, completion: nil)
+    }
+    
+    func moveToInvite() {
+        let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.shouldShowCancelBarButton = true
+        self.present(inviteNavigation, animated: true, completion: nil)
     }
     
     //MARK: My IBActions
@@ -393,15 +409,30 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
     }
 }
 
-
+//MARK: SnackbarViewDelegate
 extension ExploreViewController:  SnackbarViewDelegate {
     func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
-        self.showCustomAlert(title: "Credits", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.")
+        self.showCustomAlert(title: "Credits", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.", typeCredit: true)
     }
     
     func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {
-        let text = self.getBannerAlertText()
-        self.showCustomAlert(title: text.title, message: text.message)
+       
+        if view.type == SnackbarType.congrates {
+            self.moveToReloadVC()
+        } else {
+            let text = self.getBannerAlertText()
+            self.showCustomAlert(title: text.title, message: text.message, typeCredit: false)
+        }
     }
 
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension ExploreViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        
+        if controller.alertType == .credit {
+           self.moveToInvite()
+        }
+    }
 }

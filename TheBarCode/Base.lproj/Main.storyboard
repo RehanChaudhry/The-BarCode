@@ -1261,20 +1261,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="88" width="343" height="54"/>
+                                <rect key="frame" x="16" y="44" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="166" width="343" height="1"/>
+                                <rect key="frame" x="16" y="122" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="286" width="343" height="44"/>
+                                <rect key="frame" x="16" y="242" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1292,7 +1292,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -2967,13 +2967,13 @@ Cg
                                 <rect key="frame" x="16" y="141.5" width="343" height="384"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Opps! You are out of credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKo-za-L4s">
-                                        <rect key="frame" x="24" y="24" width="243" height="19.5"/>
+                                        <rect key="frame" x="24" y="24" width="259" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
-                                        <rect key="frame" x="275" y="11.5" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
+                                        <rect key="frame" x="291" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="FEB-70-AR3"/>
                                             <constraint firstAttribute="height" constant="44" id="nQW-ve-zdP"/>
@@ -3139,7 +3139,7 @@ Cg
                                     <constraint firstItem="xea-VL-tXZ" firstAttribute="top" secondItem="9VV-tq-BAI" secondAttribute="bottom" constant="16" id="qQn-jL-Hcz"/>
                                     <constraint firstAttribute="height" constant="384" id="sEp-p7-vGU"/>
                                     <constraint firstItem="mwn-FI-aTv" firstAttribute="centerX" secondItem="Bo9-IC-9Hs" secondAttribute="centerX" id="sOF-vA-X2N"/>
-                                    <constraint firstAttribute="trailing" secondItem="RJK-xf-6dW" secondAttribute="trailing" constant="24" id="tJT-za-7OL"/>
+                                    <constraint firstAttribute="trailing" secondItem="RJK-xf-6dW" secondAttribute="trailing" constant="8" id="tJT-za-7OL"/>
                                     <constraint firstAttribute="bottom" secondItem="aAQ-kn-SKq" secondAttribute="bottom" constant="33" id="ubX-Fg-Gs5"/>
                                     <constraint firstItem="0j7-1B-ziD" firstAttribute="top" secondItem="ZKo-za-L4s" secondAttribute="bottom" constant="24" id="wB3-iN-g6A"/>
                                     <constraint firstItem="RJK-xf-6dW" firstAttribute="centerY" secondItem="ZKo-za-L4s" secondAttribute="centerY" id="xTh-te-Ace"/>
@@ -4149,13 +4149,13 @@ Cg
                                 <rect key="frame" x="16" y="173.5" width="343" height="320"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi5-3n-Pie">
-                                        <rect key="frame" x="24" y="24" width="243" height="19"/>
+                                        <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NiB-Pf-M9P">
-                                        <rect key="frame" x="275" y="11.5" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NiB-Pf-M9P">
+                                        <rect key="frame" x="291" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="chK-oe-Uih"/>
                                             <constraint firstAttribute="width" constant="44" id="nYG-Vi-307"/>
@@ -4234,7 +4234,7 @@ Cg
                                     <constraint firstItem="NiB-Pf-M9P" firstAttribute="leading" secondItem="Vi5-3n-Pie" secondAttribute="trailing" constant="8" id="Tzz-o6-Dk1"/>
                                     <constraint firstItem="r8U-xz-gSi" firstAttribute="top" secondItem="W95-ku-uhd" secondAttribute="bottom" constant="10" id="UE8-sc-uJl"/>
                                     <constraint firstItem="r8U-xz-gSi" firstAttribute="centerX" secondItem="IFa-7a-8gD" secondAttribute="centerX" id="VzA-hP-Her"/>
-                                    <constraint firstAttribute="trailing" secondItem="NiB-Pf-M9P" secondAttribute="trailing" constant="24" id="dBG-9E-drZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="NiB-Pf-M9P" secondAttribute="trailing" constant="8" id="dBG-9E-drZ"/>
                                     <constraint firstItem="F8K-It-B8W" firstAttribute="top" secondItem="Vi5-3n-Pie" secondAttribute="bottom" constant="24" id="flo-4b-8Km"/>
                                     <constraint firstAttribute="bottom" secondItem="r8U-xz-gSi" secondAttribute="bottom" constant="20" id="gPj-sE-RXY"/>
                                     <constraint firstAttribute="trailing" secondItem="dbl-Oh-XRB" secondAttribute="trailing" constant="24" id="lUY-5w-cjT"/>
@@ -4618,13 +4618,13 @@ Cg
                                 <rect key="frame" x="16" y="224" width="343" height="219"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consume Credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiS-Jo-joG">
-                                        <rect key="frame" x="24" y="24" width="243" height="19"/>
+                                        <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RG2-VF-Q6m">
-                                        <rect key="frame" x="275" y="11.5" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RG2-VF-Q6m">
+                                        <rect key="frame" x="291" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Ery-RK-iPl"/>
                                             <constraint firstAttribute="width" constant="44" id="XH0-3h-eNE"/>
@@ -4704,7 +4704,7 @@ Cg
                                     <constraint firstItem="RUj-ZK-hBs" firstAttribute="leading" secondItem="VM8-eH-3HQ" secondAttribute="leading" constant="24" id="khc-5J-7wG"/>
                                     <constraint firstItem="RUj-ZK-hBs" firstAttribute="top" secondItem="2jw-M7-g7o" secondAttribute="bottom" constant="24" id="m8b-1B-CrX"/>
                                     <constraint firstItem="zim-UB-2K3" firstAttribute="leading" secondItem="dGu-n1-GSb" secondAttribute="trailing" constant="15.5" id="mgh-ZA-wAl"/>
-                                    <constraint firstAttribute="trailing" secondItem="RG2-VF-Q6m" secondAttribute="trailing" constant="24" id="ttR-kV-UPz"/>
+                                    <constraint firstAttribute="trailing" secondItem="RG2-VF-Q6m" secondAttribute="trailing" constant="8" id="ttR-kV-UPz"/>
                                     <constraint firstAttribute="bottom" secondItem="dGu-n1-GSb" secondAttribute="bottom" constant="24" id="xoL-VM-s70"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -4741,13 +4741,13 @@ Cg
                                 <rect key="frame" x="16" y="224" width="343" height="219"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already Redeemed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31w-ht-si8">
-                                        <rect key="frame" x="24" y="24" width="243" height="19"/>
+                                        <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9g-qQ-UHm">
-                                        <rect key="frame" x="275" y="11.5" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9g-qQ-UHm">
+                                        <rect key="frame" x="291" y="11.5" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="BID-WL-bJJ"/>
                                             <constraint firstAttribute="height" constant="44" id="jxy-x9-amL"/>
@@ -4799,7 +4799,7 @@ Cg
                                 <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="mYc-WC-xng" secondAttribute="bottom" constant="24" id="0Fq-LF-aFb"/>
-                                    <constraint firstAttribute="trailing" secondItem="H9g-qQ-UHm" secondAttribute="trailing" constant="24" id="1MZ-S3-zvp"/>
+                                    <constraint firstAttribute="trailing" secondItem="H9g-qQ-UHm" secondAttribute="trailing" constant="8" id="1MZ-S3-zvp"/>
                                     <constraint firstAttribute="trailing" secondItem="mYc-WC-xng" secondAttribute="trailing" constant="16" id="1QZ-QN-icF"/>
                                     <constraint firstAttribute="trailing" secondItem="P17-Ni-BjD" secondAttribute="trailing" constant="24" id="2JO-vL-NRZ"/>
                                     <constraint firstItem="Z2t-CI-cw1" firstAttribute="top" secondItem="31w-ht-si8" secondAttribute="bottom" constant="24" id="2sF-am-R81"/>
@@ -4836,6 +4836,7 @@ Cg
                         <viewLayoutGuide key="safeArea" id="WpS-Gc-QxU"/>
                     </view>
                     <connections>
+                        <outlet property="actionButton" destination="mYc-WC-xng" id="is7-Mq-Q8i"/>
                         <outlet property="mainViewHeightConstraint" destination="Jk4-5G-ddN" id="z8U-bG-7ae"/>
                         <outlet property="messageLabel" destination="P17-Ni-BjD" id="i3t-f1-Fdg"/>
                         <outlet property="reloadTimerLabel" destination="07W-Wy-fTn" id="TAQ-Dz-38p"/>
@@ -4853,7 +4854,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
+        <image name="icon_list" width="22" height="15"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_tab_explore" width="21" height="26"/>
@@ -4864,13 +4865,13 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="138" height="138"/>
+        <image name="profile_image" width="46" height="46"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="NvO-HD-pWX"/>
-        <segue reference="R5G-Fa-IEs"/>
+        <segue reference="zcU-ID-XXz"/>
         <segue reference="jef-DV-LyY"/>
         <segue reference="K4O-bU-rQm"/>
         <segue reference="Tsk-gy-Yut"/>
