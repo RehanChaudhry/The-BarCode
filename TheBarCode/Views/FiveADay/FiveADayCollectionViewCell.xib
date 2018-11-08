@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="205" id="uZ1-Ap-xIM"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Vk-me-Vwd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Vk-me-Vwd">
                                 <rect key="frame" x="16" y="225" width="250" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="eQ2-wE-ooN"/>
@@ -52,7 +52,7 @@
                                     <action selector="viewBarDetailButtonTapped:" destination="Dqr-zy-taJ" eventType="touchUpInside" id="8oJ-Mv-LG7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORN-dS-uJi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORN-dS-uJi">
                                 <rect key="frame" x="16" y="248" width="250" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="sxP-jf-4Ut"/>

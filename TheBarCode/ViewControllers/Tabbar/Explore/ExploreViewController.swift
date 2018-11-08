@@ -181,7 +181,7 @@ class ExploreViewController: UIViewController {
         } else if type == .reload {
             return (title: "Reloads in" , message: "You will be able to reload when the timer ends. It will allow you then redeem an offer from the same establishment again")
         } else if type == .congrates {
-            return (title: "" , message: "Congrates Text")
+            return (title: "Reload" , message: "You are able to reload")
         }
         return (title: "" , message: "")
     }

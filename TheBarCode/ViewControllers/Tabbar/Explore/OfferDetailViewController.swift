@@ -8,6 +8,9 @@
 
 import UIKit
 import Reusable
+import HTTPStatusCodes
+import ObjectMapper
+import Alamofire
 
 class OfferDetailViewController: UIViewController {
 
@@ -36,6 +39,8 @@ class OfferDetailViewController: UIViewController {
     
     var redeemTimer: Timer?
     var remainingSeconds = 0
+    
+    var reloadDataRequest: DataRequest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,6 +208,30 @@ class OfferDetailViewController: UIViewController {
     }
     
     
+    func redeemWithUserCredit(credit: Int?){
+        var userCredit: Int!
+        
+        if credit == nil {
+            let user = Utility.shared.getCurrentUser()
+            userCredit = user!.credit
+        } else {
+            userCredit = credit!
+        }
+        
+        if userCredit > 0 {
+            let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+            creditConsumptionController.delegate = self
+            creditConsumptionController.modalPresentationStyle = .overCurrentContext
+            self.present(creditConsumptionController, animated: true, completion: nil)
+            
+        } else {
+            let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.delegate = self
+            outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+            self.present(outOfCreditViewController, animated: true, completion: nil)
+        }
+    }
+    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
@@ -217,20 +246,8 @@ class OfferDetailViewController: UIViewController {
             self.present(redeemStartViewController, animated: true, completion: nil)
 
         } else {
-            let user = Utility.shared.getCurrentUser()
-            if user!.credit > 0 {
-                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-                creditConsumptionController.delegate = self
-                creditConsumptionController.modalPresentationStyle = .overCurrentContext
-                self.present(creditConsumptionController, animated: true, completion: nil)
-                
-                
-            } else {
-                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
-                outOfCreditViewController.delegate = self
-                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
-                self.present(outOfCreditViewController, animated: true, completion: nil)
-            }
+            //get updated User Credit from server api
+            self.getReloadStatus()
         }
     
     }
@@ -375,6 +392,44 @@ extension OfferDetailViewController {
             }
         }
     }
+    
+    func getReloadStatus() {
+        
+        self.redeemButton.showLoader()
+        
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.redeemWithUserCredit(credit: nil)
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.redeemWithUserCredit(credit: nil)
+                debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            self.redeemButton.hideLoader()
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
+        
+                let credit = redeemInfoDict["credit"] as! Int
+                Utility.shared.userCreditUpdate(creditValue: credit)
+                
+                self.redeemWithUserCredit(credit: credit)
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
+            }
+        }
+    }
+
     
     
 }

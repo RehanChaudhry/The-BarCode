@@ -12,6 +12,7 @@ import FSPagerView
 import ObjectMapper
 import CoreStore
 import Alamofire
+import HTTPStatusCodes
 
 class FiveADayViewController: UIViewController {
 
@@ -24,7 +25,8 @@ class FiveADayViewController: UIViewController {
     var statefulView: LoadingAndErrorView!
     
     var dataRequest: DataRequest?
-    
+    var reloadDataRequest: DataRequest?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -128,6 +130,34 @@ class FiveADayViewController: UIViewController {
         self.present(redeemDealViewController, animated: true, completion: nil)
     }
     
+    
+    func redeemWithUserCredit(credit: Int?, index: Int){
+        var userCredit: Int!
+        
+        if credit == nil {
+            let user = Utility.shared.getCurrentUser()
+            userCredit = user!.credit
+        } else {
+            userCredit = credit!
+        }
+        
+        if userCredit > 0 {
+            self.pagerView.automaticSlidingInterval = 0.0
+            let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+            creditConsumptionController.delegate = self
+            creditConsumptionController.modalPresentationStyle = .overCurrentContext
+            creditConsumptionController.selectedIndex = index
+            self.present(creditConsumptionController, animated: true, completion: nil)
+            
+        } else {
+            self.pagerView.automaticSlidingInterval = 0.0
+            let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.delegate = self
+            outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+            outOfCreditViewController.selectedIndex = index
+            self.present(outOfCreditViewController, animated: true, completion: nil)
+        }
+    }
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -215,12 +245,59 @@ extension FiveADayViewController {
             }
         }
     }
+    
+    func getReloadStatus(cell: FiveADayCollectionViewCell, deal: FiveADayDeal, index: Int) {
+        
+        deal.showLoader = true
+        self.pagerView.reloadData()
+
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.redeemWithUserCredit(credit: nil, index: index)
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.redeemWithUserCredit(credit: nil, index: index)
+                debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            deal.showLoader = false
+            self.pagerView.reloadData()
+
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
+                
+                let redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
+                redeemInfo.canReload = true
+                
+                let credit = redeemInfoDict["credit"] as! Int
+                Utility.shared.userCreditUpdate(creditValue: credit)
+                
+                self.redeemWithUserCredit(credit: credit, index: index)
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
+            }
+        }
+    }
+
+    
 }
 
 
 //MARK: FiveADayCollectionViewCellDelegate
 extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
     func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton) {
+        
+        self.pagerView.automaticSlidingInterval = 0.0
+        
         let index = self.pagerView.index(for: cell)
         let deal = self.deals[index]
         if let bar = deal.establishment.value {
@@ -236,23 +313,7 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                 self.present(redeemStartViewController, animated: true, completion: nil)
                 
             } else {
-                let user = Utility.shared.getCurrentUser()
-                if user!.credit > 0 {
-                    self.pagerView.automaticSlidingInterval = 0.0
-                    let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-                    creditConsumptionController.delegate = self
-                    creditConsumptionController.modalPresentationStyle = .overCurrentContext
-                    creditConsumptionController.selectedIndex = index
-                    self.present(creditConsumptionController, animated: true, completion: nil)
-                    
-                } else {
-                    self.pagerView.automaticSlidingInterval = 0.0
-                    let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
-                    outOfCreditViewController.delegate = self
-                    outOfCreditViewController.modalPresentationStyle = .overCurrentContext
-                    outOfCreditViewController.selectedIndex = index
-                    self.present(outOfCreditViewController, animated: true, completion: nil)
-                }
+                self.getReloadStatus(cell: cell, deal: deal, index: index)
             }
         } else {
             debugPrint("Bar not found")

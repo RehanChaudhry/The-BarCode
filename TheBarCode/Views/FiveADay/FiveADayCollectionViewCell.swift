@@ -56,19 +56,15 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     func setUpCell(deal: Deal) {
     
         let bar = deal.establishment.value
-        if !bar!.canRedeemOffer.value {
-            debugPrint("deal bar name == \(bar!.title.value)")
-            debugPrint("bar!.canRedeemOffer.value == \(bar!.canRedeemOffer.value)")
-            debugPrint("button == grey")
-
-            self.redeemButton.updateColor(withGrey: true)
+        
+        if deal.showLoader {
+            self.redeemButton.showLoader()
         } else {
-            debugPrint("deal bar name == \(bar!.title.value)")
-            debugPrint("bar!.canRedeemOffer.value == \(bar!.canRedeemOffer.value)")
-            debugPrint("button == gradient")
-
-            self.redeemButton.updateColor(withGrey: false)
+            self.redeemButton.hideLoader()
         }
+        
+        let withGreyColor = !bar!.canRedeemOffer.value ? true : false
+        self.redeemButton.updateColor(withGrey: withGreyColor)
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         

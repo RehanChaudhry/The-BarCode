@@ -10,6 +10,9 @@ import UIKit
 import SJSegmentedScrollView
 import PureLayout
 import CoreStore
+import HTTPStatusCodes
+import ObjectMapper
+import Alamofire
 
 protocol BarDetailViewControllerDelegate: class {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem)
@@ -36,6 +39,8 @@ class BarDetailViewController: UIViewController {
     var selectedBar: Bar!
     
     var refreshControl: UIRefreshControl!
+    
+    var reloadDataRequest: DataRequest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +141,30 @@ class BarDetailViewController: UIViewController {
         }
     }
     
+    func redeemWithUserCredit(credit: Int?){
+        var userCredit: Int!
+        
+        if credit == nil {
+            let user = Utility.shared.getCurrentUser()
+            userCredit = user!.credit
+        } else {
+            userCredit = credit!
+        }
+
+        if userCredit > 0 {
+            let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+            creditConsumptionController.delegate = self
+            creditConsumptionController.modalPresentationStyle = .overCurrentContext
+            self.present(creditConsumptionController, animated: true, completion: nil)
+            
+        } else {
+            let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.delegate = self
+            outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+            self.present(outOfCreditViewController, animated: true, completion: nil)
+        }
+    }
+    
     @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
         self.getBarDetails()
         self.dealsController.resetDeals()
@@ -173,19 +202,8 @@ class BarDetailViewController: UIViewController {
             self.present(redeemStartViewController, animated: true, completion: nil)
             
         } else {
-            let user = Utility.shared.getCurrentUser()
-            if user!.credit > 0 {
-                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-                creditConsumptionController.delegate = self
-                creditConsumptionController.modalPresentationStyle = .overCurrentContext
-                self.present(creditConsumptionController, animated: true, completion: nil)
-                
-            } else {
-                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
-                outOfCreditViewController.delegate = self
-                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
-                self.present(outOfCreditViewController, animated: true, completion: nil)
-            }
+            //get updated User Credit from server api
+            self.getReloadStatus()
         }
      
     }
@@ -305,6 +323,43 @@ extension BarDetailViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericerror while view api : \(genericError.localizedDescription)")
 
+            }
+        }
+    }
+    
+    func getReloadStatus() {
+        
+        self.standardRedeemButton.showLoader()
+        
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.redeemWithUserCredit(credit: nil)
+                debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.redeemWithUserCredit(credit: nil)
+               debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
+               return
+            }
+            
+            self.standardRedeemButton.hideLoader()
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
+                                
+                let credit = redeemInfoDict["credit"] as! Int
+                Utility.shared.userCreditUpdate(creditValue: credit)
+                
+                self.redeemWithUserCredit(credit: credit)
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("Error while getting reload status \(genericError.localizedDescription)")
             }
         }
     }
