@@ -177,7 +177,7 @@ class ExploreViewController: UIViewController {
         
         let type = barsController.snackBar.type
         if type == .discount {
-            return (title: "Discount" , message: "Avail discounts from bars by clicking on this banner.")
+            return (title: "Discount" , message: "Not excited about any deals? Get a discount on your first drink within each establishment!")
         } else if type == .reload {
             return (title: "Reloads in" , message: "You will be able to reload when the timer ends. It will allow you then redeem an offer from the same establishment again")
         } else if type == .congrates {

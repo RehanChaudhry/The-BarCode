@@ -76,8 +76,10 @@ class SIgnUpViewController: UIViewController {
         
         self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
         self.selectedDob = self.datePicker.date
+        let date = Calendar.current.date(byAdding: .year, value: -18, to: Date()) //User Age should be min 18
+        self.datePicker.maximumDate = date
         self.datePicker.minimumDate = nil
-        
+
         self.addBackButton()
         
         self.setUpFields()

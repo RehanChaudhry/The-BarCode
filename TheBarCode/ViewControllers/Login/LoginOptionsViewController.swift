@@ -93,13 +93,18 @@ class LoginOptionsViewController: UIViewController {
     //MARK: My Methods
     func setupInitialData(){
         
-        let option1 = IntroOption(title: "5 a day", detail: "5 amazing offers for you. Every day!", image: "login_intro_1")
-        let option2 = IntroOption(title: "Live Offers", detail: "Do not miss out on the limited time offers!", image: "login_intro_1")
-        let option3 = IntroOption(title: "Bar finder", detail: "Find bars near to you and what they offer.", image: "login_intro_1")
-        let option4 = IntroOption(title: "Invite Friends, Get Credits", detail: "Get rewarded when your friends redeem offers!", image: "login_intro_1")
-        let option5 = IntroOption(title: "Reload", detail: "Weekly recharge to keep redeeming the best offers from the best bars in town!", image: "login_intro_1")
-        let option6 = IntroOption(title: "Get Discounts", detail: "Amazing discounts now at your fingertips!", image: "login_intro_1")
+        let option1 = IntroOption(title: "Bar finder", detail: "Discover awesome Independent pubs and bars", image: "login_intro_1")
         
+        let option2 = IntroOption(title: "5 a day", detail: "Get a daily bundle of offers specific to you", image: "login_intro_1")
+        
+        let option3 = IntroOption(title: "Live Offers", detail: "Receive real-time offers from your nearest and dearest", image: "login_intro_1")
+        
+        let option4 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just £1.", image: "login_intro_1")
+        
+        let option5 = IntroOption(title: "Get Credits", detail: "Earn credits by inviting friends and sharing offers", image: "login_intro_1")
+        
+        let option6 = IntroOption(title: "Invite Friends, Get Credits", detail: "Get rewarded when your friends redeem offers!", image: "login_intro_1")
+
         introOptions = [option1, option2, option3, option4, option5, option6]
         
         self.pageControl.numberOfPages = self.introOptions.count

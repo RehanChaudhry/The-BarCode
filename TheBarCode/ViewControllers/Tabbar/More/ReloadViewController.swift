@@ -146,44 +146,69 @@ class ReloadViewController: UITableViewController {
             
             let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
-            if user!.credit > 0 {
+            let descText = user!.credit > 0 ?
+                "You can use the credit from your available credits to redeem all type of offers of any bar/establishment OR you can reload previous offers after:" :
+                "You are out of credits. You can reload previous offers after:"
+            
+            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: descText, timerText: timerText)
+            self.titleLabel.attributedText = attributedTitle
+            
+           /* if user!.credit > 0 {
                 
                 let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment OR you can reload previous offers after:", timerText: timerText)
                 self.titleLabel.attributedText = attributedTitle
                 
             } else {
                 
-                let attributedTitle = getAttributeText(prefixText: "You are out of credits.", descText: "You can reload previous offers after:", timerText: timerText)
+                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are out of credits. You can reload previous offers after:", timerText: timerText)
                 self.titleLabel.attributedText = attributedTitle
-            }
+            }*/
             
         } else if type == .reloadTimerExpire {
           
-            let fontBold = UIFont.appBoldFontOf(size: 12.0)
+            let fontBold = UIFont.appBoldFontOf(size: 14.0)
             let attributesBold: [NSAttributedStringKey: Any] = [.font: fontBold,
                                                                 .foregroundColor: UIColor.white]
-            let desc = "Congrats you are able to reload."
+            let congratesText = " Congrats you are able to reload."
 
-            if user!.credit > 0 {
+            let descText = user!.credit > 0 ?
+                            "You can use the credit from your available credits to redeem all type of offers of any bar/establishment." :
+                            "You are out of credits."
+            
+            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: descText, timerText: "")
+
+            let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(attributedTitle)
+            finalAttributedString.append(attributedText)
+            
+            self.titleLabel.attributedText = finalAttributedString
+            
+          /*  if user!.credit > 0 {
                 
                 let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment.", timerText: "")
                 
-                let attributedDesc = NSMutableAttributedString(string: desc, attributes: attributesBold)
+                let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
                 
-                attributedTitle.append(attributedDesc)
-                
-                self.titleLabel.attributedText = attributedTitle
-                
+                let finalAttributedString = NSMutableAttributedString()
+                finalAttributedString.append(attributedTitle)
+                finalAttributedString.append(attributedText)
+
+                self.titleLabel.attributedText = finalAttributedString
+  
             } else {
-                let attributedTitle = getAttributeText(prefixText: "You are out of credits.", descText: "", timerText: "")
+                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are out of credits.", timerText: "")
                 
-                let attributedDesc = NSMutableAttributedString(string: desc, attributes: attributesBold)
+                let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
                 
-                attributedTitle.append(attributedDesc)
+                let finalAttributedString = NSMutableAttributedString()
+                finalAttributedString.append(attributedTitle)
+                finalAttributedString.append(attributedText)
                 
-                self.titleLabel.attributedText = attributedTitle
+                self.titleLabel.attributedText = finalAttributedString
                 
-            }
+            }*/
         } else {
             debugPrint("Unknown reload state")
         }
@@ -237,13 +262,17 @@ class ReloadViewController: UITableViewController {
                                                              .foregroundColor: UIColor.appBlueColor()]
         
         let attributedPrefix = NSMutableAttributedString(string: prefixText, attributes: attributesBold)
+        
         let attributedDesc = NSMutableAttributedString(string: "\n" + descText, attributes: attributesNormal)
         let attributedTimer = NSMutableAttributedString(string: "\n" + timerText, attributes: timerAttributed)
         
         let finalAttributedString = NSMutableAttributedString()
         finalAttributedString.append(attributedPrefix)
         finalAttributedString.append(attributedDesc)
-        finalAttributedString.append(attributedTimer)
+
+        if timerText != "" {
+            finalAttributedString.append(attributedTimer)
+        }
         
         return finalAttributedString
         
