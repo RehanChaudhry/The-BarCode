@@ -378,6 +378,10 @@ extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
+    
+    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView) {
+        self.refreshSnackBar()
+    }
 }
 
 //MARK: BarsWithDealsViewControllerDelegate
@@ -385,12 +389,20 @@ extension ExploreViewController: BarsWithDealsViewControllerDelegate {
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
+    
+    func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView) {
+        self.refreshSnackBar()
+    }
 }
 
 //MARK: BarsWithLiveOffersViewControllerDelegate
 extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar) {
         self.moveToBarDetail(bar: bar)
+    }
+    
+    func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView) {
+        self.refreshSnackBar()
     }
 }
 

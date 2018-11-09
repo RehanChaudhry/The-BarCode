@@ -15,6 +15,7 @@ import GoogleMaps
 
 protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
+    func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView)
 }
 
 class BarsWithLiveOffersViewController: ExploreBaseViewController {
@@ -234,6 +235,8 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        
+        self.delegate.liveOffersController(controller: self, refreshSnackBar: self.snackBar)
         self.getBars(isRefreshing: true) { [unowned self] (error) in
            // handler(self.bars.count == 0, error)
             if self.isSearching {

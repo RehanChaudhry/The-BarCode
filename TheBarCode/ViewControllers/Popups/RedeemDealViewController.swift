@@ -77,10 +77,9 @@ extension RedeemDealViewController {
                                          "offer_id" : deal.id.value,
                                          "code": self.hiddenField.text!]
             
-        }
-        
-        if let shareId = deal.sharedId.value, self.isRedeemingSharedOffer {
-            params["shared_id"] = shareId
+            if let shareId = deal.sharedId.value, self.isRedeemingSharedOffer {
+                params["shared_id"] = shareId
+            }
         }
         
         UIApplication.shared.beginIgnoringInteractionEvents()

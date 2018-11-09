@@ -17,6 +17,7 @@ import GoogleMaps
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
+    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
 }
 
 class BarsViewController: ExploreBaseViewController {
@@ -277,6 +278,8 @@ extension BarsViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        
+        self.delegate.barsController(controller: self, refreshSnackBar: self.snackBar)
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             if self.isSearching {
                 handler(self.filteredBars.count == 0, error)
