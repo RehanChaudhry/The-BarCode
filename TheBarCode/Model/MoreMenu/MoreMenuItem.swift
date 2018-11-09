@@ -28,7 +28,7 @@ enum MenuItemType: String {
         case .notificationSettings:
             return ("Notification Settings", "icon_notification_settings", "NotificationSettingsNavigation", true, 16.0)
         case .sharedOffer:
-            return ("Shared Offers", "icon_preference", "SharedOffersNavigation", true, 16.0)
+            return ("Shared Offers", "icon_shared_offer", "SharedOffersNavigation", true, 16.0)
         case .preferences:
             return ("Preferences", "icon_preference", "PreferencesNavigation", true, 16.0)
         case .reload:
