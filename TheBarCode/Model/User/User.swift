@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreStore
+import CoreLocation
 
 enum UserStatus: String {
     case active = "active",
@@ -47,8 +48,8 @@ class User: CoreStoreObject {
         }
     }
     
-    var latitude = Value.Required<CGFloat>("latitude", initial: 0.0)
-    var longitude = Value.Required<CGFloat>("longitude", initial: 0.0)
+    var latitude = Value.Required<CLLocationDegrees>("latitude", initial: 0.0)
+    var longitude = Value.Required<CLLocationDegrees>("longitude", initial: 0.0)
 
     var credit: Int {
         get {
@@ -113,8 +114,8 @@ extension User: ImportableUniqueObject {
         
         self.profileImage.value = source["profile_image"] as? String
         
-        self.latitude.value = source["latitude"] as! CGFloat
-        self.longitude.value = source["longitude"] as! CGFloat
+        self.latitude.value = CLLocationDegrees("\(source["latitude"] ?? 0.0)")!
+        self.longitude.value = CLLocationDegrees("\(source["longitude"] ?? 0.0)")!
         
         if let isLocationUpdated = source["is_location_updated"] as? Bool {
             self.isLocationUpdated.value = isLocationUpdated

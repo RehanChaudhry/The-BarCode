@@ -40,7 +40,8 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
         let url = URL(string: category.image.value)
         //self.imageView.setImageWith(url: url, showRetryButton: false)
         
-        self.imageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        self.imageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "square_placeholder"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        self.imageView.backgroundColor = UIColor.appDarkGrayColor()
         
         if category.isSelected.value {
             self.imageView.layer.borderWidth = 1.0

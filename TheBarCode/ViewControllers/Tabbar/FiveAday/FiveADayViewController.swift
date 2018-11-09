@@ -393,10 +393,13 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
         
         deal.showSharingLoader = true
         self.pagerView.reloadData()
+        self.pagerView.automaticSlidingInterval = 0.0
         
-        Utility.shared.generateAndShareDynamicLink(deal: deal, controller: self) {
+        Utility.shared.generateAndShareDynamicLink(deal: deal, controller: self, presentationCompletion: {
             deal.showSharingLoader = false
             self.pagerView.reloadData()
+        }) {
+            self.pagerView.automaticSlidingInterval = 4.0
         }
     }
 }

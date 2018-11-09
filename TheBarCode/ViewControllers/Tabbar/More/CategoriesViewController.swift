@@ -52,8 +52,8 @@ class CategoriesViewController: UIViewController {
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.view.addSubview(statefulView)
         
-        self.statefulView.retryHandler = {(sender: UIButton) in
-            
+        self.statefulView.retryHandler = {[unowned self] (sender: UIButton) in
+            self.getCategories()
         }
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
@@ -71,6 +71,13 @@ class CategoriesViewController: UIViewController {
         layout?.minimumInteritemSpacing = 16.0
         layout?.sectionInset = UIEdgeInsetsMake(0.0, 16.0, 16.0, 16.0)
         layout?.minimumLineSpacing = 16.0
+        
+        for aView in self.collectionView.innerCollection.subviews {
+            if aView.isMember(of: UIRefreshControl.self) {
+                aView.removeFromSuperview()
+                break
+            }
+        }
         
         self.getCategories()
     }

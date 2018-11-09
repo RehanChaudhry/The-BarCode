@@ -176,7 +176,7 @@ class Utility: NSObject {
         return dateFormatter.date(from: date)!
     }
     
-    func getformattedDistance(distance: CGFloat) -> String {
+    func getformattedDistance(distance: Double) -> String {
         let formattedDistance = distance == 0 ? "0" : String(format: "%.2f", distance)
         return String(format: "%@ mile%@ away", formattedDistance, (distance > 1 ? "s" : ""))
     }
@@ -293,7 +293,7 @@ class Utility: NSObject {
         
     }
     
-    func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, completion: @escaping (() -> Void)) {
+    func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, presentationCompletion: @escaping (() -> Void), dismissCompletion: @escaping (() -> Void) ) {
         
         let user = Utility.shared.getCurrentUser()!
         let ownReferralCode = user.ownReferralCode.value
@@ -321,7 +321,7 @@ class Utility: NSObject {
         linkComponents.shorten { (shortUrl, warnings, error) in
             
             guard error == nil else {
-                completion()
+                presentationCompletion()
                 controller.showAlertController(title: "Invite", msg: error!.localizedDescription)
                 return
             }
@@ -332,8 +332,11 @@ class Utility: NSObject {
             
             let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = controller.view
+            activityViewController.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
+                dismissCompletion()
+            }
             controller.present(activityViewController, animated: true, completion: {
-                completion()
+                presentationCompletion()
             })
         }
         

@@ -203,6 +203,12 @@ extension BarDealsViewController: StatefulTableDelegate {
         let initialErrorView = LoadingAndErrorView.loadFromNib()
         initialErrorView.backgroundColor = .clear
         initialErrorView.showLoading()
+        
+        initialErrorView.clearConstraints()
+        
+        initialErrorView.activityIndicator.autoPinEdge(ALEdge.top, to: ALEdge.top, of: initialErrorView, withOffset: 26.0)
+        initialErrorView.activityIndicator.autoAlignAxis(ALAxis.vertical, toSameAxisOf: initialErrorView)
+        
         return initialErrorView
     }
     

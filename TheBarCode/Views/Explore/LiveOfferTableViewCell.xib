@@ -40,6 +40,10 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SAx-gl-dFM">
+                        <rect key="frame" x="280" y="202" width="20" height="20"/>
+                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDH-uh-GDT">
                         <rect key="frame" x="268" y="190" width="44" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -84,12 +88,14 @@
                     <constraint firstItem="IDH-uh-GDT" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="4" id="2Z0-e0-crI"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="5sD-Sd-NXb"/>
                     <constraint firstAttribute="bottom" secondItem="2jA-pV-ECg" secondAttribute="bottom" constant="0.5" id="92g-9N-mL8"/>
+                    <constraint firstItem="SAx-gl-dFM" firstAttribute="centerY" secondItem="IDH-uh-GDT" secondAttribute="centerY" id="A1e-Jo-OVO"/>
                     <constraint firstItem="IDH-uh-GDT" firstAttribute="leading" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="8" id="BhS-lD-vX3"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Cgb-jY-vvM"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="leading" secondItem="2jA-pV-ECg" secondAttribute="trailing" constant="8" id="EBz-AP-Fp6"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="Fmn-z5-jYo"/>
                     <constraint firstAttribute="trailing" secondItem="EFD-eR-6bt" secondAttribute="trailing" constant="16" id="FrL-Y8-IMa"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="IO0-Ym-wRy"/>
+                    <constraint firstItem="SAx-gl-dFM" firstAttribute="centerX" secondItem="IDH-uh-GDT" secondAttribute="centerX" id="LGw-EZ-FPs"/>
                     <constraint firstAttribute="trailing" secondItem="wx2-1M-QH6" secondAttribute="trailing" constant="16" id="QNI-gD-B0l"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Wee-Ws-l11"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="top" secondItem="BaG-X9-k2d" secondAttribute="top" constant="24" id="Y0j-fg-8Ws"/>
@@ -108,6 +114,7 @@
                 <outlet property="distanceLabel" destination="2jA-pV-ECg" id="afT-jw-dGT"/>
                 <outlet property="locationIconImageView" destination="e7T-kn-Jzp" id="Fag-89-bs9"/>
                 <outlet property="shareButton" destination="IDH-uh-GDT" id="d46-7G-8YW"/>
+                <outlet property="sharingLoader" destination="SAx-gl-dFM" id="ZZn-Mq-KE9"/>
                 <outlet property="titleLabel" destination="djc-IT-5qt" id="q1E-fc-PJR"/>
                 <outlet property="validityLabel" destination="EFD-eR-6bt" id="bbv-Wa-pNS"/>
             </connections>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OneSignal
 
 class MoreViewController: UIViewController {
 
@@ -74,6 +75,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         if menuItem.type == .signOut {
             let alertController = UIAlertController(title: "Confirm", message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)
             alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (action) in
+                OneSignal.deleteTag("user_id")
                 Utility.shared.removeUser()
                 self.tabBarController?.dismiss(animated: true, completion: nil)
             }))

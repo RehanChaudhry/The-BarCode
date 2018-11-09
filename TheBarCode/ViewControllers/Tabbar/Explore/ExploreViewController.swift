@@ -147,6 +147,16 @@ class ExploreViewController: UIViewController {
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
         barDetailController.delegate = self
+        
+        switch self.exploreType {
+        case .liveOffers:
+            barDetailController.preSelectedTabIndex = 2
+        case .deals:
+            barDetailController.preSelectedTabIndex = 1
+        default:
+            barDetailController.preSelectedTabIndex = 0
+        }
+        
         self.present(barDetailNav, animated: true, completion: nil)
     }
     

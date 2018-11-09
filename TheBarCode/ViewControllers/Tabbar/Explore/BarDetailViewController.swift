@@ -42,6 +42,8 @@ class BarDetailViewController: UIViewController {
     
     var reloadDataRequest: DataRequest?
     
+    var preSelectedTabIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -118,7 +120,7 @@ class BarDetailViewController: UIViewController {
         self.segmentedController.segmentTitleColor = UIColor.white
         self.segmentedController.segmentBackgroundColor = self.headerController.view.backgroundColor!
         self.segmentedController.segmentTitleFont = UIFont.appRegularFontOf(size: 16.0)
-
+        
         self.addChildViewController(self.segmentedController)
         self.segmentedController.willMove(toParentViewController: self)
         self.containerView.addSubview(self.segmentedController.view)
@@ -131,6 +133,7 @@ class BarDetailViewController: UIViewController {
             scrollView.backgroundColor = self.view.backgroundColor
         }
         
+        self.segmentedController.setSelectedSegmentAt(self.preSelectedTabIndex, animated: false)
     }
     
     func setUpBottomView() {

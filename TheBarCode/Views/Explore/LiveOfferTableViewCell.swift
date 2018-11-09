@@ -20,6 +20,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     @IBOutlet var shareButton: UIButton!
     
+    @IBOutlet var sharingLoader: UIActivityIndicatorView!
+    
     var expirationTimer: Timer?
     
     weak var delegate: LiveOfferTableViewCellDelegate?
@@ -92,7 +94,18 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.locationIconImageView.isHidden = true
         self.distanceLabel.isHidden = true
         self.detailLabel.isHidden = true
-        self.shareButton.isHidden = hideShare
+        
+        if hideShare {
+            self.shareButton.isHidden = true
+        } else {
+            if offer.showSharingLoader {
+                self.shareButton.isHidden = true
+                self.sharingLoader.startAnimating()
+            } else {
+                self.shareButton.isHidden = false
+                self.sharingLoader.stopAnimating()
+            }
+        }
         
         let endDate = offer.endDateTime
         let remainingSeconds = Int(endDate.timeIntervalSinceNow)

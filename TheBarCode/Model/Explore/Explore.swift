@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreStore
+import CoreLocation
 
 class Explore: CoreStoreObject {
     
@@ -20,8 +21,8 @@ class Explore: CoreStoreObject {
     var contactEmail = Value.Required<String>("contact_email", initial: "")
     var address = Value.Required<String>("address", initial: "")
     var website = Value.Required<String>("website", initial: "")
-    var latitude = Value.Required<CGFloat>("latitude", initial: 0.0)
-    var longitude = Value.Required<CGFloat>("longitude", initial: 0.0)
+    var latitude = Value.Required<CLLocationDegrees>("latitude", initial: 0.0)
+    var longitude = Value.Required<CLLocationDegrees>("longitude", initial: 0.0)
     var status = Value.Required<String>("status", initial: "")
     var code = Value.Required<Int>("code", initial: 0)
     var businessTiming = Value.Required<String>("business_timing", initial: "")
@@ -32,7 +33,7 @@ class Explore: CoreStoreObject {
     var googlePageUrl = Value.Optional<String>("google_page_url")
     var facebookPageUrl = Value.Optional<String>("facebook_page_url")
     var formattedUpdatedAt = Value.Optional<String>("formatted_updated_at")
-    var distance = Value.Required<CGFloat>("distance", initial: 0.0)
+    var distance = Value.Required<Double>("distance", initial: 0.0)
     var canRedeemOffer = Value.Required<Bool>("is_offer_redeemed", initial: false)
     var deals = Value.Required<Int>("deals", initial: 0)
     var liveOffers = Value.Required<Int>("live_offers", initial: 0)
@@ -81,8 +82,10 @@ extension Explore: ImportableUniqueObject {
         self.contactEmail.value = source["contact_email"] as! String
         self.address.value = source["address"] as! String
         self.website.value = source["website"] as! String
-        self.latitude.value = source["latitude"] as! CGFloat
-        self.longitude.value = source["longitude"] as! CGFloat
+        
+        self.latitude.value = CLLocationDegrees("\(source["latitude"] ?? 0.0)")!
+        self.longitude.value = CLLocationDegrees("\(source["longitude"] ?? 0.0)")!
+        
         self.status.value = source["status"] as! String
         self.code.value = source["code"] as! Int
         self.businessTiming.value = source["business_timing"] as! String
@@ -93,7 +96,9 @@ extension Explore: ImportableUniqueObject {
         self.googlePageUrl.value = source["google_page_url"] as? String
         self.facebookPageUrl.value = source["facebook_page_url"] as? String
         self.formattedUpdatedAt.value = source["formatted_updated_at"] as? String
-        self.distance.value = source["distance"] as! CGFloat
+        
+        self.distance.value = Double("\(source["distance"] ?? 0.0)")!
+        
         self.canRedeemOffer.value = source["can_redeem_offer"] as! Bool
         self.deals.value = source["deals"] as! Int
         self.liveOffers.value = source["live_offers"] as! Int

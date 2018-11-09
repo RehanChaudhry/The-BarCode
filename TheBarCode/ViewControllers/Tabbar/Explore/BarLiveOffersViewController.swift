@@ -30,6 +30,8 @@ class BarLiveOffersViewController: UIViewController {
     var dataRequest: DataRequest?
     var loadMore = Pagination()
     
+    var loadingShareController: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -120,18 +122,29 @@ extension BarLiveOffersViewController: UITableViewDataSource, UITableViewDelegat
 
 extension BarLiveOffersViewController: LiveOfferTableViewCellDelegate {
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
+        
+        guard !self.loadingShareController else {
+            debugPrint("Loading sharing controller is already in progress")
+            return
+        }
+        
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             debugPrint("Indexpath not found")
             return
         }
         
+        self.loadingShareController = true
+        
         let offer = self.offers[indexPath.row]
         offer.showSharingLoader = true
         self.statefulTableView.innerTable.reloadData()
         
-        Utility.shared.generateAndShareDynamicLink(deal: offer, controller: self) {
+        Utility.shared.generateAndShareDynamicLink(deal: offer, controller: self, presentationCompletion: {
             offer.showSharingLoader = false
             self.statefulTableView.innerTable.reloadData()
+            self.loadingShareController = false
+        }) {
+            
         }
     }
 }
@@ -236,6 +249,12 @@ extension BarLiveOffersViewController: StatefulTableDelegate {
         let initialErrorView = LoadingAndErrorView.loadFromNib()
         initialErrorView.backgroundColor = .clear
         initialErrorView.showLoading()
+        
+        initialErrorView.clearConstraints()
+        
+        initialErrorView.activityIndicator.autoPinEdge(ALEdge.top, to: ALEdge.top, of: initialErrorView, withOffset: 26.0)
+        initialErrorView.activityIndicator.autoAlignAxis(ALAxis.vertical, toSameAxisOf: initialErrorView)
+        
         return initialErrorView
     }
     
