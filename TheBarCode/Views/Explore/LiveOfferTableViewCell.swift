@@ -53,7 +53,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         self.titleLabel.text = explore.title.value
         self.distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
-        self.detailLabel.text = = "\(explore.liveOffers.value) live offer"
+        self.detailLabel.text = "\(explore.liveOffers.value) live offer"
         self.locationIconImageView.isHidden = false
         self.distanceLabel.isHidden = false
         self.detailLabel.isHidden = false

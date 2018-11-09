@@ -39,12 +39,16 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="The white hart" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSE-1m-2ly">
-                        <rect key="frame" x="36" y="179" width="77" height="15"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCT-19-SlU">
+                        <rect key="frame" x="36" y="179" width="182.5" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="The white hart">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="viewDirectionButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2ZI-cv-HRV"/>
+                        </connections>
+                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-location" translatesAutoresizingMaskIntoConstraints="NO" id="FLh-bZ-tUK">
                         <rect key="frame" x="16" y="179" width="12" height="15"/>
                         <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,7 +58,7 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wdj-iC-GK1">
-                        <rect key="frame" x="121" y="179" width="183" height="15"/>
+                        <rect key="frame" x="226.5" y="179" width="77.5" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -64,25 +68,25 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
                 <constraints>
                     <constraint firstItem="FLh-bZ-tUK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="8Tn-YM-7cB"/>
                     <constraint firstAttribute="trailing" secondItem="35U-As-bEU" secondAttribute="trailing" constant="16" id="9fD-ZY-lZe"/>
-                    <constraint firstItem="Wdj-iC-GK1" firstAttribute="leading" secondItem="eSE-1m-2ly" secondAttribute="trailing" constant="8" id="HPO-Gy-9C5"/>
+                    <constraint firstItem="Wdj-iC-GK1" firstAttribute="leading" secondItem="tCT-19-SlU" secondAttribute="trailing" constant="8" id="IOn-pD-1uA"/>
                     <constraint firstAttribute="bottom" secondItem="FLh-bZ-tUK" secondAttribute="bottom" constant="16.5" id="Je2-9e-bW0"/>
                     <constraint firstAttribute="trailing" secondItem="hBD-I3-mIh" secondAttribute="trailing" constant="16" id="L2u-tz-Xf0"/>
+                    <constraint firstAttribute="bottom" secondItem="tCT-19-SlU" secondAttribute="bottom" constant="16.5" id="L9e-ya-pyM"/>
                     <constraint firstItem="hBD-I3-mIh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="QHD-25-qBy"/>
-                    <constraint firstItem="eSE-1m-2ly" firstAttribute="centerY" secondItem="FLh-bZ-tUK" secondAttribute="centerY" id="Ra3-jR-odC"/>
-                    <constraint firstAttribute="bottom" secondItem="eSE-1m-2ly" secondAttribute="bottom" constant="16.5" id="UiA-lw-Hc7"/>
-                    <constraint firstItem="Wdj-iC-GK1" firstAttribute="centerY" secondItem="eSE-1m-2ly" secondAttribute="centerY" id="bbP-v9-TF5"/>
+                    <constraint firstItem="tCT-19-SlU" firstAttribute="centerY" secondItem="FLh-bZ-tUK" secondAttribute="centerY" id="Rv1-g3-lsW"/>
+                    <constraint firstItem="tCT-19-SlU" firstAttribute="top" secondItem="35U-As-bEU" secondAttribute="bottom" constant="16" id="atH-hv-Gbe"/>
                     <constraint firstAttribute="trailing" secondItem="Wdj-iC-GK1" secondAttribute="trailing" constant="16" id="cfy-aw-l0r"/>
                     <constraint firstItem="35U-As-bEU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="d5t-VK-neA"/>
                     <constraint firstAttribute="bottom" secondItem="Wdj-iC-GK1" secondAttribute="bottom" constant="16.5" id="fNp-8t-UxF"/>
                     <constraint firstItem="hBD-I3-mIh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="msc-Dr-qP4"/>
+                    <constraint firstItem="tCT-19-SlU" firstAttribute="leading" secondItem="FLh-bZ-tUK" secondAttribute="trailing" constant="8" id="od6-LN-x8J"/>
                     <constraint firstItem="35U-As-bEU" firstAttribute="top" secondItem="hBD-I3-mIh" secondAttribute="bottom" constant="16" id="qbS-Nd-n3a"/>
-                    <constraint firstItem="eSE-1m-2ly" firstAttribute="top" secondItem="35U-As-bEU" secondAttribute="bottom" constant="16" id="rHg-wN-VOM"/>
-                    <constraint firstItem="eSE-1m-2ly" firstAttribute="leading" secondItem="FLh-bZ-tUK" secondAttribute="trailing" constant="8" id="wQJ-je-wAU"/>
+                    <constraint firstItem="tCT-19-SlU" firstAttribute="centerY" secondItem="Wdj-iC-GK1" secondAttribute="centerY" id="wdJ-Tn-2dn"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="barNameLabel" destination="eSE-1m-2ly" id="QY3-rF-jvk"/>
+                <outlet property="barNameButton" destination="tCT-19-SlU" id="bHl-9c-aDt"/>
                 <outlet property="detailLabel" destination="35U-As-bEU" id="PIc-TI-6gS"/>
                 <outlet property="distanceLabel" destination="Wdj-iC-GK1" id="diQ-8G-aTK"/>
                 <outlet property="validityLabel" destination="hBD-I3-mIh" id="6Hb-cx-bxy"/>

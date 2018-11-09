@@ -99,13 +99,13 @@ class LoginOptionsViewController: UIViewController {
         
         let option3 = IntroOption(title: "Bar finder", detail: "Discover awesome Independent pubs and bars", image: "login_intro_1")
         
-        let option4 = IntroOption(title: "Invite Friends, Get Credits", detail: "Get rewarded when your friends redeem offers!", image: "login_intro_1")
+//        let option4 = IntroOption(title: "Invite Friends, Get Credits", detail: "Get rewarded when your friends redeem offers!", image: "login_intro_1")
 
         let option5 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just £1.", image: "login_intro_1")
         
         let option6 = IntroOption(title: "Get Credits", detail: "Earn credits by inviting friends and sharing offers", image: "login_intro_1")
 
-        introOptions = [option1, option2, option3, option4, option5, option6]
+        introOptions = [option1, option2, option3, option5, option6]
         
         self.pageControl.numberOfPages = self.introOptions.count
         self.pageControl.currentPage = 0

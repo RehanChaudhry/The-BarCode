@@ -445,11 +445,7 @@ extension SIgnUpViewController {
                       "password" : password,
                       "date_of_birth" : dob]
         
-        if self.selectedGender == Gender.other {
-            params["gender"] = nil
-        } else  {
-            params["gender"] = gender
-        }
+        params["gender"] =  self.selectedGender != Gender.other  ? gender : ""
         
         if let socialAccountId = self.socialAccountId, let accessToken = FBSDKAccessToken.current()?.tokenString {
             params["social_account_id"] = socialAccountId

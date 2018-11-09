@@ -9,13 +9,18 @@
 import UIKit
 import Reusable
 
+protocol OfferDetailTableViewCellDelegate: class {
+    func OfferDetailCell(cell: OfferDetailTableViewCell, viewDirectionButtonTapped sender: UIButton)
+}
+
 class OfferDetailTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet var validityLabel: UILabel!
-    @IBOutlet weak var barNameLabel: UILabel!
+    @IBOutlet var barNameButton: UIButton!
     @IBOutlet weak var distanceLabel: UILabel!
-    
+    weak var delegate : OfferDetailTableViewCellDelegate!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -50,8 +55,8 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
     
     func configCell(deal: Deal){
         
-        self.detailLabel.text = deal.detail.value
-        self.barNameLabel.text = deal.establishment.value?.title.value
+        self.detailLabel.text = deal.detail.value        
+        self.barNameButton.setTitle(deal.establishment.value?.title.value, for: .normal)
         
         if let distance = deal.establishment.value?.distance.value {
             self.distanceLabel.text = Utility.shared.getformattedDistance(distance: distance)
@@ -149,4 +154,7 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
+    @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
+        self.delegate.OfferDetailCell(cell: self, viewDirectionButtonTapped: sender)
+    }
 }
