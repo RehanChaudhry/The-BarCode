@@ -32,4 +32,12 @@ class Contact: NSObject {
         self.email = contact.emailAddresses.first?.value as String? ?? ""
     }
     
+    convenience init(id: String, fullName: String, email: String) {
+        self.init()
+        
+        self.id = id
+        self.fullName = fullName
+        self.email = email
+    }
+    
 }

@@ -12,6 +12,7 @@ enum MenuItemType: String {
     
     case accountSettings = "accountSettings",
     notificationSettings = "notificationSettings",
+    sharedOffer = "sharedOffer",
     preferences = "preferences",
     reload = "reload",
     faqs = "faqs",
@@ -26,6 +27,8 @@ enum MenuItemType: String {
             return ("Account Settings", "icon_account_settings", "AccountSettingsNavigation", true, 16.0)
         case .notificationSettings:
             return ("Notification Settings", "icon_notification_settings", "NotificationSettingsNavigation", true, 16.0)
+        case .sharedOffer:
+            return ("Shared Offers", "icon_preference", "SharedOffersNavigation", true, 16.0)
         case .preferences:
             return ("Preferences", "icon_preference", "PreferencesNavigation", true, 16.0)
         case .reload:
@@ -46,6 +49,7 @@ enum MenuItemType: String {
         return [
         MenuItem(type: .accountSettings),
         MenuItem(type: .notificationSettings),
+        MenuItem(type: .sharedOffer),
         MenuItem(type: .preferences),
         MenuItem(type: .reload),
         MenuItem(type: .faqs),

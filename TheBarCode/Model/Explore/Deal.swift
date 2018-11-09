@@ -58,6 +58,9 @@ class Deal: CoreStoreObject {
     var establishment = Relationship.ToOne<Bar>("establishment")
     var offer = Relationship.ToOne<Offer>("offer")
     
+    var sharedByName = Value.Optional<String>("shared_by_name")
+    var sharedId = Value.Optional<String>("shared_id")
+    
     var startDate: Date {
         get {
             return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
@@ -95,7 +98,7 @@ class Deal: CoreStoreObject {
     }
     
     var showLoader: Bool = false
-    
+    var showSharingLoader: Bool = false
 }
 
 
@@ -150,6 +153,14 @@ extension Deal: ImportableUniqueObject {
             if importedObject != nil {
                 self.establishment.value = importedObject
             }
+        }
+        
+        if let sharedByName = source["shared_by_name"] as? String {
+            self.sharedByName.value = sharedByName
+        }
+        
+        if let sharedId = source["shared_id"] {
+            self.sharedId.value = "\(sharedId)"
         }
         
     }

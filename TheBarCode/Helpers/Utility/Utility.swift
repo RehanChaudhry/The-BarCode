@@ -10,6 +10,7 @@ import UIKit
 import KeychainAccess
 import CoreStore
 import GoogleMaps
+import Firebase
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.cygnismedia.thebarcode"
@@ -31,19 +32,25 @@ enum RedeemType: String {
 enum NotificationType: String {
     case general = "admin",
     fiveADay = "five_a_day",
-    liveOffer = "live_offer"
+    liveOffer = "live_offer",
+    shareOffer = "share_offer"
 }
 
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
 let notificationNameDealRedeemed: String = "notificationNameDealRedeemed"
+let notificationNameSharedOfferRedeemed: String = "notificationNameSharedOfferRedeemed"
 
 let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 let notificationNameLiveOffer: String = "notificationNameLiveOffer"
+let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOffer"
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
 let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: -2.480438)
+
+let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
+let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
 
 class Utility: NSObject {
     
@@ -194,9 +201,7 @@ class Utility: NSObject {
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let editedObject = transaction.edit(user)
-            if let creditInt = Int(editedObject!.creditsRaw.value!), creditInt > 0 {
-                editedObject!.creditsRaw.value = "\(creditValue)"
-            }
+            editedObject?.creditsRaw.value = "\(creditValue)"
         })
         
         debugPrint("User Credit Update in local db")
@@ -241,5 +246,96 @@ class Utility: NSObject {
         default:
             return OfferType.unknown
         }
+    }
+    
+    func getReferralCodeFromUrlString(urlString: String) -> String? {
+        
+        var referralCode: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "referral" {
+                    referralCode = queryItem.value
+                    break
+                }
+            }
+        }
+        
+        return referralCode
+    }
+    
+    func getSharedOfferParams(urlString: String) -> SharedOfferParams? {
+        
+        var referral: String?
+        var offerId: String?
+        var sharedBy: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "referral" {
+                    referral = queryItem.value
+                } else if queryItem.name == "offer_id" {
+                    offerId = queryItem.value
+                } else if queryItem.name == "shared_by" {
+                    sharedBy = queryItem.value
+                }
+            }
+        }
+        
+        if let referral = referral, let offerId = offerId, let sharedBy = sharedBy {
+            let sharedOfferParams = SharedOfferParams(referral: referral, sharedBy: sharedBy, offerId: offerId)
+            return sharedOfferParams
+        } else {
+            return nil
+        }
+        
+    }
+    
+    func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, completion: @escaping (() -> Void)) {
+        
+        let user = Utility.shared.getCurrentUser()!
+        let ownReferralCode = user.ownReferralCode.value
+        let offerShareUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode + "&offer_id=" + deal.id.value + "&shared_by=" + user.userId.value
+        
+        let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkShareOfferDomain)
+        linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
+        linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
+        linkComponents.iOSParameters?.appStoreID = kAppStoreId
+        linkComponents.iOSParameters?.fallbackURL = URL(string: barCodeDomainURLString)
+        linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
+        
+        linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
+        
+        linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkComponents.socialMetaTagParameters?.title = "The Barcode "
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has shared an offer with you. With The Barcode you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        
+        linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+        linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
+        
+        linkComponents.shorten { (shortUrl, warnings, error) in
+            
+            guard error == nil else {
+                completion()
+                controller.showAlertController(title: "Invite", msg: error!.localizedDescription)
+                return
+            }
+            
+            if let warnings = warnings {
+                debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = controller.view
+            controller.present(activityViewController, animated: true, completion: {
+                completion()
+            })
+        }
+        
     }
 }

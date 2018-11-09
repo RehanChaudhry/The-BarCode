@@ -123,11 +123,9 @@ extension InviteViewController {
         
         let user = Utility.shared.getCurrentUser()!
         let ownReferralCode = user.ownReferralCode.value
-        let inviteUrlString = barCodeDomainURLString + "referral=" + ownReferralCode
+        let inviteUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode
         
         let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
-        
-        let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
         
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
         linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
@@ -139,8 +137,8 @@ extension InviteViewController {
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-        linkComponents.socialMetaTagParameters?.title = "The Bar Code Invitation"
-        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has invited you to join The Bar Code. With Bar Code you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.title = "The Barcode Invitation"
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has invited you to join The Bar Code. With The Barcode you can enjoy amazing deals and live offers on the go."
         linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
