@@ -436,9 +436,8 @@ extension AccountSettingsViewController {
         var params = ["full_name" : self.fullNameFieldView.textField.text!,
                       "date_of_birth" : dob]
         
-        if self.selectedGender != Gender.other {
-            params["gender"] = self.selectedGender.rawValue
-        }
+        params["gender"] = self.selectedGender != Gender.other ?
+                           self.selectedGender.rawValue : ""
         
         if isUpdatingPassword() {
             params["old_password"] = self.currentPasswordFieldView.textField.text!

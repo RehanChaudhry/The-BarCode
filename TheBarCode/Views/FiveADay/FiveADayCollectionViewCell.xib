@@ -238,7 +238,7 @@
     </objects>
     <resources>
         <image name="bar-location" width="28" height="32"/>
-        <image name="fiveday-deal1" width="906" height="660"/>
-        <image name="icon_share" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="fiveday-deal1" width="302" height="220"/>
+        <image name="icon_share" width="21" height="21"/>
     </resources>
 </document>
