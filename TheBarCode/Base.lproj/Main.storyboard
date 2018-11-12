@@ -1261,20 +1261,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="44" width="343" height="54"/>
+                                <rect key="frame" x="16" y="88" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="122" width="343" height="1"/>
+                                <rect key="frame" x="16" y="166" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="242" width="343" height="44"/>
+                                <rect key="frame" x="16" y="286" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1292,7 +1292,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="310" width="128" height="32"/>
+                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -3810,12 +3810,22 @@ Cg
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UJK-RA-LqE">
-                                <rect key="frame" x="34" y="224" width="68" height="14"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="cyn-Wx-4Sv">
+                                <rect key="frame" x="16" y="221" width="15" height="20"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYj-qN-SqY">
+                                <rect key="frame" x="34" y="218" width="210" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="210" id="VMJ-5G-Ahw"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="4 miles away">
+                                    <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="directionButtonTapped:" destination="zyv-eO-QJ3" eventType="touchUpInside" id="wjC-Hd-J1U"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6r9-aI-D3c">
                                 <rect key="frame" x="323" y="185.5" width="44" height="44"/>
                                 <constraints>
@@ -3828,18 +3838,15 @@ Cg
                                     <action selector="favouriteButtonTapped:" destination="zyv-eO-QJ3" eventType="touchUpInside" id="elg-1E-KSK"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="cyn-Wx-4Sv">
-                                <rect key="frame" x="16" y="221" width="15" height="20"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="uO6-Jj-ct7" firstAttribute="leading" secondItem="XhV-Uv-IFZ" secondAttribute="leading" id="4z0-Sk-zcQ"/>
-                            <constraint firstItem="UJK-RA-LqE" firstAttribute="leading" secondItem="cyn-Wx-4Sv" secondAttribute="trailing" constant="3" id="9hF-Fs-19y"/>
-                            <constraint firstItem="UJK-RA-LqE" firstAttribute="centerY" secondItem="cyn-Wx-4Sv" secondAttribute="centerY" id="J0d-8x-rGT"/>
                             <constraint firstItem="b9e-OY-zML" firstAttribute="top" secondItem="uO6-Jj-ct7" secondAttribute="bottom" constant="20" id="Jac-pG-KlL"/>
                             <constraint firstItem="XhV-Uv-IFZ" firstAttribute="trailing" secondItem="6r9-aI-D3c" secondAttribute="trailing" constant="8" id="PWS-8d-N02"/>
                             <constraint firstItem="uO6-Jj-ct7" firstAttribute="trailing" secondItem="XhV-Uv-IFZ" secondAttribute="trailing" id="eDZ-Up-vHR"/>
+                            <constraint firstItem="wYj-qN-SqY" firstAttribute="centerY" secondItem="cyn-Wx-4Sv" secondAttribute="centerY" id="emo-MK-tod"/>
+                            <constraint firstItem="wYj-qN-SqY" firstAttribute="leading" secondItem="cyn-Wx-4Sv" secondAttribute="trailing" constant="3" id="jl6-Ue-uek"/>
                             <constraint firstItem="XhV-Uv-IFZ" firstAttribute="bottom" secondItem="cyn-Wx-4Sv" secondAttribute="bottom" constant="20" id="jw9-BO-EJt"/>
                             <constraint firstItem="b9e-OY-zML" firstAttribute="leading" secondItem="XhV-Uv-IFZ" secondAttribute="leading" constant="16" id="lYi-H2-oyw"/>
                             <constraint firstItem="cyn-Wx-4Sv" firstAttribute="leading" secondItem="XhV-Uv-IFZ" secondAttribute="leading" constant="16" id="orO-ht-ruo"/>
@@ -3853,7 +3860,7 @@ Cg
                     <connections>
                         <outlet property="collectionView" destination="uO6-Jj-ct7" id="LGg-Ft-IZJ"/>
                         <outlet property="collectionViewHeight" destination="sLo-1Q-2jU" id="rOC-4y-Xya"/>
-                        <outlet property="distanceLabel" destination="UJK-RA-LqE" id="5JJ-3H-DLV"/>
+                        <outlet property="distanceButton" destination="wYj-qN-SqY" id="smC-Vj-NSU"/>
                         <outlet property="favouriteButton" destination="6r9-aI-D3c" id="ew7-Oz-AbP"/>
                         <outlet property="mapIconImageView" destination="cyn-Wx-4Sv" id="rVv-7E-sf2"/>
                         <outlet property="titleLabel" destination="b9e-OY-zML" id="tIk-vk-b9c"/>

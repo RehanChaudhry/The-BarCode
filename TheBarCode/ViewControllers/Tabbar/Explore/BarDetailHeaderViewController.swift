@@ -20,7 +20,7 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet weak var mapIconImageView: UIImageView!
     
-    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet var distanceButton: UIButton!
     
     @IBOutlet var favouriteButton: UIButton!
     
@@ -55,14 +55,30 @@ class BarDetailHeaderViewController: UIViewController {
     func setUpHeader() {
         self.titleLabel.text = self.bar.title.value
         self.mapIconImageView.isHidden = false
-        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: self.bar.distance.value)
+        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: self.bar.distance.value), for: .normal)
         let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
+    }
+    
+    func showDirection(bar: Bar){
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
     }
     
     //MARK: IBActions
     @IBAction func favouriteButtonTapped(_ sender: Any) {
         markFavourite()
+    }
+    
+    @IBAction func directionButtonTapped(_ sender: UIButton) {
+        self.showDirection(bar: self.bar)
     }
     
 }
