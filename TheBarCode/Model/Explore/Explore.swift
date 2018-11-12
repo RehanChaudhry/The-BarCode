@@ -10,6 +10,10 @@ import UIKit
 import CoreStore
 import CoreLocation
 
+enum ExploreMappingType: String {
+    case bars = "bars", deals = "deals", liveOffers = "liveOffers"
+}
+
 class Explore: CoreStoreObject {
     
     var id = Value.Required<String>("id", initial: "")
@@ -100,8 +104,7 @@ extension Explore: ImportableUniqueObject {
         self.distance.value = Double("\(source["distance"] ?? 0.0)")!
         
         self.canRedeemOffer.value = source["can_redeem_offer"] as! Bool
-        self.deals.value = source["deals"] as! Int
-        self.liveOffers.value = source["live_offers"] as! Int
+        
         self.isUserFavourite.value = source["is_user_favourite"] as! Bool
         self.credit.value = source["credit"] as! Int
 
@@ -112,6 +115,17 @@ extension Explore: ImportableUniqueObject {
                 self.images.value = importedObjects
             }
         }
+        
+        if let mappingTypeRaw = (source["mapping_type"] as? String), let mappingType = ExploreMappingType(rawValue: mappingTypeRaw) {
+            if mappingType == .bars {
+                
+            } else if mappingType == .deals {
+                self.deals.value = Int("\(source["deals"]!)")!
+            } else if mappingType == .liveOffers {
+                self.liveOffers.value = Int("\(source["live_offers"]!)")!
+            }
+        }
+        
         //TODO: handle array and object
 //        self.images.value = source["images"] as! String
 //        self.lastReloadTime.value = source["last_reload_time"] as! String

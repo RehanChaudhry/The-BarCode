@@ -16,6 +16,7 @@ import GoogleMaps
 protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
     func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView)
+    func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton)
 }
 
 class BarsWithLiveOffersViewController: ExploreBaseViewController {
@@ -38,9 +39,7 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     //MARK: My Methods
-    
     override func setUpStatefulTableView() {
         super.setUpStatefulTableView()
         
@@ -50,6 +49,10 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
         self.statefulTableView.statefulDelegate = self
     }
 
+    //MARK: My IBActions
+    @IBAction func searchButtonTapped(sender: UIButton) {
+        self.delegate.liveOffersController(controller: self, searchButtonTapped: sender)
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -171,8 +174,12 @@ extension BarsWithLiveOffersViewController {
                 
                 var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
+                    for responseDict in responseArray {
+                        var object = responseDict
+                        object["mapping_type"] = ExploreMappingType.liveOffers.rawValue
+                        let importedObject = try! transaction.importObject(Into<Bar>(), source: object)
+                        importedObjects.append(importedObject!)
+                    }
                 })
                 
                 var resultBars: [Bar] = []

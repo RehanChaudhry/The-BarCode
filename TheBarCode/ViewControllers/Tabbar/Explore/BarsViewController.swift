@@ -17,6 +17,7 @@ import GoogleMaps
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
+    func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton)
     func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
 }
 
@@ -53,7 +54,12 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
-    }    
+    }
+    
+    //MARK: My IBActions
+    @IBAction func searchButtonTapped(sender: UIButton) {
+        self.delegate.barsController(controller: self, searchButtonTapped: sender)
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -95,6 +101,7 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: UISearchBarDelegate
 extension BarsViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
@@ -177,8 +184,12 @@ extension BarsViewController {
 
                 var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
+                    for responseDict in responseArray {
+                        var object = responseDict
+                        object["mapping_type"] = ExploreMappingType.bars.rawValue
+                        let importedObject = try! transaction.importObject(Into<Bar>(), source: object)
+                        importedObjects.append(importedObject!)
+                    }
                 })
                 
                 var resultBars: [Bar] = []

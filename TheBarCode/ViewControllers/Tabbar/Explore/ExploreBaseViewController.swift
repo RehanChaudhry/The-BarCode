@@ -134,7 +134,7 @@ class ExploreBaseViewController: UIViewController {
         self.mapView.isMyLocationEnabled = true
     }
     
-    func refreshMap(){
+    func refreshMap() {
         let bars = self.isSearching ? self.filteredBars : self.bars
         self.setUpBarMarkers(bars: bars)
     }

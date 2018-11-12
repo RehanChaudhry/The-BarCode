@@ -286,6 +286,12 @@ class ExploreViewController: UIViewController {
         self.present(inviteNavigation, animated: true, completion: nil)
     }
     
+    func moveToSearch() {
+        let searchNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
+        searchNavigationController.modalTransitionStyle = .crossDissolve
+        self.present(searchNavigationController, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
@@ -392,6 +398,10 @@ extension ExploreViewController: BarsViewControllerDelegate {
     func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView) {
         self.refreshSnackBar()
     }
+    
+    func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton) {
+        self.moveToSearch()
+    }
 }
 
 //MARK: BarsWithDealsViewControllerDelegate
@@ -403,6 +413,10 @@ extension ExploreViewController: BarsWithDealsViewControllerDelegate {
     func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView) {
         self.refreshSnackBar()
     }
+    
+    func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton) {
+        self.moveToSearch()
+    }
 }
 
 //MARK: BarsWithLiveOffersViewControllerDelegate
@@ -413,6 +427,10 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
     
     func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView) {
         self.refreshSnackBar()
+    }
+    
+    func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton) {
+        self.moveToSearch()
     }
 }
 

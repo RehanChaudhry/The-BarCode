@@ -16,6 +16,7 @@ import GoogleMaps
 protocol BarsWithDealsViewControllerDelegate: class {
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar)
     func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView)
+    func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton)
 }
 
 class BarsWithDealsViewController: ExploreBaseViewController {
@@ -49,6 +50,11 @@ class BarsWithDealsViewController: ExploreBaseViewController {
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
+    }
+    
+    //MARK: My IBActions
+    @IBAction func searchButtonTapped(sender: UIButton) {
+        self.delegate.barsWithDealsController(controller: self, searchButtonTapped: sender)
     }
 
 }
@@ -171,8 +177,12 @@ extension BarsWithDealsViewController {
                 
                 var importedObjects: [Bar] = []
                 try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
+                    for responseDict in responseArray {
+                        var object = responseDict
+                        object["mapping_type"] = ExploreMappingType.deals.rawValue
+                        let importedObject = try! transaction.importObject(Into<Bar>(), source: object)
+                        importedObjects.append(importedObject!)
+                    }
                 })
                 
                 var resultBars: [Bar] = []
