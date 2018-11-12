@@ -29,7 +29,12 @@ class ShareOfferCell: UITableViewCell, NibReusable {
         super.awakeFromNib()
         // Initialization code
         
+        self.contentView.backgroundColor = UIColor.clear
         self.backgroundColor = UIColor.clear
+        
+        self.coverImageView.layer.cornerRadius = 8.0
+        
+        self.selectionStyle = .none
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

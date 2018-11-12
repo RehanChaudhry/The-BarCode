@@ -314,18 +314,14 @@ extension BarDetailViewController {
                 return
             }
             
-            if let responseObj = response as? [String : Any] {
-                if  let _ = responseObj["data"] as? [String : Any] {
-                    
-                    
-                } else {
-                    let genericError = APIHelper.shared.getGenericError()
-                    debugPrint("genericerror while view api : \(genericError.localizedDescription)")
-                }
+            let responseDic = response as! [String : Any]
+            if (responseDic["response"] as? [String : Any]) != nil {
+
+                debugPrint("view has been updated successfully")
+            
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericerror while view api : \(genericError.localizedDescription)")
-
             }
         }
     }
