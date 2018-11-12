@@ -3814,7 +3814,7 @@ Cg
                                 <rect key="frame" x="16" y="221" width="15" height="20"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wYj-qN-SqY">
-                                <rect key="frame" x="34" y="218" width="210" height="27"/>
+                                <rect key="frame" x="34" y="217.5" width="210" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="210" id="VMJ-5G-Ahw"/>
                                 </constraints>
@@ -4996,7 +4996,7 @@ Cg
                         <viewLayoutGuide key="safeArea" id="TbP-mA-aU3"/>
                     </view>
                     <navigationItem key="navigationItem" title="Shared Offers" id="kCx-nI-iGX">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="B0Z-2r-5uY">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="B0Z-2r-5uY">
                             <connections>
                                 <action selector="cancelBarButtonTappedWithSender:" destination="oTR-B3-B1I" id="kaU-XF-0PI"/>
                             </connections>
