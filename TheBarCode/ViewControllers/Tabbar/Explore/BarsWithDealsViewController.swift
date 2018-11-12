@@ -17,10 +17,13 @@ protocol BarsWithDealsViewControllerDelegate: class {
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar)
     func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView)
     func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton)
+    func barsWithDealsController(controller: BarsWithDealsViewController, preferncesButtonTapped sender: UIButton)
 }
 
 class BarsWithDealsViewController: ExploreBaseViewController {
 
+    @IBOutlet var preferencesButton: UIButton!
+    
     weak var delegate: BarsWithDealsViewControllerDelegate!
     
     var isClearingSearch: Bool = false
@@ -29,6 +32,9 @@ class BarsWithDealsViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.preferencesButton.backgroundColor = self.tempView.backgroundColor
+        self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.searchBar.delegate = self
                 
@@ -51,12 +57,15 @@ class BarsWithDealsViewController: ExploreBaseViewController {
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
     }
-    
+
     //MARK: My IBActions
     @IBAction func searchButtonTapped(sender: UIButton) {
         self.delegate.barsWithDealsController(controller: self, searchButtonTapped: sender)
     }
 
+    @IBAction func prefencesButtonTapped(sender: UIButton) {
+        self.delegate.barsWithDealsController(controller: self, preferncesButtonTapped: sender)
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate

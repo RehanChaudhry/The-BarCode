@@ -154,7 +154,10 @@ extension TabBarController {
                 let _ = fiveADayController.view
             }
             
-            fiveADayController.dismiss(animated: false, completion: nil)
+            if fiveADayController.topMostViewController() != fiveADayController {
+                fiveADayController.dismiss(animated: false, completion: nil)
+            }
+
             self.presentedViewController?.dismiss(animated: false, completion: nil)
             
             self.selectedIndex = 1

@@ -126,7 +126,7 @@ class ExploreBaseViewController: UIViewController {
         
     }
     
-    func setupMapCamera(cordinate: CLLocationCoordinate2D){
+    func setupMapCamera(cordinate: CLLocationCoordinate2D) {
         let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
         self.mapView.animate(to: position)
         self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false

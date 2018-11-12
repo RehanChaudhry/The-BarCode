@@ -151,6 +151,7 @@
 		0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */; };
 		0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */; };
 		0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81FB32174A9DD00FDB92D /* MyLocationManager.swift */; };
+		0CD74A6D21996518007DC6E1 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD74A6C21996518007DC6E1 /* CategoryFilterViewController.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -366,6 +367,7 @@
 		0CC81FAE2170881800FDB92D /* EmailVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewController.swift; sourceTree = "<group>"; };
 		0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemDealViewController.swift; sourceTree = "<group>"; };
 		0CC81FB32174A9DD00FDB92D /* MyLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLocationManager.swift; sourceTree = "<group>"; };
+		0CD74A6C21996518007DC6E1 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				0C23A88B2146583200DFB281 /* MoreViewController.swift */,
 				0C8E9A90214A87E600224720 /* AccountSettingsViewController.swift */,
 				0C955DDB2149264100F9385B /* CategoriesViewController.swift */,
+				0CD74A6C21996518007DC6E1 /* CategoryFilterViewController.swift */,
 				0C8E9A92214A88B100224720 /* NotificationSettingsViewController.swift */,
 				0C8E9A96214A8A8800224720 /* ReloadViewController.swift */,
 				0C8E9A98214A908800224720 /* FaqsViewController.swift */,
@@ -1621,6 +1624,7 @@
 				0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */,
 				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
 				0C955DBD21478B7500F9385B /* GradientView.swift in Sources */,
+				0CD74A6D21996518007DC6E1 /* CategoryFilterViewController.swift in Sources */,
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,
 				83A4B6352175ADC600730056 /* Offer.swift in Sources */,
 				0C8BDCD32150D0BE00D5117B /* DealTableViewCell.swift in Sources */,

@@ -17,10 +17,13 @@ protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
     func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView)
     func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton)
+    func liveOffersController(controller: BarsWithLiveOffersViewController, preferencesButtonTapped sender: UIButton)
 }
 
 class BarsWithLiveOffersViewController: ExploreBaseViewController {
 
+    @IBOutlet var preferencesButton: UIButton!
+    
     weak var delegate: BarsWithLiveOffersViewControllerDelegate!
     var isClearingSearch: Bool = false
 
@@ -28,6 +31,9 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.preferencesButton.backgroundColor = self.tempView.backgroundColor
+        self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
@@ -52,6 +58,10 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
     //MARK: My IBActions
     @IBAction func searchButtonTapped(sender: UIButton) {
         self.delegate.liveOffersController(controller: self, searchButtonTapped: sender)
+    }
+    
+    @IBAction func prefencesButtonTapped(sender: UIButton) {
+        self.delegate.liveOffersController(controller: self, preferencesButtonTapped: sender)
     }
 }
 

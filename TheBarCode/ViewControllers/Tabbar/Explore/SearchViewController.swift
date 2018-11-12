@@ -29,6 +29,8 @@ class SearchViewController: UIViewController {
     @IBOutlet var listButton: UIButton!
     @IBOutlet var preferencesButton: UIButton!
     
+    @IBOutlet var searchbarRight: NSLayoutConstraint!
+    
     @IBOutlet var tempView: UIView!
     
     var bars: [Bar] = []
@@ -37,13 +39,27 @@ class SearchViewController: UIViewController {
     
     var displayType: DisplayType = .list
     
+    var searchType: ExploreType = .bars
+    
+    var selectedPreferences: [Category] = []
+    
+    var shouldHidePreferenceButton: Bool = false
+    
+    let locationManager = MyLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        if self.shouldHidePreferenceButton {
+            self.preferencesButton.isHidden = true
+            self.searchbarRight.constant = -44.0
+        }
+        
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.appGrayColor()
+        textFieldInsideSearchBar?.keyboardAppearance = .dark
         
         self.resetMapListSegment()
         self.listButton.backgroundColor = UIColor.black
@@ -53,6 +69,8 @@ class SearchViewController: UIViewController {
         self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.setUpStatefulTableView()
+        
+        self.setUserLocation()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -62,7 +80,15 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.searchBar.becomeFirstResponder()
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.setUpPreferencesButton()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     //MARK: My Methods
@@ -70,6 +96,13 @@ class SearchViewController: UIViewController {
     func resetCurrentData() {
         self.bars.removeAll()
         self.statefulTableView.reloadData()
+    }
+    
+    func reset() {
+        self.dataRequest?.cancel()
+        self.resetCurrentData()
+        
+        self.statefulTableView.triggerInitialLoad()
     }
     
     func setUpMarkers() {
@@ -122,6 +155,56 @@ class SearchViewController: UIViewController {
         self.listButton.tintColor = UIColor.appGrayColor()
     }
     
+    func setUpPreferencesButton() {
+        if self.selectedPreferences.count > 0 {
+            self.preferencesButton.backgroundColor = UIColor.black
+            self.preferencesButton.tintColor = UIColor.appBlueColor()
+        } else {
+            self.preferencesButton.backgroundColor = self.tempView.backgroundColor
+            self.preferencesButton.tintColor = UIColor.appGrayColor()
+        }
+        
+    }
+    
+    func setupMapCamera(cordinate: CLLocationCoordinate2D) {
+        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
+        self.mapView.animate(to: position)
+        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+        self.mapView.settings.myLocationButton = true
+        self.mapView.isMyLocationEnabled = true
+    }
+    
+    func setUserLocation() {
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        var canContinue: Bool? = nil
+        if authorizationStatus == .authorizedAlways {
+            canContinue = true
+        } else if authorizationStatus == .authorizedWhenInUse {
+            canContinue = false
+        }
+        
+        guard let requestAlwaysAccess = canContinue else {
+            debugPrint("Location permission not authorized")
+            self.setupMapCamera(cordinate: defaultUKLocation)
+            return
+        }
+        
+        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting location: \(error!.localizedDescription)")
+                self.setupMapCamera(cordinate: defaultUKLocation)
+                return
+            }
+            
+            if let location = location {
+                self.setupMapCamera(cordinate: location.coordinate)
+            }
+        }
+    }
+    
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIButton) {
@@ -151,7 +234,10 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func preferencesButtonTapped(sender: UIButton) {
-        
+        let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoryFilterViewController") as! CategoryFilterViewController
+        categoriesController.preSelectedCategories = self.selectedPreferences
+        categoriesController.delegate = self
+        self.navigationController?.pushViewController(categoriesController, animated: true)
     }
 }
 
@@ -160,6 +246,7 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
     
@@ -177,14 +264,35 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = self.bars[indexPath.row]
+        barDetailController.delegate = self
         
+        switch self.searchType {
+        case .liveOffers:
+            barDetailController.preSelectedTabIndex = 2
+        case .deals:
+            barDetailController.preSelectedTabIndex = 1
+        default:
+            barDetailController.preSelectedTabIndex = 0
+        }
+        
+        self.present(barDetailNav, animated: true, completion: nil)
     }
 }
 
+//MARK: UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         self.statefulTableView.triggerInitialLoad()
+    }
+}
+
+//MARK: BarDetailViewControllerDelegate
+extension SearchViewController: BarDetailViewControllerDelegate {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
     }
 }
 
@@ -206,9 +314,7 @@ extension SearchViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         
-        self.bars.removeAll()
-        self.statefulTableView.reloadData()
-        
+        self.resetCurrentData()
         self.getBars(isRefreshing: false) {  [unowned self] (error) in
             handler(self.bars.count == 0, error)
         }
@@ -287,9 +393,14 @@ extension SearchViewController {
 
         self.dataRequest?.cancel()
         
-        var params:[String : Any] =  ["type": ExploreType.bars.rawValue,
+        var params:[String : Any] =  ["type": self.searchType.rawValue,
                                       "pagination" : false,
                                       "keyword" : self.searchBar.text!]
+        
+        if self.selectedPreferences.count > 0 {
+            let ids = self.selectedPreferences.map({$0.id.value})
+            params["interest_ids"] = ids
+        }
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
@@ -366,5 +477,13 @@ extension SearchViewController {
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
             }
         }
+    }
+}
+
+//MARK: CategoriesViewControllerDelegate
+extension SearchViewController: CategoryFilterViewControllerDelegate {
+    func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category]) {
+        self.selectedPreferences = selectedPreferences
+        self.reset()
     }
 }

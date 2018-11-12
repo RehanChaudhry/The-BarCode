@@ -30,6 +30,7 @@ class BarsViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
     }
@@ -143,7 +144,6 @@ extension BarsViewController {
         
         var params:[String : Any] =  ["type": ExploreType.bars.rawValue]
 
-        
         if self.isSearching {
             params["pagination"] = false
             params["keyword"] = self.searchText
