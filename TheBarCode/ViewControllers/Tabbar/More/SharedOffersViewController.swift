@@ -12,6 +12,8 @@ import StatefulTableView
 import ObjectMapper
 import CoreStore
 
+
+
 class SharedOffersViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
@@ -57,14 +59,34 @@ class SharedOffersViewController: UIViewController {
         self.statefulTableView.canLoadMore = false
         self.statefulTableView.canPullToRefresh = false
         self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-        self.statefulTableView.innerTable.estimatedRowHeight = 250.0
+        self.statefulTableView.innerTable.estimatedRowHeight = 310.0
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
         
-        self.statefulTableView.innerTable.register(cellType: LiveOfferTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: ShareOfferCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
+    }
+    
+    func showDirection(bar: Bar){
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func showBarDetail(bar: Bar){
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = bar
+        barDetailController.delegate = self
+        self.present(barDetailNav, animated: true, completion: nil)
     }
     
     //MARK: My IBActions
@@ -81,40 +103,25 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
+        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ShareOfferCell.self)
+        cell.delegate = self
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
-            cell.setUpDetailForSharedLiveOffer(offer: liveOffer)
+            cell.setUpCell(offer: liveOffer)
         } else if let deal = self.offers[indexPath.row] as? Deal {
-            cell.setUpDetailForSharedDeal(offer: deal)
+            cell.setUpCell(offer: deal)
         }
-
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let offerCell = cell as! LiveOfferTableViewCell
-        if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
-            offerCell.startTimer(deal: liveOffer)
-        } else if let deal = self.offers[indexPath.row] as? Deal {
-            offerCell.setUpDetailForSharedDeal(offer: deal)
-        }
         
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let offerCell = cell as! LiveOfferTableViewCell
-        if let _ = self.offers[indexPath.row] as? LiveOffer {
-            offerCell.stopTimer()
-        } else if let deal = self.offers[indexPath.row] as? Deal {
-            offerCell.setUpDetailForSharedDeal(offer: deal)
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
@@ -279,5 +286,40 @@ extension SharedOffersViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+extension SharedOffersViewController: ShareOfferCellDelegate {
+    func shareOfferCell(cell: ShareOfferCell, viewBarDetailButtonTapped sender: UIButton) {
+        
+        if let indexPath =  self.statefulTableView.innerTable.indexPath(for: cell) {
+            if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
+                self.showBarDetail(bar: liveOffer.establishment.value!)
+            } else if let deal = self.offers[indexPath.row] as? Deal {
+                self.showBarDetail(bar: deal.establishment.value!)
+            }
+        } else {
+            debugPrint("indexpath for cell not found")
+        }
+        
+    }
+    
+    func shareOfferCell(cell: ShareOfferCell, viewDirectionButtonTapped sender: UIButton) {
+      
+        if let indexPath =  self.statefulTableView.innerTable.indexPath(for: cell) {
+            if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
+                self.showDirection(bar: liveOffer.establishment.value!)
+            } else if let deal = self.offers[indexPath.row] as? Deal {
+                self.showDirection(bar: deal.establishment.value!)
+            }
+            
+        } else {
+            debugPrint("indexpath for cell not found")
+        }
+    }
+}
+
+extension SharedOffersViewController: BarDetailViewControllerDelegate {
+    func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
     }
 }

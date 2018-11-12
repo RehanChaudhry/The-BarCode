@@ -6,44 +6,128 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
-        </array>
-        <array key="Lato-Semibold.ttf">
-            <string>Lato-Semibold</string>
         </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="pXa-rn-Uvh" detailTextLabel="siC-il-8EJ" style="IBUITableViewCellStyleSubtitle" id="KGk-i7-Jjw" customClass="ShareOfferCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ShareOfferCell" id="isD-xT-zLc" customClass="ShareOfferCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="isD-xT-zLc" id="ckS-yy-F7d">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="309.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pXa-rn-Uvh">
-                        <rect key="frame" x="16" y="5" width="34" height="20.5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="17"/>
-                        <nil key="textColor"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_1" translatesAutoresizingMaskIntoConstraints="NO" id="yI9-Vc-ZLs" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="16" y="24" width="288" height="162"/>
+                        <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="162" id="9DY-Lm-dNN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4w-7T-9wR" userLabel="Offer Title Name">
+                        <rect key="frame" x="16" y="206" width="288" height="19.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="siC-il-8EJ">
-                        <rect key="frame" x="16" y="25.5" width="41" height="14.5"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-location" translatesAutoresizingMaskIntoConstraints="NO" id="7mW-aB-Seg">
+                        <rect key="frame" x="16" y="233.5" width="12" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="0QY-Nj-sGK"/>
+                            <constraint firstAttribute="width" constant="12" id="YlA-xM-6Yp"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhQ-0g-hgX">
+                        <rect key="frame" x="36" y="230.5" width="180" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="180" id="D8Z-Sf-K5d"/>
+                            <constraint firstAttribute="height" constant="20" id="sFZ-Y6-cuj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <state key="normal" title="Empirical Brew Pub">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="barNameButtonTapped:" destination="isD-xT-zLc" eventType="touchUpInside" id="67U-CE-rXM"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VQ7-nE-1Hi">
+                        <rect key="frame" x="224" y="227" width="80" height="27"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <state key="normal" title="4 miles away">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="distanceButtonTapped:" destination="isD-xT-zLc" eventType="touchUpInside" id="xgs-vL-EFf"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="eCC-Bk-SFm">
+                        <rect key="frame" x="16" y="255.5" width="10" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="6uj-7N-I8S"/>
+                            <constraint firstAttribute="height" constant="15" id="mBA-Be-JhS"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sy-jF-ZXA" userLabel="Offer Type Name">
+                        <rect key="frame" x="34" y="254.5" width="119" height="17"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Shared by Aasna" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qi6-Lv-c7M">
+                        <rect key="frame" x="16" y="278.5" width="288" height="17"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="7sy-jF-ZXA" firstAttribute="centerY" secondItem="eCC-Bk-SFm" secondAttribute="centerY" id="26v-De-abL"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Qi6-Lv-c7M" secondAttribute="bottom" constant="12" id="7tS-Rp-Mab"/>
+                    <constraint firstItem="yI9-Vc-ZLs" firstAttribute="top" secondItem="ckS-yy-F7d" secondAttribute="top" constant="24" id="Fbz-2o-g6W"/>
+                    <constraint firstItem="eCC-Bk-SFm" firstAttribute="leading" secondItem="ckS-yy-F7d" secondAttribute="leading" constant="16" id="GDT-Ux-g1b"/>
+                    <constraint firstAttribute="trailing" secondItem="VQ7-nE-1Hi" secondAttribute="trailing" constant="16" id="Kwb-Tm-h4t"/>
+                    <constraint firstItem="7mW-aB-Seg" firstAttribute="top" secondItem="z4w-7T-9wR" secondAttribute="bottom" constant="8" id="Kxj-cP-6oE"/>
+                    <constraint firstItem="eCC-Bk-SFm" firstAttribute="top" secondItem="7mW-aB-Seg" secondAttribute="bottom" constant="8" id="McE-bx-VWB"/>
+                    <constraint firstItem="VQ7-nE-1Hi" firstAttribute="centerY" secondItem="lhQ-0g-hgX" secondAttribute="centerY" id="NWC-ej-Y1i"/>
+                    <constraint firstItem="z4w-7T-9wR" firstAttribute="leading" secondItem="ckS-yy-F7d" secondAttribute="leading" constant="16" id="Np7-Jv-VI6"/>
+                    <constraint firstItem="7mW-aB-Seg" firstAttribute="leading" secondItem="ckS-yy-F7d" secondAttribute="leading" constant="16" id="Obd-om-y6Z"/>
+                    <constraint firstAttribute="trailing" secondItem="Qi6-Lv-c7M" secondAttribute="trailing" constant="16" id="Uur-ee-fEu"/>
+                    <constraint firstItem="yI9-Vc-ZLs" firstAttribute="leading" secondItem="ckS-yy-F7d" secondAttribute="leading" constant="16" id="cJk-lE-miz"/>
+                    <constraint firstAttribute="trailing" secondItem="yI9-Vc-ZLs" secondAttribute="trailing" constant="16" id="dXO-op-HKb"/>
+                    <constraint firstItem="Qi6-Lv-c7M" firstAttribute="leading" secondItem="ckS-yy-F7d" secondAttribute="leading" constant="16" id="fVE-8r-ZCv"/>
+                    <constraint firstItem="lhQ-0g-hgX" firstAttribute="leading" secondItem="7mW-aB-Seg" secondAttribute="trailing" constant="8" id="h4g-xT-lqD"/>
+                    <constraint firstItem="Qi6-Lv-c7M" firstAttribute="top" secondItem="eCC-Bk-SFm" secondAttribute="bottom" constant="8" id="hQF-m2-mFp"/>
+                    <constraint firstItem="lhQ-0g-hgX" firstAttribute="centerY" secondItem="7mW-aB-Seg" secondAttribute="centerY" id="nry-M8-u2F"/>
+                    <constraint firstItem="z4w-7T-9wR" firstAttribute="top" secondItem="yI9-Vc-ZLs" secondAttribute="bottom" constant="20" id="ojb-fs-Qvo"/>
+                    <constraint firstItem="7sy-jF-ZXA" firstAttribute="leading" secondItem="eCC-Bk-SFm" secondAttribute="trailing" constant="8" id="vnv-YZ-CO4"/>
+                    <constraint firstAttribute="trailing" secondItem="z4w-7T-9wR" secondAttribute="trailing" constant="16" id="vqV-iS-gQG"/>
+                    <constraint firstItem="VQ7-nE-1Hi" firstAttribute="leading" secondItem="lhQ-0g-hgX" secondAttribute="trailing" constant="8" id="vqz-Tv-ttk"/>
+                </constraints>
             </tableViewCellContentView>
-            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="barTitleButton" destination="lhQ-0g-hgX" id="8tm-Ms-smi"/>
+                <outlet property="coverImageView" destination="yI9-Vc-ZLs" id="7u1-8b-mQx"/>
+                <outlet property="distanceButton" destination="VQ7-nE-1Hi" id="IUq-3J-TEp"/>
+                <outlet property="offerTitleLabel" destination="z4w-7T-9wR" id="ukK-0F-48K"/>
+                <outlet property="offerTypeLabel" destination="7sy-jF-ZXA" id="uJe-Cp-6CS"/>
+                <outlet property="sharedByLabel" destination="Qi6-Lv-c7M" id="3iz-F1-cD4"/>
+            </connections>
+            <point key="canvasLocation" x="140.80000000000001" y="7.1964017991004505"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bar-location" width="28" height="32"/>
+        <image name="cover_1" width="1029" height="486"/>
+        <image name="icon_map" width="15" height="20"/>
+    </resources>
 </document>
