@@ -65,31 +65,9 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.shareButton.isHidden = true
     }
     
-    func setUpDetailForSharedDeal(offer: Deal) {
-        
-        let url = offer.image.value
-        self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        
-        self.titleLabel.text = offer.title.value
-        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
-        self.detailLabel.attributedText = self.attributedSharedBy(deal: offer)
-        
-        self.locationIconImageView.isHidden = false
-        self.distanceButton.isHidden = false
-        self.detailLabel.isHidden = false
-        self.validityLabel.isHidden = true
-        
-        self.shareButton.isHidden = true
-    }
-    
-    func setUpDetailForSharedLiveOffer(offer: LiveOffer) {
-        self.setUpDetailCell(offer: offer, hideShare: true)
-        self.detailLabel.attributedText = self.attributedSharedBy(deal: offer)
-    }
-    
     func setUpDetailCell(offer: LiveOffer, hideShare: Bool = false) {
         
-        let url = offer.image.value
+        let url = offer.imageUrl.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.titleLabel.text = offer.title.value
         self.locationIconImageView.isHidden = true

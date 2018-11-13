@@ -44,13 +44,11 @@ class ExploreBaseTableViewCell: UITableViewCell {
     func setUpCell(explore: Explore) {
         if explore.images.value.count > 0 {
             let url = explore.images.value[0].url.value
-           // coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
-            
             self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
 
         }
         titleLabel.text = explore.title.value
-    self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
+        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         
         locationIconImageView.isHidden = false
     }

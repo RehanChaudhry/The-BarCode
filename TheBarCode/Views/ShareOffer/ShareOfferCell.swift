@@ -48,7 +48,7 @@ class ShareOfferCell: UITableViewCell, NibReusable {
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
         self.offerTypeLabel.text = (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
-        let url = offer.image.value
+        let url = offer.imageUrl.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.sharedByLabel.attributedText =  self.attributedSharedBy(deal: offer)
     }
@@ -58,7 +58,7 @@ class ShareOfferCell: UITableViewCell, NibReusable {
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
         self.offerTypeLabel.text = (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased()
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
-        let url = offer.image.value
+        let url = offer.imageUrl.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.sharedByLabel.attributedText =  self.attributedSharedBy(deal: offer)
         
