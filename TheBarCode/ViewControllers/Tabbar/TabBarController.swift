@@ -133,8 +133,13 @@ class TabBarController: UITabBarController {
                 return
             }
             
-            self.topMostViewController().showAlertController(title: "Shared Offer", msg: "Shared offer has been accepted successfully")
+            let alertController = UIAlertController(title: "Shared Offer", message: "Shared offer has been accepted successfully", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
+                self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
+            }))
             
+            self.topMostViewController().present(alertController, animated: true, completion: nil)
         }
         
     }
