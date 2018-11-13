@@ -34,33 +34,37 @@
                             <constraint firstAttribute="width" secondItem="axE-e9-aog" secondAttribute="height" multiplier="16:9" id="mUv-2y-cFx"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-Lx-xS8">
-                        <rect key="frame" x="16" y="206" width="288" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-Lx-xS8">
+                        <rect key="frame" x="16" y="206" width="288" height="14"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="hyz-OS-uPR">
-                        <rect key="frame" x="16" y="234" width="10" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="hyz-OS-uPR">
+                        <rect key="frame" x="16" y="228" width="10" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="HDK-Mm-MHP"/>
                             <constraint firstAttribute="width" constant="10" id="TMl-4C-xK4"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="4 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZw-wl-jUF">
-                        <rect key="frame" x="34" y="234" width="68" height="15"/>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfi-6e-e5W">
+                        <rect key="frame" x="34" y="222" width="71" height="27"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="4 miles away ">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="distanceButtonTapped:" destination="CsO-OR-xRH" eventType="touchUpInside" id="rgW-y5-gNM"/>
+                        </connections>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Tc-Mw-7nw">
-                        <rect key="frame" x="110" y="234" width="194" height="15"/>
+                        <rect key="frame" x="113" y="228" width="191" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lm4-Vj-yFJ">
-                        <rect key="frame" x="16" y="234" width="288" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lm4-Vj-yFJ">
+                        <rect key="frame" x="16" y="228" width="288" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -68,21 +72,21 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="DSu-Lx-xS8" secondAttribute="trailing" constant="16" id="88X-PG-LvH"/>
-                    <constraint firstItem="tZw-wl-jUF" firstAttribute="leading" secondItem="hyz-OS-uPR" secondAttribute="trailing" constant="8" id="HZo-mw-HxN"/>
+                    <constraint firstAttribute="bottom" secondItem="xfi-6e-e5W" secondAttribute="bottom" constant="0.5" id="DQs-vx-iND"/>
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="IMb-ZQ-2GU"/>
-                    <constraint firstItem="tZw-wl-jUF" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="UI3-WP-1Ov"/>
+                    <constraint firstItem="6Tc-Mw-7nw" firstAttribute="centerY" secondItem="xfi-6e-e5W" secondAttribute="centerY" id="Nhb-Q4-UFl"/>
                     <constraint firstAttribute="trailing" secondItem="axE-e9-aog" secondAttribute="trailing" constant="16" id="Veh-xX-bDz"/>
                     <constraint firstAttribute="trailing" secondItem="6Tc-Mw-7nw" secondAttribute="trailing" constant="16" id="bZ4-Dv-ZWg"/>
-                    <constraint firstAttribute="bottom" secondItem="tZw-wl-jUF" secondAttribute="bottom" constant="0.5" id="cjc-Je-7OQ"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="fYz-ha-hp7"/>
+                    <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="xfi-6e-e5W" secondAttribute="trailing" constant="8" id="iNX-cp-AXw"/>
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="jFX-Ox-Wuq"/>
                     <constraint firstAttribute="trailing" secondItem="lm4-Vj-yFJ" secondAttribute="trailing" constant="16" id="kE1-8k-IJS"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="mf2-pb-N8b"/>
+                    <constraint firstItem="xfi-6e-e5W" firstAttribute="leading" secondItem="hyz-OS-uPR" secondAttribute="trailing" constant="8" id="mpd-PL-pzJ"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="q6l-4F-Tw0"/>
                     <constraint firstItem="axE-e9-aog" firstAttribute="top" secondItem="6Bg-MI-Mip" secondAttribute="top" constant="24" id="q71-dA-YSN"/>
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="qJn-4H-XxW"/>
                     <constraint firstItem="axE-e9-aog" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="sah-QD-eSY"/>
-                    <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="tZw-wl-jUF" secondAttribute="trailing" constant="8" id="u0u-ND-9ws"/>
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="top" secondItem="axE-e9-aog" secondAttribute="bottom" constant="20" id="ulv-Cw-DjB"/>
                 </constraints>
             </tableViewCellContentView>
@@ -90,7 +94,7 @@
             <connections>
                 <outlet property="coverImageView" destination="axE-e9-aog" id="SyT-eh-oLJ"/>
                 <outlet property="detailLabel" destination="6Tc-Mw-7nw" id="gN4-Yg-LDa"/>
-                <outlet property="distanceLabel" destination="tZw-wl-jUF" id="1wO-PA-H0d"/>
+                <outlet property="distanceButton" destination="xfi-6e-e5W" id="0eL-JO-uyh"/>
                 <outlet property="locationIconImageView" destination="hyz-OS-uPR" id="WrL-bg-ZeL"/>
                 <outlet property="titleLabel" destination="DSu-Lx-xS8" id="2wR-Su-Ctz"/>
                 <outlet property="validityLabel" destination="lm4-Vj-yFJ" id="PeE-UU-IVd"/>

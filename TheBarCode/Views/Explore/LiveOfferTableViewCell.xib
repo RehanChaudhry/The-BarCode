@@ -34,7 +34,7 @@
                             <constraint firstAttribute="width" secondItem="wx2-1M-QH6" secondAttribute="height" multiplier="16:9" id="cr2-b1-K25"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djc-IT-5qt">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djc-IT-5qt">
                         <rect key="frame" x="16" y="206" width="244" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
@@ -57,26 +57,30 @@
                             <action selector="shareOfferButtonTappedWithSender:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="Fc6-hF-4qE"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="e7T-kn-Jzp">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="e7T-kn-Jzp">
                         <rect key="frame" x="16" y="234" width="10" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="f12-Iu-a2Z"/>
                             <constraint firstAttribute="height" constant="15" id="vaC-ba-8jF"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="4 miles away" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jA-pV-ECg">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atE-kR-6C3">
                         <rect key="frame" x="34" y="234" width="68" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="4 miles away">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="distanceButtonTapped:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="ytN-gb-cD3"/>
+                        </connections>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9e-ds-BcJ">
                         <rect key="frame" x="110" y="234" width="194" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-eR-6bt">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-eR-6bt">
                         <rect key="frame" x="16" y="234" width="288" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,33 +89,34 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="03Q-CP-Jb5"/>
+                    <constraint firstItem="atE-kR-6C3" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="1at-cc-37Q"/>
                     <constraint firstItem="IDH-uh-GDT" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="4" id="2Z0-e0-crI"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="5sD-Sd-NXb"/>
-                    <constraint firstAttribute="bottom" secondItem="2jA-pV-ECg" secondAttribute="bottom" constant="0.5" id="92g-9N-mL8"/>
                     <constraint firstItem="SAx-gl-dFM" firstAttribute="centerY" secondItem="IDH-uh-GDT" secondAttribute="centerY" id="A1e-Jo-OVO"/>
                     <constraint firstItem="IDH-uh-GDT" firstAttribute="leading" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="8" id="BhS-lD-vX3"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Cgb-jY-vvM"/>
-                    <constraint firstItem="B9e-ds-BcJ" firstAttribute="leading" secondItem="2jA-pV-ECg" secondAttribute="trailing" constant="8" id="EBz-AP-Fp6"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="Fmn-z5-jYo"/>
                     <constraint firstAttribute="trailing" secondItem="EFD-eR-6bt" secondAttribute="trailing" constant="16" id="FrL-Y8-IMa"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="IO0-Ym-wRy"/>
                     <constraint firstItem="SAx-gl-dFM" firstAttribute="centerX" secondItem="IDH-uh-GDT" secondAttribute="centerX" id="LGw-EZ-FPs"/>
+                    <constraint firstItem="B9e-ds-BcJ" firstAttribute="leading" secondItem="atE-kR-6C3" secondAttribute="trailing" constant="8" id="O1Q-ZI-AUy"/>
                     <constraint firstAttribute="trailing" secondItem="wx2-1M-QH6" secondAttribute="trailing" constant="16" id="QNI-gD-B0l"/>
+                    <constraint firstItem="atE-kR-6C3" firstAttribute="leading" secondItem="e7T-kn-Jzp" secondAttribute="trailing" constant="8" id="R5k-o6-hmE"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Wee-Ws-l11"/>
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="top" secondItem="BaG-X9-k2d" secondAttribute="top" constant="24" id="Y0j-fg-8Ws"/>
-                    <constraint firstItem="2jA-pV-ECg" firstAttribute="leading" secondItem="e7T-kn-Jzp" secondAttribute="trailing" constant="8" id="ZDL-yx-gXZ"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="20" id="a2m-6A-czE"/>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="a9h-6m-psl"/>
-                    <constraint firstItem="2jA-pV-ECg" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="gC7-3f-eHe"/>
                     <constraint firstAttribute="trailing" secondItem="B9e-ds-BcJ" secondAttribute="trailing" constant="16" id="jSV-uY-zYc"/>
+                    <constraint firstItem="atE-kR-6C3" firstAttribute="centerY" secondItem="e7T-kn-Jzp" secondAttribute="centerY" id="kK9-cb-csA"/>
                     <constraint firstAttribute="trailing" secondItem="IDH-uh-GDT" secondAttribute="trailing" constant="8" id="q6a-uT-UAv"/>
+                    <constraint firstAttribute="bottom" secondItem="atE-kR-6C3" secondAttribute="bottom" constant="0.5" id="rYX-g1-vdN"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="hee-Tq-Mfk"/>
             <connections>
                 <outlet property="coverImageView" destination="wx2-1M-QH6" id="QbB-hK-WF6"/>
                 <outlet property="detailLabel" destination="B9e-ds-BcJ" id="mBe-C2-MA3"/>
-                <outlet property="distanceLabel" destination="2jA-pV-ECg" id="afT-jw-dGT"/>
+                <outlet property="distanceButton" destination="atE-kR-6C3" id="ra7-wb-Fxe"/>
                 <outlet property="locationIconImageView" destination="e7T-kn-Jzp" id="Fag-89-bs9"/>
                 <outlet property="shareButton" destination="IDH-uh-GDT" id="d46-7G-8YW"/>
                 <outlet property="sharingLoader" destination="SAx-gl-dFM" id="ZZn-Mq-KE9"/>

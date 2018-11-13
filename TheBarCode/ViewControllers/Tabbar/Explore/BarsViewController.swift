@@ -357,9 +357,23 @@ extension BarsViewController: StatefulTableDelegate {
 
 extension BarsViewController: BarTableViewCellDelegare {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
-        let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
-        let bar = self.isSearching ? self.filteredBars[indexPath!.row] : self.bars[indexPath!.row]
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+
+        let bar = self.isSearching ? self.filteredBars[indexPath.row] : self.bars[indexPath.row]
         markFavourite(bar: bar, cell: cell)
+    }
+    
+    func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        let bar = self.bars[indexPath.row]
+        self.showDirection(bar: bar)
     }
 }
 

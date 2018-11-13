@@ -79,6 +79,18 @@ class FavouritesViewController: UIViewController {
         barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }
+    
+    func showDirection(bar: Bar) {
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -315,6 +327,12 @@ extension FavouritesViewController: BarTableViewCellDelegare {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
         let bar = self.bars[indexPath!.row]
         markFavourite(bar: bar, cell: cell)
+    }
+    
+    func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton) {
+        let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
+        let bar = self.bars[indexPath!.row]
+        self.showDirection(bar: bar)
     }
 }
 

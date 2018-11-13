@@ -11,6 +11,7 @@ import Reusable
 
 protocol LiveOfferTableViewCellDelegate: class {
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton)
+    func liveOfferCell(cell: LiveOfferTableViewCell, distanceButtonTapped sender: UIButton)
 }
 
 class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
@@ -54,10 +55,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         }
         
         self.titleLabel.text = explore.title.value
-        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
+        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         self.detailLabel.text = "\(explore.liveOffers.value) live offer"
         self.locationIconImageView.isHidden = false
-        self.distanceLabel.isHidden = false
+        self.distanceButton.isHidden = false
         self.detailLabel.isHidden = false
         self.validityLabel.isHidden = true
      
@@ -70,11 +71,11 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
         self.titleLabel.text = offer.title.value
-        self.distanceLabel.text = Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value)
+        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
         self.detailLabel.attributedText = self.attributedSharedBy(deal: offer)
         
         self.locationIconImageView.isHidden = false
-        self.distanceLabel.isHidden = false
+        self.distanceButton.isHidden = false
         self.detailLabel.isHidden = false
         self.validityLabel.isHidden = true
         
@@ -92,7 +93,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.titleLabel.text = offer.title.value
         self.locationIconImageView.isHidden = true
-        self.distanceLabel.isHidden = true
+        self.distanceButton.isHidden = true
         self.detailLabel.isHidden = true
         
         if hideShare {
@@ -206,4 +207,8 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.delegate?.liveOfferCell(cell: self, shareButtonTapped: sender)
     }
     
+    
+    @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        self.delegate?.liveOfferCell(cell: self, distanceButtonTapped: sender)
+    }
 }
