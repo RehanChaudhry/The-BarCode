@@ -238,7 +238,7 @@ class OfferDetailViewController: UIViewController {
     func showDirection(bar: Bar){
         
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let urlString = String(format: "comgooglemaps://?daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
             let url = URL(string: urlString)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         } else {
