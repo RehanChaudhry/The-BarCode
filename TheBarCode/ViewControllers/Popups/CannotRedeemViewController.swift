@@ -113,7 +113,10 @@ class CannotRedeemViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancelButtonTapped(_ sender: Any) {
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true) {
+            self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+        }
         self.dismiss(animated: true, completion: nil)
     }
 }
