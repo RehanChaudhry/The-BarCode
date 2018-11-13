@@ -238,7 +238,7 @@ class AccountSettingsViewController: UIViewController {
         
         if let profileImageUrl = user.profileImage.value {
             let url = URL(string: profileImageUrl)
-            self.profileImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "profile_placeholder"), shouldShowProgress: false)
+            self.profileImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "profile_placeholder"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         } else {
             self.profileImageView.image = UIImage(named: "profile_placeholder")
         }

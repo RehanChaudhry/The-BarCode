@@ -129,9 +129,9 @@ extension Deal: ImportableUniqueObject {
     
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
-        self.id.value = "\(String(describing: source["id"]!))"
-        self.establishmentId.value = "\(String(describing: source["establishment_id"]!))"
-        self.offerTypeId.value = "\(String(describing: source["offer_type_id"]!))"
+        self.id.value = "\(source["id"]!)"
+        self.establishmentId.value = "\(source["establishment_id"]!)"
+        self.offerTypeId.value = "\(source["offer_type_id"]!)"
         self.title.value = source["title"]! as! String
         self.subTitle.value = source["sub_title"]! as! String
         self.image.value = source["image"]! as! String

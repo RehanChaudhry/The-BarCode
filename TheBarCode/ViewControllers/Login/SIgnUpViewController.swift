@@ -450,6 +450,9 @@ extension SIgnUpViewController {
         if let socialAccountId = self.socialAccountId, let accessToken = FBSDKAccessToken.current()?.tokenString {
             params["social_account_id"] = socialAccountId
             params["access_token"] = accessToken
+            
+            let profileImage = "http://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
+            params["profile_image"] = profileImage
         }
         
         self.signUpButton.showLoader()
