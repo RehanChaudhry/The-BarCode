@@ -70,6 +70,8 @@ class SearchViewController: UIViewController {
         
         self.setUpStatefulTableView()
         
+        self.mapView.delegate = self
+        
         self.setUserLocation()
     }
 
@@ -205,7 +207,23 @@ class SearchViewController: UIViewController {
         }
     }
     
-    
+    func moveToBarDetail(bar: Bar) {
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.selectedBar = bar
+        barDetailController.delegate = self
+        
+        switch self.searchType {
+        case .liveOffers:
+            barDetailController.preSelectedTabIndex = 2
+        case .deals:
+            barDetailController.preSelectedTabIndex = 1
+        default:
+            barDetailController.preSelectedTabIndex = 0
+        }
+        
+        self.present(barDetailNav, animated: true, completion: nil)
+    }
     
     func showDirection(bar: Bar) {
         
@@ -218,6 +236,7 @@ class SearchViewController: UIViewController {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
+    
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIButton) {
@@ -277,21 +296,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
-        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
-        barDetailController.selectedBar = self.bars[indexPath.row]
-        barDetailController.delegate = self
-        
-        switch self.searchType {
-        case .liveOffers:
-            barDetailController.preSelectedTabIndex = 2
-        case .deals:
-            barDetailController.preSelectedTabIndex = 1
-        default:
-            barDetailController.preSelectedTabIndex = 0
-        }
-        
-        self.present(barDetailNav, animated: true, completion: nil)
+        self.moveToBarDetail(bar: self.bars[indexPath.row])
     }
 }
 
@@ -509,4 +514,14 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
         self.selectedPreferences = selectedPreferences
         self.reset()
     }
+}
+
+extension SearchViewController : GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let bar = marker.userData as! Bar
+        self.moveToBarDetail(bar: bar)
+        return false
+    }
+    
+    
 }
