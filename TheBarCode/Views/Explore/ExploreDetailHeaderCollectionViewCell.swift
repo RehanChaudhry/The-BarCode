@@ -22,8 +22,6 @@ class ExploreDetailHeaderCollectionViewCell: UICollectionViewCell, NibReusable {
     
     func setUpCell(imageName: String) {
         let url = URL(string: imageName)
-      //  self.coverImageView.setImageWith(url: url, showRetryButton: false)
-        
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
             , shouldShowAcitivityIndicator: true, shouldShowProgress: false)
     }

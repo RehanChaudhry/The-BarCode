@@ -37,7 +37,6 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     override func setUpCell(explore: Explore) {
         if explore.images.value.count > 0 {
             let url = explore.images.value[0].url.value
-            //coverImageView.setImageWith(url: URL(string: url), showRetryButton: false)
             self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
             
         }

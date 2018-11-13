@@ -38,8 +38,6 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
         }
         
         let url = URL(string: category.image.value)
-        //self.imageView.setImageWith(url: url, showRetryButton: false)
-        
         self.imageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "square_placeholder"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.imageView.backgroundColor = UIColor.appDarkGrayColor()
         
