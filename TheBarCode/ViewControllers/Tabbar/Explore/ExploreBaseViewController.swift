@@ -172,6 +172,17 @@ class ExploreBaseViewController: UIViewController {
    
     }
 
+    func showDirection(bar: Bar) {
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
     //MARK: My IBActions
     
     @IBAction func listButtonTapped(sender: UIButton) {

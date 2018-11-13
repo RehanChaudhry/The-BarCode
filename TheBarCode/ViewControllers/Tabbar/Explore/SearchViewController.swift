@@ -225,6 +225,18 @@ class SearchViewController: UIViewController {
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
+    func showDirection(bar: Bar) {
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let urlString = String(format: "comgooglemaps://?saddr=,&daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
+    
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIButton) {
@@ -312,6 +324,16 @@ extension SearchViewController: BarTableViewCellDelegare {
         
         let bar = self.bars[indexPath.row]
         markFavourite(bar: bar, cell: cell)
+    }
+    
+    func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        let bar = self.bars[indexPath.row]
+        self.showDirection(bar: bar)
     }
 }
 

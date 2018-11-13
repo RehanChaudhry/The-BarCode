@@ -82,7 +82,7 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        
+        cell.delegate = self
         let bar = self.isSearching
             ? self.filteredBars[indexPath.row]
             : self.bars[indexPath.row]
@@ -327,6 +327,18 @@ extension BarsWithLiveOffersViewController  {
     }
 }
 
-
-
+//LiveOfferTableViewCell
+extension BarsWithLiveOffersViewController: LiveOfferTableViewCellDelegate {
+    func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
+        
+    }
+    
+    func liveOfferCell(cell: LiveOfferTableViewCell, distanceButtonTapped sender: UIButton) {
+        let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
+        if let indexPath = indexPath {
+            let bar = self.bars[indexPath.row]
+            self.showDirection(bar: bar)
+        }
+    }
+}
 

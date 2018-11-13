@@ -11,6 +11,8 @@ import Reusable
 
 protocol BarTableViewCellDelegare: class {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton)
+    func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton)
+
 }
 
 class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
@@ -43,6 +45,10 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     @IBAction func favouriteButtonTapped(_ sender: UIButton) {
         self.delegate!.barTableViewCell(cell: self, favouriteButton: sender)
+    }
+    
+    @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        self.delegate.barTableViewCell(cell: self, distanceButtonTapped: sender)
     }
 }
 

@@ -9,10 +9,16 @@
 import UIKit
 import Reusable
 
+protocol DealTableViewCellDelegate: class {
+    func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton)
+}
+
 class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
 
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet weak var validityLabel: UILabel!
+    
+    weak var delegate: DealTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,11 +42,12 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
         }
         titleLabel.text = explore.title.value
-        distanceLabel.text = Utility.shared.getformattedDistance(distance: explore.distance.value)
+        distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
+        
         detailLabel.text = "\(explore.deals.value) deals available"
         
         locationIconImageView.isHidden = false
-        distanceLabel.isHidden = false
+        distanceButton.isHidden = false
         detailLabel.isHidden = false
         validityLabel.isHidden = true
     }
@@ -51,7 +58,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         titleLabel.text = deal.title.value//explore.title.value
         locationIconImageView.isHidden = true
-        distanceLabel.isHidden = true
+        distanceButton.isHidden = true
         detailLabel.isHidden = true
         
         let dateFormatter = DateFormatter()
@@ -143,4 +150,9 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             self.validityLabel.attributedText = finalAttributedString
         }
     }
+    
+    @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        self.delegate?.dealTableViewCell(cell: self, distanceButtonTapped: sender)
+    }
 }
+

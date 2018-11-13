@@ -121,6 +121,9 @@ extension BarLiveOffersViewController: UITableViewDataSource, UITableViewDelegat
 }
 
 extension BarLiveOffersViewController: LiveOfferTableViewCellDelegate {
+    func liveOfferCell(cell: LiveOfferTableViewCell, distanceButtonTapped sender: UIButton) {
+    }
+    
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
         
         guard !self.loadingShareController else {
