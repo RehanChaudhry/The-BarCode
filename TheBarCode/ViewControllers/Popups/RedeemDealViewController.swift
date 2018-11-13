@@ -53,6 +53,13 @@ class RedeemDealViewController: CodeVerificationViewController {
         self.view.endEditing(true)
         redeemDeal(redeemWithCredit: self.redeemWithCredit)
     }
+    
+    override func closeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true) {
+            self.delegate.redeemDealViewController(controller: self, cancelButtonTapped: sender as! UIButton, selectedIndex: self.selectedIndex)
+        }
+    }
+    
 
 }
 

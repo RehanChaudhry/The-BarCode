@@ -247,6 +247,17 @@ class OfferDetailViewController: UIViewController {
         }
     }
     
+    func showCustomAlert(title: String, message: String) {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
+    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
@@ -261,7 +272,7 @@ class OfferDetailViewController: UIViewController {
             self.present(redeemStartViewController, animated: true, completion: nil)
 
         } else {
-            //get updated User Credit from server api
+            //get updated User Credit from server api and this establishment redeem count
             self.getReloadStatus()
         }
     
@@ -406,8 +417,10 @@ extension OfferDetailViewController {
     func getReloadStatus() {
         
         self.redeemButton.showLoader()
-        
-        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+        let bar = self.deal.establishment.value
+        let param = ["establishment_id" : bar!.id.value]
+
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: param , apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.redeemWithUserCredit(credit: nil)
@@ -429,8 +442,13 @@ extension OfferDetailViewController {
                 let credit = redeemInfoDict["credit"] as! Int
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
-                self.redeemWithUserCredit(credit: credit)
-                
+                let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
+                if redeemedCount < 2 {
+                    self.redeemWithUserCredit(credit: credit)
+                } else {
+                    self.showCustomAlert(title: "", message: "Sorry, Your daily limit exceeded for this bar.")
+                }
+                                
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                 
             } else {
@@ -463,5 +481,11 @@ extension OfferDetailViewController: OfferDetailTableViewCellDelegate{
        
         let bar =  self.deal.establishment.value
         self.showDirection(bar: bar!)
+    }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension OfferDetailViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
     }
 }

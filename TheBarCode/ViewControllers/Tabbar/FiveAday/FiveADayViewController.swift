@@ -157,6 +157,17 @@ class FiveADayViewController: UIViewController {
             self.present(outOfCreditViewController, animated: true, completion: nil)
         }
     }
+    
+    func showCustomAlert(title: String, message: String) {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -250,7 +261,10 @@ extension FiveADayViewController {
         deal.showLoader = true
         self.pagerView.reloadData()
 
-        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+        let bar = deal.establishment.value
+        let param = ["establishment_id" : bar!.id.value]
+        
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: param, apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.redeemWithUserCredit(credit: nil, index: index)
@@ -276,7 +290,12 @@ extension FiveADayViewController {
                 let credit = redeemInfoDict["credit"] as! Int
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
-                self.redeemWithUserCredit(credit: credit, index: index)
+                let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
+                if redeemedCount < 2 {
+                    self.redeemWithUserCredit(credit: credit, index: index)
+                } else {
+                    self.showCustomAlert(title: "", message: "Sorry, Your daily limit exceeded for this bar.")
+                }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                 
@@ -340,6 +359,7 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
                 self.present(redeemStartViewController, animated: true, completion: nil)
                 
             } else {
+                //get updated User Credit from server api and this deal establishment redeem count
                 self.getReloadStatus(cell: cell, deal: deal, index: index)
             }
         } else {
@@ -496,4 +516,12 @@ extension FiveADayViewController: RedeemDealViewControllerDelegate {
         }
 
     }    
+}
+
+
+//MARK: CannotRedeemViewControllerDelegate
+extension FiveADayViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
 }

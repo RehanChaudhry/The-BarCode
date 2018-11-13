@@ -168,6 +168,16 @@ class BarDetailViewController: UIViewController {
         }
     }
     
+    func showCustomAlert(title: String, message: String) {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
     @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
         self.getBarDetails()
         self.dealsController.resetDeals()
@@ -329,8 +339,9 @@ extension BarDetailViewController {
     func getReloadStatus() {
         
         self.standardRedeemButton.showLoader()
+        let param = ["establishment_id" : self.selectedBar.id.value]
         
-        self.reloadDataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
+        self.reloadDataRequest = APIHelper.shared.hitApi(params: param, apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.redeemWithUserCredit(credit: nil)
@@ -352,7 +363,12 @@ extension BarDetailViewController {
                 let credit = redeemInfoDict["credit"] as! Int
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
-                self.redeemWithUserCredit(credit: credit)
+                let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
+                if redeemedCount < 2 {
+                    self.redeemWithUserCredit(credit: credit)
+                } else {
+                    self.showCustomAlert(title: "Alert", message: "Sorry, Your daily limit exceeded for this bar.")
+                }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
                 
@@ -430,5 +446,11 @@ extension BarDetailViewController: RedeemDealViewControllerDelegate {
         if error == nil {
             self.setUpBottomView()
         }
+    }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension BarDetailViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
     }
 }
