@@ -260,7 +260,7 @@ extension LoginViewController {
                     
                     let socialAccountId = "\(result["id"]!)"
                     let fullName = result["name"] as! String
-                    let profileImage = "http://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
+                    let profileImage = "https://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
                     let accessToken = FBSDKAccessToken.current()!.tokenString
                     let email = result["email"] as? String
                     
