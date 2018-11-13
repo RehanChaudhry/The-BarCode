@@ -78,7 +78,7 @@ extension Explore: ImportableUniqueObject {
     
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
-        self.id.value = "\(String(describing: source["id"]!))"
+        self.id.value = "\(source["id"]!)"
         self.userId.value = "\(source["user_id"]!)"
         self.title.value = source["title"] as! String
         self.detail.value = source["description"] as! String

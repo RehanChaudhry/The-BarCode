@@ -131,4 +131,45 @@ class AsyncImageView: UIImageView {
             completion?(image, error, cacheType, url)
         }
     }
+    
+    
+    func setImageWith(url: URL?, showRetryButton show: Bool, placeHolder: UIImage?,shouldShowAcitivityIndicator: Bool, shouldShowProgress: Bool, refreshCache: Bool,  completion: SDExternalCompletionBlock?) {
+        
+        showActivityIndicator = shouldShowAcitivityIndicator
+        showProgress = shouldShowProgress
+        placeHolderImage = placeHolder
+        completionHandler = completion
+        
+        retryButton.isHidden = true
+        
+        if showActivityIndicator {
+            activityIndicatorView.startAnimating()
+        }
+        
+        sd_setImage(with: url, placeholderImage: placeHolder, options: .refreshCached, progress: { (receivedSize: Int, expectedSize: Int, url: URL?) in
+            
+            DispatchQueue.main.async {
+                if expectedSize > 0 && receivedSize > 0 {
+                    var progress = CGFloat(receivedSize) / CGFloat(expectedSize)
+                    progress = progress < 0 ? 0 : progress > 1 ? 1 : progress;
+                    
+                    self.progressView.isHidden = !self.showProgress
+                    self.progressView.progress = Float(progress)
+                }
+            }
+            
+        }) { (image: UIImage?, error: Error?, cacheType: SDImageCacheType, url: URL?) in
+            
+            self.activityIndicatorView.stopAnimating()
+            
+            if let _ = image {
+                self.progressView.isHidden = true
+            } else {
+                self.retryButton.isHidden = !show
+            }
+            
+            completion?(image, error, cacheType, url)
+        }
+    }
+
 }
