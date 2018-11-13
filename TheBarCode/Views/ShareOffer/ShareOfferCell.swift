@@ -46,32 +46,32 @@ class ShareOfferCell: UITableViewCell, NibReusable {
     func setUpCell(offer: Deal) {
         self.offerTitleLabel.text = offer.title.value
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
-        self.offerTypeLabel.text = (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
         let url = offer.image.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        self.sharedByLabel.attributedText =  self.attributedSharedBy(deal: offer)
+        self.offerTypeLabel.attributedText = self.attributedString(prefixText: "Offer type: " ,Text: (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased())
+        self.sharedByLabel.attributedText =  self.attributedString(prefixText: "Shared by: ", Text:  offer.sharedByName.value ?? "")
     }
     
     func setUpCell(offer: LiveOffer) {
         self.offerTitleLabel.text = offer.title.value
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
-        self.offerTypeLabel.text = (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased()
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
         let url = offer.image.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        self.sharedByLabel.attributedText =  self.attributedSharedBy(deal: offer)
+        self.offerTypeLabel.attributedText = self.attributedString(prefixText: "Offer Type: " ,Text: (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased())
+        self.sharedByLabel.attributedText =  self.attributedString(prefixText: "Shared by: ", Text:  offer.sharedByName.value ?? "")
         
     }
     
-    func attributedSharedBy(deal: Deal) -> NSMutableAttributedString {
+    func attributedString(prefixText: String, Text: String) -> NSMutableAttributedString {
         let placeholderAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
                                      NSAttributedStringKey.foregroundColor : UIColor.white]
         let nameAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14.0),
                               NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()]
         
-        let placeholderAttributedString = NSMutableAttributedString(string: "Shared by: ", attributes: placeholderAttributes)
-        let nameAttributedString = NSMutableAttributedString(string: deal.sharedByName.value ?? "", attributes: nameAttributes)
+        let placeholderAttributedString = NSMutableAttributedString(string: prefixText, attributes: placeholderAttributes)
+        let nameAttributedString = NSMutableAttributedString(string: Text, attributes: nameAttributes)
         
         let finalAttributedString = NSMutableAttributedString()
         finalAttributedString.append(placeholderAttributedString)
