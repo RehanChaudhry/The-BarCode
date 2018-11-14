@@ -14,6 +14,8 @@ class SplashViewController: UIViewController {
 
     var locationManager: MyLocationManager!
     
+    var visitLocationManager: CLLocationManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,6 +38,7 @@ class SplashViewController: UIViewController {
         self.setupAuthIfNeeded()
         
         self.updateLocationIfNeed()
+        self.startVisitLocationManager()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +66,41 @@ class SplashViewController: UIViewController {
     
     @objc func moveToNextController() {
         self.performSegue(withIdentifier: "SplashToLoginOptions", sender: nil)
+    }
+    
+    func startVisitLocationManager() {
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists to subscribe to location updates")
+            return
+        }
+        
+        guard CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse else {
+            debugPrint("location permission not granted")
+            return
+        }
+        
+        self.stopVisitLocationManager()
+        
+        self.visitLocationManager = CLLocationManager()
+        self.visitLocationManager?.startMonitoringVisits()
+        self.visitLocationManager?.delegate = self
+        
+        debugPrint("Starting visit location manager")
+    }
+    
+    func stopVisitLocationManager() {
+        self.visitLocationManager?.stopMonitoringVisits()
+        self.visitLocationManager = nil
+        
+        debugPrint("Stopping visit location manager")
+    }
+}
+
+//MARK: CLLocationManagerDelegate
+extension SplashViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        debugPrint("Will update visit to server:")
+        self.updateVisit(visit: visit)
     }
 }
 
@@ -143,6 +181,30 @@ extension SplashViewController {
             })
             
         }
+    }
+    
+    func updateVisit(visit: CLVisit) {
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists for location update")
+            return
+        }
+        
+        let params = ["latitude" : "\(visit.coordinate.latitude)",
+            "longitude" : "\(visit.coordinate.longitude )"] as [String : Any]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
+            guard error == nil else {
+                debugPrint("Error while updating location: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Server error while updating location: \(serverError!.errorMessages())")
+                return
+            }
+            
+            debugPrint("Visit location updated successfully")
+        })
     }
 }
 
