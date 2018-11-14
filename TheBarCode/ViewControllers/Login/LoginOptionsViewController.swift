@@ -60,17 +60,17 @@ class LoginOptionsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.updateNavigationBarAppearance()
+        
+        if !self.viewAlreadyAppeared {
+            self.viewAlreadyAppeared = true
+            self.moveToNextControllerIfNeeded()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         self.avPlayer.play()
-        
-        if !self.viewAlreadyAppeared {
-            self.viewAlreadyAppeared = true
-            self.moveToNextControllerIfNeeded()
-        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -125,7 +125,7 @@ class LoginOptionsViewController: UIViewController {
                 self.performSegue(withIdentifier: "SignOptionsToPermissionSegue", sender: nil)
             } else {
                 let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-                self.navigationController?.present(tabbarController!, animated: true, completion: {
+                self.navigationController?.present(tabbarController!, animated: false, completion: {
                     let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
                     self.navigationController?.popToViewController(loginOptions, animated: false)
                 })

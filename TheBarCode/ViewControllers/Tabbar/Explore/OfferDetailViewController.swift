@@ -66,7 +66,7 @@ class OfferDetailViewController: UIViewController {
         self.setUpBottomView()
         
 
-        self.viewOffer()
+        self.viewedOffer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -387,7 +387,7 @@ extension OfferDetailViewController: InviteViewControllerDelegate{
 //MARK: WebService Method
 extension OfferDetailViewController {
     //viewOffer
-    func viewOffer() {
+    func viewedOffer() {
         
         let params: [String: Any] = ["value": self.deal.id.value,
                                      "type":"offer_view"]

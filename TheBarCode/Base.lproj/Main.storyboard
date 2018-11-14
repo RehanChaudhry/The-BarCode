@@ -491,8 +491,8 @@
                         <outlet property="pagerView" destination="goR-HA-RVi" id="k7R-Dk-EFi"/>
                         <segue destination="8VK-Li-NYB" kind="show" identifier="LoginOptionsToLoginSegue" id="lFn-an-dqK"/>
                         <segue destination="Z16-Wr-qWJ" kind="show" identifier="LoginOptionsToSignUpSegue" id="gfy-jQ-g7J"/>
-                        <segue destination="2ep-56-xnh" kind="show" identifier="SignOptionsToCategoriesSegue" id="zzt-np-QEr"/>
-                        <segue destination="PRh-VO-DX3" kind="show" identifier="SignOptionsToPermissionSegue" id="ofk-tc-f0B"/>
+                        <segue destination="2ep-56-xnh" kind="show" identifier="SignOptionsToCategoriesSegue" animates="NO" id="zzt-np-QEr"/>
+                        <segue destination="PRh-VO-DX3" kind="show" identifier="SignOptionsToPermissionSegue" animates="NO" id="ofk-tc-f0B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JxO-t0-7Bc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5341,7 +5341,7 @@ Cg
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
-        <image name="icon_list" width="22" height="15"/>
+        <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_notification" width="21" height="24"/>
         <image name="icon_preferences_search" width="24" height="24"/>
@@ -5353,15 +5353,15 @@ Cg
         <image name="icon_tab_more" width="32" height="9"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
-        <image name="profile_image" width="46" height="46"/>
+        <image name="profile_image" width="138" height="138"/>
         <image name="red-info" width="22" height="22"/>
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NvO-HD-pWX"/>
-        <segue reference="zcU-ID-XXz"/>
-        <segue reference="jef-DV-LyY"/>
+        <segue reference="lFn-an-dqK"/>
+        <segue reference="ofk-tc-f0B"/>
+        <segue reference="zzt-np-QEr"/>
         <segue reference="K4O-bU-rQm"/>
-        <segue reference="Tsk-gy-Yut"/>
+        <segue reference="gfy-jQ-g7J"/>
     </inferredMetricsTieBreakers>
 </document>

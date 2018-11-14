@@ -27,6 +27,9 @@ class FiveADayViewController: UIViewController {
     var dataRequest: DataRequest?
     var reloadDataRequest: DataRequest?
 
+    var canSendStats: Bool = false
+    var lastSentStatsIndexPath: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,6 +76,18 @@ class FiveADayViewController: UIViewController {
         self.pagerView.itemSize = CGSize(width: cellWidth, height: cellHeight)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.canSendStats = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.canSendStats = false
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
     }
@@ -84,7 +99,7 @@ class FiveADayViewController: UIViewController {
         self.getFiveADayDeals()
     }
     
-    func showBarDetail(bar: Bar){
+    func showBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
@@ -92,7 +107,7 @@ class FiveADayViewController: UIViewController {
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
-    func showDirection(bar: Bar){
+    func showDirection(bar: Bar) {
 
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
             let urlString = String(format: "comgooglemaps://?daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
@@ -130,7 +145,7 @@ class FiveADayViewController: UIViewController {
     }
     
     
-    func redeemWithUserCredit(credit: Int?, index: Int){
+    func redeemWithUserCredit(credit: Int?, index: Int) {
         var userCredit: Int!
         
         if credit == nil {
@@ -168,6 +183,26 @@ class FiveADayViewController: UIViewController {
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     
+    func updateStatsIfNeeded() {
+        if let collectionView = self.pagerView.subviews.first?.subviews.first as? UICollectionView {
+            let point = self.view.convert(self.view.center, to: collectionView)
+            if let indexPath = collectionView.indexPathForItem(at: point) {
+                debugPrint("indexPath item: \(indexPath.item)")
+                
+                if self.lastSentStatsIndexPath != indexPath {
+                    self.lastSentStatsIndexPath = indexPath
+                    
+                    let deal = self.deals[indexPath.item]
+                    self.viewedOffer(deal: deal)
+                }
+            } else {
+                debugPrint("indexpath not found")
+            }
+        } else {
+            debugPrint("collectionview not found")
+        }
+    }
+    
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -176,6 +211,14 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
         self.pageControl.currentPage = pagerView.currentIndex
+    }
+    
+    func pagerViewDidEndDecelerating(_ pagerView: FSPagerView) {
+        self.updateStatsIfNeeded()
+    }
+    
+    func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {
+        self.updateStatsIfNeeded()
     }
     
     func pagerView(_ pagerView: FSPagerView, shouldSelectItemAt index: Int) -> Bool {
@@ -249,6 +292,10 @@ extension FiveADayViewController {
                 self.pagerView.reloadData()
                 self.pageControl.numberOfPages = self.deals.count
                 
+                if let firstDeals = self.deals.first {
+                    self.viewedOffer(deal: firstDeals)
+                }
+                
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To refresh")
@@ -307,7 +354,12 @@ extension FiveADayViewController {
     }
 
     //viewOffer
-    func viewOffer(deal: FiveADayDeal) {
+    func viewedOffer(deal: FiveADayDeal) {
+        
+        guard self.canSendStats else {
+            debugPrint("Cannot send stats")
+            return
+        }
         
         let params: [String: Any] = ["value": deal.id.value,
                                      "type":"offer_view"]
@@ -327,7 +379,7 @@ extension FiveADayViewController {
             
             let responseDic = response as! [String : Any]
             if (responseDic["response"] as? [String : Any]) != nil {
-                debugPrint("view has been updated successfully")                
+                debugPrint("view has been updated successfully: \(deal.title.value)")
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericerror while view api : \(genericError.localizedDescription)")
