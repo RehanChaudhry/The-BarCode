@@ -228,7 +228,8 @@ extension LoginViewController {
         
         self.fbSignInButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
-        
+       
+        loginManager.logOut()
         loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
             
             guard result?.isCancelled == false else {
