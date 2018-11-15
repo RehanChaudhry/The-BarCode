@@ -317,7 +317,7 @@ class Utility: NSObject {
         
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
-        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has shared an offer with you. With The Barcode you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has shared an offer with you. Join your mates and avail amazing deals & live offers together."
         linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()

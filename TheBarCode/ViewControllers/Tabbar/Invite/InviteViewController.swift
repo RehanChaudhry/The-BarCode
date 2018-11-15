@@ -138,7 +138,7 @@ extension InviteViewController {
         
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode Invitation"
-        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has invited you to join The Bar Code. With The Barcode you can enjoy amazing deals and live offers on the go."
+        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) invited you to join The Bar Code. Use the referral code \(ownReferralCode) on sign up and enjoy access to amazing deals & live offers through the application."
         linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
