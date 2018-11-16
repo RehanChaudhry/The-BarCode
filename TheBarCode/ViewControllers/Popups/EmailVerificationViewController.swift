@@ -29,7 +29,7 @@ class EmailVerificationViewController: CodeVerificationViewController {
         
         self.resendCodeButton.updateAcivityIndicatorColor(color: .white)
         
-        let subTitlePlaceholder = "Enter the confirmation code here which we have sent you on "
+        let subTitlePlaceholder = "Enter the activation code here which we have sent you on "
         let subTitleText = subTitlePlaceholder + self.email
         
         let normalAttribute = [NSAttributedStringKey.foregroundColor : self.titleLabel.textColor,

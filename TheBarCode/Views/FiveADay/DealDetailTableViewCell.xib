@@ -29,49 +29,36 @@
                 <rect key="frame" x="0.0" y="0.0" width="371" height="159.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="f8p-8P-fFs">
-                        <rect key="frame" x="20" y="10" width="331" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="cL1-4J-Whr"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GREEN BEAN" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvi-aq-7HF">
+                        <rect key="frame" x="16" y="16" width="339" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
-                        <state key="normal" title="Green Bean">
-                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="viewBarDetailButtonTapped:" destination="W90-3m-imA" eventType="touchUpInside" id="Ln6-Zs-Y62"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Nao-9k-Q4p">
-                        <rect key="frame" x="20" y="33" width="331" height="25"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="25" id="H2s-uj-6wL"/>
-                        </constraints>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 smoothies for the price of 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABg-bh-W2C">
+                        <rect key="frame" x="16" y="38.5" width="339" height="19.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                        <state key="normal" title="2 smoothies for the price of 1">
-                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="viewBarDetailButtonTapped:" destination="W90-3m-imA" eventType="touchUpInside" id="Jz3-pb-0kW"/>
-                        </connections>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lunch and get 2 for 1 on smoothies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwW-dp-hX8">
-                        <rect key="frame" x="20" y="66" width="331" height="49.5"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lunch and get 2 for 1 on smoothies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwW-dp-hX8">
+                        <rect key="frame" x="16" y="66.5" width="339" height="53.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-location" translatesAutoresizingMaskIntoConstraints="NO" id="XZi-cw-nKK">
-                        <rect key="frame" x="20" y="123.5" width="14" height="16"/>
+                        <rect key="frame" x="16" y="127.5" width="14" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="H92-lS-Zpf"/>
-                            <constraint firstAttribute="width" constant="14" id="LAD-rf-Hj4"/>
+                            <constraint firstAttribute="height" constant="16" id="fNf-oU-cdh"/>
+                            <constraint firstAttribute="width" constant="14" id="tbZ-H5-jMs"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imx-qr-Q7z">
-                        <rect key="frame" x="39" y="124.5" width="226" height="15"/>
+                        <rect key="frame" x="34" y="128" width="233.5" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="b8n-Xi-PCc"/>
+                            <constraint firstAttribute="height" constant="15" id="qBJ-Ki-zm1"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
                         <state key="normal" title="The White Hart">
@@ -82,7 +69,10 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIE-uK-WlY">
-                        <rect key="frame" x="273" y="123.5" width="78" height="16"/>
+                        <rect key="frame" x="277.5" y="127.5" width="77.5" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="hX6-Xo-8CC"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -90,34 +80,33 @@
                 </subviews>
                 <color key="backgroundColor" red="0.2470588235" green="0.2470588235" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="qwW-dp-hX8" firstAttribute="top" secondItem="Nao-9k-Q4p" secondAttribute="bottom" constant="8" id="2jB-DN-SMl"/>
-                    <constraint firstAttribute="trailing" secondItem="qwW-dp-hX8" secondAttribute="trailing" constant="20" id="6kp-Rc-26j"/>
-                    <constraint firstItem="pIE-uK-WlY" firstAttribute="top" secondItem="XZi-cw-nKK" secondAttribute="top" id="6r8-Lk-K8d"/>
-                    <constraint firstAttribute="trailing" secondItem="pIE-uK-WlY" secondAttribute="trailing" constant="20" id="DTd-eF-rGw"/>
-                    <constraint firstItem="qwW-dp-hX8" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="Jsf-ma-Ds4"/>
-                    <constraint firstAttribute="bottom" secondItem="pIE-uK-WlY" secondAttribute="bottom" constant="20" id="LIG-eq-sT8"/>
-                    <constraint firstItem="f8p-8P-fFs" firstAttribute="top" secondItem="uHi-Q2-J2c" secondAttribute="top" constant="10" id="M1e-3n-eze"/>
-                    <constraint firstItem="pIE-uK-WlY" firstAttribute="leading" secondItem="imx-qr-Q7z" secondAttribute="trailing" constant="8" id="O0N-9a-7Hg"/>
-                    <constraint firstAttribute="bottom" secondItem="imx-qr-Q7z" secondAttribute="bottom" constant="20" id="U0w-zM-2FP"/>
-                    <constraint firstAttribute="bottom" secondItem="XZi-cw-nKK" secondAttribute="bottom" constant="20" id="dYb-fZ-jOt"/>
-                    <constraint firstItem="Nao-9k-Q4p" firstAttribute="top" secondItem="f8p-8P-fFs" secondAttribute="bottom" constant="8" id="eE3-ot-QwX"/>
-                    <constraint firstItem="f8p-8P-fFs" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="eeR-hg-OYv"/>
-                    <constraint firstAttribute="trailing" secondItem="f8p-8P-fFs" secondAttribute="trailing" constant="20" id="n3A-7d-f3f"/>
-                    <constraint firstItem="XZi-cw-nKK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qwW-dp-hX8" secondAttribute="bottom" constant="8" id="nAO-hO-8xU"/>
-                    <constraint firstAttribute="trailing" secondItem="Nao-9k-Q4p" secondAttribute="trailing" constant="20" id="qIN-mo-74M"/>
-                    <constraint firstItem="imx-qr-Q7z" firstAttribute="leading" secondItem="XZi-cw-nKK" secondAttribute="trailing" constant="5" id="rDE-Aw-gqb"/>
-                    <constraint firstItem="Nao-9k-Q4p" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="t5D-Lz-3cn"/>
-                    <constraint firstItem="XZi-cw-nKK" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="20" id="tQ2-2V-mYg"/>
+                    <constraint firstItem="qwW-dp-hX8" firstAttribute="top" secondItem="ABg-bh-W2C" secondAttribute="bottom" constant="8.5" id="3IS-My-Rq0"/>
+                    <constraint firstItem="XZi-cw-nKK" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="7No-Pb-PmX"/>
+                    <constraint firstItem="Gvi-aq-7HF" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="8Es-Wq-NKm"/>
+                    <constraint firstAttribute="trailing" secondItem="Gvi-aq-7HF" secondAttribute="trailing" constant="16" id="Adc-kD-ahL"/>
+                    <constraint firstItem="imx-qr-Q7z" firstAttribute="centerY" secondItem="XZi-cw-nKK" secondAttribute="centerY" id="Doj-db-B5i"/>
+                    <constraint firstItem="ABg-bh-W2C" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="JgM-mN-PMZ"/>
+                    <constraint firstAttribute="trailing" secondItem="ABg-bh-W2C" secondAttribute="trailing" constant="16" id="L3O-3O-Mtr"/>
+                    <constraint firstItem="imx-qr-Q7z" firstAttribute="leading" secondItem="XZi-cw-nKK" secondAttribute="trailing" constant="4" id="L8o-bI-8UG"/>
+                    <constraint firstItem="pIE-uK-WlY" firstAttribute="leading" secondItem="imx-qr-Q7z" secondAttribute="trailing" constant="10" id="QnM-JG-Zpa"/>
+                    <constraint firstAttribute="bottom" secondItem="XZi-cw-nKK" secondAttribute="bottom" constant="16" id="WAu-oo-NQ9"/>
+                    <constraint firstItem="ABg-bh-W2C" firstAttribute="top" secondItem="Gvi-aq-7HF" secondAttribute="bottom" constant="8" id="Zfq-S4-IVf"/>
+                    <constraint firstAttribute="trailing" secondItem="qwW-dp-hX8" secondAttribute="trailing" constant="16" id="dF0-jP-vJz"/>
+                    <constraint firstAttribute="trailing" secondItem="pIE-uK-WlY" secondAttribute="trailing" constant="16" id="gKV-Ao-ZVm"/>
+                    <constraint firstItem="XZi-cw-nKK" firstAttribute="top" secondItem="qwW-dp-hX8" secondAttribute="bottom" constant="7.5" id="jha-dN-jAs"/>
+                    <constraint firstItem="Gvi-aq-7HF" firstAttribute="top" secondItem="uHi-Q2-J2c" secondAttribute="top" constant="16" id="k54-So-ShR"/>
+                    <constraint firstItem="qwW-dp-hX8" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="rzC-9o-fbW"/>
+                    <constraint firstItem="pIE-uK-WlY" firstAttribute="centerY" secondItem="imx-qr-Q7z" secondAttribute="centerY" id="wDV-XI-qs3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="barNameButton" destination="imx-qr-Q7z" id="tlO-g9-arb"/>
                 <outlet property="detailLabel" destination="qwW-dp-hX8" id="tA6-hw-q94"/>
                 <outlet property="locationLabel" destination="pIE-uK-WlY" id="Rg6-1A-rAY"/>
-                <outlet property="subTitleButton" destination="Nao-9k-Q4p" id="CZ1-8q-wLD"/>
-                <outlet property="titleButton" destination="f8p-8P-fFs" id="QK8-f3-2ry"/>
+                <outlet property="subTitleLabel" destination="ABg-bh-W2C" id="Ra7-es-XJM"/>
+                <outlet property="titleLabel" destination="Gvi-aq-7HF" id="i2Z-3U-8AE"/>
             </connections>
-            <point key="canvasLocation" x="42.5" y="0.0"/>
+            <point key="canvasLocation" x="42.399999999999999" y="0.0"/>
         </tableViewCell>
     </objects>
     <resources>

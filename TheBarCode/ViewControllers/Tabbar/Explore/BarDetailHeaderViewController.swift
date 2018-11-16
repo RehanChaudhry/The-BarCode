@@ -35,6 +35,9 @@ class BarDetailHeaderViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.mapIconImageView.image = self.mapIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.mapIconImageView.tintColor = UIColor.appBlueColor()
+        
         self.setUpHeader()
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
     }

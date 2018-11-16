@@ -118,7 +118,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4n-qH-Kz9">
-                                <rect key="frame" x="111.5" y="370" width="59" height="27"/>
+                                <rect key="frame" x="111.5" y="378" width="59" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="27" id="sDm-7O-9kl"/>
                                 </constraints>
@@ -186,7 +186,7 @@
                             <constraint firstAttribute="trailing" secondItem="IXk-Tx-yH5" secondAttribute="trailing" constant="16" id="ege-Aw-cBX"/>
                             <constraint firstItem="ORN-dS-uJi" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="ewN-b5-TBk"/>
                             <constraint firstAttribute="bottom" secondItem="MZg-ZB-KGl" secondAttribute="bottom" constant="24" id="hLe-VJ-CLA"/>
-                            <constraint firstItem="WbM-75-8dd" firstAttribute="top" secondItem="I4n-qH-Kz9" secondAttribute="bottom" constant="8" id="hrd-gN-4bu"/>
+                            <constraint firstItem="WbM-75-8dd" firstAttribute="top" secondItem="I4n-qH-Kz9" secondAttribute="bottom" id="hrd-gN-4bu"/>
                             <constraint firstAttribute="trailing" secondItem="8Vk-me-Vwd" secondAttribute="trailing" constant="16" id="icb-Ky-bpF"/>
                             <constraint firstItem="rMz-d8-cg0" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="qX2-pD-vjf"/>
                             <constraint firstItem="8Vk-me-Vwd" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="r8k-jx-XAK"/>
@@ -194,7 +194,7 @@
                             <constraint firstItem="IXk-Tx-yH5" firstAttribute="leading" secondItem="IL0-Y3-8n3" secondAttribute="leading" constant="16" id="utc-NN-559"/>
                             <constraint firstAttribute="trailing" secondItem="6ma-Xw-PYc" secondAttribute="trailing" id="vjh-Cg-xY8"/>
                             <constraint firstItem="9Fh-RL-K3F" firstAttribute="top" secondItem="IL0-Y3-8n3" secondAttribute="top" constant="8" id="vpJ-l1-YFf"/>
-                            <constraint firstItem="I4n-qH-Kz9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IXk-Tx-yH5" secondAttribute="bottom" constant="8" id="wLr-fR-WeI"/>
+                            <constraint firstItem="I4n-qH-Kz9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IXk-Tx-yH5" secondAttribute="bottom" constant="4" id="wLr-fR-WeI"/>
                             <constraint firstItem="IXk-Tx-yH5" firstAttribute="top" secondItem="ORN-dS-uJi" secondAttribute="bottom" constant="8" id="xJt-YW-rpv"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

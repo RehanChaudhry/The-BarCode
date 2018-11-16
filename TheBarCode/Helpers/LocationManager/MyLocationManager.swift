@@ -99,7 +99,7 @@ class MyLocationManager: NSObject {
 extension MyLocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
             startUpdatingLocation()
         } else if status == .denied || status == .restricted {
             let errorCode = MyLocationManagerError.unknown

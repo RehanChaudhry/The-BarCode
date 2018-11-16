@@ -16,18 +16,14 @@ protocol DealDetailTableViewCellDelegate: class {
 
 class DealDetailTableViewCell: UITableViewCell, NibReusable {
 
-    @IBOutlet weak var titleButton: UIButton!
-    @IBOutlet weak var subTitleButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    
     @IBOutlet weak var barNameButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
     
     weak var delegate : DealDetailTableViewCellDelegate!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -37,8 +33,9 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
     
     func configCell(deal: FiveADayDeal) {
         
-        self.titleButton.setTitle(deal.title.value, for: .normal)
-        self.subTitleButton.setTitle(deal.subTitle.value, for: .normal)
+        self.titleLabel.text = deal.subTitle.value.uppercased()
+        self.subTitleLabel.text = deal.title.value
+        
         self.detailLabel.text =  deal.detail.value
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
        

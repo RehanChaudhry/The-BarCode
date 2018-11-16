@@ -4518,7 +4518,7 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z4K-Lu-EoL">
                                 <rect key="frame" x="16" y="90" width="343" height="308"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the activation code here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS4-yw-Sb8">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify your email address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS4-yw-Sb8">
                                         <rect key="frame" x="24" y="8" width="259" height="51"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="51" id="xfa-iE-aAd"/>
@@ -4545,7 +4545,7 @@ Cg
                                             <constraint firstAttribute="height" constant="1" id="owm-Vc-xOL"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the confirmation code here which we have sent you on your email address." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBl-NU-w6w">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the activation code here which we have sent you on." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBl-NU-w6w">
                                         <rect key="frame" x="24" y="92" width="295" height="34"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
