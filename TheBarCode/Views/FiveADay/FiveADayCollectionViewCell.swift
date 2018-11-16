@@ -39,7 +39,6 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     @IBOutlet var shareButton: UIButton!
     
     @IBOutlet var coverImageHeight: NSLayoutConstraint!
-    @IBOutlet var detailVerticalSpacing: NSLayoutConstraint!
     
     @IBOutlet var detailButton: UIButton!
     
@@ -82,8 +81,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
-        self.dealTitleButton.setTitle(deal.title.value, for: .normal)
-        self.dealSubTitleButton.setTitle(deal.subTitle.value, for: .normal)
+        self.dealTitleButton.setTitle(deal.subTitle.value.uppercased(), for: .normal)
+        self.dealSubTitleButton.setTitle(deal.title.value, for: .normal)
         self.dealDetailLabel.text =  deal.detail.value
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
         
@@ -105,12 +104,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         self.layoutIfNeeded()
         
         if self.dealDetailLabel.isTruncated {
-            self.dealDetailLabel.isHidden = true
-            self.detailVerticalSpacing.constant = 8.0 + 29.0
             self.detailButton.isHidden = false
         } else {
-            self.dealDetailLabel.isHidden = false
-            self.detailVerticalSpacing.constant = 8.0
             self.detailButton.isHidden = true
         }
         

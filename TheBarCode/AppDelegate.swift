@@ -27,8 +27,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var liveOfferBarDict: [String : Any]?
     var refreshFiveADay: Bool?
     
+    var visitLocationManager: CLLocationManager?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        CoreStore.defaultStack = DataStack(
+            CoreStoreSchema(
+                modelVersion: "V1",
+                entities: [
+                    Entity<User>("User")
+                ]
+            )
+        )
+        
+        try! CoreStore.addStorageAndWait()
+        
+        let dataStack = Utility.inMemoryStack
+        try! dataStack.addStorageAndWait(InMemoryStore())
+        
+        self.setupAuthIfNeeded()
         
         self.customizeAppearance()
         GMSServices.provideAPIKey("AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8")
@@ -73,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                         appId: "87a21c8e-cfee-4b79-8eef-23e692c64eca",
                                         handleNotificationAction: notificationOpenedBlock,
                                         settings: onesignalInitSettings)
+        
+        self.startVisitLocationManager()
         
         return true
     }
@@ -149,10 +169,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
         
     }
+    
+    func setupAuthIfNeeded() {
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("User not found for auth setup")
+            return
+        }
+        
+        APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+    }
+    
+    func startVisitLocationManager() {
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists to subscribe to location updates")
+            return
+        }
+        
+        guard CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse else {
+            debugPrint("location permission not granted")
+            return
+        }
+        
+        self.stopVisitLocationManager()
+        
+        self.visitLocationManager = CLLocationManager()
+        self.visitLocationManager?.startMonitoringVisits()
+        self.visitLocationManager?.delegate = self
+        
+        debugPrint("Starting visit location manager")
+    }
+    
+    func stopVisitLocationManager() {
+        self.visitLocationManager?.stopMonitoringVisits()
+        self.visitLocationManager = nil
+        
+        debugPrint("Stopping visit location manager")
+    }
+}
+
+//MARK: CLLocationManagerDelegate
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+        debugPrint("Will update visit to server:")
+        self.updateVisit(visit: visit)
+    }
+    
+    func newVisitReceived(_ visit: CLVisit, description: String) {
+        return;
+        let content = UNMutableNotificationContent()
+        content.title = "New BarCode entry 📌"
+        content.body = description
+        content.sound = UNNotificationSound.default()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request, withCompletionHandler: nil)
+    }
+    
+}
+
+//Webservices Methods
+extension AppDelegate {
+    func updateVisit(visit: CLVisit) {
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists for location update")
+            self.newVisitReceived(visit, description: "User does not exists")
+            return
+        }
+        
+        self.newVisitReceived(visit, description: "Updating location on server")
+        
+        let params = ["latitude" : "\(visit.coordinate.latitude)",
+            "longitude" : "\(visit.coordinate.longitude )"] as [String : Any]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while updating location: \(error!.localizedDescription)")
+                self.newVisitReceived(visit, description: "Location update failed: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Server error while updating location: \(serverError!.errorMessages())")
+                self.newVisitReceived(visit, description: "Location update failed: \(serverError!.errorMessages())")
+                return
+            }
+            
+            debugPrint("Visit location updated successfully")
+            self.newVisitReceived(visit, description: "Location update success")
+        })
+    }
 }
 
 //MARK: Appearance Customization
-
 extension AppDelegate {
     func customizeAppearance() {
         

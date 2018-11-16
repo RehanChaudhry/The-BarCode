@@ -45,10 +45,8 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
         
-        if let splashNavigation = appDelegate.window?.rootViewController as? UINavigationController, let splashController = splashNavigation.viewControllers.first as? SplashViewController {
-            if splashController.visitLocationManager == nil {
-                splashController.startVisitLocationManager()
-            }
+        if appDelegate.visitLocationManager == nil {
+            appDelegate.startVisitLocationManager()
         }
     }
 

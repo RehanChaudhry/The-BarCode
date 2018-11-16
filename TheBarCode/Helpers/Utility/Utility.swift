@@ -122,9 +122,7 @@ class Utility: NSObject {
         APIHelper.shared.setUpOAuthHandler(accessToken: nil, refreshToken: nil)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let splashNavigation = appDelegate.window?.rootViewController as? UINavigationController, let splashController = splashNavigation.viewControllers.first as? SplashViewController {
-            splashController.stopVisitLocationManager()
-        }
+        appDelegate.stopVisitLocationManager()
         
         debugPrint("cleared user info from local db")
     }

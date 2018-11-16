@@ -98,14 +98,14 @@ extension RedeemDealViewController {
             self.actionButton.hideLoader()
             
             guard error == nil else {
-                self.showAlertAndDismiss(msg: error?.localizedDescription ?? genericErrorMessage)
-                self.delegate.redeemDealViewController(controller: self, dealRedeemed: error! as NSError, selectedIndex: self.selectedIndex)
+                self.hiddenField.becomeFirstResponder()
+                self.showAlertController(title: "", msg: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
-                self.showAlertAndDismiss(msg: serverError?.errorMessages() ?? genericErrorMessage)
-                self.delegate.redeemDealViewController(controller: self, dealRedeemed: serverError!.nsError(), selectedIndex: self.selectedIndex)
+                self.hiddenField.becomeFirstResponder()
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
                 return
             }
             
