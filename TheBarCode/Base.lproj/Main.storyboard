@@ -927,14 +927,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on a few things you like to get started." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25M-o2-pH9">
-                                <rect key="frame" x="16" y="88" width="343" height="18"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ykJ-nh-xTO" customClass="StatefulCollectionView" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="130" width="375" height="449"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="499"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kg-CU-8Rh">
@@ -981,15 +975,12 @@
                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4Kg-CU-8Rh" firstAttribute="trailing" secondItem="NKK-eE-dCG" secondAttribute="trailing" id="1G0-D7-3F9"/>
-                            <constraint firstItem="25M-o2-pH9" firstAttribute="top" secondItem="NKK-eE-dCG" secondAttribute="top" constant="24" id="2iA-k6-CcB"/>
-                            <constraint firstItem="ykJ-nh-xTO" firstAttribute="top" secondItem="25M-o2-pH9" secondAttribute="bottom" constant="24" id="4F2-Iv-MwH"/>
                             <constraint firstItem="4Kg-CU-8Rh" firstAttribute="top" secondItem="ykJ-nh-xTO" secondAttribute="bottom" id="6Wl-A5-Qz4"/>
                             <constraint firstItem="ykJ-nh-xTO" firstAttribute="trailing" secondItem="NKK-eE-dCG" secondAttribute="trailing" id="Gsh-gd-L0e"/>
                             <constraint firstItem="4Kg-CU-8Rh" firstAttribute="leading" secondItem="NKK-eE-dCG" secondAttribute="leading" id="KAY-Fi-uoh"/>
-                            <constraint firstItem="NKK-eE-dCG" firstAttribute="trailing" secondItem="25M-o2-pH9" secondAttribute="trailing" constant="16" id="TjE-Ym-7s0"/>
-                            <constraint firstItem="25M-o2-pH9" firstAttribute="leading" secondItem="NKK-eE-dCG" secondAttribute="leading" constant="16" id="ibX-39-tAE"/>
                             <constraint firstItem="4Kg-CU-8Rh" firstAttribute="bottom" secondItem="NKK-eE-dCG" secondAttribute="bottom" id="qRB-EE-dsD"/>
                             <constraint firstItem="ykJ-nh-xTO" firstAttribute="leading" secondItem="NKK-eE-dCG" secondAttribute="leading" id="uzI-30-KGc"/>
+                            <constraint firstItem="ykJ-nh-xTO" firstAttribute="top" secondItem="NKK-eE-dCG" secondAttribute="top" constant="16" id="z44-mo-0nb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NKK-eE-dCG"/>
                     </view>
@@ -997,7 +988,6 @@
                     <connections>
                         <outlet property="collectionView" destination="ykJ-nh-xTO" id="IAB-NP-vWX"/>
                         <outlet property="continueButton" destination="EuM-CY-1Vp" id="AYT-gh-5GF"/>
-                        <outlet property="infoLabel" destination="25M-o2-pH9" id="XXC-Yn-y9y"/>
                         <segue destination="PRh-VO-DX3" kind="show" identifier="CategoriesToPermissionSegue" id="zcU-ID-XXz"/>
                     </connections>
                 </viewController>
@@ -4528,7 +4518,7 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z4K-Lu-EoL">
                                 <rect key="frame" x="16" y="90" width="343" height="308"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Your Email Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS4-yw-Sb8">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the activation code here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS4-yw-Sb8">
                                         <rect key="frame" x="24" y="8" width="259" height="51"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="51" id="xfa-iE-aAd"/>
@@ -4567,7 +4557,7 @@ Cg
                                             <constraint firstAttribute="height" constant="44" id="IvQ-jf-2E5"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                                        <state key="normal" title="Confirm">
+                                        <state key="normal" title="Activate your account">
                                             <color key="titleColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -5239,14 +5229,8 @@ Cg
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please tap on a few things you like to get started." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uui-Dd-2Dv">
-                                <rect key="frame" x="16" y="88" width="343" height="18"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-bK-gvd" customClass="StatefulCollectionView" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="130" width="375" height="449"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="499"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Foi-bB-t3T">
@@ -5292,16 +5276,13 @@ Cg
                         </subviews>
                         <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="uui-Dd-2Dv" firstAttribute="top" secondItem="YLJ-C4-emI" secondAttribute="top" constant="24" id="0D0-V0-KHA"/>
-                            <constraint firstItem="YLJ-C4-emI" firstAttribute="trailing" secondItem="uui-Dd-2Dv" secondAttribute="trailing" constant="16" id="3LD-9n-hco"/>
-                            <constraint firstItem="uui-Dd-2Dv" firstAttribute="leading" secondItem="YLJ-C4-emI" secondAttribute="leading" constant="16" id="5og-7Y-1uT"/>
-                            <constraint firstItem="vuc-bK-gvd" firstAttribute="top" secondItem="uui-Dd-2Dv" secondAttribute="bottom" constant="24" id="9Cd-oo-TFn"/>
                             <constraint firstItem="Foi-bB-t3T" firstAttribute="bottom" secondItem="YLJ-C4-emI" secondAttribute="bottom" id="Jis-6t-pLu"/>
                             <constraint firstItem="Foi-bB-t3T" firstAttribute="leading" secondItem="YLJ-C4-emI" secondAttribute="leading" id="KPS-dv-ya0"/>
                             <constraint firstItem="vuc-bK-gvd" firstAttribute="leading" secondItem="YLJ-C4-emI" secondAttribute="leading" id="N0n-jD-XD0"/>
                             <constraint firstItem="vuc-bK-gvd" firstAttribute="trailing" secondItem="YLJ-C4-emI" secondAttribute="trailing" id="Pfv-X2-huk"/>
                             <constraint firstItem="Foi-bB-t3T" firstAttribute="trailing" secondItem="YLJ-C4-emI" secondAttribute="trailing" id="T1C-YU-llD"/>
                             <constraint firstItem="Foi-bB-t3T" firstAttribute="top" secondItem="vuc-bK-gvd" secondAttribute="bottom" id="apv-zK-GOD"/>
+                            <constraint firstItem="vuc-bK-gvd" firstAttribute="top" secondItem="YLJ-C4-emI" secondAttribute="top" constant="16" id="pmp-gs-KzD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YLJ-C4-emI"/>
                     </view>
@@ -5309,7 +5290,6 @@ Cg
                     <connections>
                         <outlet property="collectionView" destination="vuc-bK-gvd" id="r9t-w5-4rb"/>
                         <outlet property="continueButton" destination="69x-qi-87o" id="7BH-gn-qk1"/>
-                        <outlet property="infoLabel" destination="uui-Dd-2Dv" id="CiA-3N-SuB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gAc-Fi-dp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5359,7 +5339,7 @@ Cg
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lFn-an-dqK"/>
-        <segue reference="ofk-tc-f0B"/>
+        <segue reference="zcU-ID-XXz"/>
         <segue reference="zzt-np-QEr"/>
         <segue reference="K4O-bU-rQm"/>
         <segue reference="gfy-jQ-g7J"/>

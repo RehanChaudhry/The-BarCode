@@ -122,6 +122,8 @@ extension NotificationSettingsViewController {
                     editedUser?.fiveADayNotificationEnabled.value = self.fiveADaySwitch.isOn
                     editedUser?.liveOfferNotificationEnabled.value = self.liveOfferSwitch.isOn
                 })
+                
+                self.dismiss(animated: true, completion: nil)
 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -141,5 +143,9 @@ extension NotificationSettingsViewController: CannotRedeemViewControllerDelegate
         } else if self.selectedSwitchType == .liveOfferSwitch {
             self.liveOfferSwitch.isOn = !self.liveOfferSwitch.isOn
         }
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        
     }
 }

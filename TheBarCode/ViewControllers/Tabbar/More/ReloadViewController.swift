@@ -287,7 +287,7 @@ class ReloadViewController: UITableViewController {
             
         } else if self.type == ReloadState.offerRedeemed {
            
-            self.showCustomAlert(title: "Alert", message: "you cannot reload deals at this time try after timer finished.")
+            self.showCustomAlert(title: "Alert", message: "You cannot reload deals at this time try after timer finished.")
             
         } else if self.type == ReloadState.reloadTimerExpire {
            

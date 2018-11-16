@@ -21,8 +21,6 @@ class CategoryFilterViewController: UIViewController {
     
     @IBOutlet var continueButton: GradientButton!
     
-    @IBOutlet var infoLabel: UILabel!
-
     var categories: [Category] = []
     
     var statefulView: LoadingAndErrorView!
@@ -41,7 +39,6 @@ class CategoryFilterViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.title = "Filter by Preferences"
-        self.infoLabel.text = "Select preferences to filter by"
         let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
         self.navigationItem.leftBarButtonItem = cancelBarButton
         

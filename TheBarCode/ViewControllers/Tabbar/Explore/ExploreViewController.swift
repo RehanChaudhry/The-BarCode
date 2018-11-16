@@ -502,4 +502,8 @@ extension ExploreViewController: CannotRedeemViewControllerDelegate {
            self.moveToInvite()
         }
     }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        
+    }
 }

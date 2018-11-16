@@ -60,7 +60,7 @@ class OfferDetailViewController: UIViewController {
         
         self.images = [deal.imageUrl.value]
        
-        self.titleLabel.text = self.deal.subTitle.value
+        self.titleLabel.text = self.deal.subTitle.value.uppercased()
         self.descriptionLabel.text = self.deal.title.value
         
         self.setUpBottomView()
@@ -487,5 +487,9 @@ extension OfferDetailViewController: OfferDetailTableViewCellDelegate{
 //MARK: CannotRedeemViewControllerDelegate
 extension OfferDetailViewController: CannotRedeemViewControllerDelegate {
     func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        
     }
 }

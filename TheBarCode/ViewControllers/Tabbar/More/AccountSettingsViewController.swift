@@ -54,6 +54,8 @@ class AccountSettingsViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
+        self.socialLogoutButton.isHidden = true
+        
         self.profileImageView.layer.borderColor = UIColor.appGradientGrayStart().cgColor
         self.profileImageView.layer.borderWidth = 1.0
         
@@ -224,16 +226,16 @@ class AccountSettingsViewController: UIViewController {
                                    NSAttributedStringKey.foregroundColor : UIColor.white]
             
             let attributedName = NSAttributedString(string: user.fullName.value, attributes: largeAttributes)
-            let attributedInfo = NSAttributedString(string: "connected with Facebook", attributes: smallAttributes)
+            let attributedInfo = NSAttributedString(string: " Connected with Facebook", attributes: smallAttributes)
             
             let attributedString = NSMutableAttributedString()
             attributedString.append(attributedName)
             attributedString.append(attributedInfo)
             self.loginInfoLabel.attributedText = attributedString
-            self.socialLogoutButton.isHidden = false
+//            self.socialLogoutButton.isHidden = false
         } else {
             self.loginInfoLabel.text = user.fullName.value
-            self.socialLogoutButton.isHidden = true
+//            self.socialLogoutButton.isHidden = true
         }
         
         if let profileImageUrl = user.profileImage.value {

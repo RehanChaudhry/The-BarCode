@@ -576,4 +576,8 @@ extension FiveADayViewController: CannotRedeemViewControllerDelegate {
     func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        self.pagerView.automaticSlidingInterval = 4.0
+    }
 }

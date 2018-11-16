@@ -15,6 +15,7 @@ enum CustomAlertType: String {
 
 protocol CannotRedeemViewControllerDelegate: class {
     func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton)
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton)
 }
 
 class CannotRedeemViewController: UIViewController {
@@ -115,7 +116,7 @@ class CannotRedeemViewController: UIViewController {
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-            self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+            self.delegate?.cannotRedeemController(controller: self, crossButtonTapped: sender)
         }
         self.dismiss(animated: true, completion: nil)
     }

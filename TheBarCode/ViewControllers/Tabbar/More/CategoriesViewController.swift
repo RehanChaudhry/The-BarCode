@@ -17,8 +17,6 @@ class CategoriesViewController: UIViewController {
     
     @IBOutlet var continueButton: GradientButton!
     
-    @IBOutlet var infoLabel: UILabel!
-    
     var isUpdating: Bool = false
     
     var categories: [Category] = []
@@ -36,7 +34,6 @@ class CategoriesViewController: UIViewController {
         
         if self.isUpdating {
             self.title = "Update preferences"
-            self.infoLabel.text = "Please update your preferences."
             let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
             self.navigationItem.leftBarButtonItem = cancelBarButton
             
@@ -44,7 +41,6 @@ class CategoriesViewController: UIViewController {
         } else {
             self.title = "Personalize your experience"
             self.navigationItem.hidesBackButton = true
-            self.infoLabel.text = "Please tap on few things you like to get started."
             
             self.continueButton.setTitle("Continue", for: .normal)
         }
