@@ -56,7 +56,7 @@ class ReloadViewController: UITableViewController {
 
         // Do any additional setup after loading the view.
         
-        let coverHeight = ((249.0 / 375.0) * self.view.frame.width)
+        let coverHeight = ((259.0 / 335.0) * self.view.frame.width)
         var headerFrame = headerView.frame
         headerFrame.size.width = self.view.frame.width
         headerFrame.size.height = coverHeight + 100.0

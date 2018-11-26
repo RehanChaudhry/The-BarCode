@@ -19,6 +19,7 @@ protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton)
     func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
+    func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton)
 }
 
 class BarsViewController: ExploreBaseViewController {
@@ -60,6 +61,10 @@ class BarsViewController: ExploreBaseViewController {
     //MARK: My IBActions
     @IBAction func searchButtonTapped(sender: UIButton) {
         self.delegate.barsController(controller: self, searchButtonTapped: sender)
+    }
+    
+    @IBAction func preferenceButtonTapped(sender: UIButton) {
+        self.delegate.barsController(controller: self, preferncesButtonTapped: sender)
     }
 }
 
@@ -228,8 +233,11 @@ extension BarsViewController {
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
         try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-            let editedObject = transaction.edit(bar)
-            editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
+                for bar in bars {
+                    bar.isUserFavourite.value = !bar.isUserFavourite.value
+                }
+            }
         })
         
         cell.setUpCell(bar: bar)

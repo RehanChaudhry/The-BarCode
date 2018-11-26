@@ -300,7 +300,6 @@ class ExploreViewController: UIViewController {
         searchNavigationController.modalTransitionStyle = .crossDissolve
         let searchController = searchNavigationController.viewControllers.first as! SearchViewController
         searchController.searchType = self.exploreType
-        searchController.shouldHidePreferenceButton = self.exploreType == ExploreType.bars
         let _ = searchController.view
         
         if withPreferences {
@@ -422,6 +421,10 @@ extension ExploreViewController: BarsViewControllerDelegate {
     
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton) {
         self.moveToSearch(withPreferences: false)
+    }
+    
+    func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton) {
+        self.moveToSearch(withPreferences: true)
     }
 }
 

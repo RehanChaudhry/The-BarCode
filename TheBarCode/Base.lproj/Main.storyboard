@@ -75,7 +75,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="243"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_invite" translatesAutoresizingMaskIntoConstraints="NO" id="jBN-at-LIP">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_invite" translatesAutoresizingMaskIntoConstraints="NO" id="jBN-at-LIP">
                                     <rect key="frame" x="0.0" y="-64" width="375" height="307"/>
                                 </imageView>
                             </subviews>
@@ -1857,15 +1857,32 @@
                                             <action selector="listButtonTappedWithSender:" destination="zCY-fb-j8p" eventType="touchUpInside" id="fj7-F4-X4X"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neN-IF-BHE">
+                                        <rect key="frame" x="219" y="10" width="36" height="36"/>
+                                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="bDP-r8-F4h"/>
+                                            <constraint firstAttribute="width" constant="36" id="wHP-s8-Wxt"/>
+                                        </constraints>
+                                        <state key="normal" image="icon_preferences_search"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="preferenceButtonTappedWithSender:" destination="zCY-fb-j8p" eventType="touchUpInside" id="dgC-1W-pT0"/>
+                                        </connections>
+                                    </button>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="VFx-BH-hPf">
-                                        <rect key="frame" x="8" y="0.0" width="255" height="56"/>
+                                        <rect key="frame" x="8" y="0.0" width="203" height="56"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="zCY-fb-j8p" id="Wbf-hx-QOO"/>
                                         </connections>
                                     </searchBar>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZ5-l3-izf">
-                                        <rect key="frame" x="8" y="0.0" width="255" height="56"/>
+                                        <rect key="frame" x="8" y="0.0" width="203" height="56"/>
                                         <connections>
                                             <action selector="searchButtonTappedWithSender:" destination="zCY-fb-j8p" eventType="touchUpInside" id="PjP-qL-SpP"/>
                                         </connections>
@@ -1873,6 +1890,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="oIg-R0-Gzl" firstAttribute="leading" secondItem="neN-IF-BHE" secondAttribute="trailing" constant="16" id="2Cm-LT-qVu"/>
                                     <constraint firstItem="VFx-BH-hPf" firstAttribute="leading" secondItem="V5J-aW-r3g" secondAttribute="leading" constant="8" id="922-Nv-TOk"/>
                                     <constraint firstAttribute="bottom" secondItem="VFx-BH-hPf" secondAttribute="bottom" id="JMP-L9-kda"/>
                                     <constraint firstItem="t2t-uF-F9W" firstAttribute="centerY" secondItem="VFx-BH-hPf" secondAttribute="centerY" id="MmZ-Nm-l0n"/>
@@ -1880,12 +1898,13 @@
                                     <constraint firstItem="pZ5-l3-izf" firstAttribute="top" secondItem="V5J-aW-r3g" secondAttribute="top" id="cYF-HA-i7m"/>
                                     <constraint firstItem="oIg-R0-Gzl" firstAttribute="centerY" secondItem="VFx-BH-hPf" secondAttribute="centerY" id="diG-53-l29"/>
                                     <constraint firstItem="pZ5-l3-izf" firstAttribute="leading" secondItem="V5J-aW-r3g" secondAttribute="leading" constant="8" id="evh-A8-cci"/>
+                                    <constraint firstItem="neN-IF-BHE" firstAttribute="centerY" secondItem="V5J-aW-r3g" secondAttribute="centerY" id="hci-lQ-1pL"/>
                                     <constraint firstAttribute="trailing" secondItem="t2t-uF-F9W" secondAttribute="trailing" constant="16" id="lTM-xr-Cgh"/>
                                     <constraint firstAttribute="bottom" secondItem="pZ5-l3-izf" secondAttribute="bottom" id="nkw-KS-Wt4"/>
-                                    <constraint firstItem="oIg-R0-Gzl" firstAttribute="leading" secondItem="pZ5-l3-izf" secondAttribute="trailing" constant="8" id="pfz-FX-2Cg"/>
                                     <constraint firstItem="VFx-BH-hPf" firstAttribute="top" secondItem="V5J-aW-r3g" secondAttribute="top" id="qp7-Uu-NBj"/>
+                                    <constraint firstItem="neN-IF-BHE" firstAttribute="leading" secondItem="VFx-BH-hPf" secondAttribute="trailing" constant="8" id="rNO-Lk-WSf"/>
                                     <constraint firstAttribute="height" constant="56" id="ujE-GV-qd3"/>
-                                    <constraint firstItem="oIg-R0-Gzl" firstAttribute="leading" secondItem="VFx-BH-hPf" secondAttribute="trailing" constant="8" id="zT3-If-7Ro"/>
+                                    <constraint firstItem="neN-IF-BHE" firstAttribute="leading" secondItem="pZ5-l3-izf" secondAttribute="trailing" constant="8" id="zTn-MI-q8w"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIA-UP-hwd">
@@ -1991,6 +2010,7 @@
                         <outlet property="mapButton" destination="t2t-uF-F9W" id="YlD-9R-6NS"/>
                         <outlet property="mapContainer" destination="dLV-1b-Bmi" id="DuE-Fg-7Hw"/>
                         <outlet property="mapView" destination="6rK-vT-PGL" id="Mot-ML-R11"/>
+                        <outlet property="preferencesButton" destination="neN-IF-BHE" id="FgD-xU-PHl"/>
                         <outlet property="scrollView" destination="691-bs-LYe" id="v2O-XU-wR4"/>
                         <outlet property="searchBar" destination="VFx-BH-hPf" id="e2D-lS-cCa"/>
                         <outlet property="searchBarContainer" destination="V5J-aW-r3g" id="nUN-vY-vKk"/>
@@ -2716,7 +2736,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Axy-hU-CQm">
                                     <rect key="frame" x="68" y="24" width="291" height="50.5"/>
                                     <attributedString key="attributedText">
                                         <fragment content="Available Credits: You are out of credit. You can reload previous offers after ">
@@ -2742,14 +2762,14 @@
                                     </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jy-Hr-ZlP">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jy-Hr-ZlP">
                                     <rect key="frame" x="0.0" y="99" width="375" height="1"/>
                                     <color key="backgroundColor" red="0.29803921570000003" green="0.29803921570000003" blue="0.29803921570000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="prO-OJ-Eqa"/>
                                     </constraints>
                                 </view>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner_reload" translatesAutoresizingMaskIntoConstraints="NO" id="rLW-pv-QCV">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="login_intro_reload_7" translatesAutoresizingMaskIntoConstraints="NO" id="rLW-pv-QCV">
                                     <rect key="frame" x="0.0" y="100" width="375" height="249"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
@@ -5310,7 +5330,6 @@ Cg
         </scene>
     </scenes>
     <resources>
-        <image name="banner_reload" width="375" height="249"/>
         <image name="close" width="14" height="14"/>
         <image name="cover_invite" width="375" height="307"/>
         <image name="icon_barcode" width="39" height="48"/>
@@ -5325,6 +5344,7 @@ Cg
         <image name="icon_tab_fiveaday" width="27" height="26"/>
         <image name="icon_tab_invite" width="27" height="26"/>
         <image name="icon_tab_more" width="32" height="9"/>
+        <image name="login_intro_reload_7" width="1005" height="777"/>
         <image name="logo_barcode" width="240" height="92"/>
         <image name="map_example" width="375" height="437"/>
         <image name="profile_image" width="138" height="138"/>

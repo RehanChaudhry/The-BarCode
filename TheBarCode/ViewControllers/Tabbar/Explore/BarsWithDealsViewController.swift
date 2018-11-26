@@ -22,8 +22,6 @@ protocol BarsWithDealsViewControllerDelegate: class {
 
 class BarsWithDealsViewController: ExploreBaseViewController {
 
-    @IBOutlet var preferencesButton: UIButton!
-    
     weak var delegate: BarsWithDealsViewControllerDelegate!
     
     var isClearingSearch: Bool = false
@@ -32,9 +30,6 @@ class BarsWithDealsViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        self.preferencesButton.backgroundColor = self.tempView.backgroundColor
-        self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.searchBar.delegate = self
                 

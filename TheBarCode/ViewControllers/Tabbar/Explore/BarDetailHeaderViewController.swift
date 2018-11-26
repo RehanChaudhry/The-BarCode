@@ -92,8 +92,11 @@ extension BarDetailHeaderViewController {
                                      "is_favorite" : !(self.bar.isUserFavourite.value)]
         
         try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-            let editedObject = transaction.edit(bar)
-            editedObject!.isUserFavourite.value = !editedObject!.isUserFavourite.value
+            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
+                for bar in bars {
+                    bar.isUserFavourite.value = !bar.isUserFavourite.value
+                }
+            }
         })
         
         self.setUpHeader()

@@ -22,8 +22,6 @@ protocol BarsWithLiveOffersViewControllerDelegate: class {
 
 class BarsWithLiveOffersViewController: ExploreBaseViewController {
 
-    @IBOutlet var preferencesButton: UIButton!
-    
     weak var delegate: BarsWithLiveOffersViewControllerDelegate!
     var isClearingSearch: Bool = false
 
@@ -31,9 +29,6 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        self.preferencesButton.backgroundColor = self.tempView.backgroundColor
-        self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
