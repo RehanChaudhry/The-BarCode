@@ -217,7 +217,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     func newVisitReceived(_ visit: CLVisit, description: String) {
         return;
         let content = UNMutableNotificationContent()
-        content.title = "New BarCode entry 📌"
+        content.title = "New BarCode entry 📌📌📌"
         content.body = description
         content.sound = UNNotificationSound.default()
         

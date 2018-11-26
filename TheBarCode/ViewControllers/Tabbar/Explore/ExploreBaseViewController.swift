@@ -78,6 +78,12 @@ class ExploreBaseViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
     //MARK: My Methods
     
     func resetMapListSegment() {

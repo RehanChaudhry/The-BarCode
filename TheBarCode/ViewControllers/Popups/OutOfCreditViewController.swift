@@ -16,6 +16,15 @@ protocol OutOfCreditViewControllerDelegate: class {
 
 class OutOfCreditViewController: UIViewController {
     
+    @IBOutlet var inviteButton: UIButton!
+    @IBOutlet var reloadButton: UIButton!
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var detailLabel: UILabel!
+    
+    var canReload: Bool = true
+    var hasCredits: Bool = false
+    
     weak var delegate: OutOfCreditViewControllerDelegate!
 
     var selectedIndex: Int = NSNotFound
@@ -24,6 +33,26 @@ class OutOfCreditViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if self.hasCredits && self.canReload {
+            
+            self.inviteButton.isHidden = true
+            self.reloadButton.isHidden = false
+            
+            self.titleLabel.text = "Alert"
+            self.detailLabel.text = "Reload now to use Credits and access all offers"
+            
+        } else if self.canReload {
+            self.inviteButton.isHidden = false
+            self.reloadButton.isHidden = false
+            
+            self.detailLabel.text = "Reload now to access all offers and use Credits\nGet more Credits by sharing offers or Inviting Friends"
+        } else {
+            self.reloadButton.isHidden = true
+            self.inviteButton.isHidden = false
+            
+            self.detailLabel.text = "Don’t worry, get more Credits by sharing offers or Inviting Friends"
+        }
     }
 
     override func didReceiveMemoryWarning() {

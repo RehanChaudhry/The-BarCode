@@ -71,6 +71,8 @@ class BarDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        
+        self.setUpBottomView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -137,14 +139,14 @@ class BarDetailViewController: UIViewController {
     }
     
     func setUpBottomView() {
-        if !self.selectedBar.canRedeemOffer.value {
-            self.standardRedeemButton.updateColor(withGrey: true)
-        } else {
+        if self.selectedBar.canRedeemOffer.value {
             self.standardRedeemButton.updateColor(withGrey: false)
+        } else {
+            self.standardRedeemButton.updateColor(withGrey: true)
         }
     }
     
-    func redeemWithUserCredit(credit: Int?){
+    func redeemWithUserCredit(credit: Int?, canReload: Bool) {
         var userCredit: Int!
         
         if credit == nil {
@@ -155,13 +157,25 @@ class BarDetailViewController: UIViewController {
         }
 
         if userCredit > 0 {
-            let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-            creditConsumptionController.delegate = self
-            creditConsumptionController.modalPresentationStyle = .overCurrentContext
-            self.present(creditConsumptionController, animated: true, completion: nil)
+            
+            //If has credits but eligible to reload i.e. timer is zero don't allow to use credit
+            if canReload {
+                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+                outOfCreditViewController.canReload = canReload
+                outOfCreditViewController.hasCredits = true
+                outOfCreditViewController.delegate = self
+                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+                self.present(outOfCreditViewController, animated: true, completion: nil)
+            } else {
+                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+                creditConsumptionController.delegate = self
+                creditConsumptionController.modalPresentationStyle = .overCurrentContext
+                self.present(creditConsumptionController, animated: true, completion: nil)
+            }
             
         } else {
             let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.canReload = canReload
             outOfCreditViewController.delegate = self
             outOfCreditViewController.modalPresentationStyle = .overCurrentContext
             self.present(outOfCreditViewController, animated: true, completion: nil)
@@ -298,6 +312,7 @@ extension BarDetailViewController {
                 self.selectedBar = fetchedObject
                 self.aboutController.reloadData(bar: self.selectedBar)
                 self.headerController.reloadData(bar: self.selectedBar)
+                self.setUpBottomView()
                 
             } else {
                 debugPrint("Unexpected response received while getting establishment")
@@ -343,19 +358,19 @@ extension BarDetailViewController {
         
         self.reloadDataRequest = APIHelper.shared.hitApi(params: param, apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
+            self.standardRedeemButton.hideLoader()
+            
             guard error == nil else {
-                self.redeemWithUserCredit(credit: nil)
+                self.showAlertController(title: "", msg: error!.localizedDescription)
                 debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
                 return
             }
             
             guard serverError == nil else {
-                self.redeemWithUserCredit(credit: nil)
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
                debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
                return
             }
-            
-            self.standardRedeemButton.hideLoader()
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
@@ -365,9 +380,17 @@ extension BarDetailViewController {
                 
                 let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
                 if redeemedCount < 2 {
-                    self.redeemWithUserCredit(credit: credit)
+                    
+                    let redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
+                    
+                    var canReload = false
+                    if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                        canReload = true
+                    }
+                    
+                    self.redeemWithUserCredit(credit: credit, canReload: canReload)
                 } else {
-                    self.showCustomAlert(title: "Alert", message: "Sorry, Your daily limit exceeded for this bar.")
+                    self.showCustomAlert(title: "Alert", message: "You have Redeemed your daily limit for this Bar.\nDon’t worry, come again tomorrow to Redeem more")
                 }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)

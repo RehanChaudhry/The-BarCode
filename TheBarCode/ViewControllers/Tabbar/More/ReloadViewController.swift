@@ -132,10 +132,27 @@ class ReloadViewController: UITableViewController {
         
         self.type = type
         
+        let normalAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 14.0),
+                                NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 14.0),
+                              NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        let blueAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 14.0),
+                              NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
+        
         if type == .noOfferRedeemed {
             
-            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are eligible to redeem all type of offers of any bar/establishment.", timerText: "")
-            self.titleLabel.attributedText = attributedTitle
+            let attributedTitle = NSAttributedString(string: "Ineligible to Reload:", attributes: boldAttributes)
+            let attributedDesc = NSAttributedString(string: "\nYou can start using all offers and credits now.\nYou can reload all offers when the counter hits 0:00:00:00\nInvite friends and share the offers you receive to earn more credits.", attributes: normalAttributes)
+//            let creditsAttributedString = NSMutableAttributedString(string: "\nYou have \(user!.credit) Credits", attributes: normalAttributes)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(attributedTitle)
+            finalAttributedString.append(attributedDesc)
+//            finalAttributedString.append(creditsAttributedString)
+            
+            self.titleLabel.attributedText = finalAttributedString
             
         } else if type == .offerRedeemed {
             
@@ -144,71 +161,37 @@ class ReloadViewController: UITableViewController {
                 return
             }
             
-            let timerText = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
+            let remainingTime = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
-            let descText = user!.credit > 0 ?
-                "You can use the credit from your available credits to redeem all type of offers of any bar/establishment OR you can reload previous offers after:" :
-                "You are out of credits. You can reload previous offers after:"
+            let attributedTitle = NSAttributedString(string: "Ineligible to Reload:", attributes: boldAttributes)
             
-            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: descText, timerText: timerText)
-            self.titleLabel.attributedText = attributedTitle
+            let attributedTimePrefix = NSAttributedString(string: "\nReload all offers in ", attributes: normalAttributes)
+            let attributedTime = NSAttributedString(string: remainingTime, attributes: blueAttributes)
+            let attributedTimePostfix = NSAttributedString(string: " for £1", attributes: normalAttributes)
             
-           /* if user!.credit > 0 {
-                
-                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment OR you can reload previous offers after:", timerText: timerText)
-                self.titleLabel.attributedText = attributedTitle
-                
-            } else {
-                
-                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are out of credits. You can reload previous offers after:", timerText: timerText)
-                self.titleLabel.attributedText = attributedTitle
-            }*/
-            
-        } else if type == .reloadTimerExpire {
-          
-            let fontBold = UIFont.appBoldFontOf(size: 14.0)
-            let attributesBold: [NSAttributedStringKey: Any] = [.font: fontBold,
-                                                                .foregroundColor: UIColor.white]
-            let congratesText = " Congrats you are able to reload."
-
-            let descText = user!.credit > 0 ?
-                            "You can use the credit from your available credits to redeem all type of offers of any bar/establishment." :
-                            "You are out of credits."
-            
-            let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: descText, timerText: "")
-
-            let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
+            let attributedDesc = NSAttributedString(string: "\nIn the meantime, use Credits to redeem all types of offers in any of our Bars\nYou have \(user!.credit) Credits", attributes: normalAttributes)
             
             let finalAttributedString = NSMutableAttributedString()
             finalAttributedString.append(attributedTitle)
-            finalAttributedString.append(attributedText)
+            finalAttributedString.append(attributedTimePrefix)
+            finalAttributedString.append(attributedTime)
+            finalAttributedString.append(attributedTimePostfix)
+            finalAttributedString.append(attributedDesc)
             
             self.titleLabel.attributedText = finalAttributedString
             
-          /*  if user!.credit > 0 {
-                
-                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You can use the credit from your available credits to redeem all type of offers of any bar/establishment.", timerText: "")
-                
-                let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
-                
-                let finalAttributedString = NSMutableAttributedString()
-                finalAttributedString.append(attributedTitle)
-                finalAttributedString.append(attributedText)
-
-                self.titleLabel.attributedText = finalAttributedString
-  
-            } else {
-                let attributedTitle = getAttributeText(prefixText: "Available Credits:", descText: "You are out of credits.", timerText: "")
-                
-                let attributedText = NSMutableAttributedString(string: congratesText, attributes: attributesBold)
-                
-                let finalAttributedString = NSMutableAttributedString()
-                finalAttributedString.append(attributedTitle)
-                finalAttributedString.append(attributedText)
-                
-                self.titleLabel.attributedText = finalAttributedString
-                
-            }*/
+        } else if type == .reloadTimerExpire {
+          
+            let attributedTitle = NSAttributedString(string: "Eligible to Reload:", attributes: boldAttributes)
+            
+            let attributedDesc = NSAttributedString(string: "\nReload all offers now for just £1 and access all your credits\nYou have \(user!.credit) Credits", attributes: normalAttributes)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(attributedTitle)
+            finalAttributedString.append(attributedDesc)
+            
+            self.titleLabel.attributedText = finalAttributedString
+            
         } else {
             debugPrint("Unknown reload state")
         }
@@ -239,43 +222,12 @@ class ReloadViewController: UITableViewController {
         
     }
     
-    func showCustomAlert(title: String, message: String){
+    func showCustomAlert(title: String, message: String) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         self.present(cannotRedeemViewController, animated: true, completion: nil)
-    }
-    
-    func getAttributeText(prefixText: String, descText: String, timerText: String) -> NSMutableAttributedString {
-       
-        let fontRegular = UIFont.appRegularFontOf(size: 14.0)
-        let fontBold = UIFont.appBoldFontOf(size: 14.0)
-        
-        let attributesNormal: [NSAttributedStringKey: Any] = [.font: fontRegular,
-                                                              .foregroundColor: UIColor.white]
-        
-        let attributesBold: [NSAttributedStringKey: Any] = [.font: fontBold,
-                                                            .foregroundColor: UIColor.white]
-        
-        let timerAttributed: [NSAttributedStringKey: Any] = [.font: fontBold,
-                                                             .foregroundColor: UIColor.appBlueColor()]
-        
-        let attributedPrefix = NSMutableAttributedString(string: prefixText, attributes: attributesBold)
-        
-        let attributedDesc = NSMutableAttributedString(string: "\n" + descText, attributes: attributesNormal)
-        let attributedTimer = NSMutableAttributedString(string: "\n" + timerText, attributes: timerAttributed)
-        
-        let finalAttributedString = NSMutableAttributedString()
-        finalAttributedString.append(attributedPrefix)
-        finalAttributedString.append(attributedDesc)
-
-        if timerText != "" {
-            finalAttributedString.append(attributedTimer)
-        }
-        
-        return finalAttributedString
-        
     }
     
     //MARK: My IBActions
@@ -287,7 +239,7 @@ class ReloadViewController: UITableViewController {
             
         } else if self.type == ReloadState.offerRedeemed {
            
-            self.showCustomAlert(title: "Alert", message: "You cannot reload deals at this time try after timer finished.")
+            self.showCustomAlert(title: "Alert", message: "Reload when the timer hits Zero")
             
         } else if self.type == ReloadState.reloadTimerExpire {
            

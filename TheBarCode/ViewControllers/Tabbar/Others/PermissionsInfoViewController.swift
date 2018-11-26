@@ -135,7 +135,7 @@ class PermissionsInfoViewController: UIViewController {
         
         self.permissionsDenied = false
         self.askForPushNotificationPermissions()
-        self.getLocation(requestAlwaysAccess: false)
+        self.getLocation(requestAlwaysAccess: true)
     }
     
     @IBAction func whileUsingAppButtonTapped(sender: UIButton) {

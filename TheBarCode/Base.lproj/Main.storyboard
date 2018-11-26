@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x19-sG-FCr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x19-sG-FCr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -103,9 +103,9 @@
                                                     <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8A-Fd-wa3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f8A-Fd-wa3">
                                                     <rect key="frame" x="16" y="68" width="343" height="67.5"/>
-                                                    <string key="text">Invite your friends to sign up to The Barcode and we'll reward you. Once they've signed up, you get a credit which you can use to claim another 25% discount off your round.</string>
+                                                    <string key="text">Get Rewarded with Credits when you invite friends to join The Barcode. Use those Credits to Redeem unique offers available only to Barcode users. Cheers!</string>
                                                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -116,7 +116,7 @@
                                                         <constraint firstAttribute="height" constant="44" id="qF0-vB-Afv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                                                    <state key="normal" title="Share Invite Code">
+                                                    <state key="normal" title="Share With Contacts">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
@@ -140,7 +140,7 @@
                                                         <constraint firstAttribute="height" constant="44" id="iFz-gy-wKV"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                                                    <state key="normal" title="Invite Contacts">
+                                                    <state key="normal" title="Invite Friends">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
@@ -2964,16 +2964,16 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bo9-IC-9Hs">
-                                <rect key="frame" x="16" y="141.5" width="343" height="384"/>
+                                <rect key="frame" x="16" y="163.5" width="343" height="340"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Opps! You are out of credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKo-za-L4s">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oh no! You are out of Credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKo-za-L4s">
                                         <rect key="frame" x="24" y="24" width="259" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
-                                        <rect key="frame" x="291" y="11.5" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJK-xf-6dW">
+                                        <rect key="frame" x="291" y="12" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="FEB-70-AR3"/>
                                             <constraint firstAttribute="height" constant="44" id="nQW-ve-zdP"/>
@@ -2983,14 +2983,14 @@ Cg
                                             <action selector="closeButtonTapped:" destination="hzU-7e-WgU" eventType="touchUpInside" id="ZSV-az-GNN"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0j7-1B-ziD">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0j7-1B-ziD">
                                         <rect key="frame" x="0.0" y="67.5" width="343" height="1"/>
                                         <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="SjS-RR-mjc"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mwn-FI-aTv">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwn-FI-aTv">
                                         <rect key="frame" x="139.5" y="98.5" width="64" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_barcode" translatesAutoresizingMaskIntoConstraints="NO" id="n9k-eh-YtC">
@@ -3042,7 +3042,7 @@ Cg
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VV-tq-BAI">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VV-tq-BAI">
                                         <rect key="frame" x="24" y="192.5" width="295" height="34"/>
                                         <attributedString key="attributedText">
                                             <fragment content="You do not have enough credit to activate this deal. You can redeem next deal after ">
@@ -3066,14 +3066,8 @@ Cg
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="To activate this deal earlier, please use reload option or invite your friends to get credit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xea-VL-tXZ">
-                                        <rect key="frame" x="24" y="242.5" width="295" height="34"/>
-                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                                        <color key="textColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="aAQ-kn-SKq">
-                                        <rect key="frame" x="24" y="307" width="295" height="44"/>
+                                        <rect key="frame" x="24" y="263" width="295" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVp-PG-1Lb" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="139.5" height="44"/>
@@ -3122,10 +3116,8 @@ Cg
                                 </subviews>
                                 <color key="backgroundColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="aAQ-kn-SKq" firstAttribute="top" secondItem="xea-VL-tXZ" secondAttribute="bottom" constant="30" id="1Y3-EG-oDW"/>
                                     <constraint firstItem="mwn-FI-aTv" firstAttribute="top" secondItem="0j7-1B-ziD" secondAttribute="bottom" constant="30" id="7AU-Ki-aI2"/>
                                     <constraint firstAttribute="trailing" secondItem="aAQ-kn-SKq" secondAttribute="trailing" constant="24" id="Dxd-lK-mm0"/>
-                                    <constraint firstAttribute="trailing" secondItem="xea-VL-tXZ" secondAttribute="trailing" constant="24" id="EjZ-Kh-vdh"/>
                                     <constraint firstAttribute="trailing" secondItem="9VV-tq-BAI" secondAttribute="trailing" constant="24" id="GZE-Nm-XOY"/>
                                     <constraint firstItem="ZKo-za-L4s" firstAttribute="top" secondItem="Bo9-IC-9Hs" secondAttribute="top" constant="24" id="J55-vD-Wua"/>
                                     <constraint firstItem="0j7-1B-ziD" firstAttribute="leading" secondItem="Bo9-IC-9Hs" secondAttribute="leading" id="O6L-sM-6KX"/>
@@ -3135,9 +3127,7 @@ Cg
                                     <constraint firstItem="ZKo-za-L4s" firstAttribute="leading" secondItem="Bo9-IC-9Hs" secondAttribute="leading" constant="24" id="UnA-01-cpg"/>
                                     <constraint firstItem="RJK-xf-6dW" firstAttribute="leading" secondItem="ZKo-za-L4s" secondAttribute="trailing" constant="8" id="aEq-sq-8PG"/>
                                     <constraint firstAttribute="trailing" secondItem="0j7-1B-ziD" secondAttribute="trailing" id="e3l-bT-goA"/>
-                                    <constraint firstItem="xea-VL-tXZ" firstAttribute="leading" secondItem="Bo9-IC-9Hs" secondAttribute="leading" constant="24" id="nuf-Du-P08"/>
-                                    <constraint firstItem="xea-VL-tXZ" firstAttribute="top" secondItem="9VV-tq-BAI" secondAttribute="bottom" constant="16" id="qQn-jL-Hcz"/>
-                                    <constraint firstAttribute="height" constant="384" id="sEp-p7-vGU"/>
+                                    <constraint firstAttribute="height" constant="340" id="sEp-p7-vGU"/>
                                     <constraint firstItem="mwn-FI-aTv" firstAttribute="centerX" secondItem="Bo9-IC-9Hs" secondAttribute="centerX" id="sOF-vA-X2N"/>
                                     <constraint firstAttribute="trailing" secondItem="RJK-xf-6dW" secondAttribute="trailing" constant="8" id="tJT-za-7OL"/>
                                     <constraint firstAttribute="bottom" secondItem="aAQ-kn-SKq" secondAttribute="bottom" constant="33" id="ubX-Fg-Gs5"/>
@@ -3161,6 +3151,12 @@ Cg
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aSC-K7-cCb"/>
                     </view>
+                    <connections>
+                        <outlet property="detailLabel" destination="9VV-tq-BAI" id="fHc-Pt-f3p"/>
+                        <outlet property="inviteButton" destination="mnU-qo-n7F" id="Hne-Si-LdK"/>
+                        <outlet property="reloadButton" destination="aVp-PG-1Lb" id="1tm-pg-7bT"/>
+                        <outlet property="titleLabel" destination="ZKo-za-L4s" id="T41-1m-H0M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UeD-7I-4bN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4213,9 +4209,9 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFa-7a-8gD">
-                                <rect key="frame" x="16" y="173.5" width="343" height="320"/>
+                                <rect key="frame" x="16" y="182" width="343" height="303"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi5-3n-Pie">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi5-3n-Pie">
                                         <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4239,22 +4235,20 @@ Cg
                                             <constraint firstAttribute="height" constant="1" id="MOc-5q-rgQ"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xh8-62-wnO">
-                                        <rect key="frame" x="24" y="92" width="295" height="50.5"/>
-                                        <string key="text">Is the bartender ready? They will need to enter secret BarCode to activate this deal.
-</string>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is the Bartender Ready? They will need to enter their unique BarCode to Redeem this offer." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xh8-62-wnO">
+                                        <rect key="frame" x="24" y="92" width="295" height="34"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The next screen is for the bartender." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Oh-XRB">
-                                        <rect key="frame" x="24" y="162.5" width="295" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The next screen is for the Bartender" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-Oh-XRB">
+                                        <rect key="frame" x="24" y="146" width="295" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W95-ku-uhd" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="24" y="209.5" width="295" height="44"/>
+                                        <rect key="frame" x="24" y="193" width="295" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="5S0-xh-dyg"/>
                                         </constraints>
@@ -4273,7 +4267,7 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8U-xz-gSi">
-                                        <rect key="frame" x="116.5" y="263.5" width="110" height="36.5"/>
+                                        <rect key="frame" x="116.5" y="247" width="110" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="110" id="fGD-Ty-uSh"/>
                                         </constraints>
@@ -4306,7 +4300,7 @@ Cg
                                     <constraint firstAttribute="bottom" secondItem="r8U-xz-gSi" secondAttribute="bottom" constant="20" id="gPj-sE-RXY"/>
                                     <constraint firstAttribute="trailing" secondItem="dbl-Oh-XRB" secondAttribute="trailing" constant="24" id="lUY-5w-cjT"/>
                                     <constraint firstAttribute="trailing" secondItem="xh8-62-wnO" secondAttribute="trailing" constant="24" id="mBu-if-xxu"/>
-                                    <constraint firstAttribute="height" constant="320" id="oeG-cr-9Sa"/>
+                                    <constraint firstAttribute="height" constant="303" id="oeG-cr-9Sa"/>
                                     <constraint firstAttribute="trailing" secondItem="W95-ku-uhd" secondAttribute="trailing" constant="24" id="wAg-m8-aAN"/>
                                     <constraint firstItem="dbl-Oh-XRB" firstAttribute="top" secondItem="xh8-62-wnO" secondAttribute="bottom" constant="20" id="wVD-im-ZU8"/>
                                 </constraints>
@@ -4346,9 +4340,9 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeK-0b-UVT">
-                                <rect key="frame" x="16" y="90" width="343" height="281"/>
+                                <rect key="frame" x="16" y="90" width="343" height="264"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redeem deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-VI-ZkD">
                                         <rect key="frame" x="24" y="8" width="259" height="51"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="51" id="BvS-z4-w2o"/>
@@ -4375,14 +4369,14 @@ Cg
                                             <constraint firstAttribute="height" constant="1" id="li5-we-Foa"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please ask bartender to enter 4 digits BarCode to activate this deal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
-                                        <rect key="frame" x="24" y="92" width="295" height="34"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your 4 digit code below" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-EY-GyF">
+                                        <rect key="frame" x="24" y="92" width="295" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-d2-h0A" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="24" y="207" width="295" height="44"/>
+                                        <rect key="frame" x="24" y="190" width="295" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="lJR-hJ-REm"/>
                                         </constraints>
@@ -4412,19 +4406,19 @@ Cg
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UBR-2B-G3S">
-                                        <rect key="frame" x="24" y="140" width="67" height="51"/>
+                                        <rect key="frame" x="24" y="123" width="67" height="51"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9EA-A4-L1n">
-                                        <rect key="frame" x="99" y="140" width="67" height="51"/>
+                                        <rect key="frame" x="99" y="123" width="67" height="51"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ziw-0K-R9P">
-                                        <rect key="frame" x="251" y="140" width="67" height="51"/>
+                                        <rect key="frame" x="251" y="123" width="67" height="51"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dsy-G7-WMi">
-                                        <rect key="frame" x="175" y="140" width="67" height="51"/>
+                                        <rect key="frame" x="175" y="123" width="67" height="51"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -4448,7 +4442,7 @@ Cg
                                     <constraint firstItem="q3P-VI-ZkD" firstAttribute="leading" secondItem="aeK-0b-UVT" secondAttribute="leading" constant="24" id="M2k-m4-M9j"/>
                                     <constraint firstItem="Dsy-G7-WMi" firstAttribute="top" secondItem="qz2-EY-GyF" secondAttribute="bottom" constant="14" id="NT3-BO-a37"/>
                                     <constraint firstItem="8oD-d2-h0A" firstAttribute="top" secondItem="Ziw-0K-R9P" secondAttribute="bottom" constant="16" id="R3W-VV-BWF"/>
-                                    <constraint firstAttribute="height" constant="281" id="SlR-R8-uDv"/>
+                                    <constraint firstAttribute="height" constant="264" id="SlR-R8-uDv"/>
                                     <constraint firstItem="8oD-d2-h0A" firstAttribute="top" secondItem="Dsy-G7-WMi" secondAttribute="bottom" constant="16" id="TYq-D4-tuF"/>
                                     <constraint firstItem="Ziw-0K-R9P" firstAttribute="top" secondItem="qz2-EY-GyF" secondAttribute="bottom" constant="14" id="V0r-BH-AhQ"/>
                                     <constraint firstItem="ufb-bU-Qte" firstAttribute="top" secondItem="vda-ZN-sHK" secondAttribute="bottom" constant="11.5" id="g7n-GT-L0C"/>
@@ -4682,9 +4676,9 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VM8-eH-3HQ">
-                                <rect key="frame" x="16" y="224" width="343" height="219"/>
+                                <rect key="frame" x="16" y="233" width="343" height="201"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consume Credit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiS-Jo-joG">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Credit to Redeem this deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LiS-Jo-joG">
                                         <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -4708,14 +4702,14 @@ Cg
                                             <constraint firstAttribute="height" constant="1" id="jy5-8g-T3a"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to consume your credits for deal redemption?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUj-ZK-hBs">
-                                        <rect key="frame" x="24" y="92" width="295" height="34"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUj-ZK-hBs">
+                                        <rect key="frame" x="24" y="92" width="295" height="17"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGu-n1-GSb" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="24" y="151" width="139.5" height="44"/>
+                                        <rect key="frame" x="24" y="133" width="139.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="3DH-gW-VdA"/>
                                         </constraints>
@@ -4734,7 +4728,7 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zim-UB-2K3" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                        <rect key="frame" x="179" y="151" width="139.5" height="44"/>
+                                        <rect key="frame" x="179" y="133" width="139.5" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Z5l-Jx-Z6U"/>
                                         </constraints>
@@ -4757,7 +4751,7 @@ Cg
                                 <constraints>
                                     <constraint firstItem="RG2-VF-Q6m" firstAttribute="leading" secondItem="LiS-Jo-joG" secondAttribute="trailing" constant="8" id="AZb-pT-XPO"/>
                                     <constraint firstItem="LiS-Jo-joG" firstAttribute="leading" secondItem="VM8-eH-3HQ" secondAttribute="leading" constant="24" id="B43-LP-ggV"/>
-                                    <constraint firstAttribute="height" constant="219" id="DxV-Ik-pMS"/>
+                                    <constraint firstAttribute="height" constant="201" id="DxV-Ik-pMS"/>
                                     <constraint firstItem="2jw-M7-g7o" firstAttribute="top" secondItem="LiS-Jo-joG" secondAttribute="bottom" constant="24" id="Ebp-5W-RaD"/>
                                     <constraint firstAttribute="trailing" secondItem="RUj-ZK-hBs" secondAttribute="trailing" constant="24" id="Ff8-cf-jih"/>
                                     <constraint firstItem="RG2-VF-Q6m" firstAttribute="centerY" secondItem="LiS-Jo-joG" secondAttribute="centerY" id="Hos-8n-sFj"/>
@@ -4807,7 +4801,7 @@ Cg
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmB-V3-hBj">
                                 <rect key="frame" x="16" y="224" width="343" height="219"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already Redeemed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31w-ht-si8">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already Redeemed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31w-ht-si8">
                                         <rect key="frame" x="24" y="24" width="259" height="19"/>
                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

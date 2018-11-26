@@ -8,13 +8,15 @@
 
 import UIKit
 import Reusable
+import MGSwipeTableCell
 
 protocol ShareOfferCellDelegate: class {
     func shareOfferCell(cell: ShareOfferCell, viewBarDetailButtonTapped sender: UIButton)
     func shareOfferCell(cell: ShareOfferCell, viewDirectionButtonTapped sender: UIButton)
+    func shareOfferCell(cell: ShareOfferCell, deleteButtonTapped sender: MGSwipeButton)
 }
 
-class ShareOfferCell: UITableViewCell, NibReusable {
+class ShareOfferCell: MGSwipeTableCell, NibReusable {
 
     @IBOutlet var coverImageView: AsyncImageView!
     @IBOutlet var offerTitleLabel: UILabel!    
@@ -23,7 +25,7 @@ class ShareOfferCell: UITableViewCell, NibReusable {
     @IBOutlet var distanceButton: UIButton!
     @IBOutlet var sharedByLabel: UILabel!
     
-    weak var delegate : ShareOfferCellDelegate!
+    weak var sharingDelegate : ShareOfferCellDelegate!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +53,12 @@ class ShareOfferCell: UITableViewCell, NibReusable {
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         self.offerTypeLabel.attributedText = self.attributedString(prefixText: "Offer type: " ,Text: (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased())
         self.sharedByLabel.attributedText =  self.attributedString(prefixText: "Shared by: ", Text:  offer.sharedByName.value ?? "")
+        
+        let deleteButton = MGSwipeButton(title: "", icon: UIImage(named: "icon_trash"), backgroundColor: nil) { (cell) -> Bool in
+            self.sharingDelegate.shareOfferCell(cell: cell as! ShareOfferCell, deleteButtonTapped: cell.rightButtons.first as! MGSwipeButton)
+            return true
+        }
+        self.rightButtons = [deleteButton]
     }
     
     func setUpCell(offer: LiveOffer) {
@@ -62,6 +70,11 @@ class ShareOfferCell: UITableViewCell, NibReusable {
         self.offerTypeLabel.attributedText = self.attributedString(prefixText: "Offer Type: " ,Text: (Utility.shared.checkDealType(offerTypeID: offer.offerTypeId.value)).rawValue.uppercased())
         self.sharedByLabel.attributedText =  self.attributedString(prefixText: "Shared by: ", Text:  offer.sharedByName.value ?? "")
         
+        let deleteButton = MGSwipeButton(title: "", icon: UIImage(named: "icon_trash"), backgroundColor: nil) { (cell) -> Bool in
+            self.sharingDelegate.shareOfferCell(cell: cell as! ShareOfferCell, deleteButtonTapped: cell.rightButtons.first as! MGSwipeButton)
+            return true
+        }
+        self.rightButtons = [deleteButton]
     }
     
     func attributedString(prefixText: String, Text: String) -> NSMutableAttributedString {
@@ -81,11 +94,11 @@ class ShareOfferCell: UITableViewCell, NibReusable {
     }
     
     @IBAction func barNameButtonTapped(_ sender: UIButton) {
-        self.delegate.shareOfferCell(cell: self, viewBarDetailButtonTapped: sender)
+        self.sharingDelegate.shareOfferCell(cell: self, viewBarDetailButtonTapped: sender)
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
-        self.delegate.shareOfferCell(cell: self, viewDirectionButtonTapped: sender)
+        self.sharingDelegate.shareOfferCell(cell: self, viewDirectionButtonTapped: sender)
 
     }
     

@@ -26,8 +26,8 @@ target 'TheBarCode' do
   pod 'Fabric', '~> 1.7.13'
   pod 'Crashlytics', '~> 3.10.9'
   pod 'OneSignal', '~> 2.9.0'
-
-  
+  pod 'MGSwipeTableCell', '~> 1.6.7'
+  pod 'GBDeviceInfo', '~> 5.5.0'
   
   target 'TheBarCodeTests' do
     inherit! :search_paths

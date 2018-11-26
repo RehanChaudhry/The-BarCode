@@ -40,6 +40,9 @@ PODS:
     - GoogleUtilities/Environment (~> 5.3)
     - GoogleUtilities/UserDefaults (~> 5.3)
   - FSPagerView (0.7.2)
+  - GBDeviceInfo (5.5.0):
+    - GBDeviceInfo/Core (= 5.5.0)
+  - GBDeviceInfo/Core (5.5.0)
   - GoogleAppMeasurement (5.2.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -72,6 +75,7 @@ PODS:
   - Gradientable (0.0.2)
   - HTTPStatusCodes (3.2.0)
   - KeychainAccess (3.1.2)
+  - MGSwipeTableCell (1.6.7)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -103,10 +107,12 @@ DEPENDENCIES:
   - FBSDKLoginKit (~> 4.37.0)
   - Firebase/DynamicLinks (~> 5.10.0)
   - FSPagerView (~> 0.7.2)
+  - GBDeviceInfo (~> 5.5.0)
   - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
   - HTTPStatusCodes (~> 3.2.0)
   - KeychainAccess (~> 3.1.2)
+  - MGSwipeTableCell (~> 1.6.7)
   - ObjectMapper (~> 3.3.0)
   - OneSignal (~> 2.9.0)
   - PureLayout (~> 3.1.2)
@@ -135,12 +141,14 @@ SPEC REPOS:
     - FirebaseDynamicLinks
     - FirebaseInstanceID
     - FSPagerView
+    - GBDeviceInfo
     - GoogleAppMeasurement
     - GoogleMaps
     - GoogleUtilities
     - Gradientable
     - HTTPStatusCodes
     - KeychainAccess
+    - MGSwipeTableCell
     - nanopb
     - ObjectMapper
     - OneSignal
@@ -169,12 +177,14 @@ SPEC CHECKSUMS:
   FirebaseDynamicLinks: 33f349103fa71d463688b7671e6a60e00ac6a5af
   FirebaseInstanceID: 78ba376fcd5b94c001f9999b2cbd3d1f1e56e78d
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
+  GBDeviceInfo: 2defa79ae86cd5d2ae96336c73b77583fe567583
   GoogleAppMeasurement: 2b3a023a61239c8d002e6e4fcf4abce8eddce0e0
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GoogleUtilities: 82f04aeff8426309dbdbc75f6c8accd1e584a5da
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
   HTTPStatusCodes: 69f50d229c4b5d6dcb48fad9c86e32ded975bcd3
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   OneSignal: a506e3bc61d2030f0757faf9bd783a9b211c6e3c
@@ -188,6 +198,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 5a675e877c780e02118ec8ffa12ded27b235aad3
+PODFILE CHECKSUM: 747d119da1cbe3b73753ac2b4c4de64c4d720967
 
 COCOAPODS: 1.5.3

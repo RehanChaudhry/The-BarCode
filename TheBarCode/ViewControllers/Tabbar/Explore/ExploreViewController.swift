@@ -171,6 +171,7 @@ class ExploreViewController: UIViewController {
             self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
             
             self.startReloadTimer()
+            self.updateReloadTimer(sender: self.reloadTimer!)
         } else if type == .congrates {
             self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
@@ -179,13 +180,21 @@ class ExploreViewController: UIViewController {
     }
     
     func showCustomAlert(title: String, message: String, typeCredit: Bool) {
+        
+        var redeemInfoCopy: RedeemInfo?
+        if let redeemInfo = self.redeemInfo {
+            redeemInfoCopy = RedeemInfo()
+            redeemInfoCopy!.isFirstRedeem = redeemInfo.isFirstRedeem
+            redeemInfoCopy!.remainingSeconds = redeemInfo.remainingSeconds
+        }
+        
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.delegate = self
         cannotRedeemViewController.alertType = typeCredit ? .credit : .normal
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
-        cannotRedeemViewController.redeemInfo = self.redeemInfo
+        cannotRedeemViewController.redeemInfo = redeemInfoCopy
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     
@@ -195,7 +204,7 @@ class ExploreViewController: UIViewController {
         if type == .discount {
             return (title: "Discount" , message: "Not excited about any deals? Get a discount on your first drink within each establishment!")
         } else if type == .reload {
-            return (title: "Reloads in" , message: "You will be able to reload when the timer ends. It will allow you then redeem an offer from the same establishment again")
+            return (title: "Reload in" , message: "When the timer hits Zero Reload all used offers and access Credits for just £1\nYou are eligible to Reload every 7 days")
         } else if type == .congrates {
             return (title: "Reload" , message: "You are able to reload")
         }
@@ -479,7 +488,13 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
 //MARK: SnackbarViewDelegate
 extension ExploreViewController:  SnackbarViewDelegate {
     func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
-        self.showCustomAlert(title: "Credit", message: "You can use credits to redeem offers if your reload counter is still running. Invite your friends to the app to earn credits when they redeem.", typeCredit: true)
+        
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("User not saved")
+            return
+        }
+        
+        self.showCustomAlert(title: "You have \(user.credit) Credits", message: "Use Credits to Redeem unique Barcode offers. Share offers and invite friends and we will reward you with more Credits", typeCredit: true)
     }
     
     func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {

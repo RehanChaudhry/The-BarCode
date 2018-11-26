@@ -28,8 +28,6 @@ class BarDetailHeaderViewController: UIViewController {
     
     var bar: Bar!
     
-    var images: [String] = ["cover_detail", "cover_detail", "cover_detail"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

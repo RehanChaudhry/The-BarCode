@@ -114,22 +114,27 @@ extension RedeemDealViewController {
                     
                     if self.type == .standard {
                         try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                            let editedObject = transaction.edit(self.bar)
-                            editedObject!.canRedeemOffer.value = false
+                            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.bar.id.value)) {
+                                for bar in bars {
+                                    bar.canRedeemOffer.value = false
+                                }
+                            } else {
+                                debugPrint("Bars not found while redeeming standard offer")
+                            }
                         })
                     } else {
                         try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                            let editedObject = transaction.edit(self.deal)
-                            editedObject!.establishment.value!.canRedeemOffer.value = false
+                            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishment.value!.id.value)) {
+                                for bar in bars {
+                                    bar.canRedeemOffer.value = false
+                                }
+                            } else {
+                                debugPrint("Bars not found while redeeming deal")
+                            }
                         })
                     }
                     
-                    
-                    if redeemWithCredit {
-                       // Utility.shared.userCreditConsumed()
-                    }
-             
-                    let msg = responseObj["message"] as! String
+                    let msg = "Success! Offer Redeemed"
                     let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
                         

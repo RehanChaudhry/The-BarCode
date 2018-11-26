@@ -49,6 +49,11 @@ class CannotRedeemViewController: UIViewController {
         
         if alertType == .credit {
             actionButton.setTitle("Invite Friends & Get Credits", for: .normal)
+        } else {
+            if let redeemInfo = self.redeemInfo, redeemInfo.remainingSeconds > 0 {
+                self.startReloadTimer()
+                self.self.updateReloadTimer(sender: self.reloadTimer!)
+            }
         }
         
         //as timer not to show
@@ -93,17 +98,15 @@ class CannotRedeemViewController: UIViewController {
             self.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
         } else {
             self.reloadTimer?.invalidate()
-            self.hideTimer()
+            self.reloadTimerLabel.text = "Reload in"
+            
+            self.dismiss(animated: true, completion: nil)
         }
         
     }
     
     func updateTimer(remainingSeconds: Int) {
-        self.reloadTimerLabel.text = "\(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))"
-    }
-    
-    func hideTimer() {
-        self.reloadTimerLabel.text = ""
+        self.titleLabel.text = "Reload in: \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))"
     }
     
     //MARK: IBActions

@@ -145,7 +145,7 @@ class FiveADayViewController: UIViewController {
     }
     
     
-    func redeemWithUserCredit(credit: Int?, index: Int) {
+    func redeemWithUserCredit(credit: Int?, index: Int, canReload: Bool) {
         var userCredit: Int!
         
         if credit == nil {
@@ -155,17 +155,29 @@ class FiveADayViewController: UIViewController {
             userCredit = credit!
         }
         
+        self.pagerView.automaticSlidingInterval = 0.0
         if userCredit > 0 {
-            self.pagerView.automaticSlidingInterval = 0.0
-            let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
-            creditConsumptionController.delegate = self
-            creditConsumptionController.modalPresentationStyle = .overCurrentContext
-            creditConsumptionController.selectedIndex = index
-            self.present(creditConsumptionController, animated: true, completion: nil)
+            
+            //If has credits but eligible to reload i.e. timer is zero don't allow to use credit
+            if canReload {
+                let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+                outOfCreditViewController.canReload = canReload
+                outOfCreditViewController.hasCredits = true
+                outOfCreditViewController.delegate = self
+                outOfCreditViewController.modalPresentationStyle = .overCurrentContext
+                outOfCreditViewController.selectedIndex = index
+                self.present(outOfCreditViewController, animated: true, completion: nil)
+            } else {
+                let creditConsumptionController = self.storyboard?.instantiateViewController(withIdentifier: "CreditCosumptionViewController") as! CreditCosumptionViewController
+                creditConsumptionController.delegate = self
+                creditConsumptionController.modalPresentationStyle = .overCurrentContext
+                creditConsumptionController.selectedIndex = index
+                self.present(creditConsumptionController, animated: true, completion: nil)
+            }
             
         } else {
-            self.pagerView.automaticSlidingInterval = 0.0
             let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
+            outOfCreditViewController.canReload = canReload
             outOfCreditViewController.delegate = self
             outOfCreditViewController.modalPresentationStyle = .overCurrentContext
             outOfCreditViewController.selectedIndex = index
@@ -313,21 +325,21 @@ extension FiveADayViewController {
         
         self.reloadDataRequest = APIHelper.shared.hitApi(params: param, apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             
+            deal.showLoader = false
+            self.pagerView.reloadData()
+            
             guard error == nil else {
-                self.redeemWithUserCredit(credit: nil, index: index)
+                self.showAlertController(title: "", msg: error!.localizedDescription)
                 debugPrint("Error while getting reload status \(String(describing: error?.localizedDescription))")
                 return
             }
             
             guard serverError == nil else {
-                self.redeemWithUserCredit(credit: nil, index: index)
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
                 debugPrint("Error while getting reload status \(String(describing: serverError?.errorMessages()))")
                 return
             }
             
-            deal.showLoader = false
-            self.pagerView.reloadData()
-
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let redeemInfoDict = (responseDict?["data"] as? [String : Any]) {
                 
@@ -339,9 +351,15 @@ extension FiveADayViewController {
                 
                 let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
                 if redeemedCount < 2 {
-                    self.redeemWithUserCredit(credit: credit, index: index)
+                    let redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
+                    
+                    var canReload = false
+                    if !redeemInfo.isFirstRedeem && redeemInfo.remainingSeconds == 0 {
+                        canReload = true
+                    }
+                    self.redeemWithUserCredit(credit: credit, index: index, canReload: canReload)
                 } else {
-                    self.showCustomAlert(title: "", message: "Sorry, Your daily limit exceeded for this bar.")
+                    self.showCustomAlert(title: "Alert", message: "You have Redeemed your daily limit for this Bar.\nDon’t worry, come again tomorrow to Redeem more")
                 }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)

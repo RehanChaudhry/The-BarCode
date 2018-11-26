@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,11 +30,11 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pe7-C3-eRM" customClass="GradientView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="20" y="8" width="335" height="484"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_intro_1" translatesAutoresizingMaskIntoConstraints="NO" id="zKq-Cm-kmc">
-                                <rect key="frame" x="0.0" y="0.0" width="335" height="342"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_intro_1" translatesAutoresizingMaskIntoConstraints="NO" id="zKq-Cm-kmc">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="384"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Avy-BT-X1D">
-                                <rect key="frame" x="0.0" y="353" width="335" height="131"/>
+                                <rect key="frame" x="0.0" y="384" width="335" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bar Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJx-JH-xzD">
                                         <rect key="frame" x="8" y="15" width="319" height="22"/>
@@ -46,7 +46,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmR-V8-Cp6">
-                                        <rect key="frame" x="8" y="45" width="319" height="71"/>
+                                        <rect key="frame" x="8" y="45" width="319" height="40"/>
                                         <string key="text">Looking for the ultimate boozer for your night out? Use our map and browser to check out a list of the top independent pubs and bars in your neck of the woods.</string>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -62,17 +62,18 @@
                                     <constraint firstAttribute="bottom" secondItem="cmR-V8-Cp6" secondAttribute="bottom" constant="15" id="Wwv-Xa-amB"/>
                                     <constraint firstItem="gJx-JH-xzD" firstAttribute="leading" secondItem="Avy-BT-X1D" secondAttribute="leading" constant="8" id="Z6V-s9-IeY"/>
                                     <constraint firstItem="gJx-JH-xzD" firstAttribute="top" secondItem="Avy-BT-X1D" secondAttribute="top" constant="15" id="fCV-En-4dZ"/>
-                                    <constraint firstAttribute="height" constant="131" id="p1X-vE-vVY"/>
+                                    <constraint firstAttribute="height" constant="100" id="p1X-vE-vVY"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Avy-BT-X1D" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="F25-WZ-ip2"/>
+                            <constraint firstAttribute="trailing" secondItem="zKq-Cm-kmc" secondAttribute="trailing" id="FuP-cZ-ofH"/>
                             <constraint firstAttribute="bottom" secondItem="Avy-BT-X1D" secondAttribute="bottom" id="OA5-vu-d2S"/>
-                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="top" secondItem="Pe7-C3-eRM" secondAttribute="top" id="Qod-nD-Bcw"/>
-                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="cNU-aI-nKj"/>
-                            <constraint firstAttribute="trailing" secondItem="zKq-Cm-kmc" secondAttribute="trailing" id="ksK-Zy-quL"/>
+                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="top" secondItem="Pe7-C3-eRM" secondAttribute="top" id="QLz-by-c4i"/>
+                            <constraint firstItem="zKq-Cm-kmc" firstAttribute="leading" secondItem="Pe7-C3-eRM" secondAttribute="leading" id="RbW-We-SDD"/>
+                            <constraint firstItem="Avy-BT-X1D" firstAttribute="top" secondItem="zKq-Cm-kmc" secondAttribute="bottom" id="rPB-ih-fSJ"/>
                             <constraint firstAttribute="trailing" secondItem="Avy-BT-X1D" secondAttribute="trailing" id="wr9-GY-xgu"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -97,7 +98,7 @@
                 <outlet property="detailLabel" destination="cmR-V8-Cp6" id="tYm-u0-4eg"/>
                 <outlet property="titleLabel" destination="gJx-JH-xzD" id="uNR-EV-nYg"/>
             </connections>
-            <point key="canvasLocation" x="46.5" y="54"/>
+            <point key="canvasLocation" x="45.600000000000001" y="53.973013493253376"/>
         </collectionViewCell>
     </objects>
     <resources>

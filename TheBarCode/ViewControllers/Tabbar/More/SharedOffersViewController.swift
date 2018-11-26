@@ -11,7 +11,7 @@ import Alamofire
 import StatefulTableView
 import ObjectMapper
 import CoreStore
-
+import MGSwipeTableCell
 
 
 class SharedOffersViewController: UIViewController {
@@ -113,7 +113,7 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ShareOfferCell.self)
-        cell.delegate = self
+        cell.sharingDelegate = self
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
             cell.setUpCell(offer: liveOffer)
         } else if let deal = self.offers[indexPath.row] as? Deal {
@@ -206,6 +206,33 @@ extension SharedOffersViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 completion(genericError)
             }
+        }
+    }
+    
+    func deleteSharedOffer(offer: Any) {
+        
+        var sharedId: String = ""
+        if let liveOffer = offer as? LiveOffer {
+            sharedId = liveOffer.sharedId.value!
+        } else if let deal = offer as? Deal {
+            sharedId = deal.sharedId.value!
+        }
+        
+        let deleteSharedOffer = apiPathSharedOffers + "/" + sharedId
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: deleteSharedOffer, method: .delete) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while deleting shared offer: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Server error while deleting shared offer: \(serverError!.errorMessages())")
+                return
+            }
+            
+            debugPrint("shared offer has been deleted: \(sharedId)")
+            
         }
     }
 }
@@ -316,6 +343,20 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
         } else {
             debugPrint("indexpath for cell not found")
         }
+    }
+    
+    func shareOfferCell(cell: ShareOfferCell, deleteButtonTapped sender: MGSwipeButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        let sharedOffer = self.offers[indexPath.row]
+        
+        self.offers.remove(at: indexPath.row)
+        self.statefulTableView.innerTable.deleteRows(at: [indexPath], with: .top)
+        
+        self.deleteSharedOffer(offer: sharedOffer)
     }
 }
 
