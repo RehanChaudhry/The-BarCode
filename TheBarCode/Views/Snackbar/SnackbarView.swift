@@ -27,16 +27,24 @@ protocol SnackbarViewDelegate: class {
 class SnackbarView: GradientView, NibLoadable {
 
     @IBOutlet var discountInfoView: UIView!
-    
     @IBOutlet var discountInfoLabel: UILabel!
     
     @IBOutlet var reloadInfoView: UIView!
     @IBOutlet var reloadInfoLabel: UILabel!
     @IBOutlet var reloadTimerLabel: UILabel!
     
+    @IBOutlet weak var congratesInfoView: UIView!
+    @IBOutlet weak var congratesInfoLabel: UILabel!
+    
+    
+    //Reload time Credit View
     @IBOutlet var creditsLeftView: UIView!
     @IBOutlet var creditsLeftButton: UIButton!
     
+    //for congrates credit views
+    @IBOutlet weak var congratesCreditsLeftView: UIView!
+    @IBOutlet weak var congratesCreditsLeftButton: UIButton!
+  
     weak var delegate: SnackbarViewDelegate!
 
     var type: SnackbarType = .discount
@@ -71,20 +79,26 @@ class SnackbarView: GradientView, NibLoadable {
         
         let user = Utility.shared.getCurrentUser()
         self.creditsLeftButton.setTitle("\(user!.credit)", for: .normal)
-        
+
         if type == .discount {
             self.reloadInfoView.isHidden = true
+            self.congratesInfoView.isHidden = true
             self.discountInfoView.isHidden = false
             self.discountInfoLabel.text = "GET 25% OFF YOUR FIRST ROUND"
 
         } else if type == .reload {
             self.reloadInfoView.isHidden = false
+            self.congratesInfoView.isHidden = true
             self.discountInfoView.isHidden = true
             self.reloadInfoLabel.text = "RELOAD IN "
+
         } else if type == .congrates {
             self.reloadInfoView.isHidden = true
-            self.discountInfoView.isHidden = false
-            self.discountInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
+            self.discountInfoView.isHidden = true
+            self.congratesInfoView.isHidden = false
+            self.congratesInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
+            self.congratesCreditsLeftButton.setTitle("\(user!.credit)", for: .normal)
+
         }
         
         self.gradientType = gradientType

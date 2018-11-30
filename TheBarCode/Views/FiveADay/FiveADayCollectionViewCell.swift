@@ -23,16 +23,15 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var shadowView: ShadowView!
     
+    @IBOutlet weak var barTitleButton: UIButton!
     @IBOutlet var coverImageView: AsyncImageView!
     
     @IBOutlet var dealTitleButton: UIButton!
     @IBOutlet var dealSubTitleButton: UIButton!
     
     @IBOutlet var dealDetailLabel: UILabel!
-    
     @IBOutlet var barNameButton: UIButton!
     @IBOutlet var distanceLabel: UILabel!
-    
     @IBOutlet var redeemButton: GradientButton!
     
     @IBOutlet var shareButtonContainer: ShadowView!
@@ -83,8 +82,9 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
         self.dealTitleButton.setTitle(deal.subTitle.value.uppercased(), for: .normal)
         self.dealSubTitleButton.setTitle(deal.title.value, for: .normal)
-        self.dealDetailLabel.text =  deal.detail.value
+        self.dealDetailLabel.text = deal.detail.value
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
+    self.barTitleButton.setTitle(deal.establishment.value!.title.value.uppercased(), for: .normal)
         
         if let distance = deal.establishment.value?.distance {
             self.distanceLabel.isHidden = false
