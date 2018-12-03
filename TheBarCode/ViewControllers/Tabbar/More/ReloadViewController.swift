@@ -27,12 +27,11 @@ class ReloadViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var headerView: UIView!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
     
     @IBOutlet var footerView: UIView!
     @IBOutlet weak var creditsLabel: UILabel!
     @IBOutlet var reloadButton: GradientButton!
-
+    
     var isRedeemingDeal: Bool = false
     
     weak var delegate: ReloadViewControllerDelegate?
@@ -56,12 +55,15 @@ class ReloadViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        let coverHeight = ((259.0 / 335.0) * self.view.frame.width)
-        var headerFrame = headerView.frame
-        headerFrame.size.width = self.view.frame.width
-        headerFrame.size.height = coverHeight + 100.0
-        headerView.frame = headerFrame
+        //if not iphone5
+        if !(UIScreen.main.bounds.size.height <= 568.0) {
+            let coverHeight = ((239.0 / 315.0) * self.view.frame.width)
+            var headerFrame = headerView.frame
+            headerFrame.size.width = self.view.frame.width
+            headerFrame.size.height = coverHeight + 100.0
+            headerView.frame = headerFrame
+        }
+
         
         self.view.backgroundColor = UIColor.appBgGrayColor()
         self.headerView.backgroundColor = UIColor.clear
@@ -141,21 +143,21 @@ class ReloadViewController: UIViewController {
        
         if type == .noOfferRedeemed {
             
-            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
                                   NSAttributedStringKey.foregroundColor: UIColor.white]
             
-            let attributedTitle = NSAttributedString(string: "Ineligible to Reload ", attributes: boldAttributes)
-            
-            let finalAttributedString = NSMutableAttributedString()
-            finalAttributedString.append(attributedTitle)
-            
-            self.titleLabel.attributedText = finalAttributedString
+            let attributedTitle = NSAttributedString(string: "Ineligible to Reload\n", attributes: boldAttributes)
             
             let boldSubTitleAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 15.0),
                                           NSAttributedStringKey.foregroundColor: UIColor.white]
             
             let attributedSubTitle = NSAttributedString(string: "You can start using all offers and credits now.", attributes: boldSubTitleAttributes)
-            self.subTitleLabel.attributedText = attributedSubTitle
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(attributedTitle)
+            finalAttributedString.append(attributedSubTitle)
+            
+            self.titleLabel.attributedText = finalAttributedString
             
             self.reloadButton.setTitle("Reload", for: .normal)
                         
@@ -168,7 +170,7 @@ class ReloadViewController: UIViewController {
             
             let remainingTime = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
-            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
                                   NSAttributedStringKey.foregroundColor: UIColor.white]
             
             let blueAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
@@ -182,29 +184,30 @@ class ReloadViewController: UIViewController {
             finalAttributedString.append(attributedTime)
             
             self.titleLabel.attributedText = finalAttributedString
-
-            let subTitleAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 15.0),
-                                          NSAttributedStringKey.foregroundColor: UIColor.white]
             
-            let attributedSubTitle = NSAttributedString(string: "in the meantime ....... ", attributes: subTitleAttributes)
-            self.subTitleLabel.attributedText = attributedSubTitle
-            
-            self.reloadButton.setTitle("Reload In \(remainingTime)", for: .normal)
+            UIView.performWithoutAnimation {
+                self.reloadButton.setTitle("Reload In \(remainingTime)", for: .normal)
+                self.reloadButton.layoutIfNeeded()
+            }
 
             
         } else if type == .reloadTimerExpire {
             
-            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
                                   NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
             
-            let attributedTitle = NSAttributedString(string: "Reload Now", attributes: boldAttributes)
-            self.titleLabel.attributedText = attributedTitle
-            
+            let attributedTitle = NSAttributedString(string: "Reload Now \n", attributes: boldAttributes)
+
             let boldSubTitleAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
-                                  NSAttributedStringKey.foregroundColor: UIColor.appRedColor()]
+                                          NSAttributedStringKey.foregroundColor: UIColor.white]
             
             let attributedSubTitle = NSAttributedString(string: "0:00:00:00", attributes: boldSubTitleAttributes)
-            self.subTitleLabel.attributedText = attributedSubTitle
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(attributedTitle)
+            finalAttributedString.append(attributedSubTitle)
+            
+            self.titleLabel.attributedText = finalAttributedString
             
             self.reloadButton.setTitle("Reload", for: .normal)
             

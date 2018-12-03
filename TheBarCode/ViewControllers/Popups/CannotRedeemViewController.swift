@@ -59,7 +59,7 @@ class CannotRedeemViewController: UIViewController {
         }
         
         //as timer not to show
-        self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
+        self.mainViewHeightConstraint.constant = heightOfMessage + 307
         self.reloadTimerLabel.text = ""
         
        /* if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {

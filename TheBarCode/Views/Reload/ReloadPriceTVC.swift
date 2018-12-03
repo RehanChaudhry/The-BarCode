@@ -47,7 +47,7 @@ class ReloadPriceTVC: UITableViewCell, NibReusable {
             let boldAttributes = [NSAttributedStringKey.font: font,
                                   NSAttributedStringKey.foregroundColor: UIColor.white]
             
-            let description = ".... use Credits to redeem all types of offers in any of our Bars "
+            let description = "In the meantime use Credits to redeem all types of offers in any of our Bars "
             let attributedText = NSAttributedString(string: description, attributes: boldAttributes)
             
             let finalAttributedString = NSMutableAttributedString()
@@ -66,7 +66,7 @@ class ReloadPriceTVC: UITableViewCell, NibReusable {
             let blueAttributes = [NSAttributedStringKey.font: font,
                                   NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
             
-            let description = "Reload all offers \n& access credit for \n "
+            let description = "Reload all offers \n& access credits for \n "
             let description2 = "£1"
 
             let attributedText = NSAttributedString(string: description, attributes: boldAttributes)

@@ -16,6 +16,10 @@ protocol FiveADayDetailViewControllerDelegate: class {
 
 class FiveADayDetailViewController: UIViewController {
 
+    @IBOutlet weak var imageView: AsyncImageView!
+    
+    @IBOutlet weak var gradientTitleView: GradientView!
+    
     @IBOutlet weak var tableView: UITableView!
     weak var delegate: FiveADayDetailViewControllerDelegate!
 
@@ -31,6 +35,12 @@ class FiveADayDetailViewController: UIViewController {
         tableView.dataSource = self
         tableView.estimatedRowHeight = 100.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.imageView.setImageWith(url: URL(string: self.deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
+        
     }
 
     override func didReceiveMemoryWarning() {
