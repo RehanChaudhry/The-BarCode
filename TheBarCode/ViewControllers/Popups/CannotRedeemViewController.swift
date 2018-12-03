@@ -20,6 +20,8 @@ protocol CannotRedeemViewControllerDelegate: class {
 
 class CannotRedeemViewController: UIViewController {
 
+    @IBOutlet weak var gradientTitleView: GradientView!
+
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var reloadTimerLabel: UILabel!
@@ -68,6 +70,9 @@ class CannotRedeemViewController: UIViewController {
             self.reloadTimerLabel.text = ""
             self.mainViewHeightConstraint.constant = heightOfMessage + 184.0
         }*/
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
     }
     
     deinit {

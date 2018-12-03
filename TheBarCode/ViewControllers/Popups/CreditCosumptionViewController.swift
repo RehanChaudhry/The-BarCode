@@ -15,6 +15,8 @@ protocol CreditCosumptionViewControllerDelegate: class {
 
 class CreditCosumptionViewController: UIViewController {
 
+    @IBOutlet weak var gradientTitleView: GradientView!
+    
     weak var delegate: CreditCosumptionViewControllerDelegate!
     
     var selectedIndex: Int = NSNotFound
@@ -23,6 +25,8 @@ class CreditCosumptionViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
     }
     
     //MARK: My IBAction

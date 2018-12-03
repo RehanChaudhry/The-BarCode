@@ -19,19 +19,20 @@ let kProductIdReload = bundleId + ".reload"
 }
 
 enum ReloadState: String {
-    case noOfferRedeemed, offerRedeemed, reloadTimerExpire
+    case noOfferRedeemed, offerRedeemed, reloadTimerExpire, unKnown
 }
 
-class ReloadViewController: UITableViewController {
-
+class ReloadViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet var headerView: UIView!
-    
-    @IBOutlet var creditsLabel: UILabel!
-    
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
     
+    @IBOutlet var footerView: UIView!
+    @IBOutlet weak var creditsLabel: UILabel!
     @IBOutlet var reloadButton: GradientButton!
-    
+
     var isRedeemingDeal: Bool = false
     
     weak var delegate: ReloadViewControllerDelegate?
@@ -44,7 +45,7 @@ class ReloadViewController: UITableViewController {
     
     var reloadTimer: Timer?
     var redeemInfo: RedeemInfo?
-    var type: ReloadState!
+    var type: ReloadState! = .unKnown
     
     //In-app
     var transactionInProgress: Bool = false
@@ -64,10 +65,14 @@ class ReloadViewController: UITableViewController {
         
         self.view.backgroundColor = UIColor.appBgGrayColor()
         self.headerView.backgroundColor = UIColor.clear
+        
         self.creditsLabel.layer.borderColor = UIColor.appGradientGrayStart().cgColor
         
         self.tableView.estimatedRowHeight = 500.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.register(cellType: ReloadPriceTVC.self)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.tableView.addSubview(self.statefulView)
@@ -132,28 +137,28 @@ class ReloadViewController: UITableViewController {
         
         self.type = type
         
-        let normalAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 14.0),
-                                NSAttributedStringKey.foregroundColor: UIColor.white]
-        
-        let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 14.0),
-                              NSAttributedStringKey.foregroundColor: UIColor.white]
-        
-        let blueAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 14.0),
-                              NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
-        
+        self.tableView.reloadData()
+       
         if type == .noOfferRedeemed {
             
-            let attributedTitle = NSAttributedString(string: "Ineligible to Reload:", attributes: boldAttributes)
-            let attributedDesc = NSAttributedString(string: "\nYou can start using all offers and credits now.\nYou can reload all offers when the counter hits 0:00:00:00\nInvite friends and share the offers you receive to earn more credits.", attributes: normalAttributes)
-//            let creditsAttributedString = NSMutableAttributedString(string: "\nYou have \(user!.credit) Credits", attributes: normalAttributes)
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+                                  NSAttributedStringKey.foregroundColor: UIColor.white]
+            
+            let attributedTitle = NSAttributedString(string: "Ineligible to Reload ", attributes: boldAttributes)
             
             let finalAttributedString = NSMutableAttributedString()
             finalAttributedString.append(attributedTitle)
-            finalAttributedString.append(attributedDesc)
-//            finalAttributedString.append(creditsAttributedString)
             
             self.titleLabel.attributedText = finalAttributedString
             
+            let boldSubTitleAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 15.0),
+                                          NSAttributedStringKey.foregroundColor: UIColor.white]
+            
+            let attributedSubTitle = NSAttributedString(string: "You can start using all offers and credits now.", attributes: boldSubTitleAttributes)
+            self.subTitleLabel.attributedText = attributedSubTitle
+            
+            self.reloadButton.setTitle("Reload", for: .normal)
+                        
         } else if type == .offerRedeemed {
             
             guard let redeemInfo = self.redeemInfo else {
@@ -163,34 +168,45 @@ class ReloadViewController: UITableViewController {
             
             let remainingTime = Utility.shared.getFormattedRemainingTime(time: TimeInterval(redeemInfo.remainingSeconds))
             
-            let attributedTitle = NSAttributedString(string: "Ineligible to Reload:", attributes: boldAttributes)
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+                                  NSAttributedStringKey.foregroundColor: UIColor.white]
             
-            let attributedTimePrefix = NSAttributedString(string: "\nReload all offers in ", attributes: normalAttributes)
+            let blueAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+                                  NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
+            
+            let attributedTimePrefix = NSAttributedString(string: "Reload all offers in ", attributes: boldAttributes)
             let attributedTime = NSAttributedString(string: remainingTime, attributes: blueAttributes)
-            let attributedTimePostfix = NSAttributedString(string: " for £1", attributes: normalAttributes)
-            
-            let attributedDesc = NSAttributedString(string: "\nIn the meantime, use Credits to redeem all types of offers in any of our Bars\nYou have \(user!.credit) Credits", attributes: normalAttributes)
-            
+
             let finalAttributedString = NSMutableAttributedString()
-            finalAttributedString.append(attributedTitle)
             finalAttributedString.append(attributedTimePrefix)
             finalAttributedString.append(attributedTime)
-            finalAttributedString.append(attributedTimePostfix)
-            finalAttributedString.append(attributedDesc)
             
             self.titleLabel.attributedText = finalAttributedString
+
+            let subTitleAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 15.0),
+                                          NSAttributedStringKey.foregroundColor: UIColor.white]
+            
+            let attributedSubTitle = NSAttributedString(string: "in the meantime ....... ", attributes: subTitleAttributes)
+            self.subTitleLabel.attributedText = attributedSubTitle
+            
+            self.reloadButton.setTitle("Reload In \(remainingTime)", for: .normal)
+
             
         } else if type == .reloadTimerExpire {
-          
-            let attributedTitle = NSAttributedString(string: "Eligible to Reload:", attributes: boldAttributes)
             
-            let attributedDesc = NSAttributedString(string: "\nReload all offers now for just £1 and access all your credits\nYou have \(user!.credit) Credits", attributes: normalAttributes)
+            let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 20.0),
+                                  NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
             
-            let finalAttributedString = NSMutableAttributedString()
-            finalAttributedString.append(attributedTitle)
-            finalAttributedString.append(attributedDesc)
+            let attributedTitle = NSAttributedString(string: "Reload Now", attributes: boldAttributes)
+            self.titleLabel.attributedText = attributedTitle
             
-            self.titleLabel.attributedText = finalAttributedString
+            let boldSubTitleAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
+                                  NSAttributedStringKey.foregroundColor: UIColor.appRedColor()]
+            
+            let attributedSubTitle = NSAttributedString(string: "0:00:00:00", attributes: boldSubTitleAttributes)
+            self.subTitleLabel.attributedText = attributedSubTitle
+            
+            self.reloadButton.setTitle("Reload", for: .normal)
             
         } else {
             debugPrint("Unknown reload state")
@@ -258,11 +274,20 @@ class ReloadViewController: UITableViewController {
 
 }
 
-extension ReloadViewController {
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.clear
+extension ReloadViewController: UITableViewDelegate, UITableViewDataSource {
+ 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ReloadPriceTVC.self)
+        cell.setUpCell(state: self.type)
+        return cell
     }
 }
 
@@ -413,3 +438,4 @@ extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransaction
     }
 
 }
+

@@ -46,6 +46,8 @@ class CodeVerificationViewController: UIViewController {
         self.actionButton.isEnabled = false
         
         self.setUpFieldViews()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +75,7 @@ class CodeVerificationViewController: UIViewController {
         self.codeFieldView1.textField.textAlignment = .center
         self.codeFieldContainer1.addSubview(self.codeFieldView1)
         self.codeFieldView1.autoPinEdgesToSuperviewEdges()
+        self.codeFieldView1.textField.textColor = UIColor.appBlackColor()
         
         self.codeFieldView2 = FieldView.loadFromNib()
         self.codeFieldView2.textField.isEnabled = false
@@ -85,7 +88,8 @@ class CodeVerificationViewController: UIViewController {
         self.codeFieldView2.textField.textAlignment = .center
         self.codeFieldContainer2.addSubview(self.codeFieldView2)
         self.codeFieldView2.autoPinEdgesToSuperviewEdges()
-        
+        self.codeFieldView2.textField.textColor = UIColor.appBlackColor()
+
         self.codeFieldView3 = FieldView.loadFromNib()
         self.codeFieldView3.textField.isEnabled = false
         self.codeFieldView3.makeSecure(secure: isFieldsSecure)
@@ -97,6 +101,7 @@ class CodeVerificationViewController: UIViewController {
         self.codeFieldView3.textField.textAlignment = .center
         self.codeFieldContainer3.addSubview(self.codeFieldView3)
         self.codeFieldView3.autoPinEdgesToSuperviewEdges()
+        self.codeFieldView3.textField.textColor = UIColor.appBlackColor()
         
         self.codeFieldView4 = FieldView.loadFromNib()
         self.codeFieldView4.textField.isEnabled = false
@@ -109,6 +114,7 @@ class CodeVerificationViewController: UIViewController {
         self.codeFieldView4.textField.textAlignment = .center
         self.codeFieldContainer4.addSubview(self.codeFieldView4)
         self.codeFieldView4.autoPinEdgesToSuperviewEdges()
+        self.codeFieldView4.textField.textColor = UIColor.appBlackColor()
     }
     
     func resetField() {

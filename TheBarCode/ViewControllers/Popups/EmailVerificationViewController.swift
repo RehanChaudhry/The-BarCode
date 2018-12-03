@@ -16,6 +16,8 @@ protocol EmailVerificationViewControllerDelegate: class {
 
 class EmailVerificationViewController: CodeVerificationViewController {
 
+    @IBOutlet weak var gradientTitleView: GradientView!
+
     @IBOutlet var resendCodeButton: LoadingButton!
     
     var delegate: EmailVerificationViewControllerDelegate!
@@ -42,6 +44,9 @@ class EmailVerificationViewController: CodeVerificationViewController {
         attributedSubTitle.addAttributes(boldAttribute  as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: self.email))
         
         self.subTitleLabel.attributedText = attributedSubTitle
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
     }
     
     override func viewDidLayoutSubviews() {

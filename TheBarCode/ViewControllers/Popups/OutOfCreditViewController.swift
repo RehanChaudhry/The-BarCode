@@ -16,6 +16,8 @@ protocol OutOfCreditViewControllerDelegate: class {
 
 class OutOfCreditViewController: UIViewController {
     
+    @IBOutlet weak var gradientTitleView: GradientView!
+
     @IBOutlet var inviteButton: UIButton!
     @IBOutlet var reloadButton: UIButton!
     
@@ -53,6 +55,9 @@ class OutOfCreditViewController: UIViewController {
             
             self.detailLabel.text = "Don’t worry, get more Credits by sharing offers or Inviting Friends"
         }
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
     }
 
     override func didReceiveMemoryWarning() {

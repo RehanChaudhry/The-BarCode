@@ -9,7 +9,17 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>Alamofire.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Bolts.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
@@ -19,7 +29,17 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>CoreStore.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>FBSDKCoreKit.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
@@ -29,7 +49,17 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>FBSDKLoginKit.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>FSPagerView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>FSPagerView.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
@@ -39,7 +69,17 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>FirebaseCore.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>FirebaseDynamicLinks.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>FirebaseDynamicLinks.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>8</integer>
@@ -49,7 +89,17 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>GBDeviceInfo.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>GoogleUtilities.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>GoogleUtilities.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>11</integer>
@@ -59,7 +109,17 @@
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
+		<key>Gradientable.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 		<key>HTTPStatusCodes.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>HTTPStatusCodes.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>13</integer>
@@ -69,7 +129,17 @@
 			<key>orderHint</key>
 			<integer>14</integer>
 		</dict>
+		<key>KeychainAccess.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>MGSwipeTableCell.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>MGSwipeTableCell.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>15</integer>
@@ -79,7 +149,17 @@
 			<key>orderHint</key>
 			<integer>17</integer>
 		</dict>
+		<key>ObjectMapper.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
 		<key>Pods-OneSignalNotificationServiceExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>Pods-OneSignalNotificationServiceExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>18</integer>
@@ -89,7 +169,17 @@
 			<key>orderHint</key>
 			<integer>19</integer>
 		</dict>
+		<key>Pods-TheBarCode.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 		<key>Pods-TheBarCodeTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
+		<key>Pods-TheBarCodeTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>20</integer>
@@ -99,7 +189,17 @@
 			<key>orderHint</key>
 			<integer>21</integer>
 		</dict>
+		<key>Pods-TheBarCodeUITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 		<key>PureLayout.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
+		<key>PureLayout.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>22</integer>
@@ -109,7 +209,17 @@
 			<key>orderHint</key>
 			<integer>24</integer>
 		</dict>
+		<key>RNCryptor.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
 		<key>Reusable.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>23</integer>
+		</dict>
+		<key>Reusable.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>23</integer>
@@ -119,7 +229,17 @@
 			<key>orderHint</key>
 			<integer>25</integer>
 		</dict>
+		<key>SDWebImage.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>25</integer>
+		</dict>
 		<key>SJSegmentedScrollView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
+		<key>SJSegmentedScrollView.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>26</integer>
@@ -129,7 +249,17 @@
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
+		<key>StatefulTableView.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>27</integer>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
+		<key>SwiftyJSON.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>28</integer>
@@ -139,12 +269,27 @@
 			<key>orderHint</key>
 			<integer>29</integer>
 		</dict>
+		<key>TPKeyboardAvoiding.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>29</integer>
+		</dict>
 		<key>UIColor_Hex_Swift.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>30</integer>
 		</dict>
+		<key>UIColor_Hex_Swift.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>30</integer>
+		</dict>
 		<key>nanopb.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>nanopb.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>16</integer>

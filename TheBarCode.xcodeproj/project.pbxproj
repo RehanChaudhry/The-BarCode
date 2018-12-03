@@ -169,6 +169,8 @@
 		8372F62B217784D7005F3E6D /* DateAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372F62A217784D7005F3E6D /* DateAdditions.swift */; };
 		837B48B32175FB2C00841419 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B48B22175FB2C00841419 /* Pagination.swift */; };
 		83825234217E23C300567388 /* FavouritButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83825233217E23C300567388 /* FavouritButton.swift */; };
+		838B4E4021B1684E00C32214 /* ReloadPriceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B4E3F21B1684D00C32214 /* ReloadPriceTVC.swift */; };
+		838B4E4221B1688100C32214 /* ReloadPriceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838B4E4121B1688100C32214 /* ReloadPriceTVC.xib */; };
 		838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838C56A621789C1100E47678 /* CannotRedeemViewController.swift */; };
 		83A4B6352175ADC600730056 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4B6342175ADC600730056 /* Offer.swift */; };
 		83AF91912174800A00CE552F /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91902174800A00CE552F /* ImageItem.swift */; };
@@ -389,6 +391,8 @@
 		8372F62A217784D7005F3E6D /* DateAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAdditions.swift; sourceTree = "<group>"; };
 		837B48B22175FB2C00841419 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		83825233217E23C300567388 /* FavouritButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritButton.swift; sourceTree = "<group>"; };
+		838B4E3F21B1684D00C32214 /* ReloadPriceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadPriceTVC.swift; sourceTree = "<group>"; };
+		838B4E4121B1688100C32214 /* ReloadPriceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReloadPriceTVC.xib; sourceTree = "<group>"; };
 		838C56A621789C1100E47678 /* CannotRedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannotRedeemViewController.swift; sourceTree = "<group>"; };
 		83A4B6342175ADC600730056 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		83AF91902174800A00CE552F /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
@@ -840,6 +844,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				838B4E3E21B1679700C32214 /* Reload */,
 				0C48E1662191BAA600B81ADD /* ShareOffer */,
 				0C302E2A21762A9B00FA993F /* LoadingButton */,
 				0CC81FAB216F21AF00FDB92D /* AsyncImageView */,
@@ -1125,6 +1130,15 @@
 			path = FiveADay;
 			sourceTree = "<group>";
 		};
+		838B4E3E21B1679700C32214 /* Reload */ = {
+			isa = PBXGroup;
+			children = (
+				838B4E3F21B1684D00C32214 /* ReloadPriceTVC.swift */,
+				838B4E4121B1688100C32214 /* ReloadPriceTVC.xib */,
+			);
+			path = Reload;
+			sourceTree = "<group>";
+		};
 		83B2BE4B216358BF003ACA78 /* Popups */ = {
 			isa = PBXGroup;
 			children = (
@@ -1344,6 +1358,7 @@
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
 				0C48E16A2191BAC100B81ADD /* ShareOfferCell.xib in Resources */,
+				838B4E4221B1688100C32214 /* ReloadPriceTVC.xib in Resources */,
 				0C23A8A82146873400DFB281 /* Lato-Regular.ttf in Resources */,
 				0C23A8B02146873400DFB281 /* Lato-Medium.ttf in Resources */,
 				0C44DD38214A7F9F000F5D64 /* MenuCell.xib in Resources */,
@@ -1581,6 +1596,7 @@
 				0C23A87F214656C300DFB281 /* SIgnUpViewController.swift in Sources */,
 				0C8E9A97214A8A8800224720 /* ReloadViewController.swift in Sources */,
 				0C5A88F321647FEE00F16851 /* Contact.swift in Sources */,
+				838B4E4021B1684E00C32214 /* ReloadPriceTVC.swift in Sources */,
 				0C955DD82147F20E00F9385B /* PrivacyPolicyViewController.swift in Sources */,
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,

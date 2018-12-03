@@ -15,6 +15,7 @@ protocol RedeemStartViewControllerDelegate: class {
 
 class RedeemStartViewController: UIViewController {
 
+    @IBOutlet weak var gradientTitleView: GradientView!
     @IBOutlet weak var detailLabel: UILabel!
     
     @IBOutlet weak var bartenderLabel: UILabel!
@@ -37,6 +38,10 @@ class RedeemStartViewController: UIViewController {
         // Do any additional setup after loading the view.
   
        //self.setupInitialView()
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
+        
     }
 
     override func didReceiveMemoryWarning() {

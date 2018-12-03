@@ -17,6 +17,8 @@ protocol RedeemDealViewControllerDelegate: class {
 
 class RedeemDealViewController: CodeVerificationViewController {
 
+    @IBOutlet weak var gradientTitleView: GradientView!
+
     weak var delegate: RedeemDealViewControllerDelegate!
 
     var deal : Deal!
@@ -34,6 +36,9 @@ class RedeemDealViewController: CodeVerificationViewController {
         if type != .standard {
             type = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         }
+        
+        gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
+        gradientTitleView.alpha = 0.5
       
     }
     
