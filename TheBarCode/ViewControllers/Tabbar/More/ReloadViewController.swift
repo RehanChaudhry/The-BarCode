@@ -258,7 +258,7 @@ class ReloadViewController: UIViewController {
             
         } else if self.type == ReloadState.offerRedeemed {
            
-            self.showCustomAlert(title: "Alert", message: "Reload when the timer hits Zero")
+            self.showCustomAlert(title: "Alert", message: "Reload when the timer hits zero")
             
         } else if self.type == ReloadState.reloadTimerExpire {
            

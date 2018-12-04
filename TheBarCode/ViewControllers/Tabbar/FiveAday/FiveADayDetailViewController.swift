@@ -39,8 +39,8 @@ class FiveADayDetailViewController: UIViewController {
         self.imageView.setImageWith(url: URL(string: self.deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
-        gradientTitleView.alpha = 0.5
-        
+        gradientTitleView.alpha = 0.34
+
     }
 
     override func didReceiveMemoryWarning() {

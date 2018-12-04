@@ -26,7 +26,7 @@ class CreditCosumptionViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
-        gradientTitleView.alpha = 0.5
+        gradientTitleView.alpha = 0.34
     }
     
     //MARK: My IBAction

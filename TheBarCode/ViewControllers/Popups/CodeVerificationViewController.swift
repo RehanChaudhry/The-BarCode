@@ -39,7 +39,7 @@ class CodeVerificationViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
-        if UIScreen.main.bounds.size.height <= 568.0 {
+        if UIScreen.main.bounds.size.height <= 568.0 ||  UIScreen.main.bounds.size.height <= 667.0 {
             self.popUpTopMargin.constant = 30.0
         }
         

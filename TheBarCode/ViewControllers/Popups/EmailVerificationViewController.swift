@@ -29,12 +29,12 @@ class EmailVerificationViewController: CodeVerificationViewController {
 
         // Do any additional setup after loading the view.
         
-        self.resendCodeButton.updateAcivityIndicatorColor(color: .white)
+        self.resendCodeButton.updateAcivityIndicatorColor(color: UIColor.appBlackColor())
         
         let subTitlePlaceholder = "Enter the activation code here which we have sent you on "
         let subTitleText = subTitlePlaceholder + self.email
         
-        let normalAttribute = [NSAttributedStringKey.foregroundColor : self.titleLabel.textColor,
+        let normalAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
                                NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 16.0)]
         let boldAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlueColor(),
                              NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 16.0)]
@@ -46,13 +46,13 @@ class EmailVerificationViewController: CodeVerificationViewController {
         self.subTitleLabel.attributedText = attributedSubTitle
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
-        gradientTitleView.alpha = 0.5
+        gradientTitleView.alpha = 0.34
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.containerHeight.constant = 274.0 + self.subTitleLabel.frame.height
+        self.containerHeight.constant = 367.0 + self.subTitleLabel.frame.height
     }
     
     //MARK: My IBActions
