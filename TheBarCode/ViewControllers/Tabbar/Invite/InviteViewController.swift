@@ -22,6 +22,8 @@ class InviteViewController: UITableViewController {
     
     @IBOutlet var shareInviteCodeButton: GradientButton!
     
+    @IBOutlet var inviteFriendCodeButton: GradientButton!
+
     var shouldShowCancelBarButton: Bool = false
     
     var isRedeemingDeal: Bool = false
@@ -77,6 +79,29 @@ class InviteViewController: UITableViewController {
     
     @IBAction func inviteContactButtonTapped(sender: UIButton) {
         
+        self.generateAndShareDynamicLink()
+        
+       /* let status = CNContactStore.authorizationStatus(for: .contacts)
+        if status == .notDetermined {
+            let contactStore = CNContactStore()
+            contactStore.requestAccess(for: .contacts) { (granted, error) in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.performSegue(withIdentifier: "InviteToContactsSegue", sender: nil)
+                    } else {
+                        self.showContactsPermissionAlert()
+                    }
+                }
+            }
+        } else if status == .authorized {
+            self.performSegue(withIdentifier: "InviteToContactsSegue", sender: nil)
+        } else {
+            self.showContactsPermissionAlert()
+        }*/
+    }
+    
+    @IBAction func shareInviteCodeButtonTapped(sender: UIButton) {
+       // self.generateAndShareDynamicLink()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         if status == .notDetermined {
             let contactStore = CNContactStore()
@@ -94,10 +119,6 @@ class InviteViewController: UITableViewController {
         } else {
             self.showContactsPermissionAlert()
         }
-    }
-    
-    @IBAction func shareInviteCodeButtonTapped(sender: UIButton) {
-        self.generateAndShareDynamicLink()
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
@@ -119,7 +140,7 @@ extension InviteViewController {
 extension InviteViewController {
     func generateAndShareDynamicLink() {
         
-        self.shareInviteCodeButton.showLoader()
+        self.inviteFriendCodeButton.showLoader()
         
         let user = Utility.shared.getCurrentUser()!
         let ownReferralCode = user.ownReferralCode.value
@@ -147,7 +168,7 @@ extension InviteViewController {
         linkComponents.shorten { (shortUrl, warnings, error) in
             
             guard error == nil else {
-                self.shareInviteCodeButton.hideLoader()
+                self.inviteFriendCodeButton.hideLoader()
                 self.showAlertController(title: "Invite", msg: error!.localizedDescription)
                 return
             }
@@ -159,7 +180,7 @@ extension InviteViewController {
             let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view
             self.present(activityViewController, animated: true, completion: {
-                self.shareInviteCodeButton.hideLoader()
+                self.inviteFriendCodeButton.hideLoader()
             })
         }
         

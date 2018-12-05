@@ -208,6 +208,7 @@
                     <connections>
                         <outlet property="codeLabel" destination="lYm-S6-wXt" id="F93-5O-c0I"/>
                         <outlet property="headerView" destination="9eU-7j-0RW" id="DB8-wX-6FV"/>
+                        <outlet property="inviteFriendCodeButton" destination="2Lt-QF-57i" id="hMF-CZ-9V1"/>
                         <outlet property="shareInviteCodeButton" destination="4pa-1v-FQE" id="v6a-aa-ihc"/>
                         <segue destination="cno-zB-d4w" kind="show" identifier="InviteToContactsSegue" id="ncT-K6-Uov"/>
                     </connections>
@@ -1101,7 +1102,7 @@
                                                         <color key="backgroundColor" red="0.0" green="0.89019607840000003" blue="1" alpha="0.39035744859999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow Location Access" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VgR-7S-fGO">
-                                                        <rect key="frame" x="69" y="73" width="197.5" height="24"/>
+                                                        <rect key="frame" x="66.5" y="73" width="202.5" height="24"/>
                                                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
