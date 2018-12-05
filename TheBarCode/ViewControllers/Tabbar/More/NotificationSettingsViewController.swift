@@ -75,7 +75,7 @@ class NotificationSettingsViewController: UIViewController {
         
         if !sender.isOn {
             sender.isOn = !sender.isOn
-            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
+            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't hear about!")
         }
     }
     
@@ -85,7 +85,7 @@ class NotificationSettingsViewController: UIViewController {
         
         if !sender.isOn {
             sender.isOn = !sender.isOn
-            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't be informed about!")
+            self.showCustomAlert(title: "Confirm", message: "Are you sure you want to turn off your notifications? Think of all the great deals you won't hear about!")
         }
     }
 
