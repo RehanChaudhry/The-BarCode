@@ -30,6 +30,8 @@ class CannotRedeemViewController: UIViewController {
     
     @IBOutlet var mainViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var headerImageView: UIImageView!
+    
     var messageText: String = ""
     var titleText: String = ""
     
@@ -39,6 +41,8 @@ class CannotRedeemViewController: UIViewController {
     weak var delegate: CannotRedeemViewControllerDelegate?
     
     var alertType = CustomAlertType.normal
+    
+    var headerImageName: String = ""
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +77,10 @@ class CannotRedeemViewController: UIViewController {
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
+        
+        if headerImageName != "" {
+            self.headerImageView.image = UIImage(named: self.headerImageName)
+        }
     }
     
     deinit {

@@ -195,6 +195,7 @@ class ExploreViewController: UIViewController {
         cannotRedeemViewController.alertType = typeCredit ? .credit : .normal
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.redeemInfo = redeemInfoCopy
+        cannotRedeemViewController.headerImageName = typeCredit ? "login_intro_credits_5" : "login_intro_reload_5"
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     

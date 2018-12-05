@@ -245,6 +245,7 @@ class ReloadViewController: UIViewController {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.headerImageName = "login_intro_reload_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }

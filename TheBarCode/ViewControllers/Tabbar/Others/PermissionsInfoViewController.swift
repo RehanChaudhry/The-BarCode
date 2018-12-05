@@ -15,6 +15,8 @@ class PermissionsInfoViewController: UIViewController {
 
     @IBOutlet var overlayView: UIView!
     
+    @IBOutlet var shadowView: ShadowView!
+
     @IBOutlet weak var headerView: UIView!
     @IBOutlet var alwaysAllowButton: GradientButton!
     @IBOutlet var whenInUserButton: LoadingButton!
@@ -48,16 +50,17 @@ class PermissionsInfoViewController: UIViewController {
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
-        
-        self.headerView.roundCorners(corners: UIRectCorner.topLeft, radius: 8.0)
-        self.headerView.roundCorners(corners: UIRectCorner.topRight, radius: 8.0)
-
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.headerView.roundCorners(corners: [.topLeft, .topRight], radius: self.shadowView.cornerRadius)
     }
     
     func showOverlayView() {

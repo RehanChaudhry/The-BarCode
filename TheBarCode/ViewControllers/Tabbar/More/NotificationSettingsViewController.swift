@@ -55,6 +55,7 @@ class NotificationSettingsViewController: UIViewController {
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.headerImageName = "login_intro_five_a_day_5"
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     

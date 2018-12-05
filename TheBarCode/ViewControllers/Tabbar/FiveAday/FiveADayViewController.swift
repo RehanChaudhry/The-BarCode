@@ -191,6 +191,7 @@ class FiveADayViewController: UIViewController {
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.delegate = self
         cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.headerImageName = "login_intro_five_a_day_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
