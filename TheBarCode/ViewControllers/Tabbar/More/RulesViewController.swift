@@ -16,6 +16,8 @@ class RulesViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 20)
 
     }
 

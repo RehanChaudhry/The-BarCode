@@ -36,7 +36,7 @@ enum MenuItemType: String {
         case .faqs:
             return ("Frequently Asked Questions", "icon_faqs", "FaqsNavigation", true, 16.0)
         case .rules:
-            return ("Rules", "icon_rules", "RulesNavigation", true, 16.0)
+            return ("Redemption & Reload Rules", "icon_rules", "RulesNavigation", true, 16.0)
         case .privacyPolicy:
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:

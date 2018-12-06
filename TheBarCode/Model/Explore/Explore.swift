@@ -107,7 +107,7 @@ extension Explore: ImportableUniqueObject {
         self.canRedeemOffer.value = source["can_redeem_offer"] as! Bool
         
         self.isUserFavourite.value = source["is_user_favourite"] as! Bool
-        self.credit.value = source["credit"] as! Int
+        self.credit.value = Int("\(source["credit"]!)")!
 
         if let items = source["images"] as? [[String : Any]] {
             let importedObjects = try! transaction.importObjects(Into<ImageItem>(), sourceArray: items)
