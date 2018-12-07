@@ -17,12 +17,17 @@ class PermissionsInfoViewController: UIViewController {
     
     @IBOutlet var shadowView: ShadowView!
 
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet var headerView: UIView!
     @IBOutlet var alwaysAllowButton: GradientButton!
     @IBOutlet var whenInUserButton: LoadingButton!
     @IBOutlet var notNowButton: LoadingButton!
     
-    @IBOutlet weak var gradientTitleView: GradientView!
+    @IBOutlet var gradientTitleView: GradientView!
+    @IBOutlet var shadowViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var headerViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var textLabelHeightConstraint: NSLayoutConstraint!
+    
     
     var locationManager: MyLocationManager!
     
@@ -50,6 +55,13 @@ class PermissionsInfoViewController: UIViewController {
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
+        
+        if UIScreen.main.bounds.size.height <= 568.0 {
+            self.headerViewHeightConstraint.constant = 120.0
+            self.textLabelHeightConstraint.constant = 102.0
+            self.shadowViewHeightConstraint.constant = 519.0 - 30.0
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

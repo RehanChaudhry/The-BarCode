@@ -139,6 +139,7 @@ class CodeVerificationViewController: UIViewController {
                 self.codeFieldView3.textField.text = "\(char)"
             } else if index == 3 {
                 self.codeFieldView4.textField.text = "\(char)"
+                self.hiddenField.resignFirstResponder()
             } else {
                 break
             }
@@ -152,6 +153,11 @@ class CodeVerificationViewController: UIViewController {
     @IBAction func closeButtonTapped(_ sender: Any) {
         self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func textFieldButtonTapped(_ sender: UIButton) {
+        self.hiddenField.becomeFirstResponder()
     }
     
 }
