@@ -13,13 +13,15 @@ class SharedOfferParams {
     var referral: String!
     var sharedBy: String!
     var offerId: String!
+    var sharedByName: String!
     
-    convenience init(referral: String, sharedBy: String, offerId: String) {
+    convenience init(referral: String, sharedBy: String, offerId: String, sharedByName: String) {
         self.init()
         
         self.referral = referral
         self.sharedBy = sharedBy
         self.offerId = offerId
+        self.sharedByName = sharedByName
     }
     
 }

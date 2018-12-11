@@ -255,11 +255,11 @@ class ReloadViewController: UIViewController {
         
         if self.type == ReloadState.noOfferRedeemed {
             
-            self.showCustomAlert(title: "Alert", message: "All your deals are already unlocked. You cannot reload please redeem first.")
+            self.showCustomAlert(title: "Reload Now", message: "You are already ‘fully loaded.’ You can use all available offers and credits now. Reload again in 7 Days!!")
             
         } else if self.type == ReloadState.offerRedeemed {
            
-            self.showCustomAlert(title: "Alert", message: "Reload when the timer hits zero")
+            self.showCustomAlert(title: "Reload Now", message: "Reload when the timer hits zero")
             
         } else if self.type == ReloadState.reloadTimerExpire {
            

@@ -273,7 +273,8 @@ class Utility: NSObject {
         var referral: String?
         var offerId: String?
         var sharedBy: String?
-        
+        var sharedByName: String?
+
         let urlComponents = URLComponents(string: urlString)
         if let queryItems = urlComponents?.queryItems {
             for queryItem in queryItems {
@@ -283,12 +284,14 @@ class Utility: NSObject {
                     offerId = queryItem.value
                 } else if queryItem.name == "shared_by" {
                     sharedBy = queryItem.value
+                } else if queryItem.name == "shared_by_name" {
+                    sharedByName = queryItem.value
                 }
             }
         }
         
-        if let referral = referral, let offerId = offerId, let sharedBy = sharedBy {
-            let sharedOfferParams = SharedOfferParams(referral: referral, sharedBy: sharedBy, offerId: offerId)
+        if let referral = referral, let offerId = offerId, let sharedBy = sharedBy, let sharedByName = sharedByName {
+            let sharedOfferParams = SharedOfferParams(referral: referral, sharedBy: sharedBy, offerId: offerId, sharedByName: sharedByName)
             return sharedOfferParams
         } else {
             return nil
@@ -300,7 +303,7 @@ class Utility: NSObject {
         
         let user = Utility.shared.getCurrentUser()!
         let ownReferralCode = user.ownReferralCode.value
-        let offerShareUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode + "&offer_id=" + deal.id.value + "&shared_by=" + user.userId.value
+        let offerShareUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode + "&offer_id=" + deal.id.value + "&shared_by=" + user.userId.value + "&shared_by_name=" + user.fullName.value
         
         let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
