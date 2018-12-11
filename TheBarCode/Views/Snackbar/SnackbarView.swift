@@ -36,6 +36,9 @@ class SnackbarView: GradientView, NibLoadable {
     @IBOutlet weak var congratesInfoView: UIView!
     @IBOutlet weak var congratesInfoLabel: UILabel!
     
+    //Discount Views
+    @IBOutlet weak var discountCreditsLeftView: UIView!
+    @IBOutlet weak var discountCreditLeftButton: UIButton!
     
     //Reload time Credit View
     @IBOutlet var creditsLeftView: UIView!
@@ -84,8 +87,9 @@ class SnackbarView: GradientView, NibLoadable {
             self.reloadInfoView.isHidden = true
             self.congratesInfoView.isHidden = true
             self.discountInfoView.isHidden = false
-            self.discountInfoLabel.text = "GET 25% OFF YOUR FIRST ROUND"
-
+            self.discountInfoLabel.text = "07:00:00:00"
+            self.discountCreditLeftButton.setTitle("\(user!.credit)", for: .normal)
+            
         } else if type == .reload {
             self.reloadInfoView.isHidden = false
             self.congratesInfoView.isHidden = true

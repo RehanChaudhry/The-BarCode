@@ -192,7 +192,7 @@ class ExploreViewController: UIViewController {
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.delegate = self
-        cannotRedeemViewController.alertType = typeCredit ? .credit : .normal
+        cannotRedeemViewController.alertType = typeCredit ? .credit : .discount
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.redeemInfo = redeemInfoCopy
         cannotRedeemViewController.headerImageName = typeCredit ? "login_intro_credits_5" : "login_intro_reload_5"
@@ -203,7 +203,7 @@ class ExploreViewController: UIViewController {
         
         let type = barsController.snackBar.type
         if type == .discount {
-            return (title: "Discount" , message: "Not excited about any deals? Get a discount on your first drink within each establishment!")
+            return (title: "Discount" , message: "You can start using all offers and credits now.\n\nYou can reload all offers when the counter hits 0:00:00:00\n\nInvite friends and share the offers you receive to earn more credits.")
         } else if type == .reload {
             return (title: "Reload in" , message: "When the timer hits Zero Reload all used offers and access Credits for just £1\nYou are eligible to Reload every 7 days")
         } else if type == .congrates {
@@ -519,6 +519,8 @@ extension ExploreViewController: CannotRedeemViewControllerDelegate {
         
         if controller.alertType == .credit {
            self.moveToInvite()
+        } else if controller.alertType == .discount {
+            self.moveToInvite()
         }
     }
     

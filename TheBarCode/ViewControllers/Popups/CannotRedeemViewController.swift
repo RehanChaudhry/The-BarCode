@@ -10,7 +10,8 @@ import UIKit
 
 enum CustomAlertType: String {
     case normal,
-    credit
+    credit,
+    discount
 }
 
 protocol CannotRedeemViewControllerDelegate: class {
@@ -55,6 +56,8 @@ class CannotRedeemViewController: UIViewController {
         
         if alertType == .credit {
             actionButton.setTitle("Invite Friends & Get Credits", for: .normal)
+        } else if alertType == .discount {
+            actionButton.setTitle("Invite Friends", for: .normal)
         } else {
             if let redeemInfo = self.redeemInfo, redeemInfo.remainingSeconds > 0 {
                 self.startReloadTimer()

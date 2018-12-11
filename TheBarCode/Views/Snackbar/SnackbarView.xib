@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -86,12 +86,38 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQF-Ka-Afd">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GET 25% OFF YOUR FIRST ROUND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-Ik-Fdg">
-                            <rect key="frame" x="16" y="8" width="343" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-Ik-Fdg">
+                            <rect key="frame" x="16" y="8" width="289" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3n-Kt-BdS">
+                            <rect key="frame" x="325" y="5" width="34" height="34"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VH-DM-zVT">
+                                    <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                    <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                                    <state key="normal" title="5">
+                                        <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="34" id="0Dz-vm-4Sz"/>
+                                <constraint firstItem="6VH-DM-zVT" firstAttribute="leading" secondItem="F3n-Kt-BdS" secondAttribute="leading" id="DLc-bx-lDP"/>
+                                <constraint firstItem="6VH-DM-zVT" firstAttribute="top" secondItem="F3n-Kt-BdS" secondAttribute="top" id="bB1-lO-8fg"/>
+                                <constraint firstAttribute="bottom" secondItem="6VH-DM-zVT" secondAttribute="bottom" id="dgI-pb-WaM"/>
+                                <constraint firstAttribute="trailing" secondItem="6VH-DM-zVT" secondAttribute="trailing" id="jOM-VM-9aM"/>
+                                <constraint firstAttribute="width" constant="34" id="mGo-OF-OSu"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="17"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCg-PY-1uZ">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <connections>
@@ -102,10 +128,13 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="PCg-PY-1uZ" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" id="56N-gP-17d"/>
+                        <constraint firstAttribute="bottom" secondItem="F3n-Kt-BdS" secondAttribute="bottom" constant="5" id="GWJ-Xc-BMc"/>
                         <constraint firstItem="vPz-Ik-Fdg" firstAttribute="leading" secondItem="tQF-Ka-Afd" secondAttribute="leading" constant="16" id="RNO-s5-K2h"/>
                         <constraint firstItem="vPz-Ik-Fdg" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" constant="8" id="XD6-wL-yAs"/>
+                        <constraint firstItem="F3n-Kt-BdS" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" constant="5" id="Zol-tb-WsF"/>
                         <constraint firstAttribute="bottom" secondItem="PCg-PY-1uZ" secondAttribute="bottom" id="ggq-lc-PJt"/>
-                        <constraint firstAttribute="trailing" secondItem="vPz-Ik-Fdg" secondAttribute="trailing" constant="16" id="i1y-pr-Q9h"/>
+                        <constraint firstAttribute="trailing" secondItem="F3n-Kt-BdS" secondAttribute="trailing" constant="16" id="ibS-fX-Q77"/>
+                        <constraint firstItem="F3n-Kt-BdS" firstAttribute="leading" secondItem="vPz-Ik-Fdg" secondAttribute="trailing" constant="20" id="lud-8a-f0a"/>
                         <constraint firstItem="PCg-PY-1uZ" firstAttribute="leading" secondItem="tQF-Ka-Afd" secondAttribute="leading" id="nw6-zU-R06"/>
                         <constraint firstAttribute="bottom" secondItem="vPz-Ik-Fdg" secondAttribute="bottom" constant="8" id="sRW-xa-VnG"/>
                         <constraint firstAttribute="trailing" secondItem="PCg-PY-1uZ" secondAttribute="trailing" id="xFE-Wy-Qu5"/>
@@ -201,6 +230,8 @@
                 <outlet property="congratesInfoView" destination="qbW-iG-heo" id="0Cl-3G-yTr"/>
                 <outlet property="creditsLeftButton" destination="GrB-g4-NoO" id="dey-Bh-D4S"/>
                 <outlet property="creditsLeftView" destination="Oax-Ey-lOP" id="Gzk-oJ-J8w"/>
+                <outlet property="discountCreditLeftButton" destination="6VH-DM-zVT" id="a4P-x5-EGd"/>
+                <outlet property="discountCreditsLeftView" destination="F3n-Kt-BdS" id="SQa-JJ-T0f"/>
                 <outlet property="discountInfoLabel" destination="vPz-Ik-Fdg" id="C1j-BS-N26"/>
                 <outlet property="discountInfoView" destination="tQF-Ka-Afd" id="ZHS-MG-pud"/>
                 <outlet property="reloadInfoLabel" destination="knP-zz-RAM" id="gnt-fr-DMz"/>
