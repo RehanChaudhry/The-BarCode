@@ -146,7 +146,7 @@ class ReloadViewController: UIViewController {
             let boldAttributes = [NSAttributedStringKey.font: UIFont.appBoldFontOf(size: 18.0),
                                   NSAttributedStringKey.foregroundColor: UIColor.white]
             
-            let attributedTitle = NSAttributedString(string: "Ineligible to Reload\n", attributes: boldAttributes)
+            let attributedTitle = NSAttributedString(string: "You Are Fully Loaded!\n", attributes: boldAttributes)
             
             let boldSubTitleAttributes = [NSAttributedStringKey.font: UIFont.appRegularFontOf(size: 15.0),
                                           NSAttributedStringKey.foregroundColor: UIColor.white]
@@ -255,7 +255,7 @@ class ReloadViewController: UIViewController {
         
         if self.type == ReloadState.noOfferRedeemed {
             
-            self.showCustomAlert(title: "Reload Now", message: "You are already ‘fully loaded.’ You can use all available offers and credits now. Reload again in 7 Days!!")
+            self.showCustomAlert(title: "You Are Already Fully Loaded", message: "You can use all available offers and credits now. Reload again in 7 days.")
             
         } else if self.type == ReloadState.offerRedeemed {
            
