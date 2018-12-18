@@ -23,6 +23,9 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet weak var barNameButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
     
+    @IBOutlet weak var validityLabel: UILabel!
+    
+    
     weak var delegate : DealDetailTableViewCellDelegate!
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -45,6 +48,50 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         } else {
             self.locationLabel.isHidden = true
         }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "hh:mm a"
+        
+        let validtyPlaceHodler = "Validity period: "
+        
+        let fromDate = dateFormatter.string(from: deal.startDateTime)
+        let toDate = dateFormatter.string(from: deal.endDateTime)
+        let to = " to "
+        let from = " from "
+        
+        let fromTime = timeFormatter.string(from: deal.startDateTime)
+        let toTime = timeFormatter.string(from: deal.endDateTime)
+        
+        let blueAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                              NSAttributedStringKey.foregroundColor : UIColor.appDarkGrayColor()]
+        
+        let whiteAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                               NSAttributedStringKey.foregroundColor : UIColor.appDarkGrayColor()]
+        
+        let attributedTo = NSAttributedString(string: to, attributes: whiteAttributes)
+        let attributedFrom = NSAttributedString(string: from, attributes: whiteAttributes)
+        
+        let attributedPlaceholder = NSAttributedString(string: validtyPlaceHodler, attributes: whiteAttributes)
+        let attributedFromDate = NSAttributedString(string: fromDate, attributes: blueAttributes)
+        let attributedToDate = NSAttributedString(string: toDate, attributes: blueAttributes)
+        
+        let attributedFromTime = NSAttributedString(string: fromTime, attributes: blueAttributes)
+        let attributedToTime = NSAttributedString(string: toTime, attributes: blueAttributes)
+        
+        let finalAttributedText = NSMutableAttributedString()
+        finalAttributedText.append(attributedPlaceholder)
+        finalAttributedText.append(attributedFromDate)
+        finalAttributedText.append(attributedTo)
+        finalAttributedText.append(attributedToDate)
+        finalAttributedText.append(attributedFrom)
+        finalAttributedText.append(attributedFromTime)
+        finalAttributedText.append(attributedTo)
+        finalAttributedText.append(attributedToTime)
+        
+        self.validityLabel.attributedText = finalAttributedText
     }
 
     //MARK IBActions
