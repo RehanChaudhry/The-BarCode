@@ -26,7 +26,7 @@ class BarDetailViewController: UIViewController {
     @IBOutlet var bottomView: UIView!
     @IBOutlet var bottomViewBottom: NSLayoutConstraint!
     
-    weak var delegate: BarDetailViewControllerDelegate!
+    weak var delegate: BarDetailViewControllerDelegate?
 
     var headerController: BarDetailHeaderViewController!
     
@@ -36,7 +36,8 @@ class BarDetailViewController: UIViewController {
     
     var segmentedController: SJSegmentedViewController!
     
-    var selectedBar: Bar!
+    var barId: String?
+    var selectedBar: Bar?
     
     var refreshControl: UIRefreshControl!
     
@@ -44,21 +45,39 @@ class BarDetailViewController: UIViewController {
     
     var preSelectedTabIndex = 0
     
+    var statefulView: LoadingAndErrorView!
+    
+    var isSegmentsSetuped = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = self.selectedBar.title.value
+        
+        self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.statefulView.isHidden = true
+        self.view.addSubview(statefulView)
+        
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
+            self.getBarDetails(isRefreshing: false)
+        }
+        
+        self.statefulView.autoPinEdgesToSuperviewEdges()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: #selector(didTriggerPullToRefresh(sender:)), for: .valueChanged)
         
-        self.setUpSegmentedController()
         self.addBackButton()
         
-        self.setUpBottomView()
+        if let _ = self.selectedBar {
+            self.setUpTitle()
+            self.setUpSegmentedController()
+            self.setUpBottomView()
+        } else {
+            self.getBarDetails(isRefreshing: false)
+        }
         
-        viewProfile()
+        self.viewProfile()
         
     }
 
@@ -83,6 +102,8 @@ class BarDetailViewController: UIViewController {
     //MARK: My Methods
     
     func setUpSegmentedController() {
+        
+        self.isSegmentsSetuped = true
         
         let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
         let headerViewHeight = collectionViewHeight + 83.0
@@ -138,8 +159,24 @@ class BarDetailViewController: UIViewController {
         self.segmentedController.setSelectedSegmentAt(self.preSelectedTabIndex, animated: false)
     }
     
+    func setUpTitle() {
+        
+        guard let selectedBar = self.selectedBar else {
+            debugPrint("Bar not available for setting up title")
+            return
+        }
+        
+        self.title = selectedBar.title.value
+    }
+    
     func setUpBottomView() {
-        if self.selectedBar.canRedeemOffer.value {
+        
+        guard let selectedBar = self.selectedBar else {
+            debugPrint("Bar not available for setting up bottomview")
+            return
+        }
+        
+        if selectedBar.canRedeemOffer.value {
             self.standardRedeemButton.updateColor(withGrey: false)
         } else {
             self.standardRedeemButton.updateColor(withGrey: true)
@@ -194,7 +231,7 @@ class BarDetailViewController: UIViewController {
     }
     
     @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
-        self.getBarDetails()
+        self.getBarDetails(isRefreshing: true)
         self.dealsController.resetDeals()
         self.offersController.resetOffers()
     }
@@ -208,23 +245,40 @@ class BarDetailViewController: UIViewController {
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemDealViewController, animated: true, completion: nil)
     }
+    
+    func getSelectedBarId() -> String? {
+        var selectedBarId: String?
+        
+        if let selectedBar = self.selectedBar {
+            selectedBarId = selectedBar.id.value
+        } else if let barId = self.barId {
+            selectedBarId = barId
+        }
+        
+        return selectedBarId
+    }
 
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true) {
-            self.delegate.barDetailViewController(controller: self, cancelButtonTapped: sender)
+            self.delegate?.barDetailViewController(controller: self, cancelButtonTapped: sender)
         }
     }
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
+        
+        guard let selectedBar = self.selectedBar else {
+            debugPrint("Bar not available for redeeming standard offer")
+            return
+        }
     
-        if self.selectedBar.canRedeemOffer.value {
+        if selectedBar.canRedeemOffer.value {
             
             let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
             redeemStartViewController.delegate = self
             redeemStartViewController.type = .standard
-            redeemStartViewController.bar = self.selectedBar
+            redeemStartViewController.bar = selectedBar
             redeemStartViewController.modalPresentationStyle = .overCurrentContext
             redeemStartViewController.redeemWithCredit = false
             self.present(redeemStartViewController, animated: true, completion: nil)
@@ -285,21 +339,41 @@ extension BarDetailViewController: RedeemStartViewControllerDelegate {
 //MARK: WebService Method
 extension BarDetailViewController {
     
-    func getBarDetails() {
-        let apiPath = apiPathGetBarDetail + "/" + self.selectedBar.id.value
+    func getBarDetails(isRefreshing: Bool) {
+        
+        guard let barId = self.getSelectedBarId() else {
+            self.statefulView.showErrorViewWithRetry(errorMessage: "Bar Not Found", reloadMessage: "Tap to retry")
+            self.statefulView.isHidden = false
+            return
+        }
+        
+        if isRefreshing {
+            self.statefulView.isHidden = true
+            self.statefulView.showNothing()
+        } else {
+            self.statefulView.showLoading()
+            self.statefulView.isHidden = false
+        }
+        
+        let apiPath = apiPathGetBarDetail + "/" + barId
         let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPath, method: .get) { (response, serverError, error) in
             
             self.refreshControl.endRefreshing()
             
             guard error == nil else {
                 debugPrint("Error while refreshing establishment: \(error!.localizedDescription)")
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap to retry")
                 return
             }
             
             guard serverError == nil else {
                 debugPrint("Error while refreshing establishment: \(serverError!.errorMessages())")
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.errorMessages(), reloadMessage: "Tap to retry")
                 return
             }
+            
+            self.statefulView.isHidden = true
+            self.statefulView.showNothing()
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseData = (responseDict?["data"] as? [String : Any]) {
@@ -311,8 +385,15 @@ extension BarDetailViewController {
                 let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
                 
                 self.selectedBar = fetchedObject
-                self.aboutController.reloadData(bar: self.selectedBar)
-                self.headerController.reloadData(bar: self.selectedBar)
+                
+                if !self.isSegmentsSetuped {
+                    self.setUpSegmentedController()
+                } else {
+                    self.aboutController.reloadData(bar: self.selectedBar!)
+                    self.headerController.reloadData(bar: self.selectedBar!)
+                }
+                
+                self.setUpTitle()
                 self.setUpBottomView()
                 
             } else {
@@ -325,7 +406,12 @@ extension BarDetailViewController {
     //View for statistics
     func viewProfile() {
         
-        let params: [String: Any] = ["value": self.selectedBar.id.value,
+        guard let barId = self.getSelectedBarId() else {
+            debugPrint("Bar id not available for adding analytic")
+            return
+        }
+        
+        let params: [String: Any] = ["value": barId,
                                      "type":"profile_view"]
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in
@@ -354,8 +440,13 @@ extension BarDetailViewController {
     
     func getReloadStatus() {
         
+        guard let barId = self.getSelectedBarId() else {
+            debugPrint("Bar id not available for getting reload status")
+            return
+        }
+        
         self.standardRedeemButton.showLoader()
-        let param = ["establishment_id" : self.selectedBar.id.value]
+        let param = ["establishment_id" : barId]
         
         self.reloadDataRequest = APIHelper.shared.hitApi(params: param, apiPath: apiPathReloadStatus, method: .get) { (response, serverError, error) in
             

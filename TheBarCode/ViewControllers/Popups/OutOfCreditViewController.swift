@@ -41,7 +41,7 @@ class OutOfCreditViewController: UIViewController {
             self.inviteButton.isHidden = true
             self.reloadButton.isHidden = false
             
-            self.titleLabel.text = "Alert"
+            self.titleLabel.text = "Reload Now"
             self.detailLabel.text = "Reload now to use Credits and access all offers"
             
         } else if self.canReload {

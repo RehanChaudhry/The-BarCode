@@ -12,12 +12,17 @@ import ObjectMapper
 import RNCryptor
 import SwiftyJSON
 
-let theBarCodeAPIDomain = "https://thebarcode.cygnismedia.com"
+let staggingAPIDomain = "https://thebarcode.cygnismedia.com"
+let qaAPIDomain = "https://thebarcode-qa.cygnismedia.com"
+
+let theBarCodeAPIDomain = qaAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
 let clientScret = "a7024f16e0c8d6475c2f82c66a8f6d9d85380e63"
 let grantTypePassword = "password"
+
+
 
 typealias responseCompletionHandler = (_ response: Any?, _ serverError: ServerError?, _ error: Error?) -> Void
 

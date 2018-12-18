@@ -52,6 +52,23 @@ let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: 
 let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
 let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
 
+let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
+let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
+
+enum EnvironmentType: String {
+    case stagging = "stagging", qa = "qa", unknown = "unknown"
+    
+    static func current() -> EnvironmentType {
+        if theBarCodeAPIDomain == staggingAPIDomain {
+            return EnvironmentType.stagging
+        } else if theBarCodeAPIDomain == qaAPIDomain {
+            return EnvironmentType.qa
+        } else {
+            return EnvironmentType.unknown
+        }
+    }
+}
+
 class Utility: NSObject {
     
     static let shared = Utility()
@@ -346,5 +363,16 @@ class Utility: NSObject {
             })
         }
         
+    }
+    
+    func oneSignalAppId() -> String {
+        let currentEnvironment = EnvironmentType.current()
+        if currentEnvironment == .stagging {
+            return oneSignalStaggingAppId
+        } else if currentEnvironment == .qa {
+            return oneSignalQAAppId
+        } else {
+            return ""
+        }
     }
 }

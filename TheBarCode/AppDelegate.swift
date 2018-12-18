@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var referralCode: String?
     var sharedOfferParams: SharedOfferParams?
     
-    var liveOfferBarDict: [String : Any]?
+    var liveOfferBarId: String?
+    
     var refreshFiveADay: Bool?
     
     var visitLocationManager: CLLocationManager?
@@ -70,7 +71,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 debugPrint("additionalData = \(additionalData)")
 
                 if notificationType == NotificationType.liveOffer, let barDict = additionalData["bar"] as? [String : Any] {
-                    self.liveOfferBarDict = barDict
+                    
+                    let barId = "\(barDict["id"]!)"
+                    self.liveOfferBarId = barId
+                    
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
                 } else if notificationType == NotificationType.fiveADay {
                     self.refreshFiveADay = true
@@ -88,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OneSignal.setRequiresUserPrivacyConsent(false)
         OneSignal.inFocusDisplayType = .notification
         OneSignal.initWithLaunchOptions(launchOptions,
-                                        appId: "87a21c8e-cfee-4b79-8eef-23e692c64eca",
+                                        appId: Utility.shared.oneSignalAppId(),
                                         handleNotificationAction: notificationOpenedBlock,
                                         settings: onesignalInitSettings)
         

@@ -31,7 +31,7 @@ class TabBarController: UITabBarController {
         if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
             appDelegate.refreshFiveADay = false
             self.selectedIndex = 1
-        } else if appDelegate.liveOfferBarDict != nil {
+        } else if appDelegate.liveOfferBarId != nil {
             self.selectedIndex = 2
             self.shouldPresentBarDetail = true
         } else if appDelegate.sharedOfferParams != nil {
@@ -88,18 +88,10 @@ class TabBarController: UITabBarController {
     
     @objc func showBarDetailForLiveOfferNotification() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let bar = appDelegate.liveOfferBarDict {
-            
-            var importedObject: Bar!
-            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: bar)
-            })
-            
-            let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
-            
+        if let barId = appDelegate.liveOfferBarId {
             let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
             let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
-            barDetailController.selectedBar = fetchedObject
+            barDetailController.barId = barId
             self.topMostViewController().present(barDetailNav, animated: true, completion: nil)
         } else {
             debugPrint("Live offer notification AppDelegate object is nil")
