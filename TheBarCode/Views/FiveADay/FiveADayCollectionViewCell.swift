@@ -45,6 +45,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     weak var delegate : FiveADayCollectionViewCellDelegate!
 
+    var startInTimer: Timer?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -53,6 +55,10 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         super.layoutSubviews()
         
         self.coverImageView.roundCorners(corners: [.topLeft, .topRight], radius: self.shadowView.cornerRadius)
+    }
+    
+    deinit {
+        self.stopTimer()
     }
     
     //MARK: My Methods
@@ -109,6 +115,106 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.detailButton.isHidden = true
         }
         
+    }
+    
+    func setUpRedeemButton(deal: Deal) {
+        
+        let currentDate = Date()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = serverTimeFormat
+        
+        let currentTime = dateFormatter.date(from: dateFormatter.string(from: currentDate))!
+        
+        let dealStartTime = dateFormatter.date(from: dateFormatter.string(from: deal.startDateTime))!
+        let dealEndTime = dateFormatter.date(from: dateFormatter.string(from: deal.endDateTime))!
+        
+        let isDateInRange = currentDate.isDate(inRange: deal.startDateTime, toDate: deal.endDateTime, inclusive: true)
+        
+        let isTimeInRange = currentTime.isDate(inRange: deal.startTime, toDate: deal.endTime, inclusive: true)
+        
+        //Can redeem deal (With in date and time range)
+        if isDateInRange && isTimeInRange {
+            
+            UIView.performWithoutAnimation {
+                self.redeemButton.isUserInteractionEnabled = true
+                self.redeemButton.setTitle("Redeem Deal", for: .normal)
+                self.redeemButton.layoutIfNeeded()
+            }
+            
+        } else {
+            
+            //Deal expired
+            if Date().compare(deal.endDateTime) == .orderedDescending {
+                debugPrint("Deal expired")
+                
+                UIView.performWithoutAnimation {
+                    self.redeemButton.isUserInteractionEnabled = false
+                    self.redeemButton.setTitle("Deal Expired", for: .normal)
+                    self.redeemButton.layoutIfNeeded()
+                }
+                
+            } else {
+                
+                dateFormatter.dateFormat = serverDateFormat
+                let todayDateString = dateFormatter.string(from: Date())
+                
+                dateFormatter.dateFormat = serverTimeFormat
+                let dealStartTime = dateFormatter.string(from: dealStartTime)
+                
+                let todayDealDateTimeString = todayDateString + " " + dealStartTime
+                
+                dateFormatter.dateFormat = serverDateTimeFormat
+                let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
+                
+                var remainingSeconds: Int = 0
+                if Date().compare(todayDealDateTime) == .orderedAscending {
+                    remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow)
+                } else {
+                    let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
+                    remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow)
+                }
+                
+                if remainingSeconds > 0 {
+                    self.updateStartsIn(timerFinished: false, remainingSeconds: remainingSeconds)
+                    self.startInTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                        if remainingSeconds > 0 {
+                            remainingSeconds -= 1
+                            self.updateStartsIn(timerFinished: false, remainingSeconds: remainingSeconds)
+                        } else {
+                            self.updateStartsIn(timerFinished: true, remainingSeconds: remainingSeconds)
+                        }
+                    })
+                    RunLoop.current.add(self.startInTimer!, forMode: .commonModes)
+                } else {
+                    debugPrint("cannot start timer")
+                    self.updateStartsIn(timerFinished: true, remainingSeconds: remainingSeconds)
+                }
+            }
+        }
+    }
+    
+    func stopTimer() {
+        self.startInTimer?.invalidate()
+        self.startInTimer = nil
+    }
+    
+    func updateStartsIn(timerFinished: Bool, remainingSeconds: Int) {
+        
+        if timerFinished {
+            self.stopTimer()
+            
+            self.redeemButton.isUserInteractionEnabled = true
+            self.redeemButton.setTitle("Redeem Deal", for: .normal)
+            self.redeemButton.layoutIfNeeded()
+            
+        } else {
+            UIView.performWithoutAnimation {
+                self.redeemButton.isUserInteractionEnabled = false
+                self.redeemButton.setTitle("Starts in \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds)))", for: .normal)
+                self.redeemButton.layoutIfNeeded()
+            }
+        }
     }
     
     //MARK: My IBActions

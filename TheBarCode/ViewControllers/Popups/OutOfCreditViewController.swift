@@ -48,7 +48,7 @@ class OutOfCreditViewController: UIViewController {
             self.inviteButton.isHidden = false
             self.reloadButton.isHidden = false
             
-            self.detailLabel.text = "Reload now to access all offers and use Credits\nGet more Credits by sharing offers or Inviting Friends"
+            self.detailLabel.text = "Reload now to access all offers and use Credits. Get more Credits by sharing offers or Inviting Friends"
         } else {
             self.reloadButton.isHidden = true
             self.inviteButton.isHidden = false

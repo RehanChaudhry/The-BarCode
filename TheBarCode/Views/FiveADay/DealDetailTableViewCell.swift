@@ -55,16 +55,22 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "hh:mm a"
         
-        let validtyPlaceHodler = "Validity period: "
+//        let validtyPlaceHodler = "Validity period: "
         
         let fromDate = dateFormatter.string(from: deal.startDateTime)
         let toDate = dateFormatter.string(from: deal.endDateTime)
-        let to = " to "
-        let from = " from "
+//        let to = " to "
+//        let from = " from "
         
         let fromTime = timeFormatter.string(from: deal.startDateTime)
         let toTime = timeFormatter.string(from: deal.endDateTime)
         
+        let validityDate = "Validity Date: \(fromDate) to \(toDate)"
+        let validityTime = "Validity Time: \(fromTime) to \(toTime)"
+        
+        self.validityLabel.text = validityDate + "\n" + validityTime
+        
+        /*
         let blueAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
                               NSAttributedStringKey.foregroundColor : UIColor.appDarkGrayColor()]
         
@@ -92,6 +98,7 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         finalAttributedText.append(attributedToTime)
         
         self.validityLabel.attributedText = finalAttributedText
+        */
     }
 
     //MARK IBActions
