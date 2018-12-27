@@ -54,15 +54,18 @@ let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
+let oneSignalProdAppId = ""
 
 enum EnvironmentType: String {
-    case stagging = "stagging", qa = "qa", unknown = "unknown"
+    case stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
     static func current() -> EnvironmentType {
         if theBarCodeAPIDomain == staggingAPIDomain {
             return EnvironmentType.stagging
         } else if theBarCodeAPIDomain == qaAPIDomain {
             return EnvironmentType.qa
+        } else if theBarCodeAPIDomain == productionAPIDomain {
+            return EnvironmentType.production
         } else {
             return EnvironmentType.unknown
         }
@@ -371,6 +374,8 @@ class Utility: NSObject {
             return oneSignalStaggingAppId
         } else if currentEnvironment == .qa {
             return oneSignalQAAppId
+        } else if currentEnvironment == .production {
+            return oneSignalProdAppId
         } else {
             return ""
         }

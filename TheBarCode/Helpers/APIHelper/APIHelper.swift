@@ -14,6 +14,7 @@ import SwiftyJSON
 
 let staggingAPIDomain = "https://thebarcode.cygnismedia.com"
 let qaAPIDomain = "https://thebarcode-qa.cygnismedia.com"
+let productionAPIDomain = "https://thebarcode-qa.cygnismedia.com"
 
 let theBarCodeAPIDomain = qaAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
