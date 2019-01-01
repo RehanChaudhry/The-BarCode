@@ -54,7 +54,11 @@ let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
-let oneSignalProdAppId = ""
+let oneSignalProdAppId = "a314acb3-b5df-442d-820e-6cfc6731fc70"
+
+
+let googleMapQAAppId = "AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8"
+let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 
 enum EnvironmentType: String {
     case stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"

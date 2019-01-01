@@ -115,9 +115,9 @@ class ExploreBaseViewController: UIViewController {
     
     func createMapMarker(location: CLLocation) -> GMSMarker {
         let marker = GMSMarker(position: location.coordinate)
-      //  let iconImage =  UIImage(named: "Pins")
-      //  let markerView = UIImageView(image: iconImage)
-      //  marker.iconView = markerView
+        let iconImage =  UIImage(named: "Pins")
+        let markerView = UIImageView(image: iconImage)
+        marker.iconView = markerView
         return marker
     }
     

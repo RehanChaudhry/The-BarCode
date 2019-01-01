@@ -86,8 +86,14 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQF-Ka-Afd">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="RELOAD IN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2g-9R-TN4">
+                            <rect key="frame" x="16" y="8" width="84" height="28"/>
+                            <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-Ik-Fdg">
-                            <rect key="frame" x="16" y="8" width="289" height="28"/>
+                            <rect key="frame" x="108" y="8" width="197" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -127,15 +133,18 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="K2g-9R-TN4" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" constant="8" id="061-pb-Ztd"/>
                         <constraint firstItem="PCg-PY-1uZ" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" id="56N-gP-17d"/>
                         <constraint firstAttribute="bottom" secondItem="F3n-Kt-BdS" secondAttribute="bottom" constant="5" id="GWJ-Xc-BMc"/>
-                        <constraint firstItem="vPz-Ik-Fdg" firstAttribute="leading" secondItem="tQF-Ka-Afd" secondAttribute="leading" constant="16" id="RNO-s5-K2h"/>
+                        <constraint firstItem="K2g-9R-TN4" firstAttribute="leading" secondItem="tQF-Ka-Afd" secondAttribute="leading" constant="16" id="Nv7-Q0-ABd"/>
+                        <constraint firstItem="vPz-Ik-Fdg" firstAttribute="leading" secondItem="K2g-9R-TN4" secondAttribute="trailing" constant="8" id="UN2-aZ-mv8"/>
                         <constraint firstItem="vPz-Ik-Fdg" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" constant="8" id="XD6-wL-yAs"/>
                         <constraint firstItem="F3n-Kt-BdS" firstAttribute="top" secondItem="tQF-Ka-Afd" secondAttribute="top" constant="5" id="Zol-tb-WsF"/>
                         <constraint firstAttribute="bottom" secondItem="PCg-PY-1uZ" secondAttribute="bottom" id="ggq-lc-PJt"/>
                         <constraint firstAttribute="trailing" secondItem="F3n-Kt-BdS" secondAttribute="trailing" constant="16" id="ibS-fX-Q77"/>
                         <constraint firstItem="F3n-Kt-BdS" firstAttribute="leading" secondItem="vPz-Ik-Fdg" secondAttribute="trailing" constant="20" id="lud-8a-f0a"/>
                         <constraint firstItem="PCg-PY-1uZ" firstAttribute="leading" secondItem="tQF-Ka-Afd" secondAttribute="leading" id="nw6-zU-R06"/>
+                        <constraint firstAttribute="bottom" secondItem="K2g-9R-TN4" secondAttribute="bottom" constant="8" id="re5-8W-yEg"/>
                         <constraint firstAttribute="bottom" secondItem="vPz-Ik-Fdg" secondAttribute="bottom" constant="8" id="sRW-xa-VnG"/>
                         <constraint firstAttribute="trailing" secondItem="PCg-PY-1uZ" secondAttribute="trailing" id="xFE-Wy-Qu5"/>
                     </constraints>

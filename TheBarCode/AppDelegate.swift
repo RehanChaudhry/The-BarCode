@@ -50,8 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAuthIfNeeded()
         
         self.customizeAppearance()
-        GMSServices.provideAPIKey("AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8")
-        
+        GMSServices.provideAPIKey(googleMapProdAppId)
+                
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = theBarCodeInviteScheme
