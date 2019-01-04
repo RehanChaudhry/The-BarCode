@@ -82,6 +82,8 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 
             }))
+            let cell = self.tableView.cellForRow(at: indexPath)
+            alertController.popoverPresentationController?.sourceView = cell ?? self.view
             self.tabBarController?.present(alertController, animated: true, completion: nil)
         } else if menuItem.type == .preferences {
             let navController = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId) as! UINavigationController
