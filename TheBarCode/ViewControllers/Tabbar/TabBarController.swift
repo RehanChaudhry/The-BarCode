@@ -74,6 +74,17 @@ class TabBarController: UITabBarController {
     }
     
     //MARK: My Methods
+    func showCustomAlert(title: String, message: String) {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.delegate = self
+        cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.headerImageName = "login_intro_five_a_day_5"
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
     func registerTagForPushNotification() {
         
         guard let user = Utility.shared.getCurrentUser() else {
@@ -133,7 +144,7 @@ class TabBarController: UITabBarController {
             var sharedByUserName = sharedOfferParams.sharedByName!
             sharedByUserName = sharedByUserName.replacingOccurrences(of: "+", with: " ")
             
-            let alertController = UIAlertController(title: "Shared Offer", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome new offer with you. Check it out!", preferredStyle: .alert)
+         /*   let alertController = UIAlertController(title: "Shared Offer", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome new offer with you. Check it out!", preferredStyle: .alert)
             
             
             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
@@ -141,7 +152,10 @@ class TabBarController: UITabBarController {
                 self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
             }))
             
-            self.topMostViewController().present(alertController, animated: true, completion: nil)
+            self.topMostViewController().present(alertController, animated: true, completion: nil)*/
+            
+            self.showCustomAlert(title: "Shared Offer", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome new offer with you. Check it out!")
+            
         }
         
     }
@@ -177,5 +191,16 @@ extension TabBarController {
     
     @objc func acceptSharedOfferNotification(notification: Notification) {
         self.acceptSharedOffer()
+    }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension TabBarController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
+        self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
     }
 }
