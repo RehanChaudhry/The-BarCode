@@ -213,7 +213,7 @@ class AccountSettingsViewController: UIViewController {
         self.selectedDob = dateFormatter.date(from: user.dobString.value)!
         self.datePicker.date = self.selectedDob
         
-        self.selectedGender = user.gender
+        self.selectedGender = user.gender ?? Gender.male
         
         self.updateDobField()
         self.updateGenderField()

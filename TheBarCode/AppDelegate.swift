@@ -51,8 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.customizeAppearance()
         GMSServices.provideAPIKey(googleMapProdAppId)
-                
-        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = theBarCodeInviteScheme
         FirebaseApp.configure()
@@ -98,6 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.startVisitLocationManager()
         
+        if let userActivityDictionary = launchOptions?[UIApplication.LaunchOptionsKey.userActivityDictionary] as? [String : Any] {
+            if let userActivity = userActivityDictionary["UIApplicationLaunchOptionsUserActivityKey"] as? NSUserActivity {
+                print("activityDictionary: \(String(describing: userActivity))")
+            }
+        }
+        
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         return true
     }
 
@@ -125,6 +131,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
+        let handled = self.handleUserActivity(userActivity: userActivity)
+        return handled
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if url.scheme == "fb182951649264383" {
+            let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
+            return handled ?? false
+        } else if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url), let link = dynamicLink.url {
+            
+            if let sharedOfferParams = Utility.shared.getSharedOfferParams(urlString: link.absoluteString) {
+                self.sharedOfferParams = sharedOfferParams
+                self.referralCode = sharedOfferParams.referral!
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
+            } else if let code = Utility.shared.getReferralCodeFromUrlString(urlString: link.absoluteString) {
+                self.referralCode = code
+            } else {
+                debugPrint("Unable to parse referral code url: ")
+            }
+            
+            return true
+        } else if url.scheme?.lowercased() == theBarCodeInviteScheme.lowercased() {
+            if let code = Utility.shared.getReferralCodeFromUrlString(urlString: url.absoluteString) {
+                self.referralCode = code
+            } else {
+                debugPrint("Unable to parse referral code url scheme: ")
+            }
+            return true
+        }
+        
+        return false
+        
+    }
+    
+    func handleUserActivity(userActivity: NSUserActivity) -> Bool {
         let universalUrl = userActivity.webpageURL
         let handled = DynamicLinks.dynamicLinks().handleUniversalLink(universalUrl!) { (dynamicLink, error) in
             
@@ -154,24 +196,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return handled
-    }
-
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        if url.scheme == "fb182951649264383" {
-            let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
-            return handled ?? false
-        } else if url.scheme?.lowercased() == theBarCodeInviteScheme.lowercased() {
-            if let code = Utility.shared.getReferralCodeFromUrlString(urlString: url.absoluteString) {
-                self.referralCode = code
-            } else {
-                debugPrint("Unable to parse referral code url scheme: ")
-            }
-            return true
-        }
-        
-        return false
-        
     }
     
     func setupAuthIfNeeded() {

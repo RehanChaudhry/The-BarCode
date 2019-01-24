@@ -42,9 +42,9 @@ class User: CoreStoreObject {
     
     var creditsRaw = Value.Optional<String>("credits_raw")
     
-    var gender: Gender {
+    var gender: Gender? {
         get {
-            return Gender(rawValue: self.genderString.value.lowercased()) ?? .other
+            return Gender(rawValue: self.genderString.value.lowercased())
         }
     }
     
@@ -101,7 +101,13 @@ extension User: ImportableUniqueObject {
         self.fullName.value = source["full_name"] as! String
         self.email.value = source["email"] as! String
         self.dobString.value = source["date_of_birth"] as! String
-        self.genderString.value = source["gender"] as! String
+        
+        if let gender = source["gender"] as? String {
+            self.genderString.value = gender
+        } else {
+            self.genderString.value = ""
+        }
+        
         self.accessToken.value = source["access_token"] as! String
 //        self.refreshToken.value = source["refresh_token"] as! String
         self.ownReferralCode.value = source["own_referral_code"] as! String

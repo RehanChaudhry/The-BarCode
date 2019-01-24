@@ -175,7 +175,7 @@ class ExploreViewController: UIViewController {
         } else if type == .congrates {
             self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
-            self.liveOffersController.snackBar.updateAppearanceForType(type: .discount, gradientType: .orange)
+            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
         }
     }
     

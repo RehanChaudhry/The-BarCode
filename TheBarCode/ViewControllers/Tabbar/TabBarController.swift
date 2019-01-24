@@ -92,6 +92,7 @@ class TabBarController: UITabBarController {
             let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
             let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
             barDetailController.barId = barId
+            barDetailController.preSelectedTabIndex = 2
             self.topMostViewController().present(barDetailNav, animated: true, completion: nil)
         } else {
             debugPrint("Live offer notification AppDelegate object is nil")

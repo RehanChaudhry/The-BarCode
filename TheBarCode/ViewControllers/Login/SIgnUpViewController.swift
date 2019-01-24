@@ -63,7 +63,7 @@ class SIgnUpViewController: UIViewController {
     var selectedGender: Gender = Gender.male
     var selectedDob: Date = Date()
     
-    var genders: [Gender] = [Gender.male, Gender.female, Gender.other]
+    var genders: [Gender] = [Gender.male, Gender.female]
     
     var socialAccountId: String?
     

@@ -86,7 +86,12 @@ extension Explore: ImportableUniqueObject {
         self.contactNumber.value = source["contact_number"] as! String
         self.contactEmail.value = source["contact_email"] as! String
         self.address.value = source["address"] as! String
-        self.website.value = source["website"] as! String
+        
+        if let website = source["website"] as? String {
+            self.website.value = website
+        } else {
+            self.website.value = ""
+        }
         
         self.latitude.value = CLLocationDegrees("\(source["latitude"] ?? 0.0)")!
         self.longitude.value = CLLocationDegrees("\(source["longitude"] ?? 0.0)")!

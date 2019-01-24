@@ -148,18 +148,21 @@ extension InviteViewController {
         
         let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
+        let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
+        iOSNavigationParams.isForcedRedirectEnabled = true
+        
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
-        linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
+        linkComponents.navigationInfoParameters = iOSNavigationParams
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId
-        linkComponents.iOSParameters?.fallbackURL = URL(string: barCodeDomainURLString)
         linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
         
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
+        let descText = "\(user.fullName.value) invited you to join The Bar Code. Use the referral code \(ownReferralCode) on sign up and enjoy access to amazing deals & live offers through the application."
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode Invitation"
-        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) invited you to join The Bar Code. Use the referral code \(ownReferralCode) on sign up and enjoy access to amazing deals & live offers through the application."
+        linkComponents.socialMetaTagParameters?.descriptionText = descText
         linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
@@ -177,7 +180,7 @@ extension InviteViewController {
                 debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
             }
             
-            let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: [descText, shortUrl!], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view
             self.present(activityViewController, animated: true, completion: {
                 self.inviteFriendCodeButton.hideLoader()

@@ -64,7 +64,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         dateFormatter.dateFormat = "MMM dd"
         
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "hh:mm:a"
+        timeFormatter.dateFormat = "hh:mm a"
         
         let validtyPlaceHodler = "Validity period: "
         

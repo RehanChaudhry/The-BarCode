@@ -11,9 +11,10 @@ import KeychainAccess
 import CoreStore
 import GoogleMaps
 import Firebase
+import FirebaseDynamicLinks
 
 let bundleId = Bundle.main.bundleIdentifier!
-let androidPackageName = "com.cygnismedia.thebarcode"
+let androidPackageName = "com.milnesmayltd.thebarcode"
 
 let theBarCodeInviteScheme = "theBarCodeInviteScheme"
 
@@ -331,18 +332,21 @@ class Utility: NSObject {
         
         let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
+        let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
+        iOSNavigationParams.isForcedRedirectEnabled = true
+        
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkShareOfferDomain)
-        linkComponents.navigationInfoParameters?.isForcedRedirectEnabled = true
+        linkComponents.navigationInfoParameters = iOSNavigationParams
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId
-        linkComponents.iOSParameters?.fallbackURL = URL(string: barCodeDomainURLString)
         linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
         
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
+        let descText = "\(user.fullName.value) has shared an offer with you. Join your mates and avail amazing deals & live offers together."
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
-        linkComponents.socialMetaTagParameters?.descriptionText = "\(user.fullName.value) has shared an offer with you. Join your mates and avail amazing deals & live offers together."
+        linkComponents.socialMetaTagParameters?.descriptionText = descText
         linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
@@ -360,7 +364,7 @@ class Utility: NSObject {
                 debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
             }
             
-            let activityViewController = UIActivityViewController(activityItems: [shortUrl!], applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: [descText, shortUrl!], applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = controller.view
             activityViewController.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
                 dismissCompletion()

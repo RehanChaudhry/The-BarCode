@@ -8,6 +8,7 @@
 
 import UIKit
 import Contacts
+import FirebaseDynamicLinks
 
 class ContactsViewController: UIViewController {
 
@@ -100,7 +101,7 @@ class ContactsViewController: UIViewController {
     @IBAction func inviteBarButtonTapped(sender: UIBarButtonItem) {
         
         if self.contacts.first(where: {$0.isSelected}) != nil {
-            self.sendInvites()
+            self.generateAndShareDynamicLink()
         } else {
             self.showAlertController(title: "Invite Via Email", msg: "Please select atleast 1 contact to send invitation via email.")
         }
@@ -129,7 +130,56 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: Webservices Methods
 extension ContactsViewController {
     
-    func sendInvites() {
+    func generateAndShareDynamicLink() {
+        
+        self.statefulView.showLoading()
+        self.statefulView.isHidden = false
+        
+        let user = Utility.shared.getCurrentUser()!
+        let ownReferralCode = user.ownReferralCode.value
+        let inviteUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode
+        
+        let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
+        iOSNavigationParams.isForcedRedirectEnabled = true
+        
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
+        linkComponents.navigationInfoParameters = iOSNavigationParams
+        linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
+        linkComponents.iOSParameters?.appStoreID = kAppStoreId
+        linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
+        
+        linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
+        
+        let descText = "\(user.fullName.value) invited you to join The Bar Code. Use the referral code \(ownReferralCode) on sign up and enjoy access to amazing deals & live offers through the application."
+        linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkComponents.socialMetaTagParameters?.title = "The Barcode Invitation"
+        linkComponents.socialMetaTagParameters?.descriptionText = descText
+        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        
+        linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+        linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
+        
+        linkComponents.shorten { (shortUrl, warnings, error) in
+            
+            guard error == nil else {
+                self.statefulView.showNothing()
+                self.statefulView.isHidden = true
+                self.showAlertController(title: "Invite", msg: error!.localizedDescription)
+                return
+            }
+            
+            if let warnings = warnings{
+                debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
+            }
+            
+            self.sendInvites(url: shortUrl!.absoluteString)
+        }
+        
+    }
+    
+    func sendInvites(url: String) {
         
         let selectedEmails = self.contacts.compactMap { (contact) -> String? in
             if contact.isSelected {
@@ -139,8 +189,12 @@ extension ContactsViewController {
             }
         }
         
-        let params = ["emails" : selectedEmails]
+        let params: [String : Any] = ["emails" : selectedEmails,
+                                      "url" : url]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathInviteViaEmail, method: .post) { (response, serverError, error) in
+            
+            self.statefulView.showNothing()
+            self.statefulView.isHidden = true
             
             guard error == nil else {
                 self.showAlertController(title: "Invite Via Email", msg: error!.localizedDescription)

@@ -18,6 +18,8 @@ protocol ExploreAboutTableViewCellDelegate: class {
 
 class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
 
+    @IBOutlet var websitePlaceholderLabel: UILabel!
+    
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var timingsLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
@@ -30,6 +32,10 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var phoneNumberButton: UIButton!
     @IBOutlet var emailButton: UIButton!
     @IBOutlet var directionsButton: UIButton!
+    
+    @IBOutlet var websitePlaceholderLabelHeight: NSLayoutConstraint!
+    @IBOutlet var phonePlaceholderLabelTop: NSLayoutConstraint!
+    @IBOutlet var phoneNumberLabelTop: NSLayoutConstraint!
     
     @IBOutlet var websiteButtonHeight: NSLayoutConstraint!
     @IBOutlet var phoneNumberButtonHeight: NSLayoutConstraint!
@@ -67,11 +73,30 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     func setUpCell(explore: Explore) {
         infoLabel.text = explore.detail.value
         timingsLabel.text = explore.businessTiming.value
-        websiteButton.setTitle(explore.website.value, for: .normal)
         phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
         addressLabel.text = explore.address.value
         emailButton.setTitle(explore.contactEmail.value, for: .normal)
         
+        if explore.website.value == "" {
+//            self.websitePlaceholderLabel.isHidden = true
+//            self.websiteButton.isHidden = true
+            self.websiteButton.setTitle("N/A", for: .normal)
+            self.websiteButton.isUserInteractionEnabled = false
+            
+//            self.websiteButtonHeight.constant = 0.0
+//            self.phonePlaceholderLabelTop.constant = 0.0
+//            self.phoneNumberLabelTop.constant = 0.0
+            
+        } else {
+//            self.websitePlaceholderLabel.isHidden = false
+//            self.websiteButton.isHidden = false
+            self.websiteButton.setTitle(explore.website.value, for: .normal)
+            self.websiteButton.isUserInteractionEnabled = true
+            
+//            self.websiteButtonHeight.constant = 17.0
+//            self.phonePlaceholderLabelTop.constant = 15.0
+//            self.phoneNumberLabelTop.constant = 15.0
+        }
     }
     
     //MARK: My IBActions

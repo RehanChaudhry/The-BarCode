@@ -85,6 +85,9 @@ Sunday - 12:00 - 22:00</string>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Na3-14-dTn">
                         <rect key="frame" x="40" y="352" width="89" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="fy9-QU-HlI"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -268,10 +271,14 @@ Sunday - 12:00 - 22:00</string>
                 <outlet property="phoneNumberButton" destination="bs9-GE-FgW" id="sDa-58-skm"/>
                 <outlet property="phoneNumberButtonHeight" destination="nRj-Us-CkJ" id="R1u-Wc-Dq3"/>
                 <outlet property="phoneNumberLabel" destination="mHh-cy-EnE" id="pzZ-fq-fJ5"/>
+                <outlet property="phoneNumberLabelTop" destination="Xhq-TI-Otr" id="mIc-Oe-qaD"/>
+                <outlet property="phonePlaceholderLabelTop" destination="nXI-5a-DvL" id="C2X-e9-AaI"/>
                 <outlet property="timingsLabel" destination="cQZ-hh-5Hh" id="yBN-zn-27E"/>
                 <outlet property="websiteButton" destination="E3T-fZ-hrt" id="Dau-du-fWg"/>
                 <outlet property="websiteButtonHeight" destination="jZC-U1-5IZ" id="OUT-Oh-ipK"/>
                 <outlet property="websiteLabel" destination="2Vd-yV-E3a" id="BUn-6L-hMc"/>
+                <outlet property="websitePlaceholderLabel" destination="Na3-14-dTn" id="eCR-bg-MZa"/>
+                <outlet property="websitePlaceholderLabelHeight" destination="fy9-QU-HlI" id="q7T-Dg-hGN"/>
             </connections>
             <point key="canvasLocation" x="-81.599999999999994" y="167.76611694152925"/>
         </tableViewCell>
