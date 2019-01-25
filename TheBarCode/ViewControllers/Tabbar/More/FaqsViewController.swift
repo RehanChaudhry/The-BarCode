@@ -69,7 +69,7 @@ class FaqsViewController: UIViewController {
         let section15 = FAQSection(title: "How much is a credit worth?", faqs: [FAQ(text: "A credit can be used to activate any offer you like. This could be a standard 25% offer that you want to re-use or one of the many other offers on the app that you want to redeem again.")])
         self.faqSections.append(section15)
         
-        let section16 = FAQSection(title: "How do I get more credits?", faqs: [FAQ(text: "You can get credits by inviting friends to join the app or sharing offers with your friends or if you are feeling cheeky, you can also ask a friend to lend you one. The Credits will drop into your account as soon they have either downloaded the app using your code and redeemed their first offer, or redeemed the offer you shared. ")])
+        let section16 = FAQSection(title: "How do I get more credits?", faqs: [FAQ(text: "You can get credits by inviting friends to join the app or sharing offers with your friends. The Credits will drop into your account as soon they have either downloaded the app using your code and redeemed their first offer, or redeemed the offer you shared.")])
         self.faqSections.append(section16)
         
         

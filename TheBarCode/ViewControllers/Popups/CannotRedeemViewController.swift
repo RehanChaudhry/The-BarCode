@@ -39,6 +39,8 @@ class CannotRedeemViewController: UIViewController {
     var reloadTimer: Timer?
     var redeemInfo: RedeemInfo?
     
+    var alignment: NSTextAlignment = .left
+    
     weak var delegate: CannotRedeemViewControllerDelegate?
     
     var alertType = CustomAlertType.normal
@@ -50,6 +52,8 @@ class CannotRedeemViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.messageLabel.text = messageText
+        self.messageLabel.textAlignment = self.alignment
+        
         self.titleLabel.text = titleText
         
         let heightOfMessage = messageText.heightWithConstrainedWidth(width: (self.view.frame.width - 80), font: UIFont.appRegularFontOf(size: 14.0))

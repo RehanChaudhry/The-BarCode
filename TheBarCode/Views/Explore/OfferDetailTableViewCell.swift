@@ -68,8 +68,8 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         dateFormatter.dateFormat = "MMM dd"
         
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "hh:mm a"
-        
+        timeFormatter.dateFormat = "HH:mm"
+
         let validtyPlaceHodler = "Validity period: "
         
         if deal.statusText.value.lowercased() == "active".lowercased() {

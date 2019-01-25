@@ -225,6 +225,7 @@ class BarDetailViewController: UIViewController {
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.delegate = self
         cannotRedeemViewController.alertType = .normal
+        cannotRedeemViewController.alignment = .center
         cannotRedeemViewController.headerImageName = "login_intro_five_a_day_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         self.present(cannotRedeemViewController, animated: true, completion: nil)
@@ -482,7 +483,7 @@ extension BarDetailViewController {
                     
                     self.redeemWithUserCredit(credit: credit, canReload: canReload)
                 } else {
-                    self.showCustomAlert(title: "Alert", message: "You have Redeemed your daily limit for this Bar.\nDon’t worry, come again tomorrow to Redeem more")
+                    self.showCustomAlert(title: "You've Reached Your Daily Limit For This Bar", message: "You have used your two offer limit here today. Don't worry, you can use credits to redeem offers here again tomorrow.")
                 }
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
