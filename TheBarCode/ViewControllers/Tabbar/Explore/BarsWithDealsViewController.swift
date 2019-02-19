@@ -18,6 +18,7 @@ protocol BarsWithDealsViewControllerDelegate: class {
     func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView)
     func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton)
     func barsWithDealsController(controller: BarsWithDealsViewController, preferncesButtonTapped sender: UIButton)
+    func barsWithDealsController(controller: BarsWithDealsViewController, standardOfferButtonTapped sender: UIButton)
 }
 
 class BarsWithDealsViewController: ExploreBaseViewController {
@@ -60,6 +61,10 @@ class BarsWithDealsViewController: ExploreBaseViewController {
 
     @IBAction func prefencesButtonTapped(sender: UIButton) {
         self.delegate.barsWithDealsController(controller: self, preferncesButtonTapped: sender)
+    }
+    
+    @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        self.delegate.barsWithDealsController(controller: self, standardOfferButtonTapped: sender)
     }
 }
 

@@ -20,6 +20,7 @@ protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton)
     func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
     func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton)
+    func barsController(controller: BarsViewController, standardOfferButtonTapped sender: UIButton)
 }
 
 class BarsViewController: ExploreBaseViewController {
@@ -66,6 +67,11 @@ class BarsViewController: ExploreBaseViewController {
     @IBAction func preferenceButtonTapped(sender: UIButton) {
         self.delegate.barsController(controller: self, preferncesButtonTapped: sender)
     }
+    
+    @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        self.delegate.barsController(controller: self, standardOfferButtonTapped: sender)
+    }
+    
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate

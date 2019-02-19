@@ -26,6 +26,7 @@ class ExploreBaseViewController: UIViewController {
     
     @IBOutlet var tempView: UIView!
     
+    @IBOutlet var standardOfferButton: UIButton!
     @IBOutlet var preferencesButton: UIButton!
     @IBOutlet var mapButton: UIButton!
     @IBOutlet var listButton: UIButton!
@@ -66,6 +67,9 @@ class ExploreBaseViewController: UIViewController {
         self.resetMapListSegment()
         self.listButton.backgroundColor = UIColor.black
         self.listButton.tintColor = UIColor.appBlueColor()
+        
+        self.standardOfferButton.backgroundColor = self.tempView.backgroundColor
+        self.standardOfferButton.tintColor = UIColor.appGrayColor()
         
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()

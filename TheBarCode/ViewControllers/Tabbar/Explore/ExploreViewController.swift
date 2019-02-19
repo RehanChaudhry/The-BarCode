@@ -296,7 +296,7 @@ class ExploreViewController: UIViewController {
         self.present(inviteNavigation, animated: true, completion: nil)
     }
     
-    func moveToSearch(withPreferences: Bool) {
+    func moveToSearch(withPreferences: Bool, withStandardOffer: Bool) {
         let searchNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
         searchNavigationController.modalTransitionStyle = .crossDissolve
         let searchController = searchNavigationController.viewControllers.first as! SearchViewController
@@ -308,6 +308,12 @@ class ExploreViewController: UIViewController {
             categoriesController.shouldDismiss = true
             categoriesController.delegate = searchController
             searchNavigationController.setViewControllers([searchController, categoriesController], animated: false)
+        } else if withStandardOffer {
+            let standardOfferController = (self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController)
+            standardOfferController.shouldDismiss = true
+            standardOfferController.delegate = searchController
+            searchNavigationController.setViewControllers([searchController, standardOfferController], animated: false)
+            
         }
         
         self.present(searchNavigationController, animated: true, completion: nil)
@@ -412,6 +418,11 @@ extension ExploreViewController {
 
 //MARK: BarsViewControllerDelegate
 extension ExploreViewController: BarsViewControllerDelegate {
+    
+    func barsController(controller: BarsViewController, standardOfferButtonTapped sender: UIButton) {
+        self.moveToSearch(withPreferences: false, withStandardOffer: true)
+    }
+    
     func barsController(controller: BarsViewController, didSelectBar bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
@@ -421,16 +432,21 @@ extension ExploreViewController: BarsViewControllerDelegate {
     }
     
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false)
+        self.moveToSearch(withPreferences: false, withStandardOffer: false)
     }
     
     func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: true)
+        self.moveToSearch(withPreferences: true, withStandardOffer: false)
     }
 }
 
 //MARK: BarsWithDealsViewControllerDelegate
 extension ExploreViewController: BarsWithDealsViewControllerDelegate {
+    
+    func barsWithDealsController(controller: BarsWithDealsViewController, standardOfferButtonTapped sender: UIButton) {
+        self.moveToSearch(withPreferences: false, withStandardOffer: true)
+    }
+    
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
@@ -440,16 +456,21 @@ extension ExploreViewController: BarsWithDealsViewControllerDelegate {
     }
     
     func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false)
+        self.moveToSearch(withPreferences: false, withStandardOffer: false)
     }
     
     func barsWithDealsController(controller: BarsWithDealsViewController, preferncesButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: true)
+        self.moveToSearch(withPreferences: true, withStandardOffer: false)
     }
 }
 
 //MARK: BarsWithLiveOffersViewControllerDelegate
 extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
+    
+    func liveOffersController(controller: BarsWithLiveOffersViewController, standardOfferButtonTapped sender: UIButton) {
+        self.moveToSearch(withPreferences: false, withStandardOffer: true)
+    }
+    
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar) {
         self.moveToBarDetail(bar: bar)
     }
@@ -459,11 +480,11 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
     }
     
     func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false)
+        self.moveToSearch(withPreferences: false, withStandardOffer: true)
     }
     
     func liveOffersController(controller: BarsWithLiveOffersViewController, preferencesButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: true)
+        self.moveToSearch(withPreferences: true, withStandardOffer: false)
     }
 }
 

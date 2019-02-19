@@ -18,6 +18,7 @@ protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView)
     func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton)
     func liveOffersController(controller: BarsWithLiveOffersViewController, preferencesButtonTapped sender: UIButton)
+    func liveOffersController(controller: BarsWithLiveOffersViewController, standardOfferButtonTapped sender: UIButton)
 }
 
 class BarsWithLiveOffersViewController: ExploreBaseViewController {
@@ -57,6 +58,10 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
     
     @IBAction func prefencesButtonTapped(sender: UIButton) {
         self.delegate.liveOffersController(controller: self, preferencesButtonTapped: sender)
+    }
+    
+    @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        self.delegate.liveOffersController(controller: self, standardOfferButtonTapped: sender)
     }
 }
 

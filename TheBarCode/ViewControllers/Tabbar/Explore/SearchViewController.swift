@@ -28,6 +28,7 @@ class SearchViewController: UIViewController {
     @IBOutlet var mapButton: UIButton!
     @IBOutlet var listButton: UIButton!
     @IBOutlet var preferencesButton: UIButton!
+    @IBOutlet var standardOfferButton: UIButton!
     
     @IBOutlet var searchbarRight: NSLayoutConstraint!
     
@@ -64,6 +65,9 @@ class SearchViewController: UIViewController {
         self.resetMapListSegment()
         self.listButton.backgroundColor = UIColor.black
         self.listButton.tintColor = UIColor.appBlueColor()
+        
+        self.standardOfferButton.backgroundColor = self.tempView.backgroundColor
+        self.standardOfferButton.tintColor = UIColor.appGrayColor()
         
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()
@@ -270,6 +274,11 @@ class SearchViewController: UIViewController {
         categoriesController.preSelectedCategories = self.selectedPreferences
         categoriesController.delegate = self
         self.navigationController?.pushViewController(categoriesController, animated: true)
+    }
+    
+    @IBAction func standardOfferButtonTapped(sender: UIButton) {
+        let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
+        self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
 }
 
@@ -519,6 +528,12 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
     }
 }
 
+//MARK: StandardOffersViewControllerDelegate
+extension SearchViewController: StandardOffersViewControllerDelegate {
+    
+}
+
+//MARK: GMSMapViewDelegate
 extension SearchViewController : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         let bar = marker.userData as! Bar
