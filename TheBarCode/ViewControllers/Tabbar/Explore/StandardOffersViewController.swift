@@ -28,7 +28,7 @@ class StandardOffersViewController: UIViewController {
     
     weak var delegate: StandardOffersViewControllerDelegate?
     
-    var preSelectedCategories: [Category] = []
+    var preSelectedTiers: [StandardOffer] = []
     
     var shouldDismiss: Bool = false
     
@@ -96,7 +96,7 @@ class StandardOffersViewController: UIViewController {
     
     func setUpPreselectedOffers() {
         for offer in self.offers {
-            if let _ = self.preSelectedCategories.first(where: {$0.id.value == offer.id.value}) {
+            if let _ = self.preSelectedTiers.first(where: {$0.id.value == offer.id.value}) {
                 offer.isSelected.value = true
             } else {
                 offer.isSelected.value = false
