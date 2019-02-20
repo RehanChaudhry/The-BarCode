@@ -182,7 +182,7 @@ class BarDetailViewController: UIViewController {
             self.standardRedeemButton.updateColor(withGrey: true)
         }
         
-        if let standardOffer = self.selectedBar?.activeStandardOffer.value {
+        if let standardOffer = self.selectedBar!.activeStandardOffer.value {
             standardRedeemButton.setTitle(standardOffer.displayValue, for: .normal)
             
             setUpStandardRedeemButtonUI()

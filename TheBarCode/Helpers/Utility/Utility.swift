@@ -390,4 +390,20 @@ class Utility: NSObject {
             return ""
         }
     }
+    
+    
+    func getPinImage(offerType: StandardOfferType) -> UIImage {
+        switch offerType {
+        case .bronze:
+            return UIImage(named: "Pins")!
+        case .silver:
+            return UIImage(named: "Pins")!
+        case .gold:
+            return UIImage(named: "Pins")!
+        case .platinum:
+            return UIImage(named: "Pins")!
+        default:
+            return UIImage(named: "Pins")!
+        }
+    }
 }

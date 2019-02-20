@@ -121,11 +121,25 @@ class SearchViewController: UIViewController {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
-            let marker = GMSMarker(position: location.coordinate)
+            
+            var pinImage = UIImage(named: "Pins")!
+            if let activeStandardOffer = bar.activeStandardOffer.value {
+                pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
+            }
+            
+            let marker = self.createMapMarker(location: location, pinImage: pinImage)
             marker.userData = bar
             marker.map = self.mapView
         }
         
+    }
+    
+    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
+        let marker = GMSMarker(position: location.coordinate)
+        let iconImage = pinImage
+        let markerView = UIImageView(image: iconImage)
+        marker.iconView = markerView
+        return marker
     }
     
     func setUpStatefulTableView() {
