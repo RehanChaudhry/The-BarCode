@@ -32,6 +32,8 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
     
     func setUpCell(category: Category) {
         
+        self.titleButton.titleLabel?.textAlignment = .center
+
         UIView.performWithoutAnimation {
             self.titleButton.setTitle(category.title.value, for: .normal)
             self.titleButton.layoutIfNeeded()
