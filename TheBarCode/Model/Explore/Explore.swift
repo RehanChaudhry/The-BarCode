@@ -14,7 +14,7 @@ enum ExploreMappingType: String {
     case bars = "bars", deals = "deals", liveOffers = "liveOffers"
 }
 
-class Explore: CoreStoreObject {
+class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
     var userId = Value.Required<String>("user_id", initial: "")
@@ -48,10 +48,10 @@ class Explore: CoreStoreObject {
     
     var lastReloadTime = Value.Required<String>("last_reload_time", initial: "") //TODO dateObject
     
-}
+//}
 
 
-extension Explore: ImportableUniqueObject {
+//extension Explore: ImportableUniqueObject {
     
     typealias ImportSource = [String: Any]
     

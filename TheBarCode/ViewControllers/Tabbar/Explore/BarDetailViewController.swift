@@ -181,6 +181,35 @@ class BarDetailViewController: UIViewController {
         } else {
             self.standardRedeemButton.updateColor(withGrey: true)
         }
+        
+        if let standardOffer = self.selectedBar?.activeStandardOffer.value {
+            standardRedeemButton.setTitle(standardOffer.displayValue, for: .normal)
+            
+            setUpStandardRedeemButtonUI()
+        }
+    }
+    
+    func setUpStandardRedeemButtonUI(){
+        switch self.selectedBar!.activeStandardOffer.value!.type {
+        case .bronze:
+            //White logo and button (black writing) for 10%
+            standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
+            break
+        case .silver:
+            //Black logo and button (white writing) for 15%
+            standardRedeemButton.setTitleColor(UIColor.white, for: .normal)
+            break
+        case .gold:
+            //Our current green logo and button for 25%
+            //standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
+            break
+        case .platinum:
+            //Something that really stands out for 50%
+            standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
+            break
+        default:
+            break
+        }
     }
     
     func redeemWithUserCredit(credit: Int?, canReload: Bool) {

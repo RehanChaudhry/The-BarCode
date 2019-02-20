@@ -57,7 +57,8 @@ class Deal: CoreStoreObject {
     var endDateTimeRaw = Value.Required<String>("end_date_time", initial: "")
     var establishment = Relationship.ToOne<Bar>("establishment")
     var offer = Relationship.ToOne<Offer>("offer")
-    
+    var canShare = Value.Required<Bool>("can_share", initial: false)
+
     var sharedByName = Value.Optional<String>("shared_by_name")
     var sharedId = Value.Optional<String>("shared_id")
     
@@ -146,6 +147,10 @@ extension Deal: ImportableUniqueObject {
         self.startDateTimeRaw.value = source["start_date_time"]! as! String
         self.endDateTimeRaw.value = source["end_date_time"]! as! String
         self.statusText.value = source["status_text"] as! String
+       
+        if let canShare = source["can_share"] as? Bool {
+            self.canShare.value = canShare
+        }
         
         if let item = source["establishments"] as? [String : Any] {
             let importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: item)

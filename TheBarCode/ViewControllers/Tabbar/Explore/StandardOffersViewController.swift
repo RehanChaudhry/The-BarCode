@@ -10,7 +10,8 @@ import UIKit
 import CoreStore
 
 protocol StandardOffersViewControllerDelegate: class {
-    
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer])
+
 }
 
 class StandardOffersViewController: UIViewController {
@@ -19,7 +20,7 @@ class StandardOffersViewController: UIViewController {
     
     @IBOutlet var continueButton: UIButton!
     
-    var offers: [String] = ["", "", "", "", "", ""]
+    var offers: [StandardOffer] = []
     
     var statefulView: LoadingAndErrorView!
     
@@ -90,45 +91,45 @@ class StandardOffersViewController: UIViewController {
     }
     
     func getCachedOffers() {
-//        self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        self.offers = self.transaction.fetchAll(From<StandardOffer>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \StandardOffer.discountValue)))) ?? []
     }
     
     func setUpPreselectedOffers() {
-//        for category in self.categories {
-//            if let _ = self.preSelectedCategories.first(where: {$0.id.value == category.id.value}) {
-//                category.isSelected.value = true
-//            } else {
-//                category.isSelected.value = false
-//            }
-//        }
+        for offer in self.offers {
+            if let _ = self.preSelectedCategories.first(where: {$0.id.value == offer.id.value}) {
+                offer.isSelected.value = true
+            } else {
+                offer.isSelected.value = false
+            }
+        }
     }
     
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
         
-//        let selectedPreferences = self.categories.compactMap { (category) -> Category? in
-//            if category.isSelected.value {
-//                return category
-//            } else {
-//                return nil
-//            }
-//        }
-//
-//        var fetchedCategories: [Category] = []
-//        for object in selectedPreferences {
-//            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-//            fetchedCategories.append(fetchedObject!)
-//        }
-//
-//        if self.shouldDismiss && selectedPreferences.count == 0 {
-//            self.dismiss(animated: true, completion: nil)
-//        } else {
-//                        self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedCategories)
-//            self.navigationController?.popViewController(animated: true)
-//        }
+        let selectedStandardOffers = self.offers.compactMap { (offer) -> StandardOffer? in
+            if offer.isSelected.value {
+                return offer
+            } else {
+                return nil
+            }
+        }
+
+        var fetchedOffers: [StandardOffer] = []
+        for object in selectedStandardOffers {
+            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+            fetchedOffers.append(fetchedObject!)
+        }
+
+        if self.shouldDismiss && selectedStandardOffers.count == 0 {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers)
+            self.navigationController?.popViewController(animated: true)
+        }
         
-//        self.transaction.flush()
+        self.transaction.flush()
     }
 }
 
@@ -140,16 +141,16 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: StandardOfferTypeCell.self)
+        cell.setUpCell(offer: self.offers[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-//        let category = self.categories[indexPath.item]
-//        category.isSelected.value = !category.isSelected.value
-//
-//        self.collectionView.innerCollection.reloadItems(at: [indexPath])
+        let offer = self.offers[indexPath.item]
+        offer.isSelected.value = !offer.isSelected.value
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
@@ -159,7 +160,7 @@ extension StandardOffersViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathCategories, method: .get) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathStandardOffers, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
@@ -172,14 +173,14 @@ extension StandardOffersViewController {
             }
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let responseCategories = (responseDict?["data"] as? [[String : Any]]) {
+            if let responseOffers = (responseDict?["data"] as? [[String : Any]]) {
                 self.offers.removeAll()
                 
-//                let dataStack = Utility.inMemoryStack
-//                try! dataStack.perform(synchronous: { (transaction) -> Void in
-//                    let importedObjects = try! transaction.importUniqueObjects(Into<Category>(), sourceArray: responseCategories)
-//                    debugPrint("Imported categories count: \(importedObjects.count)")
-//                })
+                let dataStack = Utility.inMemoryStack
+                try! dataStack.perform(synchronous: { (transaction) -> Void in
+                    let importedObjects = try! transaction.importUniqueObjects(Into<StandardOffer>(), sourceArray: responseOffers)
+                    debugPrint("Imported Standard Offers count: \(importedObjects.count)")
+                })
                 
                 self.getCachedOffers()
                 self.setUpPreselectedOffers()

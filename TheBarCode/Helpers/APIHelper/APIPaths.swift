@@ -46,6 +46,7 @@ let apiPathGetBarDetail = "establishment"
 
 let apiPathSharedOffers = "share"
 
+let apiPathStandardOffers = "standard-offer-tier"
 
 
 

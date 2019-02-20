@@ -92,7 +92,9 @@ class Utility: NSObject {
                 Entity<Deal>("Deal"),
                 Entity<LiveOffer>("LiveOffer"),
                 Entity<ImageItem>("ImageItem"),
-                Entity<Offer>("Offer")
+                Entity<Offer>("Offer"),
+                Entity<StandardOffer>("StandardOffer"),
+                Entity<ActiveStandardOffer>("ActiveStandardOffer")
             ]
         )
     )

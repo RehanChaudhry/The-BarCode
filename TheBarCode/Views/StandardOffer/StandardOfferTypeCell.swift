@@ -30,4 +30,32 @@ class StandardOfferTypeCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
+    func setUpCell(offer: StandardOffer) {
+      
+        self.titleLabel.text = offer.discountValue.value + "%"
+        self.imageView?.image = setPinImage(offerType: offer.type)
+        
+        if offer.isSelected.value {
+            self.accessoryType = .checkmark
+            self.tintColor = UIColor.white
+        } else {
+            self.accessoryType = .none
+        }
+    }
+    
+    func setPinImage(offerType: StandardOfferType) -> UIImage {
+        switch offerType {
+        case .bronze:
+            return UIImage(named: "Pins")!
+        case .silver:
+            return UIImage(named: "Pins")!
+        case .gold:
+            return UIImage(named: "Pins")!
+        case .platinum:
+            return UIImage(named: "Pins")!
+        default:
+            return UIImage(named: "Pins")!
+        }
+    }
+    
 }

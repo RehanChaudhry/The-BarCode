@@ -117,9 +117,9 @@ class ExploreBaseViewController: UIViewController {
         self.statefulTableView.innerTable.separatorStyle = .none
     }
     
-    func createMapMarker(location: CLLocation) -> GMSMarker {
+    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
         let marker = GMSMarker(position: location.coordinate)
-        let iconImage =  UIImage(named: "Pins")
+        let iconImage = pinImage // UIImage(named: "Pins")
         let markerView = UIImageView(image: iconImage)
         marker.iconView = markerView
         return marker
@@ -133,11 +133,32 @@ class ExploreBaseViewController: UIViewController {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
-            let marker = self.createMapMarker(location: location)
+            
+            var pinImage = UIImage(named: "Pins")!
+            if let activeStandardOffer = explore.activeStandardOffer.value {
+                pinImage = getPinImage(offerType: activeStandardOffer.type)
+            }
+            
+            let marker = self.createMapMarker(location: location, pinImage: pinImage)
             marker.userData = explore
             marker.map = mapView
         }
         
+    }
+    
+    func getPinImage(offerType: StandardOfferType) -> UIImage {
+        switch offerType {
+        case .bronze:
+            return UIImage(named: "Pins")!
+        case .silver:
+            return UIImage(named: "Pins")!
+        case .gold:
+            return UIImage(named: "Pins")!
+        case .platinum:
+            return UIImage(named: "Pins")!
+        default:
+            return UIImage(named: "Pins")!
+        }
     }
     
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {

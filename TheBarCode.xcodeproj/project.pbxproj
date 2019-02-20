@@ -179,6 +179,8 @@
 		83AF91912174800A00CE552F /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91902174800A00CE552F /* ImageItem.swift */; };
 		83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
+		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
+		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 /* End PBXBuildFile section */
 
@@ -408,6 +410,8 @@
 		978374FDD2BC17E29FDA033D /* Pods-TheBarCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AE695298E02075EB71FB010D /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
+		CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveStandardOffer.swift; sourceTree = "<group>"; };
+		CE980C18221A71E90056D86E /* StandardOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardOffer.swift; sourceTree = "<group>"; };
 		D14CC8825D6B59E79A38CCFE /* Pods-TheBarCode-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		DC86CC07188FB5523F35C28B /* Pods-TheBarCodeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
@@ -816,6 +820,8 @@
 				0C8BDCDE2150D78F00D5117B /* Deal.swift */,
 				0C8BDCE02150D79B00D5117B /* LiveOffer.swift */,
 				83A4B6342175ADC600730056 /* Offer.swift */,
+				CE980C18221A71E90056D86E /* StandardOffer.swift */,
+				CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -1625,6 +1631,7 @@
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
+				CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */,
 				0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */,
 				0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */,
 				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
@@ -1662,6 +1669,7 @@
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,
 				0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */,
 				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
+				CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */,
 				0C955DBD21478B7500F9385B /* GradientView.swift in Sources */,
 				0CD74A6D21996518007DC6E1 /* CategoryFilterViewController.swift in Sources */,
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,

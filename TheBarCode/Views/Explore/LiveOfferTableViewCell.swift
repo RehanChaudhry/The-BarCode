@@ -74,17 +74,23 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.distanceButton.isHidden = true
         self.detailLabel.isHidden = true
         
-        if hideShare {
-            self.shareButton.isHidden = true
-        } else {
-            if offer.showSharingLoader {
+        if offer.canShare.value {
+            if hideShare {
                 self.shareButton.isHidden = true
-                self.sharingLoader.startAnimating()
             } else {
-                self.shareButton.isHidden = false
-                self.sharingLoader.stopAnimating()
+                if offer.showSharingLoader {
+                    self.shareButton.isHidden = true
+                    self.sharingLoader.startAnimating()
+                } else {
+                    self.shareButton.isHidden = false
+                    self.sharingLoader.stopAnimating()
+                }
             }
+        } else {
+            self.shareButton.isHidden = true
         }
+        
+   
         
         let endDate = offer.endDateTime
         let remainingSeconds = Int(endDate.timeIntervalSinceNow)

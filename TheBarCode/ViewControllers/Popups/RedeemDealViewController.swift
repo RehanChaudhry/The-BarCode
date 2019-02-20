@@ -81,6 +81,10 @@ extension RedeemDealViewController {
                                          "type": redeemType.rawValue,
                                          "code": self.hiddenField.text!]
             
+            if let activeStandardOffer = self.bar.activeStandardOffer.value {
+                params["standard_offer_id"] = activeStandardOffer.id.value
+            }
+            
         } else {
             let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
             

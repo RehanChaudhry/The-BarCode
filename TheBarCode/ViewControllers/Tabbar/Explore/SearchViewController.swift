@@ -44,6 +44,8 @@ class SearchViewController: UIViewController {
     
     var selectedPreferences: [Category] = []
     
+    var selectedStandardOffers: [StandardOffer] = []
+
     var shouldHidePreferenceButton: Bool = false
     
     let locationManager = MyLocationManager()
@@ -278,6 +280,7 @@ class SearchViewController: UIViewController {
     
     @IBAction func standardOfferButtonTapped(sender: UIButton) {
         let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
+        standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
 }
@@ -439,6 +442,11 @@ extension SearchViewController {
             params["interest_ids"] = ids
         }
         
+        if self.selectedStandardOffers.count > 0 {
+            let ids = self.selectedStandardOffers.map({$0.id.value})
+            params["tier_ids"] = ids
+        }
+        
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
@@ -530,7 +538,10 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 
 //MARK: StandardOffersViewControllerDelegate
 extension SearchViewController: StandardOffersViewControllerDelegate {
-    
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer]) {
+        self.selectedStandardOffers = selectedOffers
+        self.reset()
+    }
 }
 
 //MARK: GMSMapViewDelegate
