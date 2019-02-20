@@ -280,6 +280,7 @@ class SearchViewController: UIViewController {
     
     @IBAction func standardOfferButtonTapped(sender: UIButton) {
         let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
+        standardOfferController.preSelectedTiers = self.selectedStandardOffers
         standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
