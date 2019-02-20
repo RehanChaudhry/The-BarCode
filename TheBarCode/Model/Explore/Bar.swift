@@ -18,9 +18,8 @@ class Bar: Explore {
     override func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         super.updateInCoreStore(source: source, transaction: transaction)
         
-        debugPrint("Standard Offer map here")
-            
         if let item = source["standard_offer"] as? [String : Any] {
+            
             let importedObject =  try! transaction.importObject(Into<ActiveStandardOffer>(), source: item)
             self.activeStandardOffer.value = importedObject
         }
