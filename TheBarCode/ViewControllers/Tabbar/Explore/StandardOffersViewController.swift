@@ -51,8 +51,8 @@ class StandardOffersViewController: UIViewController {
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
         
-        self.tableView.estimatedRowHeight = 61.0
-        self.tableView.rowHeight = 61.0
+        self.tableView.estimatedRowHeight = 65.0
+        self.tableView.rowHeight = 65.0
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundView = nil
         self.tableView.backgroundColor = UIColor.clear

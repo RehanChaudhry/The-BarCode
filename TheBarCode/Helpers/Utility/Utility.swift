@@ -395,13 +395,13 @@ class Utility: NSObject {
     func getPinImage(offerType: StandardOfferType) -> UIImage {
         switch offerType {
         case .bronze:
-            return UIImage(named: "Pins")!
+            return UIImage(named: "Bronze-Pin")!
         case .silver:
-            return UIImage(named: "Pins")!
+            return UIImage(named: "Silver-Pin")!
         case .gold:
-            return UIImage(named: "Pins")!
+            return UIImage(named: "Gold-Pin")!
         case .platinum:
-            return UIImage(named: "Pins")!
+            return UIImage(named: "Platinum-Pin")!
         default:
             return UIImage(named: "Pins")!
         }

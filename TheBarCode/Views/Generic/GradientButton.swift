@@ -23,7 +23,7 @@ class GradientButton: LoadingButton, Gradientable {
     var endColor: UIColor = UIColor.appBlueColor()
     var locations: [NSNumber]?
     var directions: GradientableOptionsDirection = .right
-    
+    var buttonStandardOfferType: StandardOfferType = .gold
     
     
     override func awakeFromNib() {
@@ -70,7 +70,37 @@ class GradientButton: LoadingButton, Gradientable {
         if withGrey {
             self.updateGradient(colors: [UIColor.appRedeemedGreyColor(), UIColor.appRedeemedGreyColor()], locations: self.locations, direction: directions)
         } else {
-            self.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: self.locations, direction: directions)
+            let buttonColor = getGradientStartEndColor(type: self.buttonStandardOfferType)
+            self.updateGradient(colors: [buttonColor.startColor, buttonColor.endColor], locations: self.locations, direction: directions)
+        }
+    }
+    
+    func getGradientStartEndColor(type: StandardOfferType) -> (startColor: UIColor, endColor: UIColor){
+        switch type {
+        case .bronze:
+            let startColor = UIColor("#f6f6f6")
+            let endColor = UIColor("#ededed")
+            return (startColor, endColor)
+            
+        case .silver:
+            let startColor = UIColor("#e3e3e3")
+            let endColor = UIColor("#9d9d9d")
+            return (startColor, endColor)
+            
+        case .gold:
+            let startColor = UIColor.appGreenColor()
+            let endColor =  UIColor.appBlueColor()
+            return (startColor, endColor)
+
+        case .platinum:
+            let startColor = UIColor("#8c1b01")
+            let endColor = UIColor("#d08923")
+            return (startColor, endColor)
+            
+        default:
+            let startColor = UIColor.appGreenColor()
+            let endColor =  UIColor.appBlueColor()
+            return (startColor, endColor)
         }
     }
 

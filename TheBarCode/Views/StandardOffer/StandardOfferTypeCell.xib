@@ -25,14 +25,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pins" translatesAutoresizingMaskIntoConstraints="NO" id="k8p-am-BJd">
-                        <rect key="frame" x="16" y="8.5" width="44" height="44"/>
+                        <rect key="frame" x="16" y="15.5" width="44" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="Tba-fe-mGd"/>
-                            <constraint firstAttribute="height" constant="44" id="cPW-96-5AQ"/>
+                            <constraint firstAttribute="height" constant="30" id="cPW-96-5AQ"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2k-k2-z8V">
-                        <rect key="frame" x="68" y="20.5" width="236" height="20"/>
+                        <rect key="frame" x="72" y="20.5" width="232" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="b2k-k2-z8V" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6ZS-ei-N5y"/>
-                    <constraint firstItem="b2k-k2-z8V" firstAttribute="leading" secondItem="k8p-am-BJd" secondAttribute="trailing" constant="8" id="imC-Q8-M5D"/>
+                    <constraint firstItem="b2k-k2-z8V" firstAttribute="leading" secondItem="k8p-am-BJd" secondAttribute="trailing" constant="12" id="imC-Q8-M5D"/>
                     <constraint firstItem="k8p-am-BJd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="jRx-jn-RcC"/>
                     <constraint firstItem="k8p-am-BJd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kVq-jY-HfG"/>
                     <constraint firstAttribute="trailing" secondItem="b2k-k2-z8V" secondAttribute="trailing" constant="16" id="pHL-bQ-NRU"/>
