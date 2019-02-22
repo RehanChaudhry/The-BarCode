@@ -144,8 +144,24 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             
         } else {
             
+            //Deal not started yet
+            if Date().compare(deal.startDateTime) == .orderedAscending {
+                var remainingSeconds = Int(deal.startDateTime.timeIntervalSince(Date())) + 1
+                
+                self.updateStartsIn(timerFinished: false, remainingSeconds: remainingSeconds)
+                self.startInTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                    if remainingSeconds > 0 {
+                        remainingSeconds -= 1
+                        self.updateStartsIn(timerFinished: false, remainingSeconds: remainingSeconds)
+                    } else {
+                        self.updateStartsIn(timerFinished: true, remainingSeconds: remainingSeconds)
+                    }
+                })
+                
+                RunLoop.current.add(self.startInTimer!, forMode: .commonModes)
+            }
             //Deal expired
-            if Date().compare(deal.endDateTime) == .orderedDescending {
+            else if Date().compare(deal.endDateTime) == .orderedDescending {
                 debugPrint("Deal expired")
                 
                 UIView.performWithoutAnimation {

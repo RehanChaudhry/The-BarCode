@@ -27,6 +27,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     weak var delegate: LiveOfferTableViewCellDelegate?
     
+    enum LiveOfferStatus: String {
+        case notStarted = "notStarted", started = "started", expired = "expired"
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -92,10 +96,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
    
         
-        let endDate = offer.endDateTime
-        let remainingSeconds = Int(endDate.timeIntervalSinceNow)
-        
-        self.updateExpirationLabel(isExpired: remainingSeconds <= 0, remainingSeconds: remainingSeconds)
+//        let endDate = offer.endDateTime
+//        let remainingSeconds = Int(endDate.timeIntervalSinceNow)
+//
+//        self.updateExpirationLabel(isExpired: remainingSeconds <= 0, remainingSeconds: remainingSeconds)
     }
     
     func attributedSharedBy(deal: Deal) -> NSMutableAttributedString {
@@ -116,25 +120,51 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func startTimer(deal: Deal) {
         
-        let endDate = deal.endDateTime
-        var remainingSeconds = Int(endDate.timeIntervalSinceNow)
-        
-        if remainingSeconds > 0 {
-            self.updateExpirationLabel(isExpired: false, remainingSeconds: remainingSeconds)
+        //Deal not started yet
+        if Date().compare(deal.startDateTime) == .orderedAscending {
+            var remainingSeconds = Int(deal.startDateTime.timeIntervalSince(Date()))
+            self.updateExpirationLabel(offerStatus: .notStarted, remainingSeconds: remainingSeconds)
             self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                
                 if remainingSeconds > 0 {
                     remainingSeconds -= 1
-                    self.updateExpirationLabel(isExpired: false, remainingSeconds: remainingSeconds)
+                    self.updateExpirationLabel(offerStatus: .notStarted, remainingSeconds: remainingSeconds)
                 } else {
-                    self.updateExpirationLabel(isExpired: true, remainingSeconds: 0)
+                    self.stopTimer()
+                    var expiresInSeconds = Int(deal.endDate.timeIntervalSinceNow)
+                    if expiresInSeconds > 0 {
+                        self.updateExpirationLabel(offerStatus: .started, remainingSeconds: expiresInSeconds)
+                        self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                            if expiresInSeconds > 0 {
+                                expiresInSeconds -= 1
+                                self.updateExpirationLabel(offerStatus: .started, remainingSeconds: expiresInSeconds)
+                            } else {
+                                self.updateExpirationLabel(offerStatus: .expired, remainingSeconds: 0)
+                            }
+                        })
+                        RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+                    } else {
+                        self.updateExpirationLabel(offerStatus: .expired, remainingSeconds: 0)
+                    }
                 }
             })
             RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
             
+        } else if Int(deal.endDate.timeIntervalSinceNow) > 0 {
+            var remainingSeconds = Int(deal.endDate.timeIntervalSinceNow)
+            self.updateExpirationLabel(offerStatus: .started, remainingSeconds: remainingSeconds)
+            self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                if remainingSeconds > 0 {
+                    remainingSeconds -= 1
+                    self.updateExpirationLabel(offerStatus: .started, remainingSeconds: remainingSeconds)
+                } else {
+                    self.updateExpirationLabel(offerStatus: .expired, remainingSeconds: 0)
+                }
+            })
+            RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
         } else {
-            self.updateExpirationLabel(isExpired: true, remainingSeconds: 0)
+            self.updateExpirationLabel(offerStatus: .expired, remainingSeconds: 0)
         }
-        
     }
     
     func stopTimer() {
@@ -142,7 +172,73 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.expirationTimer = nil
     }
     
-    func updateExpirationLabel(isExpired: Bool, remainingSeconds: Int) {
+    func updateExpirationLabel(offerStatus: LiveOfferStatus, remainingSeconds: Int) {
+        switch offerStatus {
+        case .notStarted:
+            let validtyPlaceHodler = "Starts in: "
+            let attributesWhite: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.white]
+            
+            let attributesBlue: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.appBlueColor()]
+            
+            let expirationString = Utility.shared.getFormattedRemainingTime(time: TimeInterval(remainingSeconds))
+            
+            let validityAttributedString = NSAttributedString(string: validtyPlaceHodler, attributes: attributesWhite)
+            let expiredAttributedString = NSAttributedString(string: expirationString, attributes: attributesBlue)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(validityAttributedString)
+            finalAttributedString.append(expiredAttributedString)
+            
+            self.validityLabel.attributedText = finalAttributedString
+        case .started:
+            let validtyPlaceHodler = "Expires in: "
+            let attributesWhite: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.white]
+            
+            let attributesBlue: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.appBlueColor()]
+            
+            let expirationString = Utility.shared.getFormattedRemainingTimeInHours(time: TimeInterval(remainingSeconds))
+            
+            let validityAttributedString = NSAttributedString(string: validtyPlaceHodler, attributes: attributesWhite)
+            let expiredAttributedString = NSAttributedString(string: expirationString, attributes: attributesBlue)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(validityAttributedString)
+            finalAttributedString.append(expiredAttributedString)
+            
+            self.validityLabel.attributedText = finalAttributedString
+        case .expired:
+            let validtyPlaceHodler = "Expires in: "
+            let attributesWhite: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.white]
+            
+            let attributesRed: [NSAttributedStringKey: Any] = [
+                .font: UIFont.appRegularFontOf(size: 12.0),
+                .foregroundColor: UIColor.appRedColor()]
+            
+            let expiredString = "Expired"
+            
+            let validityAttributedString = NSAttributedString(string: validtyPlaceHodler, attributes: attributesWhite)
+            let expiredAttributedString = NSAttributedString(string: expiredString, attributes: attributesRed)
+            
+            let finalAttributedString = NSMutableAttributedString()
+            finalAttributedString.append(validityAttributedString)
+            finalAttributedString.append(expiredAttributedString)
+            
+            self.validityLabel.attributedText = finalAttributedString
+        }
+    }
+    
+    /*
+    func updateExpirationLabel(isStarted: Bool, isExpired: Bool, remainingSeconds: Int) {
         let validtyPlaceHodler = "Expires in: "
         if isExpired {
             let attributesWhite: [NSAttributedStringKey: Any] = [
@@ -183,7 +279,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
             self.validityLabel.attributedText = finalAttributedString
         }
-    }
+    }*/
     
     //MARK: My IBActions
     
