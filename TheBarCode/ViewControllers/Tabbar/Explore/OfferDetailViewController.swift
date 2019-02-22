@@ -127,8 +127,14 @@ class OfferDetailViewController: UIViewController {
                 self.redeemButton.isHidden = true
                 self.timerButton.isHidden = false
                 
+                //Deal not started yet
+                if Date().compare(self.deal.startDateTime) == .orderedAscending {
+                    self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(Date())) + 1
+                    self.startRedeemTimer()
+                }
+                
                 //Deal expired
-                if Date().compare(self.deal.endDateTime) == .orderedDescending {
+                else if Date().compare(self.deal.endDateTime) == .orderedDescending {
                     debugPrint("Deal expired")
                     self.bottomViewBottom.constant = self.bottomView.frame.height
                 } else {
@@ -147,14 +153,14 @@ class OfferDetailViewController: UIViewController {
                     let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
                     
                     if Date().compare(todayDealDateTime) == .orderedAscending {
-                        self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow)
+                        self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow) + 1
                     } else {
                         let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
-                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow)
+                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow) + 1
                     }
                     
                     if self.remainingSeconds > 0 {
-                        self.startReloadTimer()
+                        self.startRedeemTimer()
                     } else {
                         debugPrint("cannot start timer")
                     }
@@ -167,12 +173,13 @@ class OfferDetailViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
-    func startReloadTimer() {
+    func startRedeemTimer() {
         self.redeemTimer?.invalidate()
         self.redeemTimer = nil
         self.redeemTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
             self.updateRedeemTimer(sender: sender)
         })
+        self.updateRedeemTimer(sender: self.redeemTimer!)
     }
     
     func updateRedeemTimer(sender: Timer) {
