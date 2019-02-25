@@ -18,6 +18,8 @@ class ExploreBaseTableViewCell: UITableViewCell {
     
     @IBOutlet var distanceButton: UIButton!
     
+    @IBOutlet var ribbonView: RibbonView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -28,7 +30,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
         
         self.locationIconImageView.tintColor = UIColor.appBlueColor()
         self.locationIconImageView.image = #imageLiteral(resourceName: "icon_map").withRenderingMode(.alwaysTemplate)
-    self.distanceButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
+        self.distanceButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
         self.titleLabel.textColor = UIColor.white
         

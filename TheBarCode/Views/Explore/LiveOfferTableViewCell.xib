@@ -34,6 +34,21 @@
                             <constraint firstAttribute="width" secondItem="wx2-1M-QH6" secondAttribute="height" multiplier="16:9" id="cr2-b1-K25"/>
                         </constraints>
                     </imageView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-pK-cTe" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="16" y="24" width="288" height="162"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ribbonWidth">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djc-IT-5qt">
                         <rect key="frame" x="16" y="206" width="244" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -64,7 +79,7 @@
                             <constraint firstAttribute="height" constant="15" id="vaC-ba-8jF"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atE-kR-6C3">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atE-kR-6C3">
                         <rect key="frame" x="34" y="234" width="68" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <state key="normal" title="4 miles away">
@@ -74,7 +89,7 @@
                             <action selector="distanceButtonTapped:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="ytN-gb-cD3"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9e-ds-BcJ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9e-ds-BcJ">
                         <rect key="frame" x="110" y="234" width="194" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
@@ -94,6 +109,7 @@
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="5sD-Sd-NXb"/>
                     <constraint firstItem="SAx-gl-dFM" firstAttribute="centerY" secondItem="IDH-uh-GDT" secondAttribute="centerY" id="A1e-Jo-OVO"/>
                     <constraint firstItem="IDH-uh-GDT" firstAttribute="leading" secondItem="djc-IT-5qt" secondAttribute="trailing" constant="8" id="BhS-lD-vX3"/>
+                    <constraint firstItem="gRB-pK-cTe" firstAttribute="height" secondItem="wx2-1M-QH6" secondAttribute="height" id="CZk-Qm-IMX"/>
                     <constraint firstItem="B9e-ds-BcJ" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="Cgb-jY-vvM"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="Fmn-z5-jYo"/>
                     <constraint firstAttribute="trailing" secondItem="EFD-eR-6bt" secondAttribute="trailing" constant="16" id="FrL-Y8-IMa"/>
@@ -106,10 +122,13 @@
                     <constraint firstItem="wx2-1M-QH6" firstAttribute="top" secondItem="BaG-X9-k2d" secondAttribute="top" constant="24" id="Y0j-fg-8Ws"/>
                     <constraint firstItem="djc-IT-5qt" firstAttribute="top" secondItem="wx2-1M-QH6" secondAttribute="bottom" constant="20" id="a2m-6A-czE"/>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="leading" secondItem="BaG-X9-k2d" secondAttribute="leading" constant="16" id="a9h-6m-psl"/>
+                    <constraint firstItem="gRB-pK-cTe" firstAttribute="centerX" secondItem="wx2-1M-QH6" secondAttribute="centerX" id="f1j-E0-eRl"/>
                     <constraint firstAttribute="trailing" secondItem="B9e-ds-BcJ" secondAttribute="trailing" constant="16" id="jSV-uY-zYc"/>
                     <constraint firstItem="atE-kR-6C3" firstAttribute="centerY" secondItem="e7T-kn-Jzp" secondAttribute="centerY" id="kK9-cb-csA"/>
+                    <constraint firstItem="gRB-pK-cTe" firstAttribute="width" secondItem="wx2-1M-QH6" secondAttribute="width" id="pSB-AY-7iS"/>
                     <constraint firstAttribute="trailing" secondItem="IDH-uh-GDT" secondAttribute="trailing" constant="8" id="q6a-uT-UAv"/>
                     <constraint firstAttribute="bottom" secondItem="atE-kR-6C3" secondAttribute="bottom" constant="0.5" id="rYX-g1-vdN"/>
+                    <constraint firstItem="gRB-pK-cTe" firstAttribute="centerY" secondItem="wx2-1M-QH6" secondAttribute="centerY" id="rle-nU-d1f"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="hee-Tq-Mfk"/>
@@ -118,6 +137,7 @@
                 <outlet property="detailLabel" destination="B9e-ds-BcJ" id="mBe-C2-MA3"/>
                 <outlet property="distanceButton" destination="atE-kR-6C3" id="ra7-wb-Fxe"/>
                 <outlet property="locationIconImageView" destination="e7T-kn-Jzp" id="Fag-89-bs9"/>
+                <outlet property="ribbonView" destination="gRB-pK-cTe" id="Yu7-wF-Fec"/>
                 <outlet property="shareButton" destination="IDH-uh-GDT" id="d46-7G-8YW"/>
                 <outlet property="sharingLoader" destination="SAx-gl-dFM" id="ZZn-Mq-KE9"/>
                 <outlet property="titleLabel" destination="djc-IT-5qt" id="q1E-fc-PJR"/>

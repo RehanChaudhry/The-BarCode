@@ -122,7 +122,7 @@ class SearchViewController: UIViewController {
             
             bounds = bounds.includingCoordinate(location.coordinate)
             
-            var pinImage = UIImage(named: "Pins")!
+            var pinImage = UIImage(named: "icon_pin_gold")!
             if let activeStandardOffer = bar.activeStandardOffer.value {
                 pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
             }

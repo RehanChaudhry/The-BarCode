@@ -22,6 +22,8 @@ class StandardOfferTypeCell: UITableViewCell, NibReusable {
         self.contentView.backgroundColor = UIColor.clear
         self.backgroundColor = UIColor.clear
         
+        self.separatorInset = UIEdgeInsets(top: 0.0, left: 68.0, bottom: 0.0, right: 0.0)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -33,7 +35,7 @@ class StandardOfferTypeCell: UITableViewCell, NibReusable {
     func setUpCell(offer: StandardOffer) {
       
         self.titleLabel.text = offer.discountValue.value + "%"
-        self.imageView?.image = Utility.shared.getPinImage(offerType: offer.type)
+        self.offerImageView.image = Utility.shared.getPinImage(offerType: offer.type)
         
         if offer.isSelected.value {
             self.accessoryType = .checkmark

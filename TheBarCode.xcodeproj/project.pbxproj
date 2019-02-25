@@ -71,6 +71,8 @@
 		0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */; };
 		0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */; };
 		0C5A88FB2164D91C00F16851 /* OfferDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */; };
+		0C674F7722201C43002394F5 /* RibbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C674F7622201C43002394F5 /* RibbonView.swift */; };
+		0C674F7B22201C65002394F5 /* RibbonBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C674F7A22201C65002394F5 /* RibbonBaseView.swift */; };
 		0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */; };
 		0C72AB58219591EE00D6CD6B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB57219591EE00D6CD6B /* SearchViewController.swift */; };
 		0C7477F0221A76360057502F /* StandardOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7477EF221A76360057502F /* StandardOffersViewController.swift */; };
@@ -294,6 +296,8 @@
 		0C5A88F42164C40400F16851 /* OfferDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
 		0C5A88F82164D91C00F16851 /* OfferDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0C5A88F92164D91C00F16851 /* OfferDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferDetailTableViewCell.xib; sourceTree = "<group>"; };
+		0C674F7622201C43002394F5 /* RibbonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonView.swift; sourceTree = "<group>"; };
+		0C674F7A22201C65002394F5 /* RibbonBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonBaseView.swift; sourceTree = "<group>"; };
 		0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOfferParams.swift; sourceTree = "<group>"; };
 		0C72AB57219591EE00D6CD6B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		0C7477EF221A76360057502F /* StandardOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardOffersViewController.swift; sourceTree = "<group>"; };
@@ -759,6 +763,15 @@
 			path = Invite;
 			sourceTree = "<group>";
 		};
+		0C674F7522201C1E002394F5 /* RibbonView */ = {
+			isa = PBXGroup;
+			children = (
+				0C674F7A22201C65002394F5 /* RibbonBaseView.swift */,
+				0C674F7622201C43002394F5 /* RibbonView.swift */,
+			);
+			path = RibbonView;
+			sourceTree = "<group>";
+		};
 		0C72AB54219403C700D6CD6B /* SharedOfferParams */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,6 +879,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0C674F7522201C1E002394F5 /* RibbonView */,
 				0C7477F1221ABDB80057502F /* StandardOffer */,
 				838B4E3E21B1679700C32214 /* Reload */,
 				0C48E1662191BAA600B81ADD /* ShareOffer */,
@@ -1637,6 +1651,7 @@
 				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
+				0C674F7B22201C65002394F5 /* RibbonBaseView.swift in Sources */,
 				83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */,
 				0C7477F0221A76360057502F /* StandardOffersViewController.swift in Sources */,
 				0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */,
@@ -1708,6 +1723,7 @@
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,
 				0C955DF02149317100F9385B /* StatefulCollectionView+State.swift in Sources */,
+				0C674F7722201C43002394F5 /* RibbonView.swift in Sources */,
 				0C955DBA2147896D00F9385B /* LoginIntroCollectionViewCell.swift in Sources */,
 				0C8BDCE9215120F000D5117B /* SnackbarView.swift in Sources */,
 				0C955DF82149319200F9385B /* TableViewLoadMoreCell.swift in Sources */,

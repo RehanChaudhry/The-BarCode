@@ -34,6 +34,21 @@
                             <constraint firstAttribute="width" secondItem="axE-e9-aog" secondAttribute="height" multiplier="16:9" id="mUv-2y-cFx"/>
                         </constraints>
                     </imageView>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10y-Dq-kJT" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="16" y="24" width="288" height="162"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ribbonWidth">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-Lx-xS8">
                         <rect key="frame" x="16" y="206" width="288" height="14"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -47,7 +62,7 @@
                             <constraint firstAttribute="width" constant="10" id="TMl-4C-xK4"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfi-6e-e5W">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfi-6e-e5W">
                         <rect key="frame" x="34" y="222" width="71" height="27"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <state key="normal" title="4 miles away ">
@@ -57,7 +72,7 @@
                             <action selector="distanceButtonTapped:" destination="CsO-OR-xRH" eventType="touchUpInside" id="rgW-y5-gNM"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Tc-Mw-7nw">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Tc-Mw-7nw">
                         <rect key="frame" x="113" y="228" width="191" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
@@ -75,11 +90,14 @@
                     <constraint firstAttribute="bottom" secondItem="xfi-6e-e5W" secondAttribute="bottom" constant="0.5" id="DQs-vx-iND"/>
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="IMb-ZQ-2GU"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="centerY" secondItem="xfi-6e-e5W" secondAttribute="centerY" id="Nhb-Q4-UFl"/>
+                    <constraint firstItem="10y-Dq-kJT" firstAttribute="centerX" secondItem="axE-e9-aog" secondAttribute="centerX" id="SPQ-a7-coL"/>
                     <constraint firstAttribute="trailing" secondItem="axE-e9-aog" secondAttribute="trailing" constant="16" id="Veh-xX-bDz"/>
                     <constraint firstAttribute="trailing" secondItem="6Tc-Mw-7nw" secondAttribute="trailing" constant="16" id="bZ4-Dv-ZWg"/>
+                    <constraint firstItem="10y-Dq-kJT" firstAttribute="centerY" secondItem="axE-e9-aog" secondAttribute="centerY" id="eaI-FB-2dg"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="fYz-ha-hp7"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="xfi-6e-e5W" secondAttribute="trailing" constant="8" id="iNX-cp-AXw"/>
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="jFX-Ox-Wuq"/>
+                    <constraint firstItem="10y-Dq-kJT" firstAttribute="width" secondItem="axE-e9-aog" secondAttribute="width" id="k0t-Yo-g8D"/>
                     <constraint firstAttribute="trailing" secondItem="lm4-Vj-yFJ" secondAttribute="trailing" constant="16" id="kE1-8k-IJS"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="mf2-pb-N8b"/>
                     <constraint firstItem="xfi-6e-e5W" firstAttribute="leading" secondItem="hyz-OS-uPR" secondAttribute="trailing" constant="8" id="mpd-PL-pzJ"/>
@@ -88,6 +106,7 @@
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="8" id="qJn-4H-XxW"/>
                     <constraint firstItem="axE-e9-aog" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="sah-QD-eSY"/>
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="top" secondItem="axE-e9-aog" secondAttribute="bottom" constant="20" id="ulv-Cw-DjB"/>
+                    <constraint firstItem="10y-Dq-kJT" firstAttribute="height" secondItem="axE-e9-aog" secondAttribute="height" id="wnH-4g-a60"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="chm-DQ-xb5"/>
@@ -96,6 +115,7 @@
                 <outlet property="detailLabel" destination="6Tc-Mw-7nw" id="gN4-Yg-LDa"/>
                 <outlet property="distanceButton" destination="xfi-6e-e5W" id="0eL-JO-uyh"/>
                 <outlet property="locationIconImageView" destination="hyz-OS-uPR" id="WrL-bg-ZeL"/>
+                <outlet property="ribbonView" destination="10y-Dq-kJT" id="j2b-zu-wx3"/>
                 <outlet property="titleLabel" destination="DSu-Lx-xS8" id="2wR-Su-Ctz"/>
                 <outlet property="validityLabel" destination="lm4-Vj-yFJ" id="PeE-UU-IVd"/>
             </connections>
