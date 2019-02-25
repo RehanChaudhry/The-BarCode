@@ -43,12 +43,20 @@ class ExploreBaseTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setUpCell(explore: Explore) {
+    func setUpCell(explore: Bar) {
+        
         if explore.images.value.count > 0 {
             let url = explore.images.value[0].url.value
             self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
 
         }
+       
+        var ribbonColors = Utility.shared.getDefaultRibbonColors()
+        if let activeStandardOffer = explore.activeStandardOffer.value {
+            ribbonColors = Utility.shared.getRibbonColors(offerType: activeStandardOffer.type )
+        }
+        self.ribbonView.gradientColors = [ribbonColors.startColor.cgColor, ribbonColors.endColor.cgColor]
+        
         titleLabel.text = explore.title.value
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         

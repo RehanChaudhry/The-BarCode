@@ -75,4 +75,33 @@ extension UIColor {
     }
 
  
+    static func appBronzeColors() -> (startColor: UIColor, endColor:UIColor) {
+        let startColor = UIColor("#f6f6f6")
+        let endColor = UIColor("#ededed")
+        return (startColor, endColor)
+    }
+    
+    static func appSilverColors() -> (startColor: UIColor, endColor:UIColor) {
+        let startColor = UIColor("#e3e3e3")
+        let endColor = UIColor("#9d9d9d")
+        return (startColor, endColor)
+    }
+    
+    static func appGoldColors() ->  (startColor: UIColor, endColor:UIColor) {
+        let startColor = UIColor.appGreenColor()
+        let endColor =  UIColor.appBlueColor()
+        return (startColor, endColor)
+    }
+    
+    static func appPlatinumColors() ->  (startColor: UIColor, endColor:UIColor) {
+        let startColor = UIColor("#8c1b01")
+        let endColor = UIColor("#d08923")
+        return (startColor, endColor)
+    }
+    
+    static func appDefaultColors() ->  (startColor: UIColor, endColor:UIColor) {
+        let startColor = UIColor.appGreenColor()
+        let endColor =  UIColor.appBlueColor()
+        return (startColor, endColor)
+    }
 }

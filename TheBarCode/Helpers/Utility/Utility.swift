@@ -406,4 +406,27 @@ class Utility: NSObject {
             return UIImage(named: "icon_pin_gold")!
         }
     }
+    
+    func getRibbonColors(offerType: StandardOfferType) -> (startColor: UIColor, endColor:UIColor) {
+        switch offerType {
+        case .bronze:
+            return UIColor.appBronzeColors()
+            
+        case .silver:
+            return UIColor.appSilverColors()
+            
+        case .gold:
+            return UIColor.appGoldColors()
+            
+        case .platinum:
+            return UIColor.appPlatinumColors()
+            
+        default:
+            return UIColor.appDefaultColors()
+        }
+    }
+    
+    func getDefaultRibbonColors() -> (startColor: UIColor, endColor:UIColor) {
+        return UIColor.appDefaultColors()
+    }
 }

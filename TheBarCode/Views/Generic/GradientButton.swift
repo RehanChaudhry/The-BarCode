@@ -78,30 +78,21 @@ class GradientButton: LoadingButton, Gradientable {
     func getGradientStartEndColor(type: StandardOfferType) -> (startColor: UIColor, endColor: UIColor){
         switch type {
         case .bronze:
-            let startColor = UIColor("#f6f6f6")
-            let endColor = UIColor("#ededed")
-            return (startColor, endColor)
-            
+            return UIColor.appBronzeColors()
+        
         case .silver:
-            let startColor = UIColor("#e3e3e3")
-            let endColor = UIColor("#9d9d9d")
-            return (startColor, endColor)
-            
+            return UIColor.appSilverColors()
+        
         case .gold:
-            let startColor = UIColor.appGreenColor()
-            let endColor =  UIColor.appBlueColor()
-            return (startColor, endColor)
-
+            return UIColor.appGoldColors()
+        
         case .platinum:
-            let startColor = UIColor("#8c1b01")
-            let endColor = UIColor("#d08923")
-            return (startColor, endColor)
-            
+            return UIColor.appPlatinumColors()
+        
         default:
-            let startColor = UIColor.appGreenColor()
-            let endColor =  UIColor.appBlueColor()
-            return (startColor, endColor)
+            return UIColor.appDefaultColors()
         }
     }
+
 
 }
