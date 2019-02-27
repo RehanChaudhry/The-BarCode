@@ -34,7 +34,7 @@
                             <constraint firstAttribute="width" secondItem="axE-e9-aog" secondAttribute="height" multiplier="16:9" id="mUv-2y-cFx"/>
                         </constraints>
                     </imageView>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10y-Dq-kJT" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10y-Dq-kJT" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>

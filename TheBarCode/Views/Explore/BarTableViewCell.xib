@@ -34,7 +34,7 @@
                             <constraint firstAttribute="width" secondItem="ind-3c-R0V" secondAttribute="height" multiplier="16:9" id="vxh-ef-egH"/>
                         </constraints>
                     </imageView>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rMe-dQ-6YA" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rMe-dQ-6YA" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
@@ -63,7 +63,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-2O-2M4">
-                        <rect key="frame" x="34" y="234" width="70" height="15"/>
+                        <rect key="frame" x="34" y="234" width="68" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <state key="normal" title="4 miles away">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>

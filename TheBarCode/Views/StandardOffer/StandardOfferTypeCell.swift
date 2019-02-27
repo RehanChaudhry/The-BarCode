@@ -34,12 +34,12 @@ class StandardOfferTypeCell: UITableViewCell, NibReusable {
     
     func setUpCell(offer: StandardOffer) {
       
-        self.titleLabel.text = offer.discountValue.value + "%"
+        self.titleLabel.text = offer.discountValue.value + "% Discount"
         self.offerImageView.image = Utility.shared.getPinImage(offerType: offer.type)
         
         if offer.isSelected.value {
             self.accessoryType = .checkmark
-            self.tintColor = UIColor.white
+            self.tintColor = UIColor.appBlueColor()
         } else {
             self.accessoryType = .none
         }

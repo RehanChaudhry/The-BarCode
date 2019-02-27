@@ -34,7 +34,7 @@
                             <constraint firstAttribute="width" secondItem="wx2-1M-QH6" secondAttribute="height" multiplier="16:9" id="cr2-b1-K25"/>
                         </constraints>
                     </imageView>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-pK-cTe" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRB-pK-cTe" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
@@ -90,13 +90,13 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2 deals available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9e-ds-BcJ">
-                        <rect key="frame" x="110" y="234" width="194" height="15"/>
+                        <rect key="frame" x="110" y="234" width="194" height="14"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFD-eR-6bt">
-                        <rect key="frame" x="16" y="234" width="288" height="15"/>
+                        <rect key="frame" x="16" y="234" width="288" height="14"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>

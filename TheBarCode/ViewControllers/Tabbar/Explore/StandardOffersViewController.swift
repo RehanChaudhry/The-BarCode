@@ -36,7 +36,7 @@ class StandardOffersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Standard Offers"
+        self.title = "Filter By Standard Offers"
         let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
         self.navigationItem.leftBarButtonItem = cancelBarButton
         
