@@ -21,11 +21,10 @@ class FaqsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount available, anywhere, anytime is 25% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the 25% at different times and for different events.")])
+        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 50% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
         self.faqSections.append(section1)
         
-        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20, so you get 25% off any round that's £20 or under " +
-            "and a flat £5 discount to any round that comes to more than £20")])
+        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20")])
         self.faqSections.append(section2)
         
         let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. When it is time to pay, press \"Redeem\" and when asked hand your phone over to the Bartender. They will enter in their Bars unique code, the offer will be redeemed and the discount applied to your bill. Simple!")])
@@ -41,26 +40,26 @@ class FaqsViewController: UIViewController {
         self.faqSections.append(section6)
         
         
-        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes. With 'The Barcode' you are guaranteed 25% off a round to the value of £20 at all of our bars at anytime.")])
+        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 at all times. However this can vary from 10%, 15%, 25% and 50% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
         self.faqSections.append(section7)
         
-        let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "25% off the first round up to a value of £20, on any day of the week and at any time.")])
+        let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "10% off the first round up to a value of £20, on any day of the week and at any time.")])
         self.faqSections.append(section8)
         
         let section9 = FAQSection(title: "What is the maximum discount any bar can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
         self.faqSections.append(section9)
         
-        let section10 = FAQSection(title: "Is there any time I can't claim my 25% discount?", faqs: [FAQ(text: "Yes")])
+        let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Yes")])
         self.faqSections.append(section10)
         
-        let section11 = FAQSection(title: "Can I claim my 25% discount in any Bar that is on the app?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
+        let section11 = FAQSection(title: "Can I claim my discount at any Bar that is on the app?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
         self.faqSections.append(section11)
         
         let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Bars are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner Bars")])
         self.faqSections.append(section12)
         
         
-        let section13 = FAQSection(title: "Does the 25% discount apply to food as well as drinks?", faqs: [FAQ(text: "The rules of The Barcode are that it must only be honored on rounds of drinks. However, as a combination of offers, or as part of an individual bars particular strategy, they may have all sorts of food offers for you to choose from.")])
+        let section13 = FAQSection(title: "Does the discount apply to food as well as drinks?", faqs: [FAQ(text: "The rules of The Barcode are that it must only be honored on rounds of drinks. However, as a combination of offers, or as part of an individual bars particular strategy, they may have all sorts of food offers for you to choose from.")])
         self.faqSections.append(section13)
         
         let section14 = FAQSection(title: "What do I get for a referral?", faqs: [FAQ(text: "For each referral you make to 'The Barcode' you receive 1 free credit on us. Just go to the invite friends tab and invite as many friends as you want. When they have downloaded the app and redeemed their first offer you will get a credit. ")])

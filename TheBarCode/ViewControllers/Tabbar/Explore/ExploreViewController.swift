@@ -203,7 +203,7 @@ class ExploreViewController: UIViewController {
         
         let type = barsController.snackBar.type
         if type == .discount {
-            return (title: "Get 25% Off Your First Round & Loads Of Other Great Offers!" , message: "You can start using all offers and credits now.\n\nYou can reload all offers when the counter hits 0:00:00:00\n\nInvite friends and share the offers you receive to earn more credits.")
+            return (title: "Get guaranteed discounts off your first round plus loads of other great offers!" , message: "You can start using all offers and credits now.\n\nYou can reload all offers when the counter hits 0:00:00:00\n\nInvite friends and share the offers you receive to earn more credits.")
         } else if type == .reload {
             return (title: "Reload in" , message: "When the timer hits Zero Reload all used offers and access Credits for just £1\nYou are eligible to Reload every 7 days")
         } else if type == .congrates {
