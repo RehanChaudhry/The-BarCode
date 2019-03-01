@@ -3354,8 +3354,8 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">ou sign up to The Barcode you are entitled to a ‘Standard Offer’ in all our partner bars. This is a percentage off your first round. These ‘standard offers’ are either 10%, 15%, 25% or 50% and are signposted by the colour of the pins on our map view. Check out who’s offering what and where.  
-</string>
+                                        <mutableString key="content">ou sign up to The Barcode you are entitled to a ‘Standard Offer’ in all our partner bars. This is a percentage off your first round. These ‘standard offers’ are either 10%, 15%, 25% or 50% and are signposted by the colour of the pins on our map view. Check out who’s offering what and where.  
+</mutableString>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" metaFont="system" size="14"/>
@@ -3578,7 +3578,7 @@ CQ
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">You can redeem a maximum of 2 offers per bar per night (the wording for this rule has not changed and the rules from here on do not need changing).  
+                                        <string key="content">You can redeem a maximum of 2 offers per bar per night.  
 </string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
