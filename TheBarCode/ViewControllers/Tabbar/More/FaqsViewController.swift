@@ -24,7 +24,7 @@ class FaqsViewController: UIViewController {
         let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 50% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
         self.faqSections.append(section1)
         
-        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20")])
+        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20.")])
         self.faqSections.append(section2)
         
         let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. When it is time to pay, press \"Redeem\" and when asked hand your phone over to the Bartender. They will enter in their Bars unique code, the offer will be redeemed and the discount applied to your bill. Simple!")])
@@ -36,7 +36,7 @@ class FaqsViewController: UIViewController {
         let section5 = FAQSection(title: "Do I have to Reload?", faqs: [FAQ(text: "No. The Barcode is not a subscription and you can choose to use it as often or as little as you like. You can use The Barcode as a directory of great independent Bars and take advantage of the offers that are on there from when you sign up. However, Reloading is the best way to make the most of all of the features on 'The Barcode' app, and remember, you only pay to save.")])
         self.faqSections.append(section5)
         
-        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "£1.00")])
+        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "£1.00.")])
         self.faqSections.append(section6)
         
         
@@ -49,13 +49,13 @@ class FaqsViewController: UIViewController {
         let section9 = FAQSection(title: "What is the maximum discount any bar can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
         self.faqSections.append(section9)
         
-        let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Yes")])
+        let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Yes.")])
         self.faqSections.append(section10)
         
         let section11 = FAQSection(title: "Can I claim my discount at any Bar that is on the app?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
         self.faqSections.append(section11)
         
-        let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Bars are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner Bars")])
+        let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Bars are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner Bars.")])
         self.faqSections.append(section12)
         
         
@@ -88,7 +88,7 @@ class FaqsViewController: UIViewController {
         self.faqSections.append(section21)
         
         
-        let section22 = FAQSection(title: "What are live offers?", faqs: [FAQ(text: "Live offers are last minute promotions that bars send out to grab your attention . You will receive a notification if you are within 500m of the bar or if you have favourited that bar. The notification flare will be active for 1 hour but the offer length can vary according to the deal. You can check what live offers are on by checking your 'Live' tab")])
+        let section22 = FAQSection(title: "What are live offers?", faqs: [FAQ(text: "Live offers are last minute promotions that bars send out to grab your attention . You will receive a notification if you are within 500m of the bar or if you have favourited that bar. The notification flare will be active for 1 hour but the offer length can vary according to the deal. You can check what live offers are on by checking your 'Live' tab.")])
         self.faqSections.append(section22)
         
         
