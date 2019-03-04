@@ -54,6 +54,8 @@ class ReloadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Reload"
+        
         // Do any additional setup after loading the view.
         //if not iphone5
         if !(UIScreen.main.bounds.size.height <= 568.0) {

@@ -131,7 +131,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
                     self.updateExpirationLabel(offerStatus: .notStarted, remainingSeconds: remainingSeconds)
                 } else {
                     self.stopTimer()
-                    var expiresInSeconds = Int(deal.endDate.timeIntervalSinceNow)
+                    var expiresInSeconds = Int(deal.endDateTime.timeIntervalSinceNow)
                     if expiresInSeconds > 0 {
                         self.updateExpirationLabel(offerStatus: .started, remainingSeconds: expiresInSeconds)
                         self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in

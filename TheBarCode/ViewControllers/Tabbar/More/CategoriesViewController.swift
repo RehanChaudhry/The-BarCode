@@ -33,7 +33,7 @@ class CategoriesViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         if self.isUpdating {
-            self.title = "Update preferences"
+            self.title = "Update Preferences"
             let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
             self.navigationItem.leftBarButtonItem = cancelBarButton
             

@@ -20,6 +20,8 @@ class PrivacyPolicyViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.title = "Privacy Policy"
+        
         self.webView = WKWebView()
         self.webView.navigationDelegate = self
         self.view.addSubview(self.webView)

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +28,7 @@
                             <rect key="frame" x="16" y="24" width="343" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XUo-TL-xMt">
-                                    <rect key="frame" x="16" y="8" width="291" height="34"/>
+                                    <rect key="frame" x="16" y="8" width="327" height="34"/>
                                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button">
@@ -52,7 +52,7 @@
                                 <constraint firstItem="XUo-TL-xMt" firstAttribute="top" secondItem="YQO-5L-MAI" secondAttribute="top" constant="8" id="L79-E0-NJd"/>
                                 <constraint firstItem="yaY-Im-sVT" firstAttribute="centerY" secondItem="YQO-5L-MAI" secondAttribute="centerY" id="VT2-Yl-9IO"/>
                                 <constraint firstItem="XUo-TL-xMt" firstAttribute="leading" secondItem="YQO-5L-MAI" secondAttribute="leading" constant="16" id="bgS-W5-obi"/>
-                                <constraint firstItem="yaY-Im-sVT" firstAttribute="leading" secondItem="XUo-TL-xMt" secondAttribute="trailing" constant="8" id="qtq-wZ-SqE"/>
+                                <constraint firstAttribute="trailing" secondItem="XUo-TL-xMt" secondAttribute="trailing" id="f9h-gO-2ad"/>
                                 <constraint firstAttribute="bottom" secondItem="XUo-TL-xMt" secondAttribute="bottom" constant="8" id="xGZ-O0-hl0"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -87,7 +87,7 @@
                 <outlet property="imageView" destination="yaY-Im-sVT" id="BS0-iJ-ch2"/>
                 <outlet property="titleButton" destination="XUo-TL-xMt" id="a4o-cZ-1Up"/>
             </connections>
-            <point key="canvasLocation" x="-125.5" y="-222"/>
+            <point key="canvasLocation" x="-125.59999999999999" y="-222.1889055472264"/>
         </view>
     </objects>
     <resources>
