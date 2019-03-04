@@ -76,20 +76,20 @@ extension UIColor {
 
  
     static func appBronzeColors() -> (startColor: UIColor, endColor:UIColor) {
-        let startColor = UIColor("#f6f6f6")
-        let endColor = UIColor("#ededed")
+        let startColor = UIColor.appGreenColor()
+        let endColor =  UIColor.appBlueColor()
         return (startColor, endColor)
     }
     
     static func appSilverColors() -> (startColor: UIColor, endColor:UIColor) {
-        let startColor = UIColor("#e3e3e3")
-        let endColor = UIColor("#9d9d9d")
+        let startColor = UIColor("#c08fed")
+        let endColor =  UIColor("#8a45c9")
         return (startColor, endColor)
     }
     
     static func appGoldColors() ->  (startColor: UIColor, endColor:UIColor) {
-        let startColor = UIColor.appGreenColor()
-        let endColor =  UIColor.appBlueColor()
+        let startColor = UIColor("#4d82ca")
+        let endColor =  UIColor("#9fc5f8")
         return (startColor, endColor)
     }
     
