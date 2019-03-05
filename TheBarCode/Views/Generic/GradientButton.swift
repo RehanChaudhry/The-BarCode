@@ -23,7 +23,7 @@ class GradientButton: LoadingButton, Gradientable {
     var endColor: UIColor = UIColor.appBlueColor()
     var locations: [NSNumber]?
     var directions: GradientableOptionsDirection = .right
-    var buttonStandardOfferType: StandardOfferType = .gold
+    var buttonStandardOfferType: StandardOfferType = .bronze
     
     
     override func awakeFromNib() {
