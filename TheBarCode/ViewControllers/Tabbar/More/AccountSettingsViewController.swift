@@ -47,7 +47,7 @@ class AccountSettingsViewController: UIViewController {
     var selectedGender: Gender = Gender.male
     var selectedDob: Date = Date()
     
-    var genders: [Gender] = [Gender.male, Gender.female, Gender.other]
+    var genders: [Gender] = [Gender.male, Gender.female]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,7 +148,7 @@ class AccountSettingsViewController: UIViewController {
         self.currentPasswordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.passwordFieldView = FieldView.loadFromNib()
-        self.passwordFieldView.setUpFieldView(placeholder: "NEW PASSWORD", fieldPlaceholder: "Enter your account password", iconImage: nil)
+        self.passwordFieldView.setUpFieldView(placeholder: "NEW PASSWORD", fieldPlaceholder: "Enter your new password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
         self.passwordFieldView.setReturnKey(returnKey: .next)
         self.passwordFieldView.makeSecure(secure: true)
@@ -160,7 +160,7 @@ class AccountSettingsViewController: UIViewController {
         self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.confirmPasswordFieldView = FieldView.loadFromNib()
-        self.confirmPasswordFieldView.setUpFieldView(placeholder: "CONFIRM PASSWORD", fieldPlaceholder: "Re-enter your account password", iconImage: nil)
+        self.confirmPasswordFieldView.setUpFieldView(placeholder: "CONFIRM PASSWORD", fieldPlaceholder: "Re-enter your new password", iconImage: nil)
         self.confirmPasswordFieldView.setKeyboardType()
         self.confirmPasswordFieldView.setReturnKey(returnKey: .done)
         self.confirmPasswordFieldView.makeSecure(secure: true)

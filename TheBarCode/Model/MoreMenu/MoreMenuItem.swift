@@ -40,7 +40,7 @@ enum MenuItemType: String {
         case .privacyPolicy:
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:
-            return ("Sign Out", "icon_signout", "", true, 16.0)
+            return ("Sign Out", "icon_signout", "", false, 16.0)
             
         }
     }

@@ -49,10 +49,10 @@ class FaqsViewController: UIViewController {
         let section9 = FAQSection(title: "What is the maximum discount any bar can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
         self.faqSections.append(section9)
         
-        let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Yes.")])
+        let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Only when you have already used your discounts and have not applied either credits or reloaded.")])
         self.faqSections.append(section10)
         
-        let section11 = FAQSection(title: "Can I claim my discount at any Bar that is on the app?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
+        let section11 = FAQSection(title: "Can I claim my discount at any Bar that is on the app?", faqs: [FAQ(text: "Yes.")])
         self.faqSections.append(section11)
         
         let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Bars are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner Bars.")])

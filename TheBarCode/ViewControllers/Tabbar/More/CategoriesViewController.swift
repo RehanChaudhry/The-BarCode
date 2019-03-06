@@ -39,7 +39,7 @@ class CategoriesViewController: UIViewController {
             
             self.continueButton.setTitle("Update", for: .normal)
         } else {
-            self.title = "Personalize your experience"
+            self.title = "Personalize Your Experience"
             self.navigationItem.hidesBackButton = true
             
             self.continueButton.setTitle("Continue", for: .normal)
