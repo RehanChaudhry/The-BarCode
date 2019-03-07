@@ -208,6 +208,16 @@ class OfferDetailViewController: UIViewController {
         self.present(redeemDealViewController, animated: true, completion: nil)
     }
     
+    func moveToRedeemStartViewController(withCredit: Bool){
+        
+        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.deal = self.deal
+        redeemStartViewController.delegate = self
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        redeemStartViewController.redeemWithCredit = withCredit
+        self.present(redeemStartViewController, animated: true, completion: nil)
+    }
+    
     func setUpRedeemButtonView() {
         let bar = self.deal.establishment.value
         if !bar!.canRedeemOffer.value {
@@ -345,9 +355,9 @@ extension OfferDetailViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension OfferDetailViewController : RedeemStartViewControllerDelegate {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool) {
         
-        self.moveToRedeemDealViewController(withCredit: false)
+        self.moveToRedeemDealViewController(withCredit: withCredit)
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -358,7 +368,7 @@ extension OfferDetailViewController : RedeemStartViewControllerDelegate {
 extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
 
-        self.moveToRedeemDealViewController(withCredit: true)
+        self.moveToRedeemStartViewController(withCredit: true)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {

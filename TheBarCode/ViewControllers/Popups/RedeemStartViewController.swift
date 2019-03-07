@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RedeemStartViewControllerDelegate: class {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int)
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool)
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int)
 }
 
@@ -89,7 +89,7 @@ class RedeemStartViewController: UIViewController {
     @IBAction func barTenderReadyButtonTapped(_ sender: UIButton) {
         
         self.dismiss(animated: true) {
-            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex)
+            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex, withCredit: self.redeemWithCredit)
         }
     }
     

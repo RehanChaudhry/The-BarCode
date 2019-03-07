@@ -264,13 +264,24 @@ class BarDetailViewController: UIViewController {
     }
 
     func moveToRedeemDealViewController(withCredit: Bool) {
-        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+       let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
         redeemDealViewController.bar = self.selectedBar
         redeemDealViewController.redeemWithCredit = withCredit
         redeemDealViewController.type = .standard
         redeemDealViewController.delegate = self
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemDealViewController, animated: true, completion: nil)
+   
+    }
+    
+    func moveToRedeemStartViewController(withCredit: Bool){
+        
+        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.bar = self.selectedBar
+        redeemStartViewController.delegate = self
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        redeemStartViewController.redeemWithCredit = withCredit
+        self.present(redeemStartViewController, animated: true, completion: nil)
     }
     
     func getSelectedBarId() -> String? {
@@ -354,9 +365,9 @@ extension BarDetailViewController: BarLiveOffersViewControllerDelegate {
 
 //MARK: RedeemStartViewControllerDelegate
 extension BarDetailViewController: RedeemStartViewControllerDelegate {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool) {
     
-        self.moveToRedeemDealViewController(withCredit: false)
+        self.moveToRedeemDealViewController(withCredit: withCredit)
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {        
@@ -527,7 +538,7 @@ extension BarDetailViewController {
 extension BarDetailViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
         
-        self.moveToRedeemDealViewController(withCredit: true)
+        self.moveToRedeemStartViewController(withCredit: true)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {

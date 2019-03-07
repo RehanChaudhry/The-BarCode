@@ -541,11 +541,12 @@ extension FiveADayViewController: InviteViewControllerDelegate {
 
 //MARK: RedeemStartViewControllerDelegate
 extension FiveADayViewController : RedeemStartViewControllerDelegate {
+  
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0     
     }
     
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int) {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool) {
         self.moveToRedeemDealViewController(withCredit: false, selectedIndex: selectedIndex)
     }
 }
