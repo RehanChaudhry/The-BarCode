@@ -56,6 +56,15 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "SignInToLoginViaSegue" {
+            let controller = segue.destination as! LoginViaViewController
+            controller.forSignUp = true
+        }
+    }
+    
     //MARK: My Methods
     
     func setUpFields() {
@@ -141,6 +150,10 @@ class LoginViewController: UIViewController {
         if self.isDataValid() {
             self.login()
         }
+    }
+    
+    @IBAction func signInOptionsButtonTapped(sender: UIButton) {
+        self.performSegue(withIdentifier: "SignInToLoginViaSegue", sender: nil)
     }
 }
 

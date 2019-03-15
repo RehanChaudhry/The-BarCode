@@ -22,7 +22,6 @@ class User: CoreStoreObject {
     var userId = Value.Required<String>("user_id", initial: "")
     
     var fullName = Value.Required<String>("fullname", initial: "")
-    var email = Value.Required<String>("email_id", initial: "")
     var accessToken = Value.Required<String>("access_token", initial: "")
     var refreshToken = Value.Required<String>("refresh_token", initial: "")
     var dobString = Value.Required<String>("date_of_birth", initial: "")
@@ -41,6 +40,9 @@ class User: CoreStoreObject {
     var referralCode = Value.Optional<String>("referral_code")
     
     var creditsRaw = Value.Optional<String>("credits_raw")
+    
+    var email = Value.Optional<String>("email_id")
+    var mobileNumber = Value.Optional<String>("mobile_number")
     
     var gender: Gender? {
         get {
@@ -98,8 +100,16 @@ extension User: ImportableUniqueObject {
     
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
+        if let email = source["email"] as? String {
+            self.email.value = email
+        }
+        
+        if let mobileNo = source["contact_number"] as? String {
+            self.mobileNumber.value = mobileNo
+        }
+        
         self.fullName.value = source["full_name"] as! String
-        self.email.value = source["email"] as! String
+        
         self.dobString.value = source["date_of_birth"] as! String
         
         if let gender = source["gender"] as? String {

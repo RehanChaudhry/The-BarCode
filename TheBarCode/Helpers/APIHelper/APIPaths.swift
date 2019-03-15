@@ -13,6 +13,11 @@ let apiPathAuthenticate = "auth/login"
 let apiPathRegister = "auth/register"
 let apiPathRefreshToken = ""
 let apiPathSocialLogin = "social/login"
+let apiPathMobileLogin = "auth/verify-number"
+
+let apiPathMobileVerification = "auth/activate-number"
+let apiPathResentMobileVerification = "user/resend-activation-code"
+
 let apiPathEmailVerification = "user/customer-activate"
 let apiPathResendVerificationEmail = "user/resend-activation-email"
 let apiPathForgotPassword = "auth/password/email"
@@ -47,6 +52,8 @@ let apiPathGetBarDetail = "establishment"
 let apiPathSharedOffers = "share"
 
 let apiPathStandardOffers = "standard-offer-tier"
+
+let apiPathVersionCheck = "version"
 
 
 

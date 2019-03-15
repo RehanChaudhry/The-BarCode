@@ -19,7 +19,7 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.updateLocationIfNeed()
+        self.checkForUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,10 +38,63 @@ class SplashViewController: UIViewController {
     @objc func moveToNextController() {
         self.performSegue(withIdentifier: "SplashToLoginOptions", sender: nil)
     }
+    
+    func showForceUpdateAlert() {
+        let alertController = UIAlertController(title: "Update Available", message: "Critical update is available for The BarCode. Please update the app before proceeding", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Goto Appstore", style: .default, handler: { (action) in
+            let url = URL(string: appstoreUrlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: { (finish) in
+                self.showForceUpdateAlert()
+            })
+        }))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func version() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+        let version = dictionary["CFBundleShortVersionString"] as! String
+        return version
+    }
 }
 
 //Webservices Methods
 extension SplashViewController {
+    
+    func checkForUpdate() {
+
+        let version = self.version()
+        let params = ["version" : version,
+                      "platform" : platform]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathVersionCheck, method: .get, completion: { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting version: \(error!.localizedDescription)")
+                self.updateLocationIfNeed()
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Server error while getting version: \(serverError!.errorMessages())")
+                self.updateLocationIfNeed()
+                return
+            }
+            
+            let responseDict = (response as? [String : Any])?["response"] as? [String : Any]
+            if let responseData = (responseDict?["data"] as? [String : Any]), let forceUpdate = responseData["force_update"] as? Bool {
+                
+                if forceUpdate {
+                    self.showForceUpdateAlert()
+                } else {
+                    self.updateLocationIfNeed()
+                }
+                
+            } else {
+                self.updateLocationIfNeed()
+            }
+        })
+    }
+    
     func updateLocationIfNeed() {
         
         guard let user = Utility.shared.getCurrentUser() else {

@@ -50,6 +50,8 @@
 		0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E2B21762AB100FA993F /* LoadingButton.swift */; };
 		0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E2E2177083000FA993F /* ServerMessage.swift */; };
 		0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E302177215F00FA993F /* CodeVerificationViewController.swift */; };
+		0C35F4D92236256100EC111C /* LoginViaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35F4D82236256100EC111C /* LoginViaViewController.swift */; };
+		0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */; };
 		0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD24214A3BFF000F5D64 /* ShadowView.swift */; };
 		0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD28214A6580000F5D64 /* TabBarController.swift */; };
 		0C44DD34214A7F5E000F5D64 /* MoreMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */; };
@@ -142,6 +144,8 @@
 		0C955E08214931D500F9385B /* LoadingAndErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C955E06214931D500F9385B /* LoadingAndErrorView.xib */; };
 		0C955E0B2149362900F9385B /* LoadMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0A2149362800F9385B /* LoadMore.swift */; };
 		0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */; };
+		0C9FA2792236768B008F0B62 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9FA2782236768A008F0B62 /* StringFormatter.swift */; };
+		0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA216342237B881008B3E0B /* MobileVerificationViewController.swift */; };
 		0CBF0000214F932400B017CC /* BarsWithLiveOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFF214F932400B017CC /* BarsWithLiveOffersViewController.swift */; };
 		0CBF0002214F933000B017CC /* BarsWithDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0001214F933000B017CC /* BarsWithDealsViewController.swift */; };
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
@@ -275,6 +279,8 @@
 		0C302E2B21762AB100FA993F /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		0C302E2E2177083000FA993F /* ServerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerMessage.swift; sourceTree = "<group>"; };
 		0C302E302177215F00FA993F /* CodeVerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewController.swift; sourceTree = "<group>"; };
+		0C35F4D82236256100EC111C /* LoginViaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViaViewController.swift; sourceTree = "<group>"; };
+		0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLoginViewController.swift; sourceTree = "<group>"; };
 		0C44DD24214A3BFF000F5D64 /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		0C44DD28214A6580000F5D64 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreMenuItem.swift; sourceTree = "<group>"; };
@@ -367,6 +373,8 @@
 		0C955E06214931D500F9385B /* LoadingAndErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingAndErrorView.xib; sourceTree = "<group>"; };
 		0C955E0A2149362800F9385B /* LoadMore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMore.swift; sourceTree = "<group>"; };
 		0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsInfoViewController.swift; sourceTree = "<group>"; };
+		0C9FA2782236768A008F0B62 /* StringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
+		0CA216342237B881008B3E0B /* MobileVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileVerificationViewController.swift; sourceTree = "<group>"; };
 		0CBF0001214F933000B017CC /* BarsWithDealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsWithDealsViewController.swift; sourceTree = "<group>"; };
 		0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseViewController.swift; sourceTree = "<group>"; };
 		0CBFFFFD214F931700B017CC /* BarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsViewController.swift; sourceTree = "<group>"; };
@@ -550,6 +558,8 @@
 				0C23A87E214656C300DFB281 /* SIgnUpViewController.swift */,
 				0C23A8812146575E00DFB281 /* ForgotPasswordViewController.swift */,
 				0C955DD92149226A00F9385B /* ReferralViewController.swift */,
+				0C35F4D82236256100EC111C /* LoginViaViewController.swift */,
+				0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -574,6 +584,7 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0C9FA27722367677008F0B62 /* StringFormatter */,
 				0CC81FB22174A9BC00FDB92D /* LocationManager */,
 				0CC81FA5216DD3DC00FDB92D /* Utility */,
 				0CC81F9B216DCC6900FDB92D /* APIHelper */,
@@ -1092,6 +1103,14 @@
 			path = LoadingAndError;
 			sourceTree = "<group>";
 		};
+		0C9FA27722367677008F0B62 /* StringFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				0C9FA2782236768A008F0B62 /* StringFormatter.swift */,
+			);
+			path = StringFormatter;
+			sourceTree = "<group>";
+		};
 		0CC81F9B216DCC6900FDB92D /* APIHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1186,6 +1205,7 @@
 				0CC81FB021708BB500FDB92D /* RedeemDealViewController.swift */,
 				0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */,
 				838C56A621789C1100E47678 /* CannotRedeemViewController.swift */,
+				0CA216342237B881008B3E0B /* MobileVerificationViewController.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -1658,14 +1678,17 @@
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */,
 				0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */,
+				0C9FA2792236768B008F0B62 /* StringFormatter.swift in Sources */,
 				0C955DEF2149317100F9385B /* StatefulCollectionView+LoadMore.swift in Sources */,
 				832FD1D2216B2BC1008516F4 /* DealDetailTableViewCell.swift in Sources */,
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,
 				0C8E9A99214A908800224720 /* FaqsViewController.swift in Sources */,
 				0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */,
+				0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */,
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
 				0C955DF22149317100F9385B /* StatefulCollectionView+PullToRefresh.swift in Sources */,
+				0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */,
 				0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */,
 				0C23A87B214656AD00DFB281 /* LoginOptionsViewController.swift in Sources */,
 				0C955E0B2149362900F9385B /* LoadMore.swift in Sources */,
@@ -1737,6 +1760,7 @@
 				0C23A88A2146582A00DFB281 /* FavouritesViewController.swift in Sources */,
 				0C955DDF2149277D00F9385B /* Category.swift in Sources */,
 				0C72AB58219591EE00D6CD6B /* SearchViewController.swift in Sources */,
+				0C35F4D92236256100EC111C /* LoginViaViewController.swift in Sources */,
 				0C955DC32147C85900F9385B /* UIViewControllerAdditions.swift in Sources */,
 				83825234217E23C300567388 /* FavouritButton.swift in Sources */,
 				8344E2A02167678100CB8BD2 /* OutOfCreditViewController.swift in Sources */,

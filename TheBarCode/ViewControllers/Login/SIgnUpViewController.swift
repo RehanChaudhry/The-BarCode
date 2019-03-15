@@ -66,6 +66,10 @@ class SIgnUpViewController: UIViewController {
     var genders: [Gender] = [Gender.male, Gender.female]
     
     var socialAccountId: String?
+    var mobileSignUp: Bool = false
+    var phoneNo: String = ""
+    
+    var phoneNoFieldView: FieldView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,12 +100,23 @@ class SIgnUpViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: nil)
-        
-    }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "SignUpToLoginViaSegue" {
+            let controller = segue.destination as! LoginViaViewController
+            controller.forSignUp = false
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let height = self.bottomView.frame.origin.y + self.bottomView.frame.height + 20.0
+        self.contentHeight.constant = height
+    }
+    
     //MARK: My Methods
     
     func setUpFields() {
@@ -112,7 +127,7 @@ class SIgnUpViewController: UIViewController {
         self.fullNameFieldView.setReturnKey(returnKey: .next)
         self.contentView.addSubview(self.fullNameFieldView)
         
-        self.fullNameFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fbSignUpView, withOffset: 5.0)
+        self.fullNameFieldView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView, withOffset: 24.0)
         self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
         self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
         self.fullNameFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
@@ -121,24 +136,44 @@ class SIgnUpViewController: UIViewController {
         self.emailFieldView.setUpFieldView(placeholder: "EMAIL ADDRESS", fieldPlaceholder: "Enter your email address", iconImage: nil)
         self.emailFieldView.setKeyboardType(keyboardType: .emailAddress)
         self.emailFieldView.setReturnKey(returnKey: .next)
-        self.contentView.addSubview(self.emailFieldView)
         
-        self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
-        self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        self.phoneNoFieldView = FieldView.loadFromNib()
+        self.phoneNoFieldView.textField.text = self.phoneNo
+        self.phoneNoFieldView.delegate = self
+        self.phoneNoFieldView.setUpFieldView(placeholder: "MOBILE NUMBER", fieldPlaceholder: "Enter mobile number", iconImage: nil)
+        self.phoneNoFieldView.textField.isEnabled = false
+        self.phoneNoFieldView.setKeyboardType(keyboardType: .phonePad)
         
         self.passwordFieldView = FieldView.loadFromNib()
         self.passwordFieldView.setUpFieldView(placeholder: "PASSWORD", fieldPlaceholder: "Create your account password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
         self.passwordFieldView.setReturnKey(returnKey: .next)
         self.passwordFieldView.makeSecure(secure: true)
-        self.contentView.addSubview(self.passwordFieldView)
         
-        self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
-        self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        if self.mobileSignUp {
+            self.contentView.addSubview(self.phoneNoFieldView)
+            
+            self.phoneNoFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
+            self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.phoneNoFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+        } else {
+            self.contentView.addSubview(self.emailFieldView)
+            
+            self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
+            self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+            self.contentView.addSubview(self.passwordFieldView)
+            
+            self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+            self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+        }
         
         self.dobFieldView = FieldView.loadFromNib()
         self.dobFieldView.delegate = self
@@ -148,7 +183,12 @@ class SIgnUpViewController: UIViewController {
         self.dobFieldView.setKeyboardType(inputView: self.dateInputView)
         self.contentView.addSubview(self.dobFieldView)
         
-        self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        if self.mobileSignUp {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
+        } else {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        }
+        
         self.dobFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
         self.dobFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
@@ -161,16 +201,24 @@ class SIgnUpViewController: UIViewController {
         self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
-        self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        if self.mobileSignUp {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
+        } else {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        }
+        
         self.genderFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
         self.genderFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.genderFieldView.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.dobFieldView)
         self.genderFieldView.autoMatch(ALDimension.width, to: ALDimension.width, of: self.dobFieldView)
-
-        let fieldViewsHeight = CGFloat(4.0 * 71.0) + 2.0
-        let height = self.fbSignUpView.frame.origin.y + self.fbSignUpView.frame.height + self.bottomView.frame.height + fieldViewsHeight
-        self.contentHeight.constant = height
+        
+        self.contentView.addSubview(self.bottomView)
+        
+        self.bottomView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
+        self.bottomView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+        self.bottomView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+        self.bottomView.autoSetDimension(ALDimension.height, toSize: 182.0)
 
         self.view.layoutIfNeeded()
         
@@ -218,18 +266,31 @@ class SIgnUpViewController: UIViewController {
             self.fullNameFieldView.reset()
         }
         
-        if !self.emailFieldView.textField.text!.isValidEmail() {
-            isValid = false
-            self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
+        if self.mobileSignUp {
+            let text = self.phoneNoFieldView.textField.text!
+            let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
+            
+            if mobileNumber.count < 13 {
+                isValid = false
+                self.phoneNoFieldView.showValidationMessage(message: "Please enter valid mobile number")
+            } else {
+                self.phoneNoFieldView.reset()
+            }
+            
         } else {
-            self.emailFieldView.reset()
-        }
-        
-        if self.passwordFieldView.textField.text!.count < 8 {
-            isValid = false
-            self.passwordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
-        } else {
-            self.passwordFieldView.reset()
+            if !self.emailFieldView.textField.text!.isValidEmail() {
+                isValid = false
+                self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
+            } else {
+                self.emailFieldView.reset()
+            }
+            
+            if self.passwordFieldView.textField.text!.count < 8 {
+                isValid = false
+                self.passwordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
+            } else {
+                self.passwordFieldView.reset()
+            }
         }
         
         if self.dobFieldView.textField.text!.count == 0 {
@@ -250,13 +311,22 @@ class SIgnUpViewController: UIViewController {
     }
     
     @objc func textFieldDidEndOnExit(sender: UITextField) {
-        if sender == self.fullNameFieldView.textField {
-            self.emailFieldView.textField.becomeFirstResponder()
-        } else if sender == self.emailFieldView.textField {
-            self.passwordFieldView.textField.becomeFirstResponder()
-        } else if sender == self.passwordFieldView.textField {
-            self.dobFieldView.textField.becomeFirstResponder()
+        
+        if self.mobileSignUp {
+            if sender == self.fullNameFieldView.textField {
+                self.dobFieldView.textField.becomeFirstResponder()
+            }
+        } else {
+            if sender == self.fullNameFieldView.textField {
+                self.emailFieldView.textField.becomeFirstResponder()
+            } else if sender == self.emailFieldView.textField {
+                self.passwordFieldView.textField.becomeFirstResponder()
+            } else if sender == self.passwordFieldView.textField {
+                self.dobFieldView.textField.becomeFirstResponder()
+            }
         }
+        
+        
     }
     
     func updateGenderField() {
@@ -269,7 +339,23 @@ class SIgnUpViewController: UIViewController {
         self.dobFieldView.textField.text = dateformatter.string(from: self.selectedDob)
     }
     
+    func presentTabBarController() {
+        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+        self.navigationController?.present(tabbarController!, animated: true, completion: {
+            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+            self.navigationController?.popToViewController(loginOptions, animated: false)
+        })
+    }
+    
     func showVerificationController() {
+        if self.mobileSignUp {
+            self.showMobileVerificationController()
+        } else {
+            self.showEmailVerificationController()
+        }
+    }
+    
+    func showEmailVerificationController() {
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "EmailVerificationViewController") as! EmailVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
         verificationController.delegate = self
@@ -278,12 +364,17 @@ class SIgnUpViewController: UIViewController {
         self.present(verificationController, animated: true, completion: nil)
     }
     
-    func presentTabBarController() {
-        let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
-        self.navigationController?.present(tabbarController!, animated: true, completion: {
-            let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
-            self.navigationController?.popToViewController(loginOptions, animated: false)
-        })
+    func showMobileVerificationController() {
+        
+        let text = self.phoneNoFieldView.textField.text!
+        
+        let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "MobileVerificationViewController") as! MobileVerificationViewController)
+        verificationController.modalPresentationStyle = .overCurrentContext
+        verificationController.delegate = self
+        verificationController.isFieldsSecure = false
+        verificationController.mobileNumber = text
+        verificationController.isCommingFromSignup = true
+        self.present(verificationController, animated: true, completion: nil)
     }
     
     //MARK: My IBActions
@@ -311,10 +402,18 @@ class SIgnUpViewController: UIViewController {
     }
     
     @IBAction func previousBarButtonTapped(sender: UIBarButtonItem) {
-        if self.genderFieldView.textField.isFirstResponder {
-            self.dobFieldView.textField.becomeFirstResponder()
-        } else if self.dobFieldView.textField.isFirstResponder {
-            self.passwordFieldView.textField.becomeFirstResponder()
+        if self.mobileSignUp {
+            if self.genderFieldView.textField.isFirstResponder {
+                self.dobFieldView.textField.becomeFirstResponder()
+            } else if self.dobFieldView.textField.isFirstResponder {
+                self.fullNameFieldView.textField.becomeFirstResponder()
+            }
+        } else {
+            if self.genderFieldView.textField.isFirstResponder {
+                self.dobFieldView.textField.becomeFirstResponder()
+            } else if self.dobFieldView.textField.isFirstResponder {
+                self.passwordFieldView.textField.becomeFirstResponder()
+            }
         }
     }
     
@@ -324,7 +423,7 @@ class SIgnUpViewController: UIViewController {
     }
     
     @IBAction func signInButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "SignUpToSignInSegue", sender: nil)
+        self.performSegue(withIdentifier: "SignUpToLoginViaSegue", sender: nil)
     }
 }
 
@@ -361,7 +460,6 @@ extension SIgnUpViewController: FieldViewDelegate {
 }
 
 //MARK: UIPickerViewDelegate, UIPickerViewDataSource
-
 extension SIgnUpViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -430,20 +528,38 @@ extension SIgnUpViewController: EmailVerificationViewControllerDelegate {
     }
 }
 
+//MARK: MobileVerificationViewControllerDelegate
+extension SIgnUpViewController: MobileVerificationViewControllerDelegate {
+    func mobileVerificationController(controller: MobileVerificationViewController, userVerifiedSuccessfully canShowReferral: Bool) {
+        self.userVerifiedSuccessfully(canShowReferral: canShowReferral)
+    }
+}
+
 //MARK: Webservices Methods
 extension SIgnUpViewController {
     
     func signUp() {
         let fullName = self.fullNameFieldView.textField.text!
-        let email = self.emailFieldView.textField.text!
-        let password = self.passwordFieldView.textField.text!
         let gender = self.selectedGender.rawValue
         let dob = Utility.shared.serverDateFormattedString(date: self.selectedDob)
         
         var params = ["full_name" : fullName,
-                      "email" : email,
-                      "password" : password,
                       "date_of_birth" : dob]
+        
+        if self.mobileSignUp {
+            
+            let text = self.phoneNoFieldView.textField.text!
+            let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
+            
+            params["contact_number"] = mobileNumber
+        } else {
+            
+            let email = self.emailFieldView.textField.text!
+            let password = self.passwordFieldView.textField.text!
+            
+            params["email"] = email
+            params["password"] = password
+        }
         
         params["gender"] =  self.selectedGender != Gender.other  ? gender : ""
         

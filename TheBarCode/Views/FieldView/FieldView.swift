@@ -18,6 +18,8 @@ import Reusable
 
 class FieldView: UIView, NibReusable {
 
+    @IBOutlet var prefixLabel: UILabel!
+    
     @IBOutlet var textField: UITextField!
     
     @IBOutlet var placeholderLabel: UILabel!
@@ -25,6 +27,8 @@ class FieldView: UIView, NibReusable {
 
     @IBOutlet var iconImageView: UIImageView!
     
+    @IBOutlet var prefixLabelMargin: NSLayoutConstraint!
+    @IBOutlet var prefixLabelWidth: NSLayoutConstraint!
     @IBOutlet var placeholderLabelLeft: NSLayoutConstraint!
     
     @IBOutlet var validationLabelLeft: NSLayoutConstraint!
@@ -52,6 +56,8 @@ class FieldView: UIView, NibReusable {
         self.placeholderLabel.font = UIFont.appBoldFontOf(size: self.placeholderLabel.font.pointSize)
         self.placeholderLabel.textColor = UIColor.white
         self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appFieldBottomBorderColor() , thickness: 1.0)
+        
+        self.prefixLabel.addBorders(edges: .bottom, color: UIColor.appFieldBottomBorderColor(), thickness: 1.0)
         
     }
     

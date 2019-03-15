@@ -49,6 +49,10 @@ class AccountSettingsViewController: UIViewController {
     
     var genders: [Gender] = [Gender.male, Gender.female]
     
+    var phoneNoFieldView: FieldView!
+    
+    var isLoggedInViaMobile: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,6 +68,8 @@ class AccountSettingsViewController: UIViewController {
         
         self.addBackButton()
         
+        self.isLoggedInViaMobile = Utility.shared.getCurrentUser()?.mobileNumber.value != nil
+        
         self.setUpFields()
         self.setUpUserProfile()
     }
@@ -73,6 +79,12 @@ class AccountSettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.contentHeight.constant = self.updateButton.frame.origin.y + self.updateButton.frame.height + 24.0
+    }
+    
     //MARK: My Methods
     
     func setUpFields() {
@@ -93,13 +105,34 @@ class AccountSettingsViewController: UIViewController {
         self.emailFieldView.setKeyboardType(keyboardType: .emailAddress)
         self.emailFieldView.setReturnKey(returnKey: .next)
         self.emailFieldView.isUserInteractionEnabled = false
-        self.contentView.addSubview(self.emailFieldView)
         
-        self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
-        self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        var mobileNumber = Utility.shared.getCurrentUser()?.mobileNumber.value ?? ""
+        mobileNumber = mobileNumber.format("XNN NNNN NNNNNN", oldString: mobileNumber)
         
+        self.phoneNoFieldView = FieldView.loadFromNib()
+        self.phoneNoFieldView.textField.text = mobileNumber
+        self.phoneNoFieldView.delegate = self
+        self.phoneNoFieldView.setUpFieldView(placeholder: "MOBILE NUMBER", fieldPlaceholder: "Enter mobile number", iconImage: nil)
+        self.phoneNoFieldView.textField.isEnabled = false
+        self.phoneNoFieldView.setKeyboardType(keyboardType: .phonePad)
+        
+        if self.isLoggedInViaMobile {
+            self.contentView.addSubview(self.phoneNoFieldView)
+            
+            self.phoneNoFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
+            self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.phoneNoFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+        } else {
+            self.contentView.addSubview(self.emailFieldView)
+            
+            self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
+            self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        }
+
         self.dobFieldView = FieldView.loadFromNib()
         self.dobFieldView.delegate = self
         self.dobFieldView.fieldRight.constant = 8.0
@@ -108,7 +141,12 @@ class AccountSettingsViewController: UIViewController {
         self.dobFieldView.setKeyboardType(inputView: self.dateInputView)
         self.contentView.addSubview(self.dobFieldView)
         
-        self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        if self.isLoggedInViaMobile {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
+        } else {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        }
+        
         self.dobFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
         self.dobFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
@@ -121,70 +159,81 @@ class AccountSettingsViewController: UIViewController {
         self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
-        self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        if self.isLoggedInViaMobile {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
+        } else {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        }
+        
         self.genderFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
         self.genderFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.genderFieldView.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.dobFieldView)
         self.genderFieldView.autoMatch(ALDimension.width, to: ALDimension.width, of: self.dobFieldView)
         
-        self.contentView.addSubview(self.passwordSectionHeaderView)
-        
-        self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
-        self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.passwordSectionHeaderView.autoSetDimension(ALDimension.height, toSize: 46.0)
-        
         self.currentPasswordFieldView = FieldView.loadFromNib()
         self.currentPasswordFieldView.setUpFieldView(placeholder: "CURRENT PASSWORD", fieldPlaceholder: "Enter your current password", iconImage: nil)
         self.currentPasswordFieldView.setKeyboardType()
         self.currentPasswordFieldView.setReturnKey(returnKey: .next)
         self.currentPasswordFieldView.makeSecure(secure: true)
-        self.contentView.addSubview(self.currentPasswordFieldView)
         
-        self.currentPasswordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordSectionHeaderView, withOffset: 10.0)
-        self.currentPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.currentPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.currentPasswordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.passwordFieldView = FieldView.loadFromNib()
         self.passwordFieldView.setUpFieldView(placeholder: "NEW PASSWORD", fieldPlaceholder: "Enter your new password", iconImage: nil)
         self.passwordFieldView.setKeyboardType()
         self.passwordFieldView.setReturnKey(returnKey: .next)
         self.passwordFieldView.makeSecure(secure: true)
-        self.contentView.addSubview(self.passwordFieldView)
         
-        self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.currentPasswordFieldView, withOffset: 10.0)
-        self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.confirmPasswordFieldView = FieldView.loadFromNib()
         self.confirmPasswordFieldView.setUpFieldView(placeholder: "CONFIRM PASSWORD", fieldPlaceholder: "Re-enter your new password", iconImage: nil)
         self.confirmPasswordFieldView.setKeyboardType()
         self.confirmPasswordFieldView.setReturnKey(returnKey: .done)
         self.confirmPasswordFieldView.makeSecure(secure: true)
-        self.contentView.addSubview(self.confirmPasswordFieldView)
         
-        self.confirmPasswordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
-        self.confirmPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.confirmPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.confirmPasswordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        if !self.isLoggedInViaMobile {
+            self.contentView.addSubview(self.passwordSectionHeaderView)
+            
+            self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
+            self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.passwordSectionHeaderView.autoSetDimension(ALDimension.height, toSize: 46.0)
+            
+            self.contentView.addSubview(self.currentPasswordFieldView)
+            
+            self.currentPasswordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordSectionHeaderView, withOffset: 10.0)
+            self.currentPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.currentPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.currentPasswordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+            self.contentView.addSubview(self.passwordFieldView)
+            
+            self.passwordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.currentPasswordFieldView, withOffset: 10.0)
+            self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+            self.contentView.addSubview(self.confirmPasswordFieldView)
+            
+            self.confirmPasswordFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+            self.confirmPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.confirmPasswordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.confirmPasswordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+            
+            self.contentView.addSubview(self.updateButton)
+            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.confirmPasswordFieldView, withOffset: 16.0)
+            
+        } else {
+            self.contentView.addSubview(self.updateButton)
+            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 16.0)
+        }
         
-        self.contentView.addSubview(self.updateButton)
-        self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.confirmPasswordFieldView, withOffset: 16.0)
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.left, withInset: 16.0)
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.right, withInset: 16.0)
         self.updateButton.autoSetDimension(ALDimension.height, toSize: 44.0)
         
-//        let fieldViewsHeight = CGFloat(5.0 * 71.0) + 2.0
-//        let height = self.profileInfoView.frame.origin.y + self.profileInfoView.frame.height + self.updateButton.frame.height + fieldViewsHeight +
-        
-        
         self.updateButton.setNeedsDisplay()
         self.view.layoutIfNeeded()
-        
-        self.contentHeight.constant = self.updateButton.frame.origin.y + self.updateButton.frame.height + 24.0
         
         self.fullNameFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)
         self.emailFieldView.textField.addTarget(self, action: #selector(textFieldDidEndOnExit(sender:)), for: .editingDidEndOnExit)

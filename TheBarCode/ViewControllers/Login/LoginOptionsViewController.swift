@@ -90,6 +90,16 @@ class LoginOptionsViewController: UIViewController {
         self.pagerView.itemSize = self.pagerView.frame.size
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "LoginOptionsToLoginViaSegue", let forSignup = sender as? Bool {
+            let controller = segue.destination as! LoginViaViewController
+            controller.forSignUp = forSignup
+        }
+    }
+    
+    
     //MARK: My Methods
     func setupInitialData(){
         
@@ -139,11 +149,11 @@ class LoginOptionsViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func signUpButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "LoginOptionsToSignUpSegue", sender: nil)
+        self.performSegue(withIdentifier: "LoginOptionsToLoginViaSegue", sender: true)
     }
     
     @IBAction func loginButtonTapped(sender: UIButton) {
-        self.performSegue(withIdentifier: "LoginOptionsToLoginSegue", sender: nil)
+        self.performSegue(withIdentifier: "LoginOptionsToLoginViaSegue", sender: false)
     }
 
 }

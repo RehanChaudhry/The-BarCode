@@ -1,38 +1,40 @@
 //
-//  EmailVerificationViewController.swift
+//  MobileVerificationViewController.swift
 //  TheBarCode
 //
-//  Created by Mac OS X on 12/10/2018.
-//  Copyright © 2018 Cygnis Media. All rights reserved.
+//  Created by Mac OS X on 12/03/2019.
+//  Copyright © 2019 Cygnis Media. All rights reserved.
 //
 
 import UIKit
-import CoreStore
 import ObjectMapper
 
-protocol EmailVerificationViewControllerDelegate: class {
-    func userVerifiedSuccessfully(canShowReferral: Bool)
+protocol MobileVerificationViewControllerDelegate: class {
+    func mobileVerificationController(controller: MobileVerificationViewController, userVerifiedSuccessfully canShowReferral: Bool)
 }
 
-class EmailVerificationViewController: CodeVerificationViewController {
 
+class MobileVerificationViewController: CodeVerificationViewController {
+    
     @IBOutlet weak var gradientTitleView: GradientView!
-
+    
     @IBOutlet var resendCodeButton: LoadingButton!
     
-    var delegate: EmailVerificationViewControllerDelegate!
+    var delegate: MobileVerificationViewControllerDelegate!
     
-    var email: String!
+    var mobileNumber: String!
+    
+    var isCommingFromSignup = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         self.resendCodeButton.updateAcivityIndicatorColor(color: UIColor.appBlackColor())
         
-        let subTitlePlaceholder = "Enter the activation code here which we have sent you on "
-        let subTitleText = subTitlePlaceholder + self.email
+        let subTitlePlaceholder = "Enter the verification code here which we have sent you on "
+        let subTitleText = subTitlePlaceholder + self.mobileNumber
         
         let normalAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
                                NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 16.0)]
@@ -41,7 +43,7 @@ class EmailVerificationViewController: CodeVerificationViewController {
         
         let attributedSubTitle = NSMutableAttributedString(string: subTitleText)
         attributedSubTitle.addAttributes(normalAttribute as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: subTitlePlaceholder))
-        attributedSubTitle.addAttributes(boldAttribute  as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: self.email))
+        attributedSubTitle.addAttributes(boldAttribute  as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: self.mobileNumber))
         
         self.subTitleLabel.attributedText = attributedSubTitle
         
@@ -66,20 +68,24 @@ class EmailVerificationViewController: CodeVerificationViewController {
     @IBAction func resendCodeButtonTapped(sender: UIButton) {
         self.resendCode()
     }
-
+    
 }
 
 //MARK: Webservices Methods
-extension EmailVerificationViewController {
+extension MobileVerificationViewController {
     func verifyCurrentUser() {
-        let params = ["email" : self.email!,
+        
+        
+        let mobileNo = self.mobileNumber!.unformat("XNN NNNN NNNNNN", oldString: self.mobileNumber!)
+        
+        let params = ["contact_number" : mobileNo,
                       "activation_code" : self.hiddenField.text!]
         
         self.actionButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathEmailVerification, method: .post) { (response, serverError, error) in
-        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathMobileVerification, method: .post) { (response, serverError, error) in
+            
             self.actionButton.hideLoader()
             UIApplication.shared.endIgnoringInteractionEvents()
             
@@ -98,9 +104,9 @@ extension EmailVerificationViewController {
                 
                 let user = Utility.shared.saveCurrentUser(userDict: responseUser)
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
-
+                
                 self.dismiss(animated: true, completion: {
-                    self.delegate.userVerifiedSuccessfully(canShowReferral: true)
+                    self.delegate.mobileVerificationController(controller: self, userVerifiedSuccessfully: self.isCommingFromSignup)
                 })
                 
             } else {
@@ -112,12 +118,15 @@ extension EmailVerificationViewController {
     }
     
     func resendCode() {
-        let params = ["email" : self.email!]
+        
+        let mobileNo = self.mobileNumber!.unformat("XNN NNNN NNNNNN", oldString: self.mobileNumber!)
+        
+        let params = ["contact_number" : mobileNo]
         
         self.resendCodeButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathResendVerificationEmail, method: .post) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathResentMobileVerification, method: .post) { (response, serverError, error) in
             
             self.resendCodeButton.hideLoader()
             UIApplication.shared.endIgnoringInteractionEvents()
@@ -136,7 +145,7 @@ extension EmailVerificationViewController {
                 let serverMessage = Mapper<ServerMessage>().map(JSON: responseDict)
                 self.showAlertController(title: "Verification Code", msg: serverMessage!.message)
             } else {
-                self.showAlertController(title: "Verification Code", msg: "Email containing verfication code has been sent on \(self.email!)")
+                self.showAlertController(title: "Verification Code", msg: "An SMS containing verfication code has been sent on \(self.mobileNumber!)")
             }
         }
     }
