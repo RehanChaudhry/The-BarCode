@@ -79,10 +79,12 @@ class SIgnUpViewController: UIViewController {
         self.fbSignUpButton.updateAcivityIndicatorColor(color: UIColor.white)
         
         self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
-        self.selectedDob = self.datePicker.date
+        
         let date = Calendar.current.date(byAdding: .year, value: -18, to: Date()) //User Age should be min 18
         self.datePicker.maximumDate = date
         self.datePicker.minimumDate = nil
+        self.datePicker.date = date!
+        self.selectedDob = self.datePicker.date
 
         self.addBackButton()
         

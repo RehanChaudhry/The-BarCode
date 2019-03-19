@@ -38,14 +38,14 @@ class LoginViaViewController: UIViewController {
         
         if self.forSignUp {
             
-            self.title = "Sign Up"
+            self.title = "Sign up"
             
             self.fbButton.setTitle("Sign up with Facebook", for: .normal)
             self.emailButton.setTitle("Sign up with Email", for: .normal)
             self.mobileButton.setTitle("Sign up with Mobile", for: .normal)
         } else {
             
-            self.title = "Sign In"
+            self.title = "Sign in"
             
             self.fbButton.setTitle("Sign in with Facebook", for: .normal)
             self.emailButton.setTitle("Sign in with Email", for: .normal)

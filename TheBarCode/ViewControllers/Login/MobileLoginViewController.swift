@@ -28,12 +28,13 @@ class MobileLoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.title = "Welcome"
         self.addBackButton()
         
         if self.forSignUp {
+            self.title = "Sign up"
             self.signInButton.setTitle("Sign Up", for: .normal)
         } else {
+            self.title = "Welcome back"
             self.signInButton.setTitle("Sign In", for: .normal)
         }
         
