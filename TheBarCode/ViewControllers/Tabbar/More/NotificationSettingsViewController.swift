@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreStore
+import FirebaseAnalytics
 
 class NotificationSettingsViewController: UIViewController {
 
@@ -30,6 +31,7 @@ class NotificationSettingsViewController: UIViewController {
         
         self.definesPresentationContext = true
         self.setUpNotificationSettings()
+        Analytics.logEvent(viewNotificationSettingScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {

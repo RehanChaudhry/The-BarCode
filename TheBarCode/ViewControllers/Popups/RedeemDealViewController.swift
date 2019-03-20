@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreStore
-
+import FirebaseAnalytics
 
 protocol RedeemDealViewControllerDelegate: class {
     func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int)
@@ -56,6 +56,9 @@ class RedeemDealViewController: CodeVerificationViewController {
     
     @IBAction func actionButtonTapped(sender: UIButton) {
         self.view.endEditing(true)
+        
+        Analytics.logEvent(submitBartenderCode, parameters: nil)
+
         redeemDeal(redeemWithCredit: self.redeemWithCredit)
     }
     

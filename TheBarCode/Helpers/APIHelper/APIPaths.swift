@@ -56,4 +56,82 @@ let apiPathStandardOffers = "standard-offer-tier"
 let apiPathVersionCheck = "version"
 
 
+//Analytics Events
+let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()
+let signUpMobileClick = "Clicked on Sign up with Mobile".getFormattedEventName()
+let signUpEmailClick = "Clicked on Sign up with Email".getFormattedEventName()
 
+let signInFacebookClick = "Clicked on Sign in with Facebook".getFormattedEventName()
+let signInMobileClick = "Clicked on Sign in with Mobile".getFormattedEventName()
+let signInEmailClick = "Clicked on Sign in with Email".getFormattedEventName()
+
+let createAccountViaFacebook = "Create account via Facebook".getFormattedEventName()
+let createAccountViaEmail = "Create account via Email".getFormattedEventName()
+let createAccountViaMobile = "Create account via Mobile".getFormattedEventName()
+
+let forgotPasswordRequest = "Clicked on password reset".getFormattedEventName()
+
+//MORE
+let signOutClick = "Clicked on sign out".getFormattedEventName()
+let privacyPolicyClick = "Clicked on Prviacy Policy".getFormattedEventName()
+let faqMenuClick = "Clicked on FAQ".getFormattedEventName()
+let preferencesSubmitClick = "Submit Preferences".getFormattedEventName()
+let reloadButtonClick = "Clicked on Reload button".getFormattedEventName()
+let accountSettingsClick = "Clicked on Account settings".getFormattedEventName()
+let notificationSettingsClick = "Clicked on Notification settings".getFormattedEventName()
+let preferencesMenuClick = "Clicked on Preferences".getFormattedEventName()
+let reloadMenuClick = "Clicked on Reload".getFormattedEventName()
+let shareOffersMenuClick = "Clicked on Shared offers".getFormattedEventName()
+let redemptionReloadRulesMenuClick = "Clicked on redemption and reload rules".getFormattedEventName()
+
+let updateAccountSettings = "Clicked on update account settings".getFormattedEventName()
+
+let submitBartenderCode = "Submit bartender code".getFormattedEventName()
+let bartenderReadyClick = "Clicked on bartender ready".getFormattedEventName()
+let redeemOfferButtonClick = "Clicked on redeem offer".getFormattedEventName()
+
+let markABarAsFavorite = "Mark a bar as favorite".getFormattedEventName()
+let locationMapClick = "Clicked on bar location map".getFormattedEventName()
+
+//Explore
+let barClickFromExplore = "Clicked on a bar on Explore screen".getFormattedEventName()
+let bannerClick = "Clicked on banner".getFormattedEventName()
+let barTabClickFromExplore = "Clicked on bars tab from explore".getFormattedEventName()
+let dealTabClickFromExplore = "Clicked on deals tab from explore".getFormattedEventName()
+let liveOffersTabClickFromExplore = "Clicked on live offers tab from explore".getFormattedEventName()
+let preferenceFilterClick = "Clicked on preference filter".getFormattedEventName()
+let standardOfferFilterClick = "Clicked on standard offer filter".getFormattedEventName()
+let barDetailAboutClick = "Clicked on About tab on Bar Detail".getFormattedEventName()
+let barDetailDealClick = "Clicked on Deals tab on Bar Detail".getFormattedEventName()
+let barDetailLiveOffersClick = "Clicked on Live offers tab on Bar Detail".getFormattedEventName()
+
+//FiveADay
+let fiveADayShareClick = "Clicked on share Five a day offer".getFormattedEventName()
+let barDetailFromFiveADayClick = "Clicked on bar detail from Five a day".getFormattedEventName()
+let offerDetailFromFiveADayClick = "Clicked on Five a day offer detail".getFormattedEventName()
+
+//Invite
+let inviteFriendsClick = "Clicked on Invite Friends button".getFormattedEventName()
+let shareWithContactsClick = "Clicked on Share with Contacts button".getFormattedEventName()
+
+//TabBAr
+let fiveADayTabClick = "Clicked on Five a day menu icon".getFormattedEventName()
+let favouriteTabClick = "Clicked on Favourite menu icon".getFormattedEventName()
+let moreTabClick = "Clicked on more menu icon".getFormattedEventName()
+let exploreTabClick = "Clicked on Explore in menu tab".getFormattedEventName()
+let inviteTabClick = "Clicked on Invite menu icon".getFormattedEventName()
+
+//Screen View Events
+let viewExploreScreen = "Viewed explore screen".getFormattedEventName()
+let viewBarDetailsScreen = "Viewed bar details".getFormattedEventName()
+let viewFiveADayScreen = "Viewed Five a day screen".getFormattedEventName()
+let viewSharedOfferScreen = "Viewed shared offer list".getFormattedEventName()
+let viewAccountSettingScreen = "Viewed account settings screen".getFormattedEventName()
+let viewNotificationSettingScreen = "Viewed notification settings screen".getFormattedEventName()
+let viewPreferencesScreen = "Viewed preferences".getFormattedEventName()
+let viewReloadScreen = "Viewed reload screen".getFormattedEventName()
+let viewFaqsScreen = "Viewed faqs screen".getFormattedEventName()
+let viewRedemptionRulesScreen = "Viewed redemption reload rules screen".getFormattedEventName()
+//"Viewed redemption and reload rules screen".getFormattedEventName()
+let viewPrivacyPolicyScreen = "Viewed privacy policy screen".getFormattedEventName()
+let viewFavouriteScreen = "Viewed favourites screen".getFormattedEventName()

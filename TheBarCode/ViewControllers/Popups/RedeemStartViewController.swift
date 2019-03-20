@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 protocol RedeemStartViewControllerDelegate: class {
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool)
@@ -87,6 +88,8 @@ class RedeemStartViewController: UIViewController {
     }
     
     @IBAction func barTenderReadyButtonTapped(_ sender: UIButton) {
+        
+        Analytics.logEvent(bartenderReadyClick, parameters: nil)
         
         self.dismiss(animated: true) {
             self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex, withCredit: self.redeemWithCredit)

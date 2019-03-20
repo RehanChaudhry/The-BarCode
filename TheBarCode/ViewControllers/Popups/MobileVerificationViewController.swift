@@ -8,6 +8,8 @@
 
 import UIKit
 import ObjectMapper
+import FirebaseAnalytics
+
 
 protocol MobileVerificationViewControllerDelegate: class {
     func mobileVerificationController(controller: MobileVerificationViewController, userVerifiedSuccessfully canShowReferral: Bool)
@@ -104,6 +106,8 @@ extension MobileVerificationViewController {
                 
                 let user = Utility.shared.saveCurrentUser(userDict: responseUser)
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+                
+                Analytics.logEvent(createAccountViaMobile, parameters: nil)
                 
                 self.dismiss(animated: true, completion: {
                     self.delegate.mobileVerificationController(controller: self, userVerifiedSuccessfully: self.isCommingFromSignup)

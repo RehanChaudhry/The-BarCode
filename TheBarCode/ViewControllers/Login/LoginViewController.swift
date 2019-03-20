@@ -13,6 +13,7 @@ import HTTPStatusCodes
 import FBSDKLoginKit
 import FBSDKCoreKit
 import CoreStore
+import FirebaseAnalytics
 
 class LoginViewController: UIViewController {
 
@@ -141,6 +142,7 @@ class LoginViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func fbSignInButtonTapped(sender: UIButton) {
+        Analytics.logEvent(signInFacebookClick, parameters: nil)
         self.socialLogin()
     }
     
@@ -227,6 +229,7 @@ extension LoginViewController {
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
                 
                 self.userVerifiedSuccessfully(canShowReferral: false)
+
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
@@ -328,7 +331,8 @@ extension LoginViewController {
                             
                             self.userVerifiedSuccessfully(canShowReferral: false)
                             
-                            
+                            Analytics.logEvent(createAccountViaFacebook, parameters:nil)
+
                         } else {
                             let genericError = APIHelper.shared.getGenericError()
                             self.showAlertController(title: "", msg: genericError.localizedDescription)

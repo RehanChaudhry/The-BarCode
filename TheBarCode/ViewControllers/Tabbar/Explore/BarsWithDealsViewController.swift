@@ -12,6 +12,7 @@ import CoreStore
 import Alamofire
 import ObjectMapper
 import GoogleMaps
+import FirebaseAnalytics
 
 protocol BarsWithDealsViewControllerDelegate: class {
     func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar)
@@ -60,10 +61,12 @@ class BarsWithDealsViewController: ExploreBaseViewController {
     }
 
     @IBAction func prefencesButtonTapped(sender: UIButton) {
+        Analytics.logEvent(preferenceFilterClick, parameters: nil)
         self.delegate.barsWithDealsController(controller: self, preferncesButtonTapped: sender)
     }
     
     @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        Analytics.logEvent(standardOfferFilterClick, parameters: nil)
         self.delegate.barsWithDealsController(controller: self, standardOfferButtonTapped: sender)
     }
 }

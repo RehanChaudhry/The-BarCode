@@ -14,6 +14,7 @@ import Alamofire
 import ObjectMapper
 import HTTPStatusCodes
 import GoogleMaps
+import FirebaseAnalytics
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
@@ -65,10 +66,12 @@ class BarsViewController: ExploreBaseViewController {
     }
     
     @IBAction func preferenceButtonTapped(sender: UIButton) {
+        Analytics.logEvent(preferenceFilterClick, parameters: nil)
         self.delegate.barsController(controller: self, preferncesButtonTapped: sender)
     }
     
     @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        Analytics.logEvent(standardOfferFilterClick, parameters: nil)
         self.delegate.barsController(controller: self, standardOfferButtonTapped: sender)
     }
     
@@ -102,6 +105,8 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Analytics.logEvent(barClickFromExplore, parameters: nil)
+        
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
        
         let bar = self.isSearching ? self.filteredBars[indexPath.row]

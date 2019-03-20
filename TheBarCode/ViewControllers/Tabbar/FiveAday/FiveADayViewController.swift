@@ -13,6 +13,7 @@ import ObjectMapper
 import CoreStore
 import Alamofire
 import HTTPStatusCodes
+import FirebaseAnalytics
 
 class FiveADayViewController: UIViewController {
 
@@ -60,6 +61,8 @@ class FiveADayViewController: UIViewController {
         self.reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+        
+        Analytics.logEvent(viewFiveADayScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {

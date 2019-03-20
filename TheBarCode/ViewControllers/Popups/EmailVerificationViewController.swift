@@ -9,6 +9,7 @@
 import UIKit
 import CoreStore
 import ObjectMapper
+import FirebaseAnalytics
 
 protocol EmailVerificationViewControllerDelegate: class {
     func userVerifiedSuccessfully(canShowReferral: Bool)
@@ -98,6 +99,8 @@ extension EmailVerificationViewController {
                 
                 let user = Utility.shared.saveCurrentUser(userDict: responseUser)
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+
+                Analytics.logEvent(createAccountViaEmail, parameters: nil)
 
                 self.dismiss(animated: true, completion: {
                     self.delegate.userVerifiedSuccessfully(canShowReferral: true)

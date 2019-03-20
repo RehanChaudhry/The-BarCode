@@ -11,6 +11,7 @@ import PureLayout
 import FBSDKCoreKit
 import FBSDKLoginKit
 import CoreStore
+import FirebaseAnalytics
 
 class AccountSettingsViewController: UIViewController {
 
@@ -72,6 +73,8 @@ class AccountSettingsViewController: UIViewController {
         
         self.setUpFields()
         self.setUpUserProfile()
+        
+        Analytics.logEvent(viewAccountSettingScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -406,6 +409,8 @@ class AccountSettingsViewController: UIViewController {
     }
     
     @IBAction func updateButtonTapped(sender: UIButton) {
+        Analytics.logEvent(updateAccountSettings, parameters: nil)
+        
         if self.isDataValid() {
             self.view.endEditing(true)
             self.updateUserProfile()

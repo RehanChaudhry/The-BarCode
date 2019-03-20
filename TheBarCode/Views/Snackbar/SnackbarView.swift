@@ -9,6 +9,7 @@
 import UIKit
 import Gradientable
 import Reusable
+import FirebaseAnalytics
 
 enum SnackbarType: String {
     case discount = "discount", reload = "reload", congrates = "congrates"
@@ -141,10 +142,12 @@ class SnackbarView: GradientView, NibLoadable {
     //MARK: My IBActions
     
     @IBAction func creditButtonTapped(sender: UIButton) {
+        Analytics.logEvent(bannerClick, parameters: nil)
         self.delegate.snackbarView(view: self, creditButtonTapped: sender)
     }
     
     @IBAction func bannerButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(bannerClick, parameters: nil)
         self.delegate.snackbarView(view: self, bannerButtonTapped: sender)
     }
     

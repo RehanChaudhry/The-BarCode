@@ -8,6 +8,7 @@
 
 import UIKit
 import OneSignal
+import FirebaseAnalytics
 
 class MoreViewController: UIViewController {
 
@@ -52,6 +53,31 @@ class MoreViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: MyMethods
+    func getAnalyticsEventNameForMenuItemType(itemType: MenuItemType) -> String {
+        switch itemType {
+        case .sharedOffer:
+            return shareOffersMenuClick
+        case .accountSettings:
+            return accountSettingsClick
+        case .notificationSettings:
+            return notificationSettingsClick
+        case .preferences:
+            return preferencesMenuClick
+        case .reload:
+            return  reloadMenuClick
+        case .faqs:
+            return faqMenuClick
+        case .privacyPolicy:
+            return privacyPolicyClick
+        case .signOut:
+            return signOutClick
+        case .rules:
+            return redemptionReloadRulesMenuClick
+        }
+    }
+    
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource
@@ -71,6 +97,8 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let menuItem = menuItems[indexPath.row]
+        let eventName = getAnalyticsEventNameForMenuItemType(itemType: menuItem.type)
+        Analytics.logEvent(eventName, parameters: nil)
         
         if menuItem.type == .signOut {
             let alertController = UIAlertController(title: "Confirm", message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)

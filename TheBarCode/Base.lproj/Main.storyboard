@@ -1700,7 +1700,7 @@ Cg
         <scene sceneID="7Gf-D8-IQq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JUj-gK-SaH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="5 A DAY" image="icon_tab_fiveaday" id="rKr-a1-YiU"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="5 A DAY" image="icon_tab_fiveaday" id="rKr-a1-YiU"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Gvb-T9-s4d">
@@ -2156,7 +2156,7 @@ Cg
         <scene sceneID="xcw-de-kxh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dRM-ns-HPa" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="EXPLORE" image="icon_tab_explore" selectedImage="icon_tab_explore_selected" id="Tux-u5-VBb"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="EXPLORE" image="icon_tab_explore" selectedImage="icon_tab_explore_selected" id="Tux-u5-VBb"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="GDu-oa-24X">
@@ -2207,7 +2207,7 @@ Cg
         <scene sceneID="bcC-Jw-5X6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0no-bg-7bj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="FAVOURITES" image="icon_tab_fav" id="cbg-b3-QEz"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="FAVOURITES" image="icon_tab_fav" id="cbg-b3-QEz"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="gA1-lH-Cv9">
@@ -2588,8 +2588,8 @@ Cg
                                     <fragment content="5 a Day">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="16" name="Lato-Bold"/>
-                                            <font key="NSOriginalFont" size="14" name="Lato-Bold"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
+                                            <font key="NSOriginalFont" metaFont="system" size="14"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -2603,7 +2603,7 @@ Cg
                                     <fragment content="Receive notifications for 5 a Day">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
                                             <font key="NSOriginalFont" size="14" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -2617,7 +2617,7 @@ Cg
                                     <fragment content="Live Offers">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="16" name="Lato-Bold"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -2631,7 +2631,7 @@ Cg
                                     <fragment content="Receive notifications for Live Offers">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="14" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="14"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="8" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -2733,7 +2733,7 @@ Cg
         <scene sceneID="miV-eX-e3B">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gmy-8T-wEk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="MORE" image="icon_tab_more" id="bAb-KN-PSr"/>
+                    <tabBarItem key="tabBarItem" tag="4" title="MORE" image="icon_tab_more" id="bAb-KN-PSr"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="OBm-Hj-E9Y">
@@ -6200,8 +6200,8 @@ CQ
                                     <fragment content="Enter your mobile number below.">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="Lato-Regular"/>
-                                            <font key="NSOriginalFont" size="15" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
+                                            <font key="NSOriginalFont" metaFont="system" size="15"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -6211,7 +6211,7 @@ Cg
 </string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -6221,21 +6221,21 @@ Cg
 </string>
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Note:">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="Lato-Bold"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" You will receive a code via SMS to be entered on the next screen.">
                                         <attributes>
                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="15" name="Lato-Regular"/>
-                                            <font key="NSOriginalFont" size="15" name="Lato-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
+                                            <font key="NSOriginalFont" metaFont="system" size="15"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -6619,7 +6619,7 @@ Cg
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ntd-Ic-O1P"/>
+        <segue reference="U1x-b6-2uJ"/>
         <segue reference="q44-b9-Aeb"/>
         <segue reference="OPR-Pt-aaE"/>
         <segue reference="9Fu-jF-paq"/>

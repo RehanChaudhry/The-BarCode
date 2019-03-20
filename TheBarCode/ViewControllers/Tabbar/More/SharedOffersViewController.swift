@@ -12,7 +12,7 @@ import StatefulTableView
 import ObjectMapper
 import CoreStore
 import MGSwipeTableCell
-
+import FirebaseAnalytics
 
 class SharedOffersViewController: UIViewController {
 
@@ -32,6 +32,8 @@ class SharedOffersViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.resetOffers()
+        
+        Analytics.logEvent(viewSharedOfferScreen, parameters: nil)
     }
     
     override func didReceiveMemoryWarning() {

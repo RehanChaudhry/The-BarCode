@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FirebaseAnalytics
 
 protocol LiveOfferTableViewCellDelegate: class {
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton)
@@ -289,6 +290,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate?.liveOfferCell(cell: self, distanceButtonTapped: sender)
     }
 }

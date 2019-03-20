@@ -9,6 +9,7 @@
 import UIKit
 import OneSignal
 import CoreStore
+import FirebaseAnalytics
 
 class TabBarController: UITabBarController {
 
@@ -19,7 +20,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.delegate = self
         self.registerTagForPushNotification()
         
         let tabbarItems = self.tabBar.items!
@@ -159,6 +160,24 @@ class TabBarController: UITabBarController {
         }
         
     }
+    
+    //to get selected tab we set tag no form 0 to 4 in storyboard so we can identify which controller has been selected by user to log event on firebase analytics 
+    func getSelectedTabEventName(itemTag: Int) -> String {
+        switch itemTag {
+        case 0:
+            return inviteTabClick
+        case 1:
+            return fiveADayTabClick
+        case 2:
+            return exploreTabClick
+        case 3:
+            return favouriteTabClick
+        case 4:
+            return moreTabClick
+        default:
+            return "default case tab clicked"
+        }
+    }
 }
 
 //MARK: Notification Methods
@@ -202,5 +221,14 @@ extension TabBarController: CannotRedeemViewControllerDelegate {
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+    }
+}
+
+
+extension TabBarController: UITabBarControllerDelegate {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let eventName = getSelectedTabEventName(itemTag: tabBar.selectedItem!.tag)
+        Analytics.logEvent(eventName, parameters: nil)
+        
     }
 }

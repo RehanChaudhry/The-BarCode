@@ -11,6 +11,7 @@ import HTTPStatusCodes
 import Alamofire
 import ObjectMapper
 import StoreKit
+import FirebaseAnalytics
 
 let kProductIdReload = bundleId + ".reload"
 
@@ -89,6 +90,8 @@ class ReloadViewController: UIViewController {
         
         self.productIDs = [kProductIdReload]
         SKPaymentQueue.default().add(self)
+        
+        Analytics.logEvent(viewReloadScreen, parameters: nil)
     }
 
     deinit {
@@ -254,6 +257,8 @@ class ReloadViewController: UIViewController {
     
     //MARK: My IBActions
     @IBAction func reloadButtonTapped(_ sender: Any) {
+        
+        Analytics.logEvent(reloadButtonClick, parameters: nil)
         
         if self.type == ReloadState.noOfferRedeemed {
             
