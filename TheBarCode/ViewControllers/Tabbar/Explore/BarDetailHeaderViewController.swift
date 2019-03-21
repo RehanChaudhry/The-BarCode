@@ -81,6 +81,7 @@ class BarDetailHeaderViewController: UIViewController {
     }
     
     @IBAction func directionButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.showDirection(bar: self.bar)
     }
     

@@ -160,8 +160,6 @@ class LoginViaViewController: UIViewController {
                             
                             if self.forSignUp {
                                 Analytics.logEvent(createAccountViaFacebook, parameters:nil)
-                            } else {
-                                Analytics.logEvent(signInFacebookClick, parameters:nil)
                             }
                             
                         } else {

@@ -93,6 +93,8 @@ let redeemOfferButtonClick = "Clicked on redeem offer".getFormattedEventName()
 let markABarAsFavorite = "Mark a bar as favorite".getFormattedEventName()
 let locationMapClick = "Clicked on bar location map".getFormattedEventName()
 
+let shareDealFromShareScreenClick = "Clicked on share button from share screen"
+
 //Explore
 let barClickFromExplore = "Clicked on a bar on Explore screen".getFormattedEventName()
 let bannerClick = "Clicked on banner".getFormattedEventName()

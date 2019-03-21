@@ -95,6 +95,7 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
     }
     
     @IBAction func barNameButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(shareDealFromShareScreenClick, parameters: nil)
         self.sharingDelegate.shareOfferCell(cell: self, viewBarDetailButtonTapped: sender)
     }
     

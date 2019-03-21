@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FirebaseAnalytics
 
 protocol DealDetailTableViewCellDelegate: class {
     func dealDetailCell(cell: DealDetailTableViewCell, viewBarDetailButtonTapped sender: UIButton)
@@ -103,10 +104,12 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
 
     //MARK IBActions
     @IBAction func viewBarDetailButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(barDetailFromFiveADayClick, parameters: nil)
         self.delegate.dealDetailCell(cell: self, viewBarDetailButtonTapped: sender)
     }
     
     @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate.dealDetailCell(cell: self, viewDirectionButtonTapped: sender)
     }
 }

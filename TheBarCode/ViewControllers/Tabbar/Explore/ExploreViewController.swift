@@ -50,6 +50,8 @@ class ExploreViewController: UIViewController {
     
     var reloadDataRequest: DataRequest?
     
+    var shouldSendAnalytics = false //first time should not send analytics
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -66,6 +68,9 @@ class ExploreViewController: UIViewController {
         self.defaultButtonTitleColor = self.barsButton.titleColor(for: .normal)
         
         self.barsButton.sendActions(for: .touchUpInside)
+        
+        //now can send analytics
+        shouldSendAnalytics = true
         
         self.getReloadStatus()
         
@@ -322,7 +327,10 @@ class ExploreViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
-        Analytics.logEvent(barTabClickFromExplore, parameters: nil)
+        
+        if shouldSendAnalytics { //when application launched or from login first time analytics not send,  after that application should track application clicks
+            Analytics.logEvent(barTabClickFromExplore, parameters: nil)
+        }
         
         self.resetSegmentedButton()
         self.resetSearchBar()
