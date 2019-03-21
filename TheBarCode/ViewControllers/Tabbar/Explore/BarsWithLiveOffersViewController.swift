@@ -12,6 +12,7 @@ import Alamofire
 import ObjectMapper
 import StatefulTableView
 import GoogleMaps
+import FirebaseAnalytics
 
 protocol BarsWithLiveOffersViewControllerDelegate: class {
     func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar)
@@ -57,10 +58,12 @@ class BarsWithLiveOffersViewController: ExploreBaseViewController {
     }
     
     @IBAction func prefencesButtonTapped(sender: UIButton) {
+        Analytics.logEvent(preferenceFilterClick, parameters: nil)
         self.delegate.liveOffersController(controller: self, preferencesButtonTapped: sender)
     }
     
     @IBAction func standardOffersButtonTapped(sender: UIButton) {
+        Analytics.logEvent(standardOfferFilterClick, parameters: nil)
         self.delegate.liveOffersController(controller: self, standardOfferButtonTapped: sender)
     }
 }

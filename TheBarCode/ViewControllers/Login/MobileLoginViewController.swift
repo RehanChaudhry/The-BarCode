@@ -11,6 +11,7 @@ import PureLayout
 import HTTPStatusCodes
 import CoreLocation
 import CoreStore
+import FirebaseAnalytics
 
 class MobileLoginViewController: UIViewController {
 

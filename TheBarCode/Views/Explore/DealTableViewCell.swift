@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FirebaseAnalytics
 
 protocol DealTableViewCellDelegate: class {
     func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton)
@@ -151,6 +152,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate?.dealTableViewCell(cell: self, distanceButtonTapped: sender)
     }
 }

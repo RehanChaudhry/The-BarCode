@@ -11,6 +11,7 @@ import Reusable
 import HTTPStatusCodes
 import ObjectMapper
 import Alamofire
+import FirebaseAnalytics
 
 class OfferDetailViewController: UIViewController {
 
@@ -292,6 +293,8 @@ class OfferDetailViewController: UIViewController {
     
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
+        
+        Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
         
         let bar = self.deal.establishment.value!
         if bar.canRedeemOffer.value {

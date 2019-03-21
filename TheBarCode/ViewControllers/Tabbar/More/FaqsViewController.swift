@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class FaqsViewController: UIViewController {
 
@@ -20,6 +21,7 @@ class FaqsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        Analytics.logEvent(viewFaqsScreen, parameters: nil)
         
         let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 50% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
         self.faqSections.append(section1)

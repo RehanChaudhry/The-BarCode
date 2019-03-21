@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import FirebaseAnalytics
 
 class PrivacyPolicyViewController: UIViewController {
     
@@ -41,6 +42,7 @@ class PrivacyPolicyViewController: UIViewController {
         let request = URLRequest(url: url!)
         self.webView.load(request)
         
+        Analytics.logEvent(viewPrivacyPolicyScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {

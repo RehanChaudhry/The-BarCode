@@ -11,6 +11,7 @@ import PureLayout
 import HTTPStatusCodes
 import ObjectMapper
 import Alamofire
+import FirebaseAnalytics
 
 enum ExploreType: String {
     case bars = "bars", deals = "deals", liveOffers = "live_offers"
@@ -72,8 +73,7 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(dealRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sharedOfferRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
         
-        
-        
+        Analytics.logEvent(viewExploreScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -322,6 +322,8 @@ class ExploreViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func barsButtonTapped(sender: UIButton) {
+        Analytics.logEvent(barTabClickFromExplore, parameters: nil)
+        
         self.resetSegmentedButton()
         self.resetSearchBar()
 
@@ -333,6 +335,8 @@ class ExploreViewController: UIViewController {
     }
     
     @IBAction func dealsButtonTapped(sender: UIButton) {
+        Analytics.logEvent(dealTabClickFromExplore, parameters: nil)
+        
         self.resetSegmentedButton()
         self.resetSearchBar()
         
@@ -344,6 +348,8 @@ class ExploreViewController: UIViewController {
     }
     
     @IBAction func liveOffersButtonTapped(sender: UIButton) {
+        Analytics.logEvent(liveOffersTabClickFromExplore, parameters: nil)
+        
         self.resetSegmentedButton()
         self.resetSearchBar()
         

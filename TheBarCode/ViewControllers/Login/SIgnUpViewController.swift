@@ -13,6 +13,7 @@ import FBSDKLoginKit
 import HTTPStatusCodes
 import CoreStore
 import CoreLocation
+import FirebaseAnalytics
 
 enum Gender: String {
     case male = "male", female = "female", other = "other"
@@ -382,6 +383,7 @@ class SIgnUpViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func fbSignUpButtonTapped(sender: UIButton) {
+        Analytics.logEvent(signUpFacebookClick, parameters: nil)
         self.socialSignUp()
     }
     
@@ -541,6 +543,7 @@ extension SIgnUpViewController: MobileVerificationViewControllerDelegate {
 extension SIgnUpViewController {
     
     func signUp() {
+        
         let fullName = self.fullNameFieldView.textField.text!
         let gender = self.selectedGender.rawValue
         let dob = Utility.shared.serverDateFormattedString(date: self.selectedDob)
@@ -596,7 +599,10 @@ extension SIgnUpViewController {
                 let user = Utility.shared.saveCurrentUser(userDict: responseUser)
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
                 self.userVerifiedSuccessfully(canShowReferral: true)
+                
             } else {
+                let eventName = self.mobileSignUp ? createAccountViaMobile : createAccountViaEmail
+                Analytics.logEvent(eventName, parameters: nil)
                 self.showVerificationController()
             }
         }
@@ -604,6 +610,7 @@ extension SIgnUpViewController {
     }
     
     func socialSignUp() {
+        
         
         let loginManager = FBSDKLoginManager()
         let permissions = ["public_profile", "email"]
@@ -648,6 +655,8 @@ extension SIgnUpViewController {
                     if let email = result["email"] as? String {
                         self.emailFieldView.textField.text = email
                     }
+                    
+                    Analytics.logEvent(createAccountViaFacebook, parameters: nil)
                     
                 } else {
                     self.showAlertController(title: "", msg: "Unknown error occurred")

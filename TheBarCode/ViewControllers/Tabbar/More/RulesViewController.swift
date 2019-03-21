@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class RulesViewController: UIViewController {
 
@@ -18,7 +19,7 @@ class RulesViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 20)
-
+        Analytics.logEvent(viewRedemptionRulesScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {

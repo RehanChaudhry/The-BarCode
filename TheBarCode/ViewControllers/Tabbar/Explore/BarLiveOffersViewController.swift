@@ -13,6 +13,7 @@ import CoreStore
 import ObjectMapper
 import Alamofire
 import PureLayout
+import FirebaseAnalytics
 
 protocol BarLiveOffersViewControllerDelegate: class {
     func barLiveOffersController(controller: BarLiveOffersViewController, didSelectRowAt offer: LiveOffer)
@@ -114,6 +115,8 @@ extension BarLiveOffersViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Analytics.logEvent(barClickFromExplore, parameters: nil)
+
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         self.delegate.barLiveOffersController(controller: self, didSelectRowAt: self.offers[indexPath.row])

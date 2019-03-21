@@ -13,6 +13,7 @@ import CoreStore
 import HTTPStatusCodes
 import ObjectMapper
 import Alamofire
+import FirebaseAnalytics
 
 protocol BarDetailViewControllerDelegate: class {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem)
@@ -48,6 +49,7 @@ class BarDetailViewController: UIViewController {
     var statefulView: LoadingAndErrorView!
     
     var isSegmentsSetuped = false
+    var shouldSendAnalytics = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +80,8 @@ class BarDetailViewController: UIViewController {
         }
         
         self.viewProfile()
+        
+        Analytics.logEvent(viewBarDetailsScreen, parameters: nil)
         
     }
 
@@ -157,6 +161,8 @@ class BarDetailViewController: UIViewController {
         }
         
         self.segmentedController.setSelectedSegmentAt(self.preSelectedTabIndex, animated: false)
+        self.shouldSendAnalytics = true
+
     }
     
     func setUpTitle() {
@@ -295,6 +301,19 @@ class BarDetailViewController: UIViewController {
         
         return selectedBarId
     }
+    
+    func getAnalyticsEventName(index: Int) -> String {
+        switch index {
+        case 0:
+            return barDetailAboutClick
+        case 1:
+            return barDetailDealClick
+        case 2:
+            return barDetailLiveOffersClick
+        default:
+            return "bar detail default"
+        }
+    }
 
     //MARK: My IBActions
     
@@ -305,6 +324,8 @@ class BarDetailViewController: UIViewController {
     }
     
     @IBAction func getOffButtonTapped(_ sender: Any) {
+        
+        Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
         
         guard let selectedBar = self.selectedBar else {
             debugPrint("Bar not available for redeeming standard offer")
@@ -339,6 +360,11 @@ class BarDetailViewController: UIViewController {
 //MARK: SJSegmentedViewControllerDelegate
 extension BarDetailViewController: SJSegmentedViewControllerDelegate {
     func didMoveToPage(_ controller: UIViewController, segment: SJSegmentTab?, index: Int) {
+    
+        if self.shouldSendAnalytics {
+            let eventName = self.getAnalyticsEventName(index: index)
+            Analytics.logEvent(eventName, parameters: nil)
+        }
         
         for segment in self.segmentedController.segments {
             segment.titleColor(UIColor.white)

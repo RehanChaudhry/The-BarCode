@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FirebaseAnalytics
 
 protocol BarTableViewCellDelegare: class {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton)
@@ -44,10 +45,12 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     //MARK: IBAction
     
     @IBAction func favouriteButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(markABarAsFavorite, parameters: nil)
         self.delegate!.barTableViewCell(cell: self, favouriteButton: sender)
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate.barTableViewCell(cell: self, distanceButtonTapped: sender)
     }
 }

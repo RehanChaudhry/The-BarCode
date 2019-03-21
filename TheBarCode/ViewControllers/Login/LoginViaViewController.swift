@@ -13,6 +13,7 @@ import HTTPStatusCodes
 import FBSDKLoginKit
 import FBSDKCoreKit
 import CoreStore
+import FirebaseAnalytics
 
 class LoginViaViewController: UIViewController {
 
@@ -157,6 +158,11 @@ class LoginViaViewController: UIViewController {
                             
                             self.userVerifiedSuccessfully(canShowReferral: false)
                             
+                            if self.forSignUp {
+                                Analytics.logEvent(createAccountViaFacebook, parameters:nil)
+                            } else {
+                                Analytics.logEvent(signInFacebookClick, parameters:nil)
+                            }
                             
                         } else {
                             let genericError = APIHelper.shared.getGenericError()
@@ -299,10 +305,15 @@ class LoginViaViewController: UIViewController {
     
     //MARK: My IBActions
     @IBAction func fbButtonTapped(sender: UIButton) {
+        let eventName = self.forSignUp ? signUpFacebookClick : signInFacebookClick
+        Analytics.logEvent(eventName, parameters: nil)
         self.socialLogin()
     }
 
     @IBAction func emailButtonTapped(sender: UIButton) {
+        let eventName = self.forSignUp ? signUpEmailClick : signInEmailClick
+        Analytics.logEvent(eventName, parameters: nil)
+        
         if self.forSignUp {
             self.performSegue(withIdentifier: "LoginViaToSignUpWithEmailSegue", sender: nil)
         } else {
@@ -311,6 +322,9 @@ class LoginViaViewController: UIViewController {
     }
     
     @IBAction func mobileButtonTapped(sender: UIButton) {
+        let eventName = self.forSignUp ? signUpMobileClick : signInMobileClick
+        Analytics.logEvent(eventName, parameters: nil)
+        
         self.performSegue(withIdentifier: "LoginViaToMobileSignInSegue", sender: nil)
     }
 }

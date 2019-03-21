@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import FSPagerView
 import Gradientable
+import FirebaseAnalytics
 
 protocol FiveADayCollectionViewCellDelegate: class {
     func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton)
@@ -235,22 +236,27 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     //MARK: My IBActions
     @IBAction func redeemDealButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
         self.delegate!.fiveADayCell(cell: self, redeemedButtonTapped: sender)
     }
     
     @IBAction func viewDetailButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(offerDetailFromFiveADayClick, parameters: nil)
         self.delegate.fiveADayCell(cell: self, viewDetailButtonTapped: sender)
     }
     
     @IBAction func viewBarDetailButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(barDetailFromFiveADayClick, parameters: nil)
         self.delegate.fiveADayCell(cell: self, viewBarDetailButtonTapped: sender)
     }
     
     @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate.fiveADayCell(cell: self, viewDirectionButtonTapped: sender)
     }
     
     @IBAction func shareOfferButtonTapped(sender: UIButton) {
+        Analytics.logEvent(fiveADayShareClick, parameters: nil)
         self.delegate.fiveADayCell(cell: self, shareButtonTapped: sender)
     }
 }

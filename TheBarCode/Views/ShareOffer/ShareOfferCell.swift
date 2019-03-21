@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import MGSwipeTableCell
 import Gradientable
+import FirebaseAnalytics
 
 protocol ShareOfferCellDelegate: class {
     func shareOfferCell(cell: ShareOfferCell, viewBarDetailButtonTapped sender: UIButton)
@@ -120,6 +121,7 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
+        Analytics.logEvent(locationMapClick, parameters: nil)
         self.sharingDelegate.shareOfferCell(cell: self, viewDirectionButtonTapped: sender)
 
     }

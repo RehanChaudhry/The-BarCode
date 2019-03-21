@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 import FirebaseDynamicLinks
+import FirebaseAnalytics
 
 @objc protocol InviteViewControllerDelegate: class {
     @objc optional func inviteViewController(controller: InviteViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
@@ -78,7 +79,9 @@ class InviteViewController: UITableViewController {
     //MARK: My IBActions
     
     @IBAction func inviteContactButtonTapped(sender: UIButton) {
-        
+    
+        Analytics.logEvent(inviteFriendsClick, parameters: nil)
+
         self.generateAndShareDynamicLink()
         
        /* let status = CNContactStore.authorizationStatus(for: .contacts)
@@ -101,6 +104,9 @@ class InviteViewController: UITableViewController {
     }
     
     @IBAction func shareInviteCodeButtonTapped(sender: UIButton) {
+        
+        Analytics.logEvent(shareWithContactsClick, parameters: nil)
+        
        // self.generateAndShareDynamicLink()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         if status == .notDetermined {

@@ -11,6 +11,7 @@ import StatefulTableView
 import CoreStore
 import ObjectMapper
 import Alamofire
+import FirebaseAnalytics
 
 class FavouritesViewController: UIViewController {
 
@@ -36,6 +37,8 @@ class FavouritesViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         
         self.setUpStatefulTableView()
+        
+        Analytics.logEvent(viewFavouriteScreen, parameters: nil)
         
     }
 

@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import CoreStore
 import CoreLocation
+import FirebaseAnalytics
 
 class CategoriesViewController: UIViewController {
 
@@ -76,6 +77,8 @@ class CategoriesViewController: UIViewController {
         }
         
         self.getCategories()
+        
+        Analytics.logEvent(viewPreferencesScreen, parameters: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,6 +108,8 @@ class CategoriesViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
+        
+        Analytics.logEvent(preferencesSubmitClick, parameters: nil)
         
         let selectedCategory = self.categories.first { (category) -> Bool in
             return category.isSelected.value

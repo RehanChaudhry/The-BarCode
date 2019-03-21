@@ -9,6 +9,7 @@
 import UIKit
 import PureLayout
 import ObjectMapper
+import FirebaseAnalytics
 
 class ForgotPasswordViewController: UIViewController {
 
@@ -79,6 +80,7 @@ class ForgotPasswordViewController: UIViewController {
     
     @IBAction func forgotPasswordButtonTapped(sender: UIButton) {
         
+        Analytics.logEvent(forgotPasswordRequest, parameters: nil)
         self.view.endEditing(true)
         
         if self.isDataValid() {

@@ -20,4 +20,9 @@ extension String {
     func trimWhiteSpaces() -> String {
         return trimmingCharacters(in: CharacterSet.whitespaces)
     }
+    
+    func getFormattedEventName() -> String {
+        let underscoreString = self.replacingOccurrences(of: " ", with: "_")
+        return underscoreString.lowercased()
+    }
 }

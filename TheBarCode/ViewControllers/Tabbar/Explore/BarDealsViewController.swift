@@ -13,6 +13,7 @@ import CoreStore
 import Alamofire
 import ObjectMapper
 import PureLayout
+import FirebaseAnalytics
 
 protocol BarDealsViewControllerDelegate: class {
     func barDealsController(controller: BarDealsViewController, didSelectRowAt deal: Deal)
@@ -101,6 +102,8 @@ extension BarDealsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Analytics.logEvent(barClickFromExplore, parameters: nil)
+
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         self.delegate.barDealsController(controller: self, didSelectRowAt: self.deals[indexPath.row])

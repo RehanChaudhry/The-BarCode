@@ -9,6 +9,7 @@
 import UIKit
 import Reusable
 import CoreStore
+import FirebaseAnalytics
 
 class BarDetailHeaderViewController: UIViewController {
 
@@ -75,6 +76,7 @@ class BarDetailHeaderViewController: UIViewController {
     
     //MARK: IBActions
     @IBAction func favouriteButtonTapped(_ sender: Any) {
+        Analytics.logEvent(markABarAsFavorite, parameters: nil)
         markFavourite()
     }
     
