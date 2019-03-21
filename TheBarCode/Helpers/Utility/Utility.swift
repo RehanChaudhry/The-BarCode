@@ -250,7 +250,7 @@ class Utility: NSObject {
         let minutes = Int((timeInt % 3600) / 60)
         let seconds = Int((timeInt % 3600) % 60)
         
-        return String(format: "%02d : %02d : %02d : %02d", days, hours, minutes, seconds)
+        return String(format: "%02d:%02d:%02d:%02d", days, hours, minutes, seconds)
     }
     
     func getFormattedRemainingTimeInHours(time: TimeInterval) -> String {
@@ -261,7 +261,7 @@ class Utility: NSObject {
         let minutes = Int((timeInt % 3600) / 60)
         let seconds = Int((timeInt % 3600) % 60)
         
-        return String(format: "%02d : %02d : %02d", hours, minutes, seconds)
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
     func checkDealType(offerTypeID: String) -> OfferType {

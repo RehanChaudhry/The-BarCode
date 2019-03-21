@@ -29,6 +29,8 @@ class NotificationSettingsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.title = "Notification Settings"
+        
         self.definesPresentationContext = true
         self.setUpNotificationSettings()
         Analytics.logEvent(viewNotificationSettingScreen, parameters: nil)

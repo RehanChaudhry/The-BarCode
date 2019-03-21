@@ -2292,7 +2292,7 @@ Cg
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpe-8Q-ftB">
-                                                        <rect key="frame" x="86" y="22" width="281" height="19"/>
+                                                        <rect key="frame" x="86" y="37.5" width="281" height="19"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Phillip May ">
                                                                 <attributes>
@@ -2310,7 +2310,7 @@ Cg
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdS-Yb-e2E">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdS-Yb-e2E">
                                                         <rect key="frame" x="86" y="42" width="146" height="29"/>
                                                         <state key="normal">
                                                             <attributedString key="attributedTitle">
@@ -2340,12 +2340,12 @@ Cg
                                                     <constraint firstAttribute="bottom" secondItem="6dD-4t-yr1" secondAttribute="bottom" id="34V-MZ-64Z"/>
                                                     <constraint firstItem="pdS-Yb-e2E" firstAttribute="leading" secondItem="ROA-hi-S6T" secondAttribute="trailing" constant="8" id="36j-IX-QhW"/>
                                                     <constraint firstAttribute="trailing" secondItem="Fpe-8Q-ftB" secondAttribute="trailing" constant="8" id="5ee-eg-fSk"/>
-                                                    <constraint firstItem="Fpe-8Q-ftB" firstAttribute="top" secondItem="A5M-Ic-MEO" secondAttribute="top" constant="22" id="9m0-0p-IfP"/>
                                                     <constraint firstAttribute="trailing" secondItem="6dD-4t-yr1" secondAttribute="trailing" id="Bwa-9K-KhP"/>
                                                     <constraint firstItem="6dD-4t-yr1" firstAttribute="top" secondItem="pdS-Yb-e2E" secondAttribute="bottom" constant="22" id="K4P-mR-ETs"/>
                                                     <constraint firstAttribute="height" constant="94" id="bdb-Ay-ncU"/>
                                                     <constraint firstItem="Fpe-8Q-ftB" firstAttribute="leading" secondItem="ROA-hi-S6T" secondAttribute="trailing" constant="8" id="j80-bx-Dss"/>
                                                     <constraint firstItem="ROA-hi-S6T" firstAttribute="centerY" secondItem="A5M-Ic-MEO" secondAttribute="centerY" id="qEg-om-4Wd"/>
+                                                    <constraint firstItem="Fpe-8Q-ftB" firstAttribute="centerY" secondItem="ROA-hi-S6T" secondAttribute="centerY" id="r1V-Yp-j1c"/>
                                                     <constraint firstItem="ROA-hi-S6T" firstAttribute="leading" secondItem="A5M-Ic-MEO" secondAttribute="leading" constant="16" id="xO6-N3-Hw2"/>
                                                     <constraint firstItem="6dD-4t-yr1" firstAttribute="leading" secondItem="A5M-Ic-MEO" secondAttribute="leading" id="xwb-tH-EvP"/>
                                                 </constraints>
@@ -5690,9 +5690,9 @@ CQ
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wub-SE-wkc" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="326" width="343" height="44"/>
+                                <rect key="frame" x="16" y="390" width="343" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="M1a-9Q-Vc6"/>
+                                    <constraint firstAttribute="height" constant="44" id="LdG-P7-HBv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                 <state key="normal" title="Sign in with Email">
@@ -5708,10 +5708,10 @@ CQ
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfW-CB-RYt" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="390" width="343" height="44"/>
+                                <rect key="frame" x="16" y="326" width="343" height="44"/>
                                 <color key="backgroundColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="CVF-Ej-7oT"/>
+                                    <constraint firstAttribute="height" constant="44" id="g1G-u9-poq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                                 <state key="normal" title="Sign in with Mobile">
@@ -5729,17 +5729,17 @@ CQ
                         </subviews>
                         <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="PfW-CB-RYt" firstAttribute="top" secondItem="uJD-sG-29I" secondAttribute="bottom" constant="20" id="8Hy-9R-Sdm"/>
                             <constraint firstItem="tjU-tB-Cx3" firstAttribute="top" secondItem="3C4-c7-B0U" secondAttribute="top" constant="75" id="D17-us-loC"/>
-                            <constraint firstItem="wub-SE-wkc" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="IcE-hc-Cip"/>
-                            <constraint firstItem="PfW-CB-RYt" firstAttribute="top" secondItem="wub-SE-wkc" secondAttribute="bottom" constant="20" id="IpB-jw-NeW"/>
-                            <constraint firstItem="wub-SE-wkc" firstAttribute="top" secondItem="uJD-sG-29I" secondAttribute="bottom" constant="20" id="PcY-1v-ICo"/>
+                            <constraint firstItem="wub-SE-wkc" firstAttribute="top" secondItem="PfW-CB-RYt" secondAttribute="bottom" constant="20" id="F94-ye-39v"/>
+                            <constraint firstItem="wub-SE-wkc" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="cSk-Ee-51O"/>
                             <constraint firstItem="uJD-sG-29I" firstAttribute="top" secondItem="tjU-tB-Cx3" secondAttribute="bottom" constant="68" id="eGU-ou-hFg"/>
-                            <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="wub-SE-wkc" secondAttribute="trailing" constant="16" id="i8F-ei-syK"/>
+                            <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="wub-SE-wkc" secondAttribute="trailing" constant="16" id="fGA-RB-MKO"/>
+                            <constraint firstItem="PfW-CB-RYt" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="gbX-cU-fi2"/>
+                            <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="PfW-CB-RYt" secondAttribute="trailing" constant="16" id="qmm-7R-5Ul"/>
                             <constraint firstItem="uJD-sG-29I" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="vcp-Zq-8p2"/>
                             <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="uJD-sG-29I" secondAttribute="trailing" constant="16" id="w0n-pM-Khz"/>
-                            <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="PfW-CB-RYt" secondAttribute="trailing" constant="16" id="wtM-XZ-72A"/>
                             <constraint firstItem="tjU-tB-Cx3" firstAttribute="centerX" secondItem="MQn-GL-qg3" secondAttribute="centerX" id="ww5-FI-UIa"/>
-                            <constraint firstItem="PfW-CB-RYt" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="zN0-R7-Ze5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3C4-c7-B0U"/>
                     </view>
