@@ -9,12 +9,14 @@
 import UIKit
 import Reusable
 import MGSwipeTableCell
+import Gradientable
 import FirebaseAnalytics
 
 protocol ShareOfferCellDelegate: class {
     func shareOfferCell(cell: ShareOfferCell, viewBarDetailButtonTapped sender: UIButton)
     func shareOfferCell(cell: ShareOfferCell, viewDirectionButtonTapped sender: UIButton)
     func shareOfferCell(cell: ShareOfferCell, deleteButtonTapped sender: MGSwipeButton)
+     func shareOfferCell(cell: ShareOfferCell, shareButtonTapped sender: UIButton)
 }
 
 class ShareOfferCell: MGSwipeTableCell, NibReusable {
@@ -25,6 +27,10 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
     @IBOutlet var offerTypeLabel: UILabel!
     @IBOutlet var distanceButton: UIButton!
     @IBOutlet var sharedByLabel: UILabel!
+    
+    @IBOutlet var shareButtonContainer: ShadowView!
+    @IBOutlet var shareButton: UIButton!
+    @IBOutlet var sharingLoader: UIActivityIndicatorView!
     
     weak var sharingDelegate : ShareOfferCellDelegate!
 
@@ -60,6 +66,14 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
             return true
         }
         self.rightButtons = [deleteButton]
+        
+        if offer.showSharingLoader {
+            self.sharingLoader.startAnimating()
+            self.shareButton.isHidden = true
+        } else {
+            self.sharingLoader.stopAnimating()
+            self.shareButton.isHidden = false
+        }
     }
     
     func setUpCell(offer: LiveOffer) {
@@ -76,6 +90,14 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
             return true
         }
         self.rightButtons = [deleteButton]
+        
+        if offer.showSharingLoader {
+            self.sharingLoader.startAnimating()
+            self.shareButton.isHidden = true
+        } else {
+            self.sharingLoader.stopAnimating()
+            self.shareButton.isHidden = false
+        }
     }
     
     func attributedString(prefixText: String, Text: String) -> NSMutableAttributedString {
@@ -105,5 +127,8 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
 
     }
     
-    
+    @IBAction func shareOfferButtonTapped(_ sender: UIButton) {
+        self.sharingDelegate.shareOfferCell(cell: self, shareButtonTapped: sender)
+    }
+
 }

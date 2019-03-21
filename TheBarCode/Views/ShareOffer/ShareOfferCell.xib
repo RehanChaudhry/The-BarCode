@@ -33,6 +33,42 @@
                             <constraint firstAttribute="width" secondItem="yI9-Vc-ZLs" secondAttribute="height" multiplier="16:9" id="cOB-tg-nyF"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-EA-uys" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="252" y="32" width="44" height="44"/>
+                        <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="XUT-3j-f2F">
+                                <rect key="frame" x="12" y="12" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ymZ-Bf-6gg">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="icon_share"/>
+                                <connections>
+                                    <action selector="shareOfferButtonTapped:" destination="isD-xT-zLc" eventType="touchUpInside" id="fyj-p7-OFJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ymZ-Bf-6gg" firstAttribute="top" secondItem="S2b-EA-uys" secondAttribute="top" id="BvK-IB-o2b"/>
+                            <constraint firstAttribute="width" constant="44" id="Cyg-Cu-xWe"/>
+                            <constraint firstItem="XUT-3j-f2F" firstAttribute="centerX" secondItem="S2b-EA-uys" secondAttribute="centerX" id="Jdq-Ez-eSA"/>
+                            <constraint firstItem="ymZ-Bf-6gg" firstAttribute="leading" secondItem="S2b-EA-uys" secondAttribute="leading" id="Kkp-f1-HaI"/>
+                            <constraint firstAttribute="bottom" secondItem="ymZ-Bf-6gg" secondAttribute="bottom" id="bke-s6-zv4"/>
+                            <constraint firstAttribute="height" constant="44" id="gbB-cB-vXD"/>
+                            <constraint firstAttribute="trailing" secondItem="ymZ-Bf-6gg" secondAttribute="trailing" id="mYB-kK-0i8"/>
+                            <constraint firstItem="XUT-3j-f2F" firstAttribute="centerY" secondItem="S2b-EA-uys" secondAttribute="centerY" id="yIB-AB-uhC"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="22"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" red="0.14117647059999999" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4w-7T-9wR" userLabel="Offer Title Name">
                         <rect key="frame" x="16" y="206" width="288" height="19.5"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -90,6 +126,8 @@
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Qi6-Lv-c7M" secondAttribute="bottom" constant="12" id="7tS-Rp-Mab"/>
                     <constraint firstItem="Qi6-Lv-c7M" firstAttribute="top" secondItem="7sy-jF-ZXA" secondAttribute="bottom" constant="8" id="DWk-V9-Fiz"/>
                     <constraint firstItem="yI9-Vc-ZLs" firstAttribute="top" secondItem="ckS-yy-F7d" secondAttribute="top" constant="24" id="Fbz-2o-g6W"/>
+                    <constraint firstItem="S2b-EA-uys" firstAttribute="trailing" secondItem="yI9-Vc-ZLs" secondAttribute="trailing" constant="-8" id="HmP-8a-Uy8"/>
+                    <constraint firstItem="S2b-EA-uys" firstAttribute="top" secondItem="yI9-Vc-ZLs" secondAttribute="top" constant="8" id="J6x-vr-psp"/>
                     <constraint firstAttribute="trailing" secondItem="VQ7-nE-1Hi" secondAttribute="trailing" constant="16" id="Kwb-Tm-h4t"/>
                     <constraint firstItem="7mW-aB-Seg" firstAttribute="top" secondItem="z4w-7T-9wR" secondAttribute="bottom" constant="8" id="Kxj-cP-6oE"/>
                     <constraint firstItem="VQ7-nE-1Hi" firstAttribute="centerY" secondItem="lhQ-0g-hgX" secondAttribute="centerY" id="NWC-ej-Y1i"/>
@@ -115,12 +153,16 @@
                 <outlet property="distanceButton" destination="VQ7-nE-1Hi" id="IUq-3J-TEp"/>
                 <outlet property="offerTitleLabel" destination="z4w-7T-9wR" id="ukK-0F-48K"/>
                 <outlet property="offerTypeLabel" destination="7sy-jF-ZXA" id="uJe-Cp-6CS"/>
+                <outlet property="shareButton" destination="ymZ-Bf-6gg" id="7NG-s8-F9e"/>
+                <outlet property="shareButtonContainer" destination="S2b-EA-uys" id="1kQ-Gw-bOw"/>
                 <outlet property="sharedByLabel" destination="Qi6-Lv-c7M" id="3iz-F1-cD4"/>
+                <outlet property="sharingLoader" destination="XUT-3j-f2F" id="1sJ-Mg-m5l"/>
             </connections>
             <point key="canvasLocation" x="140.80000000000001" y="7.1964017991004505"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="bar-location" width="28" height="32"/>
+        <image name="icon_share" width="51.200000762939453" height="51.200000762939453"/>
     </resources>
 </document>

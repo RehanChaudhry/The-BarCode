@@ -352,7 +352,7 @@ class Utility: NSObject {
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
         linkComponents.socialMetaTagParameters?.descriptionText = descText
-        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        linkComponents.socialMetaTagParameters?.imageURL = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
         linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)

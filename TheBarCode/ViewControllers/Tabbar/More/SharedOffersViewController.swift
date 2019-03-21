@@ -360,6 +360,43 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
         
         self.deleteSharedOffer(offer: sharedOffer)
     }
+    
+    func shareOfferCell(cell: ShareOfferCell, shareButtonTapped sender: UIButton) {
+        
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        
+        if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
+            
+            liveOffer.showSharingLoader = true
+            self.statefulTableView.reloadData()
+            
+            Utility.shared.generateAndShareDynamicLink(deal: liveOffer, controller: self, presentationCompletion: {
+                
+                liveOffer.showSharingLoader = false
+                self.statefulTableView.reloadData()
+            }) {
+                
+            }
+            
+        } else if let deal = self.offers[indexPath.row] as? Deal {
+            
+            deal.showSharingLoader = true
+            self.statefulTableView.reloadData()
+            
+            Utility.shared.generateAndShareDynamicLink(deal: deal, controller: self, presentationCompletion: {
+                
+                deal.showSharingLoader = false
+                self.statefulTableView.reloadData()
+            }) {
+                
+            }
+        }
+
+    }
 }
 
 extension SharedOffersViewController: BarDetailViewControllerDelegate {
