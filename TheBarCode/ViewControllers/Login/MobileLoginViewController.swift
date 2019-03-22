@@ -62,7 +62,7 @@ class MobileLoginViewController: UIViewController {
     //MARK: My Methods
     func showVerificationController() {
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
+        let text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!.dropFirst()
         
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "MobileVerificationViewController") as! MobileVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
@@ -109,7 +109,7 @@ class MobileLoginViewController: UIViewController {
         var isValid = true
         
         let text = self.phoneNoFieldView.textField.text!
-        let mobileNumber = text.unformat("NNNNN NNNNNN", oldString: text)
+        let mobileNumber = text //text.unformat("NNNNN NNNNNN", oldString: text)
         
         if mobileNumber.count < 11 {
             isValid = false
@@ -155,8 +155,15 @@ extension MobileLoginViewController: FieldViewDelegate {
             return true
         }
         
+       
+        
         let lastText = (text as NSString).replacingCharacters(in: range, with: string) as String
-        textField.text = lastText.format("NNNNN NNNNNN", oldString: text)
+        //textField.text = lastText.format("NNNNN NNNNNN", oldString: text)
+        
+        if lastText.count > 11 {
+            return false
+        }
+        textField.text = lastText
         return false
         
     }
@@ -169,8 +176,8 @@ extension MobileLoginViewController {
         self.signInButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
-        let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
+        let text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!.dropFirst()
+        let mobileNumber = text //text.unformat("XNN NNNN NNNNNN", oldString: text)
         let params = ["contact_number" : mobileNumber]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathMobileLogin, method: .post) { (response, serverError, error) in
             
