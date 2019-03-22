@@ -62,7 +62,7 @@ class MobileLoginViewController: UIViewController {
     //MARK: My Methods
     func showVerificationController() {
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!.dropFirst()
+        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
         
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "MobileVerificationViewController") as! MobileVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
