@@ -41,6 +41,10 @@ class FieldView: UIView, NibReusable {
     
     @IBOutlet var iconWidth: NSLayoutConstraint!
     
+    @IBOutlet weak var sampleTextLabel: UILabel!
+    
+    @IBOutlet var flagView: UIView!
+    
     weak var delegate: FieldViewDelegate?
     
     var borders: [UIView] = []
@@ -58,6 +62,9 @@ class FieldView: UIView, NibReusable {
         self.borders = self.textField.addBorders(edges: .bottom, color: UIColor.appFieldBottomBorderColor() , thickness: 1.0)
         
         self.prefixLabel.addBorders(edges: .bottom, color: UIColor.appFieldBottomBorderColor(), thickness: 1.0)
+        
+        self.sampleTextLabel.isHidden = true
+
         
     }
     
@@ -92,6 +99,32 @@ class FieldView: UIView, NibReusable {
         
         self.textField.attributedPlaceholder = attributedPlaceholder
         self.placeholderLabel.text = placeholder
+        
+        self.iconImageView.image = iconImage
+        if let _ = iconImage {
+            self.iconWidth.constant = 16.0
+            self.layoutIfNeeded()
+        } else {
+            self.iconWidth.constant = 0.0
+            
+            self.layoutIfNeeded()
+        }
+    }
+    
+    func setUpFieldViewWithSampleText(placeholder: String = "", sampleText: String, fieldPlaceholder: String, iconImage: UIImage? = nil) {
+        
+        self.reset()
+        
+        let placeholderTextColor = UIColor.appGrayColor()
+        let placeholderAttributes = [NSAttributedStringKey.foregroundColor : placeholderTextColor,
+                                     NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 15.0)]
+        let attributedPlaceholder = NSAttributedString(string: fieldPlaceholder, attributes: placeholderAttributes)
+        
+        self.textField.attributedPlaceholder = attributedPlaceholder
+        self.placeholderLabel.text = placeholder
+
+        self.sampleTextLabel.isHidden = false
+        self.sampleTextLabel.text = sampleText
         
         self.iconImageView.image = iconImage
         if let _ = iconImage {

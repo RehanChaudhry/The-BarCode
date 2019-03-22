@@ -43,6 +43,7 @@ class MobileLoginViewController: UIViewController {
         self.phoneNoFieldView.textField.text = ""
         self.phoneNoFieldView.delegate = self
         self.phoneNoFieldView.setUpFieldView(placeholder: "MOBILE NUMBER", fieldPlaceholder: "Enter mobile number", iconImage: nil)
+        
         self.phoneNoFieldView.setKeyboardType(keyboardType: .phonePad)
         self.fieldContainerView.addSubview(self.phoneNoFieldView)
         
@@ -50,15 +51,18 @@ class MobileLoginViewController: UIViewController {
         
         self.phoneNoFieldView.textField.becomeFirstResponder()
         
-        self.phoneNoFieldView.prefixLabel.text = "+92"
+//        self.phoneNoFieldView.prefixLabel.isHidden = true
+        self.phoneNoFieldView.prefixLabel.text = "+44"
+        self.phoneNoFieldView.prefixLabel.textColor = UIColor.clear
         self.phoneNoFieldView.prefixLabelWidth.constant = 36.0
         self.phoneNoFieldView.prefixLabelMargin.constant = 5.0
+        self.phoneNoFieldView.flagView.isHidden = false
     }
     
     //MARK: My Methods
     func showVerificationController() {
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!
+        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
         
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "MobileVerificationViewController") as! MobileVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
@@ -105,9 +109,9 @@ class MobileLoginViewController: UIViewController {
         var isValid = true
         
         let text = self.phoneNoFieldView.textField.text!
-        let mobileNumber = text.unformat("NNNN NNNNNN", oldString: text)
+        let mobileNumber = text.unformat("NNNNN NNNNNN", oldString: text)
         
-        if mobileNumber.count < 10 {
+        if mobileNumber.count < 11 {
             isValid = false
             self.phoneNoFieldView.showValidationMessage(message: "Please enter valid mobile number")
         } else {
@@ -138,12 +142,21 @@ extension MobileLoginViewController: MobileVerificationViewControllerDelegate {
 extension MobileLoginViewController: FieldViewDelegate {
     func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
         
+        if string == "" {
+            textField.text = ""
+            return false
+        }
+        
+        if textField.text!.count == 0 && string != "0" {
+            return false
+        }
+        
         guard let text = textField.text else {
             return true
         }
         
         let lastText = (text as NSString).replacingCharacters(in: range, with: string) as String
-        textField.text = lastText.format("NNNN NNNNNN", oldString: text)
+        textField.text = lastText.format("NNNNN NNNNNN", oldString: text)
         return false
         
     }
@@ -156,7 +169,7 @@ extension MobileLoginViewController {
         self.signInButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!
+        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
         let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
         let params = ["contact_number" : mobileNumber]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathMobileLogin, method: .post) { (response, serverError, error) in

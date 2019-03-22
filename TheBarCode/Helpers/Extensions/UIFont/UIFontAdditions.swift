@@ -10,6 +10,7 @@ import UIKit
 
 let regularFontName = "Lato-Regular"
 let boldFontName = "Lato-Bold"
+let italicFontName = "Lato-Italic"
 
 extension UIFont {
     static func appRegularFontOf(size: CGFloat) -> UIFont {
@@ -19,6 +20,11 @@ extension UIFont {
     
     static func appBoldFontOf(size: CGFloat) -> UIFont {
         let font = UIFont(name: boldFontName, size: size)
+        return font!
+    }
+    
+    static func appItalicFontOf(size: CGFloat) -> UIFont {
+        let font = UIFont(name: italicFontName, size: size)
         return font!
     }
 }
