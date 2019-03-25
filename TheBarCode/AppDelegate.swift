@@ -33,15 +33,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        CoreStore.defaultStack = DataStack(
-            CoreStoreSchema(
-                modelVersion: "V1",
-                entities: [
-                    Entity<User>("User")
-                ]
-            )
+        let v1Schema = CoreStoreSchema(
+            modelVersion: "V1",
+            entities: [
+                Entity<V1.User>("User")
+            ]
         )
+    
+        let schemaHistory = SchemaHistory(allSchema: [v1Schema], migrationChain: ["V1"])
         
+        let persistantDataStack = DataStack(schemaHistory: schemaHistory)
+        CoreStore.defaultStack = persistantDataStack
+        
+        let localStorage = SQLiteStore(fileName: "TheBarCode.sqlite", localStorageOptions: .allowSynchronousLightweightMigration)
+        
+        let currentVersion = "V1"
+        let lastVersion = UserDefaults.standard.string(forKey: "storeversion") ?? ""
+        if FileManager.default.fileExists(atPath: localStorage.fileURL.path), lastVersion != currentVersion {
+            do {
+                try FileManager.default.removeItem(at: localStorage.fileURL)
+            } catch {
+                debugPrint("Error while deleting mismatched model version: \(error.localizedDescription)")
+            }
+        }
+
+        UserDefaults.standard.set(currentVersion, forKey: "storeversion")
         try! CoreStore.addStorageAndWait()
         
         let dataStack = Utility.inMemoryStack
