@@ -64,6 +64,8 @@ let oneSignalProdAppId = "a314acb3-b5df-442d-820e-6cfc6731fc70"
 let googleMapQAAppId = "AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8"
 let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 
+let tbcLogoUrl = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
+
 enum EnvironmentType: String {
     case stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
@@ -348,11 +350,11 @@ class Utility: NSObject {
         
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
-        let descText = "\(user.fullName.value) has shared an offer with you. Join your mates and avail amazing deals & live offers together."
+        let descText = "\(user.fullName.value) has shared an offer with you, check it out! Pass on great offers AND get  credits when your friends redeem them, so why not share the love."
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
         linkComponents.socialMetaTagParameters?.descriptionText = descText
-        linkComponents.socialMetaTagParameters?.imageURL = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
+        linkComponents.socialMetaTagParameters?.imageURL = tbcLogoUrl
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
         linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
@@ -432,4 +434,5 @@ class Utility: NSObject {
     func getDefaultRibbonColors() -> (startColor: UIColor, endColor:UIColor) {
         return UIColor.appDefaultColors()
     }
+    
 }

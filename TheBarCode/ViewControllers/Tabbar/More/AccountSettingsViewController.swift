@@ -64,6 +64,8 @@ class AccountSettingsViewController: UIViewController {
         self.profileImageView.layer.borderColor = UIColor.appGradientGrayStart().cgColor
         self.profileImageView.layer.borderWidth = 1.0
         
+        self.datePicker.maximumDate = nil
+        self.datePicker.minimumDate = nil
         self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
         self.selectedDob = self.datePicker.date
         
@@ -334,9 +336,13 @@ class AccountSettingsViewController: UIViewController {
             self.fullNameFieldView.reset()
         }
         
+        let age = Calendar.current.dateComponents([.year], from: self.selectedDob, to: Date()).year
         if self.dobFieldView.textField.text!.count == 0 {
             isValid = false
             self.dobFieldView.showValidationMessage(message: "Please select your DOB.")
+        } else if let age = age, age < 18 {
+            isValid = false
+            self.dobFieldView.showValidationMessage(message: "You must be 18 years old.")
         } else {
             self.dobFieldView.reset()
         }

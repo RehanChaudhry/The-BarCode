@@ -156,7 +156,7 @@ extension ContactsViewController {
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode Invitation"
         linkComponents.socialMetaTagParameters?.descriptionText = descText
-        linkComponents.socialMetaTagParameters?.imageURL = URL(string: barCodeDomainURLString + "images/logo.svg")
+        linkComponents.socialMetaTagParameters?.imageURL = tbcLogoUrl
         
         linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
         linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)

@@ -82,7 +82,7 @@ class SIgnUpViewController: UIViewController {
         self.datePicker.setValue(UIColor.white, forKeyPath: "textColor")
         
         let date = Calendar.current.date(byAdding: .year, value: -18, to: Date()) //User Age should be min 18
-        self.datePicker.maximumDate = date
+        self.datePicker.maximumDate = nil
         self.datePicker.minimumDate = nil
         self.datePicker.date = date!
         self.selectedDob = self.datePicker.date
@@ -296,9 +296,14 @@ class SIgnUpViewController: UIViewController {
             }
         }
         
+        let age = Calendar.current.dateComponents([.year], from: self.selectedDob, to: Date()).year
+        
         if self.dobFieldView.textField.text!.count == 0 {
             isValid = false
             self.dobFieldView.showValidationMessage(message: "Please select your DOB.")
+        } else if let age = age, age < 18 {
+            isValid = false
+            self.dobFieldView.showValidationMessage(message: "You must be 18 years old.")
         } else {
             self.dobFieldView.reset()
         }
