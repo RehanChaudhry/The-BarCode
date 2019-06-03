@@ -77,6 +77,8 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dealRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sharedOfferRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        
         
         Analytics.logEvent(viewExploreScreen, parameters: nil)
     }
@@ -98,6 +100,7 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
@@ -223,6 +226,7 @@ class ExploreViewController: UIViewController {
         self.reloadTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
             self.updateReloadTimer(sender: sender)
         })
+        RunLoop.current.add(self.reloadTimer!, forMode: .commonModes)
     }
     
     func updateReloadTimer(sender: Timer) {
@@ -340,6 +344,7 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .bars
         self.scrollView.scrollToPage(page: 0, animated: true)
+        self.barsController.statefulTableView.innerTable.reloadData()
     }
     
     @IBAction func dealsButtonTapped(sender: UIButton) {
@@ -353,6 +358,7 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .deals
         self.scrollView.scrollToPage(page: 1, animated: true)
+        self.dealsController.statefulTableView.innerTable.reloadData()
     }
     
     @IBAction func liveOffersButtonTapped(sender: UIButton) {
@@ -366,6 +372,7 @@ class ExploreViewController: UIViewController {
         
         self.exploreType = .liveOffers
         self.scrollView.scrollToPage(page: 2, animated: true)
+        self.liveOffersController.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -494,7 +501,7 @@ extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
     }
     
     func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false, withStandardOffer: true)
+        self.moveToSearch(withPreferences: false, withStandardOffer: false)
     }
     
     func liveOffersController(controller: BarsWithLiveOffersViewController, preferencesButtonTapped sender: UIButton) {
@@ -510,12 +517,21 @@ extension ExploreViewController {
     }
     
     @objc func dealRedeemedNotification(notification: Notification) {
-        self.refreshSnackBar()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.refreshSnackBar()
+        }
     }
     
     @objc func sharedOfferRedeemedNotification(notification: Notification) {
         self.refreshSnackBar()
     }
+    
+    @objc func applicationDidBecomeActive(notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.refreshSnackBar()
+        }
+    }
+    
 }
 
 //MARK: BarDetailViewControllerDelegate

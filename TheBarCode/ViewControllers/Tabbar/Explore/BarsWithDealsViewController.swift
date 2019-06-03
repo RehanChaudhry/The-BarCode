@@ -93,7 +93,21 @@ extension BarsWithDealsViewController: UITableViewDataSource, UITableViewDelegat
             ? self.filteredBars[indexPath.row]
             : self.bars[indexPath.row]
         cell.setUpCell(explore: bar)
+        cell.exploreBaseDelegate = self
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? DealTableViewCell {
+            aCell.scrollToCurrentImage()
+            aCell.pagerView.automaticSlidingInterval = 2.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? DealTableViewCell {
+            aCell.pagerView.automaticSlidingInterval = 0.0
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,6 +116,19 @@ extension BarsWithDealsViewController: UITableViewDataSource, UITableViewDelegat
         let bar = self.isSearching ? self.filteredBars[indexPath.row]
             : self.bars[indexPath.row]
         
+        self.delegate.barsWithDealsController(controller: self, didSelect: bar)
+    }
+}
+
+//MARK: ExploreBaseTableViewCellDelegate
+extension BarsWithDealsViewController: ExploreBaseTableViewCellDelegate {
+    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
+        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.isSearching ? self.filteredBars[tableCellIndexPath.row]
+            : self.bars[tableCellIndexPath.row]
         self.delegate.barsWithDealsController(controller: self, didSelect: bar)
     }
 }

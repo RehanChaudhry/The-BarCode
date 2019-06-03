@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,6 +15,9 @@
         </array>
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
+        </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
         </array>
     </customFonts>
     <objects>
@@ -27,28 +30,41 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="249.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="ind-3c-R0V" secondAttribute="height" multiplier="16:9" id="vxh-ef-egH"/>
                         </constraints>
                     </imageView>
-                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rMe-dQ-6YA" customClass="RibbonView" customModule="TheBarCode" customModuleProvider="target">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNh-vE-HpY" customClass="FSPagerView" customModule="FSPagerView">
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="suM-Yq-PQ4" id="dXw-Ar-Oaz"/>
+                            <outlet property="delegate" destination="suM-Yq-PQ4" id="zH6-9P-SgL"/>
+                        </connections>
+                    </view>
+                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-13-9ha">
+                        <rect key="frame" x="156.5" y="145.5" width="7" height="37"/>
+                    </pageControl>
+                    <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bii-27-Fef">
+                        <rect key="frame" x="24" y="150" width="60" height="28"/>
+                        <color key="backgroundColor" red="0.48675468779999997" green="0.49157404119999998" blue="0.49157404119999998" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="2Wi-Di-bF9"/>
+                            <constraint firstAttribute="width" constant="60" id="9dm-xU-l07"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                        <state key="normal" title="Open">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="0.0"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="ribbonWidth">
-                                <real key="value" value="20"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="14"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
-                    </view>
+                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-uj-0UX">
                         <rect key="frame" x="16" y="206" width="246" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -63,7 +79,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-2O-2M4">
-                        <rect key="frame" x="34" y="234" width="68" height="15"/>
+                        <rect key="frame" x="34" y="234" width="70" height="15"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <state key="normal" title="4 miles away">
                             <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -86,22 +102,26 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="bii-27-Fef" firstAttribute="leading" secondItem="ind-3c-R0V" secondAttribute="leading" constant="8" id="6ek-fh-hna"/>
+                    <constraint firstItem="TNh-vE-HpY" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="7cD-vR-YAM"/>
+                    <constraint firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="16" id="Anr-6c-ep6"/>
                     <constraint firstItem="88w-H1-hsa" firstAttribute="top" secondItem="CR5-uj-0UX" secondAttribute="bottom" constant="8" id="C6e-LI-ieF"/>
-                    <constraint firstItem="rMe-dQ-6YA" firstAttribute="width" secondItem="ind-3c-R0V" secondAttribute="width" id="EaK-X7-5YE"/>
+                    <constraint firstItem="gvl-13-9ha" firstAttribute="centerX" secondItem="TNh-vE-HpY" secondAttribute="centerX" id="CFE-ZA-KoO"/>
+                    <constraint firstItem="gvl-13-9ha" firstAttribute="centerY" secondItem="bii-27-Fef" secondAttribute="centerY" id="Deb-NZ-gGE"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="20" id="EpX-Db-XEX"/>
+                    <constraint firstItem="TNh-vE-HpY" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="I85-AZ-vHd"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="centerY" secondItem="CR5-uj-0UX" secondAttribute="centerY" id="Kju-Oq-1Fp"/>
-                    <constraint firstItem="rMe-dQ-6YA" firstAttribute="centerX" secondItem="ind-3c-R0V" secondAttribute="centerX" id="L5j-Sy-3Qc"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="leading" secondItem="CR5-uj-0UX" secondAttribute="trailing" constant="8" id="MZd-cx-has"/>
                     <constraint firstAttribute="trailing" secondItem="Skp-3x-YSf" secondAttribute="trailing" constant="6" id="Npa-k5-hfI"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="Q55-dc-t3o"/>
                     <constraint firstAttribute="bottom" secondItem="lui-2O-2M4" secondAttribute="bottom" constant="0.5" id="T1B-Vy-Jg8"/>
-                    <constraint firstItem="rMe-dQ-6YA" firstAttribute="centerY" secondItem="ind-3c-R0V" secondAttribute="centerY" id="TDf-km-A4n"/>
                     <constraint firstItem="lui-2O-2M4" firstAttribute="centerY" secondItem="88w-H1-hsa" secondAttribute="centerY" id="TaD-J7-JaF"/>
                     <constraint firstAttribute="trailing" secondItem="ind-3c-R0V" secondAttribute="trailing" constant="16" id="Uqt-Pk-QAf"/>
                     <constraint firstItem="lui-2O-2M4" firstAttribute="leading" secondItem="88w-H1-hsa" secondAttribute="trailing" constant="8" id="WJB-lC-22o"/>
+                    <constraint firstItem="Skp-3x-YSf" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="8" id="dBB-ve-8B4"/>
+                    <constraint firstItem="bii-27-Fef" firstAttribute="bottom" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="-8" id="dJc-8f-W6B"/>
                     <constraint firstItem="88w-H1-hsa" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="iym-WE-CnI"/>
                     <constraint firstItem="lui-2O-2M4" firstAttribute="top" secondItem="CR5-uj-0UX" secondAttribute="bottom" constant="8" id="kiV-z0-q0w"/>
-                    <constraint firstItem="rMe-dQ-6YA" firstAttribute="height" secondItem="ind-3c-R0V" secondAttribute="height" id="tHw-3Y-aTS"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="wLy-dm-g7u"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="xb7-bb-PKG"/>
                 </constraints>
@@ -112,7 +132,9 @@
                 <outlet property="distanceButton" destination="lui-2O-2M4" id="tuN-sk-SVI"/>
                 <outlet property="favouriteButton" destination="Skp-3x-YSf" id="JhB-hY-PRO"/>
                 <outlet property="locationIconImageView" destination="88w-H1-hsa" id="IhG-Nb-n55"/>
-                <outlet property="ribbonView" destination="rMe-dQ-6YA" id="1yx-bZ-reb"/>
+                <outlet property="pageControl" destination="gvl-13-9ha" id="Paq-qk-Piv"/>
+                <outlet property="pagerView" destination="TNh-vE-HpY" id="2Bm-Sj-InJ"/>
+                <outlet property="statusButton" destination="bii-27-Fef" id="3sU-GZ-HJ0"/>
                 <outlet property="titleLabel" destination="CR5-uj-0UX" id="WUV-03-M4P"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="136.73163418290855"/>

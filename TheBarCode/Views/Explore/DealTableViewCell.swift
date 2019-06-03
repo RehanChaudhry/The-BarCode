@@ -36,11 +36,12 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     override func setUpCell(explore: Explore) {
-        if explore.images.value.count > 0 {
-            let url = explore.images.value[0].url.value
-            self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-            
-        }
+        
+        self.bar = explore
+        self.pagerView.reloadData()
+        
+        self.pageControl.numberOfPages = self.bar?.images.count ?? 0
+        
         titleLabel.text = explore.title.value
         distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         
@@ -50,9 +51,17 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         distanceButton.isHidden = false
         detailLabel.isHidden = false
         validityLabel.isHidden = true
+        
+        self.setupStatus(explore: explore)
     }
     
     func setUpDealCell(deal: Deal) {
+        
+        self.coverImageView.isHidden = false
+        self.pageControl.isHidden = true
+        self.statusButton.isHidden = true
+        self.pagerView.isHidden = true
+        
         let url = URL(string: deal.imageUrl.value)
         coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         

@@ -396,7 +396,11 @@ class SIgnUpViewController: UIViewController {
         self.view.endEditing(true)
         
         if self.isDataValid() {
-            self.signUp()
+            let alertController = UIAlertController(title: "Info", message: "If you don’t receive your email code, use SMS.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
+                self.signUp()
+            }))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     

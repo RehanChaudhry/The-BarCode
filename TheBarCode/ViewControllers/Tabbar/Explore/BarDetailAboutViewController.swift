@@ -23,6 +23,7 @@ class BarDetailAboutViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.tableView.register(cellType: ExploreAboutTableViewCell.self)
+        self.tableView.register(cellType: SocialLinksCell.self)
         self.tableView.estimatedRowHeight = 400.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -42,19 +43,80 @@ class BarDetailAboutViewController: UIViewController {
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        var hasFBLink = false
+        if let fbLink = self.bar.facebookPageUrl.value, fbLink.count > 0 {
+            hasFBLink = true
+        }
+        
+        var hasTwitterLink = false
+        if let twitterLink = self.bar.twitterProfileUrl.value, twitterLink.count > 0 {
+            hasTwitterLink = true
+        }
+        
+        var hasInstagramLink = false
+        if let instagramLink = self.bar.instagramProfileUrl.value, instagramLink.count > 0 {
+            hasInstagramLink = true
+        }
+        
+        if hasFBLink || hasTwitterLink || hasInstagramLink {
+            return 2
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
-        cell.setUpCell(explore: self.bar)
-        cell.delegate = self
-        return cell
+        if indexPath.row == 0 {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
+            cell.setUpCell(explore: self.bar)
+            cell.delegate = self
+            return cell
+        } else {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: SocialLinksCell.self)
+            cell.delegate = self
+            cell.setupCell(bar: self.bar)
+            return cell
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
+    }
+}
+
+//MARK: SocialLinksCellDelegate
+extension BarDetailAboutViewController: SocialLinksCellDelegate {
+    func socialLinksCell(cell: SocialLinksCell, facebookButtonTapped sender: UIButton) {
+        guard let fbLink = self.bar.facebookPageUrl.value, fbLink.count > 0, let url = URL(string: fbLink) else {
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:]) { (completed) in
+            
+        }
+    }
+    
+    func socialLinksCell(cell: SocialLinksCell, twitterButtonTapped sender: UIButton) {
+        guard let twitterLink = self.bar.twitterProfileUrl.value, twitterLink.count > 0, let url = URL(string: twitterLink) else {
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:]) { (completed) in
+            
+        }
+    }
+    
+    func socialLinksCell(cell: SocialLinksCell, instagramButtonTapped sender: UIButton) {
+        guard let instagramLink = self.bar.instagramProfileUrl.value, instagramLink.count > 0, let url = URL(string: instagramLink) else {
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:]) { (completed) in
+            
+        }
     }
 }
 

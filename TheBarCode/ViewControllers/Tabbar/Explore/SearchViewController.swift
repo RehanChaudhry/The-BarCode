@@ -50,6 +50,8 @@ class SearchViewController: UIViewController {
     
     let locationManager = MyLocationManager()
     
+    var markers: [GMSMarker] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -79,6 +81,8 @@ class SearchViewController: UIViewController {
         self.mapView.delegate = self
         
         self.setUserLocation()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -91,12 +95,18 @@ class SearchViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setUpPreferencesButton()
         
+        self.statefulTableView.innerTable.reloadData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
     }
     
     //MARK: My Methods
@@ -116,22 +126,42 @@ class SearchViewController: UIViewController {
     func setUpMarkers() {
         
         self.mapView.clear()
+        self.markers.removeAll()
+        
         var bounds = GMSCoordinateBounds()
-        for bar in self.bars {
+        for (index, bar) in self.bars.enumerated() {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
             
-            var pinImage = UIImage(named: "icon_pin_gold")!
-            if let activeStandardOffer = bar.activeStandardOffer.value {
-                pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-            }
-            
+            let pinImage = self.getPinImage(explore: bar)
             let marker = self.createMapMarker(location: location, pinImage: pinImage)
             marker.userData = bar
+            marker.zIndex = Int32(index)
             marker.map = self.mapView
+            
+            self.markers.append(marker)
         }
         
+    }
+    
+    func getPinImage(explore: Bar) -> UIImage {
+        var pinImage = UIImage(named: "icon_pin_gold")!
+        if let timings = explore.timings.value {
+            if timings.isOpen.value {
+                if let activeStandardOffer = explore.activeStandardOffer.value {
+                    pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
+                } else {
+                    pinImage = UIImage(named: "icon_pin_grayed")!
+                }
+            } else {
+                pinImage = UIImage(named: "icon_pin_grayed")!
+            }
+        } else {
+            pinImage = UIImage(named: "icon_pin_grayed")!
+        }
+        
+        return pinImage
     }
     
     func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
@@ -317,6 +347,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
         cell.setUpCell(bar: self.bars[indexPath.row])
         cell.delegate = self
+        cell.exploreBaseDelegate = self
+        
         return cell
     }
     
@@ -324,6 +356,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         self.moveToBarDetail(bar: self.bars[indexPath.row])
+    }
+}
+
+//MARK: ExploreBaseTableViewCellDelegate
+extension SearchViewController: ExploreBaseTableViewCellDelegate {
+    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
+        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        self.moveToBarDetail(bar: self.bars[tableCellIndexPath.row])
     }
 }
 
@@ -566,6 +609,48 @@ extension SearchViewController : GMSMapViewDelegate {
         self.moveToBarDetail(bar: bar)
         return false
     }
-    
-    
+}
+
+//Notification Methods
+extension SearchViewController {
+    @objc func barDetailsRefreshedNotification(notification: Notification) {
+        
+        let bar = notification.object as! Bar
+        
+        let barMarkers = self.markers.filter { (marker) -> Bool in
+            if let data = marker.userData as? Bar {
+                return data.id.value == bar.id.value
+            }
+            
+            return false
+        }
+        
+        guard barMarkers.count > 0 else {
+            return
+        }
+        
+        for marker in barMarkers {
+            marker.map = nil
+        }
+        
+        self.markers.removeAll { (marker) -> Bool in
+            if let data = marker.userData as? Bar {
+                return data.id.value == bar.id.value
+            }
+            
+            return false
+        }
+        
+        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
+        
+        let pinImage = self.getPinImage(explore: bar)
+        let marker = self.createMapMarker(location: location, pinImage: pinImage)
+        marker.userData = bar
+        marker.map = mapView
+        
+        self.markers.append(marker)
+        
+        marker.zIndex = Int32(self.markers.count - 1)
+        
+    }
 }

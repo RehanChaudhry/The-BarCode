@@ -77,6 +77,44 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         addressLabel.text = explore.address.value
         emailButton.setTitle(explore.contactEmail.value, for: .normal)
         
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "HH:mm"
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.lineSpacing = 5.0
+        
+        let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 12.0),
+                                NSAttributedString.Key.foregroundColor : UIColor.white,
+                                NSAttributedString.Key.paragraphStyle : paraStyle]
+        let boldAttributes = [NSAttributedString.Key.font : UIFont.appBoldFontOf(size: 15.0),
+                                NSAttributedString.Key.foregroundColor : UIColor.white,
+                                NSAttributedString.Key.paragraphStyle : paraStyle]
+        
+        let attributedTiming = NSMutableAttributedString()
+        
+        for time in explore.weeklySchedule.value {
+//            time.day.value.lowercased() == explore.timings.value?.day.value.lowercased() ? boldAttributes : normalAttributes
+            let attributes = normalAttributes
+            if time.dayStatus == .closed {
+                let status = time.day.value + ": " + "Closed"
+                let attributedStatus = NSAttributedString(string: status, attributes: attributes)
+                attributedTiming.append(attributedStatus)
+            } else {
+                let timingString = time.day.value + ": " + dateformatter.string(from: time.openingTime.value!) + " - " + dateformatter.string(from: time.closingTime.value!)
+                
+                let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
+                attributedTiming.append(attributedTime)
+                
+            }
+
+            if time != explore.weeklySchedule.value.last {
+                let attributeNewLine = NSAttributedString(string: "\n", attributes: normalAttributes)
+                attributedTiming.append(attributeNewLine)
+            }
+        }
+        
+        self.timingsLabel.attributedText = attributedTiming
+
         if explore.website.value == "" {
 //            self.websitePlaceholderLabel.isHidden = true
 //            self.websiteButton.isHidden = true

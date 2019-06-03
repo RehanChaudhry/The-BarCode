@@ -52,6 +52,8 @@ class ExploreBaseViewController: UIViewController {
     var redeemInfo: RedeemInfo!
 
     let locationManager = MyLocationManager()
+    
+    var markers: [GMSMarker] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +80,13 @@ class ExploreBaseViewController: UIViewController {
         self.mapView.delegate = self
         
         self.setUserLocation()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
 
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,25 +135,44 @@ class ExploreBaseViewController: UIViewController {
     
     func setUpBarMarkers(bars: [Bar]) {
     
-        mapView.clear()
+        self.mapView.clear()
+        self.markers.removeAll()
+        
         var bounds = GMSCoordinateBounds()
-        for explore in bars {
+        for (index, explore) in bars.enumerated() {
             let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
             
             bounds = bounds.includingCoordinate(location.coordinate)
             
-            var pinImage = UIImage(named: "icon_pin_gold")!
-            if let activeStandardOffer = explore.activeStandardOffer.value {
-                pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-            }
-            
+            let pinImage = self.getPinImage(explore: explore)
             let marker = self.createMapMarker(location: location, pinImage: pinImage)
             marker.userData = explore
+            marker.zIndex = Int32(index)
             marker.map = mapView
+            
+            self.markers.append(marker)
         }
         
     }
     
+    func getPinImage(explore: Bar) -> UIImage {
+        var pinImage = UIImage(named: "icon_pin_gold")!
+        if let timings = explore.timings.value {
+            if timings.isOpen.value {
+                if let activeStandardOffer = explore.activeStandardOffer.value {
+                    pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
+                } else {
+                    pinImage = UIImage(named: "icon_pin_grayed")!
+                }
+            } else {
+                pinImage = UIImage(named: "icon_pin_grayed")!
+            }
+        } else {
+            pinImage = UIImage(named: "icon_pin_grayed")!
+        }
+        
+        return pinImage
+    }
     
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {
         let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
@@ -231,10 +258,54 @@ class ExploreBaseViewController: UIViewController {
     }
 }
 
+//MARK: GMSMapViewDelegate
 extension ExploreBaseViewController : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         return false
     }
 }
 
+//Notification Methods
+extension ExploreBaseViewController {
+    @objc func barDetailsRefreshedNotification(notification: Notification) {
+        
+        let bar = notification.object as! Bar
+        
+        let barMarkers = self.markers.filter { (marker) -> Bool in
+            if let data = marker.userData as? Bar {
+                return data.id.value == bar.id.value
+            }
+            
+            return false
+        }
+        
+        guard barMarkers.count > 0 else {
+            return
+        }
+        
+        for marker in barMarkers {
+            marker.map = nil
+        }
+        
+        self.markers.removeAll { (marker) -> Bool in
+            if let data = marker.userData as? Bar {
+                return data.id.value == bar.id.value
+            }
+            
+            return false
+        }
+        
+        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
+        
+        let pinImage = self.getPinImage(explore: bar)
+        let marker = self.createMapMarker(location: location, pinImage: pinImage)
+        marker.userData = bar
+        marker.map = mapView
+        
+        self.markers.append(marker)
+        
+        marker.zIndex = Int32(self.markers.count - 1)
+        
+    }
+}
 

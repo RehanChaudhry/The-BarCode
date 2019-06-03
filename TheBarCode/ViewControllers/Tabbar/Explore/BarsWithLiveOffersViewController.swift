@@ -91,6 +91,8 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
             : self.bars[indexPath.row]
         
         cell.setUpCell(explore: bar)
+        cell.exploreBaseDelegate = self
+        
         return cell
     }
     
@@ -100,6 +102,32 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
         let bar = self.isSearching ? self.filteredBars[indexPath.row]
             : self.bars[indexPath.row]
         
+        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? LiveOfferTableViewCell {
+            aCell.scrollToCurrentImage()
+            aCell.pagerView.automaticSlidingInterval = 2.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? LiveOfferTableViewCell {
+            aCell.pagerView.automaticSlidingInterval = 0.0
+        }
+    }
+}
+
+//MARK: ExploreBaseTableViewCellDelegate
+extension BarsWithLiveOffersViewController: ExploreBaseTableViewCellDelegate {
+    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
+        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.isSearching ? self.filteredBars[tableCellIndexPath.row]
+            : self.bars[tableCellIndexPath.row]
         self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
     }
 }

@@ -34,15 +34,21 @@ class EmailVerificationViewController: CodeVerificationViewController {
         
         let subTitlePlaceholder = "Enter the activation code here which we have sent you on "
         let subTitleText = subTitlePlaceholder + self.email
+        let infoText = "\n\nIf you don't receive an email, you can always use SMS."
         
         let normalAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
                                NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 16.0)]
         let boldAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlueColor(),
                              NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 16.0)]
+        let smallAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
+                               NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 12.0)]
         
         let attributedSubTitle = NSMutableAttributedString(string: subTitleText)
         attributedSubTitle.addAttributes(normalAttribute as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: subTitlePlaceholder))
         attributedSubTitle.addAttributes(boldAttribute  as [NSAttributedStringKey : Any], range: (subTitleText as NSString).range(of: self.email))
+        
+        let attributedInfoText = NSAttributedString(string: infoText, attributes: smallAttribute)
+        attributedSubTitle.append(attributedInfoText)
         
         self.subTitleLabel.attributedText = attributedSubTitle
         

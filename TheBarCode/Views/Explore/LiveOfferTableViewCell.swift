@@ -53,11 +53,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     override func setUpCell(explore: Explore) {
         
-        if let image = explore.images.first {
-            self.coverImageView.setImageWith(url: URL(string: image.url.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-        } else {
-            self.coverImageView.image = nil
-        }
+        self.bar = explore
+        self.pagerView.reloadData()
+        
+        self.pageControl.numberOfPages = self.bar?.images.count ?? 0
         
         self.titleLabel.text = explore.title.value
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
@@ -68,9 +67,16 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.validityLabel.isHidden = true
      
         self.shareButton.isHidden = true
+        
+        self.setupStatus(explore: explore)
     }
     
     func setUpDetailCell(offer: LiveOffer, hideShare: Bool = false) {
+        
+        self.coverImageView.isHidden = false
+        self.pagerView.isHidden = true
+        self.pageControl.isHidden = true
+        self.statusButton.isHidden = true
         
         let url = offer.imageUrl.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)

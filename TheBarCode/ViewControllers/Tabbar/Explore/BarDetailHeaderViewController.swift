@@ -27,6 +27,8 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet var collectionViewHeight: NSLayoutConstraint!
     
+    @IBOutlet var statusButton: UIButton!
+    
     var bar: Bar!
     
     override func viewDidLoad() {
@@ -60,6 +62,24 @@ class BarDetailHeaderViewController: UIViewController {
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: self.bar.distance.value), for: .normal)
         let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
+        
+        UIView.performWithoutAnimation {
+            if let timings = self.bar.timings.value {
+                if timings.isOpen.value {
+                    self.statusButton.setTitle("Open", for: .normal)
+                } else {
+                    self.statusButton.setTitle("Closed", for: .normal)
+                }
+            } else {
+                self.statusButton.setTitle("Closed", for: .normal)
+            }
+            
+            self.statusButton.layoutIfNeeded()
+        }
+        
+        self.pageControl.numberOfPages = self.bar.images.count
+        let pageNumber = round(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
+        self.pageControl.currentPage = Int(pageNumber)
     }
     
     func showDirection(bar: Bar){
@@ -131,6 +151,11 @@ extension BarDetailHeaderViewController {
 
 //MARK: UICollectionViewDataSource, UICollectionViewDelegate
 extension BarDetailHeaderViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+        self.pageControl.currentPage = Int(pageNumber)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.bar.images.count

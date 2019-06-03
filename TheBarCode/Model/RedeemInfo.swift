@@ -22,6 +22,8 @@ class RedeemInfo: Mappable {
     func mapping(map: Map) {
         isFirstRedeem <- map["is_first_redeem"]
         remainingSeconds <- map["remaining_seconds"]
+        
+        debugPrint("remaining seconds for reload: \(String(describing: remainingSeconds))")
     }
     
     func canShowTimer() -> Bool {

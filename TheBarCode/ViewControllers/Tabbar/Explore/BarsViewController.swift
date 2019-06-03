@@ -95,6 +95,7 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
         cell.delegate = self
+        cell.exploreBaseDelegate = self
        
         let bar = self.isSearching
                     ? self.filteredBars[indexPath.row]
@@ -102,6 +103,19 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.setUpCell(bar: bar)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.scrollToCurrentImage()
+            aCell.pagerView.automaticSlidingInterval = 2.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.pagerView.automaticSlidingInterval = 0.0
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -112,6 +126,19 @@ extension BarsViewController: UITableViewDataSource, UITableViewDelegate {
         let bar = self.isSearching ? self.filteredBars[indexPath.row]
                     : self.bars[indexPath.row]
 
+        self.delegate.barsController(controller: self, didSelectBar: bar)
+    }
+}
+
+//MARK: ExploreBaseTableViewCellDelegate
+extension BarsViewController: ExploreBaseTableViewCellDelegate {
+    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
+        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.isSearching ? self.filteredBars[tableCellIndexPath.row]
+            : self.bars[tableCellIndexPath.row]
         self.delegate.barsController(controller: self, didSelectBar: bar)
     }
 }

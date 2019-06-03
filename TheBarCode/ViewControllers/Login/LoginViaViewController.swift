@@ -18,7 +18,7 @@ import FirebaseAnalytics
 class LoginViaViewController: UIViewController {
 
     @IBOutlet var fbButton: LoadingButton!
-    @IBOutlet var emailButton: GradientButton!
+    @IBOutlet var emailButton: UIButton!
     @IBOutlet var mobileButton: GradientButton!
     
     var forSignUp: Bool = false

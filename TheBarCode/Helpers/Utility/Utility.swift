@@ -48,6 +48,8 @@ let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 let notificationNameLiveOffer: String = "notificationNameLiveOffer"
 let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOffer"
 
+let notificationNameBarDetailsRefreshed = Notification.Name(rawValue: "notificationNameBarDetailsRefreshed")
+
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
@@ -99,7 +101,9 @@ class Utility: NSObject {
                 Entity<ImageItem>("ImageItem"),
                 Entity<Offer>("Offer"),
                 Entity<StandardOffer>("StandardOffer"),
-                Entity<ActiveStandardOffer>("ActiveStandardOffer")
+                Entity<ActiveStandardOffer>("ActiveStandardOffer"),
+                Entity<EstablishmentTiming>("EstablishmentTiming"),
+                Entity<ExploreSchedule>("ExploreSchedule")
             ]
         )
     )

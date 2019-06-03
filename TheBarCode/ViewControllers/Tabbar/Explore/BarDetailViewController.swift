@@ -449,7 +449,7 @@ extension BarDetailViewController {
                 let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
                 
                 self.selectedBar = fetchedObject
-                
+
                 if !self.isSegmentsSetuped {
                     self.setUpSegmentedController()
                 } else {
@@ -459,6 +459,8 @@ extension BarDetailViewController {
                 
                 self.setUpTitle()
                 self.setUpBottomView()
+                
+                NotificationCenter.default.post(name: notificationNameBarDetailsRefreshed, object: self.selectedBar!)
                 
             } else {
                 debugPrint("Unexpected response received while getting establishment")

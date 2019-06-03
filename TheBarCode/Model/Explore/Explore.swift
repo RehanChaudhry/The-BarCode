@@ -48,8 +48,12 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var lastReloadTime = Value.Required<String>("last_reload_time", initial: "") //TODO dateObject
     
+    var timings = Relationship.ToOne<EstablishmentTiming>("establishment_timings", inverse: { $0.explore })
+    
+    var weeklySchedule = Relationship.ToManyOrdered<ExploreSchedule>("weekly_schedule", inverse: {$0.explore})
 //}
 
+    var currentImageIndex: Int = 0
 
 //extension Explore: ImportableUniqueObject {
     
@@ -98,7 +102,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         
         self.status.value = source["status"] as! String
         self.code.value = source["code"] as! Int
-        self.businessTiming.value = source["business_timing"] as! String
+        self.businessTiming.value = source["business_timing"] as? String ?? ""
         self.closeTime.value = source["close_time"] as? String
         self.openingTime.value = source["opening_time"] as? String
         self.instagramProfileUrl.value = source["instagram_profile_url"] as? String
@@ -129,6 +133,43 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
                 self.deals.value = Int("\(source["deals"]!)")!
             } else if mappingType == .liveOffers {
                 self.liveOffers.value = Int("\(source["live_offers"]!)")!
+            }
+        }
+        
+        if let timingsSource = source["establishment_timings"] as? [String : Any] {
+            let importTimings = try! transaction.importObject(Into<EstablishmentTiming>(), source: timingsSource)
+            self.timings.value = importTimings
+            
+            let bars = transaction.fetchAll(From<Explore>().where(\.id == self.id.value)) ?? []
+            for bar in bars {
+                let edit = transaction.edit(bar)
+                let timings = edit?.timings.value
+                timings?.isOpen.value = importTimings!.isOpen.value
+                timings?.openingTime.value = importTimings!.openingTime.value
+                timings?.closingTime.value = importTimings!.closingTime.value
+                timings?.day.value = importTimings!.day.value
+                timings?.dayStatusRaw.value = importTimings!.dayStatusRaw.value
+            }
+            
+        }
+        
+        if let scheduleSource = source["week_establishment_timings"] as? [[String : Any]] {
+            let importSchedule = try! transaction.importObjects(Into<ExploreSchedule>(), sourceArray: scheduleSource)
+            self.weeklySchedule.value = importSchedule
+            
+            let bars = transaction.fetchAll(From<Explore>().where(\.id == self.id.value)) ?? []
+            for bar in bars {
+                let edit = transaction.edit(bar)
+                let timings = edit?.weeklySchedule.value ?? []
+                
+                for time in timings {
+                    let day = self.weeklySchedule.value.first(where: {$0.day.value == time.day.value})
+                    
+                    time.closingTime.value = day?.closingTime.value
+                    time.openingTime.value = day?.openingTime.value
+                    time.day.value = day?.day.value ?? ""
+                    time.dayStatusRaw.value = day?.dayStatusRaw.value ?? ""
+                }
             }
         }
         
