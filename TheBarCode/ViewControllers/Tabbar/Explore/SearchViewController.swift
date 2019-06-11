@@ -252,6 +252,14 @@ class SearchViewController: UIViewController {
             }
             
             if let location = location {
+                if let user = Utility.shared.getCurrentUser() {
+                    try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                        let edittedUser = transaction.edit(user)
+                        edittedUser?.latitude.value = location.coordinate.latitude
+                        edittedUser?.longitude.value = location.coordinate.longitude
+                        
+                    })
+                }
                 self.setupMapCamera(cordinate: location.coordinate)
             }
         }

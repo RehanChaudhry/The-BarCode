@@ -304,6 +304,15 @@ extension CategoriesViewController {
                 params["send_five_day_notification"] = true
             }
             
+            if let user = Utility.shared.getCurrentUser() {
+                try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                    let edittedUser = transaction.edit(user)
+                    edittedUser?.latitude.value = location?.coordinate.latitude ?? -1.0
+                    edittedUser?.longitude.value = location?.coordinate.longitude ?? -1.0
+                    
+                })
+            }
+            
             let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
                 
                 debugPrint("Updating location finished")

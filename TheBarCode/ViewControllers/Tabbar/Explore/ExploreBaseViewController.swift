@@ -13,6 +13,7 @@ import Alamofire
 import ObjectMapper
 import HTTPStatusCodes
 import CoreLocation
+import CoreStore
 
 class ExploreBaseViewController: UIViewController {
 
@@ -217,8 +218,8 @@ class ExploreBaseViewController: UIViewController {
                 if let user = Utility.shared.getCurrentUser() {
                     try! CoreStore.perform(synchronous: { (transaction) -> Void in
                         let edittedUser = transaction.edit(user)
-                        edittedUser?.latitude.value = location!.coordinate.latitude
-                        edittedUser?.longitude.value = location!.coordinate.longitude
+                        edittedUser?.latitude.value = location.coordinate.latitude
+                        edittedUser?.longitude.value = location.coordinate.longitude
                         
                     })
                 }
