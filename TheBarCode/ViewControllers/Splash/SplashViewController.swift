@@ -119,7 +119,7 @@ extension SplashViewController {
         
         self.locationManager = MyLocationManager()
         self.locationManager.locationPreferenceAlways = requestAlwaysAccess
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting location: \(error!.localizedDescription)")
@@ -129,6 +129,14 @@ extension SplashViewController {
             
             var params = ["latitude" : "\(location!.coordinate.latitude)",
                 "longitude" : "\(location!.coordinate.longitude )"] as [String : Any]
+            
+            try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                let edittedUser = transaction.edit(user)
+                edittedUser?.latitude.value = location!.coordinate.latitude
+                edittedUser?.longitude.value = location!.coordinate.longitude
+
+            })
+            
             if !Utility.shared.getCurrentUser()!.isLocationUpdated.value {
                 params["send_five_day_notification"] = true
             }

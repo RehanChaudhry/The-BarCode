@@ -12,6 +12,7 @@ import GoogleMaps
 import Alamofire
 import ObjectMapper
 import HTTPStatusCodes
+import CoreLocation
 
 class ExploreBaseViewController: UIViewController {
 
@@ -204,7 +205,7 @@ class ExploreBaseViewController: UIViewController {
         }
         
         self.locationManager.locationPreferenceAlways = requestAlwaysAccess
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting location: \(error!.localizedDescription)")
@@ -213,6 +214,14 @@ class ExploreBaseViewController: UIViewController {
             }
             
             if let location = location {
+                if let user = Utility.shared.getCurrentUser() {
+                    try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                        let edittedUser = transaction.edit(user)
+                        edittedUser?.latitude.value = location!.coordinate.latitude
+                        edittedUser?.longitude.value = location!.coordinate.longitude
+                        
+                    })
+                }
                 self.setupMapCamera(cordinate: location.coordinate)
             }
         }
@@ -221,9 +230,12 @@ class ExploreBaseViewController: UIViewController {
     }
 
     func showDirection(bar: Bar) {
-        
+        let user = Utility.shared.getCurrentUser()!
+
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let urlString = String(format: "comgooglemaps://?daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let source = CLLocationCoordinate2D(latitude: user.latitude.value, longitude: user.longitude.value)
+            
+            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",source.latitude,source.longitude,bar.latitude.value,bar.longitude.value)
             let url = URL(string: urlString)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         } else {

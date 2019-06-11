@@ -46,11 +46,11 @@ class ExploreSchedule: CoreStoreObject, ImportableObject {
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
         dateformatter.timeZone = TimeZone(abbreviation: "UTC")
         
-        if let openingDateTimeInfo = source["modify_opening_time"] as? [String : Any], let openingDateTime = openingDateTimeInfo["date"] as? String {
+        if let openingDateTimeInfo = source["opening_time_modify"] as? [String : Any], let openingDateTime = openingDateTimeInfo["date"] as? String {
             self.openingTime.value = dateformatter.date(from: openingDateTime)
         }
         
-        if let closingDateTimeInfo = source["modify_closed_time"] as? [String : Any], let closingDateTime = closingDateTimeInfo["date"] as? String {
+        if let closingDateTimeInfo = source["closed_time_modify"] as? [String : Any], let closingDateTime = closingDateTimeInfo["date"] as? String {
             self.closingTime.value = dateformatter.date(from: closingDateTime)
         }
     }

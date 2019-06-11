@@ -270,7 +270,7 @@ extension CategoriesViewController {
         
         self.locationManager = MyLocationManager()
         self.locationManager.locationPreferenceAlways = requestAlwaysAccess
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyHundredMeters, timeOut: 20.0) { [unowned self] (location, error) in
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
             
             debugPrint("Getting location finished")
             

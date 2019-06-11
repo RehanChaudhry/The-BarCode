@@ -10,6 +10,7 @@ import UIKit
 import Reusable
 import CoreStore
 import FirebaseAnalytics
+import CoreLocation
 
 class BarDetailHeaderViewController: UIViewController {
 
@@ -83,9 +84,12 @@ class BarDetailHeaderViewController: UIViewController {
     }
     
     func showDirection(bar: Bar){
-        
+        let user = Utility.shared.getCurrentUser()!
+
         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let urlString = String(format: "comgooglemaps://?daddr=%f,%f&directionsmode=driving",bar.latitude.value,bar.longitude.value)
+            let source = CLLocationCoordinate2D(latitude: user.latitude.value, longitude: user.longitude.value)
+            
+            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",source.latitude,source.longitude,bar.latitude.value,bar.longitude.value)
             let url = URL(string: urlString)
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         } else {
