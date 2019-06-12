@@ -396,7 +396,7 @@ class SIgnUpViewController: UIViewController {
         self.view.endEditing(true)
         
         if self.isDataValid() {
-            if mobileSignUp {
+            if mobileSignUp ||  self.socialAccountId != nil {
                 self.signUp()
             } else {
                 let alertController = UIAlertController(title: "Info", message: "If you don’t receive your email code, use SMS.", preferredStyle: .alert)
