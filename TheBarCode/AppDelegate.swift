@@ -15,6 +15,7 @@ import Fabric
 import Crashlytics
 import OneSignal
 import CoreStore
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var visitLocationManager: CLLocationManager?
     
+    var locationManager: MyLocationManager!
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -135,6 +138,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        self.updateLocationComingFromBackground()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -341,3 +346,81 @@ extension AppDelegate {
     }
 }
 
+extension AppDelegate {
+    
+    func updateLocationComingFromBackground() {
+        
+        guard let user = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists for location update")
+            return
+        }
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        var canContinue: Bool? = nil
+        if authorizationStatus == .authorizedAlways {
+            canContinue = true
+        } else if authorizationStatus == .authorizedWhenInUse {
+            canContinue = false
+        }
+        
+        guard let requestAlwaysAccess = canContinue else {
+            debugPrint("Location permission not authorized")
+            return
+        }
+        
+        self.locationManager = MyLocationManager()
+        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { (location, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting location: \(error!.localizedDescription)")
+                return
+            }
+            
+            var params = ["latitude" : "\(location!.coordinate.latitude)",
+                "longitude" : "\(location!.coordinate.longitude )"] as [String : Any]
+            
+            try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                let edittedUser = transaction.edit(user)
+                edittedUser?.latitude.value = location!.coordinate.latitude
+                edittedUser?.longitude.value = location!.coordinate.longitude
+                
+            })
+            
+            if !Utility.shared.getCurrentUser()!.isLocationUpdated.value {
+                params["send_five_day_notification"] = true
+            }
+            
+            let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathLocationUpdate, method: .put, completion: { (response, serverError, error) in
+                
+                guard error == nil else {
+                    debugPrint("Error while updating location: \(error!.localizedDescription)")
+                    return
+                }
+                
+                guard serverError == nil else {
+                    debugPrint("Server error while updating location: \(serverError!.errorMessages())")
+                    return
+                }
+                
+                debugPrint("Location update successfully")
+                
+                let responseDict = response as? [String : Any]
+                if let responseData = (responseDict?["data"] as? [String : Any])
+                {
+                    if let creditValue = responseData["credit"] as? Int {
+                        debugPrint("credit == \(creditValue)")
+                        Utility.shared.userCreditUpdate(creditValue: creditValue)
+                    }
+                    
+                }
+                
+                try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                    let edittedUser = transaction.edit(user)
+                    edittedUser?.isLocationUpdated.value = true
+                })
+                
+            })
+        }
+    }
+}
