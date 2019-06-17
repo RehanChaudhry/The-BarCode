@@ -115,8 +115,22 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
         cell.delegate = self
+        cell.exploreBaseDelegate = self
         cell.setUpCell(bar: self.bars[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.scrollToCurrentImage()
+            aCell.pagerView.automaticSlidingInterval = 2.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.pagerView.automaticSlidingInterval = 0.0
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,6 +140,18 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
         
 //        let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
 //        self.present(exploreDetailNav, animated: true, completion: nil)
+    }
+}
+
+//MARK: ExploreBaseTableViewCellDelegate
+extension FavouritesViewController: ExploreBaseTableViewCellDelegate {
+    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
+        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.bars[tableCellIndexPath.row]
+        self.moveToBarDetail(bar: bar)
     }
 }
 
