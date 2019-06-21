@@ -190,28 +190,28 @@ class Utility: NSObject {
     func serverFormattedDateTime(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = serverDateTimeFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = serverTimeZone
         return dateFormatter.date(from: date)!
     }
     
     func serverFormattedTime(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = serverTimeFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = serverTimeZone
         return dateFormatter.date(from: date)!
     }
     
     func serverFormattedDate(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = serverDateFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = serverTimeZone
         return dateFormatter.date(from: date)!
     }
     
     func shortFormattedDate(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd  hh:mm a"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = serverTimeZone
         return dateFormatter.date(from: date)!
     }
     

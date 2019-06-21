@@ -130,6 +130,16 @@ extension BarDetailAboutViewController: SJSegmentedViewControllerViewSource {
 
 //MARK: ExploreAboutTableViewCellDelegate
 extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
+    
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, showButtonTapped sender: UIButton) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        self.bar.timingExpanded = !self.bar.timingExpanded
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, websiteButtonTapped sender: UIButton) {
         let urlString = self.bar.website.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let url = URL(string: urlString)!

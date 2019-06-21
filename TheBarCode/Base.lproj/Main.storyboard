@@ -590,6 +590,11 @@
                         <outlet property="contentView" destination="9Nv-4e-0jM" id="nlY-kX-zLW"/>
                         <outlet property="dateInputView" destination="1Pt-Pi-AWl" id="bLH-UV-uFY"/>
                         <outlet property="datePicker" destination="Elc-Vx-Fed" id="nQs-TV-nqr"/>
+                        <outlet property="dobDoneBarButton" destination="i9B-P7-X9u" id="EFM-WX-oxu"/>
+                        <outlet property="dobFlexibleSpace" destination="N5d-T2-VqG" id="zpG-Ff-OgR"/>
+                        <outlet property="dobNextBarButton" destination="OnI-ku-ZlL" id="SHF-d2-Q0z"/>
+                        <outlet property="dobPrevBarButton" destination="edj-zP-Qxf" id="Lwj-Np-Z25"/>
+                        <outlet property="dobToolBar" destination="93C-c5-Xzo" id="MKG-DP-g4u"/>
                         <outlet property="fbSignUpButton" destination="Tda-BJ-Y2U" id="gMQ-8f-9vj"/>
                         <outlet property="fbSignUpView" destination="6vk-f5-2f1" id="pjf-pu-qqu"/>
                         <outlet property="pickerInputView" destination="iBb-02-YHP" id="YiS-4A-3WU"/>
@@ -868,7 +873,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dD3-pd-0UV">
-                                <rect key="frame" x="67.5" y="336" width="240" height="32"/>
+                                <rect key="frame" x="64" y="335" width="247" height="31"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I don’t have any referral code, skip">
@@ -879,7 +884,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="33r-bU-HAW" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="268" width="343" height="44"/>
+                                <rect key="frame" x="16" y="267" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="fr6-Sr-lrf"/>
                                 </constraints>
@@ -897,13 +902,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter the invite/referral code if someone has invited you to The BarCode app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ck2-La-q92">
-                                <rect key="frame" x="16" y="88" width="343" height="36"/>
+                                <rect key="frame" x="16" y="88" width="343" height="35"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8YQ-4W-kyg">
-                                <rect key="frame" x="16" y="148" width="343" height="1"/>
+                                <rect key="frame" x="16" y="147" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="YsA-8v-Diy"/>
@@ -1335,20 +1340,20 @@ Cg
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address below and tap on 'Request Password Reset' button. We will contact you shortly via email." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNy-xS-4rS">
-                                <rect key="frame" x="16" y="88" width="343" height="54"/>
+                                <rect key="frame" x="16" y="88" width="343" height="52.5"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cb1-RX-Ian">
-                                <rect key="frame" x="16" y="166" width="343" height="1"/>
+                                <rect key="frame" x="16" y="164.5" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="HcN-RX-HxC"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQW-ph-Cz2" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="286" width="343" height="44"/>
+                                <rect key="frame" x="16" y="284.5" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6k4-sk-OPW"/>
                                 </constraints>
@@ -1366,7 +1371,7 @@ Cg
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hS8-bN-WBI">
-                                <rect key="frame" x="123.5" y="354" width="128" height="32"/>
+                                <rect key="frame" x="120.5" y="352.5" width="134" height="31"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Go back to Sign In">
@@ -5691,14 +5696,35 @@ CQ
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_barcode" translatesAutoresizingMaskIntoConstraints="NO" id="tjU-tB-Cx3">
-                                <rect key="frame" x="165" y="139" width="45" height="55"/>
+                                <rect key="frame" x="165" y="122" width="45" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="wBB-CV-KCT"/>
                                     <constraint firstAttribute="height" constant="55" id="xeR-98-yH3"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EkF-nH-c0r" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
+                                <rect key="frame" x="16" y="299" width="343" height="44"/>
+                                <color key="backgroundColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="yLy-Xp-qLa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
+                                <state key="normal" title="Sign in with Instagram" image="ic_instagram_white">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="instagramButtonTappedWithSender:" destination="DM2-wy-Aev" eventType="touchUpInside" id="EE8-ZB-KMt"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uJD-sG-29I" customClass="LoadingButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="262" width="343" height="44"/>
+                                <rect key="frame" x="16" y="235" width="343" height="44"/>
                                 <color key="backgroundColor" red="0.23137254900000001" green="0.3411764706" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="9Zd-IM-QtV"/>
@@ -5717,7 +5743,7 @@ CQ
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfW-CB-RYt" customClass="GradientButton" customModule="TheBarCode" customModuleProvider="target">
-                                <rect key="frame" x="16" y="326" width="343" height="44"/>
+                                <rect key="frame" x="16" y="363" width="343" height="44"/>
                                 <color key="backgroundColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="g1G-u9-poq"/>
@@ -5736,21 +5762,21 @@ CQ
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rW8-0E-nkC">
-                                <rect key="frame" x="20" y="399" width="136" height="0.5"/>
+                                <rect key="frame" x="20" y="436" width="136" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="Or6-x9-pYR"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vEl-rp-DBI">
-                                <rect key="frame" x="219" y="399" width="136" height="0.5"/>
+                                <rect key="frame" x="219" y="436" width="136" height="0.5"/>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="6sX-cE-TAn"/>
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vn6-HN-kLX">
-                                <rect key="frame" x="176.5" y="390" width="22" height="18"/>
+                                <rect key="frame" x="176.5" y="427" width="22" height="18"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -5777,15 +5803,17 @@ CQ
                         <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3C4-c7-B0U" firstAttribute="bottom" secondItem="wub-SE-wkc" secondAttribute="bottom" constant="20" id="1kz-st-JHg"/>
-                            <constraint firstItem="PfW-CB-RYt" firstAttribute="top" secondItem="uJD-sG-29I" secondAttribute="bottom" constant="20" id="8Hy-9R-Sdm"/>
+                            <constraint firstItem="EkF-nH-c0r" firstAttribute="top" secondItem="uJD-sG-29I" secondAttribute="bottom" constant="20" id="56f-RB-jVs"/>
                             <constraint firstItem="Vn6-HN-kLX" firstAttribute="top" secondItem="PfW-CB-RYt" secondAttribute="bottom" constant="20" id="9iz-Vk-y2g"/>
-                            <constraint firstItem="tjU-tB-Cx3" firstAttribute="top" secondItem="3C4-c7-B0U" secondAttribute="top" constant="75" id="D17-us-loC"/>
+                            <constraint firstItem="tjU-tB-Cx3" firstAttribute="top" secondItem="3C4-c7-B0U" secondAttribute="top" constant="58" id="D17-us-loC"/>
                             <constraint firstItem="vEl-rp-DBI" firstAttribute="centerY" secondItem="Vn6-HN-kLX" secondAttribute="centerY" id="RLM-vh-wpL"/>
+                            <constraint firstItem="uJD-sG-29I" firstAttribute="top" secondItem="tjU-tB-Cx3" secondAttribute="bottom" constant="58" id="Xj6-mI-0GH"/>
+                            <constraint firstItem="PfW-CB-RYt" firstAttribute="top" secondItem="EkF-nH-c0r" secondAttribute="bottom" constant="20" id="ZtZ-Wh-44N"/>
                             <constraint firstAttribute="trailing" secondItem="vEl-rp-DBI" secondAttribute="trailing" constant="20" id="aKQ-D3-37l"/>
+                            <constraint firstItem="EkF-nH-c0r" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="b7S-jA-bFU"/>
                             <constraint firstItem="vEl-rp-DBI" firstAttribute="leading" secondItem="Vn6-HN-kLX" secondAttribute="trailing" constant="20.5" id="bCr-dv-swd"/>
                             <constraint firstItem="wub-SE-wkc" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="cA4-dd-PvG"/>
                             <constraint firstItem="wub-SE-wkc" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="cV4-Vm-Ihy"/>
-                            <constraint firstItem="uJD-sG-29I" firstAttribute="top" secondItem="tjU-tB-Cx3" secondAttribute="bottom" constant="68" id="eGU-ou-hFg"/>
                             <constraint firstItem="rW8-0E-nkC" firstAttribute="centerY" secondItem="Vn6-HN-kLX" secondAttribute="centerY" id="g39-6h-Igb"/>
                             <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="wub-SE-wkc" secondAttribute="trailing" constant="16" id="gBU-dh-i7P"/>
                             <constraint firstItem="PfW-CB-RYt" firstAttribute="leading" secondItem="3C4-c7-B0U" secondAttribute="leading" constant="16" id="gbX-cU-fi2"/>
@@ -5797,6 +5825,7 @@ CQ
                             <constraint firstItem="Vn6-HN-kLX" firstAttribute="leading" secondItem="rW8-0E-nkC" secondAttribute="trailing" constant="20.5" id="wSs-Ag-aMe"/>
                             <constraint firstItem="tjU-tB-Cx3" firstAttribute="centerX" secondItem="MQn-GL-qg3" secondAttribute="centerX" id="ww5-FI-UIa"/>
                             <constraint firstItem="Vn6-HN-kLX" firstAttribute="centerX" secondItem="MQn-GL-qg3" secondAttribute="centerX" id="ylQ-wb-fiw"/>
+                            <constraint firstItem="3C4-c7-B0U" firstAttribute="trailing" secondItem="EkF-nH-c0r" secondAttribute="trailing" constant="16" id="z52-98-uvS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3C4-c7-B0U"/>
                     </view>
@@ -5804,6 +5833,7 @@ CQ
                     <connections>
                         <outlet property="emailButton" destination="wub-SE-wkc" id="kLS-5t-Wbk"/>
                         <outlet property="fbButton" destination="uJD-sG-29I" id="xnx-Sn-gun"/>
+                        <outlet property="instaSignInButton" destination="EkF-nH-c0r" id="SWk-JO-bDr"/>
                         <outlet property="mobileButton" destination="PfW-CB-RYt" id="Znh-kO-t6F"/>
                         <segue destination="8VK-Li-NYB" kind="show" identifier="LoginViaToSignInWithEmailSegue" id="q44-b9-Aeb"/>
                         <segue destination="Z16-Wr-qWJ" kind="show" identifier="LoginViaToSignUpWithEmailSegue" id="NH3-Sf-RJ2"/>
@@ -6425,6 +6455,28 @@ Cg
             </objects>
             <point key="canvasLocation" x="8397.6000000000004" y="-436.73163418290858"/>
         </scene>
+        <!--Instagram Login View Controller-->
+        <scene sceneID="RiI-PA-5gx">
+            <objects>
+                <viewController storyboardIdentifier="InstagramLoginViewController" id="TLE-2h-pLh" customClass="InstagramLoginViewController" customModule="TheBarCode" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K8d-yI-Waf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="6TS-aO-BuD"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ldU-tf-rhP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="htX-mq-dNQ">
+                            <connections>
+                                <action selector="cancelBarButtonTappedWithSender:" destination="TLE-2h-pLh" id="gEV-LM-n2R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ta1-vM-Tre" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="10357.6" y="101.19940029985008"/>
+        </scene>
         <!--Mobile Verification View Controller-->
         <scene sceneID="UAV-ez-Vdz">
             <objects>
@@ -6647,10 +6699,30 @@ Cg
             </objects>
             <point key="canvasLocation" x="8049" y="5680"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FuT-31-51U">
+            <objects>
+                <navigationController storyboardIdentifier="InstagramLoginNavController" automaticallyAdjustsScrollViewInsets="NO" id="dfJ-ed-tXU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="uRG-sB-fsB">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="TLE-2h-pLh" kind="relationship" relationship="rootViewController" id="vXN-se-CsQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hgE-4n-Iu0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9418.3999999999996" y="101.19940029985008"/>
+        </scene>
     </scenes>
     <resources>
         <image name="banner_reload" width="375" height="249"/>
         <image name="close" width="14" height="14"/>
+        <image name="ic_instagram_white" width="24" height="24"/>
         <image name="icon_barcode" width="39" height="48"/>
         <image name="icon_fb" width="24" height="24"/>
         <image name="icon_list" width="22.333333969116211" height="15.666666984558105"/>
@@ -49493,7 +49565,7 @@ AQAAAAAAAAIBAAAAAAAAAG0AAAAAAAAAAAAAAAAAAKoDA
         <image name="splash_bg" width="375" height="812"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U1x-b6-2uJ"/>
+        <segue reference="U7S-r4-hZp"/>
         <segue reference="q44-b9-Aeb"/>
         <segue reference="OPR-Pt-aaE"/>
         <segue reference="9Fu-jF-paq"/>

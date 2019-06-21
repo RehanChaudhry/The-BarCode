@@ -52,7 +52,8 @@ class AccountSettingsViewController: UIViewController {
     
     var phoneNoFieldView: FieldView!
     
-    var isLoggedInViaMobile: Bool = false
+    var signupProvider: SignUpProvider!
+//    var isLoggedInViaMobile: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,7 @@ class AccountSettingsViewController: UIViewController {
         
         self.addBackButton()
         
-        self.isLoggedInViaMobile = Utility.shared.getCurrentUser()?.mobileNumber.value != nil
+        self.signupProvider = Utility.shared.getCurrentUser()?.provider ?? .email
         
         self.setUpFields()
         self.setUpUserProfile()
@@ -121,21 +122,22 @@ class AccountSettingsViewController: UIViewController {
         self.phoneNoFieldView.textField.isEnabled = false
         self.phoneNoFieldView.setKeyboardType(keyboardType: .phonePad)
         
-        if self.isLoggedInViaMobile {
+        if self.signupProvider == .contactNumber {
             self.contentView.addSubview(self.phoneNoFieldView)
             
             self.phoneNoFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
             self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.phoneNoFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
-            
-        } else {
+        } else if self.signupProvider == .email {
             self.contentView.addSubview(self.emailFieldView)
             
             self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
             self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.emailFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.emailFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        } else {
+            
         }
 
         self.dobFieldView = FieldView.loadFromNib()
@@ -146,10 +148,12 @@ class AccountSettingsViewController: UIViewController {
         self.dobFieldView.setKeyboardType(inputView: self.dateInputView)
         self.contentView.addSubview(self.dobFieldView)
         
-        if self.isLoggedInViaMobile {
+        if self.signupProvider == .contactNumber {
             self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
-        } else {
+        } else if self.signupProvider == .email {
             self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        } else {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
         }
         
         self.dobFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
@@ -164,10 +168,12 @@ class AccountSettingsViewController: UIViewController {
         self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
-        if self.isLoggedInViaMobile {
+        if self.signupProvider == .contactNumber {
             self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
-        } else {
+        } else if self.signupProvider == .email {
             self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.emailFieldView, withOffset: 5.0)
+        } else {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
         }
         
         self.genderFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
@@ -196,7 +202,7 @@ class AccountSettingsViewController: UIViewController {
         self.confirmPasswordFieldView.setReturnKey(returnKey: .done)
         self.confirmPasswordFieldView.makeSecure(secure: true)
         
-        if !self.isLoggedInViaMobile {
+        if self.signupProvider == .email {
             self.contentView.addSubview(self.passwordSectionHeaderView)
             
             self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
@@ -227,12 +233,11 @@ class AccountSettingsViewController: UIViewController {
             
             self.contentView.addSubview(self.updateButton)
             self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.confirmPasswordFieldView, withOffset: 16.0)
-            
         } else {
             self.contentView.addSubview(self.updateButton)
             self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 16.0)
         }
-        
+
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.left, withInset: 16.0)
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.right, withInset: 16.0)
         self.updateButton.autoSetDimension(ALDimension.height, toSize: 44.0)
@@ -272,26 +277,24 @@ class AccountSettingsViewController: UIViewController {
         self.updateDobField()
         self.updateGenderField()
         
-        if let _ = user.socialAccountId.value, let _ = FBSDKAccessToken.current()?.tokenString  {
-            
+        if self.signupProvider == .facebook || self.signupProvider == .instagram {
             let largeAttributes = [NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 14.0),
                                    NSAttributedStringKey.foregroundColor : UIColor.white]
             let smallAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 12.0),
                                    NSAttributedStringKey.foregroundColor : UIColor.white]
             
+            let provider = self.signupProvider == .instagram ? "Instagram" : "Facebook"
             let attributedName = NSAttributedString(string: user.fullName.value, attributes: largeAttributes)
-            let attributedInfo = NSAttributedString(string: " Connected with Facebook", attributes: smallAttributes)
+            let attributedInfo = NSAttributedString(string: " Connected with \(provider)", attributes: smallAttributes)
             
             let attributedString = NSMutableAttributedString()
             attributedString.append(attributedName)
             attributedString.append(attributedInfo)
             self.loginInfoLabel.attributedText = attributedString
-//            self.socialLogoutButton.isHidden = false
         } else {
             self.loginInfoLabel.text = user.fullName.value
-//            self.socialLogoutButton.isHidden = true
         }
-        
+               
         if let profileImageUrl = user.profileImage.value {
             let url = URL(string: profileImageUrl)
             

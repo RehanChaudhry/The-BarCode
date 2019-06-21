@@ -8,6 +8,7 @@
 	<array>
 		<string>applinks:thebarcodeapp.page.link</string>
 		<string>applinks:thebarcodeappshareoffer.page.link</string>
+		<string>applinks:tbcinfluencer.page.link</string>
 	</array>
 </dict>
 </plist>

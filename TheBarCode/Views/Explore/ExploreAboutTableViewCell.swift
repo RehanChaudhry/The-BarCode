@@ -14,6 +14,7 @@ protocol ExploreAboutTableViewCellDelegate: class {
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, directionsButtonTapped sender: UIButton)
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, callButtonTapped sender: UIButton)
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, emailButtonTapped sender: UIButton)
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, showButtonTapped sender: UIButton)
 }
 
 class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
@@ -21,6 +22,7 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var websitePlaceholderLabel: UILabel!
     
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var timingPlaceholderLabel: UILabel!
     @IBOutlet var timingsLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
     
@@ -41,6 +43,8 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var phoneNumberButtonHeight: NSLayoutConstraint!
     @IBOutlet var emailButtonHeight: NSLayoutConstraint!
 
+    @IBOutlet var showMoreTimingsButton: UIButton!
+    
     weak var delegate: ExploreAboutTableViewCellDelegate!
     
     override func layoutSubviews() {
@@ -80,40 +84,79 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "HH:mm"
         
-        let paraStyle = NSMutableParagraphStyle()
-        paraStyle.lineSpacing = 5.0
-        
         let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 12.0),
-                                NSAttributedString.Key.foregroundColor : UIColor.white,
-                                NSAttributedString.Key.paragraphStyle : paraStyle]
-        let boldAttributes = [NSAttributedString.Key.font : UIFont.appBoldFontOf(size: 15.0),
-                                NSAttributedString.Key.foregroundColor : UIColor.white,
-                                NSAttributedString.Key.paragraphStyle : paraStyle]
+                                NSAttributedString.Key.foregroundColor : UIColor.white]
+        let boldAttributes = [NSAttributedString.Key.font : UIFont.appBoldFontOf(size: 13.0),
+                                NSAttributedString.Key.foregroundColor : UIColor.white]
         
-        let attributedTiming = NSMutableAttributedString()
-        
-        for time in explore.weeklySchedule.value {
-//            time.day.value.lowercased() == explore.timings.value?.day.value.lowercased() ? boldAttributes : normalAttributes
-            let attributes = normalAttributes
-            if time.dayStatus == .closed {
-                let status = time.day.value + ": " + "Closed"
-                let attributedStatus = NSAttributedString(string: status, attributes: attributes)
-                attributedTiming.append(attributedStatus)
-            } else {
-                let timingString = time.day.value + ": " + dateformatter.string(from: time.openingTime.value!) + " - " + dateformatter.string(from: time.closingTime.value!)
+        if explore.timingExpanded {
+            
+            let attributedPlaceholder = NSMutableAttributedString()
+            let attributedTiming = NSMutableAttributedString()
+            
+            for time in explore.weeklySchedule.value {
                 
-                let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
-                attributedTiming.append(attributedTime)
+                var attributes = time.day.value.lowercased() == explore.timings.value?.day.value.lowercased() ? boldAttributes : normalAttributes
                 
-            }
+                let leftAlignedParaStyle = NSMutableParagraphStyle()
+                leftAlignedParaStyle.lineSpacing = 5.0
+                leftAlignedParaStyle.alignment = .left
+                attributes[NSAttributedStringKey.paragraphStyle] = leftAlignedParaStyle
+                
+                let attributedDay = NSAttributedString(string: time.day.value, attributes: attributes)
+                attributedPlaceholder.append(attributedDay)
+                
+                let rightAlignedParaStyle = NSMutableParagraphStyle()
+                rightAlignedParaStyle.lineSpacing = 5.0
+                rightAlignedParaStyle.alignment = .center
+                attributes[NSAttributedStringKey.paragraphStyle] = rightAlignedParaStyle
+                
+                if time.dayStatus == .closed {
 
-            if time != explore.weeklySchedule.value.last {
-                let attributeNewLine = NSAttributedString(string: "\n", attributes: normalAttributes)
-                attributedTiming.append(attributeNewLine)
+                    let attributedStatus = NSAttributedString(string: "Closed", attributes: attributes)
+                    attributedTiming.append(attributedStatus)
+                    
+                } else {
+                    let timingString = dateformatter.string(from: time.openingTime.value!) + " - " + dateformatter.string(from: time.closingTime.value!)
+                    
+                    let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
+                    attributedTiming.append(attributedTime)
+                }
+                
+                if time != explore.weeklySchedule.value.last {
+                    let attributeNewLine = NSAttributedString(string: "\n", attributes: normalAttributes)
+                    attributedPlaceholder.append(attributeNewLine)
+                    attributedTiming.append(attributeNewLine)
+                }
+                
             }
+            
+            self.timingPlaceholderLabel.attributedText = attributedPlaceholder
+            self.timingsLabel.attributedText = attributedTiming
+            
+            self.showMoreTimingsButton.setTitle("Show Less", for: .normal)
+            
+        } else {
+            
+            if let timings = explore.timings.value {
+                if timings.dayStatus == .closed {
+                    self.timingPlaceholderLabel.text = timings.day.value
+                    self.timingsLabel.text = "Closed"
+                } else {
+                    let timingString = dateformatter.string(from: timings.openingTime.value!) + " - " + dateformatter.string(from: timings.closingTime.value!)
+                    self.timingPlaceholderLabel.text = timings.day.value
+                    self.timingsLabel.text = timingString
+                }
+                
+            } else {
+                self.timingPlaceholderLabel.text = "-"
+                self.timingsLabel.text = "-"
+            }
+        
+            self.showMoreTimingsButton.setTitle("Show More", for: .normal)
         }
         
-        self.timingsLabel.attributedText = attributedTiming
+        
 
         if explore.website.value == "" {
 //            self.websitePlaceholderLabel.isHidden = true
@@ -152,5 +195,9 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     
     @IBAction func directionsButtonTapped(sender: UIButton) {
         self.delegate.exploreAboutTableViewCell(cell: self, directionsButtonTapped: sender)
+    }
+    
+    @IBAction func showMoreButtonTapped(sender: UIButton) {
+        self.delegate.exploreAboutTableViewCell(cell: self, showButtonTapped: sender)
     }
 }

@@ -49,7 +49,7 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
         
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
-        dateformatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateformatter.timeZone = serverTimeZone
         
         if let openingDateTimeInfo = source["opening_time_modify"] as? [String : Any], let openingDateTime = openingDateTimeInfo["date"] as? String {
             self.openingTime.value = dateformatter.date(from: openingDateTime)

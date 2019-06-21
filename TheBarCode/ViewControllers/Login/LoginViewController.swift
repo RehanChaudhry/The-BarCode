@@ -142,8 +142,7 @@ class LoginViewController: UIViewController {
     //MARK: My IBActions
     
     @IBAction func fbSignInButtonTapped(sender: UIButton) {
-        Analytics.logEvent(signInFacebookClick, parameters: nil)
-        self.socialLogin()
+        
     }
     
     @IBAction func signInButtonTapped(sender: UIButton) {
@@ -234,122 +233,6 @@ extension LoginViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
             }
-        }
-    }
-    
-    func socialLogin() {
-        
-        let loginManager = FBSDKLoginManager()
-        let permissions = ["public_profile", "email"]
-        
-        self.fbSignInButton.showLoader()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-       
-        loginManager.logOut()
-        loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
-            
-            guard result?.isCancelled == false else {
-                debugPrint("Facebook login cancelled")
-                self.fbSignInButton.hideLoader()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                return
-            }
-            
-            guard error == nil else {
-                self.fbSignInButton.hideLoader()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
-                return
-            }
-            
-            let params = ["fields": "id, name, email, picture.width(180).height(180)"]
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
-            graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
-                
-                guard error == nil else {
-                    self.fbSignInButton.hideLoader()
-                    UIApplication.shared.endIgnoringInteractionEvents()
-                    self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
-                    return
-                }
-                
-                if let result = graphRequestResult as? [String : Any] {
-                    
-                    let socialAccountId = "\(result["id"]!)"
-                    let fullName = result["name"] as! String
-                    let profileImage = "https://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
-                    let accessToken = FBSDKAccessToken.current()!.tokenString
-                    let email = result["email"] as? String
-                    
-                    var socialLoginParams = ["social_account_id" : socialAccountId,
-                                             "full_name" : fullName,
-                                             "profile_image" : profileImage,
-                                             "access_token" : accessToken!]
-                    if let email = email {
-                        socialLoginParams["email"] = email
-                    }
-                    
-                    let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
-                        
-                        guard error == nil else {
-                            self.fbSignInButton.hideLoader()
-                            UIApplication.shared.endIgnoringInteractionEvents()
-                            self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
-                            return
-                        }
-                        
-                        guard serverError == nil else {
-                            
-                            self.fbSignInButton.hideLoader()
-                            UIApplication.shared.endIgnoringInteractionEvents()
-                            
-                            if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
-                                
-                                let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
-                                signUpViewController.socialAccountId = socialAccountId
-                                let _ = signUpViewController.view
-                                self.navigationController?.pushViewController(signUpViewController, animated: true)
-                                
-                                let name = result["name"] as! String
-                                if let email = result["email"] as? String {
-                                    signUpViewController.emailFieldView.textField.text = email
-                                }
-                                
-                                signUpViewController.fullNameFieldView.textField.text = name
-                            } else {
-                                self.showAlertController(title: "Facebook Login", msg: serverError!.errorMessages())
-                            }
-                            
-                            return
-                        }
-                        
-                        let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-                        if let responseUser = (responseDict?["data"] as? [String : Any]) {
-                            
-                            let user = Utility.shared.saveCurrentUser(userDict: responseUser)
-                            APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
-                            
-                            self.userVerifiedSuccessfully(canShowReferral: false)
-                            
-                            Analytics.logEvent(createAccountViaFacebook, parameters:nil)
-
-                        } else {
-                            let genericError = APIHelper.shared.getGenericError()
-                            self.showAlertController(title: "", msg: genericError.localizedDescription)
-                        }
-                        
-                        self.fbSignInButton.hideLoader()
-                        UIApplication.shared.endIgnoringInteractionEvents()
-                        
-                    })
-                    
-                } else {
-                    self.fbSignInButton.hideLoader()
-                    UIApplication.shared.endIgnoringInteractionEvents()
-                    self.showAlertController(title: "", msg: "Unknown error occurred")
-                }
-            })
-            
         }
     }
     

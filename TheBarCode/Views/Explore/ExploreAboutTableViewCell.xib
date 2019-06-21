@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,7 +42,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_contact" translatesAutoresizingMaskIntoConstraints="NO" id="4Br-wZ-XJv">
-                        <rect key="frame" x="16" y="315" width="16" height="16"/>
+                        <rect key="frame" x="16" y="328" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="HWj-HH-F1L"/>
                             <constraint firstAttribute="height" constant="16" id="PUP-ky-RJ8"/>
@@ -63,8 +63,8 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQZ-hh-5Hh">
-                        <rect key="frame" x="40" y="260" width="264" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQZ-hh-5Hh">
+                        <rect key="frame" x="40" y="260" width="224.5" height="34"/>
                         <string key="text">Monday To Saturday - 12:00 -24:00
 Sunday - 12:00 - 22:00</string>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -78,13 +78,13 @@ Sunday - 12:00 - 22:00</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxM-Yh-W57">
-                        <rect key="frame" x="40" y="314.5" width="103" height="17"/>
+                        <rect key="frame" x="40" y="327.5" width="103" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                         <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Na3-14-dTn">
-                        <rect key="frame" x="40" y="352" width="89" height="17"/>
+                        <rect key="frame" x="40" y="365" width="89" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="fy9-QU-HlI"/>
                         </constraints>
@@ -93,7 +93,7 @@ Sunday - 12:00 - 22:00</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3T-fZ-hrt">
-                        <rect key="frame" x="137" y="351.5" width="167" height="29"/>
+                        <rect key="frame" x="137" y="364.5" width="167" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="jZC-U1-5IZ"/>
@@ -107,13 +107,13 @@ Sunday - 12:00 - 22:00</string>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="yeoldefightingcocks.co.uk" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Vd-yV-E3a">
-                        <rect key="frame" x="137" y="351.5" width="167" height="17"/>
+                        <rect key="frame" x="137" y="364.5" width="167" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs9-GE-FgW">
-                        <rect key="frame" x="137" y="383" width="167" height="29"/>
+                        <rect key="frame" x="137" y="396" width="167" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="nRj-Us-CkJ"/>
@@ -127,25 +127,25 @@ Sunday - 12:00 - 22:00</string>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="01727 869152" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHh-cy-EnE">
-                        <rect key="frame" x="138" y="383" width="166" height="17"/>
+                        <rect key="frame" x="138" y="396" width="166" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZs-MP-7ap">
-                        <rect key="frame" x="40" y="383" width="89" height="17"/>
+                        <rect key="frame" x="40" y="396" width="89" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Email Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ded-Jh-c3F">
-                        <rect key="frame" x="40" y="415" width="89" height="17"/>
+                        <rect key="frame" x="40" y="428" width="89" height="4"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2NQ-pw-aAJ">
-                        <rect key="frame" x="40" y="447" width="89" height="17"/>
+                        <rect key="frame" x="40" y="460" width="89" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -157,7 +157,7 @@ Sunday - 12:00 - 22:00</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPn-zR-PNb">
-                        <rect key="frame" x="137" y="415" width="167" height="29"/>
+                        <rect key="frame" x="137" y="428" width="167" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="3gk-d2-hyQ"/>
@@ -171,7 +171,7 @@ Sunday - 12:00 - 22:00</string>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="reservations@yofcltd.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VtQ-gi-lNY">
-                        <rect key="frame" x="138" y="415" width="166" height="17"/>
+                        <rect key="frame" x="138" y="428" width="166" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -191,12 +191,33 @@ Sunday - 12:00 - 22:00</string>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8k-WQ-Yey">
-                        <rect key="frame" x="130" y="344" width="1" height="170"/>
+                        <rect key="frame" x="130" y="357" width="1" height="157"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="kV8-qo-uCj"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oI-IK-CdD">
+                        <rect key="frame" x="271" y="260" width="33" height="34"/>
+                        <string key="text">Label
+test</string>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENN-Eb-A0s">
+                        <rect key="frame" x="125" y="296" width="70" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="d9O-X2-Y3s"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <state key="normal" title="Show more">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="showMoreButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LI4-AR-29w"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="B8k-WQ-Yey" firstAttribute="top" secondItem="4Br-wZ-XJv" secondAttribute="bottom" constant="13" id="1I8-h9-eR3"/>
@@ -210,6 +231,7 @@ Sunday - 12:00 - 22:00</string>
                     <constraint firstItem="tPn-zR-PNb" firstAttribute="top" secondItem="VtQ-gi-lNY" secondAttribute="top" id="CSk-CO-joQ"/>
                     <constraint firstItem="2Vd-yV-E3a" firstAttribute="leading" secondItem="B8k-WQ-Yey" secondAttribute="trailing" constant="6" id="Ga6-IZ-xq0"/>
                     <constraint firstItem="Ded-Jh-c3F" firstAttribute="top" secondItem="mHh-cy-EnE" secondAttribute="bottom" constant="15" id="HE3-vK-wva"/>
+                    <constraint firstItem="ENN-Eb-A0s" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="IZ9-xB-bVt"/>
                     <constraint firstItem="B8k-WQ-Yey" firstAttribute="leading" secondItem="Na3-14-dTn" secondAttribute="trailing" constant="1" id="LpZ-BM-hng"/>
                     <constraint firstAttribute="trailing" secondItem="tPn-zR-PNb" secondAttribute="trailing" constant="16" id="Ooh-kN-WP2"/>
                     <constraint firstAttribute="trailing" secondItem="5LA-UJ-j43" secondAttribute="trailing" constant="16" id="Ov8-rR-bhk"/>
@@ -220,9 +242,11 @@ Sunday - 12:00 - 22:00</string>
                     <constraint firstAttribute="bottom" secondItem="B8k-WQ-Yey" secondAttribute="bottom" constant="16.5" id="TVb-O8-LSQ"/>
                     <constraint firstAttribute="trailing" secondItem="E3T-fZ-hrt" secondAttribute="trailing" constant="16" id="VVH-8e-B8I"/>
                     <constraint firstItem="2NQ-pw-aAJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="WOP-nk-8Hr"/>
+                    <constraint firstAttribute="trailing" secondItem="0oI-IK-CdD" secondAttribute="trailing" constant="16" id="WQt-ez-HLb"/>
                     <constraint firstItem="YQO-1k-7ft" firstAttribute="leading" secondItem="B8k-WQ-Yey" secondAttribute="trailing" constant="6" id="X3L-7l-X77"/>
                     <constraint firstItem="mHh-cy-EnE" firstAttribute="top" secondItem="2Vd-yV-E3a" secondAttribute="bottom" constant="14.5" id="Xhq-TI-Otr"/>
                     <constraint firstItem="lRp-dB-lai" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="YtD-f7-kW1"/>
+                    <constraint firstItem="0oI-IK-CdD" firstAttribute="top" secondItem="6Ez-wl-zo8" secondAttribute="bottom" constant="20.5" id="ZG7-to-KQH"/>
                     <constraint firstItem="2NQ-pw-aAJ" firstAttribute="top" secondItem="VtQ-gi-lNY" secondAttribute="bottom" constant="15" id="a6s-JE-4av"/>
                     <constraint firstItem="B8k-WQ-Yey" firstAttribute="leading" secondItem="2NQ-pw-aAJ" secondAttribute="trailing" constant="1" id="b70-IE-WW0"/>
                     <constraint firstItem="4Br-wZ-XJv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="bxa-k0-sAq"/>
@@ -247,14 +271,16 @@ Sunday - 12:00 - 22:00</string>
                     <constraint firstItem="VtQ-gi-lNY" firstAttribute="leading" secondItem="B8k-WQ-Yey" secondAttribute="trailing" constant="7" id="oQn-Tj-yfj"/>
                     <constraint firstItem="Ded-Jh-c3F" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="orj-ZD-etN"/>
                     <constraint firstItem="bs9-GE-FgW" firstAttribute="top" secondItem="mHh-cy-EnE" secondAttribute="top" id="q9R-os-eny"/>
+                    <constraint firstItem="4Br-wZ-XJv" firstAttribute="top" secondItem="0oI-IK-CdD" secondAttribute="bottom" constant="34" id="sBV-Sg-XvA"/>
+                    <constraint firstItem="0oI-IK-CdD" firstAttribute="leading" secondItem="cQZ-hh-5Hh" secondAttribute="trailing" constant="6.5" id="t2k-3x-Cgg"/>
                     <constraint firstItem="2Vd-yV-E3a" firstAttribute="top" secondItem="4Br-wZ-XJv" secondAttribute="bottom" constant="20.5" id="trG-pj-y0H"/>
+                    <constraint firstItem="ENN-Eb-A0s" firstAttribute="top" secondItem="cQZ-hh-5Hh" secondAttribute="bottom" constant="2" id="uRq-fW-2IK"/>
                     <constraint firstItem="IxM-Yh-W57" firstAttribute="leading" secondItem="4Br-wZ-XJv" secondAttribute="trailing" constant="8" id="uoy-Wc-62Q"/>
                     <constraint firstItem="IxM-Yh-W57" firstAttribute="centerY" secondItem="4Br-wZ-XJv" secondAttribute="centerY" id="vE8-qS-q0C"/>
                     <constraint firstItem="5LA-UJ-j43" firstAttribute="top" secondItem="gPI-8c-fzG" secondAttribute="bottom" constant="20" id="w6h-YH-JI2"/>
                     <constraint firstItem="bs9-GE-FgW" firstAttribute="leading" secondItem="B8k-WQ-Yey" secondAttribute="trailing" constant="6" id="wzA-h3-JCQ"/>
-                    <constraint firstItem="4Br-wZ-XJv" firstAttribute="top" secondItem="cQZ-hh-5Hh" secondAttribute="bottom" constant="21" id="xeh-kX-enT"/>
+                    <constraint firstItem="4Br-wZ-XJv" firstAttribute="top" secondItem="cQZ-hh-5Hh" secondAttribute="bottom" constant="34" id="xeh-kX-enT"/>
                     <constraint firstItem="Na3-14-dTn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="yqW-gM-hJs"/>
-                    <constraint firstAttribute="trailing" secondItem="cQZ-hh-5Hh" secondAttribute="trailing" constant="16" id="zIN-3N-Ra6"/>
                     <constraint firstItem="QFq-5j-CVk" firstAttribute="leading" secondItem="6Ez-wl-zo8" secondAttribute="trailing" constant="8" id="zJL-ac-w72"/>
                     <constraint firstAttribute="bottom" secondItem="YQO-1k-7ft" secondAttribute="bottom" constant="24.5" id="zop-28-n9J"/>
                 </constraints>
@@ -273,7 +299,9 @@ Sunday - 12:00 - 22:00</string>
                 <outlet property="phoneNumberLabel" destination="mHh-cy-EnE" id="pzZ-fq-fJ5"/>
                 <outlet property="phoneNumberLabelTop" destination="Xhq-TI-Otr" id="mIc-Oe-qaD"/>
                 <outlet property="phonePlaceholderLabelTop" destination="nXI-5a-DvL" id="C2X-e9-AaI"/>
-                <outlet property="timingsLabel" destination="cQZ-hh-5Hh" id="yBN-zn-27E"/>
+                <outlet property="showMoreTimingsButton" destination="ENN-Eb-A0s" id="7d3-ZA-niv"/>
+                <outlet property="timingPlaceholderLabel" destination="cQZ-hh-5Hh" id="uAM-92-lvX"/>
+                <outlet property="timingsLabel" destination="0oI-IK-CdD" id="TFK-ld-djP"/>
                 <outlet property="websiteButton" destination="E3T-fZ-hrt" id="Dau-du-fWg"/>
                 <outlet property="websiteButtonHeight" destination="jZC-U1-5IZ" id="OUT-Oh-ipK"/>
                 <outlet property="websiteLabel" destination="2Vd-yV-E3a" id="BUn-6L-hMc"/>

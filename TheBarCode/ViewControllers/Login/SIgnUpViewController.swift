@@ -30,6 +30,13 @@ enum Gender: String {
     }
 }
 
+enum SignUpProvider: String {
+    case facebook = "facebook",
+    instagram = "instagram",
+    email = "email",
+    contactNumber = "contact_number"
+}
+
 class SIgnUpViewController: UIViewController {
 
     @IBOutlet var scrollView: UIScrollView!
@@ -43,6 +50,13 @@ class SIgnUpViewController: UIViewController {
     @IBOutlet var termsPolicyTextView: UITextView!
     
     @IBOutlet var contentHeight: NSLayoutConstraint!
+    
+    @IBOutlet var dobNextBarButton: UIBarButtonItem!
+    @IBOutlet var dobFlexibleSpace: UIBarButtonItem!
+    @IBOutlet var dobPrevBarButton: UIBarButtonItem!
+    @IBOutlet var dobDoneBarButton: UIBarButtonItem!
+    
+    @IBOutlet var dobToolBar: UIToolbar!
     
     var fullNameFieldView: FieldView!
     var emailFieldView: FieldView!
@@ -66,16 +80,23 @@ class SIgnUpViewController: UIViewController {
     
     var genders: [Gender] = [Gender.male, Gender.female]
     
-    var socialAccountId: String?
-    var mobileSignUp: Bool = false
     var phoneNo: String = ""
     
     var phoneNoFieldView: FieldView!
+    
+    var signupProvider: SignUpProvider!
+    
+    var facebookParams: (socialId: String, accessToken: String)?
+    var instagramParams: (socialId: String, accessToken: String, profileImage: String)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if self.signupProvider == .facebook || self.signupProvider == .instagram {
+            self.dobToolBar.setItems([self.dobNextBarButton, self.dobFlexibleSpace, self.dobDoneBarButton], animated: false)
+        }
         
         self.fbSignUpButton.updateAcivityIndicatorColor(color: UIColor.white)
         
@@ -128,12 +149,15 @@ class SIgnUpViewController: UIViewController {
         self.fullNameFieldView.setUpFieldView(placeholder: "FULL NAME", fieldPlaceholder: "Enter your full name", iconImage: nil)
         self.fullNameFieldView.setKeyboardType()
         self.fullNameFieldView.setReturnKey(returnKey: .next)
-        self.contentView.addSubview(self.fullNameFieldView)
         
-        self.fullNameFieldView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView, withOffset: 24.0)
-        self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
-        self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
-        self.fullNameFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        if self.signupProvider == .contactNumber || self.signupProvider == .email {
+            self.contentView.addSubview(self.fullNameFieldView)
+            
+            self.fullNameFieldView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView, withOffset: 24.0)
+            self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            self.fullNameFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+            self.fullNameFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        }
         
         self.emailFieldView = FieldView.loadFromNib()
         self.emailFieldView.setUpFieldView(placeholder: "EMAIL ADDRESS", fieldPlaceholder: "Enter your email address", iconImage: nil)
@@ -153,15 +177,14 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView.setReturnKey(returnKey: .next)
         self.passwordFieldView.makeSecure(secure: true)
         
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             self.contentView.addSubview(self.phoneNoFieldView)
             
             self.phoneNoFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
             self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.phoneNoFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.phoneNoFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
-            
-        } else {
+        } else if self.signupProvider == .email {
             self.contentView.addSubview(self.emailFieldView)
             
             self.emailFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.fullNameFieldView, withOffset: 5.0)
@@ -175,9 +198,8 @@ class SIgnUpViewController: UIViewController {
             self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.passwordFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.passwordFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
-            
         }
-        
+    
         self.dobFieldView = FieldView.loadFromNib()
         self.dobFieldView.delegate = self
         self.dobFieldView.fieldRight.constant = 8.0
@@ -186,10 +208,12 @@ class SIgnUpViewController: UIViewController {
         self.dobFieldView.setKeyboardType(inputView: self.dateInputView)
         self.contentView.addSubview(self.dobFieldView)
         
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
-        } else {
+        } else if self.signupProvider == .email {
             self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        } else {
+            self.dobFieldView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView, withOffset: 24.0)
         }
         
         self.dobFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
@@ -204,10 +228,12 @@ class SIgnUpViewController: UIViewController {
         self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
-        } else {
+        } else if self.signupProvider == .email {
             self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.passwordFieldView, withOffset: 5.0)
+        } else {
+            self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView, withOffset: 24.0)
         }
         
         self.genderFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
@@ -269,7 +295,7 @@ class SIgnUpViewController: UIViewController {
             self.fullNameFieldView.reset()
         }
         
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             let text = self.phoneNoFieldView.textField.text!
             let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
             
@@ -279,8 +305,7 @@ class SIgnUpViewController: UIViewController {
             } else {
                 self.phoneNoFieldView.reset()
             }
-            
-        } else {
+        } else if self.signupProvider == .email {
             if !self.emailFieldView.textField.text!.isValidEmail() {
                 isValid = false
                 self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
@@ -295,7 +320,7 @@ class SIgnUpViewController: UIViewController {
                 self.passwordFieldView.reset()
             }
         }
-        
+
         let age = Calendar.current.dateComponents([.year], from: self.selectedDob, to: Date()).year
         
         if self.dobFieldView.textField.text!.count == 0 {
@@ -320,11 +345,11 @@ class SIgnUpViewController: UIViewController {
     
     @objc func textFieldDidEndOnExit(sender: UITextField) {
         
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             if sender == self.fullNameFieldView.textField {
                 self.dobFieldView.textField.becomeFirstResponder()
             }
-        } else {
+        } else if self.signupProvider == .email {
             if sender == self.fullNameFieldView.textField {
                 self.emailFieldView.textField.becomeFirstResponder()
             } else if sender == self.emailFieldView.textField {
@@ -332,9 +357,9 @@ class SIgnUpViewController: UIViewController {
             } else if sender == self.passwordFieldView.textField {
                 self.dobFieldView.textField.becomeFirstResponder()
             }
+        } else {
+
         }
-        
-        
     }
     
     func updateGenderField() {
@@ -356,9 +381,9 @@ class SIgnUpViewController: UIViewController {
     }
     
     func showVerificationController() {
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             self.showMobileVerificationController()
-        } else {
+        } else if self.signupProvider == .email {
             self.showEmailVerificationController()
         }
     }
@@ -385,25 +410,30 @@ class SIgnUpViewController: UIViewController {
         self.present(verificationController, animated: true, completion: nil)
     }
     
+    func showCustomAlert(title: String, message: String) {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = message
+        cannotRedeemViewController.titleText = title
+        cannotRedeemViewController.headerImageName = "login_intro_finder_5"
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.delegate = self
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func fbSignUpButtonTapped(sender: UIButton) {
-        Analytics.logEvent(signUpFacebookClick, parameters: nil)
-        self.socialSignUp()
+        
     }
     
     @IBAction func createAccountButtonTapped(sender: UIButton) {
         self.view.endEditing(true)
         
         if self.isDataValid() {
-            if mobileSignUp ||  self.socialAccountId != nil {
-                self.signUp()
+            if self.signupProvider == .email {
+                self.showCustomAlert(title: "Info", message: "If you don’t receive your email code, use SMS.")
             } else {
-                let alertController = UIAlertController(title: "Info", message: "If you don’t receive your email code, use SMS.", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-                    self.signUp()
-                }))
-                self.present(alertController, animated: true, completion: nil)
+                self.signUp()
             }
         }
     }
@@ -419,17 +449,21 @@ class SIgnUpViewController: UIViewController {
     }
     
     @IBAction func previousBarButtonTapped(sender: UIBarButtonItem) {
-        if self.mobileSignUp {
+        if self.signupProvider == .contactNumber {
             if self.genderFieldView.textField.isFirstResponder {
                 self.dobFieldView.textField.becomeFirstResponder()
             } else if self.dobFieldView.textField.isFirstResponder {
                 self.fullNameFieldView.textField.becomeFirstResponder()
             }
-        } else {
+        } else if self.signupProvider == .email {
             if self.genderFieldView.textField.isFirstResponder {
                 self.dobFieldView.textField.becomeFirstResponder()
             } else if self.dobFieldView.textField.isFirstResponder {
                 self.passwordFieldView.textField.becomeFirstResponder()
+            }
+        } else {
+            if self.genderFieldView.textField.isFirstResponder {
+                self.dobFieldView.textField.becomeFirstResponder()
             }
         }
     }
@@ -562,32 +596,38 @@ extension SIgnUpViewController {
         let dob = Utility.shared.serverDateFormattedString(date: self.selectedDob)
         
         var params = ["full_name" : fullName,
-                      "date_of_birth" : dob]
+                      "date_of_birth" : dob,
+                      "provider" : self.signupProvider.rawValue]
         
-        if self.mobileSignUp {
-            
+        if self.signupProvider == .contactNumber {
             let text = self.phoneNoFieldView.textField.text!
             let mobileNumber = text.unformat("XNN NNNN NNNNNN", oldString: text)
             
             params["contact_number"] = mobileNumber
-        } else {
             
+        } else if self.signupProvider == .email {
             let email = self.emailFieldView.textField.text!
             let password = self.passwordFieldView.textField.text!
             
             params["email"] = email
             params["password"] = password
-        }
-        
-        params["gender"] =  self.selectedGender != Gender.other  ? gender : ""
-        
-        if let socialAccountId = self.socialAccountId, let accessToken = FBSDKAccessToken.current()?.tokenString {
-            params["social_account_id"] = socialAccountId
-            params["access_token"] = accessToken
+        } else if self.signupProvider == .facebook {
             
-            let profileImage = "https://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
+            params["access_token"] = self.facebookParams!.accessToken
+            params["social_account_id"] = self.facebookParams!.socialId
+            
+            let profileImage = "https://graph.facebook.com/\(self.facebookParams!.socialId)/picture?width=200&height=200"
             params["profile_image"] = profileImage
+            
+        } else if self.signupProvider == .instagram {
+            
+            params["access_token"] = self.instagramParams!.accessToken
+            params["social_account_id"] = self.instagramParams!.socialId
+            params["profile_image"] = self.instagramParams!.profileImage
+            
         }
+
+        params["gender"] =  self.selectedGender != Gender.other ? gender : ""
         
         self.signUpButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
@@ -614,68 +654,32 @@ extension SIgnUpViewController {
                 self.userVerifiedSuccessfully(canShowReferral: true)
                 
             } else {
-                let eventName = self.mobileSignUp ? createAccountViaMobile : createAccountViaEmail
+                var eventName = ""
+                if self.signupProvider == .email {
+                    eventName = createAccountViaEmail
+                } else if self.signupProvider == .contactNumber {
+                    eventName = createAccountViaMobile
+                } else if self.signupProvider == .facebook {
+                    eventName = createAccountViaFacebook
+                } else if self.signupProvider == .instagram {
+                    eventName = createAccountViaInstagram
+                }
+
                 Analytics.logEvent(eventName, parameters: nil)
                 self.showVerificationController()
             }
         }
         
     }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension SIgnUpViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        self.signUp()
+    }
     
-    func socialSignUp() {
-        
-        
-        let loginManager = FBSDKLoginManager()
-        let permissions = ["public_profile", "email"]
-        
-        self.fbSignUpButton.showLoader()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        loginManager.logOut()
-        loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
-            
-            guard result?.isCancelled == false else {
-                debugPrint("Facebook login cancelled")
-                self.fbSignUpButton.hideLoader()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                return
-            }
-            
-            guard error == nil else {
-                self.fbSignUpButton.hideLoader()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
-                return
-            }
-            
-            let params = ["fields": "id, name, email, picture.width(180).height(180)"]
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
-            graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
-                
-                self.fbSignUpButton.hideLoader()
-                UIApplication.shared.endIgnoringInteractionEvents()
-                
-                guard error == nil else {
-                    self.showAlertController(title: "Facebook Login", msg: error!.localizedDescription)
-                    return
-                }
-                
-                if let result = graphRequestResult as? [String : Any] {
-                    
-                    self.fullNameFieldView.textField.text = (result["name"] as! String)
-                    self.socialAccountId = "\(result["id"]!)"
-                    
-                    if let email = result["email"] as? String {
-                        self.emailFieldView.textField.text = email
-                    }
-                    
-                    Analytics.logEvent(createAccountViaFacebook, parameters: nil)
-                    
-                } else {
-                    self.showAlertController(title: "", msg: "Unknown error occurred")
-                }
-            })
-            
-        }
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        self.signUp()
     }
 }

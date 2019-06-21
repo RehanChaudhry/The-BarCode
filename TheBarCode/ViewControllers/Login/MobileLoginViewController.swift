@@ -192,7 +192,7 @@ extension MobileLoginViewController {
             guard serverError == nil else {
                 if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
                     let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
-                    signUpViewController.mobileSignUp = true
+                    signUpViewController.signupProvider = .contactNumber
                     signUpViewController.phoneNo = text
                     self.navigationController?.pushViewController(signUpViewController, animated: true)
                 } else {

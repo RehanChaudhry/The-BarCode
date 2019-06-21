@@ -37,20 +37,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let v1Schema = CoreStoreSchema(
-            modelVersion: "V1",
+            modelVersion: "V2",
             entities: [
                 Entity<V1.User>("User")
             ]
         )
     
-        let schemaHistory = SchemaHistory(allSchema: [v1Schema], migrationChain: ["V1"])
+        let schemaHistory = SchemaHistory(allSchema: [v1Schema], migrationChain: ["V2"])
         
         let persistantDataStack = DataStack(schemaHistory: schemaHistory)
         CoreStore.defaultStack = persistantDataStack
         
         let localStorage = SQLiteStore(fileName: "TheBarCode.sqlite", localStorageOptions: .allowSynchronousLightweightMigration)
         
-        let currentVersion = "V1"
+        let currentVersion = "V2"
         let lastVersion = UserDefaults.standard.string(forKey: "storeversion") ?? ""
         if FileManager.default.fileExists(atPath: localStorage.fileURL.path), lastVersion != currentVersion {
             do {

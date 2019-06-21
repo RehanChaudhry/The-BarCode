@@ -14,12 +14,15 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import CoreStore
 import FirebaseAnalytics
+import UIColor_Hex_Swift
+import Alamofire
 
 class LoginViaViewController: UIViewController {
 
     @IBOutlet var fbButton: LoadingButton!
     @IBOutlet var emailButton: UIButton!
     @IBOutlet var mobileButton: GradientButton!
+    @IBOutlet var instaSignInButton: GradientButton!
     
     var forSignUp: Bool = false
     
@@ -35,6 +38,13 @@ class LoginViaViewController: UIViewController {
         self.mobileButton.buttonStandardOfferType = .platinum
         self.mobileButton.updateColor(withGrey: false)
         
+        let instagramColors = [UIColor("#405de6"), UIColor("#5851db"), UIColor("#833ab4"), UIColor("#c13584"), UIColor("#e1306c"), UIColor("#fd1d1d")]
+        self.instaSignInButton.updateGradient(colors: instagramColors, locations: nil, direction: .right)
+        
+        if let imageView = self.instaSignInButton.imageView {
+            self.instaSignInButton.bringSubview(toFront: imageView)
+        }
+        
         self.addBackButton()
         
         if self.forSignUp {
@@ -44,6 +54,7 @@ class LoginViaViewController: UIViewController {
             self.fbButton.setTitle("Sign up with Facebook", for: .normal)
             self.emailButton.setTitle("Sign up with Email", for: .normal)
             self.mobileButton.setTitle("Sign up with Mobile", for: .normal)
+            self.instaSignInButton.setTitle("Sign up with Instagram", for: .normal)
         } else {
             
             self.title = "Sign in"
@@ -51,6 +62,7 @@ class LoginViaViewController: UIViewController {
             self.fbButton.setTitle("Sign in with Facebook", for: .normal)
             self.emailButton.setTitle("Sign in with Email", for: .normal)
             self.mobileButton.setTitle("Sign in with Mobile", for: .normal)
+            self.instaSignInButton.setTitle("Sign in with Instagram", for: .normal)
         }
     }
     
@@ -60,6 +72,9 @@ class LoginViaViewController: UIViewController {
         if segue.identifier == "LoginViaToMobileSignInSegue" {
             let mobileLoginController = segue.destination as! MobileLoginViewController
             mobileLoginController.forSignUp = self.forSignUp
+        } else if segue.identifier == "LoginViaToSignUpWithEmailSegue" {
+            let signupController = segue.destination as! SIgnUpViewController
+            signupController.signupProvider = .email
         }
     }
     
@@ -67,7 +82,7 @@ class LoginViaViewController: UIViewController {
     func socialLogin() {
         
         let loginManager = FBSDKLoginManager()
-        let permissions = ["public_profile", "email"]
+        let permissions = ["public_profile"]
         
         self.fbButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
@@ -89,7 +104,7 @@ class LoginViaViewController: UIViewController {
                 return
             }
             
-            let params = ["fields": "id, name, email, picture.width(180).height(180)"]
+            let params = ["fields": "id, name, picture.width(180).height(180)"]
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
             graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
                 
@@ -106,15 +121,12 @@ class LoginViaViewController: UIViewController {
                     let fullName = result["name"] as! String
                     let profileImage = "https://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
                     let accessToken = FBSDKAccessToken.current()!.tokenString
-                    let email = result["email"] as? String
                     
-                    var socialLoginParams = ["social_account_id" : socialAccountId,
+                    let socialLoginParams = ["social_account_id" : socialAccountId,
                                              "full_name" : fullName,
                                              "profile_image" : profileImage,
-                                             "access_token" : accessToken!]
-                    if let email = email {
-                        socialLoginParams["email"] = email
-                    }
+                                             "access_token" : accessToken!,
+                                             "provider" : SignUpProvider.facebook.rawValue]
                     
                     let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
                         
@@ -131,17 +143,13 @@ class LoginViaViewController: UIViewController {
                             UIApplication.shared.endIgnoringInteractionEvents()
                             
                             if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
-                                
                                 let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
-                                signUpViewController.socialAccountId = socialAccountId
+                                signUpViewController.facebookParams = (socialAccountId, FBSDKAccessToken.current()!.tokenString)
+                                signUpViewController.signupProvider = .facebook
                                 let _ = signUpViewController.view
                                 self.navigationController?.pushViewController(signUpViewController, animated: true)
                                 
                                 let name = result["name"] as! String
-                                if let email = result["email"] as? String {
-                                    signUpViewController.emailFieldView.textField.text = email
-                                }
-                                
                                 signUpViewController.fullNameFieldView.textField.text = name
                             } else {
                                 self.showAlertController(title: "Facebook Login", msg: serverError!.errorMessages())
@@ -179,6 +187,93 @@ class LoginViaViewController: UIViewController {
                 }
             })
             
+        }
+    }
+    
+    func instaLogin(accessToken: String) {
+        
+        self.instaSignInButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let params = ["access_token" : accessToken]
+        let apiUrl = INSTAGRAM_IDS.INSTAGRAM_APIURl + "self"
+        let _ = Alamofire.request(apiUrl, method: .get, parameters: params, encoding: URLEncoding.methodDependent, headers: nil).responseJSON { (result) in
+            
+            guard result.error == nil else {
+                self.instaSignInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                return
+            }
+            
+            let response = result.result.value as? [String : Any]
+            let responseData = response?["data"] as? [String : Any]
+            
+            if let instaId = responseData?["id"] as? String,
+                let fullName = responseData?["full_name"] as? String {
+                
+                let profilePic = (responseData?["profile_picture"] as? String) ?? ""
+                let socialLoginParams = ["social_account_id" : instaId,
+                                         "full_name" : fullName,
+                                         "profile_image" : profilePic,
+                                         "access_token" : accessToken,
+                                         "provider" : SignUpProvider.instagram.rawValue]
+                
+                let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
+                    
+                    guard error == nil else {
+                        self.instaSignInButton.hideLoader()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        self.showAlertController(title: "Instagram Login", msg: error!.localizedDescription)
+                        return
+                    }
+                    
+                    guard serverError == nil else {
+                        
+                        self.instaSignInButton.hideLoader()
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        
+                        if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                            let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
+                            signUpViewController.signupProvider = .instagram
+                            signUpViewController.instagramParams = (instaId, accessToken, profilePic)
+                            let _ = signUpViewController.view
+                            self.navigationController?.pushViewController(signUpViewController, animated: true)
+                            
+                            signUpViewController.fullNameFieldView.textField.text = fullName
+                        } else {
+                            self.showAlertController(title: "Instagram Login", msg: serverError!.errorMessages())
+                        }
+                        
+                        return
+                    }
+                    
+                    let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+                    if let responseUser = (responseDict?["data"] as? [String : Any]) {
+                        
+                        let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                        APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+                        
+                        self.userVerifiedSuccessfully(canShowReferral: false)
+                        
+                        if self.forSignUp {
+                            Analytics.logEvent(createAccountViaInstagram, parameters:nil)
+                        }
+                        
+                    } else {
+                        let genericError = APIHelper.shared.getGenericError()
+                        self.showAlertController(title: "", msg: genericError.localizedDescription)
+                    }
+                    
+                    self.fbButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    
+                })
+                
+            } else {
+                self.instaSignInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.showAlertController(title: "", msg: "Unknown response received")
+            }
         }
     }
     
@@ -333,5 +428,31 @@ class LoginViaViewController: UIViewController {
         Analytics.logEvent(eventName, parameters: nil)
         
         self.performSegue(withIdentifier: "LoginViaToMobileSignInSegue", sender: nil)
+    }
+    
+    @IBAction func instagramButtonTapped(sender: UIButton) {
+        
+        let cookieJar : HTTPCookieStorage = HTTPCookieStorage.shared
+        for cookie in cookieJar.cookies! as [HTTPCookie] {
+            debugPrint("cookie.domain = %@", cookie.domain)
+            if cookie.domain.contains("instagram.com") {
+                cookieJar.deleteCookie(cookie)
+            }
+        }
+        
+        
+        let instaNavController = self.storyboard?.instantiateViewController(withIdentifier: "InstagramLoginNavController") as! UINavigationController
+        let instaSignInController = (instaNavController.viewControllers.first as! InstagramLoginViewController)
+        instaSignInController.delegate = self
+        instaSignInController.isSigningUp = self.forSignUp
+        self.present(instaNavController, animated: true, completion: nil)
+    }
+}
+
+//MARK: InstagramLoginViewControllerDelegate
+extension LoginViaViewController: InstagramLoginViewControllerDelegate {
+    func instagramLoginViewController(controller: InstagramLoginViewController, loggedInSuccessfully accessToke: String) {
+        debugPrint("insta accessToke: \(accessToke)")
+        self.instaLogin(accessToken: accessToke)
     }
 }

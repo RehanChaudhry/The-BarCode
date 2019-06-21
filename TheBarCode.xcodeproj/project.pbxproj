@@ -82,6 +82,7 @@
 		0C7477F5221ABE3F0057502F /* StandardOfferTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7477F3221ABE3F0057502F /* StandardOfferTypeCell.xib */; };
 		0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */; };
 		0C7B6E402192F2F40052D02C /* SharedOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */; };
+		0C8082E622B773C700793F4E /* InstagramLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */; };
 		0C854B9522804B7F00E2CECD /* EstablishmentTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */; };
 		0C8848652167370500DB222F /* UILableAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8848642167370500DB222F /* UILableAdditions.swift */; };
 		0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */; };
@@ -317,6 +318,7 @@
 		0C7477F3221ABE3F0057502F /* StandardOfferTypeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StandardOfferTypeCell.xib; sourceTree = "<group>"; };
 		0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOffersViewController.swift; sourceTree = "<group>"; };
+		0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginViewController.swift; sourceTree = "<group>"; };
 		0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentTiming.swift; sourceTree = "<group>"; };
 		0C8848642167370500DB222F /* UILableAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILableAdditions.swift; sourceTree = "<group>"; };
 		0C8BDCC62150C34400D5117B /* UIScrollViewAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewAdditions.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				0C955DD92149226A00F9385B /* ReferralViewController.swift */,
 				0C35F4D82236256100EC111C /* LoginViaViewController.swift */,
 				0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */,
+				0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1769,6 +1772,7 @@
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,
+				0C8082E622B773C700793F4E /* InstagramLoginViewController.swift in Sources */,
 				0C955DF02149317100F9385B /* StatefulCollectionView+State.swift in Sources */,
 				0C674F7722201C43002394F5 /* RibbonView.swift in Sources */,
 				0C955DBA2147896D00F9385B /* LoginIntroCollectionViewCell.swift in Sources */,

@@ -66,11 +66,16 @@ class BarDetailHeaderViewController: UIViewController {
         
         UIView.performWithoutAnimation {
             if let timings = self.bar.timings.value {
-                if timings.isOpen.value {
-                    self.statusButton.setTitle("Open", for: .normal)
+                if timings.dayStatus == .opened {
+                    if timings.isOpen.value {
+                        self.statusButton.setTitle("Open", for: .normal)
+                    } else {
+                        self.statusButton.setTitle("Closed", for: .normal)
+                    }
                 } else {
                     self.statusButton.setTitle("Closed", for: .normal)
                 }
+                
             } else {
                 self.statusButton.setTitle("Closed", for: .normal)
             }

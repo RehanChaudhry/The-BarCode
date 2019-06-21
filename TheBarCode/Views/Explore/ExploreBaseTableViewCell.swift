@@ -45,6 +45,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
         
         self.coverImageView.layer.cornerRadius = 8.0
         self.pagerView.layer.cornerRadius = 8.0
+        self.pagerView.isInfinite = true
         
         self.locationIconImageView.tintColor = UIColor.appBlueColor()
         self.locationIconImageView.image = #imageLiteral(resourceName: "icon_map").withRenderingMode(.alwaysTemplate)
@@ -101,11 +102,16 @@ class ExploreBaseTableViewCell: UITableViewCell {
     func setupStatus(explore: Explore) {
         UIView.performWithoutAnimation {
             if let timings = explore.timings.value {
-                if timings.isOpen.value {
-                    self.statusButton.setTitle("Open", for: .normal)
+                if timings.dayStatus == .opened {
+                    if timings.isOpen.value {
+                        self.statusButton.setTitle("Open", for: .normal)
+                    } else {
+                        self.statusButton.setTitle("Closed", for: .normal)
+                    }
                 } else {
                     self.statusButton.setTitle("Closed", for: .normal)
                 }
+                
             } else {
                 self.statusButton.setTitle("Closed", for: .normal)
             }

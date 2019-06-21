@@ -47,6 +47,14 @@ enum V1 {
         var email = Value.Optional<String>("email_id")
         var mobileNumber = Value.Optional<String>("mobile_number")
         
+        var providerRaw = Value.Required<String>("signup_provider", initial: "")
+        
+        var provider: SignUpProvider {
+            get {
+                return SignUpProvider(rawValue: self.providerRaw.value) ?? .email
+            }
+        }
+        
         var gender: Gender? {
             get {
                 return Gender(rawValue: self.genderString.value.lowercased())
@@ -96,6 +104,10 @@ enum V1 {
         }
         
         func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
+            
+            if let provider = source["provider"] as? String {
+                self.providerRaw.value = provider
+            }
             
             if let email = source["email"] as? String {
                 self.email.value = email
