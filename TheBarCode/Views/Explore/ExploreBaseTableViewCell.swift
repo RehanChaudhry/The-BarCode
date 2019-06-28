@@ -59,6 +59,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
         self.pagerView.register(nib, forCellWithReuseIdentifier: "ExploreImageCell")
         
         self.pagerView.transformer = FSPagerViewTransformer(type: .crossFading)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -104,15 +105,23 @@ class ExploreBaseTableViewCell: UITableViewCell {
             if let timings = explore.timings.value {
                 if timings.dayStatus == .opened {
                     if timings.isOpen.value {
+                        self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
+                        self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
                         self.statusButton.setTitle("Open", for: .normal)
                     } else {
+                        self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
+                        self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
                         self.statusButton.setTitle("Closed", for: .normal)
                     }
                 } else {
+                    self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
+                    self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
                     self.statusButton.setTitle("Closed", for: .normal)
                 }
                 
             } else {
+                self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
+                self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
                 self.statusButton.setTitle("Closed", for: .normal)
             }
             

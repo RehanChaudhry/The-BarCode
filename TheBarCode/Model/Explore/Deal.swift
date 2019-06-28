@@ -62,6 +62,8 @@ class Deal: CoreStoreObject {
     var sharedByName = Value.Optional<String>("shared_by_name")
     var sharedId = Value.Optional<String>("shared_id")
     
+    var hasTime = Value.Required<Bool>("should_show_time", initial: true)
+    
     var startDate: Date {
         get {
             return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
@@ -166,6 +168,12 @@ extension Deal: ImportableUniqueObject {
         
         if let sharedId = source["shared_id"] {
             self.sharedId.value = "\(sharedId)"
+        }
+        
+        if let hasTime = source["should_show_time"] as? Bool {
+            self.hasTime.value = hasTime
+        } else {
+            self.hasTime.value = true
         }
         
     }

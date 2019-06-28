@@ -68,16 +68,24 @@ class BarDetailHeaderViewController: UIViewController {
             if let timings = self.bar.timings.value {
                 if timings.dayStatus == .opened {
                     if timings.isOpen.value {
+                        self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
+                        self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
                         self.statusButton.setTitle("Open", for: .normal)
                     } else {
+                        self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
                         self.statusButton.setTitle("Closed", for: .normal)
+                        self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
                     }
                 } else {
+                    self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
                     self.statusButton.setTitle("Closed", for: .normal)
+                    self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
                 }
                 
             } else {
+                self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
                 self.statusButton.setTitle("Closed", for: .normal)
+                self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
             }
             
             self.statusButton.layoutIfNeeded()

@@ -45,6 +45,10 @@ class LoginViaViewController: UIViewController {
             self.instaSignInButton.bringSubview(toFront: imageView)
         }
         
+        if let imageView = self.mobileButton.imageView {
+            self.mobileButton.bringSubview(toFront: imageView)
+        }
+        
         self.addBackButton()
         
         if self.forSignUp {

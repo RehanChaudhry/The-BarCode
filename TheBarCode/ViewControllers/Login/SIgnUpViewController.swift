@@ -431,7 +431,7 @@ class SIgnUpViewController: UIViewController {
         
         if self.isDataValid() {
             if self.signupProvider == .email {
-                self.showCustomAlert(title: "Info", message: "If you don’t receive your email code, use SMS.")
+                self.showCustomAlert(title: "Info", message: "If you don’t receive your email code, use 'Sign up with Mobile'.")
             } else {
                 self.signUp()
             }

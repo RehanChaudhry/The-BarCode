@@ -35,6 +35,11 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var emailButton: UIButton!
     @IBOutlet var directionsButton: UIButton!
     
+    @IBOutlet var currentTimeHeaderLabel: UILabel!
+    @IBOutlet var currentDayTimingLabel: UILabel!
+    
+    @IBOutlet var currentDayBottomMargin: NSLayoutConstraint!
+    @IBOutlet var showMoreBottomMargin: NSLayoutConstraint!
     @IBOutlet var websitePlaceholderLabelHeight: NSLayoutConstraint!
     @IBOutlet var phonePlaceholderLabelTop: NSLayoutConstraint!
     @IBOutlet var phoneNumberLabelTop: NSLayoutConstraint!
@@ -84,12 +89,43 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "HH:mm"
         
-        let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 12.0),
-                                NSAttributedString.Key.foregroundColor : UIColor.white]
-        let boldAttributes = [NSAttributedString.Key.font : UIFont.appBoldFontOf(size: 13.0),
+        let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
+                                NSAttributedString.Key.foregroundColor : UIColor.appLightGrayColor()]
+        let boldAttributes = [NSAttributedString.Key.font : UIFont.appBoldFontOf(size: 14.0),
                                 NSAttributedString.Key.foregroundColor : UIColor.white]
         
+        if let timings = explore.timings.value {
+            if timings.dayStatus == .closed {
+                self.currentTimeHeaderLabel.text = "CLOSED"
+                self.currentTimeHeaderLabel.textColor = UIColor.appRedColor()
+                self.currentDayTimingLabel.text = ""
+            } else {
+                let timingString = dateformatter.string(from: timings.openingTime.value!) + " - " + dateformatter.string(from: timings.closingTime.value!)
+                
+                if timings.isOpen.value {
+                    self.currentTimeHeaderLabel.text = "OPEN"
+                    self.currentTimeHeaderLabel.textColor = UIColor.appBlueColor()
+                    self.currentDayTimingLabel.text = timingString
+                } else {
+                    self.currentTimeHeaderLabel.text = "CLOSED"
+                    self.currentTimeHeaderLabel.textColor = UIColor.appRedColor()
+                    self.currentDayTimingLabel.text = timingString
+                }
+            }
+            
+        } else {
+            self.currentTimeHeaderLabel.text = "CLOSED"
+            self.currentTimeHeaderLabel.textColor = UIColor.appRedColor()
+            self.currentDayTimingLabel.text = ""
+        }
+        
         if explore.timingExpanded {
+            
+            let image = UIImage(named: "icon_accordion_up")
+            self.showMoreTimingsButton.setImage(image, for: .normal)
+            
+            self.showMoreBottomMargin.constant = 8.0
+            self.currentDayBottomMargin.constant = 8.0
             
             let attributedPlaceholder = NSMutableAttributedString()
             let attributedTiming = NSMutableAttributedString()
@@ -108,7 +144,7 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
                 
                 let rightAlignedParaStyle = NSMutableParagraphStyle()
                 rightAlignedParaStyle.lineSpacing = 5.0
-                rightAlignedParaStyle.alignment = .center
+                rightAlignedParaStyle.alignment = .right
                 attributes[NSAttributedStringKey.paragraphStyle] = rightAlignedParaStyle
                 
                 if time.dayStatus == .closed {
@@ -134,28 +170,16 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
             self.timingPlaceholderLabel.attributedText = attributedPlaceholder
             self.timingsLabel.attributedText = attributedTiming
             
-            self.showMoreTimingsButton.setTitle("Show Less", for: .normal)
-            
         } else {
             
-            if let timings = explore.timings.value {
-                if timings.dayStatus == .closed {
-                    self.timingPlaceholderLabel.text = timings.day.value
-                    self.timingsLabel.text = "Closed"
-                } else {
-                    let timingString = dateformatter.string(from: timings.openingTime.value!) + " - " + dateformatter.string(from: timings.closingTime.value!)
-                    self.timingPlaceholderLabel.text = timings.day.value
-                    self.timingsLabel.text = timingString
-                }
-                
-            } else {
-                self.timingPlaceholderLabel.text = "-"
-                self.timingsLabel.text = "-"
-            }
-        
-            self.showMoreTimingsButton.setTitle("Show More", for: .normal)
+            self.showMoreTimingsButton.setImage(UIImage(named: "icon_accordion"), for: .normal)
+            
+            self.showMoreBottomMargin.constant = 0.0
+            self.currentDayBottomMargin.constant = 0.0
+            
+            self.timingPlaceholderLabel.text = ""
+            self.timingsLabel.text = ""
         }
-        
         
 
         if explore.website.value == "" {

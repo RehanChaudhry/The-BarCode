@@ -108,7 +108,11 @@ extension BarsWithLiveOffersViewController: UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let aCell = cell as? LiveOfferTableViewCell {
             aCell.scrollToCurrentImage()
-            aCell.pagerView.automaticSlidingInterval = 2.0
+            
+            let bar = self.bars[indexPath.row]
+            let imageCount = bar.images.value.count
+            
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
         }
     }
     

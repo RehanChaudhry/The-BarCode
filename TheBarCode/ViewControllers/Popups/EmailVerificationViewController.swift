@@ -34,7 +34,8 @@ class EmailVerificationViewController: CodeVerificationViewController {
         
         let subTitlePlaceholder = "Enter the activation code here which we have sent you on "
         let subTitleText = subTitlePlaceholder + self.email
-        let infoText = "\n\nIf you don't receive an email, you can always use SMS."
+//        let infoText = "\n\nIf you don’t receive your email code, use 'Sign up with Mobile'."
+        let infoText = ""
         
         let normalAttribute = [NSAttributedStringKey.foregroundColor : UIColor.appBlackColor(),
                                NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 16.0)]

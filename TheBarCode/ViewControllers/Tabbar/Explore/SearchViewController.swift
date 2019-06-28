@@ -363,6 +363,23 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.scrollToCurrentImage()
+            
+            let bar = self.bars[indexPath.row]
+            let imageCount = bar.images.value.count
+            
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let aCell = cell as? BarTableViewCell {
+            aCell.pagerView.automaticSlidingInterval = 0.0
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         

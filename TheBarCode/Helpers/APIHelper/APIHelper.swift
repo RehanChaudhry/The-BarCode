@@ -17,7 +17,7 @@ let qaAPIDomain = "https://thebarcode-qa.cygnismedia.com"
 let devAPIDomain = "https://thebarcode-dev.cygnismedia.com"
 let productionAPIDomain = "https://thebarcode.co"
 
-let theBarCodeAPIDomain = staggingAPIDomain
+let theBarCodeAPIDomain = productionAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"

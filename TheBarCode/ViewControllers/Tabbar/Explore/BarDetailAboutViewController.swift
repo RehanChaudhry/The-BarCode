@@ -137,7 +137,7 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
         }
         
         self.bar.timingExpanded = !self.bar.timingExpanded
-        self.tableView.reloadRows(at: [indexPath], with: .fade)
+        self.tableView.reloadData()
     }
     
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, websiteButtonTapped sender: UIButton) {

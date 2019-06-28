@@ -109,10 +109,14 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             finalAttributedText.append(attributedFromDate)
             finalAttributedText.append(attributedTo)
             finalAttributedText.append(attributedToDate)
-            finalAttributedText.append(attributedFrom)
-            finalAttributedText.append(attributedFromTime)
-            finalAttributedText.append(attributedTo)
-            finalAttributedText.append(attributedToTime)
+            
+            if deal.hasTime.value {
+                finalAttributedText.append(attributedFrom)
+                finalAttributedText.append(attributedFromTime)
+                finalAttributedText.append(attributedTo)
+                finalAttributedText.append(attributedToTime)
+            }
+            
             
             self.validityLabel.attributedText = finalAttributedText
             

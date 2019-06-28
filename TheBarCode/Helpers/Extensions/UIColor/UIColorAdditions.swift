@@ -104,4 +104,12 @@ extension UIColor {
         let endColor =  UIColor.appBlueColor()
         return (startColor, endColor)
     }
+    
+    static func appStatusButtonOpenColor() -> UIColor {
+        return UIColor("#7C7D7D")
+    }
+    
+    static func appStatusButtonColor() -> UIColor {
+        return UIColor("#F0F0F0")
+    }
 }
