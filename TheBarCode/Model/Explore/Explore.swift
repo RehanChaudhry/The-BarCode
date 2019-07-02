@@ -28,7 +28,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var latitude = Value.Required<CLLocationDegrees>("latitude", initial: 0.0)
     var longitude = Value.Required<CLLocationDegrees>("longitude", initial: 0.0)
     var status = Value.Required<String>("status", initial: "")
-    var code = Value.Required<Int>("code", initial: 0)
+//    var code = Value.Required<Int>("code", initial: 0)
     var businessTiming = Value.Required<String>("business_timing", initial: "")
     var closeTime = Value.Optional<String>("close_time")
     var openingTime = Value.Optional<String>("opening_time")
@@ -103,7 +103,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         self.longitude.value = CLLocationDegrees("\(source["longitude"] ?? 0.0)")!
         
         self.status.value = source["status"] as! String
-        self.code.value = source["code"] as! Int
+//        self.code.value = source["code"] as! Int
         self.businessTiming.value = source["business_timing"] as? String ?? ""
         self.closeTime.value = source["close_time"] as? String
         self.openingTime.value = source["opening_time"] as? String

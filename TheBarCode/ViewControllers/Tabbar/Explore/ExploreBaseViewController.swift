@@ -160,15 +160,20 @@ class ExploreBaseViewController: UIViewController {
     func getPinImage(explore: Bar) -> UIImage {
         var pinImage = UIImage(named: "icon_pin_gold")!
         if let timings = explore.timings.value {
-            if timings.isOpen.value {
-                if let activeStandardOffer = explore.activeStandardOffer.value {
-                    pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
+            if timings.dayStatus == .opened {
+                if timings.isOpen.value {
+                    if let activeStandardOffer = explore.activeStandardOffer.value {
+                        pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
+                    } else {
+                        pinImage = UIImage(named: "icon_pin_grayed")!
+                    }
                 } else {
                     pinImage = UIImage(named: "icon_pin_grayed")!
                 }
             } else {
                 pinImage = UIImage(named: "icon_pin_grayed")!
             }
+            
         } else {
             pinImage = UIImage(named: "icon_pin_grayed")!
         }

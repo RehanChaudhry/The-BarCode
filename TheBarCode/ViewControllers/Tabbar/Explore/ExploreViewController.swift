@@ -312,20 +312,27 @@ class ExploreViewController: UIViewController {
         searchController.searchType = self.exploreType
         let _ = searchController.view
         
+        var shouldBecomeFirstResponder: Bool = true
+        
         if withPreferences {
             let categoriesController = self.storyboard?.instantiateViewController(withIdentifier: "CategoryFilterViewController") as! CategoryFilterViewController
             categoriesController.shouldDismiss = true
             categoriesController.delegate = searchController
             searchNavigationController.setViewControllers([searchController, categoriesController], animated: false)
+            shouldBecomeFirstResponder = false
         } else if withStandardOffer {
             let standardOfferController = (self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController)
             standardOfferController.shouldDismiss = true
             standardOfferController.delegate = searchController
             searchNavigationController.setViewControllers([searchController, standardOfferController], animated: false)
-            
+            shouldBecomeFirstResponder = false
         }
         
-        self.present(searchNavigationController, animated: true, completion: nil)
+        self.present(searchNavigationController, animated: true) {
+            if shouldBecomeFirstResponder {
+                searchController.searchBar.becomeFirstResponder()
+            }
+        }
     }
     
     //MARK: My IBActions

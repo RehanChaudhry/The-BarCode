@@ -15,6 +15,8 @@ class SplashViewController: UIViewController {
 
     var locationManager: MyLocationManager!
     
+    var isViewAlreadyLoaded: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,6 +35,16 @@ class SplashViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !self.isViewAlreadyLoaded {
+            self.isViewAlreadyLoaded = true
+            
+//            self.showForceUpdateAlert()
+        }
+        
+    }
 
     //MARK: My Methods
     @objc func moveToNextController() {
@@ -40,20 +52,40 @@ class SplashViewController: UIViewController {
     }
     
     func showForceUpdateAlert() {
-        let alertController = UIAlertController(title: "Update Available", message: "Critical update is available for The BarCode. Please update the app before proceeding", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Goto Appstore", style: .default, handler: { (action) in
-            let url = URL(string: appstoreUrlString)
-            UIApplication.shared.open(url!, options: [:], completionHandler: { (finish) in
-                self.showForceUpdateAlert()
-            })
-        }))
-        self.present(alertController, animated: true, completion: nil)
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = "A new version is available for The BarCode. Please update your app."
+        cannotRedeemViewController.titleText = "We Have Made Changes!"
+        cannotRedeemViewController.headerImageName = "login_intro_reload_5"
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.delegate = self
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+        
+        cannotRedeemViewController.cancelButton.isHidden = true
+        cannotRedeemViewController.actionButton.setTitle("Update", for: .normal)
     }
     
     func version() -> String {
         let dictionary = Bundle.main.infoDictionary!
         let version = dictionary["CFBundleShortVersionString"] as! String
         return version
+    }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+extension SplashViewController: CannotRedeemViewControllerDelegate {
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        let url = URL(string: appstoreUrlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: { (finish) in
+            self.showForceUpdateAlert()
+        })
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        let url = URL(string: appstoreUrlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: { (finish) in
+            self.showForceUpdateAlert()
+        })
     }
 }
 

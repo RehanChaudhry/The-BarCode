@@ -27,6 +27,7 @@ class CannotRedeemViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var reloadTimerLabel: UILabel!
     
+    @IBOutlet var cancelButton: UIButton!
     @IBOutlet var actionButton: GradientButton!
     
     @IBOutlet var mainViewHeightConstraint: NSLayoutConstraint!
