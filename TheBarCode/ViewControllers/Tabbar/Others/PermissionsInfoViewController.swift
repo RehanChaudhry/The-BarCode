@@ -160,7 +160,6 @@ class PermissionsInfoViewController: UIViewController {
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         self.permissionsDenied = false
-        self.askForPushNotificationPermissions()
         self.getLocation(requestAlwaysAccess: true)
     }
     
@@ -171,7 +170,6 @@ class PermissionsInfoViewController: UIViewController {
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         self.permissionsDenied = false
-        self.askForPushNotificationPermissions()
         self.getLocation(requestAlwaysAccess: false)
         
     }
@@ -186,6 +184,8 @@ extension PermissionsInfoViewController {
         self.locationManager = MyLocationManager()
         self.locationManager.locationPreferenceAlways = requestAlwaysAccess
         self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
+            
+            self.askForPushNotificationPermissions()
             
             debugPrint("Getting location finished")
             

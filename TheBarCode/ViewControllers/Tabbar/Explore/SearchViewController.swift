@@ -227,8 +227,11 @@ class SearchViewController: UIViewController {
         let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
         self.mapView.animate(to: position)
         self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
-        self.mapView.settings.myLocationButton = true
-        self.mapView.isMyLocationEnabled = true
+        
+        if CLLocationManager.authorizationStatus() != .notDetermined {
+            self.mapView.settings.myLocationButton = true
+            self.mapView.isMyLocationEnabled = true
+        }
     }
     
     func setUserLocation() {

@@ -177,8 +177,8 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
             self.showMoreBottomMargin.constant = 0.0
             self.currentDayBottomMargin.constant = 0.0
             
-            self.timingPlaceholderLabel.text = ""
-            self.timingsLabel.text = ""
+            self.timingPlaceholderLabel.attributedText = NSAttributedString(string: "")
+            self.timingsLabel.attributedText = NSAttributedString(string: "")
         }
         
 
