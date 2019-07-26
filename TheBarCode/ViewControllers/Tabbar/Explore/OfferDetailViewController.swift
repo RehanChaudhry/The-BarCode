@@ -181,6 +181,7 @@ class OfferDetailViewController: UIViewController {
         self.redeemTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
             self.updateRedeemTimer(sender: sender)
         })
+        RunLoop.current.add(self.redeemTimer!, forMode: .commonModes)
         self.updateRedeemTimer(sender: self.redeemTimer!)
     }
     

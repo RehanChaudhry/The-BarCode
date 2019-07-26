@@ -55,6 +55,11 @@ let apiPathStandardOffers = "standard-offer-tier"
 
 let apiPathVersionCheck = "version"
 
+let apiPathEvents = "establishment-event"
+let apiPathMenu = "establishment-menu"
+
+let apiPathInfluencer = "influencer-counter"
+let apiPathSearchAll = "search/all"
 
 //Analytics Events
 let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()

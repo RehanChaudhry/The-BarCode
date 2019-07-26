@@ -12,16 +12,13 @@ import Alamofire
 import CoreStore
 import GoogleMaps
 import CoreLocation
+import PureLayout
 
 class SearchViewController: UIViewController {
 
     @IBOutlet var scrollView: UIScrollView!
-    
-    @IBOutlet var listContainer: UIView!
-    @IBOutlet var mapContainer: UIView!
-    
-    @IBOutlet var statefulTableView: StatefulTableView!
-    @IBOutlet var mapView: GMSMapView!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var scrollContainerView: UIView!
     
     @IBOutlet var searchBar: UISearchBar!
     
@@ -34,13 +31,9 @@ class SearchViewController: UIViewController {
     
     @IBOutlet var tempView: UIView!
     
+    @IBOutlet var collectionView: UICollectionView!
+    
     var bars: [Bar] = []
-    
-    var dataRequest: DataRequest?
-    
-    var displayType: DisplayType = .list
-    
-    var searchType: ExploreType = .bars
     
     var selectedPreferences: [Category] = []
     
@@ -52,10 +45,25 @@ class SearchViewController: UIViewController {
     
     var markers: [GMSMarker] = []
     
+    var scopeItems: [SearchScopeItem] = SearchScope.allItems()
+    var selectedScopeItem: SearchScopeItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if self.selectedScopeItem == nil {
+            self.selectedScopeItem = self.scopeItems.first
+            self.selectedScopeItem?.isSelected = true
+        }
+        
+        self.setupSearchController()
+        
+        self.listButton.roundCorners(corners: [.topLeft, .bottomLeft], radius: 5.0)
+        self.mapButton.roundCorners(corners: [.topRight, .bottomRight], radius: 5.0)
+        
+        self.collectionView.register(cellType: SearchScopeCell.self)
         
         if self.shouldHidePreferenceButton {
             self.preferencesButton.isHidden = true
@@ -76,9 +84,9 @@ class SearchViewController: UIViewController {
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()
         
-        self.setUpStatefulTableView()
-        
-        self.mapView.delegate = self
+//        self.setUpStatefulTableView()
+//
+//        self.mapView.delegate = self
         
         self.setUserLocation()
         
@@ -95,8 +103,9 @@ class SearchViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setUpPreferencesButton()
         
-        self.statefulTableView.innerTable.reloadData()
-        
+        for scope in self.scopeItems {
+            scope.controller.statefulTableView.innerTable.reloadData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,42 +115,75 @@ class SearchViewController: UIViewController {
     }
     
     deinit {
+        debugPrint("searchviewcontroller deinit called")
         NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
     }
     
     //MARK: My Methods
+    func setupSearchController() {
+        for scope in self.scopeItems {
+            let controller = scope.controller
+            controller.view.backgroundColor = UIColor.clear
+            self.contentView.addSubview(controller.view)
+            
+            controller.view.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+            controller.view.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
+
+            controller.view.autoMatch(ALDimension.width, to: ALDimension.width, of: self.scrollContainerView)
+            controller.view.autoMatch(ALDimension.height, to: ALDimension.height, of: self.scrollContainerView)
+
+            if let lastController = self.childViewControllers.last {
+                controller.view.autoPinEdge(ALEdge.left, to: ALEdge.right, of: lastController.view)
+            } else {
+                controller.view.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
+            }
+
+            if scope == self.scopeItems.last {
+                controller.view.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
+            }
+
+            self.addChildViewController(controller)
+            controller.willMove(toParentViewController: self)
+            controller.baseDelegate = self
+            controller.setUpStatefulTableView()
+            
+            if let controller = controller as? AllSearchViewController {
+                controller.allSearchDelegate = self
+            }
+        }
+    }
     
     func resetCurrentData() {
-        self.bars.removeAll()
-        self.statefulTableView.reloadData()
+//        self.bars.removeAll()
+//        self.statefulTableView.reloadData()
     }
     
     func reset() {
-        self.dataRequest?.cancel()
-        self.resetCurrentData()
-        
-        self.statefulTableView.triggerInitialLoad()
+//        self.dataRequest?.cancel()
+//        self.resetCurrentData()
+//
+//        self.statefulTableView.triggerInitialLoad()
     }
     
     func setUpMarkers() {
         
-        self.mapView.clear()
-        self.markers.removeAll()
-        
-        var bounds = GMSCoordinateBounds()
-        for (index, bar) in self.bars.enumerated() {
-            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
-            
-            bounds = bounds.includingCoordinate(location.coordinate)
-            
-            let pinImage = self.getPinImage(explore: bar)
-            let marker = self.createMapMarker(location: location, pinImage: pinImage)
-            marker.userData = bar
-            marker.zIndex = Int32(index)
-            marker.map = self.mapView
-            
-            self.markers.append(marker)
-        }
+//        self.mapView.clear()
+//        self.markers.removeAll()
+//
+//        var bounds = GMSCoordinateBounds()
+//        for (index, bar) in self.bars.enumerated() {
+//            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
+//
+//            bounds = bounds.includingCoordinate(location.coordinate)
+//
+//            let pinImage = self.getPinImage(explore: bar)
+//            let marker = self.createMapMarker(location: location, pinImage: pinImage)
+//            marker.userData = bar
+//            marker.zIndex = Int32(index)
+//            marker.map = self.mapView
+//
+//            self.markers.append(marker)
+//        }
         
     }
     
@@ -177,32 +219,32 @@ class SearchViewController: UIViewController {
         return marker
     }
     
-    func setUpStatefulTableView() {
-        
-        self.statefulTableView.backgroundColor = .clear
-        for aView in self.statefulTableView.subviews {
-            aView.backgroundColor = .clear
-        }
-        
-        self.statefulTableView.canLoadMore = false
-        self.statefulTableView.canPullToRefresh = false
-        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-        self.statefulTableView.innerTable.estimatedRowHeight = 250.0
-        self.statefulTableView.innerTable.tableFooterView = UIView()
-        self.statefulTableView.innerTable.separatorStyle = .none
-        
-        self.statefulTableView.innerTable.register(cellType: BarTableViewCell.self)
-        self.statefulTableView.innerTable.delegate = self
-        self.statefulTableView.innerTable.dataSource = self
-        self.statefulTableView.statefulDelegate = self
-        
-        for aView in self.statefulTableView.innerTable.subviews {
-            if aView.isMember(of: UIRefreshControl.self) {
-                aView.removeFromSuperview()
-                break
-            }
-        }
-    }
+//    func setUpStatefulTableView() {
+//        
+//        self.statefulTableView.backgroundColor = .clear
+//        for aView in self.statefulTableView.subviews {
+//            aView.backgroundColor = .clear
+//        }
+//        
+//        self.statefulTableView.canLoadMore = false
+//        self.statefulTableView.canPullToRefresh = false
+//        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
+//        self.statefulTableView.innerTable.estimatedRowHeight = 250.0
+//        self.statefulTableView.innerTable.tableFooterView = UIView()
+//        self.statefulTableView.innerTable.separatorStyle = .none
+//        
+//        self.statefulTableView.innerTable.register(cellType: BarTableViewCell.self)
+//        self.statefulTableView.innerTable.delegate = self
+//        self.statefulTableView.innerTable.dataSource = self
+//        self.statefulTableView.statefulDelegate = self
+//        
+//        for aView in self.statefulTableView.innerTable.subviews {
+//            if aView.isMember(of: UIRefreshControl.self) {
+//                aView.removeFromSuperview()
+//                break
+//            }
+//        }
+//    }
     
     func resetMapListSegment() {
         self.mapButton.backgroundColor = self.tempView.backgroundColor
@@ -224,14 +266,14 @@ class SearchViewController: UIViewController {
     }
     
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {
-        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
-        self.mapView.animate(to: position)
-        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
-        
-        if CLLocationManager.authorizationStatus() != .notDetermined {
-            self.mapView.settings.myLocationButton = true
-            self.mapView.isMyLocationEnabled = true
-        }
+//        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
+//        self.mapView.animate(to: position)
+//        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+//
+//        if CLLocationManager.authorizationStatus() != .notDetermined {
+//            self.mapView.settings.myLocationButton = true
+//            self.mapView.isMyLocationEnabled = true
+//        }
     }
     
     func setUserLocation() {
@@ -274,21 +316,21 @@ class SearchViewController: UIViewController {
     }
     
     func moveToBarDetail(bar: Bar) {
-        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
-        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
-        barDetailController.selectedBar = bar
-        barDetailController.delegate = self
-        
-        switch self.searchType {
-        case .liveOffers:
-            barDetailController.preSelectedTabIndex = 2
-        case .deals:
-            barDetailController.preSelectedTabIndex = 1
-        default:
-            barDetailController.preSelectedTabIndex = 0
-        }
-        
-        self.present(barDetailNav, animated: true, completion: nil)
+//        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+//        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+//        barDetailController.selectedBar = bar
+//        barDetailController.delegate = self
+//
+//        switch self.searchType {
+//        case .liveOffers:
+//            barDetailController.preSelectedTabIndex = 2
+//        case .deals:
+//            barDetailController.preSelectedTabIndex = 1
+//        default:
+//            barDetailController.preSelectedTabIndex = 0
+//        }
+//
+//        self.present(barDetailNav, animated: true, completion: nil)
     }
     
     func showDirection(bar: Bar) {
@@ -306,9 +348,23 @@ class SearchViewController: UIViewController {
         }
     }
     
+    func resetSearchScopeControllers() {
+        for scope in self.scopeItems {
+            scope.controller.selectedPreferences = self.selectedPreferences
+            scope.controller.selectedStandardOffers = self.selectedStandardOffers
+            scope.controller.shouldReset = true
+            scope.controller.prepareToReset()
+            scope.controller.keyword = self.searchBar.text ?? ""
+        }
+        
+        self.selectedScopeItem?.controller.reset()
+        self.selectedScopeItem?.controller.shouldReset = false
+    }
+    
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIButton) {
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -318,9 +374,9 @@ class SearchViewController: UIViewController {
         sender.backgroundColor = UIColor.black
         sender.tintColor = UIColor.appBlueColor()
         
-        self.displayType = .list
-        
-        self.scrollView.scrollToPage(page: 0, animated: true)
+        for scope in self.scopeItems {
+            scope.controller.showListView()
+        }
     }
     
     @IBAction func mapButtonTapped(sender: UIButton) {
@@ -329,9 +385,9 @@ class SearchViewController: UIViewController {
         sender.backgroundColor = UIColor.black
         sender.tintColor = UIColor.appBlueColor()
         
-        self.displayType = .map
-        
-        self.scrollView.scrollToPage(page: 1, animated: true)
+        for scope in self.scopeItems {
+            scope.controller.showMapView()
+        }
     }
     
     @IBAction func preferencesButtonTapped(sender: UIButton) {
@@ -350,7 +406,7 @@ class SearchViewController: UIViewController {
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
-
+/*
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -405,12 +461,14 @@ extension SearchViewController: ExploreBaseTableViewCellDelegate {
         self.moveToBarDetail(bar: self.bars[tableCellIndexPath.row])
     }
 }
+*/
 
 //MARK: UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
-        self.statefulTableView.triggerInitialLoad()
+        
+        self.resetSearchScopeControllers()
     }
 }
 
@@ -420,6 +478,7 @@ extension SearchViewController: BarDetailViewControllerDelegate {
     }
 }
 
+/*
 //MARK: BarTableViewCellDelegare
 extension SearchViewController: BarTableViewCellDelegare {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
@@ -621,12 +680,13 @@ extension SearchViewController {
         }
     }
 }
+*/
 
 //MARK: CategoriesViewControllerDelegate
 extension SearchViewController: CategoryFilterViewControllerDelegate {
     func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category]) {
         self.selectedPreferences = selectedPreferences
-        self.reset()
+        self.resetSearchScopeControllers()
     }
 }
 
@@ -634,7 +694,7 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 extension SearchViewController: StandardOffersViewControllerDelegate {
     func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer]) {
         self.selectedStandardOffers = selectedOffers
-        self.reset()
+        self.resetSearchScopeControllers()
     }
 }
 
@@ -682,7 +742,7 @@ extension SearchViewController {
         let pinImage = self.getPinImage(explore: bar)
         let marker = self.createMapMarker(location: location, pinImage: pinImage)
         marker.userData = bar
-        marker.map = mapView
+//        marker.map = mapView
         
         self.markers.append(marker)
         
@@ -690,3 +750,91 @@ extension SearchViewController {
         
     }
 }
+
+//MARK: UICollectionViewDataSource, UICollectionViewDelegate
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.scopeItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView.dequeueReusableCell(for: indexPath, cellType: SearchScopeCell.self)
+        cell.setupCell(searchScope: self.scopeItems[indexPath.item], tempViewBGColor: self.tempView.backgroundColor!)
+        cell.delegate = self
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+    }
+}
+
+//MARK: SearchScopeCellDelegate
+extension SearchViewController: SearchScopeCellDelegate {
+    func searchScopeCell(cell: SearchScopeCell, scopeButtonTapped sender: UIButton) {
+        guard let indexPath = self.collectionView.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        self.selectScope(indexPath: indexPath)
+        
+    }
+    
+    func selectScope(indexPath: IndexPath) {
+        for scope in self.scopeItems {
+            scope.isSelected = false
+        }
+        
+        self.selectedScopeItem = self.scopeItems[indexPath.item]
+        self.selectedScopeItem?.isSelected = true
+        self.collectionView.reloadData()
+        
+        self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        self.scrollView.scrollToPage(page: indexPath.item, animated: true)
+        
+        if self.selectedScopeItem?.controller.shouldReset == true {
+            self.selectedScopeItem?.controller.reset()
+            self.selectedScopeItem?.controller.shouldReset = false
+        }
+    }
+}
+
+//MARK: BaseSearchScopeViewControllerDelegate
+extension SearchViewController: BaseSearchScopeViewControllerDelegate {
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String) {
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.barId = barId
+        barDetailController.delegate = self
+        
+        self.present(barDetailNav, animated: true, completion: nil)
+    }
+}
+
+//MARK: AllSearchViewControllerDelegate
+extension SearchViewController: AllSearchViewControllerDelegate {
+    func allSearchViewController(controller: AllSearchViewController, viewMoreButtonTapped type: AllSearchItemType) {
+        if type == .bar, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .bar }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .deal, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .deal }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .liveOffer, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .liveOffer }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .food, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .food }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .drink, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .drink }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .event, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .event }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        }
+    }
+}
+

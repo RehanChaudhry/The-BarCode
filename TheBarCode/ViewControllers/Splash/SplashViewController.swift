@@ -22,6 +22,11 @@ class SplashViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.checkForUpdate()
+        
+        if let influencerId = UserDefaults.standard.string(forKey: "influencerId") {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.syncInfluencerInstallation(influencerId: influencerId)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

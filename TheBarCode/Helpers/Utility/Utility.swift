@@ -57,6 +57,7 @@ let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: 
 
 let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
 let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
+let dynamicLinkInfluencerDomain = "tbcinfluencer.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
@@ -103,7 +104,10 @@ class Utility: NSObject {
                 Entity<StandardOffer>("StandardOffer"),
                 Entity<ActiveStandardOffer>("ActiveStandardOffer"),
                 Entity<EstablishmentTiming>("EstablishmentTiming"),
-                Entity<ExploreSchedule>("ExploreSchedule")
+                Entity<ExploreSchedule>("ExploreSchedule"),
+                Entity<Event>("Event"),
+                Entity<Food>("Food"),
+                Entity<Drink>("Drink")
             ]
         )
     )
@@ -302,6 +306,23 @@ class Utility: NSObject {
         }
         
         return referralCode
+    }
+    
+    func getInfluencerIdFromUrlString(urlString: String) -> String? {
+        
+        var influencerId: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "influencer_id" {
+                    influencerId = queryItem.value
+                    break
+                }
+            }
+        }
+        
+        return influencerId
     }
     
     func getSharedOfferParams(urlString: String) -> SharedOfferParams? {

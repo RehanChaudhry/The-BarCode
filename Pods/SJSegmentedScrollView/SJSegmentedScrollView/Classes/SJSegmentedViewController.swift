@@ -49,6 +49,7 @@ import UIKit
      - returns: observe view
      */
     @objc optional func viewForSegmentControllerToObserveContentOffsetChange() -> UIView
+    @objc optional func viewsForSegmentControllerToObserveContentOffsetChange() -> [UIView]
 }
 
 /**
@@ -437,12 +438,20 @@ import UIKit
 				observeView = collectionController.collectionView
 			}
 
-            if let view = delegate?.viewForSegmentControllerToObserveContentOffsetChange?() {
+            if let views = delegate?.viewsForSegmentControllerToObserveContentOffsetChange?() {
+                for view in views {
+                    viewObservers.append(view)
+                    segmentedScrollView.addObserverFor(view)
+                }
+            } else if let view = delegate?.viewForSegmentControllerToObserveContentOffsetChange?() {
                 observeView = view
+                viewObservers.append(observeView!)
+                segmentedScrollView.addObserverFor(observeView!)
+            } else {
+                viewObservers.append(observeView!)
+                segmentedScrollView.addObserverFor(observeView!)
             }
 
-            viewObservers.append(observeView!)
-            segmentedScrollView.addObserverFor(observeView!)
             index += 1
         }
         

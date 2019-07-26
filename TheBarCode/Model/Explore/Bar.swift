@@ -14,6 +14,7 @@ class Bar: Explore {
     let fiveADayDeal = Relationship.ToManyOrdered<Deal>("fiveADayDeal", inverse: { $0.establishment })
     var activeStandardOffer = Relationship.ToOne<ActiveStandardOffer>("standard_offer")
     
+    var events = Relationship.ToManyOrdered<Event>("events", inverse: { $0.bar })
     
     override func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         super.updateInCoreStore(source: source, transaction: transaction)

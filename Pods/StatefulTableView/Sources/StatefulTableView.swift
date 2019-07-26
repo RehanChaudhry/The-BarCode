@@ -55,7 +55,7 @@ public final class StatefulTableView: UIView {
    */
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    commonInit()
+//    commonInit()
   }
 
   /**
@@ -70,6 +70,12 @@ public final class StatefulTableView: UIView {
     commonInit()
   }
 
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.commonInit()
+    }
+    
   func commonInit() {
     addSubview(tableView)
     addSubview(dynamicContentView)
@@ -87,8 +93,19 @@ public final class StatefulTableView: UIView {
     tableView.frame = bounds
     dynamicContentView.frame = bounds
   }
+    
+    @IBInspectable var tableViewStyleGrouped: Bool = false
 
-  internal lazy var tableView = UITableView()
+    internal lazy var tableView: UITableView = {
+        if self.tableViewStyleGrouped {
+            let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+            return tableView
+
+        } else {
+            let tableView = UITableView(frame: CGRect.zero, style: .plain)
+            return tableView
+        }
+    }()
 
   /**
    An accessor to the contained `UITableView`.

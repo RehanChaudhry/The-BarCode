@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="AllSearchFooterView" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lz0-vS-xdX">
+                    <rect key="frame" x="16" y="8" width="382" height="29"/>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                    <state key="normal" title="View More">
+                        <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="viewMoreButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="fXw-v2-kHj"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYa-Fu-t6k">
+                    <rect key="frame" x="0.0" y="45" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Dhv-Z7-5i3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Lz0-vS-xdX" secondAttribute="trailing" constant="16" id="0XG-hv-Kh4"/>
+                <constraint firstAttribute="trailing" secondItem="KYa-Fu-t6k" secondAttribute="trailing" id="2dL-Rw-h4e"/>
+                <constraint firstItem="Lz0-vS-xdX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="N4d-wY-wRU"/>
+                <constraint firstItem="KYa-Fu-t6k" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ufs-m1-0cb"/>
+                <constraint firstItem="KYa-Fu-t6k" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="YNc-dG-NnA"/>
+                <constraint firstItem="Lz0-vS-xdX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="bZU-5a-s2S"/>
+                <constraint firstItem="KYa-Fu-t6k" firstAttribute="top" secondItem="Lz0-vS-xdX" secondAttribute="bottom" constant="8" id="tpN-wy-JbO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="separatorView" destination="KYa-Fu-t6k" id="ALm-aC-nl7"/>
+                <outlet property="viewMoreButton" destination="Lz0-vS-xdX" id="dHT-88-T3I"/>
+            </connections>
+            <point key="canvasLocation" x="137.59999999999999" y="98.050974512743636"/>
+        </view>
+    </objects>
+</document>

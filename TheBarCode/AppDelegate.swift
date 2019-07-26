@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var visitLocationManager: CLLocationManager?
     
     var locationManager: MyLocationManager!
+    
+    var isSyncingInfluencer: Bool = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -169,6 +171,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
             } else if let code = Utility.shared.getReferralCodeFromUrlString(urlString: link.absoluteString) {
                 self.referralCode = code
+            } else if let influencerId = Utility.shared.getInfluencerIdFromUrlString(urlString: link.absoluteString) {
+                
+                UserDefaults.standard.setValue(influencerId, forKey: "influencerId")
+                UserDefaults.standard.synchronize()
+                
+                self.syncInfluencerInstallation(influencerId: influencerId)
             } else {
                 debugPrint("Unable to parse referral code url: ")
             }
@@ -310,6 +318,42 @@ extension AppDelegate {
             debugPrint("Visit location updated successfully")
             self.newVisitReceived(visit, description: "Location update success")
         })
+    }
+    
+    func syncInfluencerInstallation(influencerId: String) {
+        
+        guard !self.isSyncingInfluencer else {
+            debugPrint("Already syncing influencer")
+            return
+        }
+        
+        self.isSyncingInfluencer = true
+        
+        let params = ["influencer_id" : influencerId,
+                      "platform" : platform,
+                      "device_id" : Utility.shared.deviceId]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathInfluencer, method: .post) { (response, serverError, error) in
+            
+            self.isSyncingInfluencer = false
+            
+            guard error == nil else {
+                debugPrint("Error while syncing influencer result: \(error!.localizedDescription)")
+                return
+            }
+            
+            UserDefaults.standard.removeObject(forKey: "influencerId")
+            UserDefaults.standard.synchronize()
+            
+            guard serverError == nil else {
+                debugPrint("Server error while syncing influencer result: \(serverError!.messages)")
+                return
+            }
+            
+            
+            
+            debugPrint("Synced successfully")
+        }
     }
 }
 

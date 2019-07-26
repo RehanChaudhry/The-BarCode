@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="215" id="AK0-Hg-4ur" customClass="WhatsOnDetailFoodCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="211"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AK0-Hg-4ur" id="rFC-KZ-wjw">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="210.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Validity period:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AcP-U6-Sjr">
+                        <rect key="frame" x="16" y="16" width="188" height="16.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxp-Ta-AlR">
+                        <rect key="frame" x="16" y="48.5" width="288" height="114.5"/>
+                        <string key="text">Get 25% cash back on your first purchase and 20% cash back on all additional purchases.
+
+In just two years, the ramshackle joint transformed into a happening spot. Now friends and family gather to share a frosty beer, creative cocktail, or specialty coffee.</string>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNY-2x-8eH">
+                        <rect key="frame" x="36" y="179" width="180.5" height="15"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <state key="normal" title="The white hart">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="viewDirectionButtonTapped:" destination="AK0-Hg-4ur" eventType="touchUpInside" id="bYc-KJ-oms"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar-location" translatesAutoresizingMaskIntoConstraints="NO" id="18y-iN-zV0">
+                        <rect key="frame" x="16" y="179" width="12" height="15"/>
+                        <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="12" id="cxI-Je-7g0"/>
+                            <constraint firstAttribute="height" constant="15" id="nUf-jN-rwq"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.5 miles away" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lb-7V-VuQ">
+                        <rect key="frame" x="224.5" y="179" width="79.5" height="15"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Validity period:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyP-Bv-Asw">
+                        <rect key="frame" x="211.5" y="16" width="92.5" height="16.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="gNY-2x-8eH" firstAttribute="leading" secondItem="18y-iN-zV0" secondAttribute="trailing" constant="8" id="2BM-Vi-ocU"/>
+                    <constraint firstAttribute="bottom" secondItem="6lb-7V-VuQ" secondAttribute="bottom" constant="16.5" id="68w-kk-qYw"/>
+                    <constraint firstAttribute="bottom" secondItem="18y-iN-zV0" secondAttribute="bottom" constant="16.5" id="9Yl-RD-5Ug"/>
+                    <constraint firstItem="dxp-Ta-AlR" firstAttribute="top" secondItem="AcP-U6-Sjr" secondAttribute="bottom" constant="16" id="Beb-Jg-Ud5"/>
+                    <constraint firstItem="AcP-U6-Sjr" firstAttribute="leading" secondItem="rFC-KZ-wjw" secondAttribute="leading" constant="16" id="GUE-us-Efn"/>
+                    <constraint firstItem="6lb-7V-VuQ" firstAttribute="leading" secondItem="gNY-2x-8eH" secondAttribute="trailing" constant="8" id="KuU-Nf-PA6"/>
+                    <constraint firstItem="AcP-U6-Sjr" firstAttribute="top" secondItem="rFC-KZ-wjw" secondAttribute="top" constant="16" id="NXv-PX-2J4"/>
+                    <constraint firstItem="gNY-2x-8eH" firstAttribute="centerY" secondItem="6lb-7V-VuQ" secondAttribute="centerY" id="P6r-os-HZ7"/>
+                    <constraint firstItem="dxp-Ta-AlR" firstAttribute="leading" secondItem="rFC-KZ-wjw" secondAttribute="leading" constant="16" id="WcD-Vw-8go"/>
+                    <constraint firstItem="18y-iN-zV0" firstAttribute="leading" secondItem="rFC-KZ-wjw" secondAttribute="leading" constant="16" id="XcA-Ci-fC9"/>
+                    <constraint firstAttribute="trailing" secondItem="hyP-Bv-Asw" secondAttribute="trailing" constant="16" id="Ydh-V8-bnr"/>
+                    <constraint firstAttribute="trailing" secondItem="dxp-Ta-AlR" secondAttribute="trailing" constant="16" id="Zx6-ez-e3q"/>
+                    <constraint firstItem="hyP-Bv-Asw" firstAttribute="leading" secondItem="AcP-U6-Sjr" secondAttribute="trailing" constant="7.5" id="bLR-4b-7FF"/>
+                    <constraint firstItem="hyP-Bv-Asw" firstAttribute="top" secondItem="rFC-KZ-wjw" secondAttribute="top" constant="16" id="bwN-TK-o7R"/>
+                    <constraint firstItem="gNY-2x-8eH" firstAttribute="centerY" secondItem="18y-iN-zV0" secondAttribute="centerY" id="jwk-WI-KUT"/>
+                    <constraint firstAttribute="bottom" secondItem="gNY-2x-8eH" secondAttribute="bottom" constant="16.5" id="kiP-E2-ak6"/>
+                    <constraint firstItem="dxp-Ta-AlR" firstAttribute="top" secondItem="hyP-Bv-Asw" secondAttribute="bottom" constant="16" id="rJX-Cz-YVy"/>
+                    <constraint firstAttribute="trailing" secondItem="6lb-7V-VuQ" secondAttribute="trailing" constant="16" id="vgb-fz-x27"/>
+                    <constraint firstItem="gNY-2x-8eH" firstAttribute="top" secondItem="dxp-Ta-AlR" secondAttribute="bottom" constant="16" id="yIv-bT-LHC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="zZU-8M-nzr"/>
+            <connections>
+                <outlet property="barNameButton" destination="gNY-2x-8eH" id="UUw-q7-Wei"/>
+                <outlet property="detailLabel" destination="dxp-Ta-AlR" id="I7d-NJ-ckE"/>
+                <outlet property="distanceLabel" destination="6lb-7V-VuQ" id="rdd-1E-xet"/>
+                <outlet property="infoLabel" destination="AcP-U6-Sjr" id="MJF-B1-MHd"/>
+                <outlet property="typeLabel" destination="hyP-Bv-Asw" id="IS7-KG-nej"/>
+            </connections>
+            <point key="canvasLocation" x="120.28985507246378" y="197.20982142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bar-location" width="28" height="32"/>
+    </resources>
+</document>
