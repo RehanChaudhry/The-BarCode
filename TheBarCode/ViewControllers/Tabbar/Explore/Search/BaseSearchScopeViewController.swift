@@ -14,7 +14,7 @@ import CoreLocation
 import CoreStore
 
 protocol BaseSearchScopeViewControllerDelegate: class {
-    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String)
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope)
 }
 
 class BaseSearchScopeViewController: UIViewController {
@@ -167,8 +167,8 @@ class BaseSearchScopeViewController: UIViewController {
         }
     }
     
-    func moveToBarDetails(barId: String) {
+    func moveToBarDetails(barId: String, scopeType: SearchScope) {
         debugPrint("bar did select with id: \(barId)")
-        self.baseDelegate.baseSearchScopeViewController(controller: self, moveToBarDetails: barId)
+        self.baseDelegate.baseSearchScopeViewController(controller: self, moveToBarDetails: barId, scopeType: scopeType)
     }
 }

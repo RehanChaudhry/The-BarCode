@@ -35,6 +35,10 @@ class WhatsOnViewController: UIViewController {
     
     weak var delegate: WhatsOnViewControllerDelegate!
     
+    var preSelectedTabIndex: Int = 0
+    
+    var viewDidLayout: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +64,20 @@ class WhatsOnViewController: UIViewController {
         self.addChildController(controller: self.foodMenuController)
         self.foodMenuContainerView.addSubview(self.foodMenuController.view)
         self.foodMenuController.view.autoPinEdgesToSuperviewEdges()
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !self.viewDidLayout {
+            self.viewDidLayout = true
+            
+            self.segmentedControl.selectedSegmentIndex = self.preSelectedTabIndex
+            self.segmentedControl.sendActions(for: .valueChanged)
+        }
+        
     }
     
     //MARK: My Methods

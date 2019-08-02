@@ -153,7 +153,7 @@ extension DealSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        self.moveToBarDetails(barId: self.bars[indexPath.row].id.value)
+        self.moveToBarDetails(barId: self.bars[indexPath.row].id.value, scopeType: .deal)
     }
 }
 
@@ -164,7 +164,7 @@ extension DealSearchViewController: ExploreBaseTableViewCellDelegate {
             return
         }
         
-        self.moveToBarDetails(barId: self.bars[tableCellIndexPath.row].id.value)
+        self.moveToBarDetails(barId: self.bars[tableCellIndexPath.row].id.value, scopeType: .deal)
     }
 }
 

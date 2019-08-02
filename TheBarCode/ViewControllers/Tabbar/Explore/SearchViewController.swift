@@ -102,6 +102,7 @@ class SearchViewController: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setUpPreferencesButton()
+        self.setUpStandardOfferButton()
         
         for scope in self.scopeItems {
             scope.controller.statefulTableView.innerTable.reloadData()
@@ -265,6 +266,16 @@ class SearchViewController: UIViewController {
         
     }
     
+    func setUpStandardOfferButton() {
+        if self.selectedStandardOffers.count > 0 {
+            self.standardOfferButton.backgroundColor = UIColor.black
+            self.standardOfferButton.tintColor = UIColor.appBlueColor()
+        } else {
+            self.standardOfferButton.backgroundColor = self.tempView.backgroundColor
+            self.standardOfferButton.tintColor = UIColor.appGrayColor()
+        }
+    }
+    
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {
 //        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
 //        self.mapView.animate(to: position)
@@ -388,6 +399,8 @@ class SearchViewController: UIViewController {
         for scope in self.scopeItems {
             scope.controller.showMapView()
         }
+        
+        self.searchBar.resignFirstResponder()
     }
     
     @IBAction func preferencesButtonTapped(sender: UIButton) {
@@ -803,11 +816,38 @@ extension SearchViewController: SearchScopeCellDelegate {
 
 //MARK: BaseSearchScopeViewControllerDelegate
 extension SearchViewController: BaseSearchScopeViewControllerDelegate {
-    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String) {
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope) {
+        
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = barId
         barDetailController.delegate = self
+        
+        if scopeType == .bar {
+            barDetailController.preSelectedTabIndex = 0
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
+            barDetailController.preSelectedSubTabIndexOffers = 0
+        } else if scopeType == .deal {
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
+            barDetailController.preSelectedSubTabIndexOffers = 1
+        } else if scopeType == .liveOffer {
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
+            barDetailController.preSelectedSubTabIndexOffers = 2
+        } else if scopeType == .food {
+            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedSubTabIndexWhatsOn = 2
+            barDetailController.preSelectedSubTabIndexOffers = 0
+        } else if scopeType == .drink {
+            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedSubTabIndexWhatsOn = 1
+            barDetailController.preSelectedSubTabIndexOffers = 0
+        } else if scopeType == .event {
+            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
+            barDetailController.preSelectedSubTabIndexOffers = 0
+        }
         
         self.present(barDetailNav, animated: true, completion: nil)
     }

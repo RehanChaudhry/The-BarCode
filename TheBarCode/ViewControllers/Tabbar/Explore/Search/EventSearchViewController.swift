@@ -135,7 +135,7 @@ extension EventSearchViewController: UITableViewDelegate, UITableViewDataSource 
         
         let event = self.events[indexPath.row]
         
-        self.moveToBarDetails(barId: event.bar.value!.id.value)
+        self.moveToBarDetails(barId: event.bar.value!.id.value, scopeType: .event)
     }
 }
 

@@ -34,10 +34,7 @@ class BarDetailViewController: UIViewController {
     var aboutController: BarDetailAboutViewController!
     var whatsOnController: WhatsOnViewController!
     var offersController: OffersViewController!
-    
-//    var dealsController: BarDealsViewController!
-//    var offersController: LiveOffersViewController!
-    
+
     var segmentedController: SJSegmentedViewController!
     
     var barId: String?
@@ -48,6 +45,8 @@ class BarDetailViewController: UIViewController {
     var reloadDataRequest: DataRequest?
     
     var preSelectedTabIndex = 0
+    var preSelectedSubTabIndexWhatsOn = 0
+    var preSelectedSubTabIndexOffers = 0
     
     var statefulView: LoadingAndErrorView!
     
@@ -129,12 +128,14 @@ class BarDetailViewController: UIViewController {
         self.whatsOnController.bar = self.selectedBar
         self.whatsOnController.delegate = self
         self.whatsOnController.title = "Whats On"
+        self.whatsOnController.preSelectedTabIndex = self.preSelectedSubTabIndexWhatsOn
         self.whatsOnController.view.backgroundColor = self.containerView.backgroundColor
         
         self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "OffersViewController") as! OffersViewController)
         self.offersController.bar = self.selectedBar
         self.offersController.title = "Offers"
         self.offersController.delegate = self
+        self.offersController.preSelectedTabIndex = self.preSelectedSubTabIndexOffers
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
         
         self.aboutController.automaticallyAdjustsScrollViewInsets = false

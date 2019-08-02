@@ -153,7 +153,7 @@ extension BarSearchViewController: UITableViewDelegate, UITableViewDataSource {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         let bar = self.bars[indexPath.row]
-        self.moveToBarDetails(barId: bar.id.value)
+        self.moveToBarDetails(barId: bar.id.value, scopeType: .bar)
     }
 }
 
@@ -164,7 +164,7 @@ extension BarSearchViewController: ExploreBaseTableViewCellDelegate {
             return
         }
         
-        self.moveToBarDetails(barId: self.bars[tableCellIndexPath.row].id.value)
+        self.moveToBarDetails(barId: self.bars[tableCellIndexPath.row].id.value, scopeType: .bar)
     }
 }
 

@@ -160,7 +160,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let bar = self.searchResults[indexPath.section].bar
-        self.moveToBarDetails(barId: bar.id.value)
+        self.moveToBarDetails(barId: bar.id.value, scopeType: .food)
     }
 }
 
@@ -168,7 +168,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension FoodSearchViewController: ScopeSearchResultHeaderViewDelegate {
     func scopeSearchResultHeaderView(headerView: ScopeSearchResultHeaderView, detailsButtonTapped sender: UIButton) {
         let bar = self.searchResults[headerView.section].bar
-        self.moveToBarDetails(barId: bar.id.value)
+        self.moveToBarDetails(barId: bar.id.value, scopeType: .food)
     }
 }
 

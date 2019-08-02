@@ -323,19 +323,19 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func handleItemSelection(indexPath: IndexPath) {
         let viewModel = self.viewModels[indexPath.section]
         if let model = viewModel as? AllSearchViewModelTypeBar, viewModel.type == .bar {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .bar)
         } else if let model = viewModel as? AllSearchViewModelTypeDeal, viewModel.type == .deal {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .deal)
         } else if let model = viewModel as? AllSearchViewModelTypeLiveOffer, viewModel.type == .liveOffer {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .liveOffer)
         } else if let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .bar)
         } else if let model = viewModel as? AllSearchViewModelTypeEvent, viewModel.type == .event {
-            self.moveToBarDetails(barId: model.items[indexPath.row].bar.value!.id.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].bar.value!.id.value, scopeType: .event)
         } else if let model = viewModel as? AllSearchViewModelTypeFood, viewModel.type == .food {
-            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value, scopeType: .food)
         } else if let model = viewModel as? AllSearchViewModelTypeDrink, viewModel.type == .drink {
-            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value)
+            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value, scopeType: .drink)
         }
     }
 }
@@ -370,7 +370,7 @@ extension AllSearchViewController: FoodBarCellDelegate {
         
         let viewModel = self.viewModels[tableCellIndexPath.section]
         if let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
-            self.moveToBarDetails(barId: model.items[tableCellIndexPath.row].id.value)
+            self.moveToBarDetails(barId: model.items[tableCellIndexPath.row].id.value, scopeType: .bar)
         }
     }
 }

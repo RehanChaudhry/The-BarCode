@@ -34,6 +34,10 @@ class OffersViewController: UIViewController {
     
     weak var delegate: OffersViewControllerDelegate!
     
+    var preSelectedTabIndex: Int = 0
+    
+    var viewDidLayout: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +63,19 @@ class OffersViewController: UIViewController {
         self.addChildController(controller: self.liveController)
         self.liveContainerView.addSubview(self.liveController.view)
         self.liveController.view.autoPinEdgesToSuperviewEdges()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !self.viewDidLayout {
+            self.viewDidLayout = true
+            
+            self.segmentedControl.selectedSegmentIndex = self.preSelectedTabIndex
+            self.segmentedControl.sendActions(for: .valueChanged)
+        }
+        
     }
     
     //MARK: My Methods
