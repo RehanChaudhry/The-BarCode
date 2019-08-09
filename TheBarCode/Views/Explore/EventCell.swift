@@ -16,6 +16,8 @@ class EventCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     
+    @IBOutlet var topPadding: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,12 +38,14 @@ class EventCell: UITableViewCell, NibReusable {
     }
     
     //MARK: My Methods
-    func setupCell(event: Event) {
+    func setupCell(event: Event, topPadding: Bool = true) {
         self.titleLabel.text = event.name.value
         self.detailLabel.text = event.formattedDateString
         
         let url = URL(string: event.image.value)
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
             , shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
     }
 }

@@ -44,6 +44,8 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
     var credit = Value.Required<Int>("credit", initial: 0)
     
+    var videoUrlString = Value.Optional<String>("video_url_string")
+    
     var images = Relationship.ToManyOrdered<ImageItem>("images", inverse: { $0.explore })
     
     var lastReloadTime = Value.Required<String>("last_reload_time", initial: "") //TODO dateObject
@@ -173,6 +175,12 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
                     time.dayStatusRaw.value = day?.dayStatusRaw.value ?? ""
                 }
             }
+        }
+        
+        if let videoDict = source["video"] as? [String : Any], let videoUrlString = videoDict["url"] as? String, videoUrlString.count > 0 {
+            self.videoUrlString.value = videoUrlString
+        } else {
+            self.videoUrlString.value = nil
         }
         
         //TODO: handle array and object

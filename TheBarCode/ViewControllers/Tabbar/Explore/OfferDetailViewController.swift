@@ -33,6 +33,9 @@ class OfferDetailViewController: UIViewController {
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet weak var redeemButton: GradientButton!
     
+    @IBOutlet var bookmarkButton: UIButton!
+    @IBOutlet var bookmarkLoader: UIActivityIndicatorView!
+    
     var images: [String] = []
     
     var deal: Deal!
@@ -66,9 +69,15 @@ class OfferDetailViewController: UIViewController {
         self.descriptionLabel.text = self.deal.title.value
         
         self.setUpBottomView()
-        
+        self.updateBookmarkButton()
 
         self.viewedOffer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLayoutSubviews() {
@@ -295,6 +304,22 @@ class OfferDetailViewController: UIViewController {
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }
     
+    func updateBookmarkButton() {
+        if self.deal.savingBookmarkStatus {
+            self.bookmarkButton.isHidden = true
+            self.bookmarkLoader.startAnimating()
+        } else {
+            
+            if self.deal.isBookmarked.value {
+                self.bookmarkButton.tintColor = UIColor.appBlueColor()
+            } else {
+                self.bookmarkButton.tintColor = UIColor.appGrayColor()
+            }
+            
+            self.bookmarkButton.isHidden = false
+            self.bookmarkLoader.stopAnimating()
+        }
+    }
     
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
@@ -322,6 +347,9 @@ class OfferDetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+        self.updateBookmarkStatus(offer: self.deal, isBookmarked: !self.deal.isBookmarked.value)
+    }
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource
@@ -506,7 +534,54 @@ extension OfferDetailViewController {
         }
     }
 
-    
+    func updateBookmarkStatus(offer: Deal, isBookmarked: Bool) {
+        
+        guard !offer.savingBookmarkStatus else {
+            debugPrint("Already saving bookmark status")
+            return
+        }
+        
+        offer.savingBookmarkStatus = true
+        
+        self.updateBookmarkButton()
+        
+        let offerId: String = offer.id.value
+        
+        let params: [String : Any] = ["offer_id" : offerId,
+                                      "is_favorite" : isBookmarked]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddRemoveBookmarkedOffer, method: .put) { (response, serverError, error) in
+            
+            offer.savingBookmarkStatus = false
+            
+            defer {
+                self.updateBookmarkButton()
+            }
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                debugPrint("Error while saving bookmark offer status: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("Server error while saving bookmark offer status: \(serverError!.errorMessages())")
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                let edittedOffer = transaction.edit(offer)
+                edittedOffer?.isBookmarked.value = isBookmarked
+            })
+            
+            if isBookmarked {
+                NotificationCenter.default.post(name: notificationNameBookmarkAdded, object: offer)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBookmarkRemoved, object: offer)
+            }
+        }
+        
+    }
     
 }
 

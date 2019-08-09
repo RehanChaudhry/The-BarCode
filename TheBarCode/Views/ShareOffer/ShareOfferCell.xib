@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -30,7 +30,7 @@
                         <rect key="frame" x="16" y="24" width="288" height="162"/>
                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="yI9-Vc-ZLs" secondAttribute="height" multiplier="16:9" id="cOB-tg-nyF"/>
+                            <constraint firstAttribute="width" secondItem="yI9-Vc-ZLs" secondAttribute="height" multiplier="16:9" priority="999" id="cOB-tg-nyF"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-EA-uys" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
@@ -157,12 +157,13 @@
                 <outlet property="shareButtonContainer" destination="S2b-EA-uys" id="1kQ-Gw-bOw"/>
                 <outlet property="sharedByLabel" destination="Qi6-Lv-c7M" id="3iz-F1-cD4"/>
                 <outlet property="sharingLoader" destination="XUT-3j-f2F" id="1sJ-Mg-m5l"/>
+                <outlet property="topPadding" destination="Fbz-2o-g6W" id="Ls8-fv-wbG"/>
             </connections>
             <point key="canvasLocation" x="140.80000000000001" y="7.1964017991004505"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="bar-location" width="28" height="32"/>
-        <image name="icon_share" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="icon_share" width="21.333333969116211" height="21.333333969116211"/>
     </resources>
 </document>

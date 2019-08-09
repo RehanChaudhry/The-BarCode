@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3CA1726BE6D20CB3D90D8A039B41AD8"
+               BlueprintIdentifier = "D4F8239FB329387A8476B964D92D92E7"
+               BuildableName = "FSPagerView.framework"
                BlueprintName = "FSPagerView"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "FSPagerView.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

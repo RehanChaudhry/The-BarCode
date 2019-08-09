@@ -24,6 +24,8 @@ class SharedOffersViewController: UIViewController {
     var dataRequest: DataRequest?
     var loadMore = Pagination()
     
+    var shouldShowFirstItemPadding = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,7 +89,7 @@ class SharedOffersViewController: UIViewController {
         }
     }
     
-    func showBarDetail(bar: Bar){
+    func showBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
@@ -120,10 +122,13 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ShareOfferCell.self)
         cell.sharingDelegate = self
+        
+        let shouldAddTopPadding = !(!self.shouldShowFirstItemPadding && indexPath.row == 0)
+        
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
-            cell.setUpCell(offer: liveOffer)
+            cell.setUpCell(offer: liveOffer, topPadding: shouldAddTopPadding)
         } else if let deal = self.offers[indexPath.row] as? Deal {
-            cell.setUpCell(offer: deal)
+            cell.setUpCell(offer: deal, topPadding: shouldAddTopPadding)
         }
         return cell
     }

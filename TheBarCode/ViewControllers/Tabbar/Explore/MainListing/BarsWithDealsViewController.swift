@@ -364,6 +364,7 @@ extension BarsWithDealsViewController  {
     }
 }
 
+//MARK: DealTableViewCellDelegate
 extension BarsWithDealsViewController: DealTableViewCellDelegate {
     func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton) {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
@@ -373,6 +374,9 @@ extension BarsWithDealsViewController: DealTableViewCellDelegate {
         }
     }
     
+    func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
+        
+    }
     
 }
 

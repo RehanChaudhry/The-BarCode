@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D95C54A7969849ABF81892D934D03C80"
+               BlueprintIdentifier = "B6859896338838F0B60A91E98C40CCF1"
+               BuildableName = "Gradientable.framework"
                BlueprintName = "Gradientable"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "Gradientable.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

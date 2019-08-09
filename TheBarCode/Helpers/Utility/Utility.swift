@@ -50,6 +50,13 @@ let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOff
 
 let notificationNameBarDetailsRefreshed = Notification.Name(rawValue: "notificationNameBarDetailsRefreshed")
 
+let notificationNameBookmarkAdded = Notification.Name(rawValue: "notificationNameBookmarkAdded")
+let notificationNameBookmarkRemoved = Notification.Name(rawValue: "notificationNameBookmarkRemoved")
+
+let notificationNameBarFavouriteAdded = Notification.Name(rawValue: "notificationNameBarFavouriteAdded")
+let notificationNameBarFavouriteRemoved = Notification.Name(rawValue: "notificationNameBarFavouriteRemoved")
+
+
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"

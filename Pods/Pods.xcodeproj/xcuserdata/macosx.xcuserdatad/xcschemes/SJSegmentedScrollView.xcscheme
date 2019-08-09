@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8CAE2311B196E3AB583936C479649FE"
+               BlueprintIdentifier = "21E211472A35925796B493ECFDFAC941"
+               BuildableName = "SJSegmentedScrollView.framework"
                BlueprintName = "SJSegmentedScrollView"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SJSegmentedScrollView.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

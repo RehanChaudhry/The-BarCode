@@ -97,7 +97,7 @@ extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: EventCell.self)
-        cell.setupCell(event: self.events[indexPath.row])
+        cell.setupCell(event: self.events[indexPath.row], topPadding: indexPath.row != 0)
         return cell
     }
     

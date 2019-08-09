@@ -42,6 +42,12 @@ class LiveOffersViewController: UIViewController {
         self.reset()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -99,7 +105,7 @@ extension LiveOffersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-        cell.setUpDetailCell(offer: self.offers[indexPath.row])
+        cell.setUpDetailCell(offer: self.offers[indexPath.row], topPadding: indexPath.row != 0)
         cell.delegate = self
         return cell
     }
@@ -123,8 +129,22 @@ extension LiveOffersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+//MARK: LiveOfferTableViewCellDelegate
 extension LiveOffersViewController: LiveOfferTableViewCellDelegate {
+    
+    func liveOfferCell(cell: LiveOfferTableViewCell, bookmarButtonTapped sender: UIButton) {
+        
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("IndexPath not found")
+            return
+        }
+        
+        let offer = self.offers[indexPath.row]
+        self.updateBookmarkStatus(offer: offer, isBookmarked: !offer.isBookmarked.value)
+    }
+    
     func liveOfferCell(cell: LiveOfferTableViewCell, distanceButtonTapped sender: UIButton) {
+        
     }
     
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
@@ -217,6 +237,54 @@ extension LiveOffersViewController {
                 completion(genericError)
             }
         }
+    }
+    
+    func updateBookmarkStatus(offer: LiveOffer, isBookmarked: Bool) {
+        
+        guard !offer.savingBookmarkStatus else {
+            debugPrint("Already saving bookmark status")
+            return
+        }
+        
+        offer.savingBookmarkStatus = true
+        self.statefulTableView.innerTable.reloadData()
+        
+        let offerId: String = offer.id.value
+        
+        let params: [String : Any] = ["offer_id" : offerId,
+                                      "is_favorite" : isBookmarked]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddRemoveBookmarkedOffer, method: .put) { (response, serverError, error) in
+            
+            offer.savingBookmarkStatus = false
+            
+            guard error == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                debugPrint("Error while saving bookmark offer status: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                debugPrint("Server error while saving bookmark offer status: \(serverError!.errorMessages())")
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                let edittedOffer = transaction.edit(offer)
+                edittedOffer?.isBookmarked.value = isBookmarked
+            })
+            
+            self.statefulTableView.innerTable.reloadData()
+            
+            if isBookmarked {
+                NotificationCenter.default.post(name: notificationNameBookmarkAdded, object: offer)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBookmarkRemoved, object: offer)
+            }
+        }
+        
     }
 }
 

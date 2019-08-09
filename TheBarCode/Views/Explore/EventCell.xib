@@ -65,6 +65,7 @@
                 <outlet property="coverImageView" destination="J8a-c1-nUe" id="Tul-M7-OsE"/>
                 <outlet property="detailLabel" destination="ZCW-Ke-VqV" id="eTB-yD-OZx"/>
                 <outlet property="titleLabel" destination="G4u-CK-m5g" id="p8U-gF-aYO"/>
+                <outlet property="topPadding" destination="gro-aP-k1Q" id="Dwz-Gk-8Nl"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="144.64285714285714"/>
         </tableViewCell>

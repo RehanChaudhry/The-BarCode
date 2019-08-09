@@ -417,10 +417,19 @@ extension AllSearchViewController: DealTableViewCellDelegate {
             self.showDirection(bar: bar)
         }
     }
+    
+    func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
+        
+    }
 }
 
 //MARK: LiveOfferTableViewCellDelegate
 extension AllSearchViewController: LiveOfferTableViewCellDelegate {
+    
+    func liveOfferCell(cell: LiveOfferTableViewCell, bookmarButtonTapped sender: UIButton) {
+        
+    }
+    
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
         
     }
@@ -477,7 +486,8 @@ extension AllSearchViewController {
                     let title = responseDict["title"] as? String
                     let type = "\(responseDict["type"]!)"
                     let results = responseDict["results"] as? [[String : Any]] ?? []
-                    let hasMore = responseDict["is_results_complete"] as? Bool ?? false
+                    let isResultsComplete = responseDict["is_results_complete"] as? Bool ?? true
+                    let hasMore = !isResultsComplete
                     if type == "1" {
                         let bars = self.mapBars(results: results, mappingType: .bars)
                         let viewModel = AllSearchViewModelTypeBar(sectionTitle: title, items: bars, footerType: hasMore ? AllSearchFooterType.viewMore : .singleLine)
@@ -642,6 +652,12 @@ extension AllSearchViewController {
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
+            }
+            
+            if bar.isUserFavourite.value {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteAdded, object: bar)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteRemoved, object: bar)
             }
         }
     }

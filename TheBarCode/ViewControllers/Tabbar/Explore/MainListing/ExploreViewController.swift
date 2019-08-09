@@ -159,10 +159,13 @@ class ExploreViewController: UIViewController {
         switch self.exploreType {
         case .liveOffers:
             barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexOffers = 2
         case .deals:
-            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexOffers = 1
         default:
             barDetailController.preSelectedTabIndex = 0
+            barDetailController.preSelectedSubTabIndexOffers = 0
         }
         
         self.present(barDetailNav, animated: true, completion: nil)

@@ -170,6 +170,10 @@ extension LiveOfferSearchViewController: ExploreBaseTableViewCellDelegate {
 //MARK: LiveOfferTableViewCellDelegate
 extension LiveOfferSearchViewController: LiveOfferTableViewCellDelegate {
     
+    func liveOfferCell(cell: LiveOfferTableViewCell, bookmarButtonTapped sender: UIButton) {
+        
+    }
+    
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
         
     }

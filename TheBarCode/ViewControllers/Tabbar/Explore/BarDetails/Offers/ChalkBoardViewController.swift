@@ -38,6 +38,12 @@ class ChalkBoardViewController: UIViewController {
         self.reset()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -95,7 +101,8 @@ extension ChalkBoardViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-        cell.setUpDealCell(deal: self.deals[indexPath.row])
+        cell.setUpDealCell(deal: self.deals[indexPath.row], topPadding: indexPath.row != 0)
+        cell.delegate = self
         return cell
     }
     
@@ -105,6 +112,24 @@ extension ChalkBoardViewController: UITableViewDataSource, UITableViewDelegate {
         
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         self.delegate.chalkBoardViewController(controller: self, didSelect: deal)
+    }
+}
+
+//MARK: DealTableViewCellDelegate
+extension ChalkBoardViewController: DealTableViewCellDelegate {
+    func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
+        
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("IndexPath not found")
+            return
+        }
+        
+        let deal = self.deals[indexPath.row]
+        self.updateBookmarkStatus(offer: deal, isBookmarked: !deal.isBookmarked.value)
+    }
+    
+    func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton) {
+        
     }
 }
 
@@ -168,6 +193,54 @@ extension ChalkBoardViewController {
                 completion(genericError)
             }
         }
+    }
+    
+    func updateBookmarkStatus(offer: Deal, isBookmarked: Bool) {
+        
+        guard !offer.savingBookmarkStatus else {
+            debugPrint("Already saving bookmark status")
+            return
+        }
+        
+        offer.savingBookmarkStatus = true
+        self.statefulTableView.innerTable.reloadData()
+        
+        let offerId: String = offer.id.value
+        
+        let params: [String : Any] = ["offer_id" : offerId,
+                                      "is_favorite" : isBookmarked]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddRemoveBookmarkedOffer, method: .put) { (response, serverError, error) in
+            
+            offer.savingBookmarkStatus = false
+            
+            guard error == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                debugPrint("Error while saving bookmark offer status: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                debugPrint("Server error while saving bookmark offer status: \(serverError!.errorMessages())")
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                let edittedOffer = transaction.edit(offer)
+                edittedOffer?.isBookmarked.value = isBookmarked
+            })
+            
+            self.statefulTableView.innerTable.reloadData()
+            
+            if isBookmarked {
+                NotificationCenter.default.post(name: notificationNameBookmarkAdded, object: offer)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBookmarkRemoved, object: offer)
+            }
+        }
+        
     }
 }
 

@@ -177,6 +177,10 @@ extension DealSearchViewController: DealTableViewCellDelegate {
             self.showDirection(bar: bar)
         }
     }
+    
+    func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
+        
+    }
 }
 
 //MARK: Webservices Methods

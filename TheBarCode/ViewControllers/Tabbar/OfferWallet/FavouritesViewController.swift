@@ -20,15 +20,20 @@ class FavouritesViewController: UIViewController {
     
     var bars: [Bar] = []
     
-    var dealsRequest: DataRequest?
-    var dealsLoadMore = Pagination()
+    var dataRequest: DataRequest?
+    var loadMore = Pagination()
     
-    var shouldShowEmptyDataView = false
+    var showHideEmptyDatasetForcefully: Bool = false
+    
+    var shouldShowFirstItemPadding = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(establishmentMarkAsFavouriteNotification(notification:)), name: notificationNameBarFavouriteAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(establishmentRemovedAsFavouriteNotification(notification:)), name: notificationNameBarFavouriteRemoved, object: nil)
         
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 21))
         titleLabel.textAlignment = .center
@@ -38,9 +43,15 @@ class FavouritesViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         
         self.setUpStatefulTableView()
+        self.statefulTableView.triggerInitialLoad()
         
         Analytics.logEvent(viewFavouriteScreen, parameters: nil)
         
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameBarFavouriteAdded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameBarFavouriteRemoved, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,9 +61,8 @@ class FavouritesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.bars.removeAll()
+        
         self.statefulTableView.innerTable.reloadData()
-        self.statefulTableView.triggerInitialLoad()
     }
     
     func setUpStatefulTableView() {
@@ -98,6 +108,13 @@ class FavouritesViewController: UIViewController {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
+    
+    func setupForEmptyDataSetIfNeeded() {
+        if !self.loadMore.isLoading {
+            self.showHideEmptyDatasetForcefully = true
+            self.statefulTableView.triggerInitialLoad()
+        }
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -116,7 +133,10 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
         cell.delegate = self
         cell.exploreBaseDelegate = self
-        cell.setUpCell(bar: self.bars[indexPath.row])
+        
+        let shouldAddTopPadding = !(!self.shouldShowFirstItemPadding && indexPath.row == 0)
+        cell.setUpCell(bar: self.bars[indexPath.row], topPadding: shouldAddTopPadding)
+        
         return cell
     }
     
@@ -141,9 +161,6 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         self.moveToBarDetail(bar: self.bars[indexPath.row])
-        
-//        let exploreDetailNav = (self.storyboard?.instantiateViewController(withIdentifier: "ExploreDetailNavigation") as! UINavigationController)
-//        self.present(exploreDetailNav, animated: true, completion: nil)
     }
 }
 
@@ -165,25 +182,25 @@ extension FavouritesViewController {
     func getFavourites(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
         if isRefreshing {
-            self.dealsLoadMore = Pagination()
+            self.loadMore = Pagination()
         }
         
-        let params:[String : Any] = ["pagination" : true,"page": self.dealsLoadMore.next]
-        self.dealsLoadMore.isLoading = true
+        let params:[String : Any] = ["pagination" : true,"page": self.loadMore.next]
+        self.loadMore.isLoading = true
 
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiFavorite, method: .get) { (response, serverError, error) in
             
-            self.dealsLoadMore.isLoading = false
+            self.loadMore.isLoading = false
 
             guard error == nil else {
-                self.dealsLoadMore.error = error! as NSError
+                self.loadMore.error = error! as NSError
                 self.statefulTableView.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
-                self.dealsLoadMore.error = serverError!.nsError()
+                self.loadMore.error = serverError!.nsError()
                 self.statefulTableView.reloadData()
                 completion(serverError!.nsError())
                 return
@@ -211,9 +228,9 @@ extension FavouritesViewController {
                 
                 self.bars.append(contentsOf: resultBars)
                 
-                self.dealsLoadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canPullToRefresh = true
-                self.statefulTableView.canLoadMore = self.dealsLoadMore.canLoadMore()
+                self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
                 
@@ -273,18 +290,17 @@ extension FavouritesViewController {
         self.bars.remove(at: indexPath.row)
         self.statefulTableView.innerTable.deleteRows(at: [indexPath], with: .fade)
         
-        if !self.dealsLoadMore.isLoading && self.bars.count == 0 {
-            self.shouldShowEmptyDataView = true
-            self.statefulTableView.triggerInitialLoad()
-        }
+        self.setupForEmptyDataSetIfNeeded()
     }
 }
 
+//MARK: StatefulTableDelegate
 extension FavouritesViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        if self.shouldShowEmptyDataView {
-            self.shouldShowEmptyDataView = false
+        
+        if self.showHideEmptyDatasetForcefully {
+            self.showHideEmptyDatasetForcefully = false
             handler(self.bars.count == 0, nil)
         } else {
             self.getFavourites(isRefreshing: false) {  [unowned self] (error) in
@@ -294,11 +310,11 @@ extension FavouritesViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
-        self.dealsLoadMore.error = nil
+        self.loadMore.error = nil
         tvc.innerTable.reloadData()
         
         self.getFavourites(isRefreshing: false) { [unowned self] (error) in
-            handler(self.dealsLoadMore.canLoadMore(), error, error != nil)
+            handler(self.loadMore.canLoadMore(), error, error != nil)
         }
     }
     
@@ -362,6 +378,7 @@ extension FavouritesViewController: StatefulTableDelegate {
     }
 }
 
+//MARK: BarTableViewCellDelegare
 extension FavouritesViewController: BarTableViewCellDelegare {
     func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
         let indexPath = self.statefulTableView.innerTable.indexPath(for: cell)
@@ -379,5 +396,38 @@ extension FavouritesViewController: BarTableViewCellDelegare {
 //MARK: BarDetailViewControllerDelegate
 extension FavouritesViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+    }
+}
+
+//MARK: Notification Methods
+extension FavouritesViewController {
+    @objc func establishmentMarkAsFavouriteNotification(notification: Notification) {
+        
+        let bar = notification.object as! Bar
+        self.bars.insert(bar, at: 0)
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.statefulTableView.innerTable.insertRows(at: [indexPath], with: .bottom)
+        self.setupForEmptyDataSetIfNeeded()
+    }
+    
+    @objc func establishmentRemovedAsFavouriteNotification(notification: Notification) {
+        
+        let bar = notification.object as! Bar
+        
+        let index = self.bars.firstIndex { (obj) -> Bool in
+            return obj.id.value == bar.id.value
+        }
+
+        if let index = index {
+            self.bars.remove(at: index)
+            
+            let indexPath = IndexPath(row: index, section: 0)
+            self.statefulTableView.innerTable.deleteRows(at: [indexPath], with: .top)
+        } else {
+            self.statefulTableView.innerTable.reloadData()
+        }
+        
+        self.setupForEmptyDataSetIfNeeded()
     }
 }

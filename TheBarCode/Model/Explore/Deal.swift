@@ -64,6 +64,8 @@ class Deal: CoreStoreObject {
     
     var hasTime = Value.Required<Bool>("should_show_time", initial: true)
     
+    var isBookmarked = Value.Required<Bool>("is_bookmarked", initial: false)
+    
     var startDate: Date {
         get {
             return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
@@ -102,6 +104,12 @@ class Deal: CoreStoreObject {
     
     var showLoader: Bool = false
     var showSharingLoader: Bool = false
+    
+    var savingBookmarkStatus: Bool = false {
+        didSet {
+            debugPrint("loading status changed")
+        }
+    }
 }
 
 
@@ -149,6 +157,8 @@ extension Deal: ImportableUniqueObject {
         self.startDateTimeRaw.value = source["start_date_time"]! as! String
         self.endDateTimeRaw.value = source["end_date_time"]! as! String
         self.statusText.value = source["status_text"] as! String
+        
+        self.isBookmarked.value = source["is_user_favourite"] as? Bool ?? false
        
         if let canShare = source["can_share"] as? Bool {
             self.canShare.value = canShare

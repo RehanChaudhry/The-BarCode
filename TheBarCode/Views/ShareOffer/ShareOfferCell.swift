@@ -32,6 +32,8 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
     @IBOutlet var shareButton: UIButton!
     @IBOutlet var sharingLoader: UIActivityIndicatorView!
     
+    @IBOutlet var topPadding: NSLayoutConstraint!
+    
     weak var sharingDelegate : ShareOfferCellDelegate!
 
     override func awakeFromNib() {
@@ -52,7 +54,7 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setUpCell(offer: Deal) {
+    func setUpCell(offer: Deal, topPadding: Bool = true) {
         self.offerTitleLabel.text = offer.title.value
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
@@ -74,9 +76,11 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
             self.sharingLoader.stopAnimating()
             self.shareButton.isHidden = false
         }
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
     }
     
-    func setUpCell(offer: LiveOffer) {
+    func setUpCell(offer: LiveOffer, topPadding: Bool = true) {
         self.offerTitleLabel.text = offer.title.value
         self.barTitleButton.setTitle(offer.establishment.value!.title.value, for: .normal)
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: offer.establishment.value!.distance.value), for: .normal)
@@ -98,6 +102,8 @@ class ShareOfferCell: MGSwipeTableCell, NibReusable {
             self.sharingLoader.stopAnimating()
             self.shareButton.isHidden = false
         }
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
     }
     
     func attributedString(prefixText: String, Text: String) -> NSMutableAttributedString {

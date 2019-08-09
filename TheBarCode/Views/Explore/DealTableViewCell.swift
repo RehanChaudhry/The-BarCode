@@ -12,12 +12,17 @@ import FirebaseAnalytics
 
 protocol DealTableViewCellDelegate: class {
     func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton)
+    func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton)
 }
 
 class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
 
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet weak var validityLabel: UILabel!
+    
+    @IBOutlet var bookmarkButton: UIButton!
+    
+    @IBOutlet var bookmarkActivityIndicator: UIActivityIndicatorView!
     
     weak var delegate: DealTableViewCellDelegate?
     
@@ -42,20 +47,22 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         self.pageControl.numberOfPages = self.bar?.images.count ?? 0
         
-        titleLabel.text = explore.title.value
-        distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
+        self.titleLabel.text = explore.title.value
+        self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         
-        detailLabel.text = "\(explore.deals.value) deals available"
+        self.detailLabel.text = "\(explore.deals.value) deals available"
         
-        locationIconImageView.isHidden = false
-        distanceButton.isHidden = false
-        detailLabel.isHidden = false
-        validityLabel.isHidden = true
+        self.locationIconImageView.isHidden = false
+        self.distanceButton.isHidden = false
+        self.detailLabel.isHidden = false
+        self.validityLabel.isHidden = true
+        
+        self.bookmarkButton.isHidden = true
         
         self.setupStatus(explore: explore)
     }
     
-    func setUpDealCell(deal: Deal) {
+    func setUpDealCell(deal: Deal, topPadding: Bool = true) {
         
         self.coverImageView.isHidden = false
         self.pageControl.isHidden = true
@@ -162,11 +169,30 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
             self.validityLabel.attributedText = finalAttributedString
         }
+        
+        if deal.savingBookmarkStatus {
+            self.bookmarkButton.isHidden = true
+            self.bookmarkActivityIndicator.startAnimating()
+        } else {
+            if deal.isBookmarked.value {
+                self.bookmarkButton.tintColor = UIColor.appBlueColor()
+            } else {
+                self.bookmarkButton.tintColor = UIColor.appGrayColor()
+            }
+            self.bookmarkActivityIndicator.stopAnimating()
+            self.bookmarkButton.isHidden = false
+        }
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
         Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate?.dealTableViewCell(cell: self, distanceButtonTapped: sender)
+    }
+    
+    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+        self.delegate?.dealTableViewCell(cell: self, bookmarkButtonTapped: sender)
     }
 }
 

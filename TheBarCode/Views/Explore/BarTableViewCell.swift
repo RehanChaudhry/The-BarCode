@@ -37,9 +37,11 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(bar: Bar) {
+    func setUpCell(bar: Bar, topPadding: Bool = true) {
         super.setUpCell(explore: bar)
-       self.favouriteButton.tintColor = bar.isUserFavourite.value ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+        self.favouriteButton.tintColor = bar.isUserFavourite.value ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
     }
     
     //MARK: IBAction

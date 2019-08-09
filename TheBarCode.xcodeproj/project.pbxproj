@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */; };
+		0C0BD8D822F411FA00668DF7 /* OfferWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BD8D722F411FA00668DF7 /* OfferWalletViewController.swift */; };
+		0C0BD8DA22F4130500668DF7 /* BookmarkedOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BD8D922F4130500668DF7 /* BookmarkedOfferViewController.swift */; };
 		0C0CA20E22E04BC300C90409 /* WhatsOnDetailEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0CA20C22E04BC300C90409 /* WhatsOnDetailEventCell.swift */; };
 		0C0CA20F22E04BC300C90409 /* WhatsOnDetailEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0CA20D22E04BC300C90409 /* WhatsOnDetailEventCell.xib */; };
 		0C0CA21522E07E0200C90409 /* SearchScopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0CA21322E07E0200C90409 /* SearchScopeCell.swift */; };
@@ -279,6 +281,8 @@
 
 /* Begin PBXFileReference section */
 		0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCosumptionViewController.swift; sourceTree = "<group>"; };
+		0C0BD8D722F411FA00668DF7 /* OfferWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferWalletViewController.swift; sourceTree = "<group>"; };
+		0C0BD8D922F4130500668DF7 /* BookmarkedOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedOfferViewController.swift; sourceTree = "<group>"; };
 		0C0CA20C22E04BC300C90409 /* WhatsOnDetailEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsOnDetailEventCell.swift; sourceTree = "<group>"; };
 		0C0CA20D22E04BC300C90409 /* WhatsOnDetailEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhatsOnDetailEventCell.xib; sourceTree = "<group>"; };
 		0C0CA21322E07E0200C90409 /* SearchScopeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScopeCell.swift; sourceTree = "<group>"; };
@@ -566,6 +570,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C0BD8D622F411BB00668DF7 /* OfferWallet */ = {
+			isa = PBXGroup;
+			children = (
+				0C0BD8D722F411FA00668DF7 /* OfferWalletViewController.swift */,
+				0C0BD8D922F4130500668DF7 /* BookmarkedOfferViewController.swift */,
+				0C23A8892146582A00DFB281 /* FavouritesViewController.swift */,
+				0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */,
+			);
+			path = OfferWallet;
+			sourceTree = "<group>";
+		};
 		0C0CA21022E0792000C90409 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,14 +885,6 @@
 			path = Explore;
 			sourceTree = "<group>";
 		};
-		0C44DD2D214A7E27000F5D64 /* Favourite */ = {
-			isa = PBXGroup;
-			children = (
-				0C23A8892146582A00DFB281 /* FavouritesViewController.swift */,
-			);
-			path = Favourite;
-			sourceTree = "<group>";
-		};
 		0C44DD2E214A7E36000F5D64 /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,7 +896,6 @@
 				0C8E9A96214A8A8800224720 /* ReloadViewController.swift */,
 				0C8E9A98214A908800224720 /* FaqsViewController.swift */,
 				0C8E9A9A214A909E00224720 /* RulesViewController.swift */,
-				0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -1130,7 +1136,7 @@
 				0C44DD2A214A7D37000F5D64 /* Invite */,
 				0C44DD2B214A7DE3000F5D64 /* FiveAday */,
 				0C44DD2C214A7E19000F5D64 /* Explore */,
-				0C44DD2D214A7E27000F5D64 /* Favourite */,
+				0C0BD8D622F411BB00668DF7 /* OfferWallet */,
 				0C44DD2E214A7E36000F5D64 /* More */,
 				0C44DD2F214A7E45000F5D64 /* Others */,
 			);
@@ -1759,61 +1765,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/CoreStore/CoreStore.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/GBDeviceInfo/GBDeviceInfo.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Gradientable/Gradientable.framework",
-				"${BUILT_PRODUCTS_DIR}/HTTPStatusCodes/HTTPStatusCodes.framework",
-				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
-				"${BUILT_PRODUCTS_DIR}/MGSwipeTableCell/MGSwipeTableCell.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/RNCryptor/RNCryptor.framework",
-				"${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework",
-				"${BUILT_PRODUCTS_DIR}/StatefulTableView/StatefulTableView.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreStore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GBDeviceInfo.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gradientable.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HTTPStatusCodes.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MGSwipeTableCell.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RNCryptor.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reusable.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SJSegmentedScrollView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulTableView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIColor_Hex_Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D8EEC5E5FCB51CC6F36FFE7A /* [CP] Check Pods Manifest.lock */ = {
@@ -1839,17 +1800,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1882,6 +1842,7 @@
 				838B4E4021B1684E00C32214 /* ReloadPriceTVC.swift in Sources */,
 				0C955DD82147F20E00F9385B /* PrivacyPolicyViewController.swift in Sources */,
 				0C0CA20E22E04BC300C90409 /* WhatsOnDetailEventCell.swift in Sources */,
+				0C0BD8DA22F4130500668DF7 /* BookmarkedOfferViewController.swift in Sources */,
 				0C8BDCDB2150D74500D5117B /* Explore.swift in Sources */,
 				0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */,
 				0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */,
@@ -1891,6 +1852,7 @@
 				0C86D02522DEF4E90034DA5C /* Drink.swift in Sources */,
 				0CB668EB22DDF2FA003422DB /* FoodMenuCell.swift in Sources */,
 				0CCA528722E83265006833C5 /* FoodSearch.swift in Sources */,
+				0C0BD8D822F411FA00668DF7 /* OfferWalletViewController.swift in Sources */,
 				0C8E9AAB214BBAE300224720 /* FAQ.swift in Sources */,
 				0CFECFD622EAC63C0033BE20 /* AllSearchHeaderView.swift in Sources */,
 				0C8D166B229F8F2A00666F77 /* ExploreImageCell.swift in Sources */,

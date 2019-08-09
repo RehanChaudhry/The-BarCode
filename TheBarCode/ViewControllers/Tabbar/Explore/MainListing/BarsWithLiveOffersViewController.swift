@@ -364,6 +364,11 @@ extension BarsWithLiveOffersViewController  {
 
 //LiveOfferTableViewCell
 extension BarsWithLiveOffersViewController: LiveOfferTableViewCellDelegate {
+    
+    func liveOfferCell(cell: LiveOfferTableViewCell, bookmarButtonTapped sender: UIButton) {
+        
+    }
+    
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton) {
         
     }

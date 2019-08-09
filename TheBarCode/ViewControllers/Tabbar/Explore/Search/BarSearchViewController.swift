@@ -296,6 +296,12 @@ extension BarSearchViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
             }
+            
+            if bar.isUserFavourite.value {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteAdded, object: bar)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteRemoved, object: bar)
+            }
         }
     }
 }

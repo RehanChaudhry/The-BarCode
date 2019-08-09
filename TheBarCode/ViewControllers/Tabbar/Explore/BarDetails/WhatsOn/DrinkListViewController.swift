@@ -96,7 +96,7 @@ extension DrinkListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-        cell.setupCellForDrink(drink: self.drinks[indexPath.row])
+        cell.setupCellForDrink(drink: self.drinks[indexPath.row], topPadding: indexPath.row != 0)
         return cell
     }
     

@@ -29,6 +29,8 @@ class ExploreBaseTableViewCell: UITableViewCell {
     
     @IBOutlet var pageControl: UIPageControl!
     
+    @IBOutlet var topPadding: NSLayoutConstraint!
+    
     var bar: Explore?
     
     weak var exploreBaseDelegate: ExploreBaseTableViewCellDelegate?

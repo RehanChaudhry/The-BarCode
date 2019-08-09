@@ -13,6 +13,7 @@ import FirebaseAnalytics
 protocol LiveOfferTableViewCellDelegate: class {
     func liveOfferCell(cell: LiveOfferTableViewCell, shareButtonTapped sender: UIButton)
     func liveOfferCell(cell: LiveOfferTableViewCell, distanceButtonTapped sender: UIButton)
+    func liveOfferCell(cell: LiveOfferTableViewCell, bookmarButtonTapped sender: UIButton)
 }
 
 class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
@@ -21,8 +22,10 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     @IBOutlet weak var validityLabel: UILabel!
     
     @IBOutlet var shareButton: UIButton!
+    @IBOutlet var bookmarkButton: UIButton!
     
     @IBOutlet var sharingLoader: UIActivityIndicatorView!
+    @IBOutlet var bookmarkActivityIndicator: UIActivityIndicatorView!
     
     var expirationTimer: Timer?
     
@@ -67,11 +70,12 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.validityLabel.isHidden = true
      
         self.shareButton.isHidden = true
+        self.bookmarkButton.isHidden = true
         
         self.setupStatus(explore: explore)
     }
     
-    func setUpDetailCell(offer: LiveOffer, hideShare: Bool = false) {
+    func setUpDetailCell(offer: LiveOffer, hideShare: Bool = false, topPadding: Bool = true) {
         
         self.coverImageView.isHidden = false
         self.pagerView.isHidden = true
@@ -101,7 +105,20 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
             self.shareButton.isHidden = true
         }
         
-   
+        if offer.savingBookmarkStatus {
+            self.bookmarkButton.isHidden = true
+            self.bookmarkActivityIndicator.startAnimating()
+        } else {
+            if offer.isBookmarked.value {
+                self.bookmarkButton.tintColor = UIColor.appBlueColor()
+            } else {
+                self.bookmarkButton.tintColor = UIColor.appGrayColor()
+            }
+            self.bookmarkActivityIndicator.stopAnimating()
+            self.bookmarkButton.isHidden = false
+        }
+        
+        self.topPadding.constant = topPadding ? 24.0 : 0.0
         
 //        let endDate = offer.endDateTime
 //        let remainingSeconds = Int(endDate.timeIntervalSinceNow)
@@ -298,5 +315,9 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
     @IBAction func distanceButtonTapped(_ sender: UIButton) {
         Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate?.liveOfferCell(cell: self, distanceButtonTapped: sender)
+    }
+    
+    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+        self.delegate?.liveOfferCell(cell: self, bookmarButtonTapped: sender)
     }
 }

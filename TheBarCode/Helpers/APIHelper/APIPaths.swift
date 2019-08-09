@@ -61,6 +61,9 @@ let apiPathMenu = "establishment-menu"
 let apiPathInfluencer = "influencer-counter"
 let apiPathSearchAll = "search/all"
 
+let apiPathBookmarkedOffers = "user-favorite-offer"
+let apiPathAddRemoveBookmarkedOffer = "user-favorite-offer/update"
+
 //Analytics Events
 let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()
 let signUpMobileClick = "Clicked on Sign up with Mobile".getFormattedEventName()

@@ -11,10 +11,13 @@ import Reusable
 import CoreStore
 import FirebaseAnalytics
 import CoreLocation
+import AVKit
 
 class BarDetailHeaderViewController: UIViewController {
 
     @IBOutlet var collectionView: UICollectionView!
+    
+    @IBOutlet var videoContainerView: UIView!
     
     @IBOutlet var pageControl: UIPageControl!
     
@@ -30,23 +33,56 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet var statusButton: UIButton!
     
+    @IBOutlet var playerLoaderView: ShadowView!
+    @IBOutlet var playerActivityIndicator: UIActivityIndicatorView!
+    
     var bar: Bar!
+    
+    var avplayer: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    var playerObserver: Any?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        
         self.mapIconImageView.image = self.mapIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.mapIconImageView.tintColor = UIColor.appBlueColor()
         
         self.setUpHeader()
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.playerLayer?.frame = self.videoContainerView.bounds
+    }
+    
+    deinit {
+        
+        if let observer = self.playerObserver {
+            //removing time observer
+            self.avplayer?.removeTimeObserver(observer)
+            self.playerObserver = nil
+        }
+        
+        self.avplayer?.pause()
+        self.avplayer = nil
+        
+        self.playerLayer?.removeFromSuperlayer()
+        self.playerLayer = nil
+        
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
     }
     
     //MARK: My Methods
@@ -94,6 +130,63 @@ class BarDetailHeaderViewController: UIViewController {
         self.pageControl.numberOfPages = self.bar.images.count
         let pageNumber = round(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
         self.pageControl.currentPage = Int(pageNumber)
+        
+        if let videoUrlString = self.bar.videoUrlString.value {
+            
+            self.collectionView.isHidden = true
+            self.pageControl.isHidden = true
+            self.videoContainerView.isHidden = false
+            
+            if self.avplayer != nil {
+                NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: self.avplayer?.currentItem)
+            }
+            
+            if let observer = self.playerObserver {
+                //removing time observer
+                self.avplayer?.removeTimeObserver(observer)
+                self.playerObserver = nil
+            }
+            
+            self.avplayer?.pause()
+            self.avplayer = nil
+            
+            self.playerLayer?.removeFromSuperlayer()
+            self.playerLayer = nil
+            
+            let videoUrl = URL(string: videoUrlString)!
+            self.avplayer = AVPlayer(url: videoUrl)
+            self.avplayer?.actionAtItemEnd = .none
+            self.playerLayer = AVPlayerLayer(player: self.avplayer)
+            self.playerLayer?.frame = self.videoContainerView.bounds
+            self.playerLayer?.videoGravity = .resizeAspectFill
+            self.videoContainerView.layer.addSublayer(self.playerLayer!)
+            self.avplayer?.play()
+            
+            self.addPreriodicTimeObsever()
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: self.avplayer?.currentItem)
+            
+        } else {
+            self.collectionView.isHidden = false
+            self.pageControl.isHidden = false
+            self.videoContainerView.isHidden = true
+        }
+    }
+    
+    func addPreriodicTimeObsever(){
+        
+        let intervel : CMTime = CMTimeMake(1, 10)
+        self.playerObserver = avplayer?.addPeriodicTimeObserver(forInterval: intervel, queue: DispatchQueue.main) { [weak self] time in
+            
+            guard let `self` = self else { return }
+            
+            let playbackLikelyToKeepUp = self.avplayer?.currentItem?.isPlaybackLikelyToKeepUp
+            if playbackLikelyToKeepUp == false {
+                self.playerLoaderView.isHidden = false
+            } else {
+                self.playerLoaderView.isHidden = true
+            }
+        }
     }
     
     func showDirection(bar: Bar){
@@ -162,6 +255,12 @@ extension BarDetailHeaderViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
             }
+            
+            if self.bar.isUserFavourite.value {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteAdded, object: self.bar)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBarFavouriteRemoved, object: self.bar)
+            }
         }
     }
 }
@@ -190,5 +289,27 @@ extension BarDetailHeaderViewController: UICollectionViewDataSource, UICollectio
 extension BarDetailHeaderViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.collectionView.frame.size
+    }
+}
+
+//MARK: Notification Methods
+extension BarDetailHeaderViewController {
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: kCMTimeZero, completionHandler: nil)
+            debugPrint("Video playback restarted")
+        }
+    }
+    
+    @objc func applicationDidBecomeActive(notification: Notification) {
+        if self.avplayer?.isPlaying ==  false {
+            self.avplayer?.play()
+        }
+    }
+}
+
+extension AVPlayer {
+    var isPlaying: Bool {
+        return rate != 0 && error == nil
     }
 }

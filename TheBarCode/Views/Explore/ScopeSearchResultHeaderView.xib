@@ -25,7 +25,7 @@
                     <rect key="frame" x="16" y="8" width="288" height="162"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="hvq-LE-OgM" secondAttribute="height" multiplier="16:9" id="hza-Xu-xV7"/>
+                        <constraint firstAttribute="width" secondItem="hvq-LE-OgM" secondAttribute="height" multiplier="16:9" priority="999" id="hza-Xu-xV7"/>
                     </constraints>
                     <connections>
                         <outlet property="dataSource" destination="iN0-l3-epB" id="vFe-ge-IF5"/>
