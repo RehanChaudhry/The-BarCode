@@ -24,22 +24,22 @@ enum SearchScope: String {
             let item = SearchScopeItem(storyboardId: "AllSearchViewController", scopeType: .all, title: "ALL")
             return item
         case .bar:
-            let item = SearchScopeItem(storyboardId: "BarSearchViewController", scopeType: .bar, title: "BAR")
+            let item = SearchScopeItem(storyboardId: "BarSearchViewController", scopeType: .bar, title: "BARS")
             return item
         case .deal:
-            let item = SearchScopeItem(storyboardId: "DealSearchViewController", scopeType: .deal, title: "DEAL")
+            let item = SearchScopeItem(storyboardId: "DealSearchViewController", scopeType: .deal, title: "DEALS")
             return item
         case .liveOffer:
-            let item = SearchScopeItem(storyboardId: "LiveOfferSearchViewController", scopeType: .liveOffer, title: "LIVE OFFER")
+            let item = SearchScopeItem(storyboardId: "LiveOfferSearchViewController", scopeType: .liveOffer, title: "LIVE OFFERS")
             return item
         case .food:
-            let item = SearchScopeItem(storyboardId: "FoodSearchViewController", scopeType: .food, title: "FOOD")
+            let item = SearchScopeItem(storyboardId: "FoodSearchViewController", scopeType: .food, title: "FOODS")
             return item
         case .drink:
-            let item = SearchScopeItem(storyboardId: "DrinkSearchViewController", scopeType: .drink, title: "DRINK")
+            let item = SearchScopeItem(storyboardId: "DrinkSearchViewController", scopeType: .drink, title: "DRINKS")
             return item
         case .event:
-            let item = SearchScopeItem(storyboardId: "EventSearchViewController", scopeType: .event, title: "EVENT")
+            let item = SearchScopeItem(storyboardId: "EventSearchViewController", scopeType: .event, title: "EVENTS")
             return item
         }
     }

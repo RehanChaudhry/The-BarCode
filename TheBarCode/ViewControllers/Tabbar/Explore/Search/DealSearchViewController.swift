@@ -237,7 +237,7 @@ extension DealSearchViewController {
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                
+                self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 self.setUpMarkers()
                 
@@ -270,6 +270,7 @@ extension DealSearchViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.refreshSnackBar()
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             handler(self.bars.count == 0, error)
         }
@@ -284,7 +285,7 @@ extension DealSearchViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Search Result Found"
+            let title = "Searching for something specific, why not type what you’re looking for in the search bar?"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

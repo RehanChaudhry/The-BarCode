@@ -21,6 +21,7 @@ class EmptyDataView: UIView, NibLoadable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.titleLabel.numberOfLines = 0
        // actionButton.backgroundColor = UIColor.appBlueColor()
     }
     

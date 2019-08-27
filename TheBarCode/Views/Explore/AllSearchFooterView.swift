@@ -25,16 +25,15 @@ class AllSearchFooterView: UITableViewHeaderFooterView, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        self.contentView.backgroundColor = UIColor.orange
     }
     
-    func setup(footerType: AllSearchFooterType) {
-        if footerType == .viewMore {
-            self.viewMoreButton.isHidden = false
-        } else {
-            self.viewMoreButton.isHidden = true
-        }
-    }
+//    func setup(footerType: AllSearchFooterType) {
+//        if footerType == .viewMore {
+//            self.viewMoreButton.isHidden = false
+//        } else {
+//            self.viewMoreButton.isHidden = true
+//        }
+//    }
     
     //MARK: My IBActions
     @IBAction func viewMoreButtonTapped(sender: UIButton) {

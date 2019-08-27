@@ -18,17 +18,23 @@ enum AllSearchItemType: String {
     foodBar = "foodBar"
 }
 
+/*
 enum AllSearchFooterType: String {
     case none = "none",
     singleLine = "singleLine",
-    viewMore = "viewMore"
-}
+    viewMore = "viewMore",
+    
+    expandableWithViewMore = "expandableWithViewMore",
+    
+    expandableWithoutViewMoreWithSeparator = "expandableWithoutViewMoreWithSeparator",
+    expandableWithoutViewMoreWithOutSeparator = "expandableWithoutViewMoreWithOutSeparator"
+}*/
 
 protocol AllSearchViewModelItem: class {
     var type: AllSearchItemType { get }
     var sectionTitle: String? { get }
     var rowCount: Int { get }
-    var footerType: AllSearchFooterType { get }
+    var footerModel: AllSearchFooterViewModel { get }
 }
 
 class AllSearchViewModelTypeBar: AllSearchViewModelItem {
@@ -44,13 +50,13 @@ class AllSearchViewModelTypeBar: AllSearchViewModelItem {
         return self.items.count
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Bar], footerType: AllSearchFooterType) {
+    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
     
 }
@@ -68,13 +74,13 @@ class AllSearchViewModelTypeDeal: AllSearchViewModelItem {
         return self.items.count
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Bar], footerType: AllSearchFooterType) {
+    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
     
 }
@@ -92,13 +98,13 @@ class AllSearchViewModelTypeLiveOffer: AllSearchViewModelItem {
         return self.items.count
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Bar], footerType: AllSearchFooterType) {
+    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
     
 }
@@ -113,15 +119,25 @@ class AllSearchViewModelTypeFood: AllSearchViewModelItem {
     }
     
     var rowCount: Int {
-        return self.items.count
+        if self.items.count > 3 {
+            if self.isExpanded {
+                return self.items.count
+            } else {
+                return 3
+            }
+        } else {
+            return self.items.count
+        }
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Food], footerType: AllSearchFooterType) {
+    var isExpanded = false
+    
+    init(sectionTitle: String?, items: [Food], footerModel: AllSearchFooterViewModel) {
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
 }
 
@@ -135,16 +151,26 @@ class AllSearchViewModelTypeDrink: AllSearchViewModelItem {
     }
     
     var rowCount: Int {
-        return self.items.count
+        if self.items.count > 3 {
+            if self.isExpanded {
+                return self.items.count
+            } else {
+                return 3
+            }
+        } else {
+            return self.items.count
+        }
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Drink], footerType: AllSearchFooterType) {
+    var isExpanded = false
+    
+    init(sectionTitle: String?, items: [Drink], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
 }
 
@@ -161,13 +187,13 @@ class AllSearchViewModelTypeEvent: AllSearchViewModelItem {
         return self.items.count
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Event], footerType: AllSearchFooterType) {
+    init(sectionTitle: String?, items: [Event], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
 }
 
@@ -184,13 +210,13 @@ class AllSearchViewModelTypeFoodBar: AllSearchViewModelItem {
         return self.items.count
     }
     
-    var footerType: AllSearchFooterType
+    var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Bar], footerType: AllSearchFooterType) {
+    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel) {
         
         self.sectionTitle = sectionTitle
         self.items = items
-        self.footerType = footerType
+        self.footerModel = footerModel
     }
 }
 

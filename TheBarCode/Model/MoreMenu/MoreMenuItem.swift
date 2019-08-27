@@ -47,7 +47,7 @@ enum MenuItemType: String {
     
     static func allMenuItems() -> [MenuItem] {
         return [
-        MenuItem(type: .sharedOffer),
+//        MenuItem(type: .sharedOffer),
         MenuItem(type: .accountSettings),
         MenuItem(type: .notificationSettings),
         MenuItem(type: .preferences),

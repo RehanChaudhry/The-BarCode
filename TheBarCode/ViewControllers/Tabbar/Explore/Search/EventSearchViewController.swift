@@ -127,8 +127,21 @@ extension EventSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: EventCell.self)
-        cell.setupCell(event: self.events[indexPath.row])
+        
+        let event = self.events[indexPath.row]
+        cell.setupCell(event: event, barName: event.bar.value?.title.value)
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let eventCell = cell as? EventCell
+        eventCell?.startTimer(event: self.events[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let eventCell = cell as? EventCell
+        eventCell?.stopTimer()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -146,8 +159,7 @@ extension EventSearchViewController {
         
         self.dataRequest?.cancel()
         
-        var params:[String : Any] =  ["type": SearchScope.event.rawValue,
-                                      "pagination" : true,
+        var params:[String : Any] =  ["pagination" : true,
                                       "page" : self.loadMore.next,
                                       "keyword" : self.keyword]
         
@@ -193,6 +205,7 @@ extension EventSearchViewController {
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
+                self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
                 
@@ -223,6 +236,7 @@ extension EventSearchViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.refreshSnackBar()
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             handler(self.events.count == 0, error)
         }
@@ -237,7 +251,7 @@ extension EventSearchViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Search Result Found"
+            let title = "Searching for something specific, why not type what you’re looking for in the search bar?"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

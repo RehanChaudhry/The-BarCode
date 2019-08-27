@@ -103,7 +103,7 @@ class LoginOptionsViewController: UIViewController {
     //MARK: My Methods
     func setupInitialData(){
         
-        let option1 = IntroOption(title: "Bar finder", detail: "Discover awesome Independent pubs and bars", type: .barFinder)
+        let option1 = IntroOption(title: "Discover", detail: "Discover awesome Independent pubs and bars", type: .barFinder)
     
         let option2 = IntroOption(title: "5 a day", detail: "Get a daily bundle of offers specific to you", type: .fiveADay)
         

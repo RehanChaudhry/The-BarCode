@@ -16,6 +16,8 @@ class ScopeSearchResult: NSObject {
     var foods: [Food]
     var events: [Event]
     
+    var isExpanded: Bool = false
+    
     init(bar: Bar, foods: [Food]) {
         self.bar = bar
         self.foods = foods

@@ -24,14 +24,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AHb-yy-21p">
-                        <rect key="frame" x="16" y="16" width="33.5" height="17"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Validity period:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CO8-xn-sMm">
-                        <rect key="frame" x="81" y="16" width="223" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Validity period:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CO8-xn-sMm">
+                        <rect key="frame" x="16" y="16" width="288" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="GvK-Oj-Nfw"/>
                         </constraints>
@@ -47,6 +41,9 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Validity period:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtL-7z-tVp">
                         <rect key="frame" x="80.5" y="49" width="223.5" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="nxQ-oQ-drx"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -83,29 +80,26 @@ In just two years, the ramshackle joint transformed into a happening spot. Now f
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="AsZ-IP-D94" secondAttribute="bottom" constant="16.5" id="3D9-pc-jKH"/>
                     <constraint firstItem="sgg-3h-2Ry" firstAttribute="leading" secondItem="qXu-Dq-1Tm" secondAttribute="leading" constant="16" id="3wZ-dy-v1e"/>
-                    <constraint firstItem="AHb-yy-21p" firstAttribute="top" secondItem="qXu-Dq-1Tm" secondAttribute="top" constant="16" id="5WB-do-xn8"/>
+                    <constraint firstItem="CO8-xn-sMm" firstAttribute="leading" secondItem="qXu-Dq-1Tm" secondAttribute="leading" constant="16" id="7b5-8P-fYe"/>
                     <constraint firstItem="AsZ-IP-D94" firstAttribute="top" secondItem="sgg-3h-2Ry" secondAttribute="bottom" constant="16" id="ANs-WG-yRN"/>
                     <constraint firstItem="OtL-7z-tVp" firstAttribute="leading" secondItem="5HA-Yp-RC8" secondAttribute="trailing" constant="8" id="B9V-DF-WKJ"/>
                     <constraint firstItem="bJ2-MK-IN2" firstAttribute="leading" secondItem="qXu-Dq-1Tm" secondAttribute="leading" constant="16" id="EVt-bV-6js"/>
                     <constraint firstItem="sgg-3h-2Ry" firstAttribute="top" secondItem="OtL-7z-tVp" secondAttribute="bottom" constant="16" id="HFs-uA-0SH"/>
                     <constraint firstItem="OtL-7z-tVp" firstAttribute="top" secondItem="CO8-xn-sMm" secondAttribute="bottom" constant="16" id="JQx-rW-5aL"/>
                     <constraint firstItem="CO8-xn-sMm" firstAttribute="top" secondItem="qXu-Dq-1Tm" secondAttribute="top" constant="16" id="LqO-6R-lFW"/>
-                    <constraint firstItem="CO8-xn-sMm" firstAttribute="leading" secondItem="5HA-Yp-RC8" secondAttribute="trailing" constant="8.5" id="PZs-t5-ydx"/>
                     <constraint firstItem="AsZ-IP-D94" firstAttribute="leading" secondItem="bJ2-MK-IN2" secondAttribute="trailing" constant="8" id="RsH-3g-iSh"/>
+                    <constraint firstItem="5HA-Yp-RC8" firstAttribute="top" secondItem="CO8-xn-sMm" secondAttribute="bottom" constant="16" id="Scp-7w-OoF"/>
                     <constraint firstItem="AsZ-IP-D94" firstAttribute="centerY" secondItem="bJ2-MK-IN2" secondAttribute="centerY" id="VY1-iB-zkV"/>
                     <constraint firstAttribute="trailing" secondItem="CO8-xn-sMm" secondAttribute="trailing" constant="16" id="fuc-Wn-5J3"/>
                     <constraint firstItem="5HA-Yp-RC8" firstAttribute="leading" secondItem="qXu-Dq-1Tm" secondAttribute="leading" constant="16" id="gFj-dC-8KV"/>
                     <constraint firstAttribute="trailing" secondItem="sgg-3h-2Ry" secondAttribute="trailing" constant="16" id="j7T-06-3OJ"/>
-                    <constraint firstItem="5HA-Yp-RC8" firstAttribute="top" secondItem="AHb-yy-21p" secondAttribute="bottom" constant="16" id="k0u-d4-mte"/>
                     <constraint firstAttribute="trailing" secondItem="OtL-7z-tVp" secondAttribute="trailing" constant="16" id="ryv-L9-eiq"/>
-                    <constraint firstItem="AHb-yy-21p" firstAttribute="leading" secondItem="qXu-Dq-1Tm" secondAttribute="leading" constant="16" id="tDx-9K-UnO"/>
                     <constraint firstAttribute="bottom" secondItem="bJ2-MK-IN2" secondAttribute="bottom" constant="16.5" id="wda-Fz-Bfx"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="6ui-xE-YZk"/>
             <connections>
                 <outlet property="dateLabel" destination="CO8-xn-sMm" id="jJd-jV-Pbw"/>
-                <outlet property="datePlaceholderLabel" destination="AHb-yy-21p" id="uUa-v1-jS7"/>
                 <outlet property="detailLabel" destination="sgg-3h-2Ry" id="qGF-88-ivh"/>
                 <outlet property="directionButton" destination="AsZ-IP-D94" id="mkK-pw-Boo"/>
                 <outlet property="locationLabel" destination="OtL-7z-tVp" id="bf5-2E-fFX"/>

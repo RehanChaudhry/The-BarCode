@@ -30,6 +30,7 @@ class FoodSearchViewController: BaseSearchScopeViewController {
         
         self.statefulTableView.innerTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.statefulTableView.frame.size.width, height: 16.0))
         self.statefulTableView.innerTable.register(headerFooterViewType: ScopeSearchResultHeaderView.self)
+        self.statefulTableView.innerTable.register(headerFooterViewType: FoodSearchFooterView.self)
         self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
@@ -115,12 +116,22 @@ class FoodSearchViewController: BaseSearchScopeViewController {
 
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.searchResults.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.searchResults[section].foods.count
+        let result = self.searchResults[section]
+        if result.foods.count > 3 {
+            if result.isExpanded {
+                return self.searchResults[section].foods.count
+            } else {
+                return 3
+            }
+        } else {
+            return self.searchResults[section].foods.count
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -129,6 +140,29 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         headerView?.delegate = self
         headerView?.section = section
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let result = self.searchResults[section]
+        if result.foods.count > 3 {
+            let footerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(FoodSearchFooterView.self)
+            footerView?.section = section
+            footerView?.delegate = self
+            footerView?.setupFooterView(searchResult: result)
+            return footerView
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let results = self.searchResults[section]
+        if results.foods.count > 3 {
+            return 30.0
+        } else {
+            return 0.0
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -161,6 +195,15 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         let bar = self.searchResults[indexPath.section].bar
         self.moveToBarDetails(barId: bar.id.value, scopeType: .food)
+    }
+}
+
+//MARK: FoodSearchFooterViewDelegate
+extension FoodSearchViewController: FoodSearchFooterViewDelegate {
+    func foodSearchFooterView(footerView: FoodSearchFooterView, showResultsButtonTapped sender: UIButton) {
+        let result = self.searchResults[footerView.section]
+        result.isExpanded = !result.isExpanded
+        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -236,7 +279,7 @@ extension FoodSearchViewController {
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
-                
+                self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 self.setUpMarkers()
                 
@@ -316,6 +359,7 @@ extension FoodSearchViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.refreshSnackBar()
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             handler(self.searchResults.count == 0, error)
         }
@@ -330,7 +374,7 @@ extension FoodSearchViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Search Result Found"
+            let title = "Searching for something specific, why not type what you’re looking for in the search bar?"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

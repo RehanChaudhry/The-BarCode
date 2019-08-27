@@ -10,10 +10,15 @@ import UIKit
 import CoreStore
 import CoreLocation
 
+enum EventStatus: String {
+    case notStarted = "notStarted", started = "started", expired = "expired"
+}
+
 class Event: CoreStoreObject {
     
     var id = Value.Required<String>("id", initial: "")
     var establishmentId = Value.Required<String>("establishment_id", initial: "")
+    var establishmentName = Value.Required<String>("establishment_name", initial: "")
     
     var image = Value.Required<String>("image", initial: "")
     var locationName = Value.Required<String>("location", initial: "")
@@ -51,6 +56,49 @@ class Event: CoreStoreObject {
     }
     
     var bar = Relationship.ToOne<Bar>("bar")
+    
+    var startDateRaw =  Value.Required<String>("start_date", initial: "")
+    var endDateRaw = Value.Required<String>("end_date", initial: "")
+    var startTimeRaw = Value.Required<String>("start_time", initial: "")
+    var endTimeRaw = Value.Required<String>("end_time", initial: "")
+    var startDateTimeRaw = Value.Required<String>("start_date_time", initial: "")
+    var endDateTimeRaw = Value.Required<String>("end_date_time", initial: "")
+    
+    var startDate: Date {
+        get {
+            return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
+        }
+    }
+    
+    var endDate: Date {
+        get {
+            return Utility.shared.serverFormattedDate(date: self.endDateRaw.value)
+        }
+    }
+    
+    var startTime: Date {
+        get {
+            return Utility.shared.serverFormattedTime(date: self.startTimeRaw.value)
+        }
+    }
+    
+    var endTime: Date {
+        get {
+            return Utility.shared.serverFormattedTime(date: self.endTimeRaw.value)
+        }
+    }
+    
+    var startDateTime: Date {
+        get {
+            return Utility.shared.serverFormattedDateTime(date: self.startDateTimeRaw.value)
+        }
+    }
+    
+    var endDateTime: Date {
+        get {
+            return Utility.shared.serverFormattedDateTime(date: self.endDateTimeRaw.value)
+        }
+    }
 }
 
 extension Event: ImportableUniqueObject {
@@ -114,6 +162,14 @@ extension Event: ImportableUniqueObject {
             let bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarSource)
             self.bar.value = bar!
         }
+        
+        self.startDateRaw.value = source["start_date"]! as! String
+        self.endDateRaw.value = source["end_date"]! as! String
+        self.startTimeRaw.value = source["start_time"]! as! String
+        self.endTimeRaw.value = source["end_time"]! as! String
+        
+        self.startDateTimeRaw.value = self.startDateRaw.value + " " + self.startTimeRaw.value
+        self.endDateTimeRaw.value = self.endDateRaw.value + " " + self.endTimeRaw.value
         
     }
 }

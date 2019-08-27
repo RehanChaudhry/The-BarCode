@@ -41,24 +41,27 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhp-bA-HqF">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhp-bA-HqF">
                     <rect key="frame" x="0.0" y="173" width="320" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
                         <action selector="detailsButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="67H-bQ-zsc"/>
                     </connections>
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="MYE-6W-SMS" secondAttribute="trailing" constant="16" id="1yd-7R-oRf"/>
-                <constraint firstItem="hvq-LE-OgM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="2Qy-kR-KFx"/>
-                <constraint firstItem="3jN-GM-fjv" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" constant="-40" id="4ye-4r-P8y"/>
-                <constraint firstItem="MYE-6W-SMS" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" constant="8" id="9dB-32-BQm"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hvq-LE-OgM" secondAttribute="trailing" constant="16" id="FSd-Af-kiy"/>
-                <constraint firstItem="hvq-LE-OgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="ZAY-C7-ljM"/>
-                <constraint firstItem="MYE-6W-SMS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="gqy-MR-Gcx"/>
-                <constraint firstItem="3jN-GM-fjv" firstAttribute="centerX" secondItem="hvq-LE-OgM" secondAttribute="centerX" id="mnq-1l-sWL"/>
-                <constraint firstAttribute="bottom" secondItem="MYE-6W-SMS" secondAttribute="bottom" constant="8" id="vBk-hH-SmJ"/>
+                <constraint firstAttribute="trailing" secondItem="MYE-6W-SMS" secondAttribute="trailing" priority="999" constant="16" id="1yd-7R-oRf"/>
+                <constraint firstItem="hvq-LE-OgM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="999" constant="16" id="2Qy-kR-KFx"/>
+                <constraint firstItem="3jN-GM-fjv" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="-40" id="4ye-4r-P8y"/>
+                <constraint firstItem="MYE-6W-SMS" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="8" id="9dB-32-BQm"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hvq-LE-OgM" secondAttribute="trailing" priority="999" constant="16" id="FSd-Af-kiy"/>
+                <constraint firstAttribute="trailing" secondItem="Vhp-bA-HqF" secondAttribute="trailing" priority="999" id="OqQ-TT-4OQ"/>
+                <constraint firstItem="hvq-LE-OgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="999" constant="8" id="ZAY-C7-ljM"/>
+                <constraint firstItem="MYE-6W-SMS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" constant="16" id="gqy-MR-Gcx"/>
+                <constraint firstItem="3jN-GM-fjv" firstAttribute="centerX" secondItem="hvq-LE-OgM" secondAttribute="centerX" priority="999" id="mnq-1l-sWL"/>
+                <constraint firstAttribute="bottom" secondItem="Vhp-bA-HqF" secondAttribute="bottom" priority="999" constant="3" id="n5B-8n-aIS"/>
+                <constraint firstItem="Vhp-bA-HqF" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="3" id="oYX-IV-gF7"/>
+                <constraint firstItem="Vhp-bA-HqF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" id="ohS-Hs-Wr7"/>
+                <constraint firstAttribute="bottom" secondItem="MYE-6W-SMS" secondAttribute="bottom" priority="999" constant="8" id="vBk-hH-SmJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

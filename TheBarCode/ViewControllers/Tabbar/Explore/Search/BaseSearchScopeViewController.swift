@@ -15,6 +15,7 @@ import CoreStore
 
 protocol BaseSearchScopeViewControllerDelegate: class {
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope)
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool)
 }
 
 class BaseSearchScopeViewController: UIViewController {
@@ -88,18 +89,11 @@ class BaseSearchScopeViewController: UIViewController {
         }
         
         self.statefulTableView.canLoadMore = false
-        self.statefulTableView.canPullToRefresh = false
+        self.statefulTableView.canPullToRefresh = true
         self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
         self.statefulTableView.innerTable.estimatedRowHeight = 250.0
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
-        
-        for aView in self.statefulTableView.innerTable.subviews {
-            if aView.isMember(of: UIRefreshControl.self) {
-                aView.removeFromSuperview()
-                break
-            }
-        }
     }
     
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {
@@ -170,5 +164,9 @@ class BaseSearchScopeViewController: UIViewController {
     func moveToBarDetails(barId: String, scopeType: SearchScope) {
         debugPrint("bar did select with id: \(barId)")
         self.baseDelegate.baseSearchScopeViewController(controller: self, moveToBarDetails: barId, scopeType: scopeType)
+    }
+    
+    func refreshSnackBar() {
+        self.baseDelegate.baseSearchScopeViewController(controller: self, refreshSnackBar: true)
     }
 }

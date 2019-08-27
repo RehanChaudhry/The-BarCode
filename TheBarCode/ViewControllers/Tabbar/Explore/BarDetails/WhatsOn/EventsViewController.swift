@@ -101,6 +101,16 @@ extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let eventCell = cell as? EventCell
+        eventCell?.startTimer(event: self.events[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let eventCell = cell as? EventCell
+        eventCell?.stopTimer()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let event = self.events[indexPath.row]

@@ -13,6 +13,8 @@ import CoreStore
 import GoogleMaps
 import CoreLocation
 import PureLayout
+import ObjectMapper
+import HTTPStatusCodes
 
 class SearchViewController: UIViewController {
 
@@ -33,6 +35,8 @@ class SearchViewController: UIViewController {
     
     @IBOutlet var collectionView: UICollectionView!
     
+    @IBOutlet var snackBarContainer: UIView!
+    
     var bars: [Bar] = []
     
     var selectedPreferences: [Category] = []
@@ -41,12 +45,10 @@ class SearchViewController: UIViewController {
 
     var shouldHidePreferenceButton: Bool = false
     
-    let locationManager = MyLocationManager()
-    
-    var markers: [GMSMarker] = []
-    
     var scopeItems: [SearchScopeItem] = SearchScope.allItems()
     var selectedScopeItem: SearchScopeItem?
+    
+    var snackBarController: ReloadSnackBarViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,14 +85,14 @@ class SearchViewController: UIViewController {
         
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()
+
+        self.resetSearchScopeControllers()
         
-//        self.setUpStatefulTableView()
-//
-//        self.mapView.delegate = self
-        
-        self.setUserLocation()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
+        self.snackBarController = (self.storyboard!.instantiateViewController(withIdentifier: "ReloadSnackBarViewController") as! ReloadSnackBarViewController)
+        self.addChildViewController(self.snackBarController)
+        self.snackBarController.willMove(toParentViewController: self)
+        self.snackBarContainer.addSubview(self.snackBarController.view)
+        self.snackBarController.view.autoPinEdgesToSuperviewEdges()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -117,7 +119,6 @@ class SearchViewController: UIViewController {
     
     deinit {
         debugPrint("searchviewcontroller deinit called")
-        NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
     }
     
     //MARK: My Methods
@@ -154,99 +155,6 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func resetCurrentData() {
-//        self.bars.removeAll()
-//        self.statefulTableView.reloadData()
-    }
-    
-    func reset() {
-//        self.dataRequest?.cancel()
-//        self.resetCurrentData()
-//
-//        self.statefulTableView.triggerInitialLoad()
-    }
-    
-    func setUpMarkers() {
-        
-//        self.mapView.clear()
-//        self.markers.removeAll()
-//
-//        var bounds = GMSCoordinateBounds()
-//        for (index, bar) in self.bars.enumerated() {
-//            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
-//
-//            bounds = bounds.includingCoordinate(location.coordinate)
-//
-//            let pinImage = self.getPinImage(explore: bar)
-//            let marker = self.createMapMarker(location: location, pinImage: pinImage)
-//            marker.userData = bar
-//            marker.zIndex = Int32(index)
-//            marker.map = self.mapView
-//
-//            self.markers.append(marker)
-//        }
-        
-    }
-    
-    func getPinImage(explore: Bar) -> UIImage {
-        var pinImage = UIImage(named: "icon_pin_gold")!
-        if let timings = explore.timings.value {
-            if timings.dayStatus == .opened {
-                if timings.isOpen.value {
-                    if let activeStandardOffer = explore.activeStandardOffer.value {
-                        pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-                    } else {
-                        pinImage = UIImage(named: "icon_pin_grayed")!
-                    }
-                } else {
-                    pinImage = UIImage(named: "icon_pin_grayed")!
-                }
-            } else {
-                pinImage = UIImage(named: "icon_pin_grayed")!
-            }
-            
-        } else {
-            pinImage = UIImage(named: "icon_pin_grayed")!
-        }
-        
-        return pinImage
-    }
-    
-    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
-        let marker = GMSMarker(position: location.coordinate)
-        let iconImage = pinImage
-        let markerView = UIImageView(image: iconImage)
-        marker.iconView = markerView
-        return marker
-    }
-    
-//    func setUpStatefulTableView() {
-//        
-//        self.statefulTableView.backgroundColor = .clear
-//        for aView in self.statefulTableView.subviews {
-//            aView.backgroundColor = .clear
-//        }
-//        
-//        self.statefulTableView.canLoadMore = false
-//        self.statefulTableView.canPullToRefresh = false
-//        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-//        self.statefulTableView.innerTable.estimatedRowHeight = 250.0
-//        self.statefulTableView.innerTable.tableFooterView = UIView()
-//        self.statefulTableView.innerTable.separatorStyle = .none
-//        
-//        self.statefulTableView.innerTable.register(cellType: BarTableViewCell.self)
-//        self.statefulTableView.innerTable.delegate = self
-//        self.statefulTableView.innerTable.dataSource = self
-//        self.statefulTableView.statefulDelegate = self
-//        
-//        for aView in self.statefulTableView.innerTable.subviews {
-//            if aView.isMember(of: UIRefreshControl.self) {
-//                aView.removeFromSuperview()
-//                break
-//            }
-//        }
-//    }
-    
     func resetMapListSegment() {
         self.mapButton.backgroundColor = self.tempView.backgroundColor
         self.listButton.backgroundColor = self.tempView.backgroundColor
@@ -273,56 +181,6 @@ class SearchViewController: UIViewController {
         } else {
             self.standardOfferButton.backgroundColor = self.tempView.backgroundColor
             self.standardOfferButton.tintColor = UIColor.appGrayColor()
-        }
-    }
-    
-    func setupMapCamera(cordinate: CLLocationCoordinate2D) {
-//        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
-//        self.mapView.animate(to: position)
-//        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
-//
-//        if CLLocationManager.authorizationStatus() != .notDetermined {
-//            self.mapView.settings.myLocationButton = true
-//            self.mapView.isMyLocationEnabled = true
-//        }
-    }
-    
-    func setUserLocation() {
-        
-        let authorizationStatus = CLLocationManager.authorizationStatus()
-        var canContinue: Bool? = nil
-        if authorizationStatus == .authorizedAlways {
-            canContinue = true
-        } else if authorizationStatus == .authorizedWhenInUse {
-            canContinue = false
-        }
-        
-        guard let requestAlwaysAccess = canContinue else {
-            debugPrint("Location permission not authorized")
-            self.setupMapCamera(cordinate: defaultUKLocation)
-            return
-        }
-        
-        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
-            
-            guard error == nil else {
-                debugPrint("Error while getting location: \(error!.localizedDescription)")
-                self.setupMapCamera(cordinate: defaultUKLocation)
-                return
-            }
-            
-            if let location = location {
-                if let user = Utility.shared.getCurrentUser() {
-                    try! CoreStore.perform(synchronous: { (transaction) -> Void in
-                        let edittedUser = transaction.edit(user)
-                        edittedUser?.latitude.value = location.coordinate.latitude
-                        edittedUser?.longitude.value = location.coordinate.longitude
-                        
-                    })
-                }
-                self.setupMapCamera(cordinate: location.coordinate)
-            }
         }
     }
     
@@ -373,12 +231,6 @@ class SearchViewController: UIViewController {
     }
     
     //MARK: My IBActions
-    
-    @IBAction func cancelBarButtonTapped(sender: UIButton) {
-        self.view.endEditing(true)
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func listButtonTapped(sender: UIButton) {
         self.resetMapListSegment()
         
@@ -418,70 +270,44 @@ class SearchViewController: UIViewController {
     }
 }
 
-//MARK: UITableViewDataSource, UITableViewDelegate
-/*
-extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.searchBar.resignFirstResponder()
-        self.statefulTableView.scrollViewDidScroll(scrollView)
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.bars.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
-        cell.setUpCell(bar: self.bars[indexPath.row])
-        cell.delegate = self
-        cell.exploreBaseDelegate = self
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let aCell = cell as? BarTableViewCell {
-            aCell.scrollToCurrentImage()
-            
-            let bar = self.bars[indexPath.row]
-            let imageCount = bar.images.value.count
-            
-            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let aCell = cell as? BarTableViewCell {
-            aCell.pagerView.automaticSlidingInterval = 0.0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-        
-        self.moveToBarDetail(bar: self.bars[indexPath.row])
-    }
-}
-
-//MARK: ExploreBaseTableViewCellDelegate
-extension SearchViewController: ExploreBaseTableViewCellDelegate {
-    func exploreBaseTableViewCell(cell: ExploreBaseTableViewCell, didSelectItem itemIndexPath: IndexPath) {
-        guard let tableCellIndexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
-            return
-        }
-        
-        self.moveToBarDetail(bar: self.bars[tableCellIndexPath.row])
-    }
-}
-*/
-
 //MARK: UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         
         self.resetSearchScopeControllers()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        UIView.animate(withDuration: 0.25) {
+            
+            self.standardOfferButton.alpha = 0.0
+            self.preferencesButton.alpha = 0.0
+            self.mapButton.alpha = 0.0
+            self.listButton.alpha = 0.0
+            
+            self.searchbarRight.constant = -164.0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: false)
+        UIView.animate(withDuration: 0.25) {
+            
+            self.standardOfferButton.alpha = 1.0
+            self.preferencesButton.alpha = 1.0
+            self.mapButton.alpha = 1.0
+            self.listButton.alpha = 1.0
+            
+            self.searchbarRight.constant = 0.0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -490,210 +316,6 @@ extension SearchViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
     }
 }
-
-/*
-//MARK: BarTableViewCellDelegare
-extension SearchViewController: BarTableViewCellDelegare {
-    func barTableViewCell(cell: BarTableViewCell, favouriteButton sender: UIButton) {
-        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
-            debugPrint("Indexpath not found")
-            return
-        }
-        
-        let bar = self.bars[indexPath.row]
-        markFavourite(bar: bar, cell: cell)
-    }
-    
-    func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton) {
-        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
-            debugPrint("Indexpath not found")
-            return
-        }
-        
-        let bar = self.bars[indexPath.row]
-        self.showDirection(bar: bar)
-    }
-}
-
-//MARK: StatefulTableDelegate
-extension SearchViewController: StatefulTableDelegate {
-    
-    func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        
-        self.resetCurrentData()
-        self.getBars(isRefreshing: false) {  [unowned self] (error) in
-            handler(self.bars.count == 0, error)
-        }
-        
-    }
-    
-    func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
-        self.getBars(isRefreshing: false) { (error) in
-            handler(false, error, error != nil)
-        }
-    }
-    
-    func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getBars(isRefreshing: true) { [unowned self] (error) in
-            handler(self.bars.count == 0, error)
-        }
-    }
-    
-    func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
-        let initialErrorView = LoadingAndErrorView.loadFromNib()
-        initialErrorView.backgroundColor = .clear
-        initialErrorView.showLoading()
-        return initialErrorView
-    }
-    
-    func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
-        if forInitialLoadError == nil {
-            let title = "No Search Result Found"
-            let subTitle = "Tap to refresh"
-            
-            let emptyDataView = EmptyDataView.loadFromNib()
-            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
-            
-            emptyDataView.actionHandler = { (sender: UIButton) in
-                tvc.triggerInitialLoad()
-            }
-            
-            return emptyDataView
-            
-        } else {
-            let initialErrorView = LoadingAndErrorView.loadFromNib()
-            initialErrorView.showErrorView(canRetry: true)
-            initialErrorView.backgroundColor = .clear
-            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
-            
-            initialErrorView.retryHandler = {(sender: UIButton) in
-                tvc.triggerInitialLoad()
-            }
-            
-            return initialErrorView
-        }
-    }
-    
-    func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
-        let loadingView = LoadingAndErrorView.loadFromNib()
-        loadingView.showErrorView(canRetry: true)
-        loadingView.backgroundColor = .clear
-        
-        if forLoadMoreError == nil {
-            loadingView.showLoading()
-        } else {
-            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
-        }
-        
-        loadingView.retryHandler = {(sender: UIButton) in
-            tvc.triggerLoadMore()
-        }
-        
-        return loadingView
-    }
-}
-
-//MARK: Webservices Methods
-extension SearchViewController {
-    func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
-
-        self.dataRequest?.cancel()
-        
-        var params:[String : Any] =  ["type": self.searchType.rawValue,
-                                      "pagination" : false,
-                                      "keyword" : self.searchBar.text!]
-        
-        if self.selectedPreferences.count > 0 {
-            let ids = self.selectedPreferences.map({$0.id.value})
-            params["interest_ids"] = ids
-        }
-        
-        if self.selectedStandardOffers.count > 0 {
-            let ids = self.selectedStandardOffers.map({$0.id.value})
-            params["tier_ids"] = ids
-        }
-        
-        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
-            
-            guard error == nil else {
-                completion(error! as NSError)
-                return
-            }
-            
-            guard serverError == nil else {
-                completion(serverError!.nsError())
-                return
-            }
-            
-            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
-                
-                self.bars.removeAll()
-                var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
-                })
-                
-                for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-                    self.bars.append(fetchedObject!)
-                }
-                
-                self.statefulTableView.innerTable.reloadData()
-                self.setUpMarkers()
-
-                completion(nil)
-                
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                completion(genericError)
-            }
-        }
-    }
-    
-    func markFavourite(bar: Bar, cell: BarTableViewCell) {
-        
-        debugPrint("isFav == \(bar.isUserFavourite.value)")
-        
-        let params:[String : Any] = ["establishment_id": bar.id.value,
-                                     "is_favorite" : !(bar.isUserFavourite.value)]
-        
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
-            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
-                for bar in bars {
-                    bar.isUserFavourite.value = !bar.isUserFavourite.value
-                }
-            }
-        })
-        
-        cell.setUpCell(bar: bar)
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiUpdateFavorite, method: .put) { (response, serverError, error) in
-            
-            guard error == nil else {
-                debugPrint("error == \(String(describing: error?.localizedDescription))")
-                return
-            }
-            
-            guard serverError == nil else {
-                debugPrint("servererror == \(String(describing: serverError?.errorMessages()))")
-                return
-            }
-            
-            let response = response as! [String : Any]
-            let responseDict = response["response"] as! [String : Any]
-            
-            if let responseID = (responseDict["data"] as? Int) {
-                debugPrint("responseID == \(responseID)")
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                debugPrint("genericError == \(String(describing: genericError.localizedDescription))")
-            }
-        }
-    }
-}
-*/
 
 //MARK: CategoriesViewControllerDelegate
 extension SearchViewController: CategoryFilterViewControllerDelegate {
@@ -717,50 +339,6 @@ extension SearchViewController : GMSMapViewDelegate {
         let bar = marker.userData as! Bar
         self.moveToBarDetail(bar: bar)
         return false
-    }
-}
-
-//Notification Methods
-extension SearchViewController {
-    @objc func barDetailsRefreshedNotification(notification: Notification) {
-        
-        let bar = notification.object as! Bar
-        
-        let barMarkers = self.markers.filter { (marker) -> Bool in
-            if let data = marker.userData as? Bar {
-                return data.id.value == bar.id.value
-            }
-            
-            return false
-        }
-        
-        guard barMarkers.count > 0 else {
-            return
-        }
-        
-        for marker in barMarkers {
-            marker.map = nil
-        }
-        
-        self.markers.removeAll { (marker) -> Bool in
-            if let data = marker.userData as? Bar {
-                return data.id.value == bar.id.value
-            }
-            
-            return false
-        }
-        
-        let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
-        
-        let pinImage = self.getPinImage(explore: bar)
-        let marker = self.createMapMarker(location: location, pinImage: pinImage)
-        marker.userData = bar
-//        marker.map = mapView
-        
-        self.markers.append(marker)
-        
-        marker.zIndex = Int32(self.markers.count - 1)
-        
     }
 }
 
@@ -850,6 +428,10 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
         }
         
         self.present(barDetailNav, animated: true, completion: nil)
+    }
+    
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool) {
+        self.snackBarController.getReloadStatus()
     }
 }
 
