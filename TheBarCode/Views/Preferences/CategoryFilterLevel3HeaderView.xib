@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CategoryFilterLevel3HeaderView" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rEU-Nm-UeB">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arJ-L8-qPW">
+                            <rect key="frame" x="16" y="8" width="323" height="28"/>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="headerButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="mt8-HR-F5k"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="arJ-L8-qPW" firstAttribute="top" secondItem="rEU-Nm-UeB" secondAttribute="top" constant="8" id="CXS-NF-kne"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="dbH-hr-VJ6"/>
+                        <constraint firstItem="arJ-L8-qPW" firstAttribute="leading" secondItem="rEU-Nm-UeB" secondAttribute="leading" constant="16" id="uyB-i2-RLU"/>
+                        <constraint firstAttribute="bottom" secondItem="arJ-L8-qPW" secondAttribute="bottom" constant="8" id="xu0-Zg-Q3G"/>
+                    </constraints>
+                </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="XGs-dY-v3y">
+                    <rect key="frame" x="347" y="16" width="12" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="ltT-Fy-FsM"/>
+                        <constraint firstAttribute="width" constant="12" id="q1i-iN-iXA"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="XGs-dY-v3y" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="47p-A2-xBo"/>
+                <constraint firstItem="XGs-dY-v3y" firstAttribute="leading" secondItem="arJ-L8-qPW" secondAttribute="trailing" constant="8" id="9oD-1X-5Jr"/>
+                <constraint firstItem="rEU-Nm-UeB" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Kcb-Ul-55T"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="XGs-dY-v3y" secondAttribute="trailing" constant="16" id="ScB-YJ-6iR"/>
+                <constraint firstItem="rEU-Nm-UeB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="V8u-94-zEh"/>
+                <constraint firstItem="rEU-Nm-UeB" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="haH-4v-vLZ"/>
+                <constraint firstItem="rEU-Nm-UeB" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="pYV-KC-TgJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="selectionIndicator" destination="XGs-dY-v3y" id="NI1-ND-FSb"/>
+                <outlet property="titleButton" destination="arJ-L8-qPW" id="NHa-QH-sFz"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_checkmark" width="170.66667175292969" height="170.66667175292969"/>
+    </resources>
+</document>

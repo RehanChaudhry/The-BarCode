@@ -40,6 +40,7 @@ class SearchViewController: UIViewController {
     var bars: [Bar] = []
     
     var selectedPreferences: [Category] = []
+    var filteredPreferences: [Category] = []
     
     var selectedStandardOffers: [StandardOffer] = []
 
@@ -219,7 +220,7 @@ class SearchViewController: UIViewController {
     
     func resetSearchScopeControllers() {
         for scope in self.scopeItems {
-            scope.controller.selectedPreferences = self.selectedPreferences
+            scope.controller.selectedPreferences = self.filteredPreferences
             scope.controller.selectedStandardOffers = self.selectedStandardOffers
             scope.controller.shouldReset = true
             scope.controller.prepareToReset()
@@ -314,13 +315,17 @@ extension SearchViewController: UISearchBarDelegate {
 //MARK: BarDetailViewControllerDelegate
 extension SearchViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        
     }
 }
 
 //MARK: CategoriesViewControllerDelegate
 extension SearchViewController: CategoryFilterViewControllerDelegate {
-    func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category]) {
+    func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category], filteredPreferences: [Category]) {
+        
         self.selectedPreferences = selectedPreferences
+        self.filteredPreferences = filteredPreferences
+        
         self.resetSearchScopeControllers()
     }
 }

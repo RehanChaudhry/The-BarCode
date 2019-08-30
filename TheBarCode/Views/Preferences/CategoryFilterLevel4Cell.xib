@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="b5x-Rn-rT8" customClass="CategoryFilterLevel4Cell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b5x-Rn-rT8" id="QwG-up-S4h">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KC0-QO-hSp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="43.5" id="MxZ-vk-ldJ"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="bkU-zK-avQ">
+                        <rect key="frame" x="292" y="16" width="12" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="12" id="anF-ul-rPg"/>
+                            <constraint firstAttribute="height" constant="12" id="vVd-CA-d7E"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nqE-lW-ecr">
+                        <rect key="frame" x="32" y="8" width="252" height="28"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="titleButtonTappedWithSender:" destination="b5x-Rn-rT8" eventType="touchUpInside" id="54i-Yi-BuW"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KC0-QO-hSp" firstAttribute="leading" secondItem="QwG-up-S4h" secondAttribute="leading" id="Fsx-Tr-7U8"/>
+                    <constraint firstAttribute="trailing" secondItem="KC0-QO-hSp" secondAttribute="trailing" id="Ih2-K9-tHh"/>
+                    <constraint firstItem="nqE-lW-ecr" firstAttribute="leading" secondItem="QwG-up-S4h" secondAttribute="leading" constant="32" id="SFp-WZ-qKP"/>
+                    <constraint firstItem="bkU-zK-avQ" firstAttribute="centerY" secondItem="QwG-up-S4h" secondAttribute="centerY" id="U2N-tk-iBO"/>
+                    <constraint firstItem="bkU-zK-avQ" firstAttribute="leading" secondItem="nqE-lW-ecr" secondAttribute="trailing" constant="8" id="VH4-ct-kRU"/>
+                    <constraint firstAttribute="bottom" secondItem="KC0-QO-hSp" secondAttribute="bottom" id="Y1i-qL-De0"/>
+                    <constraint firstAttribute="bottom" secondItem="nqE-lW-ecr" secondAttribute="bottom" constant="7.5" id="ZXR-tH-qrF"/>
+                    <constraint firstItem="nqE-lW-ecr" firstAttribute="top" secondItem="QwG-up-S4h" secondAttribute="top" constant="8" id="hD8-V0-yzQ"/>
+                    <constraint firstItem="KC0-QO-hSp" firstAttribute="top" secondItem="QwG-up-S4h" secondAttribute="top" id="nKq-6G-oJ4"/>
+                    <constraint firstAttribute="trailing" secondItem="bkU-zK-avQ" secondAttribute="trailing" constant="16" id="xCF-4r-sdb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="51q-Va-io5"/>
+            <connections>
+                <outlet property="selectionIndicator" destination="bkU-zK-avQ" id="vUR-4W-qfa"/>
+                <outlet property="titleButton" destination="nqE-lW-ecr" id="YoG-gR-HRo"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="110.49107142857143"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_checkmark" width="170.66667175292969" height="170.66667175292969"/>
+    </resources>
+</document>

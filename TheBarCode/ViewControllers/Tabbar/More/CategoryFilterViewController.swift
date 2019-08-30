@@ -12,7 +12,7 @@ import CoreStore
 import CoreLocation
 
 protocol CategoryFilterViewControllerDelegate: class {
-    func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category])
+    func categoryFilterViewController(controller: CategoryFilterViewController, didSelectPrefernces selectedPreferences: [Category], filteredPreferences: [Category])
 }
 
 class CategoryFilterViewController: UIViewController {
@@ -41,6 +41,7 @@ class CategoryFilterViewController: UIViewController {
         self.title = "Filter by Preferences"
         let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
         self.navigationItem.leftBarButtonItem = cancelBarButton
+        self.addBackButton()
         
         self.continueButton.setTitle("Update", for: .normal)
         
@@ -82,6 +83,9 @@ class CategoryFilterViewController: UIViewController {
         } else {
             self.statefulView.isHidden = true
         }
+        
+        let clearBarButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearBarButtonTapped(sender:)))
+        self.navigationItem.rightBarButtonItem = clearBarButton
     }
     
     override func didReceiveMemoryWarning() {
@@ -95,6 +99,8 @@ class CategoryFilterViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        self.collectionView.innerCollection.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,12 +130,22 @@ class CategoryFilterViewController: UIViewController {
         }
     }
     
+    @objc func clearBarButtonTapped(sender: UIBarButtonItem) {
+        let categories = self.transaction.fetchAll(From<Category>()) ?? []
+        for category in categories {
+            category.isSelected.value = false
+        }
+        
+        self.collectionView.innerCollection.reloadData()
+    }
+    
     func getCachedCategories() {
-        self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        self.categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
     }
     
     func setUpPreselectedCategories() {
-        for category in self.categories {
+        let categories = self.transaction.fetchAll(From<Category>()) ?? []
+        for category in categories {
             if let _ = self.preSelectedCategories.first(where: {$0.id.value == category.id.value}) {
                 category.isSelected.value = true
             } else {
@@ -138,30 +154,43 @@ class CategoryFilterViewController: UIViewController {
         }
     }
     
+    func moveToNextLevel(category: Category) {
+        let categoryLevel2Controller = self.storyboard!.instantiateViewController(withIdentifier: "CategoryFilterLevel2ViewController") as! CategoryFilterLevel2ViewController
+        categoryLevel2Controller.title = category.title.value
+        categoryLevel2Controller.parentCategory = category
+        categoryLevel2Controller.transaction = self.transaction
+        self.navigationController?.pushViewController(categoryLevel2Controller, animated: true)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
         
-        let selectedPreferences = self.categories.compactMap { (category) -> Category? in
-            if category.isSelected.value {
-                return category
-            } else {
-                return nil
-            }
-        }
+        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
         
-        var fetchedCategories: [Category] = []
-        for object in selectedPreferences {
+        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
+        
+        var fetchedSelectedCategories: [Category] = []
+        var fetchedFilteredCategories: [Category] = []
+        
+        for object in selectedCategories {
             let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-            fetchedCategories.append(fetchedObject!)
+            fetchedSelectedCategories.append(fetchedObject!)
         }
         
-        if self.shouldDismiss && selectedPreferences.count == 0 {
+        for object in filteredCategories {
+            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+            fetchedFilteredCategories.append(fetchedObject!)
+        }
+        
+        if self.shouldDismiss && selectedCategories.count == 0 {
             self.dismiss(animated: true, completion: nil)
         } else {
-            self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedCategories)
+            self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedSelectedCategories, filteredPreferences: fetchedFilteredCategories)
             self.navigationController?.popViewController(animated: true)
         }
+        
+        debugPrint("selected categories: \(fetchedFilteredCategories.map({$0.title.value}))")
         
         self.transaction.flush()
     }
@@ -202,8 +231,12 @@ extension CategoryFilterViewController: CategoryCollectionViewCellDelegate {
         }
         
         let category = self.categories[indexPath.item]
-        category.isSelected.value = !category.isSelected.value
-        
+        if category.hasChildren.value {
+            self.moveToNextLevel(category: category)
+        } else {
+            category.isSelected.value = !category.isSelected.value
+        }
+
         self.collectionView.innerCollection.reloadItems(at: [indexPath])
     }
 }
