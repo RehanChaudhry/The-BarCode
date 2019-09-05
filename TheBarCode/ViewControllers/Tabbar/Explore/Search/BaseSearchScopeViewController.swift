@@ -12,8 +12,10 @@ import GoogleMaps
 import Alamofire
 import CoreLocation
 import CoreStore
+import PureLayout
 
 protocol BaseSearchScopeViewControllerDelegate: class {
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, scrollViewDidScroll scrollView: UIScrollView)
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope)
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool)
 }
@@ -29,6 +31,8 @@ class BaseSearchScopeViewController: UIViewController {
     @IBOutlet var statefulTableView: StatefulTableView!
     @IBOutlet var mapView: GMSMapView!
     
+    @IBOutlet var mapErrorView: ShadowView!
+    
     var dataRequest: DataRequest?
     
     var displayType: DisplayType = .list
@@ -36,8 +40,6 @@ class BaseSearchScopeViewController: UIViewController {
     var selectedPreferences: [Category] = []
     
     var selectedStandardOffers: [StandardOffer] = []
-    
-    var markers: [GMSMarker] = []
     
     var keyword: String = ""
     
@@ -49,12 +51,52 @@ class BaseSearchScopeViewController: UIViewController {
     
     weak var baseDelegate: BaseSearchScopeViewControllerDelegate!
     
+    var strokeView: UIView!
+    
+    var clusterManager: GMUClusterManager!
+    
+    var mapApiState: LoadMore = LoadMore(isLoading: false, canLoadMore: false, error: nil)
+    var mapDataRequest: DataRequest?
+    var mapBars: [MapBasicBar] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        renderer.delegate = self
+        
+        self.clusterManager = GMUClusterManager(map: self.mapView, algorithm: algorithm, renderer: renderer)
+        self.clusterManager.setDelegate(self, mapDelegate: self)
+        
         self.setUserLocation()
+        
+        self.strokeView = UIView()
+        if self is BarSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopeYellowColor()
+        } else if self is DealSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopeOrangeColor()
+        } else if self is LiveOfferSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopeBlueColor()
+        } else if self is FoodSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopePurpleColor()
+        } else if self is DrinkSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopePinkColor()
+        } else if self is EventSearchViewController {
+            self.strokeView.backgroundColor = UIColor.appSearchScopeGreenColor()
+        } else {
+            self.strokeView.backgroundColor = UIColor.clear
+        }
+        
+        self.view.addSubview(self.strokeView)
+        
+        self.strokeView.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.view)
+        self.strokeView.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.view)
+        self.strokeView.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.view)
+        self.strokeView.autoSetDimension(ALDimension.height, toSize: 8.0)
     }
     
 
@@ -168,5 +210,88 @@ class BaseSearchScopeViewController: UIViewController {
     
     func refreshSnackBar() {
         self.baseDelegate.baseSearchScopeViewController(controller: self, refreshSnackBar: true)
+    }
+    
+    func setUpMapViewForLocations() {
+        
+    }
+    
+    func setUpMarkers() {
+        
+        self.mapView.clear()
+        self.clusterManager.clearItems()
+        
+        for mapBar in self.mapBars {
+            self.clusterManager.add(mapBar)
+        }
+        
+        self.clusterManager.cluster()
+        
+    }
+    
+    func scrollDidScroll(scrollView: UIScrollView) {
+        self.baseDelegate.baseSearchScopeViewController(controller: self, scrollViewDidScroll: scrollView)
+    }
+    
+    func getCurrentSearchScope() -> SearchScope {
+        
+        var searchScope = SearchScope.all
+        
+        if self is BarSearchViewController {
+            searchScope = .bar
+        } else if self is DealSearchViewController {
+            searchScope = .deal
+        } else if self is LiveOfferSearchViewController {
+            searchScope = .liveOffer
+        } else if self is FoodSearchViewController {
+            searchScope = .food
+        } else if self is DrinkSearchViewController {
+            searchScope = .drink
+        } else if self is EventSearchViewController {
+            searchScope = .event
+        }
+        
+        return searchScope
+    }
+    
+    //MARK: My IBActions
+    @IBAction func mapRetryButtonTapped(sender: UIButton) {
+        self.setUpMapViewForLocations()
+    }
+
+}
+
+//MARK: GMUClusterManagerDelegate
+extension BaseSearchScopeViewController: GMUClusterManagerDelegate {
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: 13.5)
+        let update = GMSCameraUpdate.setCamera(newCamera)
+        self.mapView.animate(with: update)
+        
+        return true
+    }
+    
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+        return false
+    }
+}
+
+//MARK: GMUClusterRendererDelegate
+extension BaseSearchScopeViewController: GMUClusterRendererDelegate {
+    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
+        if let mapBar = marker.userData as? MapBasicBar {
+            marker.icon = Utility.shared.getMapBarPinImage(mapBar: mapBar)
+        }
+    }
+}
+
+//MARK: GMSMapViewDelegate
+extension BaseSearchScopeViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if let mapbar = marker.userData as? MapBasicBar {
+            let searchScope = self.getCurrentSearchScope()
+            self.moveToBarDetails(barId: mapbar.barId, scopeType: searchScope)
+        }
+        return false
     }
 }

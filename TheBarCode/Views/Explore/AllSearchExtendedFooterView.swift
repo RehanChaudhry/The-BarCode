@@ -25,6 +25,7 @@ class AllSearchExtendedFooterView: UITableViewHeaderFooterView, NibReusable {
     
     @IBOutlet var resultsButtonTop: NSLayoutConstraint!
     @IBOutlet var resultsButtonHeight: NSLayoutConstraint!
+    @IBOutlet var separatorHeight: NSLayoutConstraint!
     
     var section: Int!
     
@@ -43,11 +44,15 @@ class AllSearchExtendedFooterView: UITableViewHeaderFooterView, NibReusable {
         
         self.footerViewModel = model
         
-        if model.shouldShowSeparator {
-            self.separatorView.isHidden = false
-        } else {
+//        if model.shouldShowSeparator {
+//            self.separatorView.backgroundColor = model.footerStrokeColor
+//            self.separatorView.isHidden = false
+//            self.separatorHeight.constant = 8.0
+//        } else {
             self.separatorView.isHidden = true
-        }
+            self.separatorHeight.constant = 0.0
+            self.separatorView.backgroundColor = UIColor.clear
+//        }
         
         if model.shouldShowExpandButton {
             self.resultsButton.isHidden = false
@@ -60,9 +65,11 @@ class AllSearchExtendedFooterView: UITableViewHeaderFooterView, NibReusable {
         if model.shouldShowViewMoreButon {
             self.viewMoreButton.isHidden = false
             self.viewMoreButtonHeight.constant = 29.0
+            self.viewMoreButton.setTitleColor(model.footerStrokeColor, for: .normal)
         } else {
             self.viewMoreButton.isHidden = true
             self.viewMoreButtonHeight.constant = 0.0
+            self.viewMoreButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         }
         
         if isExpanded {

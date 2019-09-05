@@ -14,10 +14,13 @@ class AllSearchFooterViewModel {
     var shouldShowExpandButton: Bool
     var shouldShowViewMoreButon: Bool
     
-    init(shouldShowSeparator: Bool, shouldShowExpandButton: Bool, shouldShowViewMoreButon: Bool) {
+    var footerStrokeColor: UIColor
+    
+    init(shouldShowSeparator: Bool, shouldShowExpandButton: Bool, shouldShowViewMoreButon: Bool, footerStrokeColor: UIColor) {
         self.shouldShowSeparator = shouldShowSeparator
         self.shouldShowExpandButton = shouldShowExpandButton
         self.shouldShowViewMoreButon = shouldShowViewMoreButon
+        self.footerStrokeColor = footerStrokeColor
     }
     
 }

@@ -32,14 +32,25 @@ class SearchScopeCell: UICollectionViewCell, NibReusable {
         }
         
         if searchScope.isSelected {
-            self.button.backgroundColor = UIColor.black
-            self.button.tintColor = UIColor.appBlueColor()
-            self.button.setTitleColor(UIColor.appBlueColor(), for: .normal)
-            
+            if searchScope.scopeType == .all {
+                self.button.backgroundColor = searchScope.selectedBackgroundColor
+                self.button.tintColor = UIColor.appBlueColor()
+                self.button.setTitleColor(UIColor.appBlueColor(), for: .normal)
+            } else {
+                self.button.backgroundColor = searchScope.selectedBackgroundColor
+                self.button.tintColor = UIColor.white
+                self.button.setTitleColor(UIColor.white, for: .normal)
+            }
         } else {
-            self.button.backgroundColor = tempViewBGColor
-            self.button.tintColor = UIColor.appGrayColor()
-            self.button.setTitleColor(UIColor.appGrayColor(), for: .normal)
+            if searchScope.scopeType == .all {
+                self.button.backgroundColor = tempViewBGColor
+                self.button.tintColor = UIColor.white
+                self.button.setTitleColor(UIColor.white, for: .normal)
+            } else {
+                self.button.backgroundColor = searchScope.backgroundColor
+                self.button.tintColor = UIColor.white
+                self.button.setTitleColor(UIColor.white, for: .normal)
+            }
         }
     }
     

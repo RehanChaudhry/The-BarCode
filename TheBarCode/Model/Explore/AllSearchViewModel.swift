@@ -34,10 +34,20 @@ protocol AllSearchViewModelItem: class {
     var type: AllSearchItemType { get }
     var sectionTitle: String? { get }
     var rowCount: Int { get }
+    
+    var headerStrokeColor: UIColor { get }
     var footerModel: AllSearchFooterViewModel { get }
 }
 
+
+
 class AllSearchViewModelTypeBar: AllSearchViewModelItem {
+    
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopeYellowColor()
+        }
+    }
     
     var sectionTitle: String?
     var items: [Bar] = []
@@ -63,6 +73,12 @@ class AllSearchViewModelTypeBar: AllSearchViewModelItem {
 
 class AllSearchViewModelTypeDeal: AllSearchViewModelItem {
     
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopeOrangeColor()
+        }
+    }
+    
     var sectionTitle: String?
     var items: [Bar] = []
     
@@ -87,6 +103,12 @@ class AllSearchViewModelTypeDeal: AllSearchViewModelItem {
 
 class AllSearchViewModelTypeLiveOffer: AllSearchViewModelItem {
     
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopeBlueColor()
+        }
+    }
+    
     var sectionTitle: String?
     var items: [Bar] = []
     
@@ -110,6 +132,12 @@ class AllSearchViewModelTypeLiveOffer: AllSearchViewModelItem {
 }
 
 class AllSearchViewModelTypeFood: AllSearchViewModelItem {
+    
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopePurpleColor()
+        }
+    }
     
     var sectionTitle: String?
     var items: [Food] = []
@@ -142,6 +170,12 @@ class AllSearchViewModelTypeFood: AllSearchViewModelItem {
 }
 
 class AllSearchViewModelTypeDrink: AllSearchViewModelItem {
+    
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopePinkColor()
+        }
+    }
     
     var sectionTitle: String?
     var items: [Drink] = []
@@ -176,6 +210,12 @@ class AllSearchViewModelTypeDrink: AllSearchViewModelItem {
 
 class AllSearchViewModelTypeEvent: AllSearchViewModelItem {
     
+    var headerStrokeColor: UIColor {
+        get {
+            return UIColor.appSearchScopeGreenColor()
+        }
+    }
+    
     var sectionTitle: String?
     var items: [Event] = []
     
@@ -199,6 +239,16 @@ class AllSearchViewModelTypeEvent: AllSearchViewModelItem {
 
 class AllSearchViewModelTypeFoodBar: AllSearchViewModelItem {
     
+    var headerStrokeColor: UIColor {
+        get {
+            if self.isDrink {
+                return UIColor.appSearchScopePinkColor()
+            } else {
+                return UIColor.appSearchScopePurpleColor()
+            }
+        }
+    }
+    
     var sectionTitle: String?
     var items: [Bar] = []
     
@@ -212,11 +262,14 @@ class AllSearchViewModelTypeFoodBar: AllSearchViewModelItem {
     
     var footerModel: AllSearchFooterViewModel
     
-    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel) {
+    var isDrink: Bool
+    
+    init(sectionTitle: String?, items: [Bar], footerModel: AllSearchFooterViewModel, isDrink: Bool) {
         
         self.sectionTitle = sectionTitle
         self.items = items
         self.footerModel = footerModel
+        self.isDrink = isDrink
     }
 }
 

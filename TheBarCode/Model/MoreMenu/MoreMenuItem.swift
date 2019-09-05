@@ -30,7 +30,7 @@ enum MenuItemType: String {
         case .sharedOffer:
             return ("Shared Offers", "icon_shared_offer", "SharedOffersNavigation", true, 16.0)
         case .preferences:
-            return ("Preferences", "icon_preference", "PreferencesNavigation", true, 16.0)
+            return ("Preferences", "icon_preference", "CategoryFilterNavigation", true, 16.0)
         case .reload:
             return ("Reload", "icon_reload", "ReloadNavigation", true, 16.0)
         case .faqs:

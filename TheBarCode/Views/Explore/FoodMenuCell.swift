@@ -40,7 +40,9 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         self.setupTitle(title: drink.name.value)
         self.setupDetail(details: drink.detail.value)
         
-        self.priceLabel.text = "   £ " + drink.price.value + "   "
+        let price = Double(drink.price.value) ?? 0.0
+        let priceString = String(format: "%.2f", price)
+        self.priceLabel.text = "   £ " + priceString + "   "
         
         self.topPadding.constant = topPadding ? 8.0 : 0.0
     }
@@ -52,7 +54,9 @@ class FoodMenuCell: UITableViewCell, NibReusable {
 //        self.titleLabel.attributedText = food.name.value.html2Attributed
 //        self.detailLabel.attributedText = food.detail.value.html2Attributed
         
-        self.priceLabel.text = "   £ " + food.price.value + "   "
+        let price = Double(food.price.value) ?? 0.0
+        let priceString = String(format: "%.2f", price)
+        self.priceLabel.text = "   £ " + priceString + "   "
         
         self.topPadding.constant = topPadding ? 8.0 : 0.0
     }

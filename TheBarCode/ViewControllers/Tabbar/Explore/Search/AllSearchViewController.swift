@@ -11,6 +11,7 @@ import StatefulTableView
 import GoogleMaps
 import ObjectMapper
 import CoreStore
+import Alamofire
 
 protocol AllSearchViewControllerDelegate: class {
     func allSearchViewController(controller: AllSearchViewController, viewMoreButtonTapped type: AllSearchItemType)
@@ -26,6 +27,7 @@ class AllSearchViewController: BaseSearchScopeViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
     
     //MARK: My Methods
@@ -89,78 +91,36 @@ class AllSearchViewController: BaseSearchScopeViewController {
         
         return fetchedBars
     }
-
-    func setUpMarkers() {
-        self.mapView.clear()
-        self.markers.removeAll()
+    
+    override func setUpMapViewForLocations() {
         
-        for viewModel in self.viewModels {
-            if let viewModel = viewModel as? AllSearchViewModelTypeBar {
-                self.plotMarkersForBars(bars: viewModel.items)
-            } else if let viewModel = viewModel as? AllSearchViewModelTypeDeal {
-                self.plotMarkersForBars(bars: viewModel.items)
-            } else if let viewModel = viewModel as? AllSearchViewModelTypeLiveOffer {
-                self.plotMarkersForBars(bars: viewModel.items)
-            } else if let viewModel = viewModel as? AllSearchViewModelTypeFoodBar {
-                self.plotMarkersForBars(bars: viewModel.items)
-            } else if let viewModel = viewModel as? AllSearchViewModelTypeEvent {
-                self.plotMarkersForBars(bars: viewModel.items.map({ $0.bar.value! }))
-            }
-        }
-    }
-    
-    func plotMarkersForBars(bars: [Bar]) {
-        var bounds = GMSCoordinateBounds()
-        for (index, bar) in bars.enumerated() {
-            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
+        super.setUpMapViewForLocations()
+        
+        self.mapErrorView.isHidden = true
+        self.mapApiState.isLoading = true
+        
+        self.getBarsForMap { (error) in
             
-            bounds = bounds.includingCoordinate(location.coordinate)
+            self.mapApiState.isLoading = false
             
-            let pinImage = self.getPinImage(explore: bar)
-            let marker = self.createMapMarker(location: location, pinImage: pinImage)
-            marker.userData = bar
-            marker.zIndex = Int32(index)
-            marker.map = self.mapView
-            
-            self.markers.append(marker)
-        }
-    }
-    
-    func getPinImage(explore: Bar) -> UIImage {
-        var pinImage = UIImage(named: "icon_pin_gold")!
-        if let timings = explore.timings.value {
-            if timings.dayStatus == .opened {
-                if timings.isOpen.value {
-                    if let activeStandardOffer = explore.activeStandardOffer.value {
-                        pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-                    } else {
-                        pinImage = UIImage(named: "icon_pin_grayed")!
-                    }
-                } else {
-                    pinImage = UIImage(named: "icon_pin_grayed")!
-                }
-            } else {
-                pinImage = UIImage(named: "icon_pin_grayed")!
+            guard error == nil else {
+                debugPrint("Error while getting basic map bars: \(error!)")
+                self.mapErrorView.isHidden = false
+                return
             }
             
-        } else {
-            pinImage = UIImage(named: "icon_pin_grayed")!
+            self.mapErrorView.isHidden = true
+            self.setUpMarkers()
         }
-        
-        return pinImage
-    }
-    
-    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
-        let marker = GMSMarker(position: location.coordinate)
-        let iconImage = pinImage
-        let markerView = UIImageView(image: iconImage)
-        marker.iconView = markerView
-        return marker
     }
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.scrollDidScroll(scrollView: scrollView)
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.viewModels.count
@@ -194,16 +154,17 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let _ = self.viewModels[section].sectionTitle {
-            return 45.0
+            return UITableViewAutomaticDimension
         } else {
             return 0.0
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let title = self.viewModels[section].sectionTitle {
+        let viewModel = self.viewModels[section]
+        if let title = viewModel.sectionTitle {
             let headerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(AllSearchHeaderView.self)
-            headerView?.setup(title: title)
+            headerView?.setup(title: title, strokeColor: viewModel.headerStrokeColor)
             return headerView
         } else {
             return nil
@@ -542,7 +503,7 @@ extension AllSearchViewController {
                         let bars = self.mapBars(results: results, mappingType: .bars)
                         let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore)
+                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeYellowColor())
                         let viewModel = AllSearchViewModelTypeBar(sectionTitle: title, items: bars, footerModel: footerModel)
                         self.viewModels.append(viewModel)
                         
@@ -550,7 +511,7 @@ extension AllSearchViewController {
                         let bars = self.mapBars(results: results, mappingType: .deals)
                         let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore)
+                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeOrangeColor())
                         let viewModel = AllSearchViewModelTypeDeal(sectionTitle: title, items: bars, footerModel: footerModel)
                         self.viewModels.append(viewModel)
                         
@@ -558,7 +519,7 @@ extension AllSearchViewController {
                         let bars = self.mapBars(results: results, mappingType: .liveOffers)
                         let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore)
+                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeBlueColor())
                         let viewModel = AllSearchViewModelTypeLiveOffer(sectionTitle: title, items: bars, footerModel: footerModel)
                         self.viewModels.append(viewModel)
                         
@@ -581,9 +542,9 @@ extension AllSearchViewController {
                             
                             let sectionTitle = index == 0 ? title : nil
                             
-                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false)
+                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false, footerStrokeColor: .clear)
                             
-                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel)
+                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel, isDrink: false)
                             self.viewModels.append(barViewModel)
                             
                             var fetchedFoods: [Food] = []
@@ -601,7 +562,7 @@ extension AllSearchViewController {
                                 hasSeparator = false
                             }
                             
-                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore)
+                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore, footerStrokeColor: .appSearchScopePurpleColor())
                             
                             let foodsViewModel = AllSearchViewModelTypeFood(sectionTitle: nil, items: fetchedFoods, footerModel: footerInfo)
                             self.viewModels.append(foodsViewModel)
@@ -626,8 +587,8 @@ extension AllSearchViewController {
                             
                             let sectionTitle = index == 0 ? title : nil
                             
-                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false)
-                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel)
+                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false, footerStrokeColor: .clear)
+                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel, isDrink: true)
                             self.viewModels.append(barViewModel)
                             
                             var fetchedDrinks: [Drink] = []
@@ -645,7 +606,7 @@ extension AllSearchViewController {
                                 hasSeparator = false
                             }
                             
-                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore)
+                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore, footerStrokeColor: .appSearchScopePinkColor())
                             let drinksViewModel = AllSearchViewModelTypeDrink(sectionTitle: nil, items: fetchedDrinks, footerModel: footerInfo)
                             self.viewModels.append(drinksViewModel)
                         }
@@ -666,7 +627,7 @@ extension AllSearchViewController {
                         
                         let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore)
+                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeGreenColor())
                         let eventsViewModel = AllSearchViewModelTypeEvent(sectionTitle: title, items: fetchedEvents, footerModel: footerModel)
                         self.viewModels.append(eventsViewModel)
                     }
@@ -680,6 +641,71 @@ extension AllSearchViewController {
                 self.statefulTableView.innerTable.reloadData()
                 self.setUpMarkers()
                 
+                completion(nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                completion(genericError)
+            }
+        }
+    }
+    
+    func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
+        
+        var params:[String : Any] =  ["pagination" : false,
+                                      "is_for_map" : true,
+                                      "keyword" : self.keyword]
+        
+        if self.selectedPreferences.count > 0 {
+            let ids = self.selectedPreferences.map({$0.id.value})
+            params["interest_ids"] = ids
+        }
+        
+        if self.selectedStandardOffers.count > 0 {
+            let ids = self.selectedStandardOffers.map({$0.id.value})
+            params["tier_ids"] = ids
+        }
+        
+        self.mapApiState.isLoading = true
+        
+        self.mapDataRequest?.cancel()
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathSearchAll, method: .get) { (response, serverError, error) in
+            
+            self.mapApiState.isLoading = false
+            
+            guard error == nil else {
+                self.mapApiState.error = error! as NSError
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.mapApiState.error = serverError!.nsError()
+                completion(serverError!.nsError())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                self.mapBars.removeAll()
+                
+                var responseBars: [[String : Any]] = []
+                for responseDict in responseArray {
+
+                    let type = "\(responseDict["type"]!)"
+                    let results = responseDict["results"] as? [[String : Any]] ?? []
+                    
+                    if type == "1" || type == "2" || type == "3" || type == "4" || type == "5" {
+                        responseBars.append(contentsOf: results)
+                    } else if type == "6" {
+                        let barsArray = results.compactMap({$0["establishment"] as? [String : Any]})
+                        responseBars.append(contentsOf: barsArray)
+                    }
+                }
+                
+                let mapBars = Mapper<MapBasicBar>().mapArray(JSONArray: responseBars)
+                self.mapBars.append(contentsOf: mapBars)
                 completion(nil)
                 
             } else {

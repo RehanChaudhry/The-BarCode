@@ -8,8 +8,9 @@
 
 import UIKit
 import Reusable
+import FSPagerView
 
-class ExploreDetailHeaderCollectionViewCell: UICollectionViewCell, NibReusable {
+class ExploreDetailHeaderCollectionViewCell: FSPagerViewCell, NibReusable {
 
     @IBOutlet var coverImageView: AsyncImageView!
     

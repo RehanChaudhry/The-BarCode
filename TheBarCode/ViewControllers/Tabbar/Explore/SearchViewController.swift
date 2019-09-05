@@ -29,6 +29,9 @@ class SearchViewController: UIViewController {
     @IBOutlet var preferencesButton: UIButton!
     @IBOutlet var standardOfferButton: UIButton!
     
+    @IBOutlet var cancelButton: UIButton!
+    
+    @IBOutlet var searchbarLeft: NSLayoutConstraint!
     @IBOutlet var searchbarRight: NSLayoutConstraint!
     
     @IBOutlet var tempView: UIView!
@@ -49,7 +52,9 @@ class SearchViewController: UIViewController {
     var scopeItems: [SearchScopeItem] = SearchScope.allItems()
     var selectedScopeItem: SearchScopeItem?
     
-    var snackBarController: ReloadSnackBarViewController!
+//    var snackBarController: ReloadSnackBarViewController!
+    
+    var isViewAlreadyLoaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,8 +65,6 @@ class SearchViewController: UIViewController {
             self.selectedScopeItem = self.scopeItems.first
             self.selectedScopeItem?.isSelected = true
         }
-        
-        self.setupSearchController()
         
         self.listButton.roundCorners(corners: [.topLeft, .bottomLeft], radius: 5.0)
         self.mapButton.roundCorners(corners: [.topRight, .bottomRight], radius: 5.0)
@@ -86,14 +89,12 @@ class SearchViewController: UIViewController {
         
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()
-
-        self.resetSearchScopeControllers()
         
-        self.snackBarController = (self.storyboard!.instantiateViewController(withIdentifier: "ReloadSnackBarViewController") as! ReloadSnackBarViewController)
-        self.addChildViewController(self.snackBarController)
-        self.snackBarController.willMove(toParentViewController: self)
-        self.snackBarContainer.addSubview(self.snackBarController.view)
-        self.snackBarController.view.autoPinEdgesToSuperviewEdges()
+//        self.snackBarController = (self.storyboard!.instantiateViewController(withIdentifier: "ReloadSnackBarViewController") as! ReloadSnackBarViewController)
+//        self.addChildViewController(self.snackBarController)
+//        self.snackBarController.willMove(toParentViewController: self)
+//        self.snackBarContainer.addSubview(self.snackBarController.view)
+//        self.snackBarController.view.autoPinEdgesToSuperviewEdges()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -106,6 +107,14 @@ class SearchViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setUpPreferencesButton()
         self.setUpStandardOfferButton()
+        
+        //WORKAROUND: If we load it in viewdidload, map view center get disturbed
+        if !self.isViewAlreadyLoaded {
+            self.isViewAlreadyLoaded = true
+            
+            self.setupSearchController()
+            self.resetSearchScopeControllers()
+        }
         
         for scope in self.scopeItems {
             scope.controller.statefulTableView.innerTable.reloadData()
@@ -123,6 +132,7 @@ class SearchViewController: UIViewController {
     }
     
     //MARK: My Methods
+    
     func setupSearchController() {
         for scope in self.scopeItems {
             let controller = scope.controller
@@ -228,6 +238,7 @@ class SearchViewController: UIViewController {
         }
         
         self.selectedScopeItem?.controller.reset()
+        self.selectedScopeItem?.controller.setUpMapViewForLocations()
         self.selectedScopeItem?.controller.shouldReset = false
     }
     
@@ -269,6 +280,10 @@ class SearchViewController: UIViewController {
         standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
+    
+    @IBAction func cancelButtonTapped(sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 //MARK: UISearchBarDelegate
@@ -287,8 +302,10 @@ extension SearchViewController: UISearchBarDelegate {
             self.preferencesButton.alpha = 0.0
             self.mapButton.alpha = 0.0
             self.listButton.alpha = 0.0
+            self.cancelButton.alpha = 0.0
             
             self.searchbarRight.constant = -164.0
+            self.searchbarLeft.constant = -self.cancelButton.frame.size.width + 8.0
             self.view.layoutIfNeeded()
         }
     }
@@ -301,8 +318,10 @@ extension SearchViewController: UISearchBarDelegate {
             self.preferencesButton.alpha = 1.0
             self.mapButton.alpha = 1.0
             self.listButton.alpha = 1.0
+            self.cancelButton.alpha = 1.0
             
-            self.searchbarRight.constant = 0.0
+            self.searchbarRight.constant = 6.0
+            self.searchbarLeft.constant = -8.0
             self.view.layoutIfNeeded()
         }
     }
@@ -326,6 +345,11 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
         self.selectedPreferences = selectedPreferences
         self.filteredPreferences = filteredPreferences
         
+        if !self.isViewAlreadyLoaded {
+            self.isViewAlreadyLoaded = true
+            self.setupSearchController()
+        }
+        
         self.resetSearchScopeControllers()
     }
 }
@@ -334,6 +358,10 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 extension SearchViewController: StandardOffersViewControllerDelegate {
     func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer]) {
         self.selectedStandardOffers = selectedOffers
+        if !self.isViewAlreadyLoaded {
+            self.isViewAlreadyLoaded = true
+            self.setupSearchController()
+        }
         self.resetSearchScopeControllers()
     }
 }
@@ -362,7 +390,6 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
     }
 }
 
@@ -376,6 +403,7 @@ extension SearchViewController: SearchScopeCellDelegate {
         
         self.selectScope(indexPath: indexPath)
         
+        self.view.endEditing(true)
     }
     
     func selectScope(indexPath: IndexPath) {
@@ -392,6 +420,7 @@ extension SearchViewController: SearchScopeCellDelegate {
         
         if self.selectedScopeItem?.controller.shouldReset == true {
             self.selectedScopeItem?.controller.reset()
+            self.selectedScopeItem?.controller.setUpMapViewForLocations()
             self.selectedScopeItem?.controller.shouldReset = false
         }
     }
@@ -436,7 +465,11 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
     }
     
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool) {
-        self.snackBarController.getReloadStatus()
+//        self.snackBarController.getReloadStatus()
+    }
+    
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, scrollViewDidScroll scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
 }
 

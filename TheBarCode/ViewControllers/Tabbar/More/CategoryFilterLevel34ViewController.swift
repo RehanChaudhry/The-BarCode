@@ -118,7 +118,9 @@ extension CategoryFilterLevel34ViewController: CategoryFilterLevel4CellDelegate 
         level4Category.isSelected.value = !level4Category.isSelected.value
         
         level3Category.isSelected.value = sectionCategory.subcategories.first(where: {$0.isSelected.value}) != nil
-        self.parentCategory.isSelected.value = level3Category.isSelected.value
+        
+        let firstSelected = self.categories.first(where: {$0.category.isSelected.value == true})
+        self.parentCategory.isSelected.value = firstSelected != nil
         
         self.delegate.categoryFilterLevel34ViewController(controller: self, parentCategoryStatusChanged: self.parentCategory)
         
@@ -134,11 +136,16 @@ extension CategoryFilterLevel34ViewController: CategoryFilterLevel3HeaderViewDel
         let category = sectionCategory.category
         
         if category.isSelected.value {
-            self.parentCategory.isSelected.value = false
+            
             category.isSelected.value = false
             for category in sectionCategory.subcategories {
                 category.isSelected.value = false
             }
+            
+            let firstSelected = self.categories.first(where: {$0.category.isSelected.value == true})
+            
+            self.parentCategory.isSelected.value = firstSelected != nil
+            
         } else {
             self.parentCategory.isSelected.value = true
             category.isSelected.value = true

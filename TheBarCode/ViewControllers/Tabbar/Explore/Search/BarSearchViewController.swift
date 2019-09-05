@@ -16,13 +16,14 @@ import GoogleMaps
 import StatefulTableView
 
 class BarSearchViewController: BaseSearchScopeViewController {
-
+    
     var bars: [Bar] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
     
 
@@ -57,58 +58,27 @@ class BarSearchViewController: BaseSearchScopeViewController {
         self.bars.removeAll()
         self.statefulTableView.innerTable.reloadData()
     }
-
-    func setUpMarkers() {
-        self.mapView.clear()
-        self.markers.removeAll()
-        
-        var bounds = GMSCoordinateBounds()
-        for (index, bar) in self.bars.enumerated() {
-            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(bar.latitude.value), longitude: CLLocationDegrees(bar.longitude.value))
-            
-            bounds = bounds.includingCoordinate(location.coordinate)
-            
-            let pinImage = self.getPinImage(explore: bar)
-            let marker = self.createMapMarker(location: location, pinImage: pinImage)
-            marker.userData = bar
-            marker.zIndex = Int32(index)
-            marker.map = self.mapView
-            
-            self.markers.append(marker)
-        }
-
-    }
     
-    func getPinImage(explore: Bar) -> UIImage {
-        var pinImage = UIImage(named: "icon_pin_gold")!
-        if let timings = explore.timings.value {
-            if timings.dayStatus == .opened {
-                if timings.isOpen.value {
-                    if let activeStandardOffer = explore.activeStandardOffer.value {
-                        pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-                    } else {
-                        pinImage = UIImage(named: "icon_pin_grayed")!
-                    }
-                } else {
-                    pinImage = UIImage(named: "icon_pin_grayed")!
-                }
-            } else {
-                pinImage = UIImage(named: "icon_pin_grayed")!
+    override func setUpMapViewForLocations() {
+        
+        super.setUpMapViewForLocations()
+        
+        self.mapErrorView.isHidden = true
+        self.mapApiState.isLoading = true
+        
+        self.getBarsForMap { (error) in
+            
+            self.mapApiState.isLoading = false
+            
+            guard error == nil else {
+                debugPrint("Error while getting basic map bars: \(error!)")
+                self.mapErrorView.isHidden = false
+                return
             }
             
-        } else {
-            pinImage = UIImage(named: "icon_pin_grayed")!
+            self.mapErrorView.isHidden = true
+            self.setUpMarkers()
         }
-        
-        return pinImage
-    }
-    
-    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
-        let marker = GMSMarker(position: location.coordinate)
-        let iconImage = pinImage
-        let markerView = UIImageView(image: iconImage)
-        marker.iconView = markerView
-        return marker
     }
 }
 
@@ -117,6 +87,7 @@ extension BarSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.statefulTableView.scrollViewDidScroll(scrollView)
+        self.scrollDidScroll(scrollView: scrollView)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -248,6 +219,59 @@ extension BarSearchViewController {
                 self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 self.setUpMarkers()
+                
+                completion(nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                completion(genericError)
+            }
+        }
+    }
+    
+    func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
+        
+        var params:[String : Any] =  ["type": SearchScope.bar.rawValue,
+                                      "pagination" : false,
+                                      "is_for_map" : true,
+                                      "keyword" : self.keyword]
+        
+        if self.selectedPreferences.count > 0 {
+            let ids = self.selectedPreferences.map({$0.id.value})
+            params["interest_ids"] = ids
+        }
+        
+        if self.selectedStandardOffers.count > 0 {
+            let ids = self.selectedStandardOffers.map({$0.id.value})
+            params["tier_ids"] = ids
+        }
+        
+        self.mapApiState.isLoading = true
+        
+        self.mapDataRequest?.cancel()
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+            
+            self.mapApiState.isLoading = false
+            
+            guard error == nil else {
+                self.mapApiState.error = error! as NSError
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.mapApiState.error = serverError!.nsError()
+                completion(serverError!.nsError())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                self.mapBars.removeAll()
+                
+                let mapBars = Mapper<MapBasicBar>().mapArray(JSONArray: responseArray)
+                self.mapBars.append(contentsOf: mapBars)
                 
                 completion(nil)
                 

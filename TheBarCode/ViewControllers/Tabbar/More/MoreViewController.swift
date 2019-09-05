@@ -115,8 +115,8 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             self.tabBarController?.present(alertController, animated: true, completion: nil)
         } else if menuItem.type == .preferences {
             let navController = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId) as! UINavigationController
-            let categoriesController = navController.viewControllers.first as! CategoriesViewController
-            categoriesController.isUpdating = true
+            let categoriesController = navController.viewControllers.first as! CategoryFilterViewController
+            categoriesController.comingForUpdatingPreference = true
             self.tabBarController?.present(navController, animated: true, completion: nil)
         }
         else {

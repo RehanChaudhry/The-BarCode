@@ -39,7 +39,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fp9-qg-lNs">
-                        <rect key="frame" x="16" y="8" width="234" height="28"/>
+                        <rect key="frame" x="16" y="0.0" width="270" height="43.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button">
@@ -51,14 +51,14 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Hd8-rx-3ae" firstAttribute="leading" secondItem="Fp9-qg-lNs" secondAttribute="trailing" constant="8" id="41H-lg-3dJ"/>
                     <constraint firstItem="EwS-aV-fb8" firstAttribute="leading" secondItem="Lkf-0b-qhW" secondAttribute="leading" id="9ZY-Oh-uHe"/>
                     <constraint firstItem="Hd8-rx-3ae" firstAttribute="centerY" secondItem="Lkf-0b-qhW" secondAttribute="centerY" id="Jjw-Cr-cXE"/>
                     <constraint firstAttribute="trailing" secondItem="EwS-aV-fb8" secondAttribute="trailing" id="LSs-3y-s5z"/>
                     <constraint firstAttribute="bottom" secondItem="EwS-aV-fb8" secondAttribute="bottom" id="Mr3-yo-Y1h"/>
+                    <constraint firstAttribute="trailing" secondItem="Fp9-qg-lNs" secondAttribute="trailing" id="UZ6-64-m4o"/>
                     <constraint firstAttribute="trailing" secondItem="Hd8-rx-3ae" secondAttribute="trailing" constant="16" id="aM9-0r-Mmv"/>
-                    <constraint firstAttribute="bottom" secondItem="Fp9-qg-lNs" secondAttribute="bottom" constant="7.5" id="jO1-DO-846"/>
-                    <constraint firstItem="Fp9-qg-lNs" firstAttribute="top" secondItem="Lkf-0b-qhW" secondAttribute="top" constant="8" id="tcm-aI-ARk"/>
+                    <constraint firstAttribute="bottom" secondItem="Fp9-qg-lNs" secondAttribute="bottom" id="jO1-DO-846"/>
+                    <constraint firstItem="Fp9-qg-lNs" firstAttribute="top" secondItem="Lkf-0b-qhW" secondAttribute="top" id="tcm-aI-ARk"/>
                     <constraint firstItem="EwS-aV-fb8" firstAttribute="top" secondItem="Lkf-0b-qhW" secondAttribute="top" id="vOH-S7-OKR"/>
                     <constraint firstItem="Fp9-qg-lNs" firstAttribute="leading" secondItem="Lkf-0b-qhW" secondAttribute="leading" constant="16" id="wsd-Le-mkd"/>
                 </constraints>

@@ -18,11 +18,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="a5G-Or-GU4" customClass="AllSearchExtendedFooterView" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VVR-RR-jev">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Pg-ph-A61">
@@ -52,10 +52,10 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GE-em-0jQ">
-                    <rect key="frame" x="0.0" y="74" width="414" height="1"/>
+                    <rect key="frame" x="0.0" y="74" width="414" height="8"/>
                     <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="wMA-Ga-0B6"/>
+                        <constraint firstAttribute="height" constant="8" id="wMA-Ga-0B6"/>
                     </constraints>
                 </view>
             </subviews>
@@ -80,6 +80,7 @@
                 <outlet property="resultsButton" destination="C9v-fD-K2t" id="g05-uQ-pYr"/>
                 <outlet property="resultsButtonHeight" destination="rfG-KI-T4b" id="WHF-cd-og9"/>
                 <outlet property="resultsButtonTop" destination="Fjc-u1-8YW" id="5UF-R7-fVF"/>
+                <outlet property="separatorHeight" destination="wMA-Ga-0B6" id="dzi-Kq-UA7"/>
                 <outlet property="separatorView" destination="5GE-em-0jQ" id="uOp-px-z1e"/>
                 <outlet property="viewMoreButton" destination="4Pg-ph-A61" id="l8U-4O-csP"/>
                 <outlet property="viewMoreButtonHeight" destination="QkR-uE-MYM" id="yEY-QY-vEJ"/>

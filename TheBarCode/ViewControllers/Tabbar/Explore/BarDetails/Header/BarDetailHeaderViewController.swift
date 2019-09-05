@@ -12,10 +12,11 @@ import CoreStore
 import FirebaseAnalytics
 import CoreLocation
 import AVKit
+import FSPagerView
 
 class BarDetailHeaderViewController: UIViewController {
 
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var pagerView: FSPagerView!
     
     @IBOutlet var videoContainerView: UIView!
     
@@ -47,12 +48,19 @@ class BarDetailHeaderViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let nib = UINib(nibName: "ExploreDetailHeaderCollectionViewCell", bundle: nil)
+        self.pagerView.register(nib, forCellWithReuseIdentifier: "ExploreDetailHeaderCollectionViewCell")
+        
+        
+        self.pagerView.backgroundColor = UIColor.clear
+        self.pagerView.backgroundView = nil
+        self.pagerView.isInfinite = true
+        self.pagerView.transformer = FSPagerViewTransformer(type: .crossFading)
         
         self.mapIconImageView.image = self.mapIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.mapIconImageView.tintColor = UIColor.appBlueColor()
         
         self.setUpHeader()
-        self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -90,7 +98,7 @@ class BarDetailHeaderViewController: UIViewController {
     func reloadData(bar: Bar) {
         self.bar = bar
         self.setUpHeader()
-        self.collectionView.reloadData()
+        self.pagerView.reloadData()
     }
     
     func setUpHeader() {
@@ -128,12 +136,12 @@ class BarDetailHeaderViewController: UIViewController {
         }
         
         self.pageControl.numberOfPages = self.bar.images.count
-        let pageNumber = round(self.collectionView.contentOffset.x / self.collectionView.frame.size.width)
-        self.pageControl.currentPage = Int(pageNumber)
+        self.scrollToCurrentImage()
+        self.pagerView.automaticSlidingInterval = self.bar.images.count > 1 ? 2.0 : 0.0
         
         if let videoUrlString = self.bar.videoUrlString.value {
             
-            self.collectionView.isHidden = true
+            self.pagerView.isHidden = true
             self.pageControl.isHidden = true
             self.videoContainerView.isHidden = false
             
@@ -162,12 +170,14 @@ class BarDetailHeaderViewController: UIViewController {
             self.videoContainerView.layer.addSublayer(self.playerLayer!)
             self.avplayer?.play()
             
+            self.playerLoaderView.isHidden = false
+            
             self.addPreriodicTimeObsever()
             
             NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: self.avplayer?.currentItem)
             
         } else {
-            self.collectionView.isHidden = false
+            self.pagerView.isHidden = false
             self.pageControl.isHidden = false
             self.videoContainerView.isHidden = true
         }
@@ -201,6 +211,22 @@ class BarDetailHeaderViewController: UIViewController {
         } else {
             let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+    }
+    
+    func scrollToCurrentImage() {
+        
+        let imagesCount = self.bar?.images.count ?? 0
+        let currentIndex = self.bar?.currentImageIndex ?? 0
+        
+        if currentIndex < imagesCount {
+            self.pageControl.currentPage = currentIndex
+            self.pagerView.layoutIfNeeded()
+            self.pagerView.scrollToItem(at: currentIndex, animated: false)
+        } else {
+            self.pageControl.currentPage = 0
+            self.pagerView.layoutIfNeeded()
+            self.pagerView.scrollToItem(at: 0, animated: false)
         }
     }
     
@@ -265,31 +291,30 @@ extension BarDetailHeaderViewController {
     }
 }
 
-//MARK: UICollectionViewDataSource, UICollectionViewDelegate
-extension BarDetailHeaderViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension BarDetailHeaderViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        self.pageControl.currentPage = Int(pageNumber)
+    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
+        self.pageControl.currentPage = targetIndex
+        self.bar?.currentImageIndex = targetIndex
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func pagerViewDidEndScrollAnimation(_ pagerView: FSPagerView) {
+        self.pageControl.currentPage = pagerView.currentIndex
+        self.bar?.currentImageIndex = pagerView.currentIndex
+    }
+    
+    func numberOfItems(in pagerView: FSPagerView) -> Int {
         return self.bar.images.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(for: indexPath, cellType: ExploreDetailHeaderCollectionViewCell.self)
-        cell.setUpCell(imageName: self.bar.images[indexPath.item].url.value)
+    func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
+        let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "ExploreDetailHeaderCollectionViewCell", at: index) as! ExploreDetailHeaderCollectionViewCell
+        cell.setUpCell(imageName: self.bar.images[index].url.value)
         return cell
     }
     
-}
-
-//MARK: UICollectionViewDelegateFlowLayout
-extension BarDetailHeaderViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.collectionView.frame.size
-    }
+    
+    
 }
 
 //MARK: Notification Methods

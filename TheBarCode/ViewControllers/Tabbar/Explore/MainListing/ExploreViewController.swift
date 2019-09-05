@@ -95,6 +95,10 @@ class ExploreViewController: UIViewController {
         self.navigationController?.navigationBar.isUserInteractionEnabled = false
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     deinit {
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
@@ -168,6 +172,14 @@ class ExploreViewController: UIViewController {
             barDetailController.preSelectedSubTabIndexOffers = 0
         }
         
+        self.present(barDetailNav, animated: true, completion: nil)
+    }
+    
+    func moveToBarDetail(barId: String) {
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        barDetailController.barId = barId
+        barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
@@ -470,6 +482,10 @@ extension ExploreViewController: BarsViewControllerDelegate {
     
     func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton) {
         self.moveToSearch(withPreferences: true, withStandardOffer: false)
+    }
+    
+    func barsController(controller: BarsViewController, didSelectBar barId: String) {
+        self.moveToBarDetail(barId: barId)
     }
 }
 

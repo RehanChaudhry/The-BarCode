@@ -165,7 +165,7 @@ extension BarsWithDealsViewController: UISearchBarDelegate {
         self.statefulTableView.innerTable.reloadData()
         self.isClearingSearch = true
         self.statefulTableView.triggerInitialLoad()
-        self.refreshMap()
+     
     }
 }
 
@@ -247,7 +247,7 @@ extension BarsWithDealsViewController {
                 self.statefulTableView.innerTable.reloadData()
                 self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.reloadData()
-                self.refreshMap()
+                
                 completion(nil)
                 
             } else {

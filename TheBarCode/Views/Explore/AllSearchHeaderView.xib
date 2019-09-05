@@ -21,22 +21,33 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="562-2W-AoV">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="8"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="8" id="Id5-7K-wg6"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dj9-Xt-niR">
                     <rect key="frame" x="16" y="24" width="382" height="21"/>
-                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
                 <constraint firstItem="Dj9-Xt-niR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="QIW-6A-Yjf"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="V3b-31-XLo"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Wd5-s5-o0r"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Dj9-Xt-niR" secondAttribute="trailing" constant="16" id="dQJ-Kq-zS2"/>
                 <constraint firstItem="Dj9-Xt-niR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="nK8-Vf-QYj"/>
                 <constraint firstItem="Dj9-Xt-niR" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="oW3-aE-7ND"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pRI-tb-rYY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="strokeView" destination="562-2W-AoV" id="PaS-zT-eDk"/>
                 <outlet property="titleLabel" destination="Dj9-Xt-niR" id="ghM-Jj-PD0"/>
             </connections>
             <point key="canvasLocation" x="248" y="103.89805097451276"/>

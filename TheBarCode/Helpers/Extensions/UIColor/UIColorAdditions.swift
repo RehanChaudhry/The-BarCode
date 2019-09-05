@@ -112,4 +112,53 @@ extension UIColor {
     static func appStatusButtonColor() -> UIColor {
         return UIColor("#F0F0F0")
     }
+    
+    static func appSearchScopeYellowColor() -> UIColor {
+        return UIColor("#ffb73b")
+    }
+    
+    static func appSearchScopeYellowSelectedColor() -> UIColor {
+        return UIColor("#ffa200")
+    }
+    
+    static func appSearchScopeGreenColor() -> UIColor {
+        return UIColor("#00c799")
+    }
+    
+    static func appSearchScopeGreenSelectedColor() -> UIColor {
+        return UIColor("#00b58b")
+    }
+    
+    static func appSearchScopePurpleColor() -> UIColor {
+        return UIColor("#b46edd")
+    }
+    
+    static func appSearchScopePurpleSelectedColor() -> UIColor {
+        return UIColor("#a749de")
+    }
+    
+    static func appSearchScopePinkColor() -> UIColor {
+        return UIColor("#ff2f9e")
+    }
+    
+    static func appSearchScopePinkSelectedColor() -> UIColor {
+        return UIColor("#ff0088")
+    }
+    
+    static func appSearchScopeBlueColor() -> UIColor {
+        return UIColor("#00c5df")
+    }
+    
+    static func appSearchScopeBlueSelectedColor() -> UIColor {
+        return UIColor("#00a9bf")
+    }
+    
+    static func appSearchScopeOrangeColor() -> UIColor {
+        return UIColor("#ec6623")
+    }
+    
+    static func appSearchScopeOrangeSelectedColor() -> UIColor {
+        return UIColor("#ed4f00")
+    }
+
 }

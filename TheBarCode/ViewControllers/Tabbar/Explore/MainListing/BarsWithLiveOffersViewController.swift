@@ -164,7 +164,7 @@ extension BarsWithLiveOffersViewController: UISearchBarDelegate {
         self.statefulTableView.innerTable.reloadData()
         self.isClearingSearch = true
         self.statefulTableView.triggerInitialLoad()
-        self.refreshMap()
+        
     }
 }
 
@@ -246,7 +246,7 @@ extension BarsWithLiveOffersViewController {
                 self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.innerTable.reloadData()
                 self.statefulTableView.reloadData()
-                self.refreshMap()
+                
                 completion(nil)
             
             } else {

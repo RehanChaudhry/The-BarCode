@@ -55,12 +55,24 @@ class ExploreBaseViewController: UIViewController {
 
     let locationManager = MyLocationManager()
     
-    var markers: [GMSMarker] = []
+    var clusterManager: GMUClusterManager!
 
+    var mapApiState: LoadMore = LoadMore(isLoading: false, canLoadMore: false, error: nil)
+    var mapDataRequest: DataRequest?
+    var mapBars: [MapBasicBar] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        renderer.delegate = self
+        
+        self.clusterManager = GMUClusterManager(map: self.mapView, algorithm: algorithm, renderer: renderer)
+        self.clusterManager.setDelegate(self, mapDelegate: self)
         
         self.listButton.roundCorners(corners: [.topLeft, .bottomLeft], radius: 5.0)
         self.mapButton.roundCorners(corners: [.topRight, .bottomRight], radius: 5.0)
@@ -130,14 +142,19 @@ class ExploreBaseViewController: UIViewController {
         self.statefulTableView.innerTable.separatorStyle = .none
     }
     
-    func createMapMarker(location: CLLocation, pinImage: UIImage) -> GMSMarker {
-        let marker = GMSMarker(position: location.coordinate)
-        let iconImage = pinImage
-        let markerView = UIImageView(image: iconImage)
-        marker.iconView = markerView
-        return marker
+    func setUpMarkers() {
+        
+        self.mapView.clear()
+        self.clusterManager.clearItems()
+        
+        for mapBar in self.mapBars {
+            self.clusterManager.add(mapBar)
+        }
+        
+        self.clusterManager.cluster()
     }
-    
+
+    /*
     func setUpBarMarkers(bars: [Bar]) {
     
         self.mapView.clear()
@@ -159,32 +176,9 @@ class ExploreBaseViewController: UIViewController {
         }
         
     }
+    */
     
-    func getPinImage(explore: Bar) -> UIImage {
-        var pinImage = UIImage(named: "icon_pin_gold")!
-        if let timings = explore.timings.value {
-            if timings.dayStatus == .opened {
-                if timings.isOpen.value {
-                    if let activeStandardOffer = explore.activeStandardOffer.value {
-                        pinImage = Utility.shared.getPinImage(offerType: activeStandardOffer.type)
-                    } else {
-                        pinImage = UIImage(named: "icon_pin_grayed")!
-                    }
-                } else {
-                    pinImage = UIImage(named: "icon_pin_grayed")!
-                }
-            } else {
-                pinImage = UIImage(named: "icon_pin_grayed")!
-            }
-            
-        } else {
-            pinImage = UIImage(named: "icon_pin_grayed")!
-        }
-        
-        return pinImage
-    }
-    
-    func setupMapCamera(cordinate: CLLocationCoordinate2D) {
+    func focusCameraTo(cordinate: CLLocationCoordinate2D) {
         let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
         self.mapView.animate(to: position)
         self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
@@ -194,11 +188,6 @@ class ExploreBaseViewController: UIViewController {
             self.mapView.isMyLocationEnabled = true
         }
         
-    }
-    
-    func refreshMap() {
-        let bars = self.isSearching ? self.filteredBars : self.bars
-        self.setUpBarMarkers(bars: bars)
     }
     
     func setUserLocation() {
@@ -213,7 +202,7 @@ class ExploreBaseViewController: UIViewController {
         
         guard let requestAlwaysAccess = canContinue else {
             debugPrint("Location permission not authorized")
-            self.setupMapCamera(cordinate: defaultUKLocation)
+            self.focusCameraTo(cordinate: defaultUKLocation)
             return
         }
         
@@ -222,7 +211,7 @@ class ExploreBaseViewController: UIViewController {
             
             guard error == nil else {
                 debugPrint("Error while getting location: \(error!.localizedDescription)")
-                self.setupMapCamera(cordinate: defaultUKLocation)
+                self.focusCameraTo(cordinate: defaultUKLocation)
                 return
             }
             
@@ -235,7 +224,7 @@ class ExploreBaseViewController: UIViewController {
                         
                     })
                 }
-                self.setupMapCamera(cordinate: location.coordinate)
+                self.focusCameraTo(cordinate: location.coordinate)
             }
         }
         
@@ -278,8 +267,6 @@ class ExploreBaseViewController: UIViewController {
         self.displayType = .map
         
         self.scrollView.scrollToPage(page: 1, animated: true)
-        
-        self.refreshMap()
     }
 }
 
@@ -290,12 +277,14 @@ extension ExploreBaseViewController : GMSMapViewDelegate {
     }
 }
 
+
 //Notification Methods
 extension ExploreBaseViewController {
     @objc func barDetailsRefreshedNotification(notification: Notification) {
         
         let bar = notification.object as! Bar
         
+        /*
         let barMarkers = self.markers.filter { (marker) -> Bool in
             if let data = marker.userData as? Bar {
                 return data.id.value == bar.id.value
@@ -330,7 +319,30 @@ extension ExploreBaseViewController {
         self.markers.append(marker)
         
         marker.zIndex = Int32(self.markers.count - 1)
-        
+        */
     }
 }
 
+//MARK: GMUClusterManagerDelegate
+extension ExploreBaseViewController: GMUClusterManagerDelegate {
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: 13.5)
+        let update = GMSCameraUpdate.setCamera(newCamera)
+        self.mapView.animate(with: update)
+        
+        return true
+    }
+    
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+        return false
+    }
+}
+
+//MARK: GMUClusterRendererDelegate
+extension ExploreBaseViewController: GMUClusterRendererDelegate {
+    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
+        if let mapBar = marker.userData as? MapBasicBar {
+            marker.icon = Utility.shared.getMapBarPinImage(mapBar: mapBar)
+        }
+    }
+}

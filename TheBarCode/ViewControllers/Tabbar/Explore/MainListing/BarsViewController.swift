@@ -17,6 +17,7 @@ import GoogleMaps
 import FirebaseAnalytics
 
 protocol BarsViewControllerDelegate: class {
+    func barsController(controller: BarsViewController, didSelectBar barId: String)
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton)
     func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
@@ -25,6 +26,8 @@ protocol BarsViewControllerDelegate: class {
 }
 
 class BarsViewController: ExploreBaseViewController {
+    
+    @IBOutlet var mapErrorView: ShadowView!
     
     weak var delegate: BarsViewControllerDelegate!
     var isClearingSearch: Bool = false
@@ -36,6 +39,8 @@ class BarsViewController: ExploreBaseViewController {
         
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
+        
+        self.setUpBasicMapBars()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +65,26 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.statefulDelegate = self
     }
     
+    func setUpBasicMapBars() {
+        
+        self.mapErrorView.isHidden = true
+        self.mapApiState.isLoading = true
+        
+        self.getBarsForMap { (error) in
+            
+            self.mapApiState.isLoading = false
+            
+            guard error == nil else {
+                debugPrint("Error while getting basic map bars: \(error!)")
+                self.mapErrorView.isHidden = false
+                return
+            }
+            
+            self.mapErrorView.isHidden = true
+            self.setUpMarkers()
+        }
+    }
+    
     //MARK: My IBActions
     @IBAction func searchButtonTapped(sender: UIButton) {
         self.delegate.barsController(controller: self, searchButtonTapped: sender)
@@ -75,6 +100,9 @@ class BarsViewController: ExploreBaseViewController {
         self.delegate.barsController(controller: self, standardOfferButtonTapped: sender)
     }
     
+    @IBAction func mapRetryButtonTapped(sender: UIButton) {
+        self.setUpBasicMapBars()
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -177,7 +205,6 @@ extension BarsViewController: UISearchBarDelegate {
         self.statefulTableView.innerTable.reloadData()
         self.isClearingSearch = true
         self.statefulTableView.triggerInitialLoad()
-        self.refreshMap()
     }
 }
 
@@ -257,7 +284,49 @@ extension BarsViewController {
                 self.statefulTableView.innerTable.reloadData()
                 self.statefulTableView.canPullToRefresh = true
                 self.statefulTableView.reloadData()
-                self.refreshMap()
+                
+                completion(nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                completion(genericError)
+            }
+        }
+    }
+    
+    func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
+
+        let params:[String : Any] =  ["type": ExploreType.bars.rawValue,
+                                      "pagination" : false,
+                                      "is_for_map" : true]
+        
+        self.mapApiState.isLoading = true
+        
+        self.mapDataRequest?.cancel()
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+            
+            self.mapApiState.isLoading = false
+            
+            guard error == nil else {
+                self.mapApiState.error = error! as NSError
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.mapApiState.error = serverError!.nsError()
+                completion(serverError!.nsError())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                self.mapBars.removeAll()
+                
+                let mapBars = Mapper<MapBasicBar>().mapArray(JSONArray: responseArray)
+                self.mapBars.append(contentsOf: mapBars)
+                
                 completion(nil)
                 
             } else {
@@ -433,13 +502,11 @@ extension BarsViewController: BarTableViewCellDelegare {
     }
 }
 
-
-
-
 extension BarsViewController  {
-   override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let bar = marker.userData as! Bar
-        self.delegate.barsController(controller: self, didSelectBar: bar)
+    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if let mapbar = marker.userData as? MapBasicBar {
+            self.delegate.barsController(controller: self, didSelectBar: mapbar.barId)
+        }
         return false
     }
 }

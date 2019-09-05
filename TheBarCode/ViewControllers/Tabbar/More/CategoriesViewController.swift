@@ -166,7 +166,23 @@ extension CategoriesViewController: CategoryCollectionViewCellDelegate {
         }
         
         let category = self.categories[indexPath.item]
-        category.isSelected.value = !category.isSelected.value
+        
+        let selection = !category.isSelected.value
+        category.isSelected.value = selection
+        
+        func markChildAsSelection(category: Category) {
+            if category.hasChildren.value,
+                let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+                for childCategory in childCategories {
+                    childCategory.isSelected.value = selection
+                    markChildAsSelection(category: childCategory)
+                    
+                    debugPrint("marking child as selection: \(childCategory.title.value)")
+                }
+            }
+        }
+        
+        markChildAsSelection(category: category)
         
         self.collectionView.innerCollection.reloadItems(at: [indexPath])
     }
@@ -201,7 +217,7 @@ extension CategoriesViewController {
                     debugPrint("Imported categories count: \(importedObjects.count)")
                 })
                 
-                self.categories = self.transaction.fetchAll(From<Category>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+                self.categories = self.transaction.fetchAll(From<Category>().where(\Category.level == "0").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
                 self.collectionView.innerCollection.reloadData()
                 
                 self.statefulView.isHidden = true
@@ -216,11 +232,13 @@ extension CategoriesViewController {
     
     func updatePreferences() {
         
-        let selectedCategories = self.categories.filter { (category) -> Bool in
-            return category.isSelected.value
-        }
+        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
         
-        let selectedCategoriesIds = selectedCategories.map({$0.id.value})
+        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
+        
+//        debugPrint("cat name: \(filteredCategories.map({$0.title.value}))")
+        
+        let selectedCategoriesIds = filteredCategories.map({$0.id.value})
         let params = ["ids" : selectedCategoriesIds]
         
         self.continueButton.showLoader()

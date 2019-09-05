@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arJ-L8-qPW">
-                            <rect key="frame" x="16" y="8" width="323" height="28"/>
+                            <rect key="frame" x="16" y="0.0" width="359" height="44"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button">
@@ -38,10 +38,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="arJ-L8-qPW" firstAttribute="top" secondItem="rEU-Nm-UeB" secondAttribute="top" constant="8" id="CXS-NF-kne"/>
+                        <constraint firstAttribute="trailing" secondItem="arJ-L8-qPW" secondAttribute="trailing" id="1dK-vU-tbz"/>
+                        <constraint firstItem="arJ-L8-qPW" firstAttribute="top" secondItem="rEU-Nm-UeB" secondAttribute="top" id="CXS-NF-kne"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="dbH-hr-VJ6"/>
                         <constraint firstItem="arJ-L8-qPW" firstAttribute="leading" secondItem="rEU-Nm-UeB" secondAttribute="leading" constant="16" id="uyB-i2-RLU"/>
-                        <constraint firstAttribute="bottom" secondItem="arJ-L8-qPW" secondAttribute="bottom" constant="8" id="xu0-Zg-Q3G"/>
+                        <constraint firstAttribute="bottom" secondItem="arJ-L8-qPW" secondAttribute="bottom" id="xu0-Zg-Q3G"/>
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="XGs-dY-v3y">
@@ -54,7 +55,6 @@
             </subviews>
             <constraints>
                 <constraint firstItem="XGs-dY-v3y" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="47p-A2-xBo"/>
-                <constraint firstItem="XGs-dY-v3y" firstAttribute="leading" secondItem="arJ-L8-qPW" secondAttribute="trailing" constant="8" id="9oD-1X-5Jr"/>
                 <constraint firstItem="rEU-Nm-UeB" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Kcb-Ul-55T"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="XGs-dY-v3y" secondAttribute="trailing" constant="16" id="ScB-YJ-6iR"/>
                 <constraint firstItem="rEU-Nm-UeB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="V8u-94-zEh"/>
@@ -67,6 +67,7 @@
                 <outlet property="selectionIndicator" destination="XGs-dY-v3y" id="NI1-ND-FSb"/>
                 <outlet property="titleButton" destination="arJ-L8-qPW" id="NHa-QH-sFz"/>
             </connections>
+            <point key="canvasLocation" x="274.39999999999998" y="111.54422788605699"/>
         </view>
     </objects>
     <resources>

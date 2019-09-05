@@ -39,7 +39,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nqE-lW-ecr">
-                        <rect key="frame" x="32" y="8" width="252" height="28"/>
+                        <rect key="frame" x="32" y="0.0" width="288" height="43.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button">
@@ -55,11 +55,11 @@
                     <constraint firstAttribute="trailing" secondItem="KC0-QO-hSp" secondAttribute="trailing" id="Ih2-K9-tHh"/>
                     <constraint firstItem="nqE-lW-ecr" firstAttribute="leading" secondItem="QwG-up-S4h" secondAttribute="leading" constant="32" id="SFp-WZ-qKP"/>
                     <constraint firstItem="bkU-zK-avQ" firstAttribute="centerY" secondItem="QwG-up-S4h" secondAttribute="centerY" id="U2N-tk-iBO"/>
-                    <constraint firstItem="bkU-zK-avQ" firstAttribute="leading" secondItem="nqE-lW-ecr" secondAttribute="trailing" constant="8" id="VH4-ct-kRU"/>
                     <constraint firstAttribute="bottom" secondItem="KC0-QO-hSp" secondAttribute="bottom" id="Y1i-qL-De0"/>
-                    <constraint firstAttribute="bottom" secondItem="nqE-lW-ecr" secondAttribute="bottom" constant="7.5" id="ZXR-tH-qrF"/>
-                    <constraint firstItem="nqE-lW-ecr" firstAttribute="top" secondItem="QwG-up-S4h" secondAttribute="top" constant="8" id="hD8-V0-yzQ"/>
+                    <constraint firstAttribute="bottom" secondItem="nqE-lW-ecr" secondAttribute="bottom" id="ZXR-tH-qrF"/>
+                    <constraint firstItem="nqE-lW-ecr" firstAttribute="top" secondItem="QwG-up-S4h" secondAttribute="top" id="hD8-V0-yzQ"/>
                     <constraint firstItem="KC0-QO-hSp" firstAttribute="top" secondItem="QwG-up-S4h" secondAttribute="top" id="nKq-6G-oJ4"/>
+                    <constraint firstAttribute="trailing" secondItem="nqE-lW-ecr" secondAttribute="trailing" id="vsH-L0-D3R"/>
                     <constraint firstAttribute="trailing" secondItem="bkU-zK-avQ" secondAttribute="trailing" constant="16" id="xCF-4r-sdb"/>
                 </constraints>
             </tableViewCellContentView>

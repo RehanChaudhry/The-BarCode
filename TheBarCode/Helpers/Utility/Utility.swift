@@ -467,4 +467,15 @@ class Utility: NSObject {
         return UIColor.appDefaultColors()
     }
     
+    func getMapBarPinImage(mapBar: MapBasicBar) -> UIImage {
+        
+        var pinImage = UIImage(named: "icon_pin_gold")!
+        if mapBar.isOpen {
+            pinImage = Utility.shared.getPinImage(offerType: mapBar.standardOfferType)
+        } else {
+            pinImage = UIImage(named: "icon_pin_grayed")!
+        }
+        
+        return pinImage
+    }
 }

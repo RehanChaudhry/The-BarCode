@@ -33,6 +33,8 @@ class CategoryFilterViewController: UIViewController {
     
     var shouldDismiss: Bool = false
     
+    var comingForUpdatingPreference: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,7 +125,7 @@ class CategoryFilterViewController: UIViewController {
     }
     
     @objc func cancelBarButtonTapped(sender: UIBarButtonItem) {
-        if shouldDismiss {
+        if shouldDismiss || self.comingForUpdatingPreference {
             self.dismiss(animated: true, completion: nil)
         } else {
             self.navigationController?.popViewController(animated: true)
@@ -144,6 +146,12 @@ class CategoryFilterViewController: UIViewController {
     }
     
     func setUpPreselectedCategories() {
+        
+        guard !self.comingForUpdatingPreference else {
+            debugPrint("preselecting only required when coming for list filtering")
+            return
+        }
+        
         let categories = self.transaction.fetchAll(From<Category>()) ?? []
         for category in categories {
             if let _ = self.preSelectedCategories.first(where: {$0.id.value == category.id.value}) {
@@ -166,33 +174,37 @@ class CategoryFilterViewController: UIViewController {
     
     @IBAction func continueButtonTapped(sender: UIButton) {
         
-        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
-        
-        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
-        
-        var fetchedSelectedCategories: [Category] = []
-        var fetchedFilteredCategories: [Category] = []
-        
-        for object in selectedCategories {
-            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-            fetchedSelectedCategories.append(fetchedObject!)
-        }
-        
-        for object in filteredCategories {
-            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
-            fetchedFilteredCategories.append(fetchedObject!)
-        }
-        
-        if self.shouldDismiss && selectedCategories.count == 0 {
-            self.dismiss(animated: true, completion: nil)
+        if self.comingForUpdatingPreference {
+            self.updatePreferences()
         } else {
-            self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedSelectedCategories, filteredPreferences: fetchedFilteredCategories)
-            self.navigationController?.popViewController(animated: true)
+            let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
+            
+            let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
+            
+            var fetchedSelectedCategories: [Category] = []
+            var fetchedFilteredCategories: [Category] = []
+            
+            for object in selectedCategories {
+                let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                fetchedSelectedCategories.append(fetchedObject!)
+            }
+            
+            for object in filteredCategories {
+                let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                fetchedFilteredCategories.append(fetchedObject!)
+            }
+            
+            if self.shouldDismiss && selectedCategories.count == 0 {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedSelectedCategories, filteredPreferences: fetchedFilteredCategories)
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+            debugPrint("selected categories: \(fetchedFilteredCategories.map({$0.title.value}))")
+            
+            self.transaction.flush()
         }
-        
-        debugPrint("selected categories: \(fetchedFilteredCategories.map({$0.title.value}))")
-        
-        self.transaction.flush()
     }
 }
 
@@ -267,6 +279,28 @@ extension CategoryFilterViewController {
                 let dataStack = Utility.inMemoryStack
                 try! dataStack.perform(synchronous: { (transaction) -> Void in
                     let importedObjects = try! transaction.importUniqueObjects(Into<Category>(), sourceArray: responseCategories)
+                    
+                    
+                    func markParentsAsSelected(category: Category) {
+                        if let parentId = category.parentId.value,
+                            parentId != "0",
+                            let parentCategory = transaction.fetchOne(From<Category>().where(\Category.id == category.parentId.value ?? "")) {
+                            
+                            parentCategory.isSelected.value = true
+                            markParentsAsSelected(category: parentCategory)
+                            
+                            debugPrint("marking parent as selected: \(parentCategory.title.value)")
+                            
+                        } else {
+                            category.isSelected.value = true
+                        }
+                    }
+                    
+                    let lastLevelCategories = transaction.fetchAll(From<Category>().where(\Category.isSelected == true && \Category.hasChildren == false)) ?? []
+                    for category in lastLevelCategories {
+                        markParentsAsSelected(category: category)
+                    }
+                    
                     debugPrint("Imported categories count: \(importedObjects.count)")
                 })
                 
@@ -281,6 +315,48 @@ extension CategoryFilterViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 self.statefulView.showErrorViewWithRetry(errorMessage: genericError.localizedDescription, reloadMessage: "Tap To refresh")
             }
+        }
+    }
+    
+    func updatePreferences() {
+        
+        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
+        
+        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
+        
+        let selectedCategoriesIds = filteredCategories.map({$0.id.value})
+        let params = ["ids" : selectedCategoriesIds]
+        
+        self.continueButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateSelectedCategories, method: .post) { (response, serverError, error) in
+            
+            self.continueButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! self.transaction.commitAndWait()
+            
+            let user = Utility.shared.getCurrentUser()!
+            try! CoreStore.perform(synchronous: { (transaction) -> Void in
+                let edittedUser = transaction.edit(user)
+                edittedUser?.isCategorySelected.value = true
+            })
+            
+            if self.comingForUpdatingPreference {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
         }
     }
 }

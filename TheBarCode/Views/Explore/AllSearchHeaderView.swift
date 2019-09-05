@@ -13,13 +13,23 @@ class AllSearchHeaderView: UITableViewHeaderFooterView, NibReusable {
 
     @IBOutlet var titleLabel: UILabel!
     
+    @IBOutlet var strokeView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.contentView.backgroundColor = UIColor.clear
     }
 
-    func setup(title: String) {
+    func setup(title: String, strokeColor: UIColor?) {
         self.titleLabel.text = title.uppercased()
+        
+        if let strokeColor = strokeColor {
+            self.strokeView.backgroundColor = strokeColor
+            self.titleLabel.textColor = strokeColor
+        } else {
+            self.strokeView.backgroundColor = UIColor.clear
+            self.titleLabel.textColor = UIColor.white
+        }
     }
 }
