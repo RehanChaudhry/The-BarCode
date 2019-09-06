@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */; };
+		0C05DDDE232155660073A2BA /* AllSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C05DDDD232155660073A2BA /* AllSearchViewModel.swift */; };
 		0C0B40E6230D09830060BB58 /* ReloadSnackBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B40E5230D09830060BB58 /* ReloadSnackBarViewController.swift */; };
 		0C0BD8D822F411FA00668DF7 /* OfferWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BD8D722F411FA00668DF7 /* OfferWalletViewController.swift */; };
 		0C0BD8DA22F4130500668DF7 /* BookmarkedOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BD8D922F4130500668DF7 /* BookmarkedOfferViewController.swift */; };
@@ -249,7 +250,6 @@
 		0CCA528322E828CB006833C5 /* ScopeSearchResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA528222E828CB006833C5 /* ScopeSearchResultHeaderView.swift */; };
 		0CCA528522E828DA006833C5 /* ScopeSearchResultHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CCA528422E828DA006833C5 /* ScopeSearchResultHeaderView.xib */; };
 		0CCA528722E83265006833C5 /* FoodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA528622E83265006833C5 /* FoodSearch.swift */; };
-		0CCA528922E97EBC006833C5 /* AllSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA528822E97EBB006833C5 /* AllSearchViewModel.swift */; };
 		0CD74A6D21996518007DC6E1 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD74A6C21996518007DC6E1 /* CategoryFilterViewController.swift */; };
 		0CE4618621522C6000124E7F /* splash.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4618521522C6000124E7F /* splash.mp4 */; };
 		0CF41626229E7D51000EAA59 /* ExploreSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */; };
@@ -325,6 +325,7 @@
 
 /* Begin PBXFileReference section */
 		0C057A3A217778AF00C99356 /* CreditCosumptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCosumptionViewController.swift; sourceTree = "<group>"; };
+		0C05DDDD232155660073A2BA /* AllSearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllSearchViewModel.swift; sourceTree = "<group>"; };
 		0C0B40E5230D09830060BB58 /* ReloadSnackBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadSnackBarViewController.swift; sourceTree = "<group>"; };
 		0C0BD8D722F411FA00668DF7 /* OfferWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferWalletViewController.swift; sourceTree = "<group>"; };
 		0C0BD8D922F4130500668DF7 /* BookmarkedOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedOfferViewController.swift; sourceTree = "<group>"; };
@@ -615,7 +616,6 @@
 		0CCA528222E828CB006833C5 /* ScopeSearchResultHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScopeSearchResultHeaderView.swift; sourceTree = "<group>"; };
 		0CCA528422E828DA006833C5 /* ScopeSearchResultHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScopeSearchResultHeaderView.xib; sourceTree = "<group>"; };
 		0CCA528622E83265006833C5 /* FoodSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearch.swift; sourceTree = "<group>"; };
-		0CCA528822E97EBB006833C5 /* AllSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchViewModel.swift; sourceTree = "<group>"; };
 		0CD74A6C21996518007DC6E1 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		0CE4618521522C6000124E7F /* splash.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = splash.mp4; sourceTree = "<group>"; };
 		0CE8BACA21528F8A000D01B2 /* TheBarCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TheBarCode.entitlements; sourceTree = "<group>"; };
@@ -1316,7 +1316,6 @@
 				0C0CA21422E07E0200C90409 /* SearchScopeCell.xib */,
 				0CCA528222E828CB006833C5 /* ScopeSearchResultHeaderView.swift */,
 				0CCA528422E828DA006833C5 /* ScopeSearchResultHeaderView.xib */,
-				0CCA528822E97EBB006833C5 /* AllSearchViewModel.swift */,
 				0CFECFD122EAC3C60033BE20 /* FoodBarCell.swift */,
 				0CFECFD222EAC3C60033BE20 /* FoodBarCell.xib */,
 				0CFECFD522EAC63C0033BE20 /* AllSearchHeaderView.swift */,
@@ -1349,6 +1348,7 @@
 				0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */,
 				0C0CA21822E0852F00C90409 /* SearchScope.swift */,
 				0CCA528622E83265006833C5 /* FoodSearch.swift */,
+				0C05DDDD232155660073A2BA /* AllSearchViewModel.swift */,
 				0C1947E923154E5900498934 /* AllSearchFooterViewModel.swift */,
 			);
 			path = Explore;
@@ -2256,7 +2256,6 @@
 				0C9ECA8E2295284800DEC34F /* SocialLinksCell.swift in Sources */,
 				0C39F2F1231E72D500596A2B /* GMUHeatmapTileLayer.m in Sources */,
 				0C39F2F4231E72D500596A2B /* GMUGeometryCollection.m in Sources */,
-				0CCA528922E97EBC006833C5 /* AllSearchViewModel.swift in Sources */,
 				0C23A88F2146732000DFB281 /* UIColorAdditions.swift in Sources */,
 				0C117F0222DDA1640061FFC3 /* ExclusiveViewController.swift in Sources */,
 				0C955DB52147824C00F9385B /* GradientButton.swift in Sources */,
@@ -2309,6 +2308,7 @@
 				0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */,
 				0C955DF12149317100F9385B /* StatefulCollectionView+InitialLoad.swift in Sources */,
 				0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */,
+				0C05DDDE232155660073A2BA /* AllSearchViewModel.swift in Sources */,
 				0C8BDCDF2150D78F00D5117B /* Deal.swift in Sources */,
 				0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */,
 				0C6D271E22EADACE0002098C /* AllSearchFooterView.swift in Sources */,
