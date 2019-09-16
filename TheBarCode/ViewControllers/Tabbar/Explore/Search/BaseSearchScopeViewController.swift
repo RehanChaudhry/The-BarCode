@@ -76,17 +76,17 @@ class BaseSearchScopeViewController: UIViewController {
         
         self.strokeView = UIView()
         if self is BarSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopeYellowColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeBarsColor()
         } else if self is DealSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopeOrangeColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeDealsColor()
         } else if self is LiveOfferSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopeBlueColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeLiveOffersColor()
         } else if self is FoodSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopePurpleColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeFoodsColor()
         } else if self is DrinkSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopePinkColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeDrinksColor()
         } else if self is EventSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopeGreenColor()
+            self.strokeView.backgroundColor = UIColor.appSearchScopeEventsColor()
         } else {
             self.strokeView.backgroundColor = UIColor.clear
         }
@@ -221,6 +221,9 @@ class BaseSearchScopeViewController: UIViewController {
         self.mapView.clear()
         self.clusterManager.clearItems()
         
+        self.mapBars.removeAll(where: {$0.position.latitude > 85.0})        
+        self.mapBars.removeAll(where: {$0.position.latitude < -85.0})
+        
         for mapBar in self.mapBars {
             self.clusterManager.add(mapBar)
         }
@@ -264,8 +267,14 @@ class BaseSearchScopeViewController: UIViewController {
 //MARK: GMUClusterManagerDelegate
 extension BaseSearchScopeViewController: GMUClusterManagerDelegate {
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
-        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: 13.5)
-        let update = GMSCameraUpdate.setCamera(newCamera)
+        
+        var latlngBounds = GMSCoordinateBounds(coordinate: cluster.items.first!.position,
+                                               coordinate: cluster.items.first!.position)
+        for clusterItem in cluster.items {
+            latlngBounds = latlngBounds.includingCoordinate(clusterItem.position)
+        }
+        
+        let update = GMSCameraUpdate.fit(latlngBounds, withPadding: 150.0)
         self.mapView.animate(with: update)
         
         return true

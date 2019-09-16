@@ -355,11 +355,11 @@ extension BarsWithLiveOffersViewController: StatefulTableDelegate {
 
 extension BarsWithLiveOffersViewController  {
     
-    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let bar = marker.userData as! Bar
-        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
-        return false
-    }
+//    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+//        let bar = marker.userData as! Bar
+//        self.delegate.liveOffersController(controller: self, didSelectLiveOfferOf: bar)
+//        return false
+//    }
 }
 
 //LiveOfferTableViewCell

@@ -50,6 +50,7 @@ class DealSearchViewController: BaseSearchScopeViewController {
         super.reset()
         
         self.prepareToReset()
+        self.loadMore.next = 1
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -158,8 +159,12 @@ extension DealSearchViewController: DealTableViewCellDelegate {
 extension DealSearchViewController {
     
     func getBars(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
-        
+
         self.dataRequest?.cancel()
+        
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
         
         var params:[String : Any] =  ["type": SearchScope.deal.rawValue,
                                       "pagination" : true,
@@ -177,6 +182,14 @@ extension DealSearchViewController {
         }
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.bars.removeAll()
+            }
             
             guard error == nil else {
                 completion(error! as NSError)

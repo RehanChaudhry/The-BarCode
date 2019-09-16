@@ -19,7 +19,7 @@ protocol AllSearchViewControllerDelegate: class {
 
 class AllSearchViewController: BaseSearchScopeViewController {
     
-    var viewModels: [AllSearchViewModelItem] = []
+    var viewModels: [AllSearchSectionViewModel] = []
     
     weak var allSearchDelegate: AllSearchViewControllerDelegate!
     
@@ -34,8 +34,11 @@ class AllSearchViewController: BaseSearchScopeViewController {
     override func setUpStatefulTableView() {
         super.setUpStatefulTableView()
         
-        self.statefulTableView.innerTable.register(headerFooterViewType: AllSearchExtendedFooterView.self)
         self.statefulTableView.innerTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.statefulTableView.frame.size.width, height: 0.01))
+        
+        self.statefulTableView.innerTable.register(cellType: AllSearchHeaderCell.self)
+        self.statefulTableView.innerTable.register(cellType: AllSearchFooterCell.self)
+        self.statefulTableView.innerTable.register(cellType: AllSearchViewMoreCell.self)
         self.statefulTableView.innerTable.register(cellType: BarTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: DealTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: LiveOfferTableViewCell.self)
@@ -127,160 +130,135 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModels[section].rowCount
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let viewModel = self.viewModels[section]
-        let footerModel = viewModel.footerModel
-        if !footerModel.shouldShowViewMoreButon &&
-            !footerModel.shouldShowSeparator &&
-            !footerModel.shouldShowExpandButton {
-            return 0.0
-        } else {
-            return UITableViewAutomaticDimension
-        }
-//        switch viewModel.footerType {
-//        case .singleLine:
-//            return 12.0
-//        case .viewMore, .expandableWithoutViewMoreWithOutSeparator, .expandableWithoutViewMoreWithSeparator:
-//            return 46.0
-//        case .expandableWithViewMore:
-//            return 75.0
-//        case .none:
-//            return 0.0
-//        }
+        return viewModel.items.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let _ = self.viewModels[section].sectionTitle {
-            return UITableViewAutomaticDimension
-        } else {
-            return 0.0
-        }
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let viewModel = self.viewModels[section]
-        if let title = viewModel.sectionTitle {
-            let headerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(AllSearchHeaderView.self)
-            headerView?.setup(title: title, strokeColor: viewModel.headerStrokeColor)
-            return headerView
-        } else {
-            return nil
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let viewModel = self.viewModels[section]
-        let footerModel = viewModel.footerModel
-        if !footerModel.shouldShowViewMoreButon &&
-            !footerModel.shouldShowSeparator &&
-            !footerModel.shouldShowExpandButton {
-            return nil
-        } else {
-            let footerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(AllSearchExtendedFooterView.self)
-            footerView?.section = section
-            footerView?.delegate = self
-            
-            if let foodViewModel = viewModel as? AllSearchViewModelTypeFood {
-                footerView?.setupFooterView(model: footerModel, isExpanded: foodViewModel.isExpanded)
-            } else if let drinkViewModel = viewModel as? AllSearchViewModelTypeDrink {
-                footerView?.setupFooterView(model: footerModel, isExpanded: drinkViewModel.isExpanded)
-            } else {
-                footerView?.setupFooterView(model: footerModel, isExpanded: true)
-            }
-
-            return footerView
-        }
+        let headerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(AllSearchHeaderView.self)
+        headerView?.setup(strokeColor: viewModel.headerStrokeColor)
+        
+        return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let viewModel = self.viewModels[indexPath.section]
-        if let model = viewModel as? AllSearchViewModelTypeBar, viewModel.type == .bar {
+        let viewModelItem = viewModel.items[indexPath.item]
+        
+        if let item = viewModelItem as? AllSearchHeaderModel, item.type == .headerCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: AllSearchHeaderCell.self)
+            cell.setup(title: item.title, strokeColor: viewModel.headerStrokeColor)
+            return cell
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .barCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
-            cell.setUpCell(bar: model.items[indexPath.row])
+            cell.setUpCell(bar: item.bar, bottomPadding: indexPath.row == viewModel.items.count - 1)
             cell.delegate = self
             cell.exploreBaseDelegate = self
             return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeDeal, viewModel.type == .deal {
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .dealCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-            cell.setUpCell(explore: model.items[indexPath.row])
+            cell.setUpCell(explore: item.bar)
             cell.delegate = self
             cell.exploreBaseDelegate = self
             return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeLiveOffer, viewModel.type == .liveOffer {
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .liveOfferCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-            cell.setUpCell(explore: model.items[indexPath.row])
+            cell.setUpCell(explore: item.bar)
+            cell.updateBottomPadding(showPadding: indexPath.row == viewModel.items.count - 1)
             cell.delegate = self
             cell.exploreBaseDelegate = self
             return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeFood, viewModel.type == .food {
-            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForFood(food: model.items[indexPath.row])
-            return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeDrink, viewModel.type == .drink {
-            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForDrink(drink: model.items[indexPath.row])
-            return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeEvent, viewModel.type == .event {
+        } else if let item = viewModelItem as? AllSearchEventModel, item.type == .eventCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: EventCell.self)
             
-            let event = model.items[indexPath.row]
+            let event = item.event
             cell.setupCell(event: event, barName: event.bar.value?.title.value)
             
             return cell
-        } else if let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .foodBarCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodBarCell.self)
-            cell.setUpCell(explore: model.items[indexPath.row])
+            cell.setUpCell(explore: item.bar)
             cell.delegate = self
             return cell
-        } else {
-            return UITableViewCell(frame: .zero)
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .drinkBarCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodBarCell.self)
+            cell.setUpCell(explore: item.bar)
+            cell.delegate = self
+            return cell
+        } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+            cell.setupCellForFood(food: item.food)
+            return cell
+        } else if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+            cell.setupCellForDrink(drink: item.drink)
+            return cell
+        } else if let item = viewModelItem as? AllSearchExpandModel, item.type == .footerCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: AllSearchFooterCell.self)
+            cell.setupCell(isExpanded: item.isExpanded)
+            cell.delegate = self
+            return cell
+        } else if let item = viewModelItem as? AllSearchViewMoreModel, item.type == .viewMoreCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: AllSearchViewMoreCell.self)
+            cell.delegate = self
+            cell.setup(model: item)
+            return cell
         }
+
+        return UITableViewCell(frame: .zero)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let viewModel = self.viewModels[indexPath.section]
-        if let aCell = cell as? BarTableViewCell, let model = viewModel as? AllSearchViewModelTypeBar, viewModel.type == .bar {
+        let viewModelItem = viewModel.items[indexPath.row]
+        
+        if let aCell = cell as? BarTableViewCell,
+            let item = viewModelItem as? AllSearchBarModel,
+            item.type == .barCell {
+            
+            aCell.scrollToCurrentImage()
+            let imageCount = item.bar.images.value.count
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
+            
+        } else if let aCell = cell as? DealTableViewCell,
+            let item = viewModelItem as? AllSearchBarModel,
+            item.type == .dealCell {
+            
+            aCell.scrollToCurrentImage()
+            let imageCount = item.bar.images.value.count
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
+            
+        } else if let aCell = cell as? LiveOfferTableViewCell,
+            let item = viewModelItem as? AllSearchBarModel,
+            item.type == .liveOfferCell {
+            
+            aCell.scrollToCurrentImage()
+            let imageCount = item.bar.images.value.count
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
+            
+        } else if let aCell = cell as? EventCell,
+            let item = viewModelItem as? AllSearchEventModel,
+            item.type == .eventCell {
+            
+            aCell.startTimer(event:item.event)
+            
+        } else if let aCell = cell as? FoodBarCell,
+            let item = viewModelItem as? AllSearchBarModel {
             
             aCell.scrollToCurrentImage()
             
-            let bar = model.items[indexPath.row]
+            let bar = item.bar
             let imageCount = bar.images.value.count
             
             aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
-        } else if let aCell = cell as? DealTableViewCell, let model = viewModel as? AllSearchViewModelTypeDeal, viewModel.type == .deal {
-            
-            aCell.scrollToCurrentImage()
-            
-            let bar = model.items[indexPath.row]
-            let imageCount = bar.images.value.count
-            
-            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
-            
-        } else if let aCell = cell as? LiveOfferTableViewCell, let model = viewModel as? AllSearchViewModelTypeLiveOffer, viewModel.type == .liveOffer {
-            
-            aCell.scrollToCurrentImage()
-            
-            let bar = model.items[indexPath.row]
-            let imageCount = bar.images.value.count
-            
-            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
-            
-        } else if let aCell = cell as? FoodBarCell, let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
-            
-            aCell.scrollToCurrentImage()
-            
-            let bar = model.items[indexPath.row]
-            let imageCount = bar.images.value.count
-            
-            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
-            
-        } else if let aCell = cell as? EventCell, let model = viewModel as? AllSearchViewModelTypeEvent, viewModel.type == .event {
-            aCell.startTimer(event: model.items[indexPath.row])
         }
     }
     
@@ -306,55 +284,65 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func handleItemSelection(indexPath: IndexPath) {
         let viewModel = self.viewModels[indexPath.section]
-        if let model = viewModel as? AllSearchViewModelTypeBar, viewModel.type == .bar {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .bar)
-        } else if let model = viewModel as? AllSearchViewModelTypeDeal, viewModel.type == .deal {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .deal)
-        } else if let model = viewModel as? AllSearchViewModelTypeLiveOffer, viewModel.type == .liveOffer {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .liveOffer)
-        } else if let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
-            self.moveToBarDetails(barId: model.items[indexPath.row].id.value, scopeType: .bar)
-        } else if let model = viewModel as? AllSearchViewModelTypeEvent, viewModel.type == .event {
-            self.moveToBarDetails(barId: model.items[indexPath.row].bar.value!.id.value, scopeType: .event)
-        } else if let model = viewModel as? AllSearchViewModelTypeFood, viewModel.type == .food {
-            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value, scopeType: .food)
-        } else if let model = viewModel as? AllSearchViewModelTypeDrink, viewModel.type == .drink {
-            self.moveToBarDetails(barId: model.items[indexPath.row].establishmentId.value, scopeType: .drink)
+        if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .barCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .dealCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .deal)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .liveOfferCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .liveOffer)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .foodBarCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .drinkBarCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchFoodModel, viewModelItem.type == .foodCell {
+            self.moveToBarDetails(barId: viewModelItem.food.establishmentId.value, scopeType: .food)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchDrinkModel, viewModelItem.type == .drinkCell {
+            self.moveToBarDetails(barId: viewModelItem.drink.establishmentId.value, scopeType: .drink)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchEventModel, viewModelItem.type == .eventCell {
+            self.moveToBarDetails(barId: viewModelItem.event.bar.value!.id.value, scopeType: .event)
         }
     }
 }
 
-//MARK: AllSearchExtendedFooterViewDelegate
-extension AllSearchViewController: AllSearchExtendedFooterViewDelegate {
-    func allSearchExtendedFooterView(footerView: AllSearchExtendedFooterView, viewMoreButtonTapped sender: UIButton) {
-        let itemType = self.viewModels[footerView.section].type
-        self.allSearchDelegate.allSearchViewController(controller: self, viewMoreButtonTapped: itemType)
-    }
-    
-    func allSearchExtendedFooterView(footerView: AllSearchExtendedFooterView, expandableButtonTapped sender: UIButton) {
-        let viewModel = self.viewModels[footerView.section]
-        let itemType = viewModel.type
-        guard itemType == .drink || itemType == .food else {
-            debugPrint("Item does not support expandable")
+//MARK: AllSearchViewMoreCellDelegate
+extension AllSearchViewController: AllSearchViewMoreCellDelegate {
+    func allSearchViewMoreCell(cell: AllSearchViewMoreCell, viewMoreButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
         
-        if let drinkViewModel = viewModel as? AllSearchViewModelTypeDrink {
-            drinkViewModel.isExpanded = !drinkViewModel.isExpanded
-            self.statefulTableView.innerTable.reloadData()
-        } else if let foodViewModel = viewModel as? AllSearchViewModelTypeFood {
-            foodViewModel.isExpanded = !foodViewModel.isExpanded
-            self.statefulTableView.innerTable.reloadData()
-        } else {
-            debugPrint("isExpanded property does not exists")
-        }
+        let itemType = self.viewModels[indexPath.section].type
+        self.allSearchDelegate.allSearchViewController(controller: self, viewMoreButtonTapped: itemType)
     }
 }
 
-//MARK: AllSearchFooterViewDelegate
-extension AllSearchViewController: AllSearchFooterViewDelegate {
-    func allSearchFooterView(footerView: AllSearchFooterView, viewMoreButtonTapped sender: UIButton) {
-        self.allSearchDelegate.allSearchViewController(controller: self, viewMoreButtonTapped: footerView.type)
+//MARK: AllSearchFooterCellDelegate
+extension AllSearchViewController: AllSearchFooterCellDelegate {
+    
+    func allSearchFooterCell(cell: AllSearchFooterCell, expandButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let viewModel = self.viewModels[indexPath.section] as? AllSearchViewModel,
+            let viewModelItem = viewModel.items[indexPath.row] as? AllSearchExpandModel else {
+                debugPrint("Unsupported type")
+                return
+        }
+        
+        if viewModelItem.isExpanded {
+            viewModel.items.removeAll { (item) -> Bool in
+                return viewModelItem.expandableItems.contains(where: { (expandableItem) -> Bool in
+                    return expandableItem === item
+                })
+            }
+            viewModelItem.isExpanded = false
+        } else {
+            viewModel.items.insert(contentsOf: viewModelItem.expandableItems, at: indexPath.row)
+            viewModelItem.isExpanded = true
+        }
+
+        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -380,8 +368,8 @@ extension AllSearchViewController: FoodBarCellDelegate {
         }
         
         let viewModel = self.viewModels[tableCellIndexPath.section]
-        if let model = viewModel as? AllSearchViewModelTypeFoodBar, viewModel.type == .foodBar {
-            self.moveToBarDetails(barId: model.items[tableCellIndexPath.row].id.value, scopeType: .bar)
+        if let viewModelItem = viewModel.items[tableCellIndexPath.row] as? AllSearchBarModel {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
         }
     }
 }
@@ -395,11 +383,12 @@ extension AllSearchViewController: BarTableViewCellDelegare {
             return
         }
         
-        if let viewModel = self.viewModels[indexPath.section] as? AllSearchViewModelTypeBar {
-            let bar = viewModel.items[indexPath.row]
-            markFavourite(bar: bar, cell: cell)
-        }
+        let viewModel = self.viewModels[indexPath.section]
+        let viewModelItem = viewModel.items[indexPath.row]
         
+        if let barModel = viewModelItem as? AllSearchBarModel {
+            markFavourite(bar: barModel.bar, cell: cell)
+        }
     }
     
     func barTableViewCell(cell: BarTableViewCell, distanceButtonTapped sender: UIButton) {
@@ -408,9 +397,11 @@ extension AllSearchViewController: BarTableViewCellDelegare {
             return
         }
         
-        if let viewModel = self.viewModels[indexPath.section] as? AllSearchViewModelTypeBar {
-            let bar = viewModel.items[indexPath.row]
-            self.showDirection(bar: bar)
+        let viewModel = self.viewModels[indexPath.section]
+        let viewModelItem = viewModel.items[indexPath.row]
+        
+        if let barModel = viewModelItem as? AllSearchBarModel {
+            self.showDirection(bar: barModel.bar)
         }
     }
 }
@@ -423,9 +414,11 @@ extension AllSearchViewController: DealTableViewCellDelegate {
             return
         }
         
-        if let viewModel = self.viewModels[indexPath.section] as? AllSearchViewModelTypeDeal {
-            let bar = viewModel.items[indexPath.row]
-            self.showDirection(bar: bar)
+        let viewModel = self.viewModels[indexPath.section]
+        let viewModelItem = viewModel.items[indexPath.row]
+        
+        if let barModel = viewModelItem as? AllSearchBarModel {
+            self.showDirection(bar: barModel.bar)
         }
     }
     
@@ -451,9 +444,9 @@ extension AllSearchViewController: LiveOfferTableViewCellDelegate {
             return
         }
         
-        if let viewModel = self.viewModels[indexPath.section] as? AllSearchViewModelTypeLiveOffer {
-            let bar = viewModel.items[indexPath.row]
-            self.showDirection(bar: bar)
+        let viewModel = self.viewModels[indexPath.section]
+        if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel {
+            self.showDirection(bar: viewModelItem.bar)
         }
     }
 }
@@ -480,6 +473,11 @@ extension AllSearchViewController {
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathSearchAll, method: .get) { (response, serverError, error) in
             
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            self.viewModels.removeAll()
+            
             guard error == nil else {
                 completion(error! as NSError)
                 return
@@ -494,38 +492,80 @@ extension AllSearchViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 for (responseIndex, responseDict) in responseArray.enumerated() {
-                    let title = responseDict["title"] as? String
+                    
+                    let title = responseDict["title"] as? String ?? ""
                     let type = "\(responseDict["type"]!)"
                     let results = responseDict["results"] as? [[String : Any]] ?? []
                     let isResultsComplete = responseDict["is_results_complete"] as? Bool ?? true
                     let hasMore = !isResultsComplete
                     if type == "1" {
                         let bars = self.mapBars(results: results, mappingType: .bars)
-                        let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
+
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeYellowColor())
-                        let viewModel = AllSearchViewModelTypeBar(sectionTitle: title, items: bars, footerModel: footerModel)
+                        let searchBarModels = bars.map({ AllSearchBarModel(type: .barCell, bar: $0) })
+                        items.append(contentsOf: searchBarModels)
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeBarsColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .bar,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeBarsColor())
                         self.viewModels.append(viewModel)
                         
                     } else if type == "2" {
                         let bars = self.mapBars(results: results, mappingType: .deals)
-                        let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeOrangeColor())
-                        let viewModel = AllSearchViewModelTypeDeal(sectionTitle: title, items: bars, footerModel: footerModel)
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+                        
+                        let searchBarModels = bars.map({ AllSearchBarModel(type: .dealCell, bar: $0) })
+                        items.append(contentsOf: searchBarModels)
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeDealsColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .deal,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeDealsColor())
                         self.viewModels.append(viewModel)
                         
                     } else if type == "3" {
                         let bars = self.mapBars(results: results, mappingType: .liveOffers)
-                        let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeBlueColor())
-                        let viewModel = AllSearchViewModelTypeLiveOffer(sectionTitle: title, items: bars, footerModel: footerModel)
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+                        
+                        let searchBarModels = bars.map({ AllSearchBarModel(type: .liveOfferCell, bar: $0) })
+                        items.append(contentsOf: searchBarModels)
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeLiveOffersColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .liveOffer,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeLiveOffersColor())
                         self.viewModels.append(viewModel)
+                        
                         
                     } else if type == "4" {
                         
-                        for (index, result) in results.enumerated() {
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+                        
+                        for result in results {
+                            
                             var bar: Bar!
                             var foods: [Food] = []
                             try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
@@ -540,12 +580,8 @@ extension AllSearchViewController {
                             
                             let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)!
                             
-                            let sectionTitle = index == 0 ? title : nil
-                            
-                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false, footerStrokeColor: .clear)
-                            
-                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel, isDrink: false)
-                            self.viewModels.append(barViewModel)
+                            let barModel = AllSearchBarModel(type: .foodBarCell, bar: fetchedBar)
+                            items.append(barModel)
                             
                             var fetchedFoods: [Food] = []
                             for food in foods {
@@ -553,24 +589,43 @@ extension AllSearchViewController {
                                 fetchedFoods.append(fetchedFood!)
                             }
                             
-                            let hasSeparator: Bool
-                            let isExpandable: Bool = foods.count > 3
-                            let hasViewMore: Bool = hasMore && index == results.count - 1
-                            if index == results.count - 1 {
-                                hasSeparator = responseIndex == responseArray.count - 1 ? false : true
-                            } else {
-                                hasSeparator = false
+                            let foodItems = fetchedFoods.map({ AllSearchFoodModel(type: .foodCell, food: $0) })
+                            
+                            var expandableItems: [AllSearchSectionViewModelItem] = []
+                            for (index, foodItem) in foodItems.enumerated() {
+                                if index > 2 {
+                                    expandableItems.append(foodItem)
+                                } else {
+                                    items.append(foodItem)
+                                }
                             }
                             
-                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore, footerStrokeColor: .appSearchScopePurpleColor())
-                            
-                            let foodsViewModel = AllSearchViewModelTypeFood(sectionTitle: nil, items: fetchedFoods, footerModel: footerInfo)
-                            self.viewModels.append(foodsViewModel)
+                            if expandableItems.count > 0 {
+                                let expandModelItem = AllSearchExpandModel(type: .footerCell,
+                                                                           isExpanded: false,
+                                                                           expandableItems: expandableItems)
+                                items.append(expandModelItem)
+                            }
                         }
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeFoodsColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .food,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeFoodsColor())
+                        self.viewModels.append(viewModel)
                         
                     } else if type == "5" {
                         
-                        for (index, result) in results.enumerated() {
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+                        
+                        for result in results {
+                            
                             var bar: Bar!
                             var drinks: [Drink] = []
                             try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
@@ -584,12 +639,8 @@ extension AllSearchViewController {
                             })
                             
                             let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)!
-                            
-                            let sectionTitle = index == 0 ? title : nil
-                            
-                            let footerModel = AllSearchFooterViewModel(shouldShowSeparator: false, shouldShowExpandButton: false, shouldShowViewMoreButon: false, footerStrokeColor: .clear)
-                            let barViewModel = AllSearchViewModelTypeFoodBar(sectionTitle: sectionTitle, items: [fetchedBar], footerModel: footerModel, isDrink: true)
-                            self.viewModels.append(barViewModel)
+                            let barModel = AllSearchBarModel(type: .drinkBarCell, bar: fetchedBar)
+                            items.append(barModel)
                             
                             var fetchedDrinks: [Drink] = []
                             for drink in drinks {
@@ -597,19 +648,35 @@ extension AllSearchViewController {
                                 fetchedDrinks.append(fetchedDrink!)
                             }
                             
-                            let hasSeparator: Bool
-                            let isExpandable: Bool = drinks.count > 3
-                            let hasViewMore: Bool = hasMore && index == results.count - 1
-                            if index == results.count - 1 {
-                                hasSeparator = responseIndex == responseArray.count - 1 ? false : true
-                            } else {
-                                hasSeparator = false
+                            let drinkItems = fetchedDrinks.map({ AllSearchDrinkModel(type: .drinkCell, drink: $0)})
+                            
+                            var expandableItems: [AllSearchSectionViewModelItem] = []
+                            for (index, drinkItem) in drinkItems.enumerated() {
+                                if index > 2 {
+                                    expandableItems.append(drinkItem)
+                                } else {
+                                    items.append(drinkItem)
+                                }
                             }
                             
-                            let footerInfo = AllSearchFooterViewModel(shouldShowSeparator: hasSeparator, shouldShowExpandButton: isExpandable, shouldShowViewMoreButon: hasViewMore, footerStrokeColor: .appSearchScopePinkColor())
-                            let drinksViewModel = AllSearchViewModelTypeDrink(sectionTitle: nil, items: fetchedDrinks, footerModel: footerInfo)
-                            self.viewModels.append(drinksViewModel)
+                            if expandableItems.count > 0 {
+                                let expandModelItem = AllSearchExpandModel(type: .footerCell,
+                                                                           isExpanded: false,
+                                                                           expandableItems: expandableItems)
+                                items.append(expandModelItem)
+                            }
                         }
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeDrinksColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .drink,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeDrinksColor())
+                        self.viewModels.append(viewModel)
                         
                     } else if type == "6" {
                         
@@ -625,15 +692,23 @@ extension AllSearchViewController {
                             fetchedEvents.append(fetchedObject!)
                         }
                         
-                        let shouldShowSeparator = responseIndex == responseArray.count - 1 ? false : true
+                        let headerItem = AllSearchHeaderModel(title: title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
-                        let footerModel = AllSearchFooterViewModel(shouldShowSeparator: shouldShowSeparator, shouldShowExpandButton: false, shouldShowViewMoreButon: hasMore, footerStrokeColor: .appSearchScopeGreenColor())
-                        let eventsViewModel = AllSearchViewModelTypeEvent(sectionTitle: title, items: fetchedEvents, footerModel: footerModel)
-                        self.viewModels.append(eventsViewModel)
+                        let allSearchEvents = fetchedEvents.map({ AllSearchEventModel(event: $0, type: .eventCell) })
+                        items.append(contentsOf: allSearchEvents)
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeEventsColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .event,
+                                                           sectionTitle: title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeEventsColor())
+                        self.viewModels.append(viewModel)
                     }
-                    
-                    
-                    
                 }
                     
                 
@@ -705,7 +780,16 @@ extension AllSearchViewController {
                 }
                 
                 let mapBars = Mapper<MapBasicBar>().mapArray(JSONArray: responseBars)
-                self.mapBars.append(contentsOf: mapBars)
+                
+                let initialResults: [MapBasicBar] = []
+                let uniqueMapBars = mapBars.reduce(initialResults, { (results: [MapBasicBar], mapBasicBar: MapBasicBar) -> [MapBasicBar] in
+                    return results.contains(where: { (mapBar: MapBasicBar) -> Bool in
+                        return mapBar.barId == mapBasicBar.barId
+                    }) ? results : results + [mapBasicBar]
+                })
+                
+                
+                self.mapBars.append(contentsOf: uniqueMapBars)
                 completion(nil)
                 
             } else {

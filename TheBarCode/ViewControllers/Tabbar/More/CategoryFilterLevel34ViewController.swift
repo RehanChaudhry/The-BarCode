@@ -36,12 +36,12 @@ class CategoryFilterLevel34ViewController: UIViewController {
         self.tableView.register(cellType: CategoryFilterLevel4Cell.self)
         self.tableView.register(headerFooterViewType: CategoryFilterLevel3HeaderView.self)
         self.tableView.tableFooterView = UIView()
-        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 32.0, bottom: 0.0, right: 0.0)
+        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         self.getCachedCategories()
         
-        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneBarButtonTapped(sender:)))
-        self.navigationItem.rightBarButtonItem = doneBarButton
+//        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneBarButtonTapped(sender:)))
+//        self.navigationItem.rightBarButtonItem = doneBarButton
     }
     
     //MARK: My Methods

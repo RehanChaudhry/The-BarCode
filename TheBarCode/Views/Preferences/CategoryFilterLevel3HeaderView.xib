@@ -18,15 +18,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CategoryFilterLevel3HeaderView" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rEU-Nm-UeB">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arJ-L8-qPW">
-                            <rect key="frame" x="16" y="0.0" width="359" height="44"/>
-                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                            <rect key="frame" x="16" y="0.0" width="359" height="54"/>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,13 +40,13 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="arJ-L8-qPW" secondAttribute="trailing" id="1dK-vU-tbz"/>
                         <constraint firstItem="arJ-L8-qPW" firstAttribute="top" secondItem="rEU-Nm-UeB" secondAttribute="top" id="CXS-NF-kne"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="dbH-hr-VJ6"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="54" id="dbH-hr-VJ6"/>
                         <constraint firstItem="arJ-L8-qPW" firstAttribute="leading" secondItem="rEU-Nm-UeB" secondAttribute="leading" constant="16" id="uyB-i2-RLU"/>
                         <constraint firstAttribute="bottom" secondItem="arJ-L8-qPW" secondAttribute="bottom" id="xu0-Zg-Q3G"/>
                     </constraints>
                 </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="XGs-dY-v3y">
-                    <rect key="frame" x="347" y="16" width="12" height="12"/>
+                    <rect key="frame" x="347" y="21" width="12" height="12"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="12" id="ltT-Fy-FsM"/>
                         <constraint firstAttribute="width" constant="12" id="q1i-iN-iXA"/>

@@ -50,6 +50,7 @@ class FoodSearchViewController: BaseSearchScopeViewController {
         super.reset()
         
         self.prepareToReset()
+        self.loadMore.next = 1
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -196,6 +197,10 @@ extension FoodSearchViewController {
         
         self.dataRequest?.cancel()
         
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
+        
         var params:[String : Any] =  ["type": SearchScope.food.rawValue,
                                       "pagination" : true,
                                       "page" : self.loadMore.next,
@@ -212,6 +217,14 @@ extension FoodSearchViewController {
         }
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathMenu, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.searchResults.removeAll()
+            }
             
             guard error == nil else {
                 completion(error! as NSError)

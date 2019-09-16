@@ -25,7 +25,7 @@ class CategoryFilterLevel2ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tableView.register(cellType: CategoryFilterLevel2Cell.self)
         self.tableView.tableFooterView = UIView()
-        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 0.0)
+        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         self.addBackButton()
         

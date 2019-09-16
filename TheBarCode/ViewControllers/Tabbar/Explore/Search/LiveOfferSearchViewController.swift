@@ -48,6 +48,7 @@ class LiveOfferSearchViewController: BaseSearchScopeViewController {
         super.reset()
         
         self.prepareToReset()
+        self.loadMore.next = 1
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -96,6 +97,7 @@ extension LiveOfferSearchViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
         cell.setUpCell(explore: self.bars[indexPath.row])
+        cell.updateBottomPadding(showPadding: indexPath.row == self.bars.count - 1)
         cell.delegate = self
         cell.exploreBaseDelegate = self
         
@@ -164,6 +166,10 @@ extension LiveOfferSearchViewController {
         
         self.dataRequest?.cancel()
         
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
+        
         var params:[String : Any] =  ["type": SearchScope.liveOffer.rawValue,
                                       "pagination" : true,
                                       "page" : self.loadMore.next,
@@ -180,6 +186,14 @@ extension LiveOfferSearchViewController {
         }
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.bars.removeAll()
+            }
             
             guard error == nil else {
                 completion(error! as NSError)

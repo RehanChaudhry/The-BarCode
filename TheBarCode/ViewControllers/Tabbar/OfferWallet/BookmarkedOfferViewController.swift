@@ -100,17 +100,15 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let shouldAddTopPadding = !(!self.shouldShowFirstItemPadding && indexPath.row == 0)
-        
         let object = self.offers[indexPath.row]
         if let liveOffer = object as? LiveOffer {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: LiveOfferTableViewCell.self)
-            cell.setUpDetailCell(offer: liveOffer, topPadding: shouldAddTopPadding)
+            cell.setUpDetailCell(offer: liveOffer)
             cell.delegate = self
             return cell
         } else if let deal = object as? Deal {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-            cell.setUpDealCell(deal: deal, topPadding: shouldAddTopPadding)
+            cell.setUpDealCell(deal: deal)
             cell.delegate = self
             return cell
         }
@@ -391,7 +389,7 @@ extension BookmarkedOfferViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Bookmarked Offers Available"
+            let title = "No Bookmarked Offer Available"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

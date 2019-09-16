@@ -357,11 +357,11 @@ extension BarsWithDealsViewController: StatefulTableDelegate {
 
 extension BarsWithDealsViewController  {
     
-    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let bar = marker.userData as! Bar
-        self.delegate.barsWithDealsController(controller: self, didSelect: bar)
-        return false
-    }
+//    override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+//        let bar = marker.userData as! Bar
+//        self.delegate.barsWithDealsController(controller: self, didSelect: bar)
+//        return false
+//    }
 }
 
 //MARK: DealTableViewCellDelegate

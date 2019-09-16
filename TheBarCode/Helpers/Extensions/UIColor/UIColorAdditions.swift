@@ -113,52 +113,52 @@ extension UIColor {
         return UIColor("#F0F0F0")
     }
     
-    static func appSearchScopeYellowColor() -> UIColor {
-        return UIColor("#ffb73b")
+    static func appSearchScopeBarsColor() -> UIColor {
+        return UIColor("#bad3ca")
     }
     
-    static func appSearchScopeYellowSelectedColor() -> UIColor {
-        return UIColor("#ffa200")
+    static func appSearchScopeBarsSelectedColor() -> UIColor {
+        return UIColor("#95a9a2")
     }
     
-    static func appSearchScopeGreenColor() -> UIColor {
-        return UIColor("#00c799")
+    static func appSearchScopeDealsColor() -> UIColor {
+        return UIColor("#a3ffcf")
     }
     
-    static func appSearchScopeGreenSelectedColor() -> UIColor {
-        return UIColor("#00b58b")
+    static func appSearchScopeDealsSelectedColor() -> UIColor {
+        return UIColor("#82cca6")
     }
     
-    static func appSearchScopePurpleColor() -> UIColor {
-        return UIColor("#b46edd")
+    static func appSearchScopeLiveOffersColor() -> UIColor {
+        return UIColor("#00ff99")
     }
     
-    static func appSearchScopePurpleSelectedColor() -> UIColor {
-        return UIColor("#a749de")
+    static func appSearchScopeLiveOffersSelectedColor() -> UIColor {
+        return UIColor("#00cc7a")
     }
     
-    static func appSearchScopePinkColor() -> UIColor {
-        return UIColor("#ff2f9e")
+    static func appSearchScopeFoodsColor() -> UIColor {
+        return UIColor("#28fff7")
     }
     
-    static func appSearchScopePinkSelectedColor() -> UIColor {
-        return UIColor("#ff0088")
+    static func appSearchScopeFoodsSelectedColor() -> UIColor {
+        return UIColor("#20ccc6")
     }
     
-    static func appSearchScopeBlueColor() -> UIColor {
-        return UIColor("#00c5df")
+    static func appSearchScopeDrinksColor() -> UIColor {
+        return UIColor("#07e1f9")
     }
     
-    static func appSearchScopeBlueSelectedColor() -> UIColor {
-        return UIColor("#00a9bf")
+    static func appSearchScopeDrinksSelectedColor() -> UIColor {
+        return UIColor("#06b4c7")
     }
     
-    static func appSearchScopeOrangeColor() -> UIColor {
-        return UIColor("#ec6623")
+    static func appSearchScopeEventsColor() -> UIColor {
+        return UIColor("#55deed")
     }
     
-    static func appSearchScopeOrangeSelectedColor() -> UIColor {
-        return UIColor("#ed4f00")
+    static func appSearchScopeEventsSelectedColor() -> UIColor {
+        return UIColor("#44b2be")
     }
-
+    
 }

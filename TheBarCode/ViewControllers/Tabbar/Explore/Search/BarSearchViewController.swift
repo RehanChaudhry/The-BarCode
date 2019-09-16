@@ -49,6 +49,7 @@ class BarSearchViewController: BaseSearchScopeViewController {
         super.reset()
 
         self.prepareToReset()
+        self.loadMore.next = 1
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -169,6 +170,10 @@ extension BarSearchViewController {
         
         self.dataRequest?.cancel()
         
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
+        
         var params:[String : Any] =  ["type": SearchScope.bar.rawValue,
                                       "pagination" : true,
                                       "page" : self.loadMore.next,
@@ -186,6 +191,14 @@ extension BarSearchViewController {
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.bars.removeAll()
+            }
+            
             guard error == nil else {
                 completion(error! as NSError)
                 return
@@ -195,7 +208,7 @@ extension BarSearchViewController {
                 completion(serverError!.nsError())
                 return
             }
-            
+
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 

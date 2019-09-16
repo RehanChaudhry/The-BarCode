@@ -47,6 +47,7 @@ class EventSearchViewController: BaseSearchScopeViewController {
         super.reset()
         
         self.prepareToReset()
+        self.loadMore.next = 1
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -125,6 +126,10 @@ extension EventSearchViewController {
         
         self.dataRequest?.cancel()
         
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
+        
         var params:[String : Any] =  ["pagination" : true,
                                       "page" : self.loadMore.next,
                                       "keyword" : self.keyword]
@@ -140,6 +145,14 @@ extension EventSearchViewController {
         }
         
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathEvents, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.events.removeAll()
+            }
             
             guard error == nil else {
                 completion(error! as NSError)

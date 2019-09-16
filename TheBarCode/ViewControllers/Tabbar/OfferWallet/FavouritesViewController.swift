@@ -134,8 +134,7 @@ extension FavouritesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.exploreBaseDelegate = self
         
-        let shouldAddTopPadding = !(!self.shouldShowFirstItemPadding && indexPath.row == 0)
-        cell.setUpCell(bar: self.bars[indexPath.row], topPadding: shouldAddTopPadding)
+        cell.setUpCell(bar: self.bars[indexPath.row])
         
         return cell
     }
@@ -333,7 +332,7 @@ extension FavouritesViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Favorite Bar"
+            let title = "No Favourite Bar Available"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

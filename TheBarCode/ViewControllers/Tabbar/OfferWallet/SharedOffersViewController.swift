@@ -123,12 +123,10 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ShareOfferCell.self)
         cell.sharingDelegate = self
         
-        let shouldAddTopPadding = !(!self.shouldShowFirstItemPadding && indexPath.row == 0)
-        
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
-            cell.setUpCell(offer: liveOffer, topPadding: shouldAddTopPadding)
+            cell.setUpCell(offer: liveOffer)
         } else if let deal = self.offers[indexPath.row] as? Deal {
-            cell.setUpCell(offer: deal, topPadding: shouldAddTopPadding)
+            cell.setUpCell(offer: deal)
         }
         return cell
     }
@@ -282,7 +280,7 @@ extension SharedOffersViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Shared Offers Available"
+            let title = "No Shared Offer Available"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

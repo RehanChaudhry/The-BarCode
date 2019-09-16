@@ -31,43 +31,43 @@ enum SearchScope: String {
             let item = SearchScopeItem(storyboardId: "BarSearchViewController",
                                        scopeType: .bar,
                                        title: "BARS",
-                                       backgroundColor: .appSearchScopeYellowColor(),
-                                       selectedBackgroundColor: .appSearchScopeYellowSelectedColor())
+                                       backgroundColor: .appSearchScopeBarsColor(),
+                                       selectedBackgroundColor: .appSearchScopeBarsSelectedColor())
             return item
         case .deal:
             let item = SearchScopeItem(storyboardId: "DealSearchViewController",
                                        scopeType: .deal,
                                        title: "DEALS",
-                                       backgroundColor: .appSearchScopeOrangeColor(),
-                                       selectedBackgroundColor: .appSearchScopeOrangeSelectedColor())
+                                       backgroundColor: .appSearchScopeDealsColor(),
+                                       selectedBackgroundColor: .appSearchScopeDealsSelectedColor())
             return item
         case .liveOffer:
             let item = SearchScopeItem(storyboardId: "LiveOfferSearchViewController",
                                        scopeType: .liveOffer,
                                        title: "LIVE OFFERS",
-                                       backgroundColor: .appSearchScopeBlueColor(),
-                                       selectedBackgroundColor: .appSearchScopeBlueSelectedColor())
+                                       backgroundColor: .appSearchScopeLiveOffersColor(),
+                                       selectedBackgroundColor: .appSearchScopeLiveOffersSelectedColor())
             return item
         case .food:
             let item = SearchScopeItem(storyboardId: "FoodSearchViewController",
                                        scopeType: .food,
                                        title: "FOODS",
-                                       backgroundColor: .appSearchScopePurpleColor(),
-                                       selectedBackgroundColor: .appSearchScopePurpleSelectedColor())
+                                       backgroundColor: .appSearchScopeFoodsColor(),
+                                       selectedBackgroundColor: .appSearchScopeFoodsSelectedColor())
             return item
         case .drink:
             let item = SearchScopeItem(storyboardId: "DrinkSearchViewController",
                                        scopeType: .drink,
                                        title: "DRINKS",
-                                       backgroundColor: .appSearchScopePinkColor(),
-                                       selectedBackgroundColor: .appSearchScopePinkSelectedColor())
+                                       backgroundColor: .appSearchScopeDrinksColor(),
+                                       selectedBackgroundColor: .appSearchScopeDrinksSelectedColor())
             return item
         case .event:
             let item = SearchScopeItem(storyboardId: "EventSearchViewController",
                                        scopeType: .event,
                                        title: "EVENTS",
-                                       backgroundColor: .appSearchScopeGreenColor(),
-                                       selectedBackgroundColor: .appSearchScopeGreenSelectedColor())
+                                       backgroundColor: .appSearchScopeEventsColor(),
+                                       selectedBackgroundColor: .appSearchScopeEventsSelectedColor())
             return item
         }
     }

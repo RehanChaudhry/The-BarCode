@@ -46,7 +46,13 @@ class CategoryFilterLevel2Cell: UITableViewCell, NibReusable {
         }
         
         self.selectionIndicator.isHidden = !category.isSelected.value
-        self.accessoryType = .disclosureIndicator
+        
+        if category.hasChildren.value {
+            self.accessoryType = .disclosureIndicator
+        } else {
+            self.accessoryType = .none
+        }
+        
     }
     
     //MARK: My IBActions

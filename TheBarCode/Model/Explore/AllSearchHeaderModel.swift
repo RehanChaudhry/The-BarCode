@@ -7,7 +7,17 @@
 //
 
 import UIKit
+import Reusable
 
-class AllSearchHeaderModel: NSObject {
+class AllSearchHeaderModel: AllSearchSectionViewModelItem {
+    
+    var type: AllSearchSectionViewModelItemType {
+        return .headerCell
+    }
 
+    var title: String
+    
+    init(title: String) {
+        self.title = title
+    }
 }

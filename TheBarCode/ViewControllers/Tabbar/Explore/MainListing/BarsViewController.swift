@@ -504,10 +504,20 @@ extension BarsViewController: BarTableViewCellDelegare {
 
 extension BarsViewController  {
     override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        if let mapbar = marker.userData as? MapBasicBar {
-            self.delegate.barsController(controller: self, didSelectBar: mapbar.barId)
-        }
-        return false
+        return super.mapView(mapView, didTap: marker)
     }
 }
 
+extension BarsViewController {
+    override func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        return super.clusterManager(clusterManager, didTap: cluster)
+    }
+    
+    override func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+        
+        if let mapbar = clusterItem as? MapBasicBar {
+            self.delegate.barsController(controller: self, didSelectBar: mapbar.barId)
+        }
+        return super.clusterManager(clusterManager, didTap: clusterItem)
+    }
+}

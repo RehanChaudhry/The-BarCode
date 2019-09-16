@@ -94,7 +94,6 @@ class ExploreBaseViewController: UIViewController {
         self.preferencesButton.tintColor = UIColor.appGrayColor()
         
         self.setUpStatefulTableView()
-        self.mapView.delegate = self
         
         self.setUserLocation()
         
@@ -147,7 +146,11 @@ class ExploreBaseViewController: UIViewController {
         self.mapView.clear()
         self.clusterManager.clearItems()
         
+        self.mapBars.removeAll(where: {$0.position.latitude > 85.0})        
+        self.mapBars.removeAll(where: {$0.position.latitude < -85.0})
+        
         for mapBar in self.mapBars {
+            debugPrint("position: \(mapBar.position)")
             self.clusterManager.add(mapBar)
         }
         
@@ -326,11 +329,17 @@ extension ExploreBaseViewController {
 //MARK: GMUClusterManagerDelegate
 extension ExploreBaseViewController: GMUClusterManagerDelegate {
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
-        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: 13.5)
-        let update = GMSCameraUpdate.setCamera(newCamera)
+        
+        var latlngBounds = GMSCoordinateBounds(coordinate: cluster.items.first!.position,
+                                               coordinate: cluster.items.first!.position)
+        for clusterItem in cluster.items {
+            latlngBounds = latlngBounds.includingCoordinate(clusterItem.position)
+        }
+        
+        let update = GMSCameraUpdate.fit(latlngBounds, withPadding: 150.0)
         self.mapView.animate(with: update)
         
-        return true
+        return false
     }
     
     func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
