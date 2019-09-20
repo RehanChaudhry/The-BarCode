@@ -388,7 +388,7 @@ extension AppDelegate {
         
         let searchBarTextField = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self, SearchViewController.self])
         searchBarTextField.font = UIFont.appRegularFontOf(size: 14.0)
-        searchBarTextField.clearButtonMode = .never
+//        searchBarTextField.clearButtonMode = .never
         
         UIPickerView.appearance(whenContainedInInstancesOf: [UIView.self]).backgroundColor = UIColor.clear
     }

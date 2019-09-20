@@ -17,6 +17,8 @@ class SplashViewController: UIViewController {
     
     var isViewAlreadyLoaded: Bool = false
     
+    var shouldShowPreferences: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -50,6 +52,15 @@ class SplashViewController: UIViewController {
         }
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "SplashToLoginOptions" {
+            let loginOptions = segue.destination as! LoginOptionsViewController
+            loginOptions.shouldShowPreferences = self.shouldShowPreferences
+        }
+    }
 
     //MARK: My Methods
     @objc func moveToNextController() {
@@ -64,6 +75,8 @@ class SplashViewController: UIViewController {
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
         self.present(cannotRedeemViewController, animated: true, completion: nil)
+        
+        let _ = cannotRedeemViewController.view
         
         cannotRedeemViewController.cancelButton.isHidden = true
         cannotRedeemViewController.actionButton.setTitle("Update", for: .normal)
@@ -203,7 +216,10 @@ extension SplashViewController {
                         debugPrint("credit == \(creditValue)")
                         Utility.shared.userCreditUpdate(creditValue: creditValue)
                     }
-
+                    
+                    if let shouldShowPreferences = responseData["show_preferences"] as? Bool {
+                        self.shouldShowPreferences = shouldShowPreferences
+                    }
                 }
                 
                 try! CoreStore.perform(synchronous: { (transaction) -> Void in

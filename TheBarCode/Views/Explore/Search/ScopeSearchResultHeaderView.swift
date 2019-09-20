@@ -72,6 +72,7 @@ class ScopeSearchResultHeaderView: UITableViewHeaderFooterView, NibReusable {
         self.pagerView.reloadData()
         
         self.pageControl.numberOfPages = self.bar?.images.count ?? 0
+        self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
         
         self.titleLabel.text = explore.title.value
     }

@@ -26,6 +26,8 @@ class LoginOptionsViewController: UIViewController {
     
     var viewAlreadyAppeared: Bool = false
     
+    var shouldShowPreferences: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -126,13 +128,15 @@ class LoginOptionsViewController: UIViewController {
             debugPrint("No user found")
             return
         }
-
+        
         switch user.status {
         case .active:
             if !user.isCategorySelected.value {
                 self.performSegue(withIdentifier: "SignOptionsToCategoriesSegue", sender: nil)
             } else if CLLocationManager.authorizationStatus() == .notDetermined {
                 self.performSegue(withIdentifier: "SignOptionsToPermissionSegue", sender: nil)
+            } else if self.shouldShowPreferences {
+                self.moveToCategoryUpdate()
             } else {
                 let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
                 self.navigationController?.present(tabbarController!, animated: false, completion: {
@@ -144,6 +148,13 @@ class LoginOptionsViewController: UIViewController {
             Utility.shared.removeUser()
             self.showAlertController(title: "", msg: "Please sign in again")
         }
+    }
+    
+    func moveToCategoryUpdate() {
+        let categoryFilterViewController = self.storyboard!.instantiateViewController(withIdentifier: "CategoryFilterViewController") as! CategoryFilterViewController
+        categoryFilterViewController.comingForUpdatingPreference = true
+        categoryFilterViewController.comingFromSplash = true
+        self.navigationController?.pushViewController(categoryFilterViewController, animated: false)
     }
     
     //MARK: My IBActions

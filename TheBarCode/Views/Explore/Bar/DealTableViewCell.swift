@@ -46,6 +46,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.pagerView.reloadData()
         
         self.pageControl.numberOfPages = self.bar?.images.count ?? 0
+        self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
         
         self.titleLabel.text = explore.title.value
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)

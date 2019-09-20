@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
         </array>
     </customFonts>
     <objects>
@@ -24,9 +24,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qH5-X3-fRH" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="3" y="3" width="141" height="141"/>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h5A-ku-e0Y" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="6" y="6" width="141" height="141"/>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xcc-pU-L5G" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                        <color key="backgroundColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="0.0" y="0.0" width="141" height="141"/>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                 <integer key="value" value="8"/>
@@ -43,8 +61,8 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="I9b-qj-Ze8">
-                        <rect key="frame" x="8" y="8" width="134" height="134"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <rect key="frame" x="8" y="8" width="125" height="125"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                         <state key="normal" title="Button">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
@@ -55,23 +73,35 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="I9b-qj-Ze8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="6De-1h-L4O"/>
+                <constraint firstItem="h5A-ku-e0Y" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="2Vg-X4-raQ"/>
+                <constraint firstAttribute="bottom" secondItem="h5A-ku-e0Y" secondAttribute="bottom" constant="3" id="32W-YY-NMy"/>
                 <constraint firstAttribute="trailing" secondItem="AEc-Il-V2M" secondAttribute="trailing" id="79d-uI-4qo"/>
-                <constraint firstAttribute="trailing" secondItem="I9b-qj-Ze8" secondAttribute="trailing" constant="8" id="OVg-Qt-QXs"/>
                 <constraint firstItem="AEc-Il-V2M" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ob4-AH-sTe"/>
-                <constraint firstItem="I9b-qj-Ze8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="PQk-ai-w1P"/>
-                <constraint firstAttribute="trailing" secondItem="xcc-pU-L5G" secondAttribute="trailing" id="QbY-Pk-S8e"/>
-                <constraint firstAttribute="bottom" secondItem="xcc-pU-L5G" secondAttribute="bottom" id="XCH-py-9J0"/>
-                <constraint firstAttribute="bottom" secondItem="I9b-qj-Ze8" secondAttribute="bottom" constant="8" id="bnW-lz-IDd"/>
+                <constraint firstItem="qH5-X3-fRH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="SFH-0a-zbi"/>
+                <constraint firstAttribute="trailing" secondItem="h5A-ku-e0Y" secondAttribute="trailing" constant="3" id="bu4-pe-Cdp"/>
+                <constraint firstAttribute="bottom" secondItem="qH5-X3-fRH" secondAttribute="bottom" constant="6" id="fbE-yX-l5E"/>
+                <constraint firstItem="I9b-qj-Ze8" firstAttribute="trailing" secondItem="xcc-pU-L5G" secondAttribute="trailing" constant="-8" id="fdV-HP-5H3"/>
+                <constraint firstAttribute="trailing" secondItem="xcc-pU-L5G" secondAttribute="trailing" constant="9" id="j6g-4E-cHd"/>
+                <constraint firstItem="h5A-ku-e0Y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="lEt-Kl-b7b"/>
                 <constraint firstAttribute="bottom" secondItem="AEc-Il-V2M" secondAttribute="bottom" id="msc-JN-muL"/>
-                <constraint firstItem="xcc-pU-L5G" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rgh-z6-dPN"/>
+                <constraint firstItem="qH5-X3-fRH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="oOq-dt-ik7"/>
+                <constraint firstAttribute="bottom" secondItem="xcc-pU-L5G" secondAttribute="bottom" constant="9" id="pni-Qf-XES"/>
+                <constraint firstItem="xcc-pU-L5G" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="suJ-Y7-QKO"/>
+                <constraint firstItem="I9b-qj-Ze8" firstAttribute="leading" secondItem="xcc-pU-L5G" secondAttribute="leading" constant="8" id="t52-Jv-pE2"/>
+                <constraint firstItem="xcc-pU-L5G" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="vbg-Wc-4bL"/>
                 <constraint firstItem="AEc-Il-V2M" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="w3U-nK-eaL"/>
-                <constraint firstItem="xcc-pU-L5G" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="wnk-b8-eMn"/>
+                <constraint firstAttribute="trailing" secondItem="qH5-X3-fRH" secondAttribute="trailing" constant="6" id="xay-tr-pDl"/>
+                <constraint firstItem="I9b-qj-Ze8" firstAttribute="bottom" secondItem="xcc-pU-L5G" secondAttribute="bottom" constant="-8" id="xpK-hL-pTd"/>
+                <constraint firstItem="I9b-qj-Ze8" firstAttribute="top" secondItem="xcc-pU-L5G" secondAttribute="top" constant="8" id="xxm-0r-Hu3"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="264" height="99"/>
             <connections>
+                <outlet property="bottomMargin" destination="pni-Qf-XES" id="cAL-g7-beE"/>
                 <outlet property="imageView" destination="xcc-pU-L5G" id="mky-0E-G3k"/>
+                <outlet property="rightMargin" destination="j6g-4E-cHd" id="3QD-MT-Qot"/>
+                <outlet property="stackImageView1" destination="qH5-X3-fRH" id="bsC-m3-ZoK"/>
+                <outlet property="stackImageView2" destination="h5A-ku-e0Y" id="vyG-K3-nlD"/>
                 <outlet property="titleButton" destination="I9b-qj-Ze8" id="ANV-eW-AzI"/>
             </connections>
             <point key="canvasLocation" x="-73" y="78"/>

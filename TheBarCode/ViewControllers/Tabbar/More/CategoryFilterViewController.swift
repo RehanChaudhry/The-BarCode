@@ -34,18 +34,33 @@ class CategoryFilterViewController: UIViewController {
     var shouldDismiss: Bool = false
     
     var comingForUpdatingPreference: Bool = false
+    var comingFromSplash: Bool = false
+    
+    var isViewAlreadyAppeared: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
-        self.title = "Filter by Preferences"
-        let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
-        self.navigationItem.leftBarButtonItem = cancelBarButton
-        self.addBackButton()
+        if self.comingForUpdatingPreference {
+            self.title = "Update Preferences"
+            self.continueButton.setTitle("Update", for: .normal)
+        } else {
+            self.title = "Filter by Preferences"
+            self.continueButton.setTitle("Search", for: .normal)
+        }
         
-        self.continueButton.setTitle("Update", for: .normal)
+        if !self.comingFromSplash {
+            let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
+            self.navigationItem.leftBarButtonItem = cancelBarButton
+            self.addBackButton()
+        } else {
+            self.navigationItem.hidesBackButton = true
+            self.navigationItem.leftBarButtonItem = nil
+        }
+        
+        
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.view.addSubview(statefulView)
@@ -109,6 +124,29 @@ class CategoryFilterViewController: UIViewController {
         super.viewDidAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        if !self.isViewAlreadyAppeared {
+            self.isViewAlreadyAppeared = true
+            
+            if self.comingFromSplash {
+                self.showUpdateInfoPopup()
+            }
+        }
+    }
+    
+    func showUpdateInfoPopup() {
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = "Don't miss out on the preferences that we have updated. Check them now!"
+        cannotRedeemViewController.titleText = "Preferences"
+        cannotRedeemViewController.headerImageName = "login_intro_reload_5"
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.delegate = self
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
+        
+        let _ = cannotRedeemViewController.view
+        
+        cannotRedeemViewController.cancelButton.isHidden = true
+        cannotRedeemViewController.actionButton.setTitle("Okay", for: .normal)
     }
     
     func getItemSize() -> CGSize {
@@ -162,11 +200,33 @@ class CategoryFilterViewController: UIViewController {
         }
     }
     
+    func preselectAllChildForSelectedCategories() {
+        let categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0" && \Category.isSelected == true).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        
+        func markChildAsSelected(category: Category) {
+            if category.hasChildren.value,
+                let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+                for childCategory in childCategories {
+                    childCategory.isSelected.value = true
+                    markChildAsSelected(category: childCategory)
+                    
+                    debugPrint("marking child as selection: \(childCategory.title.value)")
+                }
+            }
+        }
+        
+        for category in categories {
+            markChildAsSelected(category: category)
+        }
+    }
+    
     func moveToNextLevel(category: Category) {
         let categoryLevel2Controller = self.storyboard!.instantiateViewController(withIdentifier: "CategoryFilterLevel2ViewController") as! CategoryFilterLevel2ViewController
         categoryLevel2Controller.title = category.title.value
         categoryLevel2Controller.parentCategory = category
         categoryLevel2Controller.transaction = self.transaction
+        categoryLevel2Controller.delegate = self
+        categoryLevel2Controller.comingForUpdatingPreference = self.comingForUpdatingPreference
         self.navigationController?.pushViewController(categoryLevel2Controller, animated: true)
     }
     
@@ -198,13 +258,20 @@ class CategoryFilterViewController: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 self.delegate?.categoryFilterViewController(controller: self, didSelectPrefernces: fetchedSelectedCategories, filteredPreferences: fetchedFilteredCategories)
-                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.popToRootViewController(animated: true)
             }
             
             debugPrint("selected categories: \(fetchedFilteredCategories.map({$0.title.value}))")
             
             self.transaction.flush()
         }
+    }
+}
+
+//MARK: CategoryFilterLevel2ViewControllerDelegate
+extension CategoryFilterViewController: CategoryFilterLevel2ViewControllerDelegate {
+    func categoryFilterLevel2ViewController(controller: CategoryFilterLevel2ViewController, continueButtonTapped sender: UIButton) {
+        self.continueButton.sendActions(for: .touchUpInside)
     }
 }
 
@@ -306,6 +373,9 @@ extension CategoryFilterViewController {
                 
                 self.getCachedCategories()
                 self.setUpPreselectedCategories()
+                if self.comingFromSplash {
+                    self.preselectAllChildForSelectedCategories()
+                }
                 self.collectionView.innerCollection.reloadData()
                 
                 self.statefulView.isHidden = true
@@ -322,9 +392,9 @@ extension CategoryFilterViewController {
         
         let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
         
-        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
+//        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
         
-        let selectedCategoriesIds = filteredCategories.map({$0.id.value})
+        let selectedCategoriesIds = selectedCategories.map({$0.id.value})
         let params = ["ids" : selectedCategoriesIds]
         
         self.continueButton.showLoader()
@@ -353,10 +423,27 @@ extension CategoryFilterViewController {
                 edittedUser?.isCategorySelected.value = true
             })
             
-            if self.comingForUpdatingPreference {
+            if self.comingFromSplash {
+                let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                self.navigationController?.present(tabbarController!, animated: false, completion: {
+                    let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
+                    self.navigationController?.popToViewController(loginOptions, animated: false)
+                })
+            } else if self.comingForUpdatingPreference {
                 self.dismiss(animated: true, completion: nil)
             }
             
         }
+    }
+}
+
+//CannotRedeemViewControllerDelegate
+extension CategoryFilterViewController: CannotRedeemViewControllerDelegate {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        
     }
 }

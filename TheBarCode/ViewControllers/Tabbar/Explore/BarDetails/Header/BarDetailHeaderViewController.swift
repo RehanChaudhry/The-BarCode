@@ -136,6 +136,7 @@ class BarDetailHeaderViewController: UIViewController {
         }
         
         self.pageControl.numberOfPages = self.bar.images.count
+        
         self.scrollToCurrentImage()
         self.pagerView.automaticSlidingInterval = self.bar.images.count > 1 ? 2.0 : 0.0
         
@@ -178,7 +179,7 @@ class BarDetailHeaderViewController: UIViewController {
             
         } else {
             self.pagerView.isHidden = false
-            self.pageControl.isHidden = false
+            self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
             self.videoContainerView.isHidden = true
         }
     }

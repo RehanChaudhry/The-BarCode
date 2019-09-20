@@ -150,7 +150,6 @@ class ExploreBaseViewController: UIViewController {
         self.mapBars.removeAll(where: {$0.position.latitude < -85.0})
         
         for mapBar in self.mapBars {
-            debugPrint("position: \(mapBar.position)")
             self.clusterManager.add(mapBar)
         }
         

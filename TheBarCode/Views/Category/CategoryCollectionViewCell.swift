@@ -15,9 +15,15 @@ protocol CategoryCollectionViewCellDelegate: class {
 
 class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
 
+    @IBOutlet var stackImageView1: AsyncImageView!
+    @IBOutlet var stackImageView2: AsyncImageView!
+    
     @IBOutlet var imageView: AsyncImageView!
     
     @IBOutlet var titleButton: UIButton!
+    
+    @IBOutlet var rightMargin: NSLayoutConstraint!
+    @IBOutlet var bottomMargin: NSLayoutConstraint!
     
     weak var delegate: CategoryCollectionViewCellDelegate!
     
@@ -25,7 +31,9 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
         super.awakeFromNib()
         // Initialization code
         
-        self.imageView.layer.borderColor = UIColor.appBlueColor().cgColor
+        self.stackImageView1.layer.borderWidth = 1.0
+        self.stackImageView2.layer.borderWidth = 1.0
+        self.imageView.layer.borderWidth = 1.0
     }
     
     //MARK: My Methods
@@ -44,12 +52,39 @@ class CategoryCollectionViewCell: UICollectionViewCell, NibReusable {
         self.imageView.backgroundColor = UIColor.appDarkGrayColor()
         
         if category.isSelected.value {
-            self.imageView.layer.borderWidth = 1.0
+            self.stackImageView1.layer.borderColor = UIColor.appBlueColor().cgColor
+            self.stackImageView2.layer.borderColor = UIColor.appBlueColor().cgColor
+            self.imageView.layer.borderColor = UIColor.appBlueColor().cgColor
+            
             self.titleButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         } else {
-            self.imageView.layer.borderWidth = 0.0
+            self.stackImageView1.layer.borderColor = UIColor.white.cgColor
+            self.stackImageView2.layer.borderColor = UIColor.white.cgColor
+            self.imageView.layer.borderColor = UIColor.white.cgColor
+            
             self.titleButton.setTitleColor(UIColor.white, for: .normal)
         }
+        
+        if category.hasChildren.value {
+            self.stackImageView1.isHidden = false
+            self.stackImageView2.isHidden = false
+            
+            self.bottomMargin.constant = 9.0
+            self.rightMargin.constant = 9.0
+            
+        } else {
+            self.stackImageView1.isHidden = true
+            self.stackImageView2.isHidden = true
+            
+            self.rightMargin.constant = 0.0
+            self.bottomMargin.constant = 0.0
+        }
+        
+        
+        
+        self.stackImageView1.backgroundColor = UIColor.clear
+        self.stackImageView2.backgroundColor = UIColor.clear
+        self.imageView.backgroundColor = UIColor.clear
     }
     
     //MARK: My IBActions
