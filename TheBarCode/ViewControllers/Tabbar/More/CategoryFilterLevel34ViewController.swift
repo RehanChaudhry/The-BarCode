@@ -27,6 +27,7 @@ class CategoryFilterLevel34ViewController: UIViewController {
     typealias SectionedCategory = (category: Category, subcategories: [Category], isExpanded: Bool)
     
     var categories: [SectionedCategory] = []
+    var searchingCategories: [SectionedCategory] = []
     
     var transaction: UnsafeDataTransaction!
     
@@ -51,10 +52,33 @@ class CategoryFilterLevel34ViewController: UIViewController {
         }
     }
     
+    var searchController: UISearchController!
+    
+    var isSearching: Bool {
+        get {
+            return self.searchController.isActive && self.searchController.searchBar.text!.count > 0
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.definesPresentationContext = true
+        
+        self.searchController = UISearchController(searchResultsController: nil)
+        self.searchController.searchBar.backgroundColor = self.view.backgroundColor
+        self.searchController.searchBar.searchBarStyle = .minimal
+        self.searchController.searchResultsUpdater = self
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.sizeToFit()
+        
+        let textFieldInsideSearchBar = self.searchController.searchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.white
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
         
         if self.comingForUpdatingPreference {
             self.bottomViewHeight.constant = 0.0
@@ -67,6 +91,7 @@ class CategoryFilterLevel34ViewController: UIViewController {
         self.tableView.register(headerFooterViewType: CategoryFilterLevel3HeaderView.self)
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .none
+        self.tableView.backgroundView = nil
 //        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         self.getCachedCategories()
@@ -153,8 +178,16 @@ class CategoryFilterLevel34ViewController: UIViewController {
         }
     }
     
-    func toggleLevel3CategorySelection(sectionCategory: SectionedCategory) {
+    func toggleLevel3CategorySelection(selectedSectionCategory: SectionedCategory) {
+        
+        guard let index = self.categories.firstIndex(where: {$0.category == selectedSectionCategory.category}) else {
+            debugPrint("Index not found")
+            return
+        }
+        
+        let sectionCategory = self.categories[index]
         let category = sectionCategory.category
+        
         if category.isSelected.value {
             
             category.isSelected.value = false
@@ -190,16 +223,30 @@ class CategoryFilterLevel34ViewController: UIViewController {
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension CategoryFilterLevel34ViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchController.searchBar.resignFirstResponder()
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 78.0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.categories.count
+        if self.isSearching {
+            return self.searchingCategories.count
+        } else {
+            return self.categories.count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let categoryInfo = self.categories[section]
+        let categoryInfo: SectionedCategory
+        if self.isSearching {
+            categoryInfo = self.searchingCategories[section]
+        } else {
+            categoryInfo = self.categories[section]
+        }
+        
         if !categoryInfo.isExpanded {
             return 0
         } else {
@@ -209,7 +256,14 @@ extension CategoryFilterLevel34ViewController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(CategoryFilterLevel3HeaderView.self)
-        let categoryInfo = self.categories[section]
+        
+        let categoryInfo: SectionedCategory
+        if self.isSearching {
+            categoryInfo = self.searchingCategories[section]
+        } else {
+            categoryInfo = self.categories[section]
+        }
+        
         headerView?.setupForLevel3(category: categoryInfo.category, isExpanded: categoryInfo.isExpanded)
         headerView?.section = section
         headerView?.delegate = self
@@ -218,7 +272,15 @@ extension CategoryFilterLevel34ViewController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: CategoryFilterLevel4Cell.self)
-        cell.setup(category: self.categories[indexPath.section].subcategories[indexPath.row])
+        
+        let category: Category
+        if self.isSearching {
+            category = self.searchingCategories[indexPath.section].subcategories[indexPath.row]
+        } else {
+            category = self.categories[indexPath.section].subcategories[indexPath.row]
+        }
+        
+        cell.setup(category: category)
         cell.delegate = self
         return cell
     }
@@ -239,13 +301,26 @@ extension CategoryFilterLevel34ViewController: CategoryFilterLevel4CellDelegate 
             return
         }
         
-        let sectionCategory = self.categories[indexPath.section]
+        let sectionCategory: SectionedCategory
+        if self.isSearching {
+            sectionCategory = self.searchingCategories[indexPath.section]
+        } else {
+            sectionCategory = self.categories[indexPath.section]
+        }
+        
+        guard let originalIndex = self.categories.firstIndex(where: {$0.category == sectionCategory.category}) else {
+            debugPrint("Index not found")
+            return
+        }
+        
+        let originalCategory = self.categories[originalIndex]
+        
         let level3Category = sectionCategory.category
         let level4Category = sectionCategory.subcategories[indexPath.row]
         
         level4Category.isSelected.value = !level4Category.isSelected.value
         
-        level3Category.isSelected.value = sectionCategory.subcategories.first(where: {$0.isSelected.value}) != nil
+        level3Category.isSelected.value = originalCategory.subcategories.first(where: {$0.isSelected.value}) != nil
         
         let firstSelected = self.categories.first(where: {$0.category.isSelected.value == true})
         self.parentCategory.isSelected.value = firstSelected != nil
@@ -262,44 +337,90 @@ extension CategoryFilterLevel34ViewController: CategoryFilterLevel4CellDelegate 
 extension CategoryFilterLevel34ViewController: CategoryFilterLevel3HeaderViewDelegate {
     func categoryFilterLevel3HeaderView(headerView: CategoryFilterLevel3HeaderView, titleButtonTapped sender: UIButton) {
         
-        let sectionCategory = self.categories[headerView.section]
+        let sectionCategory: SectionedCategory
+        if self.isSearching {
+            sectionCategory = self.searchingCategories[headerView.section]
+        } else {
+            sectionCategory = self.categories[headerView.section]
+        }
+        
         let category = sectionCategory.category
         
         if category.hasChildren.value {
             self.categoryFilterLevel3HeaderView(headerView: headerView, expandButtonTapped: headerView.expandButton)
         } else {
-            self.toggleLevel3CategorySelection(sectionCategory: sectionCategory)
+            self.toggleLevel3CategorySelection(selectedSectionCategory: sectionCategory)
         }
     }
     
     func categoryFilterLevel3HeaderView(headerView: CategoryFilterLevel3HeaderView, checkboxButtonTapped sender: UIButton) {
-        let sectionCategory = self.categories[headerView.section]
-        self.toggleLevel3CategorySelection(sectionCategory: sectionCategory)
+        let sectionCategory: SectionedCategory
+        if self.isSearching {
+            sectionCategory = self.searchingCategories[headerView.section]
+        } else {
+            sectionCategory = self.categories[headerView.section]
+        }
+        self.toggleLevel3CategorySelection(selectedSectionCategory: sectionCategory)
     }
     
     func categoryFilterLevel3HeaderView(headerView: CategoryFilterLevel3HeaderView, expandButtonTapped sender: UIButton) {
 
-        self.categories[headerView.section].isExpanded = !self.categories[headerView.section].isExpanded
-        
-        headerView.setupForLevel3(category: self.categories[headerView.section].category, isExpanded: self.categories[headerView.section].isExpanded)
-        
-        var indexPaths: [IndexPath] = []
-        for (index, _) in self.categories[headerView.section].subcategories.enumerated() {
-            let indexPath = IndexPath(row: index, section: headerView.section)
-            indexPaths.append(indexPath)
+        var sectionCategory: SectionedCategory
+        if self.isSearching {
+            sectionCategory = self.searchingCategories[headerView.section]
+            sectionCategory.isExpanded = !sectionCategory.isExpanded
+            self.searchingCategories[headerView.section] = sectionCategory
+        } else {
+            sectionCategory = self.categories[headerView.section]
+            sectionCategory.isExpanded = !sectionCategory.isExpanded
+            self.categories[headerView.section] = sectionCategory
         }
         
-//        self.tableView.beginUpdates()
+        headerView.setupForLevel3(category: sectionCategory.category, isExpanded: sectionCategory.isExpanded)
+        
+        var indexPaths: [IndexPath] = []
+        for i in 0..<sectionCategory.subcategories.count {
+            let indexPath = IndexPath(row: i, section: headerView.section)
+            indexPaths.append(indexPath)
+        }
         
         if self.categories[headerView.section].isExpanded {
             self.tableView.insertRows(at: indexPaths, with: .bottom)
         } else {
             self.tableView.deleteRows(at: indexPaths, with: .top)
         }
+    }
+}
+
+//MARK: UISearchResultsUpdating
+extension CategoryFilterLevel34ViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
         
-//        self.tableView.endUpdates()
-//        self.tableView.reloadData()
-//        let indexSet = IndexSet(integer: headerView.section)
-//        self.tableView.reloadSections(indexSet, with: sectionCategory.isExpanded ? .bottom : .top)
+        let searchText = searchController.searchBar.text?.lowercased() ?? ""
+        
+        self.searchingCategories.removeAll()
+        
+        for categorySection in self.categories {
+            let hasSearchText = categorySection.category.title.value.lowercased().contains(searchText)
+            let subCategories = categorySection.subcategories.filter({$0.title.value.lowercased().contains(searchText)})
+            
+            if hasSearchText || subCategories.count > 0 {
+                let filteredSection = (categorySection.category, subCategories, true)
+                self.searchingCategories.append(filteredSection)
+            }
+        }
+        
+        self.tableView.reloadData()
+    }
+}
+
+//MARK: UISearchControllerDelegate
+extension CategoryFilterLevel34ViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        
     }
 }

@@ -63,8 +63,8 @@ let serverDateFormat = "yyyy-MM-dd"
 let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: -2.480438)
 
 let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
-let dynamicLinkShareOfferDomain = "thebarcodeappshareoffer.page.link"
-let dynamicLinkInfluencerDomain = "tbcinfluencer.page.link"
+let dynamicLinkShareOfferDomain = "barcodeoffer.page.link"
+let dynamicLinkInfluencerDomain = "thebarcode.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
@@ -372,7 +372,7 @@ class Utility: NSObject {
         let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
         let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
-        iOSNavigationParams.isForcedRedirectEnabled = true
+        iOSNavigationParams.isForcedRedirectEnabled = false
         
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkShareOfferDomain)
         linkComponents.navigationInfoParameters = iOSNavigationParams

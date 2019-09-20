@@ -155,7 +155,7 @@ extension InviteViewController {
         let url = URL(string: inviteUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
         
         let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
-        iOSNavigationParams.isForcedRedirectEnabled = true
+        iOSNavigationParams.isForcedRedirectEnabled = false
         
         let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
         linkComponents.navigationInfoParameters = iOSNavigationParams

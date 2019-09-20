@@ -7,8 +7,8 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:thebarcodeapp.page.link</string>
-		<string>applinks:thebarcodeappshareoffer.page.link</string>
-		<string>applinks:tbcinfluencer.page.link</string>
+		<string>applinks:thebarcode.page.link</string>
+		<string>applinks:barcodeoffer.page.link</string>
 	</array>
 </dict>
 </plist>

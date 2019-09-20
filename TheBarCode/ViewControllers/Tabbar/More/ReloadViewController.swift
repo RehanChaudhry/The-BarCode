@@ -246,8 +246,9 @@ class ReloadViewController: UIViewController {
         
     }
     
-    func showCustomAlert(title: String, message: String) {
+    func showCustomAlert(title: String, message: String, messageAlignment: NSTextAlignment = .left) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.alignment = messageAlignment
         cannotRedeemViewController.messageText = message
         cannotRedeemViewController.titleText = title
         cannotRedeemViewController.headerImageName = "login_intro_reload_5"
@@ -266,7 +267,7 @@ class ReloadViewController: UIViewController {
             
         } else if self.type == ReloadState.offerRedeemed {
            
-            self.showCustomAlert(title: "Reload Now", message: "Reload when the timer hits zero")
+            self.showCustomAlert(title: "Reload Now", message: "Reload when the timer hits zero", messageAlignment: .center)
             
         } else if self.type == ReloadState.reloadTimerExpire {
            

@@ -217,7 +217,7 @@ extension SplashViewController {
                         Utility.shared.userCreditUpdate(creditValue: creditValue)
                     }
                     
-                    if let shouldShowPreferences = responseData["show_preferences"] as? Bool {
+                    if let shouldShowPreferences = responseData["show_preference"] as? Bool {
                         self.shouldShowPreferences = shouldShowPreferences
                     }
                 }
