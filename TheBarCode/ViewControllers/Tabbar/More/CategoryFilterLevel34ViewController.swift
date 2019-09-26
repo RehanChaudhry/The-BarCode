@@ -19,6 +19,8 @@ class CategoryFilterLevel34ViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var bottomView: UIView!
+    
     @IBOutlet var continueButton: GradientButton!
     @IBOutlet var bottomViewHeight: NSLayoutConstraint!
     
@@ -69,6 +71,7 @@ class CategoryFilterLevel34ViewController: UIViewController {
         
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchBar.backgroundColor = self.view.backgroundColor
+        self.searchController.searchBar.backgroundImage = UIImage()
         self.searchController.searchBar.searchBarStyle = .minimal
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
@@ -82,6 +85,7 @@ class CategoryFilterLevel34ViewController: UIViewController {
         
         if self.comingForUpdatingPreference {
             self.bottomViewHeight.constant = 0.0
+            self.bottomView.isHidden = true
             self.continueButton.setTitle("Update", for: .normal)
         } else {
             self.continueButton.setTitle("Search", for: .normal)
@@ -92,6 +96,7 @@ class CategoryFilterLevel34ViewController: UIViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .none
         self.tableView.backgroundView = nil
+        self.tableView.backgroundColor = UIColor.clear
 //        self.tableView.separatorInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         self.getCachedCategories()
@@ -384,7 +389,7 @@ extension CategoryFilterLevel34ViewController: CategoryFilterLevel3HeaderViewDel
             indexPaths.append(indexPath)
         }
         
-        if self.categories[headerView.section].isExpanded {
+        if sectionCategory.isExpanded {
             self.tableView.insertRows(at: indexPaths, with: .bottom)
         } else {
             self.tableView.deleteRows(at: indexPaths, with: .top)

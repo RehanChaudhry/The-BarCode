@@ -146,7 +146,7 @@ class CategoryFilterViewController: UIViewController {
         let _ = cannotRedeemViewController.view
         
         cannotRedeemViewController.cancelButton.isHidden = true
-        cannotRedeemViewController.actionButton.setTitle("Okay", for: .normal)
+        cannotRedeemViewController.actionButton.setTitle("Ok", for: .normal)
     }
     
     func getItemSize() -> CGSize {

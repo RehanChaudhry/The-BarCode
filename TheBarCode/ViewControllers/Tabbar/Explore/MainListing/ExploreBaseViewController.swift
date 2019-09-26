@@ -66,7 +66,8 @@ class ExploreBaseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        let iconGenerator = GMUDefaultClusterIconGenerator()
+//        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let iconGenerator = GMUCustomClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
         renderer.delegate = self

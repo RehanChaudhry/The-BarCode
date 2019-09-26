@@ -18,6 +18,8 @@ class CategoryFilterLevel2ViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var bottomView: UIView!
+    
     @IBOutlet var continueButton: GradientButton!
     @IBOutlet var bottomViewHeight: NSLayoutConstraint!
     
@@ -42,6 +44,7 @@ class CategoryFilterLevel2ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         if self.comingForUpdatingPreference {
+            self.bottomView.isHidden = true
             self.bottomViewHeight.constant = 0.0
             self.continueButton.setTitle("Update", for: .normal)
         } else {

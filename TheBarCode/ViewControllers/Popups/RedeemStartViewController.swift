@@ -23,6 +23,8 @@ class RedeemStartViewController: UIViewController {
     
     @IBOutlet weak var actionButton: GradientButton!
     
+    @IBOutlet var standardOfferInfoLabel: UILabel!
+    
     weak var delegate: RedeemStartViewControllerDelegate!
     
     var selectedIndex: Int = NSNotFound
@@ -42,6 +44,8 @@ class RedeemStartViewController: UIViewController {
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
+        
+        self.standardOfferInfoLabel.isHidden = !(self.type == .standard)
 
     }
 

@@ -116,6 +116,7 @@
 		0C39F2FE231E72D500596A2B /* GMUGeoJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F2DD231E72D500596A2B /* GMUGeoJSONParser.m */; };
 		0C39F2FF231E72D500596A2B /* GQTPointQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F2E0231E72D500596A2B /* GQTPointQuadTree.m */; };
 		0C39F300231E72D500596A2B /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F2E2231E72D500596A2B /* GQTPointQuadTreeChild.m */; };
+		0C4252ED2338952B0088068A /* GMUCustomClusterIconGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4252EC2338952B0088068A /* GMUCustomClusterIconGenerator.swift */; };
 		0C44DD25214A3BFF000F5D64 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD24214A3BFF000F5D64 /* ShadowView.swift */; };
 		0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD28214A6580000F5D64 /* TabBarController.swift */; };
 		0C44DD34214A7F5E000F5D64 /* MoreMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */; };
@@ -486,6 +487,7 @@
 		0C39F2E5231E72D500596A2B /* GQTPointQuadTreeChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeChild.h; sourceTree = "<group>"; };
 		0C39F2E6231E72D500596A2B /* GQTBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTBounds.h; sourceTree = "<group>"; };
 		0C39F301231E732C00596A2B /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		0C4252EC2338952B0088068A /* GMUCustomClusterIconGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMUCustomClusterIconGenerator.swift; sourceTree = "<group>"; };
 		0C44DD24214A3BFF000F5D64 /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		0C44DD28214A6580000F5D64 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0C44DD33214A7F5E000F5D64 /* MoreMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreMenuItem.swift; sourceTree = "<group>"; };
@@ -1080,6 +1082,7 @@
 		0C39F29C231E72D400596A2B /* Google-Maps-iOS-Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0C4252EB233894C60088068A /* GMUCustomClusterIconGenerator */,
 				0C39F29D231E72D400596A2B /* Clustering */,
 				0C39F2B9231E72D500596A2B /* Heatmap */,
 				0C39F2C0231E72D500596A2B /* Geometry */,
@@ -1205,6 +1208,14 @@
 				0C39F2E6231E72D500596A2B /* GQTBounds.h */,
 			);
 			path = QuadTree;
+			sourceTree = "<group>";
+		};
+		0C4252EB233894C60088068A /* GMUCustomClusterIconGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				0C4252EC2338952B0088068A /* GMUCustomClusterIconGenerator.swift */,
+			);
+			path = GMUCustomClusterIconGenerator;
 			sourceTree = "<group>";
 		};
 		0C44DD23214A3BB8000F5D64 /* ShadowView */ = {
@@ -2262,6 +2273,7 @@
 				0C8E9A99214A908800224720 /* FaqsViewController.swift in Sources */,
 				0C86D02C22DF2F5F0034DA5C /* WhatsOnDetailFoodCell.swift in Sources */,
 				0C39F2F7231E72D500596A2B /* GMUStyleMap.m in Sources */,
+				0C4252ED2338952B0088068A /* GMUCustomClusterIconGenerator.swift in Sources */,
 				0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */,
 				0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */,
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
