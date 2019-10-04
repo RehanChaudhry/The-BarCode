@@ -136,7 +136,12 @@ extension DealSearchViewController: ExploreBaseTableViewCellDelegate {
             return
         }
         
-        self.moveToBarDetails(barId: self.bars[tableCellIndexPath.row].id.value, scopeType: .deal)
+        let bar = self.bars[tableCellIndexPath.row]
+        if bar.exclusiveDeals.value > 0 {
+            self.moveToBarDetails(barId: bar.id.value, scopeType: .deal, dealDetailSubType: .exclusive)
+        } else {
+            self.moveToBarDetails(barId: bar.id.value, scopeType: .deal, dealDetailSubType: .chalkboard)
+        }
     }
 }
 
@@ -254,7 +259,7 @@ extension DealSearchViewController {
         self.mapApiState.isLoading = true
         
         self.mapDataRequest?.cancel()
-        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+        self.mapDataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
             self.mapApiState.isLoading = false
             
@@ -309,6 +314,7 @@ extension DealSearchViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.refreshSnackBar()
+        self.setUpMapViewForLocations()
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             handler(self.bars.count == 0, error)
         }

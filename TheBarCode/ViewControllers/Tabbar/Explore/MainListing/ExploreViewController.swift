@@ -157,7 +157,9 @@ class ExploreViewController: UIViewController {
     func moveToBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
-        barDetailController.selectedBar = bar
+        barDetailController.barId = bar.id.value
+        
+//        barDetailController.selectedBar = bar
         barDetailController.delegate = self
         
         switch self.exploreType {

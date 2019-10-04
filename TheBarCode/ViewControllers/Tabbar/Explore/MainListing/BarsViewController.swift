@@ -415,6 +415,7 @@ extension BarsViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         
+        self.setUpBasicMapBars()
         self.delegate.barsController(controller: self, refreshSnackBar: self.snackBar)
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             if self.isSearching {

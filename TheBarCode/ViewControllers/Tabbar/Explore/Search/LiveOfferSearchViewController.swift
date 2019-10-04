@@ -258,7 +258,7 @@ extension LiveOfferSearchViewController {
         self.mapApiState.isLoading = true
         
         self.mapDataRequest?.cancel()
-        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
+        self.mapDataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
             self.mapApiState.isLoading = false
             
@@ -312,6 +312,7 @@ extension LiveOfferSearchViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.refreshSnackBar()
+        self.setUpMapViewForLocations()
         self.getBars(isRefreshing: true) { [unowned self] (error) in
             handler(self.bars.count == 0, error)
         }

@@ -428,7 +428,8 @@ extension SearchViewController: SearchScopeCellDelegate {
 
 //MARK: BaseSearchScopeViewControllerDelegate
 extension SearchViewController: BaseSearchScopeViewControllerDelegate {
-    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope) {
+    
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope, dealsSubType: BarDetailDealsPreSelectedSubTabType) {
         
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
@@ -440,9 +441,17 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
             barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .deal {
+            
             barDetailController.preSelectedTabIndex = 2
             barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 1
+            
+            if dealsSubType == .chalkboard {
+                barDetailController.preSelectedSubTabIndexOffers = 0
+            } else if dealsSubType == .exclusive {
+                barDetailController.preSelectedSubTabIndexOffers = 1
+            }
+            
         } else if scopeType == .liveOffer {
             barDetailController.preSelectedTabIndex = 2
             barDetailController.preSelectedSubTabIndexWhatsOn = 0

@@ -16,8 +16,12 @@ import PureLayout
 
 protocol BaseSearchScopeViewControllerDelegate: class {
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, scrollViewDidScroll scrollView: UIScrollView)
-    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope)
+    func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope, dealsSubType: BarDetailDealsPreSelectedSubTabType)
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool)
+}
+
+enum BarDetailDealsPreSelectedSubTabType: String {
+    case none = "none", chalkboard = "chalkboard", exclusive = "exclusive"
 }
 
 class BaseSearchScopeViewController: UIViewController {
@@ -98,6 +102,12 @@ class BaseSearchScopeViewController: UIViewController {
         self.strokeView.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.view)
         self.strokeView.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.view)
         self.strokeView.autoSetDimension(ALDimension.height, toSize: 8.0)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
     }
     
 
@@ -204,9 +214,9 @@ class BaseSearchScopeViewController: UIViewController {
         }
     }
     
-    func moveToBarDetails(barId: String, scopeType: SearchScope) {
+    func moveToBarDetails(barId: String, scopeType: SearchScope, dealDetailSubType: BarDetailDealsPreSelectedSubTabType = .none) {
         debugPrint("bar did select with id: \(barId)")
-        self.baseDelegate.baseSearchScopeViewController(controller: self, moveToBarDetails: barId, scopeType: scopeType)
+        self.baseDelegate.baseSearchScopeViewController(controller: self, moveToBarDetails: barId, scopeType: scopeType, dealsSubType: dealDetailSubType)
     }
     
     func refreshSnackBar() {
@@ -303,5 +313,32 @@ extension BaseSearchScopeViewController: GMSMapViewDelegate {
             self.moveToBarDetails(barId: mapbar.barId, scopeType: searchScope)
         }
         return false
+    }
+}
+
+//Notification Methods
+extension BaseSearchScopeViewController {
+    @objc func barDetailsRefreshedNotification(notification: Notification) {
+        
+        let bar = notification.object as! Bar
+        
+        if let mapBar = self.mapBars.first(where: {$0.barId == bar.id.value}) {
+            var isOpened = false
+            if let timings = bar.timings.value {
+                if timings.dayStatus == .opened {
+                    if timings.isOpen.value {
+                        isOpened  = true
+                        
+                    }
+                }
+                
+            }
+            mapBar.isOpen = isOpened
+            
+            self.clusterManager.remove(mapBar)
+            
+            self.clusterManager.add(mapBar)
+            self.clusterManager.cluster()
+        }
     }
 }

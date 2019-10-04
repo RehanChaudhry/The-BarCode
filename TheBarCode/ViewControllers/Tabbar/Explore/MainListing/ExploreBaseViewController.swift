@@ -287,6 +287,26 @@ extension ExploreBaseViewController {
         
         let bar = notification.object as! Bar
         
+        if let mapBar = self.mapBars.first(where: {$0.barId == bar.id.value}) {
+            var isOpened = false
+            if let timings = bar.timings.value {
+                if timings.dayStatus == .opened {
+                    if timings.isOpen.value {
+                        isOpened  = true
+                        
+                    }
+                }
+                
+            }
+            mapBar.isOpen = isOpened
+            
+            self.clusterManager.remove(mapBar)
+            
+            self.clusterManager.add(mapBar)
+            self.clusterManager.cluster()
+        }
+        
+        
         /*
         let barMarkers = self.markers.filter { (marker) -> Bool in
             if let data = marker.userData as? Bar {

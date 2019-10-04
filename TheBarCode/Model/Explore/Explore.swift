@@ -39,7 +39,11 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var formattedUpdatedAt = Value.Optional<String>("formatted_updated_at")
     var distance = Value.Required<Double>("distance", initial: 0.0)
     var canRedeemOffer = Value.Required<Bool>("is_offer_redeemed", initial: false)
+    
     var deals = Value.Required<Int>("deals", initial: 0)
+    var chalkboardDeals = Value.Required<Int>("chalkboard_deals", initial: 0)
+    var exclusiveDeals = Value.Required<Int>("exclusive_deals", initial: 0)
+    
     var liveOffers = Value.Required<Int>("live_offers", initial: 0)
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
     var credit = Value.Required<Int>("credit", initial: 0)
@@ -134,7 +138,17 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             if mappingType == .bars {
                 
             } else if mappingType == .deals {
+                
+                if let _ = source["deals_chalkboard"] {
+                    self.chalkboardDeals.value = Int("\(source["deals_chalkboard"]!)") ?? 0
+                }
+                
+                if let _ = source["deals_exclusive"] {
+                    self.exclusiveDeals.value = Int("\(source["deals_exclusive"]!)") ?? 0
+                }
+                
                 self.deals.value = Int("\(source["deals"]!)")!
+                
             } else if mappingType == .liveOffers {
                 self.liveOffers.value = Int("\(source["live_offers"]!)")!
             }
