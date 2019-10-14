@@ -20,16 +20,13 @@ protocol ExploreAboutTableViewCellDelegate: class {
 class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var websitePlaceholderLabel: UILabel!
+    @IBOutlet var phoneNumberPlaceholderLabel: UILabel!
     
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var timingPlaceholderLabel: UILabel!
     @IBOutlet var timingsLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
-    
-    @IBOutlet var websiteLabel: UILabel!
-    @IBOutlet var phoneNumberLabel: UILabel!
-    @IBOutlet var emailLabel: UILabel!
-    
+
     @IBOutlet var websiteButton: UIButton!
     @IBOutlet var phoneNumberButton: UIButton!
     @IBOutlet var emailButton: UIButton!
@@ -40,13 +37,9 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     
     @IBOutlet var currentDayBottomMargin: NSLayoutConstraint!
     @IBOutlet var showMoreBottomMargin: NSLayoutConstraint!
-    @IBOutlet var websitePlaceholderLabelHeight: NSLayoutConstraint!
-    @IBOutlet var phonePlaceholderLabelTop: NSLayoutConstraint!
-    @IBOutlet var phoneNumberLabelTop: NSLayoutConstraint!
     
-    @IBOutlet var websiteButtonHeight: NSLayoutConstraint!
-    @IBOutlet var phoneNumberButtonHeight: NSLayoutConstraint!
-    @IBOutlet var emailButtonHeight: NSLayoutConstraint!
+    @IBOutlet var websiteLabelHeight: NSLayoutConstraint!
+    @IBOutlet var phoneNumberLabelHeight: NSLayoutConstraint!
 
     @IBOutlet var showMoreTimingsButton: UIButton!
     
@@ -55,9 +48,9 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.websiteButtonHeight.constant = self.websiteLabel.frame.height
-        self.phoneNumberButtonHeight.constant = self.phoneNumberLabel.frame.height
-        self.emailButtonHeight.constant = self.emailLabel.frame.height
+//        self.websiteButtonHeight.constant = self.websiteLabel.frame.height
+//        self.phoneNumberButtonHeight.constant = self.phoneNumberLabel.frame.height
+//        self.emailButtonHeight.constant = self.emailLabel.frame.height
     }
     
     override func awakeFromNib() {
@@ -65,10 +58,7 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
         // Initialization code
         
         self.selectionStyle = .none
-                
-        self.emailLabel.isHidden = true
-        self.websiteLabel.isHidden = true
-        self.phoneNumberLabel.isHidden = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -82,7 +72,6 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     func setUpCell(explore: Explore) {
         infoLabel.text = explore.detail.value
         timingsLabel.text = explore.businessTiming.value
-        phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
         addressLabel.text = explore.address.value
         emailButton.setTitle(explore.contactEmail.value, for: .normal)
         
@@ -181,27 +170,79 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
             self.timingsLabel.attributedText = NSAttributedString(string: "")
         }
         
-
         if explore.website.value == "" {
+            self.websiteButton.isHidden = true
+            self.websitePlaceholderLabel.isHidden = true
+            self.websiteLabelHeight.constant = 0.0
+            self.websiteButton.setTitle("", for: .normal)
+        } else {
+            self.websiteButton.isHidden = false
+            self.websitePlaceholderLabel.isHidden = false
+            self.websiteLabelHeight.constant = 40.0
+            self.websiteButton.setTitle(explore.website.value, for: .normal)
+        }
+        
+        if explore.contactNumber.value == "" {
+            self.phoneNumberButton.isHidden = true
+            self.phoneNumberPlaceholderLabel.isHidden = true
+            self.phoneNumberLabelHeight.constant = 0.0
+            self.phoneNumberButton.setTitle("", for: .normal)
+        } else {
+            self.phoneNumberButton.isHidden = false
+            self.phoneNumberPlaceholderLabel.isHidden = false
+            self.phoneNumberLabelHeight.constant = 40.0
+            self.phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
+        }
+        
+//        if explore.website.value != "" {
+//            self.websiteButton.isHidden = true
+//            self.websitePlaceholderLabel.isHidden = true
+//            self.websitePlaceholderLabelHeight.constant = 0.0
+//            self.phoneNumberLabelTop.constant = 0.0
+//            self.websiteButton.setTitle("", for: .normal)
+        
+            
 //            self.websitePlaceholderLabel.isHidden = true
 //            self.websiteButton.isHidden = true
-            self.websiteButton.setTitle("N/A", for: .normal)
-            self.websiteButton.isUserInteractionEnabled = false
+//            self.websiteButton.setTitle("N/A", for: .normal)
+//            self.websiteButton.isUserInteractionEnabled = false
             
 //            self.websiteButtonHeight.constant = 0.0
 //            self.phonePlaceholderLabelTop.constant = 0.0
 //            self.phoneNumberLabelTop.constant = 0.0
             
-        } else {
+//        } else {
+//
+//            self.websitePlaceholderLabelHeight.constant = 17.0
+//            self.phoneNumberLabelTop.constant = 14.0
+//            self.websiteButton.isHidden = false
+//            self.websitePlaceholderLabel.isHidden = false
+//            self.websiteButton.setTitle(explore.website.value, for: .normal)
+        
 //            self.websitePlaceholderLabel.isHidden = false
 //            self.websiteButton.isHidden = false
-            self.websiteButton.setTitle(explore.website.value, for: .normal)
-            self.websiteButton.isUserInteractionEnabled = true
+            
+//            self.websiteButton.isUserInteractionEnabled = true
             
 //            self.websiteButtonHeight.constant = 17.0
 //            self.phonePlaceholderLabelTop.constant = 15.0
 //            self.phoneNumberLabelTop.constant = 15.0
-        }
+//        }
+        
+//        if explore.contactNumber.value != "" {
+//            self.phoneNumberButton.isHidden = true
+//            self.phoneNumberPlaceholderLabel.isHidden = true
+//            self.phoneNumberPlaceholderLabelHeight.constant = 0.0
+//            self.emailLabelTop.constant = 0.0
+//            self.phoneNumberButton.setTitle("", for: .normal)
+//
+//        } else {
+//            self.phoneNumberButton.isHidden = false
+//            self.phoneNumberPlaceholderLabel.isHidden = false
+//            self.phoneNumberPlaceholderLabelHeight.constant = 17.0
+//            self.emailLabelTop.constant = 14.0
+//            self.phoneNumberButton.setTitle(explore.contactNumber.value, for: .normal)
+//        }
     }
     
     //MARK: My IBActions

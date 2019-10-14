@@ -95,7 +95,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         self.title.value = source["title"] as! String
         self.detail.value = source["description"] as! String
         self.managerName.value = source["manager_name"] as! String
-        self.contactNumber.value = source["contact_number"] as! String
+        self.contactNumber.value = source["contact_number"] as? String ?? ""
         self.contactEmail.value = source["contact_email"] as! String
         self.address.value = source["address"] as! String
         

@@ -102,8 +102,8 @@ extension EventSearchViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let eventCell = cell as? EventCell
-        eventCell?.startTimer(event: self.events[indexPath.row])
+//        let eventCell = cell as? EventCell
+//        eventCell?.startTimer(event: self.events[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

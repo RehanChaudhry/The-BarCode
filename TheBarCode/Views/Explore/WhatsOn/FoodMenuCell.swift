@@ -43,6 +43,7 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         let price = Double(drink.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "   £ " + priceString + "   "
+        self.priceLabel.isHidden = price == 0.0
         
         self.topPadding.constant = topPadding ? 8.0 : 0.0
     }
@@ -57,6 +58,7 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         let price = Double(food.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "   £ " + priceString + "   "
+        self.priceLabel.isHidden = price == 0.0
         
         self.topPadding.constant = topPadding ? 8.0 : 0.0
     }

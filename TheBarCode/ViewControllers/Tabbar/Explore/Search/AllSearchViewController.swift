@@ -493,7 +493,7 @@ extension AllSearchViewController {
                 
                 for (responseIndex, responseDict) in responseArray.enumerated() {
                     
-                    let title = responseDict["title"] as? String ?? ""
+//                    let title = responseDict["title"] as? String ?? ""
                     let type = "\(responseDict["type"]!)"
                     let results = responseDict["results"] as? [[String : Any]] ?? []
                     let isResultsComplete = responseDict["is_results_complete"] as? Bool ?? true
@@ -501,7 +501,8 @@ extension AllSearchViewController {
                     if type == "1" {
                         let bars = self.mapBars(results: results, mappingType: .bars)
 
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.bar.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         let searchBarModels = bars.map({ AllSearchBarModel(type: .barCell, bar: $0) })
@@ -513,7 +514,7 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .bar,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeBarsColor())
                         self.viewModels.append(viewModel)
@@ -521,7 +522,8 @@ extension AllSearchViewController {
                     } else if type == "2" {
                         let bars = self.mapBars(results: results, mappingType: .deals)
                         
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.deal.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         let searchBarModels = bars.map({ AllSearchBarModel(type: .dealCell, bar: $0) })
@@ -533,7 +535,7 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .deal,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeDealsColor())
                         self.viewModels.append(viewModel)
@@ -541,7 +543,8 @@ extension AllSearchViewController {
                     } else if type == "3" {
                         let bars = self.mapBars(results: results, mappingType: .liveOffers)
                         
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.liveOffer.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         let searchBarModels = bars.map({ AllSearchBarModel(type: .liveOfferCell, bar: $0) })
@@ -553,15 +556,15 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .liveOffer,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeLiveOffersColor())
                         self.viewModels.append(viewModel)
                         
                         
                     } else if type == "4" {
-                        
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.food.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         for result in results {
@@ -614,14 +617,15 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .food,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeFoodsColor())
                         self.viewModels.append(viewModel)
                         
                     } else if type == "5" {
                         
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.drink.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         for result in results {
@@ -673,7 +677,7 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .drink,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeDrinksColor())
                         self.viewModels.append(viewModel)
@@ -692,7 +696,8 @@ extension AllSearchViewController {
                             fetchedEvents.append(fetchedObject!)
                         }
                         
-                        let headerItem = AllSearchHeaderModel(title: title)
+                        let scopeItem = SearchScope.event.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]
                         
                         let allSearchEvents = fetchedEvents.map({ AllSearchEventModel(event: $0, type: .eventCell) })
@@ -704,7 +709,7 @@ extension AllSearchViewController {
                         }
                         
                         let viewModel = AllSearchViewModel(type: .event,
-                                                           sectionTitle: title,
+                                                           sectionTitle: scopeItem.title,
                                                            items: items,
                                                            headerStrokeColor: .appSearchScopeEventsColor())
                         self.viewModels.append(viewModel)

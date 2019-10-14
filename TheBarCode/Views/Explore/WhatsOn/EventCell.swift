@@ -58,7 +58,8 @@ class EventCell: UITableViewCell, NibReusable {
         
         self.titleLabel.text = event.name.value
         
-        self.detailLabel.text = event.formattedDateString
+//        self.detailLabel.text = event.formattedDateString
+        self.detailLabel.text = ""
         
         let url = URL(string: event.image.value)
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
