@@ -25,7 +25,7 @@ let kAppStoreId = "1441084506"
 let genericErrorMessage = "Opps! Something went wrong"
 
 let platform = "ios"
-let appstoreUrlString = "itms://itunes.apple.com/us/app/the-barcode-app/id1441084506?mt=8"
+let appstoreUrlString = "itms-apps://itunes.apple.com/us/app/the-barcode-app/id1441084506?mt=8"
 
 enum RedeemType: String {
     case standard = "standard",
