@@ -25,10 +25,10 @@
                 </view>
             </subviews>
             <constraints>
-                <constraint firstItem="562-2W-AoV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="V3b-31-XLo"/>
-                <constraint firstItem="562-2W-AoV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Wd5-s5-o0r"/>
-                <constraint firstItem="562-2W-AoV" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pRI-tb-rYY"/>
-                <constraint firstItem="562-2W-AoV" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="xrw-Nl-3qI"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="999" id="V3b-31-XLo"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" priority="999" id="Wd5-s5-o0r"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" priority="999" id="pRI-tb-rYY"/>
+                <constraint firstItem="562-2W-AoV" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" priority="999" id="xrw-Nl-3qI"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

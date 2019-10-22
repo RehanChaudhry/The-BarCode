@@ -43,6 +43,7 @@ class BarSearchViewController: BaseSearchScopeViewController {
         
         self.dataRequest?.cancel()
         self.resetCurrentData()
+        self.statefulTableView.state = .idle
     }
     
     override func reset() {
@@ -213,7 +214,7 @@ extension BarSearchViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     for responseDict in responseArray {
                         var object = responseDict
                         object["mapping_type"] = ExploreMappingType.bars.rawValue
@@ -223,7 +224,7 @@ extension BarSearchViewController {
                 })
                 
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     self.bars.append(fetchedObject!)
                 }
 
@@ -302,7 +303,7 @@ extension BarSearchViewController {
         let params:[String : Any] = ["establishment_id": bar.id.value,
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
                 for bar in bars {
                     bar.isUserFavourite.value = !bar.isUserFavourite.value

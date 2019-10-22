@@ -44,6 +44,7 @@ class DealSearchViewController: BaseSearchScopeViewController {
         
         self.dataRequest?.cancel()
         self.resetCurrentData()
+        self.statefulTableView.state = .idle
     }
     
     override func reset() {
@@ -210,7 +211,7 @@ extension DealSearchViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     for responseDict in responseArray {
                         var object = responseDict
                         object["mapping_type"] = ExploreMappingType.deals.rawValue
@@ -220,7 +221,7 @@ extension DealSearchViewController {
                 })
                 
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     self.bars.append(fetchedObject!)
                 }
                 

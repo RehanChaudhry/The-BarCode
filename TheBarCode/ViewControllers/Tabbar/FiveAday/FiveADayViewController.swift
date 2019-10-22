@@ -301,14 +301,14 @@ extension FiveADayViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 var importedObjects: [FiveADayDeal] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     let objects = try! transaction.importUniqueObjects(Into<FiveADayDeal>(), sourceArray: responseArray)
                     importedObjects.append(contentsOf: objects)
                 })
                 
                 self.deals.removeAll()
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     self.deals.append(fetchedObject!)
                 }
                 

@@ -65,8 +65,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(currentVersion, forKey: "storeversion")
         try! CoreStore.addStorageAndWait()
         
-        let dataStack = Utility.inMemoryStack
-        try! dataStack.addStorageAndWait(InMemoryStore())
+        let dataStorage = SQLiteStore(fileName: "TheBarCode_Data.sqlite", localStorageOptions: .allowSynchronousLightweightMigration)
+        if FileManager.default.fileExists(atPath: dataStorage.fileURL.path) {
+            do {
+                try FileManager.default.removeItem(at: dataStorage.fileURL)
+            } catch {
+                debugPrint("Error while deleting mismatched model version: \(error.localizedDescription)")
+            }
+        }
+        
+        let dataStack = Utility.barCodeDataStack
+        try! dataStack.addStorageAndWait(dataStorage)
+//        try! dataStack.addStorageAndWait(InMemoryStore())
         
         self.setupAuthIfNeeded()
         

@@ -125,7 +125,7 @@ extension RedeemDealViewController {
                 if  let _ = responseObj["data"] as? [String : Any] {
                     
                     if self.type == .standard {
-                        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.bar.id.value)) {
                                 for bar in bars {
                                     bar.canRedeemOffer.value = false
@@ -135,7 +135,7 @@ extension RedeemDealViewController {
                             }
                         })
                     } else {
-                        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishment.value!.id.value)) {
                                 for bar in bars {
                                     bar.canRedeemOffer.value = false

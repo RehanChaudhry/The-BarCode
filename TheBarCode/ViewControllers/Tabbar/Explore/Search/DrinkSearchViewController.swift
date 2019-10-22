@@ -44,6 +44,7 @@ class DrinkSearchViewController: BaseSearchScopeViewController {
         
         self.dataRequest?.cancel()
         self.resetCurrentData()
+        self.statefulTableView.state = .idle
     }
     
     override func reset() {
@@ -243,7 +244,7 @@ extension DrinkSearchViewController {
                     
                     var bar: Bar!
                     var drinks: [Drink] = []
-                    try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                    try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                         
                         var mutableBarDict = responseObject
                         mutableBarDict["mapping_type"] = ExploreMappingType.bars.rawValue
@@ -253,10 +254,10 @@ extension DrinkSearchViewController {
                         drinks = try! transaction.importUniqueObjects(Into<Drink>(), sourceArray: drinksArray)
                     })
                     
-                    let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)
+                    let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)
                     var fetchedDrinks: [Drink] = []
                     for drinks in drinks {
-                        let fetchedDrink  = Utility.inMemoryStack.fetchExisting(drinks)
+                        let fetchedDrink  = Utility.barCodeDataStack.fetchExisting(drinks)
                         fetchedDrinks.append(fetchedDrink!)
                     }
                     

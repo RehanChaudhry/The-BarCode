@@ -24,7 +24,7 @@ class CategoriesViewController: UIViewController {
     
     var statefulView: LoadingAndErrorView!
     
-    let transaction = Utility.inMemoryStack.beginUnsafe()
+    let transaction = Utility.barCodeDataStack.beginUnsafe()
     
     var locationManager: MyLocationManager!
     
@@ -211,7 +211,7 @@ extension CategoriesViewController {
             if let responseCategories = (responseDict?["data"] as? [[String : Any]]) {
                 self.categories.removeAll()
 
-                let dataStack = Utility.inMemoryStack
+                let dataStack = Utility.barCodeDataStack
                 try! dataStack.perform(synchronous: { (transaction) -> Void in
                     let importedObjects = try! transaction.importUniqueObjects(Into<Category>(), sourceArray: responseCategories)
                     debugPrint("Imported categories count: \(importedObjects.count)")

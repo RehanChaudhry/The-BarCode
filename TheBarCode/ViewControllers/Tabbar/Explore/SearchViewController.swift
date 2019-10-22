@@ -18,9 +18,7 @@ import HTTPStatusCodes
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var contentView: UIView!
-    @IBOutlet var scrollContainerView: UIView!
+    @IBOutlet var containerView: UIView!
     
     @IBOutlet var searchBar: UISearchBar!
     
@@ -52,9 +50,11 @@ class SearchViewController: UIViewController {
     var scopeItems: [SearchScopeItem] = SearchScope.allItems()
     var selectedScopeItem: SearchScopeItem?
     
-//    var snackBarController: ReloadSnackBarViewController!
+    var pageViewController: UIPageViewController!
     
     var isViewAlreadyLoaded: Bool = false
+    
+    var lastSearchQuery: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,11 +90,23 @@ class SearchViewController: UIViewController {
         self.preferencesButton.backgroundColor = self.tempView.backgroundColor
         self.preferencesButton.tintColor = UIColor.appGrayColor()
         
-//        self.snackBarController = (self.storyboard!.instantiateViewController(withIdentifier: "ReloadSnackBarViewController") as! ReloadSnackBarViewController)
-//        self.addChildViewController(self.snackBarController)
-//        self.snackBarController.willMove(toParentViewController: self)
-//        self.snackBarContainer.addSubview(self.snackBarController.view)
-//        self.snackBarController.view.autoPinEdgesToSuperviewEdges()
+        self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
+        self.pageViewController.view.backgroundColor = UIColor.clear
+        self.pageViewController.dataSource = self
+        self.pageViewController.delegate = self
+        
+        self.addChildViewController(self.pageViewController)
+        self.pageViewController.willMove(toParentViewController: self)
+        self.containerView.addSubview(self.pageViewController.view)
+        
+        self.pageViewController.view.autoPinEdgesToSuperviewEdges()
+        
+        for aView in self.pageViewController.view.subviews {
+            aView.backgroundColor = UIColor.clear
+            if let scrollView = aView as? UIScrollView {
+                scrollView.isScrollEnabled = false
+            }
+        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -113,7 +125,6 @@ class SearchViewController: UIViewController {
             self.isViewAlreadyLoaded = true
             
             self.setupSearchController()
-            self.resetSearchScopeControllers()
         }
         
         for scope in self.scopeItems {
@@ -127,6 +138,12 @@ class SearchViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        debugPrint("Did receive memory warning")
+    }
+    
     deinit {
         debugPrint("searchviewcontroller deinit called")
     }
@@ -134,36 +151,18 @@ class SearchViewController: UIViewController {
     //MARK: My Methods
     
     func setupSearchController() {
-        for scope in self.scopeItems {
-            let controller = scope.controller
-            controller.view.backgroundColor = UIColor.clear
-            self.contentView.addSubview(controller.view)
-            
-            controller.view.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
-            controller.view.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-
-            controller.view.autoMatch(ALDimension.width, to: ALDimension.width, of: self.scrollContainerView)
-            controller.view.autoMatch(ALDimension.height, to: ALDimension.height, of: self.scrollContainerView)
-
-            if let lastController = self.childViewControllers.last {
-                controller.view.autoPinEdge(ALEdge.left, to: ALEdge.right, of: lastController.view)
-            } else {
-                controller.view.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
-            }
-
-            if scope == self.scopeItems.last {
-                controller.view.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
-            }
-
-            self.addChildViewController(controller)
-            controller.willMove(toParentViewController: self)
-            controller.baseDelegate = self
-            controller.setUpStatefulTableView()
-            
-            if let controller = controller as? AllSearchViewController {
-                controller.allSearchDelegate = self
-            }
+        for scopeItem in self.scopeItems {
+            scopeItem.controller.view.backgroundColor = UIColor.clear
+            scopeItem.controller.baseDelegate = self
+            scopeItem.controller.setUpStatefulTableView()
         }
+        
+        let allSearchViewController = self.scopeItems.map{$0.controller}.first! as! AllSearchViewController
+        allSearchViewController.allSearchDelegate = self
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        self.forcefullySelectScopeItemAt(indexPath: indexPath, direction: .forward, animated: false)
+        self.resetSearchScopeControllers()
     }
     
     func resetMapListSegment() {
@@ -193,24 +192,6 @@ class SearchViewController: UIViewController {
             self.standardOfferButton.backgroundColor = self.tempView.backgroundColor
             self.standardOfferButton.tintColor = UIColor.appGrayColor()
         }
-    }
-    
-    func moveToBarDetail(bar: Bar) {
-//        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
-//        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
-//        barDetailController.selectedBar = bar
-//        barDetailController.delegate = self
-//
-//        switch self.searchType {
-//        case .liveOffers:
-//            barDetailController.preSelectedTabIndex = 2
-//        case .deals:
-//            barDetailController.preSelectedTabIndex = 1
-//        default:
-//            barDetailController.preSelectedTabIndex = 0
-//        }
-//
-//        self.present(barDetailNav, animated: true, completion: nil)
     }
     
     func showDirection(bar: Bar) {
@@ -250,7 +231,7 @@ class SearchViewController: UIViewController {
         sender.tintColor = UIColor.appBlueColor()
         
         for scope in self.scopeItems {
-            scope.controller.showListView()
+            scope.controller.showListView(animted: true)
         }
     }
     
@@ -261,7 +242,7 @@ class SearchViewController: UIViewController {
         sender.tintColor = UIColor.appBlueColor()
         
         for scope in self.scopeItems {
-            scope.controller.showMapView()
+            scope.controller.showMapView(animted: true)
         }
         
         self.searchBar.resignFirstResponder()
@@ -291,7 +272,10 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         
-        self.resetSearchScopeControllers()
+        if self.lastSearchQuery != searchBar.text! {
+            self.lastSearchQuery = searchBar.text!
+            self.resetSearchScopeControllers()
+        }
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -344,9 +328,10 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
         
         self.selectedPreferences = selectedPreferences
         self.filteredPreferences = filteredPreferences
-        
+
         if !self.isViewAlreadyLoaded {
             self.isViewAlreadyLoaded = true
+            
             self.setupSearchController()
         }
         
@@ -358,20 +343,14 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 extension SearchViewController: StandardOffersViewControllerDelegate {
     func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer]) {
         self.selectedStandardOffers = selectedOffers
+        
         if !self.isViewAlreadyLoaded {
             self.isViewAlreadyLoaded = true
+            
             self.setupSearchController()
         }
+        
         self.resetSearchScopeControllers()
-    }
-}
-
-//MARK: GMSMapViewDelegate
-extension SearchViewController : GMSMapViewDelegate {
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        let bar = marker.userData as! Bar
-        self.moveToBarDetail(bar: bar)
-        return false
     }
 }
 
@@ -407,6 +386,21 @@ extension SearchViewController: SearchScopeCellDelegate {
     }
     
     func selectScope(indexPath: IndexPath) {
+        
+        let currentController = self.pageViewController.viewControllers![0]
+        let indexOfCurrentController = self.scopeItems.firstIndex(where: {$0.controller == currentController})!
+        
+        guard indexOfCurrentController != indexPath.item else {
+            debugPrint("Already showing the controller")
+            return
+        }
+        
+        let direction = indexPath.item > indexOfCurrentController ? UIPageViewControllerNavigationDirection.forward : .reverse
+        self.forcefullySelectScopeItemAt(indexPath: indexPath, direction: direction, animated: true)
+    }
+    
+    func forcefullySelectScopeItemAt(indexPath: IndexPath, direction: UIPageViewControllerNavigationDirection, animated: Bool) {
+        
         for scope in self.scopeItems {
             scope.isSelected = false
         }
@@ -415,8 +409,11 @@ extension SearchViewController: SearchScopeCellDelegate {
         self.selectedScopeItem?.isSelected = true
         self.collectionView.reloadData()
         
+        self.pageViewController.setViewControllers([self.selectedScopeItem!.controller], direction: direction, animated: animated) { (completed: Bool) in
+            
+        }
+        
         self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        self.scrollView.scrollToPage(page: indexPath.item, animated: true)
         
         if self.selectedScopeItem?.controller.shouldReset == true {
             self.selectedScopeItem?.controller.reset()
@@ -474,7 +471,7 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
     }
     
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, refreshSnackBar refresh: Bool) {
-//        self.snackBarController.getReloadStatus()
+
     }
     
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, scrollViewDidScroll scrollView: UIScrollView) {
@@ -507,3 +504,34 @@ extension SearchViewController: AllSearchViewControllerDelegate {
     }
 }
 
+//MARK: UIPageViewControllerDelegate
+extension SearchViewController: UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        debugPrint("pending controllers: \(previousViewControllers)")
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        debugPrint("pending controllers: \(pendingViewControllers)")
+    }
+}
+
+//MARK: UIPageViewControllerDataSource
+extension SearchViewController: UIPageViewControllerDataSource {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
+        if let index = self.scopeItems.firstIndex(where: {$0.controller == viewController}), (index - 1) >= 0 {
+            return (self.scopeItems[index - 1]).controller
+        } else {
+            return nil
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        if let index = self.scopeItems.firstIndex(where: {$0.controller == viewController}), ((index + 1) < self.scopeItems.count) {
+            return (self.scopeItems[index + 1]).controller
+        } else {
+            return nil
+        }
+    }
+}

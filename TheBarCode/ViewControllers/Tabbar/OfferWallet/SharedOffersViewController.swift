@@ -50,7 +50,7 @@ class SharedOffersViewController: UIViewController {
         self.dataRequest?.cancel()
         self.loadMore = Pagination()
         self.offers.removeAll()
-        self.statefulTableView.reloadData()
+        self.statefulTableView.innerTable.reloadData()
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -160,14 +160,14 @@ extension SharedOffersViewController {
             
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -180,7 +180,7 @@ extension SharedOffersViewController {
                 }
                 
                 var importedObjects: [Any] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     
                     for responseObject in responseArray {
                         let offerType = Utility.shared.checkDealType(offerTypeID: "\(responseObject["offer_type_id"]!)")
@@ -197,10 +197,10 @@ extension SharedOffersViewController {
                 
                 for object in importedObjects {
                     if let object = object as? LiveOffer {
-                        let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                        let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                         self.offers.append(fetchedObject!)
                     } else if let object = object as? FiveADayDeal {
-                        let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                        let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                         self.offers.append(fetchedObject!)
                     }
                 }
@@ -379,12 +379,12 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
             
             liveOffer.showSharingLoader = true
-            self.statefulTableView.reloadData()
+            self.statefulTableView.innerTable.reloadData()
             
             Utility.shared.generateAndShareDynamicLink(deal: liveOffer, controller: self, presentationCompletion: {
                 
                 liveOffer.showSharingLoader = false
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
             }) {
                 
             }
@@ -392,12 +392,12 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
         } else if let deal = self.offers[indexPath.row] as? Deal {
             
             deal.showSharingLoader = true
-            self.statefulTableView.reloadData()
+            self.statefulTableView.innerTable.reloadData()
             
             Utility.shared.generateAndShareDynamicLink(deal: deal, controller: self, presentationCompletion: {
                 
                 deal.showSharingLoader = false
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
             }) {
                 
             }

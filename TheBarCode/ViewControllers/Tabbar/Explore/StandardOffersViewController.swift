@@ -24,7 +24,7 @@ class StandardOffersViewController: UIViewController {
     
     var statefulView: LoadingAndErrorView!
     
-    let transaction = Utility.inMemoryStack.beginUnsafe()
+    let transaction = Utility.barCodeDataStack.beginUnsafe()
     
     weak var delegate: StandardOffersViewControllerDelegate?
     
@@ -118,7 +118,7 @@ class StandardOffersViewController: UIViewController {
 
         var fetchedOffers: [StandardOffer] = []
         for object in selectedStandardOffers {
-            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+            let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
             fetchedOffers.append(fetchedObject!)
         }
 
@@ -176,7 +176,7 @@ extension StandardOffersViewController {
             if let responseOffers = (responseDict?["data"] as? [[String : Any]]) {
                 self.offers.removeAll()
                 
-                let dataStack = Utility.inMemoryStack
+                let dataStack = Utility.barCodeDataStack
                 try! dataStack.perform(synchronous: { (transaction) -> Void in
                     let importedObjects = try! transaction.importUniqueObjects(Into<StandardOffer>(), sourceArray: responseOffers)
                     debugPrint("Imported Standard Offers count: \(importedObjects.count)")

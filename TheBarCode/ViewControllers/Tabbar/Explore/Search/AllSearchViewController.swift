@@ -57,6 +57,7 @@ class AllSearchViewController: BaseSearchScopeViewController {
         
         self.dataRequest?.cancel()
         self.resetCurrentData()
+        self.statefulTableView.state = .idle
     }
     
     override func reset() {
@@ -80,13 +81,13 @@ class AllSearchViewController: BaseSearchScopeViewController {
             var bars: [Bar] = []
             var mutableResult = result
             mutableResult["mapping_type"] = mappingType.rawValue
-            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 let bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableResult)
                 bars.append(bar!)
             })
             
             for bar in bars {
-                let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)
+                let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)
                 fetchedBars.append(fetchedBar!)
                 debugPrint("fetched bar title: \(fetchedBar!.title.value)")
             }
@@ -571,7 +572,7 @@ extension AllSearchViewController {
                             
                             var bar: Bar!
                             var foods: [Food] = []
-                            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                                 
                                 var mutableBarDict = result
                                 mutableBarDict["mapping_type"] = ExploreMappingType.bars.rawValue
@@ -581,14 +582,14 @@ extension AllSearchViewController {
                                 foods = try! transaction.importUniqueObjects(Into<Food>(), sourceArray: foodsArray)
                             })
                             
-                            let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)!
+                            let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
                             
                             let barModel = AllSearchBarModel(type: .foodBarCell, bar: fetchedBar)
                             items.append(barModel)
                             
                             var fetchedFoods: [Food] = []
                             for food in foods {
-                                let fetchedFood  = Utility.inMemoryStack.fetchExisting(food)
+                                let fetchedFood  = Utility.barCodeDataStack.fetchExisting(food)
                                 fetchedFoods.append(fetchedFood!)
                             }
                             
@@ -632,7 +633,7 @@ extension AllSearchViewController {
                             
                             var bar: Bar!
                             var drinks: [Drink] = []
-                            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                                 
                                 var mutableBarDict = result
                                 mutableBarDict["mapping_type"] = ExploreMappingType.bars.rawValue
@@ -642,13 +643,13 @@ extension AllSearchViewController {
                                 drinks = try! transaction.importUniqueObjects(Into<Drink>(), sourceArray: drinksArray)
                             })
                             
-                            let fetchedBar = Utility.inMemoryStack.fetchExisting(bar)!
+                            let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
                             let barModel = AllSearchBarModel(type: .drinkBarCell, bar: fetchedBar)
                             items.append(barModel)
                             
                             var fetchedDrinks: [Drink] = []
                             for drink in drinks {
-                                let fetchedDrink  = Utility.inMemoryStack.fetchExisting(drink)
+                                let fetchedDrink  = Utility.barCodeDataStack.fetchExisting(drink)
                                 fetchedDrinks.append(fetchedDrink!)
                             }
                             
@@ -685,14 +686,14 @@ extension AllSearchViewController {
                     } else if type == "6" {
                         
                         var importedObjects: [Event] = []
-                        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                             let objects = try! transaction.importUniqueObjects(Into<Event>(), sourceArray: results)
                             importedObjects.append(contentsOf: objects)
                         })
                         
                         var fetchedEvents: [Event] = []
                         for object in importedObjects {
-                            let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                            let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                             fetchedEvents.append(fetchedObject!)
                         }
                         
@@ -811,7 +812,7 @@ extension AllSearchViewController {
         let params:[String : Any] = ["establishment_id": bar.id.value,
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
                 for bar in bars {
                     bar.isUserFavourite.value = !bar.isUserFavourite.value

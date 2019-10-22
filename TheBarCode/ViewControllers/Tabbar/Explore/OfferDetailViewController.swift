@@ -569,7 +569,7 @@ extension OfferDetailViewController {
                 return
             }
             
-            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 let edittedOffer = transaction.edit(offer)
                 edittedOffer?.isBookmarked.value = isBookmarked
             })

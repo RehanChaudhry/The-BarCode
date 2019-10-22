@@ -432,11 +432,11 @@ extension BarDetailViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseData = (responseDict?["data"] as? [String : Any]) {
                 var importedObject: Bar!
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     importedObject = try! transaction.importUniqueObject(Into<Bar>(), source: responseData)
                 })
                 
-                let fetchedObject = Utility.inMemoryStack.fetchExisting(importedObject)
+                let fetchedObject = Utility.barCodeDataStack.fetchExisting(importedObject)
                 
                 self.selectedBar = fetchedObject
 

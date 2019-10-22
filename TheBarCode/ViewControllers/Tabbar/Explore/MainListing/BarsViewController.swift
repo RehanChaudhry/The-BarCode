@@ -235,14 +235,14 @@ extension BarsViewController {
 
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -257,7 +257,7 @@ extension BarsViewController {
                 }
 
                 var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     for responseDict in responseArray {
                         var object = responseDict
                         object["mapping_type"] = ExploreMappingType.bars.rawValue
@@ -268,7 +268,7 @@ extension BarsViewController {
                 
                 var resultBars: [Bar] = []
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     resultBars.append(fetchedObject!)
                 }
 
@@ -283,7 +283,7 @@ extension BarsViewController {
 
                 self.statefulTableView.innerTable.reloadData()
                 self.statefulTableView.canPullToRefresh = true
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 
                 completion(nil)
                 
@@ -343,7 +343,7 @@ extension BarsViewController {
         let params:[String : Any] = ["establishment_id": bar.id.value,
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
                 for bar in bars {
                     bar.isUserFavourite.value = !bar.isUserFavourite.value

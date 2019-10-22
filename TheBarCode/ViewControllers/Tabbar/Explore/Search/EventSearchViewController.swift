@@ -41,6 +41,7 @@ class EventSearchViewController: BaseSearchScopeViewController {
         
         self.dataRequest?.cancel()
         self.resetCurrentData()
+        self.statefulTableView.state = .idle
     }
     
     override func reset() {
@@ -172,13 +173,13 @@ extension EventSearchViewController {
                 }
                 
                 var importedObjects: [Event] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     let objects = try! transaction.importUniqueObjects(Into<Event>(), sourceArray: responseArray)
                     importedObjects.append(contentsOf: objects)
                 })
                 
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     self.events.append(fetchedObject!)
                 }
                 

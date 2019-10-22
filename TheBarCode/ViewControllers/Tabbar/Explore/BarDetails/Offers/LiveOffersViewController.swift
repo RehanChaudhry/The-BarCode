@@ -59,7 +59,8 @@ class LiveOffersViewController: UIViewController {
         self.dataRequest?.cancel()
         self.loadMore = Pagination()
         self.offers.removeAll()
-        self.statefulTableView.reloadData()
+        self.statefulTableView.innerTable.reloadData()
+        self.statefulTableView.state = .idle
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -196,14 +197,14 @@ extension LiveOffersViewController {
 
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -216,13 +217,13 @@ extension LiveOffersViewController {
                 }
                 
                 var importedObjects: [LiveOffer] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     let objects = try! transaction.importUniqueObjects(Into<LiveOffer>(), sourceArray: responseArray)
                     importedObjects.append(contentsOf: objects)
                 })
                 
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     self.offers.append(fetchedObject!)
                 }
                 
@@ -271,7 +272,7 @@ extension LiveOffersViewController {
                 return
             }
             
-            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 let edittedOffer = transaction.edit(offer)
                 edittedOffer?.isBookmarked.value = isBookmarked
             })

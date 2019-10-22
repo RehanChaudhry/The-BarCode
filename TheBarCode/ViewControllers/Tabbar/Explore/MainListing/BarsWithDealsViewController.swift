@@ -197,14 +197,14 @@ extension BarsWithDealsViewController {
             
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -219,7 +219,7 @@ extension BarsWithDealsViewController {
                 }
                 
                 var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     for responseDict in responseArray {
                         var object = responseDict
                         object["mapping_type"] = ExploreMappingType.deals.rawValue
@@ -230,7 +230,7 @@ extension BarsWithDealsViewController {
                 
                 var resultBars: [Bar] = []
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     resultBars.append(fetchedObject!)
                 }
                 
@@ -246,7 +246,7 @@ extension BarsWithDealsViewController {
                 
                 self.statefulTableView.innerTable.reloadData()
                 self.statefulTableView.canPullToRefresh = true
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 
                 completion(nil)
                 

@@ -193,14 +193,14 @@ extension FavouritesViewController {
 
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -213,14 +213,14 @@ extension FavouritesViewController {
                 }
                 
                 var importedObjects: [Bar] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     let objects = try! transaction.importUniqueObjects(Into<Bar>(), sourceArray: responseArray)
                     importedObjects.append(contentsOf: objects)
                 })
                 
                 var resultBars: [Bar] = []
                 for object in importedObjects {
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                     //self.bars.append(fetchedObject!)
                     resultBars.append(fetchedObject!)
                 }
@@ -248,7 +248,7 @@ extension FavouritesViewController {
         let params:[String : Any] = ["establishment_id": bar.id.value,
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
                 for bar in bars {
                     bar.isUserFavourite.value = !bar.isUserFavourite.value

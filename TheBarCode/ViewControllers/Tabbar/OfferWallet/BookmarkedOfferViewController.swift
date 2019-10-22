@@ -228,14 +228,14 @@ extension BookmarkedOfferViewController {
             
             guard error == nil else {
                 self.loadMore.error = error! as NSError
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(error! as NSError)
                 return
             }
             
             guard serverError == nil else {
                 self.loadMore.error = serverError!.nsError()
-                self.statefulTableView.reloadData()
+                self.statefulTableView.innerTable.reloadData()
                 completion(serverError!.nsError())
                 return
             }
@@ -248,7 +248,7 @@ extension BookmarkedOfferViewController {
                 }
                 
                 var importedObjects: [Any] = []
-                try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                     
                     for responseObject in responseArray {
                         let offerType = Utility.shared.checkDealType(offerTypeID: "\(responseObject["offer_type_id"]!)")
@@ -265,7 +265,7 @@ extension BookmarkedOfferViewController {
                 
                 for object in importedObjects {
                     let corestoreObject = object as! CoreStoreObject
-                    let fetchedObject = Utility.inMemoryStack.fetchExisting(corestoreObject)
+                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(corestoreObject)
                     
                     self.offers.append(fetchedObject as Any)
                 }
@@ -330,7 +330,7 @@ extension BookmarkedOfferViewController {
                 return
             }
             
-            try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 let edittedOffer = transaction.edit(offer)
                 edittedOffer?.isBookmarked.value = isBookmarked
             })

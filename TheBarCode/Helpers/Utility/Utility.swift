@@ -96,7 +96,7 @@ class Utility: NSObject {
     
     static let shared = Utility()
     
-    static let inMemoryStack = DataStack(
+    static let barCodeDataStack = DataStack(
         CoreStoreSchema(
             modelVersion: "V1",
             entities: [

@@ -165,7 +165,7 @@ class APIHelper {
             
         case .failure(let error):
             
-            if let responseData = response.data, responseData.count > 0 {
+            if let responseData = response.data, responseData.count > 0, error._code != NSURLErrorCancelled {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: .allowFragments) as! [String : Any]
                     let serverError = Mapper<ServerError>().map(JSON: jsonObject)

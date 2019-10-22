@@ -12,7 +12,7 @@ import UIKit
  Drop-in replacement for `UITableView` that supports pull-to-refresh, load-more, initial load, and empty states.
  */
 public final class StatefulTableView: UIView {
-  internal enum State {
+  public enum State {
     case idle
     case initialLoading
     case initialLoadingTableView
@@ -149,7 +149,7 @@ public final class StatefulTableView: UIView {
   internal var lastLoadMoreError: NSError?
   internal var watchForLoadMore = false
 
-  internal var state: State = .idle
+  open var state: State = .idle
 
   internal var viewMode: ViewMode = .table {
     didSet {

@@ -251,7 +251,7 @@ extension BarDetailHeaderViewController {
         let params:[String : Any] = ["establishment_id": self.bar.id.value,
                                      "is_favorite" : !(self.bar.isUserFavourite.value)]
         
-        try! Utility.inMemoryStack.perform(synchronous: { (transaction) -> Void in
+        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
             if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
                 for bar in bars {
                     bar.isUserFavourite.value = !bar.isUserFavourite.value

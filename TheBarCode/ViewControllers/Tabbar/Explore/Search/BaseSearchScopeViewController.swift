@@ -33,9 +33,10 @@ class BaseSearchScopeViewController: UIViewController {
     @IBOutlet var mapContainer: UIView!
     
     @IBOutlet var statefulTableView: StatefulTableView!
-    @IBOutlet var mapView: GMSMapView!
     
     @IBOutlet var mapErrorView: ShadowView!
+    
+    var mapView: GMSMapView?
     
     var dataRequest: DataRequest?
     
@@ -57,26 +58,19 @@ class BaseSearchScopeViewController: UIViewController {
     
     var strokeView: UIView!
     
-    var clusterManager: GMUClusterManager!
+    var clusterManager: GMUClusterManager?
     
     var mapApiState: LoadMore = LoadMore(isLoading: false, canLoadMore: false, error: nil)
     var mapDataRequest: DataRequest?
     var mapBars: [MapBasicBar] = []
     
+    var mapCameraPosition: GMSCameraPosition?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-//        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let iconGenerator = GMUCustomClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        renderer.delegate = self
-        
-        self.clusterManager = GMUClusterManager(map: self.mapView, algorithm: algorithm, renderer: renderer)
-        self.clusterManager.setDelegate(self, mapDelegate: self)
-        
+    
         self.setUserLocation()
         
         self.strokeView = UIView()
@@ -104,13 +98,50 @@ class BaseSearchScopeViewController: UIViewController {
         self.strokeView.autoSetDimension(ALDimension.height, toSize: 8.0)
         
         NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
+        
+        self.scrollView.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize), options: [NSKeyValueObservingOptions.new], context: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.setupMapView()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.clearMapView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.restoreMapCameraPosition(animated: false)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
+        self.scrollView.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize))
+        
+        debugPrint("Deinit called: \(String(describing: self))")
     }
     
-
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if let scrollView = object as? UIScrollView, scrollView == self.scrollView,  let keyPath = keyPath, keyPath == #keyPath(UIScrollView.contentSize) {
+            
+            debugPrint("Content size did updated: \(scrollView.contentSize)")
+            
+            //As we are using pageviewcontroller, the view of selected scope item may not be added on the parent controller view which results in scrollview content size zero
+            if self.displayType == DisplayType.map {
+                self.showMapView(animted: false)
+            } else {
+                self.showListView(animted: false)
+            }
+        }
+    }
+    
     //MARK: My Methods
     func prepareToReset() {
         self.shouldReset = true
@@ -124,14 +155,14 @@ class BaseSearchScopeViewController: UIViewController {
         
     }
     
-    func showListView() {
+    func showListView(animted: Bool) {
         self.displayType = .list
-        self.scrollView.scrollToPage(page: 0, animated: true)
+        self.scrollView.scrollToPage(page: 0, animated: animted)
     }
     
-    func showMapView() {
+    func showMapView(animted: Bool) {
         self.displayType = .map
-        self.scrollView.scrollToPage(page: 1, animated: true)
+        self.scrollView.scrollToPage(page: 1, animated: animted)
     }
     
     func setUpStatefulTableView() {
@@ -149,14 +180,61 @@ class BaseSearchScopeViewController: UIViewController {
         self.statefulTableView.innerTable.separatorStyle = .none
     }
     
+    func setupMapView() {
+        
+        let mapView = GMSMapView(frame: CGRect.zero)
+        mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+        if CLLocationManager.authorizationStatus() != .notDetermined {
+            mapView.settings.myLocationButton = true
+            mapView.isMyLocationEnabled = true
+        }
+        
+        self.mapContainer.insertSubview(mapView, at: 0)
+        
+        mapView.autoPinEdgesToSuperviewEdges()
+        
+        let iconGenerator = GMUCustomClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        renderer.delegate = self
+        
+        self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        self.clusterManager?.setDelegate(self, mapDelegate: self)
+        
+        self.mapView = mapView
+        
+        self.setUpMarkers()
+        
+        self.restoreMapCameraPosition(animated: false)
+    }
+    
+    func clearMapView() {
+        
+        self.clusterManager?.clearItems()
+        
+        self.mapView?.clear()
+        self.mapView?.removeFromSuperview()
+        
+        self.mapView = nil
+        self.clusterManager = nil
+    }
+    
     func setupMapCamera(cordinate: CLLocationCoordinate2D) {
         let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
-        self.mapView.animate(to: position)
-        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+        self.mapView?.animate(to: position)
         
-        if CLLocationManager.authorizationStatus() != .notDetermined {
-            self.mapView.settings.myLocationButton = true
-            self.mapView.isMyLocationEnabled = true
+        self.mapCameraPosition = position
+    }
+    
+    func restoreMapCameraPosition(animated: Bool) {
+        if let camera = self.mapCameraPosition {
+            if animated {
+                self.mapView?.animate(to: camera)
+            } else {
+                self.mapView?.camera = camera
+            }
+        } else {
+            debugPrint("Camera position not available for restoration")
         }
     }
     
@@ -229,17 +307,17 @@ class BaseSearchScopeViewController: UIViewController {
     
     func setUpMarkers() {
         
-        self.mapView.clear()
-        self.clusterManager.clearItems()
+        self.mapView?.clear()
+        self.clusterManager?.clearItems()
         
         self.mapBars.removeAll(where: {$0.position.latitude > 85.0})        
         self.mapBars.removeAll(where: {$0.position.latitude < -85.0})
         
         for mapBar in self.mapBars {
-            self.clusterManager.add(mapBar)
+            self.clusterManager?.add(mapBar)
         }
         
-        self.clusterManager.cluster()
+        self.clusterManager?.cluster()
         
     }
     
@@ -286,7 +364,7 @@ extension BaseSearchScopeViewController: GMUClusterManagerDelegate {
         }
         
         let update = GMSCameraUpdate.fit(latlngBounds, withPadding: 150.0)
-        self.mapView.animate(with: update)
+        self.mapView?.animate(with: update)
         
         return true
     }
@@ -314,6 +392,10 @@ extension BaseSearchScopeViewController: GMSMapViewDelegate {
         }
         return false
     }
+    
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        self.mapCameraPosition = position
+    }
 }
 
 //Notification Methods
@@ -335,10 +417,10 @@ extension BaseSearchScopeViewController {
             }
             mapBar.isOpen = isOpened
             
-            self.clusterManager.remove(mapBar)
+            self.clusterManager?.remove(mapBar)
             
-            self.clusterManager.add(mapBar)
-            self.clusterManager.cluster()
+            self.clusterManager?.add(mapBar)
+            self.clusterManager?.cluster()
         }
     }
 }

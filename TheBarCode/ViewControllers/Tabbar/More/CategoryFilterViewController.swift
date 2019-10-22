@@ -25,7 +25,7 @@ class CategoryFilterViewController: UIViewController {
     
     var statefulView: LoadingAndErrorView!
     
-    let transaction = Utility.inMemoryStack.beginUnsafe()
+    let transaction = Utility.barCodeDataStack.beginUnsafe()
     
     weak var delegate: CategoryFilterViewControllerDelegate?
     
@@ -245,12 +245,12 @@ class CategoryFilterViewController: UIViewController {
             var fetchedFilteredCategories: [Category] = []
             
             for object in selectedCategories {
-                let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                 fetchedSelectedCategories.append(fetchedObject!)
             }
             
             for object in filteredCategories {
-                let fetchedObject = Utility.inMemoryStack.fetchExisting(object)
+                let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                 fetchedFilteredCategories.append(fetchedObject!)
             }
             
@@ -343,7 +343,7 @@ extension CategoryFilterViewController {
             if let responseCategories = (responseDict?["data"] as? [[String : Any]]) {
                 self.categories.removeAll()
                 
-                let dataStack = Utility.inMemoryStack
+                let dataStack = Utility.barCodeDataStack
                 try! dataStack.perform(synchronous: { (transaction) -> Void in
                     let importedObjects = try! transaction.importUniqueObjects(Into<Category>(), sourceArray: responseCategories)
                     
