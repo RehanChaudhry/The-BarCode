@@ -16,6 +16,7 @@ import Crashlytics
 import OneSignal
 import CoreStore
 import CoreLocation
+import BugfenderSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -87,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         Fabric.with([Crashlytics.self])
+        Bugfender.activateLogger("WD6RXFEeYgdRgCrl5bdRVwaBTbbICqAq")
         
         let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
             // This block gets called when the user reacts to a notification received

@@ -114,6 +114,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>See https://bugfender.com/terms-of-service/</string>
+			<key>License</key>
+			<string>Commercial</string>
+			<key>Title</key>
+			<string>BugfenderSDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>The MIT License (MIT)
 
 Copyright © 2018 John Rommel Estropia

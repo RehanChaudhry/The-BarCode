@@ -11,6 +11,7 @@ import Alamofire
 import ObjectMapper
 import RNCryptor
 import SwiftyJSON
+import BugfenderSDK
 
 let staggingAPIDomain = "https://thebarcode.cygnismedia.com"
 let qaAPIDomain = "https://thebarcode-qa.cygnismedia.com"
@@ -25,6 +26,8 @@ let clientScret = "a7024f16e0c8d6475c2f82c66a8f6d9d85380e63"
 let grantTypePassword = "password"
 
 let serverTimeZone = TimeZone(identifier: "Europe/London")
+
+let remoteLogginEnabled = true
 
 typealias responseCompletionHandler = (_ response: Any?, _ serverError: ServerError?, _ error: Error?) -> Void
 
@@ -78,7 +81,7 @@ class APIHelper {
         if let sessionManager = sessionManager {
             let url = baseURLString + apiPath
             let request = sessionManager.request(url, method: method, parameters: aParams, encoding: URLEncoding.methodDependent, headers: headers).validate().responseJSON { (response: DataResponse<Any>) in
-                self.parseResponse(response: response, completion: completion)
+                self.parseResponse(apiPath: apiPath, response: response, completion: completion)
             }
             
             return request
@@ -122,7 +125,8 @@ class APIHelper {
         }
     }
     
-    func parseResponse(response: DataResponse<Any>, completion: responseCompletionHandler) {
+    func parseResponse(apiPath: String = "Unknown", response: DataResponse<Any>, completion: responseCompletionHandler) {
+        
         switch response.result {
         case .success:
             
@@ -154,10 +158,47 @@ class APIHelper {
                 }
             } else {
                 if let responseResult = response.result.value as? [String : Any] {
+                    
+                    if remoteLogginEnabled {
+                        Bugfender.print("apiPath: \(apiPath)",
+                            "successBlockCalled: true",
+                            "responseType: dictionary",
+                            separator: "  ---  ",
+                            terminator: "\n",
+                            tag: "SUCCESS")
+                    }
+                    
                     completion(responseResult, nil, nil)
                 } else if let responseResult = response.result.value as? [[String : Any]] {
+                    
+                    if remoteLogginEnabled {
+                        Bugfender.print("apiPath: \(apiPath)",
+                            "successBlockCalled: true",
+                            "responseType: array",
+                            separator: "  ---  ",
+                            terminator: "\n",
+                            tag: "SUCCESS")
+                    }
+                    
                     completion(responseResult, nil, nil)
                 } else {
+                    
+                    if remoteLogginEnabled {
+                        
+                        var dataString = "Data is empty"
+                        if let data = response.data {
+                            dataString = String(data: data, encoding: .utf8) ?? "Unable to make string from returned data"
+                        }
+                        
+                        Bugfender.error("apiPath: \(apiPath)",
+                            "successBlockCalled: true",
+                            "responseType: unexpected",
+                            "responseString: \(dataString)",
+                            separator: "  ---  ",
+                            terminator: "\n",
+                            tag: "ERROR")
+                    }
+                    
                     let error = NSError(domain: "UnExpectedResponse", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unexpected response received"])
                     completion(response.result.value, nil, error)
                 }
@@ -165,21 +206,81 @@ class APIHelper {
             
         case .failure(let error):
             
+            var dataString = "Response data is empty"
+            if let data = response.data {
+                dataString = String(data: data, encoding: .utf8) ?? "Unable to make string from returned data"
+                if dataString.count == 0 {
+                    dataString = "Response data is empty"
+                }
+            }
+            
             if let responseData = response.data, responseData.count > 0, error._code != NSURLErrorCancelled {
                 do {
                     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: .allowFragments) as! [String : Any]
                     let serverError = Mapper<ServerError>().map(JSON: jsonObject)
                     serverError?.statusCode = response.response!.statusCode
                     debugPrint("jsonObject: \(jsonObject)")
+                    
+                    if remoteLogginEnabled {
+                        Bugfender.error("apiPath: \(apiPath)",
+                            "successBlockCalled: false",
+                            "errorInfo: \(error.localizedDescription)",
+                            "isRequestCancelled: false",
+                            "responseType: ServerErrorJSONResponse",
+                            "responseString: \(dataString)",
+                            separator: "   -----   ",
+                            terminator: "\n",
+                            tag: "ERROR")
+                    }
+
                     completion(nil, serverError, nil)
+                    
                 } catch {
+                    
+                    if remoteLogginEnabled {
+                        Bugfender.error("apiPath: \(apiPath)",
+                            "successBlockCalled: false",
+                            "errorInfo: \(error.localizedDescription)",
+                            "isRequestCancelled: false",
+                            "responseType: ServerErrorJSONResponseParserError",
+                            "responseString: \(dataString)",
+                            separator: "   -----   ",
+                            terminator: "\n",
+                            tag: "JSONParsingERROR")
+                    }
+                    
                     let genericError = getSomethingWentWrongError(error: error)
                     completion(nil, nil, genericError)
                 }
                 
             } else if error._code != NSURLErrorCancelled {
+                
+                if remoteLogginEnabled {
+                    Bugfender.print("apiPath: \(apiPath)",
+                        "successBlockCalled: false",
+                        "errorInfo: \(error.localizedDescription)",
+                        "isRequestCancelled: false",
+                        "responseType: networkError",
+                        "responseString: \(dataString)",
+                        separator: "  ---  ",
+                        terminator: "\n",
+                        tag: "INFO")
+                }
+                
                 let genericError = getNoInternetError(error: error)
                 completion(nil, nil, genericError)
+            } else {
+                if remoteLogginEnabled {
+                    Bugfender.print("apiPath: \(apiPath)",
+                        "successBlockCalled: false",
+                        "errorInfo: \(error.localizedDescription)",
+                        "isRequestCancelled: true",
+                        "responseType: RequestCancelled",
+                        "responseString: \(dataString)",
+                        separator: "  ---  ",
+                        terminator: "\n",
+                        tag: "INFO")
+                }
             }
         }
     }

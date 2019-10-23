@@ -10,6 +10,7 @@ import UIKit
 import OneSignal
 import CoreStore
 import FirebaseAnalytics
+import BugfenderSDK
 
 class TabBarController: UITabBarController {
 
@@ -96,6 +97,9 @@ class TabBarController: UITabBarController {
         debugPrint("User access token: \(user.accessToken.value)")
         
         OneSignal.sendTags(["user_id" : user.userId.value])
+        
+        Bugfender.setDeviceString("id: \(user.userId.value) fullName: \(user.fullName.value)", forKey: "user")
+        
     }
     
     @objc func showBarDetailForLiveOfferNotification() {
