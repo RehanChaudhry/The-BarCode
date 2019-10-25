@@ -40,8 +40,6 @@ class ExploreViewController: UIViewController {
     var exploreType = ExploreType.bars
     
     var barsController: BarsViewController!
-    var dealsController: BarsWithDealsViewController!
-    var liveOffersController: BarsWithLiveOffersViewController!
     
     var defaultButtonTitleColor: UIColor!
     
@@ -133,16 +131,6 @@ class ExploreViewController: UIViewController {
         self.barsController.delegate = self
         self.barsController.snackBar.delegate = self
         self.addViewController(controller: self.barsController, parent: self.barsContainerView)
-        
-        self.dealsController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithDealsViewController") as! BarsWithDealsViewController)
-        self.dealsController.delegate = self
-        self.dealsController.snackBar.delegate = self
-        self.addViewController(controller: self.dealsController, parent: self.dealsContainerView)
-        
-        self.liveOffersController = (self.storyboard!.instantiateViewController(withIdentifier: "BarsWithLiveOffersViewController") as! BarsWithLiveOffersViewController)
-        self.liveOffersController.delegate = self
-        self.liveOffersController.snackBar.delegate = self
-        self.addViewController(controller: self.liveOffersController, parent: self.liveOffersContainerView)
     }
     
     func addViewController(controller: UIViewController, parent: UIView) {
@@ -187,20 +175,13 @@ class ExploreViewController: UIViewController {
     
     func updateSnackBarForType(type: SnackbarType) {
         if type == .discount {
-            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
-            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
         } else if type == .reload {
-            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
-            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
-            
             self.startReloadTimer()
             self.updateReloadTimer(sender: self.reloadTimer!)
         } else if type == .congrates {
-            self.dealsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
             self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
-            self.liveOffersController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
         }
     }
     
@@ -255,10 +236,7 @@ class ExploreViewController: UIViewController {
         
         if redeemInfo.remainingSeconds > 0 {
             self.redeemInfo!.remainingSeconds -= 1
-            
-            self.dealsController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
             self.barsController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
-            self.liveOffersController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
         } else {
             self.reloadTimer?.invalidate()
             self.updateSnackBarForType(type: .congrates)
@@ -267,34 +245,23 @@ class ExploreViewController: UIViewController {
     }
     
     func showSnackBarSpinner() {
-        self.dealsController.snackBar.showLoading()
         self.barsController.snackBar.showLoading()
-        self.liveOffersController.snackBar.showLoading()
     }
     
     func finishLoading() {
-        self.dealsController.snackBar.hideLoading()
         self.barsController.snackBar.hideLoading()
-        self.liveOffersController.snackBar.hideLoading()
     }
     
     func showError(msg: String) {
-        self.dealsController.snackBar.showError(msg: msg)
         self.barsController.snackBar.showError(msg: msg)
-        self.liveOffersController.snackBar.showError(msg: msg)
     }
     
     func reloadData() {
         self.barsController.dataRequest?.cancel()
-        self.dealsController.dataRequest?.cancel()
-        self.liveOffersController.dataRequest?.cancel()
         
         let _ = self.barsController.statefulTableView.triggerPullToRefresh()
-        let _ = self.dealsController.statefulTableView.triggerPullToRefresh()
-        let _ = self.liveOffersController.statefulTableView.triggerPullToRefresh()
-        
+
         self.refreshSnackBar()
-        
     }
     
     func refreshSnackBar() {
@@ -304,8 +271,6 @@ class ExploreViewController: UIViewController {
     
     func resetSearchBar(){
         self.barsController.searchBar.resignFirstResponder()
-        self.dealsController.searchBar.resignFirstResponder()
-        self.liveOffersController.searchBar.resignFirstResponder()
     }
     
     func moveToReloadVC() {
@@ -364,7 +329,7 @@ class ExploreViewController: UIViewController {
         
         self.resetSegmentedButton()
         self.resetSearchBar()
-
+        
         sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
         
@@ -372,34 +337,7 @@ class ExploreViewController: UIViewController {
         self.scrollView.scrollToPage(page: 0, animated: true)
         self.barsController.statefulTableView.innerTable.reloadData()
     }
-    
-    @IBAction func dealsButtonTapped(sender: UIButton) {
-        Analytics.logEvent(dealTabClickFromExplore, parameters: nil)
-        
-        self.resetSegmentedButton()
-        self.resetSearchBar()
-        
-        sender.backgroundColor = UIColor.black
-        sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
-        
-        self.exploreType = .deals
-        self.scrollView.scrollToPage(page: 1, animated: true)
-        self.dealsController.statefulTableView.innerTable.reloadData()
-    }
-    
-    @IBAction func liveOffersButtonTapped(sender: UIButton) {
-        Analytics.logEvent(liveOffersTabClickFromExplore, parameters: nil)
-        
-        self.resetSegmentedButton()
-        self.resetSearchBar()
-        
-        sender.backgroundColor = UIColor.black
-        sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
-        
-        self.exploreType = .liveOffers
-        self.scrollView.scrollToPage(page: 2, animated: true)
-        self.liveOffersController.statefulTableView.innerTable.reloadData()
-    }
+
 }
 
 //MARK: Webservices Methods
@@ -491,54 +429,6 @@ extension ExploreViewController: BarsViewControllerDelegate {
     }
 }
 
-//MARK: BarsWithDealsViewControllerDelegate
-extension ExploreViewController: BarsWithDealsViewControllerDelegate {
-    
-    func barsWithDealsController(controller: BarsWithDealsViewController, standardOfferButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false, withStandardOffer: true)
-    }
-    
-    func barsWithDealsController(controller: BarsWithDealsViewController, didSelect bar: Bar) {
-        self.moveToBarDetail(bar: bar)
-    }
-    
-    func barsWithDealsController(controller: BarsWithDealsViewController, refreshSnackBar snack: SnackbarView) {
-        self.refreshSnackBar()
-    }
-    
-    func barsWithDealsController(controller: BarsWithDealsViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false, withStandardOffer: false)
-    }
-    
-    func barsWithDealsController(controller: BarsWithDealsViewController, preferncesButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: true, withStandardOffer: false)
-    }
-}
-
-//MARK: BarsWithLiveOffersViewControllerDelegate
-extension ExploreViewController: BarsWithLiveOffersViewControllerDelegate {
-    
-    func liveOffersController(controller: BarsWithLiveOffersViewController, standardOfferButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false, withStandardOffer: true)
-    }
-    
-    func liveOffersController(controller: BarsWithLiveOffersViewController, didSelectLiveOfferOf bar: Bar) {
-        self.moveToBarDetail(bar: bar)
-    }
-    
-    func liveOffersController(controller: BarsWithLiveOffersViewController, refreshSnackBar snack: SnackbarView) {
-        self.refreshSnackBar()
-    }
-    
-    func liveOffersController(controller: BarsWithLiveOffersViewController, searchButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: false, withStandardOffer: false)
-    }
-    
-    func liveOffersController(controller: BarsWithLiveOffersViewController, preferencesButtonTapped sender: UIButton) {
-        self.moveToSearch(withPreferences: true, withStandardOffer: false)
-    }
-}
-
 //MARK: Notification Methods
 extension ExploreViewController {
     
@@ -571,7 +461,7 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
 }
 
 //MARK: SnackbarViewDelegate
-extension ExploreViewController:  SnackbarViewDelegate {
+extension ExploreViewController: SnackbarViewDelegate {
     func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
         
         guard let user = Utility.shared.getCurrentUser() else {

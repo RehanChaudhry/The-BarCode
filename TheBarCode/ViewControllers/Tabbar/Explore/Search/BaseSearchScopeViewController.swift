@@ -36,6 +36,12 @@ class BaseSearchScopeViewController: UIViewController {
     
     @IBOutlet var mapErrorView: ShadowView!
     
+    @IBOutlet var mapLoadingIndicator: UIActivityIndicatorView!
+    @IBOutlet var mapReloadButton: UIButton!
+    
+    var myLocationButtonContainer: ShadowView!
+    var myLocationButton: UIButton!
+    
     var mapView: GMSMapView?
     
     var dataRequest: DataRequest?
@@ -66,12 +72,14 @@ class BaseSearchScopeViewController: UIViewController {
     
     var mapCameraPosition: GMSCameraPosition?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     
         self.setUserLocation()
+        self.setupMyLocationButton()
         
         self.strokeView = UIView()
         if self is BarSearchViewController {
@@ -143,6 +151,32 @@ class BaseSearchScopeViewController: UIViewController {
     }
     
     //MARK: My Methods
+    
+    func setupMyLocationButton() {
+        
+        self.myLocationButtonContainer = ShadowView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        self.myLocationButtonContainer.backgroundColor = self.mapErrorView.backgroundColor
+        self.myLocationButtonContainer.cornerRadius = 22.0
+        self.myLocationButtonContainer.shadowColor = self.mapErrorView.shadowColor
+        self.myLocationButtonContainer.shadowRadius = self.mapErrorView.shadowRadius
+        self.myLocationButtonContainer.shadowOffset = self.mapErrorView.shadowOffset
+        self.myLocationButtonContainer.shadowOpacity = self.mapErrorView.shadowOpacity
+        
+        self.myLocationButton = UIButton(type: .system)
+        self.myLocationButton.setImage(UIImage(named: "icon_my_location"), for: .normal)
+        self.myLocationButton.addTarget(self, action: #selector(myLocationButtonTapped(sender:)), for: .touchUpInside)
+        self.myLocationButton.tintColor = UIColor.white
+        self.myLocationButtonContainer.addSubview(self.myLocationButton)
+        self.myLocationButton.autoPinEdgesToSuperviewEdges()
+        
+        self.mapContainer.addSubview(self.myLocationButtonContainer)
+        self.myLocationButtonContainer.autoSetDimensions(to: self.myLocationButtonContainer.frame.size)
+        self.myLocationButtonContainer.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.mapContainer, withOffset: -16.0)
+        self.myLocationButtonContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.top, of: self.mapErrorView, withOffset: -16.0)
+        
+        self.myLocationButtonContainer.isHidden = CLLocationManager.authorizationStatus() == .notDetermined
+    }
+    
     func prepareToReset() {
         self.shouldReset = true
     }
@@ -185,8 +219,12 @@ class BaseSearchScopeViewController: UIViewController {
         let mapView = GMSMapView(frame: CGRect.zero)
         mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
         if CLLocationManager.authorizationStatus() != .notDetermined {
-            mapView.settings.myLocationButton = true
+            mapView.settings.myLocationButton = false
             mapView.isMyLocationEnabled = true
+            
+            self.myLocationButtonContainer.isHidden = false
+        } else {
+            self.myLocationButtonContainer.isHidden = true
         }
         
         self.mapContainer.insertSubview(mapView, at: 0)
@@ -346,6 +384,13 @@ class BaseSearchScopeViewController: UIViewController {
         return searchScope
     }
     
+    @objc func myLocationButtonTapped(sender: UIButton) {
+        if let location = self.mapView?.myLocation {
+            let position = GMSCameraPosition.camera(withTarget: location.coordinate, zoom: 15.0)
+            self.mapView?.animate(to: position)
+        }
+    }
+    
     //MARK: My IBActions
     @IBAction func mapRetryButtonTapped(sender: UIButton) {
         self.setUpMapViewForLocations()
@@ -379,6 +424,7 @@ extension BaseSearchScopeViewController: GMUClusterRendererDelegate {
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
         if let mapBar = marker.userData as? MapBasicBar {
             marker.icon = Utility.shared.getMapBarPinImage(mapBar: mapBar)
+            marker.zIndex = Int32(self.mapBars.firstIndex(of: mapBar) ?? 0)
         }
     }
 }
@@ -387,14 +433,49 @@ extension BaseSearchScopeViewController: GMUClusterRendererDelegate {
 extension BaseSearchScopeViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if let mapbar = marker.userData as? MapBasicBar {
-            let searchScope = self.getCurrentSearchScope()
-            self.moveToBarDetails(barId: mapbar.barId, scopeType: searchScope)
+            
+            let selectedBarLocation = CLLocation(latitude: mapbar.latitude, longitude: mapbar.longitude)
+            
+            let filteredBars = self.mapBars.filter { (bar) -> Bool in
+                let location = CLLocation(latitude: bar.latitude, longitude: bar.longitude)
+                return location.distance(from: selectedBarLocation) < 10.0
+            }
+            
+            if filteredBars.count > 1 {
+                
+                let mapPinsController = self.storyboard!.instantiateViewController(withIdentifier: "MapPinsViewController") as! MapPinsViewController
+                mapPinsController.mapBars = filteredBars
+                mapPinsController.delegate = self
+                mapPinsController.modalPresentationStyle = .overCurrentContext
+                mapPinsController.modalTransitionStyle = .crossDissolve
+                self.present(mapPinsController, animated: true, completion: nil)
+                
+                //Needs little offset to be perfectly in center b/c of other views
+                let convertedCenterPoint = self.mapContainer.convert(mapPinsController.containerView.center, from: mapPinsController.view)
+                mapPinsController.centerYConstraint.constant = self.mapContainer.center.y - convertedCenterPoint.y
+                
+//                debugPrint("Multiple establishments detected: \(filteredBars.map({$0.title}))")
+//                debugPrint("Selected establishment title: \(mapbar.title)")
+            } else {
+                let searchScope = self.getCurrentSearchScope()
+                self.moveToBarDetails(barId: mapbar.barId, scopeType: searchScope)
+            }
         }
         return false
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         self.mapCameraPosition = position
+    }
+}
+
+//MARK: MapPinsViewController
+extension BaseSearchScopeViewController: MapPinsViewControllerDelegate {
+    func mapPinsViewController(controller: MapPinsViewController, didSelectMapBar mapBar: MapBasicBar) {
+        controller.dismiss(animated: true) {
+            let searchScope = self.getCurrentSearchScope()
+            self.moveToBarDetails(barId: mapBar.barId, scopeType: searchScope)
+        }
     }
 }
 

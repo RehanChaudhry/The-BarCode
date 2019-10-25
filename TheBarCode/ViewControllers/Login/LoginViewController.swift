@@ -51,6 +51,10 @@ class LoginViewController: UIViewController {
         
         self.updateNavigationBarAppearance()
     }
+    
+    deinit {
+        debugPrint("LoginViewController deinit called")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -119,6 +119,10 @@ class SIgnUpViewController: UIViewController {
         
         self.updateNavigationBarAppearance()
     }
+    
+    deinit {
+        debugPrint("SIgnUpViewController deinit called")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

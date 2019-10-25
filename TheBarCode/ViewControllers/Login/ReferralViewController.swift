@@ -44,6 +44,10 @@ class ReferralViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        debugPrint("ReferralViewController deinit called")
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
         

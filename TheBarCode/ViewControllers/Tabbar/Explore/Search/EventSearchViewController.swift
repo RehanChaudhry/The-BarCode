@@ -64,11 +64,13 @@ class EventSearchViewController: BaseSearchScopeViewController {
         super.setUpMapViewForLocations()
         
         self.mapErrorView.isHidden = true
-        self.mapApiState.isLoading = true
+        self.mapLoadingIndicator.startAnimating()
+        self.mapReloadButton.isHidden = true
         
         self.getBarsForMap { (error) in
             
-            self.mapApiState.isLoading = false
+            self.mapLoadingIndicator.stopAnimating()
+            self.mapReloadButton.isHidden = false
             
             guard error == nil else {
                 debugPrint("Error while getting basic map bars: \(error!)")

@@ -15,6 +15,7 @@ import ObjectMapper
 import HTTPStatusCodes
 import GoogleMaps
 import FirebaseAnalytics
+import PureLayout
 
 protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar barId: String)
@@ -26,8 +27,6 @@ protocol BarsViewControllerDelegate: class {
 }
 
 class BarsViewController: ExploreBaseViewController {
-    
-    @IBOutlet var mapErrorView: ShadowView!
     
     weak var delegate: BarsViewControllerDelegate!
     var isClearingSearch: Bool = false
@@ -65,14 +64,18 @@ class BarsViewController: ExploreBaseViewController {
         self.statefulTableView.statefulDelegate = self
     }
     
-    func setUpBasicMapBars() {
+    override func setUpBasicMapBars() {
+        
+        super.setUpBasicMapBars()
         
         self.mapErrorView.isHidden = true
-        self.mapApiState.isLoading = true
+        self.mapLoadingIndicator.startAnimating()
+        self.mapReloadButton.isHidden = true
         
         self.getBarsForMap { (error) in
             
-            self.mapApiState.isLoading = false
+            self.mapLoadingIndicator.stopAnimating()
+            self.mapReloadButton.isHidden = false
             
             guard error == nil else {
                 debugPrint("Error while getting basic map bars: \(error!)")
@@ -300,9 +303,9 @@ extension BarsViewController {
                                       "pagination" : false,
                                       "is_for_map" : true]
         
+        self.mapDataRequest?.cancel()
         self.mapApiState.isLoading = true
         
-        self.mapDataRequest?.cancel()
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
             self.mapApiState.isLoading = false
@@ -503,6 +506,15 @@ extension BarsViewController: BarTableViewCellDelegare {
     }
 }
 
+//MARK: MapPinsViewController
+extension BarsViewController: MapPinsViewControllerDelegate {
+    func mapPinsViewController(controller: MapPinsViewController, didSelectMapBar mapBar: MapBasicBar) {
+        controller.dismiss(animated: true) {
+            self.delegate.barsController(controller: self, didSelectBar: mapBar.barId)
+        }
+    }
+}
+
 extension BarsViewController  {
     override func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         return super.mapView(mapView, didTap: marker)
@@ -517,7 +529,28 @@ extension BarsViewController {
     override func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
         
         if let mapbar = clusterItem as? MapBasicBar {
-            self.delegate.barsController(controller: self, didSelectBar: mapbar.barId)
+            
+            let selectedBarLocation = CLLocation(latitude: mapbar.latitude, longitude: mapbar.longitude)
+            
+            let filteredBars = self.mapBars.filter { (bar) -> Bool in
+                let location = CLLocation(latitude: bar.latitude, longitude: bar.longitude)
+                return location.distance(from: selectedBarLocation) < 10.0
+            }
+            
+            if filteredBars.count > 1 {
+                let mapPinsController = self.storyboard!.instantiateViewController(withIdentifier: "MapPinsViewController") as! MapPinsViewController
+                mapPinsController.mapBars = filteredBars
+                mapPinsController.delegate = self
+                mapPinsController.modalPresentationStyle = .overCurrentContext
+                mapPinsController.modalTransitionStyle = .crossDissolve
+                self.present(mapPinsController, animated: true, completion: nil)
+                
+                //Needs little offset to be perfectly in center b/c of other views
+                let convertedCenterPoint = self.mapContainer.convert(mapPinsController.containerView.center, from: mapPinsController.view)
+                mapPinsController.centerYConstraint.constant = self.mapContainer.center.y - convertedCenterPoint.y
+            } else {
+                self.delegate.barsController(controller: self, didSelectBar: mapbar.barId)
+            }
         }
         return super.clusterManager(clusterManager, didTap: clusterItem)
     }

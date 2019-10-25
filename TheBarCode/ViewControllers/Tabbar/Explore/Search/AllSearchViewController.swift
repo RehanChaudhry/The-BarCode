@@ -101,11 +101,13 @@ class AllSearchViewController: BaseSearchScopeViewController {
         super.setUpMapViewForLocations()
         
         self.mapErrorView.isHidden = true
-        self.mapApiState.isLoading = true
+        self.mapLoadingIndicator.startAnimating()
+        self.mapReloadButton.isHidden = true
         
         self.getBarsForMap { (error) in
             
-            self.mapApiState.isLoading = false
+            self.mapLoadingIndicator.stopAnimating()
+            self.mapReloadButton.isHidden = false
             
             guard error == nil else {
                 debugPrint("Error while getting basic map bars: \(error!)")
@@ -747,9 +749,9 @@ extension AllSearchViewController {
             params["tier_ids"] = ids
         }
         
+        self.mapDataRequest?.cancel()
         self.mapApiState.isLoading = true
         
-        self.mapDataRequest?.cancel()
         self.mapDataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathSearchAll, method: .get) { (response, serverError, error) in
             
             self.mapApiState.isLoading = false

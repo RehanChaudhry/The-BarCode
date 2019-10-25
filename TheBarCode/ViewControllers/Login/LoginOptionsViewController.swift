@@ -22,7 +22,7 @@ class LoginOptionsViewController: UIViewController {
     
     var introOptions: [IntroOption] = []
     
-    var avPlayer: AVPlayer!
+    var avPlayer: AVPlayer?
     
     var viewAlreadyAppeared: Bool = false
     
@@ -33,18 +33,7 @@ class LoginOptionsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        let url = Bundle.main.url(forResource: "splash", withExtension: "mp4")!
-        self.avPlayer = AVPlayer(url: url)
         
-        NotificationCenter.default.addObserver(forName: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { (notif) in
-            self.avPlayer.seek(to: kCMTimeZero)
-            self.avPlayer.play()
-        }
-        
-        let layer: AVPlayerLayer = AVPlayerLayer(player: self.avPlayer)
-        layer.frame = self.view.bounds
-        layer.videoGravity = .resizeAspectFill
-        self.imageView.layer.addSublayer(layer)
 
         self.navigationItem.hidesBackButton = true
         
@@ -62,6 +51,7 @@ class LoginOptionsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.updateNavigationBarAppearance()
+        self.setupPlayerLayer()
         
         if !self.viewAlreadyAppeared {
             self.viewAlreadyAppeared = true
@@ -72,13 +62,13 @@ class LoginOptionsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.avPlayer.play()
+        self.avPlayer?.play()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.avPlayer.pause()
+        self.clearPlayerLayer()
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,6 +93,36 @@ class LoginOptionsViewController: UIViewController {
     
     
     //MARK: My Methods
+    
+    func setupPlayerLayer() {
+        let url = Bundle.main.url(forResource: "splash", withExtension: "mp4")!
+        self.avPlayer = AVPlayer(url: url)
+        
+        let playerItem = self.avPlayer!.currentItem!
+        NotificationCenter.default.addObserver(forName: Notification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem, queue: nil) { [unowned self] (notif) in
+            self.avPlayer?.seek(to: kCMTimeZero)
+            self.avPlayer?.play()
+        }
+        
+        let layer: AVPlayerLayer = AVPlayerLayer(player: self.avPlayer)
+        layer.frame = self.view.bounds
+        layer.videoGravity = .resizeAspectFill
+        self.imageView.layer.addSublayer(layer)
+    }
+    
+    //DONOT CALL WITHOUT BEIGN SETUP
+    func clearPlayerLayer() {
+        self.avPlayer?.pause()
+        let playerItem = self.avPlayer!.currentItem!
+        NotificationCenter.default.removeObserver(playerItem, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        for subLayer in self.imageView.layer.sublayers ?? [] {
+            subLayer.removeFromSuperlayer()
+        }
+        
+        self.avPlayer = nil
+    }
+    
     func setupInitialData(){
         
         let option1 = IntroOption(title: "Discover", detail: "Discover awesome Independent pubs and bars", type: .barFinder)

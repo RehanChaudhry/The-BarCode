@@ -73,6 +73,9 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
+        
+        debugPrint("Tabbarcontroller deinit called")
+        
     }
     
     //MARK: My Methods

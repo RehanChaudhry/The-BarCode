@@ -81,6 +81,10 @@ class CategoriesViewController: UIViewController {
         Analytics.logEvent(viewPreferencesScreen, parameters: nil)
     }
 
+    deinit {
+        debugPrint("CategoriesViewController deinit called")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

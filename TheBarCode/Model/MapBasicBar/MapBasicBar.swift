@@ -17,6 +17,8 @@ class MapBasicBar: NSObject, Mappable {
     
     var barId: String!
     
+    var title: String!
+    
     var standardOfferType: StandardOfferType {
         get {
             if let standardOfferTypeRaw = self.standardOfferTypeRaw {
@@ -36,6 +38,9 @@ class MapBasicBar: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
+        
+        self.title <- map["title"]
+        
         self.latitude = CLLocationDegrees("\(map.JSON["latitude"]!)")!
         self.longitude = CLLocationDegrees("\(map.JSON["longitude"]!)")!
         

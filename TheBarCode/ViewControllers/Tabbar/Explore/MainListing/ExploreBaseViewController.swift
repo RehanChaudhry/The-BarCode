@@ -14,6 +14,7 @@ import ObjectMapper
 import HTTPStatusCodes
 import CoreLocation
 import CoreStore
+import PureLayout
 
 class ExploreBaseViewController: UIViewController {
 
@@ -36,7 +37,15 @@ class ExploreBaseViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     
     @IBOutlet var statefulTableView: StatefulTableView!
-    @IBOutlet var mapView: GMSMapView!
+    var mapView: GMSMapView?
+    
+    @IBOutlet var mapErrorView: ShadowView!
+    
+    @IBOutlet var mapLoadingIndicator: UIActivityIndicatorView!
+    @IBOutlet var mapReloadButton: UIButton!
+    
+    var myLocationButtonContainer: ShadowView!
+    var myLocationButton: UIButton!
     
     var displayType: DisplayType = .list
     
@@ -55,25 +64,18 @@ class ExploreBaseViewController: UIViewController {
 
     let locationManager = MyLocationManager()
     
-    var clusterManager: GMUClusterManager!
+    var clusterManager: GMUClusterManager?
 
     var mapApiState: LoadMore = LoadMore(isLoading: false, canLoadMore: false, error: nil)
     var mapDataRequest: DataRequest?
     var mapBars: [MapBasicBar] = []
     
+    var mapCameraPosition: GMSCameraPosition?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-//        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let iconGenerator = GMUCustomClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        renderer.delegate = self
-        
-        self.clusterManager = GMUClusterManager(map: self.mapView, algorithm: algorithm, renderer: renderer)
-        self.clusterManager.setDelegate(self, mapDelegate: self)
         
         self.listButton.roundCorners(corners: [.topLeft, .bottomLeft], radius: 5.0)
         self.mapButton.roundCorners(corners: [.topRight, .bottomRight], radius: 5.0)
@@ -99,6 +101,8 @@ class ExploreBaseViewController: UIViewController {
         self.setUserLocation()
         
         NotificationCenter.default.addObserver(self, selector: #selector(barDetailsRefreshedNotification(notification:)), name: notificationNameBarDetailsRefreshed, object: nil)
+        
+        self.setupMyLocationButton()
 
     }
     
@@ -114,10 +118,115 @@ class ExploreBaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.setupMapView()
         self.statefulTableView.innerTable.reloadData()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.clearMapView()
+    }
+    
     //MARK: My Methods
+    
+    func setUpBasicMapBars() {
+        
+    }
+    
+    func setupMyLocationButton() {
+        
+        self.myLocationButtonContainer = ShadowView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        self.myLocationButtonContainer.backgroundColor = self.mapErrorView.backgroundColor
+        self.myLocationButtonContainer.cornerRadius = 22.0
+        self.myLocationButtonContainer.shadowColor = self.mapErrorView.shadowColor
+        self.myLocationButtonContainer.shadowRadius = self.mapErrorView.shadowRadius
+        self.myLocationButtonContainer.shadowOffset = self.mapErrorView.shadowOffset
+        self.myLocationButtonContainer.shadowOpacity = self.mapErrorView.shadowOpacity
+        
+        self.myLocationButton = UIButton(type: .system)
+        self.myLocationButton.setImage(UIImage(named: "icon_my_location"), for: .normal)
+        self.myLocationButton.addTarget(self, action: #selector(myLocationButtonTapped(sender:)), for: .touchUpInside)
+        self.myLocationButton.tintColor = UIColor.white
+        self.myLocationButtonContainer.addSubview(self.myLocationButton)
+        self.myLocationButton.autoPinEdgesToSuperviewEdges()
+        
+        self.mapContainer.addSubview(self.myLocationButtonContainer)
+        self.myLocationButtonContainer.autoSetDimensions(to: self.myLocationButtonContainer.frame.size)
+        self.myLocationButtonContainer.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.mapContainer, withOffset: -16.0)
+        self.myLocationButtonContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.top, of: self.mapErrorView, withOffset: -16.0)
+        
+        self.myLocationButtonContainer.isHidden = CLLocationManager.authorizationStatus() == .notDetermined
+    }
+    
+    @objc func myLocationButtonTapped(sender: UIButton) {
+        if let location = self.mapView?.myLocation {
+            let position = GMSCameraPosition.camera(withTarget: location.coordinate, zoom: 15.0)
+            self.mapView?.animate(to: position)
+        }
+    }
+    
+    func setupMapView() {
+        
+        let mapView = GMSMapView(frame: CGRect.zero)
+        mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
+        if CLLocationManager.authorizationStatus() != .notDetermined {
+            mapView.settings.myLocationButton = false
+            mapView.isMyLocationEnabled = true
+            
+            self.myLocationButtonContainer.isHidden = false
+        } else {
+            self.myLocationButtonContainer.isHidden = true
+        }
+        
+        self.mapContainer.insertSubview(mapView, at: 0)
+        
+        mapView.autoPinEdgesToSuperviewEdges()
+        
+        let iconGenerator = GMUCustomClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
+        renderer.delegate = self
+        
+        self.clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        self.clusterManager?.setDelegate(self, mapDelegate: self)
+        
+        self.mapView = mapView
+        
+        self.setUpMarkers()
+        
+        self.restoreMapCameraPosition(animated: false)
+    }
+    
+    func clearMapView() {
+        
+        self.clusterManager?.clearItems()
+        
+        self.mapView?.clear()
+        self.mapView?.removeFromSuperview()
+        
+        self.mapView = nil
+        self.clusterManager = nil
+    }
+    
+    func setupMapCamera(cordinate: CLLocationCoordinate2D) {
+        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
+        self.mapView?.animate(to: position)
+        
+        self.mapCameraPosition = position
+    }
+    
+    func restoreMapCameraPosition(animated: Bool) {
+        if let camera = self.mapCameraPosition {
+            if animated {
+                self.mapView?.animate(to: camera)
+            } else {
+                self.mapView?.camera = camera
+            }
+        } else {
+            debugPrint("Camera position not available for restoration")
+        }
+    }
     
     func resetMapListSegment() {
         self.mapButton.backgroundColor = self.tempView.backgroundColor
@@ -144,55 +253,19 @@ class ExploreBaseViewController: UIViewController {
     
     func setUpMarkers() {
         
-        self.mapView.clear()
-        self.clusterManager.clearItems()
+        self.mapView?.clear()
+        self.clusterManager?.clearItems()
         
         self.mapBars.removeAll(where: {$0.position.latitude > 85.0})        
         self.mapBars.removeAll(where: {$0.position.latitude < -85.0})
         
         for mapBar in self.mapBars {
-            self.clusterManager.add(mapBar)
+            self.clusterManager?.add(mapBar)
         }
         
-        self.clusterManager.cluster()
+        self.clusterManager?.cluster()
     }
 
-    /*
-    func setUpBarMarkers(bars: [Bar]) {
-    
-        self.mapView.clear()
-        self.markers.removeAll()
-        
-        var bounds = GMSCoordinateBounds()
-        for (index, explore) in bars.enumerated() {
-            let location: CLLocation = CLLocation(latitude: CLLocationDegrees(explore.latitude.value), longitude: CLLocationDegrees(explore.longitude.value))
-            
-            bounds = bounds.includingCoordinate(location.coordinate)
-            
-            let pinImage = self.getPinImage(explore: explore)
-            let marker = self.createMapMarker(location: location, pinImage: pinImage)
-            marker.userData = explore
-            marker.zIndex = Int32(index)
-            marker.map = mapView
-            
-            self.markers.append(marker)
-        }
-        
-    }
-    */
-    
-    func focusCameraTo(cordinate: CLLocationCoordinate2D) {
-        let position = GMSCameraPosition.camera(withTarget: cordinate, zoom: 15.0)
-        self.mapView.animate(to: position)
-        self.mapView.settings.allowScrollGesturesDuringRotateOrZoom = false
-        
-        if CLLocationManager.authorizationStatus() != .notDetermined {
-            self.mapView.settings.myLocationButton = true
-            self.mapView.isMyLocationEnabled = true
-        }
-        
-    }
-    
     func setUserLocation() {
         
         let authorizationStatus = CLLocationManager.authorizationStatus()
@@ -205,7 +278,7 @@ class ExploreBaseViewController: UIViewController {
         
         guard let requestAlwaysAccess = canContinue else {
             debugPrint("Location permission not authorized")
-            self.focusCameraTo(cordinate: defaultUKLocation)
+            self.setupMapCamera(cordinate: defaultUKLocation)
             return
         }
         
@@ -214,7 +287,7 @@ class ExploreBaseViewController: UIViewController {
             
             guard error == nil else {
                 debugPrint("Error while getting location: \(error!.localizedDescription)")
-                self.focusCameraTo(cordinate: defaultUKLocation)
+                self.setupMapCamera(cordinate: defaultUKLocation)
                 return
             }
             
@@ -227,11 +300,9 @@ class ExploreBaseViewController: UIViewController {
                         
                     })
                 }
-                self.focusCameraTo(cordinate: location.coordinate)
+                self.setupMapCamera(cordinate: location.coordinate)
             }
         }
-        
-   
     }
 
     func showDirection(bar: Bar) {
@@ -278,6 +349,10 @@ extension ExploreBaseViewController : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         return false
     }
+    
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        self.mapCameraPosition = position
+    }
 }
 
 
@@ -300,10 +375,10 @@ extension ExploreBaseViewController {
             }
             mapBar.isOpen = isOpened
             
-            self.clusterManager.remove(mapBar)
+            self.clusterManager?.remove(mapBar)
             
-            self.clusterManager.add(mapBar)
-            self.clusterManager.cluster()
+            self.clusterManager?.add(mapBar)
+            self.clusterManager?.cluster()
         }
         
         
@@ -357,7 +432,7 @@ extension ExploreBaseViewController: GMUClusterManagerDelegate {
         }
         
         let update = GMSCameraUpdate.fit(latlngBounds, withPadding: 150.0)
-        self.mapView.animate(with: update)
+        self.mapView?.animate(with: update)
         
         return false
     }
@@ -372,6 +447,7 @@ extension ExploreBaseViewController: GMUClusterRendererDelegate {
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
         if let mapBar = marker.userData as? MapBasicBar {
             marker.icon = Utility.shared.getMapBarPinImage(mapBar: mapBar)
+            marker.zIndex = Int32(self.mapBars.firstIndex(of: mapBar) ?? 0)
         }
     }
 }
