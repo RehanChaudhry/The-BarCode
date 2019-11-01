@@ -39,13 +39,16 @@ class BarsViewController: ExploreBaseViewController {
         self.searchBar.delegate = self
         self.statefulTableView.triggerInitialLoad()
         
-        self.setUpBasicMapBars()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.statefulTableView.innerTable.reloadData()
+        
+        if !self.mapApiState.isLoading {
+            self.setUpBasicMapBars()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -347,10 +350,9 @@ extension BarsViewController {
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
         try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
-                for bar in bars {
-                    bar.isUserFavourite.value = !bar.isUserFavourite.value
-                }
+            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value))
+            for bar in bars {
+                bar.isUserFavourite.value = !bar.isUserFavourite.value
             }
         })
         

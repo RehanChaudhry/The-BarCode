@@ -126,22 +126,16 @@ extension RedeemDealViewController {
                     
                     if self.type == .standard {
                         try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.bar.id.value)) {
-                                for bar in bars {
-                                    bar.canRedeemOffer.value = false
-                                }
-                            } else {
-                                debugPrint("Bars not found while redeeming standard offer")
+                            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.bar.id.value))
+                            for bar in bars {
+                                bar.canRedeemOffer.value = false
                             }
                         })
                     } else {
                         try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishment.value!.id.value)) {
-                                for bar in bars {
-                                    bar.canRedeemOffer.value = false
-                                }
-                            } else {
-                                debugPrint("Bars not found while redeeming deal")
+                            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishment.value!.id.value))
+                            for bar in bars {
+                                bar.canRedeemOffer.value = false
                             }
                         })
                     }

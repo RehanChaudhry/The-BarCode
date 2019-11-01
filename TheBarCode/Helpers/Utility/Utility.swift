@@ -48,14 +48,24 @@ let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 let notificationNameLiveOffer: String = "notificationNameLiveOffer"
 let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOffer"
 
+let notificationNameAcceptSharedEvent = Notification.Name("notificationNameAcceptSharedEvent")
+
 let notificationNameBarDetailsRefreshed = Notification.Name(rawValue: "notificationNameBarDetailsRefreshed")
 
 let notificationNameBookmarkAdded = Notification.Name(rawValue: "notificationNameBookmarkAdded")
 let notificationNameBookmarkRemoved = Notification.Name(rawValue: "notificationNameBookmarkRemoved")
 
+let notificationNameEventBookmarked = Notification.Name(rawValue: "notificationNameEventBookmarked")
+let notificationNameBookmarkedEventRemoved = Notification.Name(rawValue: "notificationNameBookmarkedEventRemoved")
+
 let notificationNameBarFavouriteAdded = Notification.Name(rawValue: "notificationNameBarFavouriteAdded")
 let notificationNameBarFavouriteRemoved = Notification.Name(rawValue: "notificationNameBarFavouriteRemoved")
 
+let notificationNameReloadAllSharedOffers = Notification.Name(rawValue: "notificationNameReloadAllSharedOffers")
+let notificationNameReloadAllSharedEvents = Notification.Name(rawValue: "notificationNameReloadAllSharedEvents")
+
+let notificationNameSharedOfferRemoved = Notification.Name(rawValue: "notificationNameSharedOfferRemoved")
+let notificationNameSharedEventRemoved = Notification.Name(rawValue: "notificationNameSharedEventRemoved")
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
@@ -64,7 +74,7 @@ let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: 
 
 let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
 let dynamicLinkShareOfferDomain = "barcodeoffer.page.link"
-let dynamicLinkInfluencerDomain = "thebarcode.page.link"
+let dynamicLinkGenaricDomain = "thebarcode.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
@@ -114,7 +124,8 @@ class Utility: NSObject {
                 Entity<ExploreSchedule>("ExploreSchedule"),
                 Entity<Event>("Event"),
                 Entity<Food>("Food"),
-                Entity<Drink>("Drink")
+                Entity<Drink>("Drink"),
+                Entity<EventExternalCTA>("EventExternalCTA")
             ]
         )
     )
@@ -152,19 +163,19 @@ class Utility: NSObject {
     func saveCurrentUser(userDict: [String : Any]) -> User {
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let user = try! transaction.importUniqueObject(Into<User>(), source: userDict)
-            let _ = transaction.deleteAll(From<User>().where(\User.userId != user!.userId.value))
+            let _ = try! transaction.deleteAll(From<User>().where(\User.userId != user!.userId.value))
         })
         return self.getCurrentUser()!
     }
     
     func getCurrentUser() -> User? {
-        let user = CoreStore.fetchOne(From<User>())
+        let user = try! CoreStore.fetchOne(From<User>())
         return user
     }
     
     func removeUser() {
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
-            transaction.deleteAll(From<User>())
+            try! transaction.deleteAll(From<User>())
         })
         APIHelper.shared.setUpOAuthHandler(accessToken: nil, refreshToken: nil)
         
@@ -233,7 +244,7 @@ class Utility: NSObject {
 
     //decrement credit by 1 
     func userCreditConsumed() {
-        let user = CoreStore.fetchOne(From<User>())
+        let user = try! CoreStore.fetchOne(From<User>())
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let editedObject = transaction.edit(user)
@@ -247,7 +258,7 @@ class Utility: NSObject {
     }
     
     func userCreditUpdate(creditValue: Int) {
-        let user = CoreStore.fetchOne(From<User>())
+        let user = try! CoreStore.fetchOne(From<User>())
         
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
             let editedObject = transaction.edit(user)
@@ -363,6 +374,36 @@ class Utility: NSObject {
         
     }
     
+    func getSharedEventParams(urlString: String) -> SharedEventParams? {
+        var referral: String?
+        var eventId: String?
+        var sharedBy: String?
+        var sharedByName: String?
+        
+        let urlComponents = URLComponents(string: urlString)
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if queryItem.name == "referral" {
+                    referral = queryItem.value
+                } else if queryItem.name == "event_id" {
+                    eventId = queryItem.value
+                } else if queryItem.name == "shared_by" {
+                    sharedBy = queryItem.value
+                } else if queryItem.name == "shared_by_name" {
+                    sharedByName = queryItem.value
+                }
+            }
+        }
+        
+        if let referral = referral, let eventId = eventId, let sharedBy = sharedBy, let sharedByName = sharedByName {
+            let sharedEventParams = SharedEventParams(referral: referral, sharedBy: sharedBy, eventId: eventId, sharedByName: sharedByName)
+            return sharedEventParams
+        } else {
+            return nil
+        }
+        
+    }
+    
     func generateAndShareDynamicLink(deal: Deal, controller: UIViewController, presentationCompletion: @escaping (() -> Void), dismissCompletion: @escaping (() -> Void) ) {
         
         let user = Utility.shared.getCurrentUser()!
@@ -382,7 +423,7 @@ class Utility: NSObject {
         
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
-        let descText = "\(user.fullName.value) has shared an offer with you, check it out! Pass on great offers AND get  credits when your friends redeem them, so why not share the love."
+        let descText = "\(user.fullName.value) has shared an offer with you, check it out! Pass on great offers AND get credits when your friends redeem them, so why not share the love."
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
         linkComponents.socialMetaTagParameters?.descriptionText = descText
@@ -396,6 +437,58 @@ class Utility: NSObject {
             guard error == nil else {
                 presentationCompletion()
                 controller.showAlertController(title: "Invite", msg: error!.localizedDescription)
+                return
+            }
+            
+            if let warnings = warnings {
+                debugPrint("Dynamic link generation warnings: \(String(describing: warnings))")
+            }
+            
+            let activityViewController = UIActivityViewController(activityItems: [descText, shortUrl!], applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = controller.view
+            activityViewController.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
+                dismissCompletion()
+            }
+            controller.present(activityViewController, animated: true, completion: {
+                presentationCompletion()
+            })
+        }
+        
+    }
+    
+    func generateAndShareDynamicLink(event: Event, controller: UIViewController, presentationCompletion: @escaping (() -> Void), dismissCompletion: @escaping (() -> Void) ) {
+        
+        let user = Utility.shared.getCurrentUser()!
+        let ownReferralCode = user.ownReferralCode.value
+        let offerShareUrlString = theBarCodeAPIDomain + "?referral=" + ownReferralCode + "&event_id=" + event.id.value + "&shared_by=" + user.userId.value + "&shared_by_name=" + user.fullName.value
+        
+        let url = URL(string: offerShareUrlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        
+        let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
+        iOSNavigationParams.isForcedRedirectEnabled = false
+        
+        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkGenaricDomain)
+        linkComponents.navigationInfoParameters = iOSNavigationParams
+        linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
+        linkComponents.iOSParameters?.appStoreID = kAppStoreId
+        linkComponents.iOSParameters?.customScheme = theBarCodeInviteScheme
+        
+        linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
+        
+        let descText = "\(user.fullName.value) has shared an event with you, check it out! Pass on great events, so why not share the love."
+        linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkComponents.socialMetaTagParameters?.title = "The Barcode"
+        linkComponents.socialMetaTagParameters?.descriptionText = descText
+        linkComponents.socialMetaTagParameters?.imageURL = tbcLogoUrl
+        
+        linkComponents.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+        linkComponents.otherPlatformParameters?.fallbackUrl = URL(string: barCodeDomainURLString)
+        
+        linkComponents.shorten { (shortUrl, warnings, error) in
+            
+            guard error == nil else {
+                presentationCompletion()
+                controller.showAlertController(title: "Share Event", msg: error!.localizedDescription)
                 return
             }
             

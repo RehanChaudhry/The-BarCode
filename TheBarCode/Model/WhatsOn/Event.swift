@@ -31,6 +31,9 @@ class Event: CoreStoreObject {
     
     var date = Value.Optional<Date>("date")
     
+    var sharedId = Value.Optional<String>("shared_id")
+    var sharedByName = Value.Optional<String>("shared_by_name")
+    
     var formattedDateString: String {
         get {
             if let date = self.date.value {
@@ -63,6 +66,8 @@ class Event: CoreStoreObject {
     var endTimeRaw = Value.Required<String>("end_time", initial: "")
     var startDateTimeRaw = Value.Required<String>("start_date_time", initial: "")
     var endDateTimeRaw = Value.Required<String>("end_date_time", initial: "")
+    
+    var isBookmarked = Value.Required<Bool>("is_bookmarked", initial: false)
     
     var startDate: Date {
         get {
@@ -99,6 +104,20 @@ class Event: CoreStoreObject {
             return Utility.shared.serverFormattedDateTime(date: self.endDateTimeRaw.value)
         }
     }
+    
+    var showLoader: Bool = false
+    var showSharingLoader: Bool = false
+    
+    var savingBookmarkStatus: Bool = false {
+        didSet {
+            debugPrint("loading status changed")
+        }
+    }
+    
+    var externalCTAs = Relationship.ToManyOrdered<EventExternalCTA>("external_ctas", inverse: { $0.event })
+    
+    var shouldShowDate = Value.Required<Bool>("should_show_date", initial: false)
+    var shouldShowTime = Value.Required<Bool>("should_show_time", initial: false)
 }
 
 extension Event: ImportableUniqueObject {
@@ -163,6 +182,8 @@ extension Event: ImportableUniqueObject {
             self.bar.value = bar!
         }
         
+        self.isBookmarked.value = source["is_user_favourite"] as? Bool ?? false
+        
         self.startDateRaw.value = source["start_date"]! as! String
         self.endDateRaw.value = source["end_date"]! as! String
         self.startTimeRaw.value = source["start_time"]! as! String
@@ -171,5 +192,21 @@ extension Event: ImportableUniqueObject {
         self.startDateTimeRaw.value = self.startDateRaw.value + " " + self.startTimeRaw.value
         self.endDateTimeRaw.value = self.endDateRaw.value + " " + self.endTimeRaw.value
         
+        if let externalLinks = source["links"] as? [[String : Any]] {
+            self.externalCTAs.value = try! transaction.importObjects(Into<EventExternalCTA>(), sourceArray: externalLinks)
+        } else {
+            self.externalCTAs.value = []
+        }
+        
+        self.shouldShowDate.value = source["is_date_show"] as? Bool ?? false
+        self.shouldShowTime.value = source["is_time_selected"] as? Bool ?? false
+        
+        if let _ = source["shared_id"] {
+            self.sharedId.value = "\(source["shared_id"]!)"
+        }
+        
+        if let shareByName = source["shared_by_name"] as? String {
+            self.sharedByName.value = shareByName
+        }
     }
 }

@@ -24,8 +24,8 @@ class SharedOffersViewController: UIViewController {
     var dataRequest: DataRequest?
     var loadMore = Pagination()
     
-    var shouldShowFirstItemPadding = true
-    
+    var showHideEmptyDatasetForcefully: Bool = false
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,12 +36,26 @@ class SharedOffersViewController: UIViewController {
         self.setUpStatefulTableView()
         self.resetOffers()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(resetAllSharedOfferNotificationReceived(notif:)), name: notificationNameReloadAllSharedOffers, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sharedOfferRemovedNotification(notif:)), name: notificationNameSharedOfferRemoved, object: nil)
+        
         Analytics.logEvent(viewSharedOfferScreen, parameters: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameReloadAllSharedOffers, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameSharedOfferRemoved, object: nil)
     }
     
     //MARK: My Methods
@@ -51,6 +65,7 @@ class SharedOffersViewController: UIViewController {
         self.loadMore = Pagination()
         self.offers.removeAll()
         self.statefulTableView.innerTable.reloadData()
+        self.statefulTableView.state = .idle
         self.statefulTableView.triggerInitialLoad()
     }
     
@@ -75,17 +90,9 @@ class SharedOffersViewController: UIViewController {
     }
     
     func showDirection(bar: Bar){
-        let user = Utility.shared.getCurrentUser()!
-
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let source = CLLocationCoordinate2D(latitude: user.latitude.value, longitude: user.longitude.value)
+        let mapUrl = "https://www.google.com/maps/dir/?api=1&destination=\(bar.latitude.value)+\(bar.longitude.value)"
+        UIApplication.shared.open(URL(string: mapUrl)!, options: [:]) { (success) in
             
-            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",source.latitude,source.longitude,bar.latitude.value,bar.longitude.value)
-            let url = URL(string: urlString)
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-        } else {
-            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
     
@@ -95,6 +102,13 @@ class SharedOffersViewController: UIViewController {
         barDetailController.selectedBar = bar
         barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
+    }
+    
+    func setupForEmptyDataSetIfNeeded() {
+        if !self.loadMore.isLoading {
+            self.showHideEmptyDatasetForcefully = true
+            self.statefulTableView.triggerInitialLoad()
+        }
     }
     
     //MARK: My IBActions
@@ -250,9 +264,14 @@ extension SharedOffersViewController {
 //MARK: StatefulTableDelegate
 extension SharedOffersViewController: StatefulTableDelegate {
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getOffers(isRefreshing: false) {  [unowned self] (error) in
-            debugPrint("deal== \(self.offers.count)")
-            handler(self.offers.count == 0, error)
+        if self.showHideEmptyDatasetForcefully {
+            self.showHideEmptyDatasetForcefully = false
+            handler(self.offers.count == 0, nil)
+        } else {
+            self.getOffers(isRefreshing: false) {  [unowned self] (error) in
+                debugPrint("deal== \(self.offers.count)")
+                handler(self.offers.count == 0, error)
+            }
         }
     }
     
@@ -360,10 +379,20 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
             return
         }
         
+        let reachabilityManager = NetworkReachabilityManager()
+        guard reachabilityManager?.isReachable == true else {
+            self.showAlertController(title: "", msg: "No or weak internet connection")
+            return
+        }
+        
         let sharedOffer = self.offers[indexPath.row]
         
         self.offers.remove(at: indexPath.row)
         self.statefulTableView.innerTable.deleteRows(at: [indexPath], with: .top)
+        
+        self.setupForEmptyDataSetIfNeeded()
+        
+        NotificationCenter.default.post(name: notificationNameSharedOfferRemoved, object: sharedOffer)
         
         self.deleteSharedOffer(offer: sharedOffer)
     }
@@ -374,7 +403,6 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
             debugPrint("Indexpath not found")
             return
         }
-        
         
         if let liveOffer = self.offers[indexPath.row] as? LiveOffer {
             
@@ -406,7 +434,41 @@ extension SharedOffersViewController: ShareOfferCellDelegate {
     }
 }
 
+//MARK: BarDetailViewControllerDelegate
 extension SharedOffersViewController: BarDetailViewControllerDelegate {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem) {
+        
+    }
+}
+
+//MARK: Notification Methods
+extension SharedOffersViewController {
+    @objc func resetAllSharedOfferNotificationReceived(notif: Notification) {
+        self.resetOffers()
+    }
+    
+    @objc func sharedOfferRemovedNotification(notif: Notification) {
+        guard let offerId = (notif.object as? Deal)?.id.value else {
+            debugPrint("Offer id not available")
+            return
+        }
+        
+        let offerIndex = self.offers.firstIndex { (offer) -> Bool in
+            if let deal = offer as? Deal {
+                return deal.id.value == offerId
+            } else {
+                return false
+            }
+        }
+        
+        guard let index = offerIndex else {
+            debugPrint("Offer id does not exist to remove")
+            return
+        }
+        
+        self.offers.remove(at: index)
+        self.statefulTableView.innerTable.reloadData()
+        
+        self.setupForEmptyDataSetIfNeeded()
     }
 }

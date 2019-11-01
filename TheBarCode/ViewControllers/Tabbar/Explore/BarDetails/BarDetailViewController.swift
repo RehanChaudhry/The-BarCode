@@ -653,11 +653,9 @@ extension BarDetailViewController: WhatsOnViewControllerDelegate {
     }
     
     func whatsOnViewController(controller: WhatsOnViewController, didSelect event: Event) {
-        let detailController = (self.storyboard!.instantiateViewController(withIdentifier: "WhatsOnDetailViewController") as! WhatsOnDetailViewController)
-        detailController.type = .event
-        detailController.event = event
-        detailController.bar = self.selectedBar!
-        self.navigationController?.pushViewController(detailController, animated: true)
+        let eventDetailController = (self.storyboard!.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController)
+        eventDetailController.event = event
+        self.navigationController?.pushViewController(eventDetailController, animated: true)
     }
 }
 

@@ -257,12 +257,15 @@ public struct OrderBy<D: DynamicObject>: OrderByClause, FetchClause, QueryClause
     }
 }
 
-public extension OrderBy.SortKey where D: CoreStoreObject {
+
+// MARK: - OrderBy.SortKey where D: CoreStoreObject
+
+extension OrderBy.SortKey where D: CoreStoreObject {
     
     /**
      Indicates that the `KeyPathString` should be sorted in ascending order
      */
-    public static func ascending<K: DynamicKeyPath>(_ attribute: (D) -> K) -> OrderBy<D>.SortKey {
+    public static func ascending<K: KeyPathStringConvertible>(_ attribute: (D) -> K) -> OrderBy<D>.SortKey {
         
         return .ascending(attribute(D.meta).cs_keyPathString)
     }
@@ -270,7 +273,7 @@ public extension OrderBy.SortKey where D: CoreStoreObject {
     /**
      Indicates that the `KeyPathString` should be sorted in descending order
      */
-    public static func descending<K: DynamicKeyPath>(_ attribute: (D) -> K) -> OrderBy<D>.SortKey {
+    public static func descending<K: KeyPathStringConvertible>(_ attribute: (D) -> K) -> OrderBy<D>.SortKey {
         
         return .descending(attribute(D.meta).cs_keyPathString)
     }
@@ -298,7 +301,7 @@ public protocol OrderByClause {
 
 // MARK: - Sequence where Iterator.Element: OrderByClause
 
-public extension Sequence where Iterator.Element: OrderByClause {
+extension Sequence where Iterator.Element: OrderByClause {
     
     /**
      Combines multiple `OrderBy` predicates together

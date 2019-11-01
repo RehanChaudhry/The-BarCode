@@ -29,7 +29,7 @@ import Foundation
 
 // MARK: - DynamicObject
 
-public extension DynamicObject where Self: CoreStoreObject {
+extension DynamicObject where Self: CoreStoreObject {
     
     /**
      The containing type for value propertiess. `Value` properties support any type that conforms to `ImportableAttributeType`.
@@ -73,7 +73,7 @@ public enum ValueContainer<O: CoreStoreObject> {
      ```
      - Important: `Value.Required` properties are required to be stored properties. Computed properties will be ignored, including `lazy` and `weak` properties.
      */
-    public final class Required<V: ImportableAttributeType>: AttributeProtocol {
+    public final class Required<V: ImportableAttributeType>: AttributeKeyPathStringConvertible, AttributeProtocol {
         
         /**
          Initializes the metadata for the property.
@@ -129,11 +129,11 @@ public enum ValueContainer<O: CoreStoreObject> {
             self.customSetter = customSetter
             self.affectedByKeyPaths = affectedByKeyPaths
         }
-        
+
         /**
-         The property value.
+         The attribute value
          */
-        public var value: V {
+        public var value: ReturnValueType {
             
             get {
                 
@@ -183,6 +183,25 @@ public enum ValueContainer<O: CoreStoreObject> {
                 }
             }
         }
+
+
+        // MARK: AnyKeyPathStringConvertible
+
+        public var cs_keyPathString: String {
+
+            return self.keyPath
+        }
+
+
+        // MARK: KeyPathStringConvertible
+
+        public typealias ObjectType = O
+        public typealias DestinationValueType = V
+
+
+        // MARK: AttributeKeyPathStringConvertible
+
+        public typealias ReturnValueType = DestinationValueType
         
         
         // MARK: AttributeProtocol
@@ -249,24 +268,6 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         private let customGetter: ((_ partialObject: PartialObject<O>) -> V)?
         private let customSetter: ((_ partialObject: PartialObject<O>, _ newValue: V) -> Void)?
-        
-        
-        // MARK: Deprecated
-        
-        @available(*, unavailable, message: "Indexes are now set through the Entity<T> initializer, which now supports compound indexes.")
-        public convenience init(
-            _ keyPath: KeyPathString,
-            initial: @autoclosure @escaping () -> V,
-            isIndexed: Bool,
-            isTransient: Bool = false,
-            versionHashModifier: @autoclosure @escaping () -> String? = nil,
-            renamingIdentifier: @autoclosure @escaping () -> String? = nil,
-            customGetter: ((_ partialObject: PartialObject<O>) -> V)? = nil,
-            customSetter: ((_ partialObject: PartialObject<O>, _ newValue: V) -> Void)? = nil,
-            affectedByKeyPaths: @autoclosure @escaping () -> Set<String> = []) {
-            
-            fatalError()
-        }
     }
     
     
@@ -283,7 +284,7 @@ public enum ValueContainer<O: CoreStoreObject> {
      ```
      - Important: `Value.Optional` properties are required to be stored properties. Computed properties will be ignored, including `lazy` and `weak` properties.
      */
-    public final class Optional<V: ImportableAttributeType>: AttributeProtocol {
+    public final class Optional<V: ImportableAttributeType>: AttributeKeyPathStringConvertible, AttributeProtocol {
         
         /**
          Initializes the metadata for the property.
@@ -342,11 +343,11 @@ public enum ValueContainer<O: CoreStoreObject> {
             self.customSetter = customSetter
             self.affectedByKeyPaths = affectedByKeyPaths
         }
-        
+
         /**
-         The property value.
+         The attribute value
          */
-        public var value: V? {
+        public var value: ReturnValueType {
             
             get {
                 
@@ -395,6 +396,25 @@ public enum ValueContainer<O: CoreStoreObject> {
                 }
             }
         }
+
+
+        // MARK: AnyKeyPathStringConvertible
+
+        public var cs_keyPathString: String {
+
+            return self.keyPath
+        }
+
+
+        // MARK: KeyPathStringConvertible
+
+        public typealias ObjectType = O
+        public typealias DestinationValueType = V
+
+
+        // MARK: AttributeKeyPathStringConvertible
+
+        public typealias ReturnValueType = DestinationValueType?
         
         
         // MARK: AttributeProtocol
@@ -461,24 +481,6 @@ public enum ValueContainer<O: CoreStoreObject> {
         
         private let customGetter: ((_ partialObject: PartialObject<O>) -> V?)?
         private let customSetter: ((_ partialObject: PartialObject<O>, _ newValue: V?) -> Void)?
-        
-        
-        // MARK: Deprecated
-        
-        @available(*, unavailable, message: "Indexes are now set through the Entity<T> initializer, which now supports compound indexes.")
-        public convenience init(
-            _ keyPath: KeyPathString,
-            initial: @autoclosure @escaping () -> V? = nil,
-            isIndexed: Bool,
-            isTransient: Bool = false,
-            versionHashModifier: @autoclosure @escaping () -> String? = nil,
-            renamingIdentifier: @autoclosure @escaping () -> String? = nil,
-            customGetter: ((_ partialObject: PartialObject<O>) -> V?)? = nil,
-            customSetter: ((_ partialObject: PartialObject<O>, _ newValue: V?) -> Void)? = nil,
-            affectedByKeyPaths: @autoclosure @escaping () -> Set<String> = []) {
-            
-            fatalError()
-        }
     }
 }
 

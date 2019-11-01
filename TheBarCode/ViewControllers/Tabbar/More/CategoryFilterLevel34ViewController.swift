@@ -115,9 +115,9 @@ class CategoryFilterLevel34ViewController: UIViewController {
     
     //MARK: My Methods
     func getCachedCategories() {
-        let level3Categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == parentCategory.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        let level3Categories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == parentCategory.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
         for level3Category in level3Categories {
-            let level4Categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == level3Category.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+            let level4Categories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == level3Category.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
             
             let sectionCategory = (level3Category, level4Categories, false)
             self.categories.append(sectionCategory)
@@ -162,8 +162,8 @@ class CategoryFilterLevel34ViewController: UIViewController {
     }
     
     func markChildAsSelection(category: Category, selection: Bool) {
-        if category.hasChildren.value,
-            let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+        if category.hasChildren.value {
+            let childCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value))
             for childCategory in childCategories {
                 childCategory.isSelected.value = selection
                 markChildAsSelection(category: childCategory, selection: selection)

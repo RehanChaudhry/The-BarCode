@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var referralCode: String?
     var sharedOfferParams: SharedOfferParams?
+    var sharedEventParams: SharedEventParams?
     
     var liveOfferBarId: String?
     
@@ -166,6 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
+        Thread.sleep(forTimeInterval: 0.2)
+        
         let handled = self.handleUserActivity(userActivity: userActivity)
         return handled
     }
@@ -181,6 +184,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.sharedOfferParams = sharedOfferParams
                 self.referralCode = sharedOfferParams.referral!
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
+            } else if let sharedEventParams = Utility.shared.getSharedEventParams(urlString: link.absoluteString) {
+                self.sharedEventParams = sharedEventParams
+                self.referralCode = sharedEventParams.referral
+                NotificationCenter.default.post(name: notificationNameAcceptSharedEvent, object: nil)
             } else if let code = Utility.shared.getReferralCodeFromUrlString(urlString: link.absoluteString) {
                 self.referralCode = code
             } else if let influencerId = Utility.shared.getInfluencerIdFromUrlString(urlString: link.absoluteString) {
@@ -230,6 +237,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
                 } else {
                     debugPrint("Unable to parse shared offer params: ")
+                }
+            } else if universalUrl?.host == dynamicLinkGenaricDomain {
+                if let sharedEventParams = Utility.shared.getSharedEventParams(urlString: dynamicLink!.url!.absoluteString) {
+                    self.sharedEventParams = sharedEventParams
+                    self.referralCode = sharedEventParams.referral
+                    NotificationCenter.default.post(name: notificationNameAcceptSharedEvent, object: nil)
+                } else {
+                    debugPrint("shared offer/event params unavailable")
                 }
             } else {
                 debugPrint("Unhandled dynamic link domain")

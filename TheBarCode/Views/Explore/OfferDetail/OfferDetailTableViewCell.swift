@@ -73,7 +73,7 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
 
         let validtyPlaceHodler = "Validity period: "
         
-        if Utility.shared.checkDealType(offerTypeID: deal.offerTypeId.value) == OfferType.bannerAds {
+        if !deal.shouldShowDate.value {
             self.validityLabel.text = ""
         } else {
             if deal.statusText.value.lowercased() == "active".lowercased() {

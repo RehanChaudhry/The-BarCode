@@ -1,8 +1,8 @@
 //
-//  CoreStoreFetchRequest+CoreStore.swift
+//  String+KeyPaths.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2019 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,44 @@
 //  SOFTWARE.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 
-// MARK: - CoreStoreFetchRequest
+// MARK: - KeyPathString
 
-internal extension CoreStoreFetchRequest {
-    
-    // MARK: Internal
-    
-    @nonobjc @inline(__always)
-    internal func dynamicCast<U>() -> NSFetchRequest<U> {
-        
-        return unsafeBitCast(self, to: NSFetchRequest<U>.self)
+extension KeyPathString {
+
+    /**
+     Extracts the keyPath string from the property.
+     ```
+     let keyPath = String(keyPath: \Person.nickname)
+     ```
+     */
+    public init<O: NSManagedObject, V: AllowedObjectiveCKeyPathValue>(keyPath: KeyPath<O, V>) {
+
+        self = keyPath.cs_keyPathString
+    }
+
+    /**
+     Extracts the keyPath string from the property.
+     ```
+     let keyPath = String(keyPath: \Person.nickname)
+     ```
+     */
+    public init<O: CoreStoreObject, K: KeyPathStringConvertible>(keyPath: KeyPath<O, K>) {
+
+        self = O.meta[keyPath: keyPath].cs_keyPathString
+    }
+
+    /**
+     Extracts the keyPath string from the property.
+     ```
+     let keyPath = String(keyPath: \Person.nickname)
+     ```
+     */
+    public init<O: DynamicObject, T, V>(keyPath: Where<O>.Expression<T, V>) {
+
+        self = keyPath.cs_keyPathString
     }
 }

@@ -104,10 +104,12 @@ class ExploreBaseViewController: UIViewController {
         
         self.setupMyLocationButton()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameBarDetailsRefreshed, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -306,17 +308,9 @@ class ExploreBaseViewController: UIViewController {
     }
 
     func showDirection(bar: Bar) {
-        let user = Utility.shared.getCurrentUser()!
-
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let source = CLLocationCoordinate2D(latitude: user.latitude.value, longitude: user.longitude.value)
+        let mapUrl = "https://www.google.com/maps/dir/?api=1&destination=\(bar.latitude.value)+\(bar.longitude.value)"
+        UIApplication.shared.open(URL(string: mapUrl)!, options: [:]) { (success) in
             
-            let urlString = String(format: "comgooglemaps://?saddr=%f,%f&daddr=%f,%f&directionsmode=driving",source.latitude,source.longitude,bar.latitude.value,bar.longitude.value)
-            let url = URL(string: urlString)
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-        } else {
-            let url = URL(string: "https://itunes.apple.com/us/app/google-maps-transit-food/id585027354?mt=8")
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
     //MARK: My IBActions
@@ -341,6 +335,10 @@ class ExploreBaseViewController: UIViewController {
         self.displayType = .map
         
         self.scrollView.scrollToPage(page: 1, animated: true)
+        
+        if !self.mapApiState.isLoading {
+            self.setUpBasicMapBars()
+        }
     }
 }
 
@@ -418,6 +416,14 @@ extension ExploreBaseViewController {
         
         marker.zIndex = Int32(self.markers.count - 1)
         */
+    }
+    
+    @objc func applicationDidBecomeActive(notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if !self.mapApiState.isLoading {
+                self.setUpBasicMapBars()
+            }
+        }
     }
 }
 

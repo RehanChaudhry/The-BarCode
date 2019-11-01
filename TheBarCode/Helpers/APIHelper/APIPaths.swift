@@ -50,6 +50,7 @@ let apiPathView = "view"
 let apiPathGetBarDetail = "establishment"
 
 let apiPathSharedOffers = "share"
+let apiPathSharedEvents = "event-share"
 
 let apiPathStandardOffers = "standard-offer-tier"
 
@@ -63,6 +64,9 @@ let apiPathSearchAll = "search/all"
 
 let apiPathBookmarkedOffers = "user-favorite-offer"
 let apiPathAddRemoveBookmarkedOffer = "user-favorite-offer/update"
+
+let apiPathBookmarkedEvents = "user-bookmark-event"
+let apiPathAddRemoveBookmarkedEvents = "user-bookmark-event/update"
 
 //Analytics Events
 let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()
@@ -137,6 +141,7 @@ let viewExploreScreen = "Viewed explore screen".getFormattedEventName()
 let viewBarDetailsScreen = "Viewed bar details".getFormattedEventName()
 let viewFiveADayScreen = "Viewed Five a day screen".getFormattedEventName()
 let viewSharedOfferScreen = "Viewed shared offer list".getFormattedEventName()
+let viewSharedEventScreen = "Viewed shared event list".getFormattedEventName()
 let viewAccountSettingScreen = "Viewed account settings screen".getFormattedEventName()
 let viewNotificationSettingScreen = "Viewed notification settings screen".getFormattedEventName()
 let viewPreferencesScreen = "Viewed preferences".getFormattedEventName()

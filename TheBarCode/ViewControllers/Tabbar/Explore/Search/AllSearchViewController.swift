@@ -23,6 +23,8 @@ class AllSearchViewController: BaseSearchScopeViewController {
     
     weak var allSearchDelegate: AllSearchViewControllerDelegate!
     
+    var loadingShareController: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -183,6 +185,7 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             let event = item.event
             cell.setupCell(event: event, barName: event.bar.value?.title.value)
+            cell.eventCellDelegate = self
             
             return cell
         } else if let item = viewModelItem as? AllSearchBarModel, item.type == .foodBarCell {
@@ -427,6 +430,54 @@ extension AllSearchViewController: DealTableViewCellDelegate {
     
     func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
         
+    }
+}
+
+//MARK: EventCellDelegate
+extension AllSearchViewController: EventCellDelegate {
+    func eventCell(cell: EventCell, bookmarkButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        let viewModel = self.viewModels[indexPath.section]
+        let viewModelItem = viewModel.items[indexPath.row]
+        
+        if let eventViewModel = viewModelItem as? AllSearchEventModel {
+            let event = eventViewModel.event
+            self.updateBookmarkStatus(event: event, isBookmarked: !event.isBookmarked.value)
+        }
+    }
+    
+    func eventCell(cell: EventCell, shareButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        guard !self.loadingShareController else {
+            debugPrint("Loading sharing controller is already in progress")
+            return
+        }
+        
+        let viewModel = self.viewModels[indexPath.section]
+        let viewModelItem = viewModel.items[indexPath.row]
+        
+        if let eventViewModel = viewModelItem as? AllSearchEventModel {
+            let event = eventViewModel.event
+            event.showSharingLoader = true
+            self.statefulTableView.innerTable.reloadData()
+            
+            Utility.shared.generateAndShareDynamicLink(event: event, controller: self, presentationCompletion: {
+                event.showSharingLoader = false
+                self.statefulTableView.innerTable.reloadData()
+                self.loadingShareController = false
+            }) {
+                
+            }
+            
+        }
     }
 }
 
@@ -815,10 +866,9 @@ extension AllSearchViewController {
                                      "is_favorite" : !(bar.isUserFavourite.value)]
         
         try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-            if let bars = transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value)) {
-                for bar in bars {
-                    bar.isUserFavourite.value = !bar.isUserFavourite.value
-                }
+            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), bar.id.value))
+            for bar in bars {
+                bar.isUserFavourite.value = !bar.isUserFavourite.value
             }
         })
         
@@ -850,6 +900,53 @@ extension AllSearchViewController {
                 NotificationCenter.default.post(name: notificationNameBarFavouriteAdded, object: bar)
             } else {
                 NotificationCenter.default.post(name: notificationNameBarFavouriteRemoved, object: bar)
+            }
+        }
+    }
+    
+    func updateBookmarkStatus(event: Event, isBookmarked: Bool) {
+        
+        guard !event.savingBookmarkStatus else {
+            debugPrint("Already saving bookmark status")
+            return
+        }
+        
+        event.savingBookmarkStatus = true
+        self.statefulTableView.innerTable.reloadData()
+        
+        let eventId: String = event.id.value
+        
+        let params: [String : Any] = ["event_id" : eventId,
+                                      "is_favorite" : isBookmarked]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddRemoveBookmarkedEvents, method: .put) { (response, serverError, error) in
+            
+            event.savingBookmarkStatus = false
+            
+            guard error == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                debugPrint("Error while saving bookmark offer status: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulTableView.innerTable.reloadData()
+                debugPrint("Server error while saving bookmark offer status: \(serverError!.errorMessages())")
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let edittedEvent = transaction.edit(event)
+                edittedEvent?.isBookmarked.value = isBookmarked
+            })
+            
+            self.statefulTableView.innerTable.reloadData()
+            
+            if isBookmarked {
+                NotificationCenter.default.post(name: notificationNameEventBookmarked, object: event)
+            } else {
+                NotificationCenter.default.post(name: notificationNameBookmarkedEventRemoved, object: event)
             }
         }
     }

@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import ObjectMapper
-import RNCryptor
 import SwiftyJSON
 import BugfenderSDK
 
@@ -129,79 +128,50 @@ class APIHelper {
         
         switch response.result {
         case .success:
-            
-            if self.isEncryptionEnabled {
-                if let responseResult = response.result.value as? [String : Any], let result = responseResult["result"] as? String {
-                    
-                    do {
-                        let encryptedData = Data(base64Encoded: result)
-                        let password = "9>E>VBa=X%;[5BX~=Q~K"
-                        let decryptedData = try RNCryptor.decrypt(data: encryptedData!, withPassword: password)
-                        
-                        let json = try JSON.init(data: decryptedData)
-                        if let responseDictionary = json.dictionaryObject {
-                            completion(responseDictionary, nil, nil)
-                        } else if let responseArray = json.arrayObject {
-                            completion(responseArray, nil, nil)
-                        } else {
-                            let error = NSError(domain: "EncryptionError", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unknown Error"])
-                            completion(response.result.value, nil, error)
-                        }
-                        
-                    } catch {
-                        let error = NSError(domain: "EncryptionError", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unknown Error"])
-                        completion(response.result.value, nil, error)
-                    }
-                } else {
-                    let error = NSError(domain: "EncryptionError", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unknown Error"])
-                    completion(response.result.value, nil, error)
+            if let responseResult = response.result.value as? [String : Any] {
+                
+                if remoteLogginEnabled {
+                    Bugfender.print("apiPath: \(apiPath)",
+                        "successBlockCalled: true",
+                        "responseType: dictionary",
+                        separator: "  ---  ",
+                        terminator: "\n",
+                        tag: "SUCCESS")
                 }
+                
+                completion(responseResult, nil, nil)
+            } else if let responseResult = response.result.value as? [[String : Any]] {
+                
+                if remoteLogginEnabled {
+                    Bugfender.print("apiPath: \(apiPath)",
+                        "successBlockCalled: true",
+                        "responseType: array",
+                        separator: "  ---  ",
+                        terminator: "\n",
+                        tag: "SUCCESS")
+                }
+                
+                completion(responseResult, nil, nil)
             } else {
-                if let responseResult = response.result.value as? [String : Any] {
+                
+                if remoteLogginEnabled {
                     
-                    if remoteLogginEnabled {
-                        Bugfender.print("apiPath: \(apiPath)",
-                            "successBlockCalled: true",
-                            "responseType: dictionary",
-                            separator: "  ---  ",
-                            terminator: "\n",
-                            tag: "SUCCESS")
+                    var dataString = "Data is empty"
+                    if let data = response.data {
+                        dataString = String(data: data, encoding: .utf8) ?? "Unable to make string from returned data"
                     }
                     
-                    completion(responseResult, nil, nil)
-                } else if let responseResult = response.result.value as? [[String : Any]] {
-                    
-                    if remoteLogginEnabled {
-                        Bugfender.print("apiPath: \(apiPath)",
-                            "successBlockCalled: true",
-                            "responseType: array",
-                            separator: "  ---  ",
-                            terminator: "\n",
-                            tag: "SUCCESS")
-                    }
-                    
-                    completion(responseResult, nil, nil)
-                } else {
-                    
-                    if remoteLogginEnabled {
-                        
-                        var dataString = "Data is empty"
-                        if let data = response.data {
-                            dataString = String(data: data, encoding: .utf8) ?? "Unable to make string from returned data"
-                        }
-                        
-                        Bugfender.error("apiPath: \(apiPath)",
-                            "successBlockCalled: true",
-                            "responseType: unexpected",
-                            "responseString: \(dataString)",
-                            separator: "  ---  ",
-                            terminator: "\n",
-                            tag: "ERROR")
-                    }
-                    
-                    let error = NSError(domain: "UnExpectedResponse", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unexpected response received"])
-                    completion(response.result.value, nil, error)
+                    Bugfender.error("apiPath: \(apiPath)",
+                        "successBlockCalled: true",
+                        "responseType: unexpected",
+                        "responseString: \(dataString)",
+                        separator: "  ---  ",
+                        terminator: "\n",
+                        tag: "ERROR")
                 }
+                
+                let error = NSError(domain: "UnExpectedResponse", code: 500, userInfo: [NSLocalizedDescriptionKey : "Unexpected response received"])
+                completion(response.result.value, nil, error)
             }
             
         case .failure(let error):
@@ -232,7 +202,7 @@ class APIHelper {
                             terminator: "\n",
                             tag: "ERROR")
                     }
-
+                    
                     completion(nil, serverError, nil)
                     
                 } catch {

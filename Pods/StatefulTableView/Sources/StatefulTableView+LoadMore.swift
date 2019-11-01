@@ -33,6 +33,8 @@ extension StatefulTableView {
   }
 
   internal func updateLoadMoreView() {
+    guard !preventTableFooterViewOverriding else { return }
+    
     if watchForLoadMore || lastLoadMoreError != nil {
       tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
     } else {
@@ -57,7 +59,7 @@ extension StatefulTableView {
       label.textAlignment = .center
       sub = label
     } else {
-      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
       activityIndicator.translatesAutoresizingMaskIntoConstraints = false
       activityIndicator.startAnimating()
       sub = activityIndicator

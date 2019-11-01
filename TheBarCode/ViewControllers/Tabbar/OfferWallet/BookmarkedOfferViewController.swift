@@ -16,9 +16,7 @@ import Alamofire
 class BookmarkedOfferViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
-    
-    var shouldShowFirstItemPadding = true
-    
+        
     var offers: [Any] = []
     
     var dataRequest: DataRequest?

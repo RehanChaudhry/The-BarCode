@@ -93,7 +93,7 @@ public final class StatefulTableView: UIView {
     tableView.frame = bounds
     dynamicContentView.frame = bounds
   }
-    
+
     @IBInspectable var tableViewStyleGrouped: Bool = false
 
     internal lazy var tableView: UITableView = {
@@ -114,6 +114,11 @@ public final class StatefulTableView: UIView {
     return tableView
   }
 
+  /**
+   Determines whether or not to show dynamic initial load and empty views. Defaults to true
+   */
+  public var shouldShowDynamicContent = true
+    
   internal lazy var dynamicContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
     view.backgroundColor = .white
@@ -144,19 +149,26 @@ public final class StatefulTableView: UIView {
    The pluralized name of the items to be displayed. This will be used when the table is empty and no error view has been provided.
    */
   public var pluralType = "records"
+    
+  /**
+    Prevents the tableview to add loading more views to the footer, allowing the user to use a custom table footer view.
+   */
+  public var preventTableFooterViewOverriding = false
 
   internal var loadMoreViewIsErrorView = false
   internal var lastLoadMoreError: NSError?
   internal var watchForLoadMore = false
 
-  open var state: State = .idle
+  public var state: State = .idle
 
   internal var viewMode: ViewMode = .table {
     didSet {
       let hidden = viewMode == .table
+        
+      let shouldHide = hidden || !shouldShowDynamicContent
 
-      guard dynamicContentView.isHidden != hidden else { return }
-      dynamicContentView.isHidden = hidden
+      guard dynamicContentView.isHidden != shouldHide else { return }
+      dynamicContentView.isHidden = shouldHide
     }
   }
 

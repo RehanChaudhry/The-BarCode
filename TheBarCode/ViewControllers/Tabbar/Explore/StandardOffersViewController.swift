@@ -91,7 +91,7 @@ class StandardOffersViewController: UIViewController {
     }
     
     func getCachedOffers() {
-        self.offers = self.transaction.fetchAll(From<StandardOffer>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \StandardOffer.discountValue)))) ?? []
+        self.offers = try! self.transaction.fetchAll(From<StandardOffer>().orderBy(OrderBy.SortKey.ascending(String(keyPath: \StandardOffer.discountValue))))
     }
     
     func setUpPreselectedOffers() {

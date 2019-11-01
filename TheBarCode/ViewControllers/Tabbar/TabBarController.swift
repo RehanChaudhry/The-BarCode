@@ -16,6 +16,10 @@ class TabBarController: UITabBarController {
 
     var shouldPresentBarDetail: Bool = false
     var shouldHandleSharedOffer: Bool = false
+    var shouldHandleSharedEvent: Bool = false
+    
+    var showingSharedEventAlert: Bool = false
+    var showingSharedOfferAlert: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +43,14 @@ class TabBarController: UITabBarController {
         } else if appDelegate.sharedOfferParams != nil {
             self.selectedIndex = 2
             self.shouldHandleSharedOffer = true
+        } else if appDelegate.sharedEventParams != nil {
+            self.selectedIndex = 2
+            self.shouldHandleSharedEvent = true
         } else {
             self.selectedIndex = 2
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedEventNotification(notification:)), name: notificationNameAcceptSharedEvent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
@@ -61,6 +69,9 @@ class TabBarController: UITabBarController {
         } else if self.shouldHandleSharedOffer {
             self.shouldHandleSharedOffer = false
             self.acceptSharedOffer()
+        } else if self.shouldHandleSharedEvent {
+            self.shouldHandleSharedEvent = false
+            self.acceptSharedEvent()
         }
     }
     
@@ -152,17 +163,55 @@ class TabBarController: UITabBarController {
             var sharedByUserName = sharedOfferParams.sharedByName!
             sharedByUserName = sharedByUserName.replacingOccurrences(of: "+", with: " ")
             
-         /*   let alertController = UIAlertController(title: "Shared Offer", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome new offer with you. Check it out!", preferredStyle: .alert)
-            
-            
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
-                self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
-            }))
-            
-            self.topMostViewController().present(alertController, animated: true, completion: nil)*/
+            NotificationCenter.default.post(name: notificationNameReloadAllSharedOffers, object: nil)
             
             self.showCustomAlert(title: "Shared Offer", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome new offer with you. Check it out!")
+            
+            self.showingSharedOfferAlert = true
+            
+        }
+        
+    }
+    
+    func acceptSharedEvent() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        guard let sharedEventParams = appDelegate.sharedEventParams else {
+            debugPrint("Could not accept event because params not available")
+            return
+        }
+        
+        guard Utility.shared.getCurrentUser()?.userId.value != sharedEventParams.sharedBy else {
+            self.topMostViewController().showAlertController(title: "Sharing Event", msg: "You cannot share an event with your self. Share event with your friends and family.")
+            appDelegate.sharedEventParams = nil
+            appDelegate.referralCode = nil
+            return
+        }
+        
+        let params: [String : Any] = ["shared_by" : sharedEventParams.sharedBy!,
+                                      "event_id" : sharedEventParams.eventId!]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathSharedEvents, method: .post) { (response, serverError, error) in
+            
+            appDelegate.sharedEventParams = nil
+            appDelegate.referralCode = nil
+            
+            guard error == nil else {
+                self.topMostViewController().showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.topMostViewController().showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            var sharedByUserName = sharedEventParams.sharedByName!
+            sharedByUserName = sharedByUserName.replacingOccurrences(of: "+", with: " ")
+            
+            NotificationCenter.default.post(name: notificationNameReloadAllSharedEvents, object: nil)
+            
+            self.showCustomAlert(title: "Shared Event", message: "Great news! Your friend \(sharedByUserName) has just shared an awesome event with you. Check it out!")
+            
+            self.showingSharedEventAlert = true
             
         }
         
@@ -218,16 +267,31 @@ extension TabBarController {
     @objc func acceptSharedOfferNotification(notification: Notification) {
         self.acceptSharedOffer()
     }
+    
+    @objc func acceptSharedEventNotification(notification: Notification) {
+        self.acceptSharedEvent()
+    }
 }
 
 //MARK: CannotRedeemViewControllerDelegate
 extension TabBarController: CannotRedeemViewControllerDelegate {
     func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
-        let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
-        self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
+        
+        if self.showingSharedEventAlert {
+            let sharedEventNavigation = self.storyboard!.instantiateViewController(withIdentifier: "SharedEventNavigation") as! UINavigationController
+            self.topMostViewController().present(sharedEventNavigation, animated: true, completion: nil)
+        } else if self.showingSharedOfferAlert {
+            let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
+            self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
+        }
+        
+        self.showingSharedEventAlert = false
+        self.showingSharedOfferAlert = false
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        self.showingSharedEventAlert = false
+        self.showingSharedOfferAlert = false
     }
 }
 

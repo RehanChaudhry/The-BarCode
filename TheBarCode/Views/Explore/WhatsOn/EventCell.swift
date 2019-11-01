@@ -8,8 +8,14 @@
 
 import UIKit
 import Reusable
+import MGSwipeTableCell
 
-class EventCell: UITableViewCell, NibReusable {
+protocol EventCellDelegate: class {
+    func eventCell(cell: EventCell, bookmarkButtonTapped sender: UIButton)
+    func eventCell(cell: EventCell, shareButtonTapped sender: UIButton)
+}
+
+class EventCell: MGSwipeTableCell, NibReusable {
 
     @IBOutlet var coverImageView: AsyncImageView!
     
@@ -22,7 +28,15 @@ class EventCell: UITableViewCell, NibReusable {
     @IBOutlet var subTitleTop: NSLayoutConstraint!
     @IBOutlet var subTitleHeight: NSLayoutConstraint!
     
+    @IBOutlet var shareButton: UIButton!
+    @IBOutlet var bookmarkButton: UIButton!
+    
+    @IBOutlet var bookmarkLoader: UIActivityIndicatorView!
+    @IBOutlet var sharingLoader: UIActivityIndicatorView!
+    
     var expirationTimer: Timer?
+    
+    weak var eventCellDelegate: EventCellDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,6 +60,29 @@ class EventCell: UITableViewCell, NibReusable {
     //MARK: My Methods
     func setupCell(event: Event, topPadding: Bool = true, barName: String? = nil) {
         
+        if event.savingBookmarkStatus {
+            self.bookmarkButton.isHidden = true
+            self.bookmarkLoader.startAnimating()
+        } else {
+            if event.isBookmarked.value {
+                self.bookmarkButton.tintColor = UIColor.appBlueColor()
+            } else {
+                self.bookmarkButton.tintColor = UIColor.appGrayColor()
+            }
+            self.bookmarkLoader.stopAnimating()
+            self.bookmarkButton.isHidden = false
+        }
+        
+        self.shareButton.tintColor = UIColor.appGrayColor()
+        
+        if event.showSharingLoader {
+            self.shareButton.isHidden = true
+            self.sharingLoader.startAnimating()
+        } else {
+            self.shareButton.isHidden = false
+            self.sharingLoader.stopAnimating()
+        }
+        
         if let barName = barName {
             self.subTitleLabel.text = barName
             self.subTitleTop.constant = 8.0
@@ -57,9 +94,6 @@ class EventCell: UITableViewCell, NibReusable {
         }
         
         self.titleLabel.text = event.name.value
-        
-//        self.detailLabel.text = event.formattedDateString
-        self.detailLabel.text = ""
         
         let url = URL(string: event.image.value)
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
@@ -86,6 +120,11 @@ class EventCell: UITableViewCell, NibReusable {
     }
     
     func startTimer(event: Event) {
+        
+        guard event.shouldShowDate.value && event.shouldShowTime.value else {
+            self.detailLabel.text = ""
+            return
+        }
         
         //Not started yet
         //Started but not expired
@@ -266,5 +305,14 @@ class EventCell: UITableViewCell, NibReusable {
             
             self.detailLabel.attributedText = finalAttributedString
         }
+    }
+    
+    //MARK: My IBActions
+    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+        self.eventCellDelegate.eventCell(cell: self, bookmarkButtonTapped: sender)
+    }
+    
+    @IBAction func shareButtonTapped(sender: UIButton) {
+        self.eventCellDelegate.eventCell(cell: self, shareButtonTapped: sender)
     }
 }

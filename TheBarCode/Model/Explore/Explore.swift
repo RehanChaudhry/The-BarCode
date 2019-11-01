@@ -158,7 +158,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             let importTimings = try! transaction.importObject(Into<EstablishmentTiming>(), source: timingsSource)
             self.timings.value = importTimings
             
-            let bars = transaction.fetchAll(From<Explore>().where(\.id == self.id.value)) ?? []
+            let bars = try! transaction.fetchAll(From<Explore>().where(\.id == self.id.value))
             for bar in bars {
                 let edit = transaction.edit(bar)
                 let timings = edit?.timings.value
@@ -175,7 +175,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             let importSchedule = try! transaction.importObjects(Into<ExploreSchedule>(), sourceArray: scheduleSource)
             self.weeklySchedule.value = importSchedule
             
-            let bars = transaction.fetchAll(From<Explore>().where(\.id == self.id.value)) ?? []
+            let bars = try! transaction.fetchAll(From<Explore>().where(\.id == self.id.value))
             for bar in bars {
                 let edit = transaction.edit(bar)
                 let timings = edit?.weeklySchedule.value ?? []

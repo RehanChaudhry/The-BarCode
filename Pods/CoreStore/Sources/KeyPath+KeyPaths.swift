@@ -1,8 +1,8 @@
 //
-//  SaveResult.swift
+//  KeyPath+KeyPaths.swift
 //  CoreStore
 //
-//  Copyright © 2018 John Rommel Estropia
+//  Copyright © 2019 John Rommel Estropia
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,36 +23,24 @@
 //  SOFTWARE.
 //
 
+import CoreData
 import Foundation
 
 
-// MARK: - SaveResult
+// MARK: - KeyPath: AnyKeyPathStringConvertible, KeyPathStringConvertible where Root: NSManagedObject, Value: AllowedObjectiveCKeyPathValue
 
-@available(*, deprecated, message: "Use the new DataStack.perform(asynchronous:...) and DataStack.perform(synchronous:...) family of APIs")
-public enum SaveResult: Hashable {
-    
-    case success(hasChanges: Bool)
-    case failure(CoreStoreError)
-    
-    public var boolValue: Bool {
-        
-        switch self {
-            
-        case .success: return true
-        case .failure: return false
-        }
+extension KeyPath: AnyKeyPathStringConvertible, KeyPathStringConvertible where Root: NSManagedObject, Value: AllowedObjectiveCKeyPathValue {
+
+    // MARK: AnyKeyPathStringConvertible
+
+    public var cs_keyPathString: String {
+
+        return self._kvcKeyPathString!
     }
-    
-    
-    // MARK: Internal
-    
-    internal init(hasChanges: Bool) {
-        
-        self = .success(hasChanges: hasChanges)
-    }
-    
-    internal init(_ error: CoreStoreError) {
-        
-        self = .failure(error)
-    }
+
+
+    // MARK: KeyPathStringConvertible
+
+    public typealias ObjectType = Root
+    public typealias DestinationValueType = Value
 }

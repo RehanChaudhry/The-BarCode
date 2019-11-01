@@ -29,7 +29,7 @@ import Foundation
 
 // MARK: - DynamicObject
 
-public extension DynamicObject where Self: CoreStoreObject {
+extension DynamicObject where Self: CoreStoreObject {
     
     /**
      The containing type for relationships. `Relationship`s can be any `CoreStoreObject` subclass.
@@ -76,7 +76,7 @@ public enum RelationshipContainer<O: CoreStoreObject> {
      ```
      - Important: `Relationship.ToOne` properties are required to be stored properties. Computed properties will be ignored, including `lazy` and `weak` properties.
      */
-    public final class ToOne<D: CoreStoreObject>: RelationshipProtocol {
+    public final class ToOne<D: CoreStoreObject>: RelationshipKeyPathStringConvertible, RelationshipProtocol {
         
         /**
          Initializes the metadata for the relationship. All relationships require an "inverse", so updates to to this object's relationship are also reflected on its destination object. Make sure to declare this relationship's inverse relationship on its destination object. Due to Swift's compiler limitation, only one of the relationship and its inverse can declare an `inverse:` argument.
@@ -105,9 +105,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 keyPath: keyPath,
                 inverseKeyPath: { nil },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -140,9 +140,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 keyPath: keyPath,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -175,9 +175,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 keyPath: keyPath,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -210,16 +210,16 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 keyPath: keyPath,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
-        
+
         /**
-         The relationship destination object.
+         The relationship value
          */
-        public var value: D? {
+        public var value: ReturnValueType {
             
             get {
                 
@@ -230,6 +230,25 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 self.nativeValue = newValue?.rawObject
             }
         }
+
+
+        // MARK: AnyKeyPathStringConvertible
+
+        public var cs_keyPathString: String {
+
+            return self.keyPath
+        }
+
+
+        // MARK: KeyPathStringConvertible
+
+        public typealias ObjectType = O
+        public typealias DestinationValueType = D
+
+
+        // MARK: RelationshipKeyPathStringConvertible
+
+        public typealias ReturnValueType = DestinationValueType?
         
         
         // MARK: RelationshipProtocol
@@ -319,7 +338,7 @@ public enum RelationshipContainer<O: CoreStoreObject> {
      ```
      - Important: `Relationship.ToManyOrdered` properties are required to be stored properties. Computed properties will be ignored, including `lazy` and `weak` properties.
      */
-    public final class ToManyOrdered<D: CoreStoreObject>: RelationshipProtocol {
+    public final class ToManyOrdered<D: CoreStoreObject>: ToManyRelationshipKeyPathStringConvertible, RelationshipProtocol {
         
         /**
          Initializes the metadata for the relationship. All relationships require an "inverse", so updates to to this object's relationship are also reflected on its destination object. Make sure to declare this relationship's inverse relationship on its destination object. Due to Swift's compiler limitation, only one of the relationship and its inverse can declare an `inverse:` argument.
@@ -354,9 +373,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 maxCount: maxCount,
                 inverseKeyPath: { nil },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -395,9 +414,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 maxCount: maxCount,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -436,9 +455,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 maxCount: maxCount,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -477,16 +496,16 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 maxCount: maxCount,
                 inverseKeyPath: { inverse(D.meta).keyPath },
                 deleteRule: deleteRule,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
-        
+
         /**
-         The relationship ordered objects.
+         The relationship value
          */
-        public var value: [D] {
+        public var value: ReturnValueType {
             
             get {
                 
@@ -497,6 +516,25 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 self.nativeValue = NSOrderedSet(array: newValue.map({ $0.rawObject! }))
             }
         }
+
+
+        // MARK: AnyKeyPathStringConvertible
+
+        public var cs_keyPathString: String {
+
+            return self.keyPath
+        }
+
+
+        // MARK: KeyPathStringConvertible
+
+        public typealias ObjectType = O
+        public typealias DestinationValueType = D
+
+
+        // MARK: RelationshipKeyPathStringConvertible
+
+        public typealias ReturnValueType = [DestinationValueType]
         
         
         // MARK: RelationshipProtocol
@@ -591,7 +629,7 @@ public enum RelationshipContainer<O: CoreStoreObject> {
      ```
      - Important: `Relationship.ToManyUnordered` properties are required to be stored properties. Computed properties will be ignored, including `lazy` and `weak` properties.
      */
-    public final class ToManyUnordered<D: CoreStoreObject>: RelationshipProtocol {
+    public final class ToManyUnordered<D: CoreStoreObject>: ToManyRelationshipKeyPathStringConvertible, RelationshipProtocol {
         
         /**
          Initializes the metadata for the relationship. All relationships require an "inverse", so updates to to this object's relationship are also reflected on its destination object. Make sure to declare this relationship's inverse relationship on its destination object. Due to Swift's compiler limitation, only one of the relationship and its inverse can declare an `inverse:` argument.
@@ -627,9 +665,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 deleteRule: deleteRule,
                 minCount: minCount,
                 maxCount: maxCount,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -668,9 +706,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 deleteRule: deleteRule,
                 minCount: minCount,
                 maxCount: maxCount,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -709,9 +747,9 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 deleteRule: deleteRule,
                 minCount: minCount,
                 maxCount: maxCount,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
         
@@ -750,16 +788,16 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 deleteRule: deleteRule,
                 minCount: minCount,
                 maxCount: maxCount,
-                versionHashModifier: versionHashModifier,
-                renamingIdentifier: renamingIdentifier,
-                affectedByKeyPaths: affectedByKeyPaths
+                versionHashModifier: versionHashModifier(),
+                renamingIdentifier: renamingIdentifier(),
+                affectedByKeyPaths: affectedByKeyPaths()
             )
         }
-        
+
         /**
-         The relationship unordered objects.
+         The relationship value
          */
-        public var value: Set<D> {
+        public var value: ReturnValueType {
             
             get {
                 
@@ -770,6 +808,25 @@ public enum RelationshipContainer<O: CoreStoreObject> {
                 self.nativeValue = NSSet(array: newValue.map({ $0.rawObject! }))
             }
         }
+
+
+        // MARK: AnyKeyPathStringConvertible
+
+        public var cs_keyPathString: String {
+
+            return self.keyPath
+        }
+
+
+        // MARK: KeyPathStringConvertible
+
+        public typealias ObjectType = O
+        public typealias DestinationValueType = D
+
+
+        // MARK: RelationshipKeyPathStringConvertible
+
+        public typealias ReturnValueType = Set<DestinationValueType>
         
         
         // MARK: RelationshipProtocol

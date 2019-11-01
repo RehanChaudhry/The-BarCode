@@ -24,6 +24,7 @@
 //
 
 import Foundation
+import CoreData
 
 
 // MARK: - DynamicObject
@@ -31,7 +32,7 @@ import Foundation
 /**
  All CoreStore's utilities are designed around `DynamicObject` instances. `NSManagedObject` and `CoreStoreObject` instances all conform to `DynamicObject`.
  */
-public protocol DynamicObject: class {
+public protocol DynamicObject: AnyObject {
     
     /**
      Used internally by CoreStore. Do not call directly.

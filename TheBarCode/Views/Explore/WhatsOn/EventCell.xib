@@ -38,13 +38,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4u-CK-m5g">
-                        <rect key="frame" x="16" y="206" width="288" height="19.5"/>
+                        <rect key="frame" x="16" y="206" width="200" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3no-Ot-Mws">
-                        <rect key="frame" x="16" y="234" width="288" height="15"/>
+                        <rect key="frame" x="16" y="234.5" width="288" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="GeO-Od-Kmf"/>
                         </constraints>
@@ -53,32 +53,82 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2 deals available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCW-Ke-VqV">
-                        <rect key="frame" x="16" y="257.5" width="288" height="15"/>
+                        <rect key="frame" x="16" y="258" width="288" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="by5-Kd-YME">
+                        <rect key="frame" x="268" y="188" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="eOo-8E-uJv"/>
+                            <constraint firstAttribute="height" constant="44" id="eQJ-tg-ARe"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="icon_tab_wallet"/>
+                        <connections>
+                            <action selector="bookmarkButtonTappedWithSender:" destination="yDl-uA-WaR" eventType="touchUpInside" id="k1d-E8-RL2"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oj-hf-vli">
+                        <rect key="frame" x="224" y="188" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="kHg-YZ-IX2"/>
+                            <constraint firstAttribute="height" constant="44" id="kaN-Gb-iTC"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="icon_share"/>
+                        <connections>
+                            <action selector="shareButtonTappedWithSender:" destination="yDl-uA-WaR" eventType="touchUpInside" id="n9k-LJ-dvg"/>
+                        </connections>
+                    </button>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iWG-1J-xP0">
+                        <rect key="frame" x="236" y="200" width="20" height="20"/>
+                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Kpz-LT-8tY">
+                        <rect key="frame" x="288" y="200" width="4" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="G4u-CK-m5g" firstAttribute="leading" secondItem="dVn-Zf-The" secondAttribute="leading" constant="16" id="6bR-yy-UMh"/>
                     <constraint firstItem="3no-Ot-Mws" firstAttribute="top" secondItem="G4u-CK-m5g" secondAttribute="bottom" constant="8.5" id="8Lw-Ke-RBe"/>
+                    <constraint firstAttribute="trailing" secondItem="Kpz-LT-8tY" secondAttribute="trailing" constant="28" id="C9k-rm-GhM"/>
+                    <constraint firstItem="2oj-hf-vli" firstAttribute="top" secondItem="J8a-c1-nUe" secondAttribute="bottom" constant="2" id="CNN-H0-EDi"/>
+                    <constraint firstItem="iWG-1J-xP0" firstAttribute="centerY" secondItem="2oj-hf-vli" secondAttribute="centerY" id="F2X-do-zS9"/>
+                    <constraint firstItem="by5-Kd-YME" firstAttribute="top" secondItem="J8a-c1-nUe" secondAttribute="bottom" constant="2" id="FTP-EG-PH1"/>
                     <constraint firstAttribute="trailing" secondItem="J8a-c1-nUe" secondAttribute="trailing" constant="16" id="Ga0-DM-oPA"/>
+                    <constraint firstItem="by5-Kd-YME" firstAttribute="leading" secondItem="iWG-1J-xP0" secondAttribute="trailing" constant="12" id="I54-FC-IuH"/>
+                    <constraint firstItem="iWG-1J-xP0" firstAttribute="top" secondItem="J8a-c1-nUe" secondAttribute="bottom" constant="14" id="IQV-Rh-QqI"/>
+                    <constraint firstItem="iWG-1J-xP0" firstAttribute="centerX" secondItem="2oj-hf-vli" secondAttribute="centerX" id="Khu-Eg-KxD"/>
                     <constraint firstItem="ZCW-Ke-VqV" firstAttribute="top" secondItem="3no-Ot-Mws" secondAttribute="bottom" constant="8.5" id="KmR-am-hln"/>
+                    <constraint firstItem="by5-Kd-YME" firstAttribute="leading" secondItem="2oj-hf-vli" secondAttribute="trailing" id="PhO-EP-3Hg"/>
+                    <constraint firstItem="Kpz-LT-8tY" firstAttribute="top" secondItem="J8a-c1-nUe" secondAttribute="bottom" constant="14" id="TdP-1U-Jme"/>
+                    <constraint firstAttribute="trailing" secondItem="by5-Kd-YME" secondAttribute="trailing" constant="8" id="U01-g5-byt"/>
                     <constraint firstItem="3no-Ot-Mws" firstAttribute="leading" secondItem="dVn-Zf-The" secondAttribute="leading" constant="16" id="WRc-Wj-YUS"/>
+                    <constraint firstItem="Kpz-LT-8tY" firstAttribute="centerX" secondItem="by5-Kd-YME" secondAttribute="centerX" id="WVm-vR-NmO"/>
                     <constraint firstAttribute="trailing" secondItem="3no-Ot-Mws" secondAttribute="trailing" constant="16" id="X6U-t7-qeG"/>
                     <constraint firstItem="ZCW-Ke-VqV" firstAttribute="leading" secondItem="dVn-Zf-The" secondAttribute="leading" constant="16" id="YGm-ky-RAL"/>
+                    <constraint firstItem="2oj-hf-vli" firstAttribute="leading" secondItem="G4u-CK-m5g" secondAttribute="trailing" constant="8" id="ZKB-dM-msO"/>
                     <constraint firstItem="J8a-c1-nUe" firstAttribute="leading" secondItem="dVn-Zf-The" secondAttribute="leading" constant="16" id="ZLS-Yt-GWA"/>
-                    <constraint firstAttribute="trailing" secondItem="G4u-CK-m5g" secondAttribute="trailing" constant="16" id="bkg-Zg-SIJ"/>
                     <constraint firstItem="G4u-CK-m5g" firstAttribute="top" secondItem="J8a-c1-nUe" secondAttribute="bottom" constant="20" id="fbi-0Z-1VS"/>
                     <constraint firstItem="J8a-c1-nUe" firstAttribute="top" secondItem="dVn-Zf-The" secondAttribute="top" constant="24" id="gro-aP-k1Q"/>
                     <constraint firstAttribute="trailing" secondItem="ZCW-Ke-VqV" secondAttribute="trailing" constant="16" id="gxR-Qm-7Kl"/>
+                    <constraint firstItem="by5-Kd-YME" firstAttribute="leading" secondItem="2oj-hf-vli" secondAttribute="trailing" id="svY-ph-lV6"/>
                     <constraint firstAttribute="bottom" secondItem="ZCW-Ke-VqV" secondAttribute="bottom" constant="1" id="yUG-pr-avq"/>
+                    <constraint firstItem="Kpz-LT-8tY" firstAttribute="centerY" secondItem="by5-Kd-YME" secondAttribute="centerY" id="zv2-Yl-J0h"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="QKa-MJ-nPw"/>
             <connections>
+                <outlet property="bookmarkButton" destination="by5-Kd-YME" id="XQy-tg-dfT"/>
+                <outlet property="bookmarkLoader" destination="Kpz-LT-8tY" id="86E-UN-6L9"/>
                 <outlet property="coverImageView" destination="J8a-c1-nUe" id="Tul-M7-OsE"/>
                 <outlet property="detailLabel" destination="ZCW-Ke-VqV" id="eTB-yD-OZx"/>
+                <outlet property="shareButton" destination="2oj-hf-vli" id="e8C-a8-pD1"/>
+                <outlet property="sharingLoader" destination="iWG-1J-xP0" id="nw3-cG-aQD"/>
                 <outlet property="subTitleHeight" destination="GeO-Od-Kmf" id="N52-xx-BUG"/>
                 <outlet property="subTitleLabel" destination="3no-Ot-Mws" id="XcM-Pd-ovA"/>
                 <outlet property="subTitleTop" destination="8Lw-Ke-RBe" id="8O1-uf-bUk"/>
@@ -88,4 +138,8 @@
             <point key="canvasLocation" x="140.57971014492756" y="150.66964285714286"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_share" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="icon_tab_wallet" width="26" height="26"/>
+    </resources>
 </document>

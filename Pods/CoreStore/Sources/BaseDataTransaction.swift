@@ -213,6 +213,25 @@ public /*abstract*/ class BaseDataTransaction {
     
     
     // MARK: Inspecting Pending Objects
+
+    /**
+     Returns `true` if the object has any property values changed. This method should not be called after the `commit()` method was called.
+
+     - parameter entity: the `DynamicObject` instance
+     - returns: `true` if the object has any property values changed.
+     */
+    public func objectHasPersistentChangedValues<D: DynamicObject>(_ entity: D) -> Bool {
+
+        CoreStore.assert(
+            self.isRunningInAllowedQueue(),
+            "Attempted to access inserted objects from a \(cs_typeName(self)) outside its designated queue."
+        )
+        CoreStore.assert(
+            !self.isCommitted,
+            "Attempted to access inserted objects from an already committed \(cs_typeName(self))."
+        )
+        return entity.cs_toRaw().hasPersistentChangedValues
+    }
     
     /**
      Returns all pending `DynamicObject`s of the specified type that were inserted to the transaction. This method should not be called after the `commit()` method was called.
@@ -223,7 +242,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func insertedObjects<D: DynamicObject>(_ entity: D.Type) -> Set<D> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access inserted objects from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -241,7 +260,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func insertedObjectIDs() -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access inserted object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -260,7 +279,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func insertedObjectIDs<D: DynamicObject>(_ entity: D.Type) -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access inserted object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -279,7 +298,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func updatedObjects<D: DynamicObject>(_ entity: D.Type) -> Set<D> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access updated objects from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -297,7 +316,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func updatedObjectIDs() -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access updated object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -316,7 +335,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func updatedObjectIDs<D: DynamicObject>(_ entity: D.Type) -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access updated object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -335,7 +354,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func deletedObjects<D: DynamicObject>(_ entity: D.Type) -> Set<D> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access deleted objects from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -354,7 +373,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func deletedObjectIDs() -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access deleted object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -373,7 +392,7 @@ public /*abstract*/ class BaseDataTransaction {
     public func deletedObjectIDs<D: DynamicObject>(_ entity: D.Type) -> Set<NSManagedObjectID> {
         
         CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
+            self.isRunningInAllowedQueue(),
             "Attempted to access deleted object IDs from a \(cs_typeName(self)) outside its designated queue."
         )
         CoreStore.assert(
@@ -441,50 +460,5 @@ public /*abstract*/ class BaseDataTransaction {
     deinit {
         
         self.context.reset()
-    }
-    
-    
-    // MARK: Deprecated
-    
-    @available(*, deprecated, message: "Use insertedObjects(_:) and pass the specific entity type")
-    public func insertedObjects() -> Set<NSManagedObject> {
-        
-        CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
-            "Attempted to access inserted objects from a \(cs_typeName(self)) outside its designated queue."
-        )
-        CoreStore.assert(
-            !self.isCommitted,
-            "Attempted to access inserted objects from an already committed \(cs_typeName(self))."
-        )
-        return self.context.insertedObjects
-    }
-    
-    @available(*, deprecated, message: "Use updatedObjects(_:) and pass the specific entity type")
-    public func updatedObjects() -> Set<NSManagedObject> {
-        
-        CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
-            "Attempted to access updated objects from a \(cs_typeName(self)) outside its designated queue."
-        )
-        CoreStore.assert(
-            !self.isCommitted,
-            "Attempted to access updated objects from an already committed \(cs_typeName(self))."
-        )
-        return self.context.updatedObjects
-    }
-    
-    @available(*, deprecated, message: "Use deletedObjects(_:) and pass the specific entity type")
-    public func deletedObjects() -> Set<NSManagedObject> {
-        
-        CoreStore.assert(
-            self.transactionQueue.cs_isCurrentExecutionContext(),
-            "Attempted to access deleted objects from a \(cs_typeName(self)) outside its designated queue."
-        )
-        CoreStore.assert(
-            !self.isCommitted,
-            "Attempted to access deleted objects from an already committed \(cs_typeName(self))."
-        )
-        return self.context.deletedObjects
     }
 }

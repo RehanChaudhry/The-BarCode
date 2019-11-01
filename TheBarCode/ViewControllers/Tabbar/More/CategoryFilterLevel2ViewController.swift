@@ -101,7 +101,7 @@ class CategoryFilterLevel2ViewController: UIViewController {
     }
     
     func getCachedCategories() {
-        self.categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == parentCategory.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        self.categories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == parentCategory.id.value).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
     }
     
     func updateContinueButtonState() {
@@ -115,8 +115,8 @@ class CategoryFilterLevel2ViewController: UIViewController {
     }
     
     func markChildAsSelection(category: Category, selection: Bool) {
-        if category.hasChildren.value,
-            let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+        if category.hasChildren.value {
+            let childCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value))
             for childCategory in childCategories {
                 childCategory.isSelected.value = selection
                 markChildAsSelection(category: childCategory, selection: selection)

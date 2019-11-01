@@ -175,8 +175,8 @@ extension CategoriesViewController: CategoryCollectionViewCellDelegate {
         category.isSelected.value = selection
         
         func markChildAsSelection(category: Category) {
-            if category.hasChildren.value,
-                let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+            if category.hasChildren.value {
+                let childCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value))
                 for childCategory in childCategories {
                     childCategory.isSelected.value = selection
                     markChildAsSelection(category: childCategory)
@@ -221,7 +221,7 @@ extension CategoriesViewController {
                     debugPrint("Imported categories count: \(importedObjects.count)")
                 })
                 
-                self.categories = self.transaction.fetchAll(From<Category>().where(\Category.level == "1").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+                self.categories = try! self.transaction.fetchAll(From<Category>().where(\Category.level == "1").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
                 self.collectionView.innerCollection.reloadData()
                 
                 self.statefulView.isHidden = true
@@ -236,7 +236,7 @@ extension CategoriesViewController {
     
     func updatePreferences() {
         
-        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
+        let selectedCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true))
         
         let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
         

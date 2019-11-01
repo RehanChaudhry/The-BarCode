@@ -171,7 +171,7 @@ class CategoryFilterViewController: UIViewController {
     }
     
     @objc func clearBarButtonTapped(sender: UIBarButtonItem) {
-        let categories = self.transaction.fetchAll(From<Category>()) ?? []
+        let categories = try! self.transaction.fetchAll(From<Category>())
         for category in categories {
             category.isSelected.value = false
         }
@@ -180,7 +180,7 @@ class CategoryFilterViewController: UIViewController {
     }
     
     func getCachedCategories() {
-        self.categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        self.categories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0").orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
     }
     
     func setUpPreselectedCategories() {
@@ -190,7 +190,7 @@ class CategoryFilterViewController: UIViewController {
             return
         }
         
-        let categories = self.transaction.fetchAll(From<Category>()) ?? []
+        let categories = try! self.transaction.fetchAll(From<Category>())
         for category in categories {
             if let _ = self.preSelectedCategories.first(where: {$0.id.value == category.id.value}) {
                 category.isSelected.value = true
@@ -201,11 +201,11 @@ class CategoryFilterViewController: UIViewController {
     }
     
     func preselectAllChildForSelectedCategories() {
-        let categories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0" && \Category.isSelected == true).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title)))) ?? []
+        let categories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == "0" && \Category.isSelected == true).orderBy(OrderBy.SortKey.ascending(String(keyPath: \Category.title))))
         
         func markChildAsSelected(category: Category) {
-            if category.hasChildren.value,
-                let childCategories = self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value)) {
+            if category.hasChildren.value {
+                let childCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.parentId == category.id.value))
                 for childCategory in childCategories {
                     childCategory.isSelected.value = true
                     markChildAsSelected(category: childCategory)
@@ -237,7 +237,7 @@ class CategoryFilterViewController: UIViewController {
         if self.comingForUpdatingPreference {
             self.updatePreferences()
         } else {
-            let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
+            let selectedCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true))
             
             let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
             
@@ -351,7 +351,7 @@ extension CategoryFilterViewController {
                     func markParentsAsSelected(category: Category) {
                         if let parentId = category.parentId.value,
                             parentId != "0",
-                            let parentCategory = transaction.fetchOne(From<Category>().where(\Category.id == category.parentId.value ?? "")) {
+                            let parentCategory = try! transaction.fetchOne(From<Category>().where(\Category.id == category.parentId.value ?? "")) {
                             
                             parentCategory.isSelected.value = true
                             markParentsAsSelected(category: parentCategory)
@@ -363,7 +363,7 @@ extension CategoryFilterViewController {
                         }
                     }
                     
-                    let lastLevelCategories = transaction.fetchAll(From<Category>().where(\Category.isSelected == true && \Category.hasChildren == false)) ?? []
+                    let lastLevelCategories = try! transaction.fetchAll(From<Category>().where(\Category.isSelected == true && \Category.hasChildren == false))
                     for category in lastLevelCategories {
                         markParentsAsSelected(category: category)
                     }
@@ -390,7 +390,7 @@ extension CategoryFilterViewController {
     
     func updatePreferences() {
         
-        let selectedCategories = self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true)) ?? []
+        let selectedCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true))
         
 //        let filteredCategories = selectedCategories.filter({ $0.hasChildren.value == false })
         

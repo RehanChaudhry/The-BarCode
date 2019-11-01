@@ -10,7 +10,7 @@ PODS:
   - BugfenderSDK (1.7.0):
     - BugfenderSDK/Swift (= 1.7.0)
   - BugfenderSDK/Swift (1.7.0)
-  - CoreStore (5.3.1)
+  - CoreStore (6.3.2)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
   - Fabric (1.7.13)
@@ -80,7 +80,7 @@ PODS:
   - GoogleUtilities/UserDefaults (5.3.2):
     - GoogleUtilities/Logger
   - Gradientable (0.0.2)
-  - HTTPStatusCodes (3.2.0)
+  - HTTPStatusCodes (3.3.1)
   - KeychainAccess (3.1.2)
   - MGSwipeTableCell (1.6.7)
   - nanopb (0.3.8):
@@ -88,20 +88,19 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - ObjectMapper (3.3.0)
+  - ObjectMapper (3.5.1)
   - OneSignal (2.9.3)
-  - PureLayout (3.1.2)
+  - PureLayout (3.1.5)
   - Reusable (4.0.3):
     - Reusable/Storyboard (= 4.0.3)
     - Reusable/View (= 4.0.3)
   - Reusable/Storyboard (4.0.3)
   - Reusable/View (4.0.3)
-  - RNCryptor (5.0.3)
   - SDWebImage (4.4.2):
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
   - SJSegmentedScrollView (1.3.9)
-  - StatefulTableView (0.1.0)
+  - StatefulTableView (0.1.5)
   - SwiftyJSON (4.2.0)
   - TPKeyboardAvoiding (1.3.2)
   - UIColor_Hex_Swift (4.0.2)
@@ -110,7 +109,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7.3)
   - Atributika (~> 4.8.2)
   - BugfenderSDK (~> 1.7)
-  - CoreStore (~> 5.3.1)
+  - CoreStore (~> 6.3.2)
   - Crashlytics (~> 3.10.9)
   - Fabric (~> 1.7.13)
   - FBSDKLoginKit (~> 4.37.0)
@@ -120,17 +119,16 @@ DEPENDENCIES:
   - GBDeviceInfo (~> 5.5.0)
   - GoogleMaps (~> 2.7.0)
   - Gradientable (~> 0.0.2)
-  - HTTPStatusCodes (~> 3.2.0)
+  - HTTPStatusCodes (~> 3.3.1)
   - KeychainAccess (~> 3.1.2)
   - MGSwipeTableCell (~> 1.6.7)
-  - ObjectMapper (~> 3.3.0)
+  - ObjectMapper (~> 3.5.1)
   - OneSignal (~> 2.9.0)
-  - PureLayout (~> 3.1.2)
+  - PureLayout (~> 3.1.5)
   - Reusable (~> 4.0.3)
-  - RNCryptor (~> 5.0.3)
   - SDWebImage (~> 4.4.2)
   - SJSegmentedScrollView (~> 1.3.9)
-  - StatefulTableView (~> 0.1.0)
+  - StatefulTableView (~> 0.1.5)
   - SwiftyJSON (~> 4.2.0)
   - TPKeyboardAvoiding (~> 1.3.2)
   - UIColor_Hex_Swift (~> 4.0.2)
@@ -140,7 +138,6 @@ SPEC REPOS:
     - Alamofire
     - Atributika
     - Bolts
-    - CoreStore
     - Crashlytics
     - Fabric
     - FBSDKCoreKit
@@ -157,30 +154,30 @@ SPEC REPOS:
     - GoogleMaps
     - GoogleUtilities
     - Gradientable
-    - HTTPStatusCodes
     - KeychainAccess
     - MGSwipeTableCell
     - nanopb
-    - ObjectMapper
     - OneSignal
-    - PureLayout
     - Reusable
-    - RNCryptor
     - SDWebImage
     - SJSegmentedScrollView
-    - StatefulTableView
     - SwiftyJSON
     - TPKeyboardAvoiding
     - UIColor_Hex_Swift
   trunk:
     - BugfenderSDK
+    - CoreStore
+    - HTTPStatusCodes
+    - ObjectMapper
+    - PureLayout
+    - StatefulTableView
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Atributika: 7b3631032cf11f2197b352343e0bd1b783d8ca88
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BugfenderSDK: cc587f83e8cec9ae1567ec1d837969a6df7dcbca
-  CoreStore: 89d0c8e7a9d76d0c533018b4850245c973f4ecbd
+  CoreStore: 690a587902a81c412cf353466d2d2a029934267e
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
@@ -197,22 +194,21 @@ SPEC CHECKSUMS:
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GoogleUtilities: 82f04aeff8426309dbdbc75f6c8accd1e584a5da
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
-  HTTPStatusCodes: 69f50d229c4b5d6dcb48fad9c86e32ded975bcd3
+  HTTPStatusCodes: a07dff597042a9f692cf4f979cb0fd91fc938835
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OneSignal: a506e3bc61d2030f0757faf9bd783a9b211c6e3c
-  PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
+  PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
-  RNCryptor: c93d19029dcf7ff160aca0f24d6c9e7b0d82f664
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SJSegmentedScrollView: 41dde7568372103e3526caa9de6914f9725256f7
-  StatefulTableView: be99827cf564125aedbc0738caa5b9742839cd59
+  StatefulTableView: 071f3f6f274d28cf84d4c669dea5fe9fb10b7d9e
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 4491043d8d60dd7bbaedeb4ad1c54fa0196ab687
+PODFILE CHECKSUM: 029ae44861430dd8f144fea79339b2b6d750a737
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4

@@ -37,7 +37,7 @@ import CoreData
  ```
  */
 @available(macOS 10.12, *)
-public protocol ObjectObserver: class {
+public protocol ObjectObserver: AnyObject {
     
     /**
      The `DynamicObject` type for the observed object
@@ -77,7 +77,7 @@ public protocol ObjectObserver: class {
 // MARK: - ObjectObserver (Default Implementations)
 
 @available(macOS 10.12, *)
-public extension ObjectObserver {
+extension ObjectObserver {
     
     public func objectMonitor(_ monitor: ObjectMonitor<ObjectEntityType>, willUpdateObject object: ObjectEntityType) { }
     

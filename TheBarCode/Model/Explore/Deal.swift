@@ -62,6 +62,7 @@ class Deal: CoreStoreObject {
     var sharedByName = Value.Optional<String>("shared_by_name")
     var sharedId = Value.Optional<String>("shared_id")
     
+    var shouldShowDate = Value.Required<Bool>("should_show_date", initial: false)
     var hasTime = Value.Required<Bool>("should_show_time", initial: true)
     
     var isBookmarked = Value.Required<Bool>("is_bookmarked", initial: false)
@@ -180,11 +181,7 @@ extension Deal: ImportableUniqueObject {
             self.sharedId.value = "\(sharedId)"
         }
         
-        if let hasTime = source["should_show_time"] as? Bool {
-            self.hasTime.value = hasTime
-        } else {
-            self.hasTime.value = true
-        }
-        
+        self.shouldShowDate.value = source["is_date_show"] as? Bool ?? false
+        self.hasTime.value = source["should_show_time"] as? Bool ?? true
     }
 }

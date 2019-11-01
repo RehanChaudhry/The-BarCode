@@ -54,19 +54,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDH-uh-GDT">
-                        <rect key="frame" x="224" y="190" width="44" height="44"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="44" id="Ysr-mo-EoV"/>
-                            <constraint firstAttribute="width" constant="44" id="bdt-hl-QEs"/>
-                        </constraints>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal" image="icon_share"/>
-                        <connections>
-                            <action selector="shareOfferButtonTappedWithSender:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="Fc6-hF-4qE"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHB-OH-2Bh">
                         <rect key="frame" x="24" y="150" width="60" height="28"/>
                         <color key="backgroundColor" red="0.48675468779999997" green="0.49157404119999998" blue="0.49157404119999998" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
@@ -83,6 +70,19 @@
                                 <integer key="value" value="14"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDH-uh-GDT">
+                        <rect key="frame" x="224" y="190" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Ysr-mo-EoV"/>
+                            <constraint firstAttribute="width" constant="44" id="bdt-hl-QEs"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="icon_share"/>
+                        <connections>
+                            <action selector="shareOfferButtonTappedWithSender:" destination="j7z-sJ-Rgk" eventType="touchUpInside" id="Fc6-hF-4qE"/>
+                        </connections>
                     </button>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SAx-gl-dFM">
                         <rect key="frame" x="236" y="202" width="20" height="20"/>
