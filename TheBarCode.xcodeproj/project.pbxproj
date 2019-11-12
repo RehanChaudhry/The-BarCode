@@ -231,6 +231,8 @@
 		0C9ECA8E2295284800DEC34F /* SocialLinksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9ECA8C2295284800DEC34F /* SocialLinksCell.swift */; };
 		0C9ECA8F2295284800DEC34F /* SocialLinksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9ECA8D2295284800DEC34F /* SocialLinksCell.xib */; };
 		0C9FA2792236768B008F0B62 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9FA2782236768A008F0B62 /* StringFormatter.swift */; };
+		0CA20F6E237032290051F0DC /* FoodMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA20F6D237032290051F0DC /* FoodMenuHeaderView.swift */; };
+		0CA20F70237032390051F0DC /* FoodMenuHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA20F6F237032390051F0DC /* FoodMenuHeaderView.xib */; };
 		0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA216342237B881008B3E0B /* MobileVerificationViewController.swift */; };
 		0CAAAB212316843B008A7159 /* CategoryFilterLevel2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAAB202316843B008A7159 /* CategoryFilterLevel2ViewController.swift */; };
 		0CAAAB2823168906008A7159 /* CategoryFilterLevel3HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAAB2723168906008A7159 /* CategoryFilterLevel3HeaderView.swift */; };
@@ -271,6 +273,8 @@
 		0CEFD5DC2361BD77000E2FBC /* MapPinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEFD5DB2361BD77000E2FBC /* MapPinsViewController.swift */; };
 		0CEFD5E02361C0B9000E2FBC /* MapPinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEFD5DE2361C0B9000E2FBC /* MapPinCell.swift */; };
 		0CEFD5E12361C0B9000E2FBC /* MapPinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEFD5DF2361C0B9000E2FBC /* MapPinCell.xib */; };
+		0CF3B1CA2372B47600B93786 /* FoodMenuSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF3B1C92372B47600B93786 /* FoodMenuSegment.swift */; };
+		0CF3B1CC2372B48900B93786 /* DrinkMenuSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF3B1CB2372B48900B93786 /* DrinkMenuSegment.swift */; };
 		0CF41626229E7D51000EAA59 /* ExploreSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
@@ -616,6 +620,8 @@
 		0C9ECA8C2295284800DEC34F /* SocialLinksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinksCell.swift; sourceTree = "<group>"; };
 		0C9ECA8D2295284800DEC34F /* SocialLinksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialLinksCell.xib; sourceTree = "<group>"; };
 		0C9FA2782236768A008F0B62 /* StringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
+		0CA20F6D237032290051F0DC /* FoodMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuHeaderView.swift; sourceTree = "<group>"; };
+		0CA20F6F237032390051F0DC /* FoodMenuHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodMenuHeaderView.xib; sourceTree = "<group>"; };
 		0CA216342237B881008B3E0B /* MobileVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileVerificationViewController.swift; sourceTree = "<group>"; };
 		0CAAAB202316843B008A7159 /* CategoryFilterLevel2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterLevel2ViewController.swift; sourceTree = "<group>"; };
 		0CAAAB2723168906008A7159 /* CategoryFilterLevel3HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterLevel3HeaderView.swift; sourceTree = "<group>"; };
@@ -657,6 +663,8 @@
 		0CEFD5DB2361BD77000E2FBC /* MapPinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinsViewController.swift; sourceTree = "<group>"; };
 		0CEFD5DE2361C0B9000E2FBC /* MapPinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinCell.swift; sourceTree = "<group>"; };
 		0CEFD5DF2361C0B9000E2FBC /* MapPinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapPinCell.xib; sourceTree = "<group>"; };
+		0CF3B1C92372B47600B93786 /* FoodMenuSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuSegment.swift; sourceTree = "<group>"; };
+		0CF3B1CB2372B48900B93786 /* DrinkMenuSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkMenuSegment.swift; sourceTree = "<group>"; };
 		0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreSchedule.swift; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreDetailHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -787,6 +795,8 @@
 				0C0CA20D22E04BC300C90409 /* WhatsOnDetailEventCell.xib */,
 				0C86D02A22DF2F5F0034DA5C /* WhatsOnDetailFoodCell.swift */,
 				0C86D02B22DF2F5F0034DA5C /* WhatsOnDetailFoodCell.xib */,
+				0CA20F6D237032290051F0DC /* FoodMenuHeaderView.swift */,
+				0CA20F6F237032390051F0DC /* FoodMenuHeaderView.xib */,
 			);
 			path = WhatsOn;
 			sourceTree = "<group>";
@@ -1407,6 +1417,8 @@
 				0C86D02222DEF4DD0034DA5C /* Event.swift */,
 				0C86D02422DEF4E90034DA5C /* Drink.swift */,
 				0C86D02622DEF4F50034DA5C /* Food.swift */,
+				0CF3B1C92372B47600B93786 /* FoodMenuSegment.swift */,
+				0CF3B1CB2372B48900B93786 /* DrinkMenuSegment.swift */,
 			);
 			path = WhatsOn;
 			sourceTree = "<group>";
@@ -2059,6 +2071,7 @@
 				0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */,
 				0C23A8A72146873400DFB281 /* Lato-Heavy.ttf in Resources */,
 				0C955DD02147D18400F9385B /* FieldView.xib in Resources */,
+				0CA20F70237032390051F0DC /* FoodMenuHeaderView.xib in Resources */,
 				0CEFD5E12361C0B9000E2FBC /* MapPinCell.xib in Resources */,
 				0C955DF92149319200F9385B /* TableViewLoadMoreCell.xib in Resources */,
 				0C955E03214931C400F9385B /* CollectionViewLoadMoreView.xib in Resources */,
@@ -2337,6 +2350,7 @@
 				0C478A93215C9D92002C51FA /* BarDealsViewController.swift in Sources */,
 				0C117F0022DDA1530061FFC3 /* ChalkBoardViewController.swift in Sources */,
 				0CC81FA1216DCE6100FDB92D /* APIPaths.swift in Sources */,
+				0CA20F6E237032290051F0DC /* FoodMenuHeaderView.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
 				0C39F2F8231E72D500596A2B /* GMUFeature.m in Sources */,
 				0C674F7B22201C65002394F5 /* RibbonBaseView.swift in Sources */,
@@ -2349,6 +2363,7 @@
 				0C39F2FB231E72D500596A2B /* GMUPoint.m in Sources */,
 				0C39F2F9231E72D500596A2B /* GMUGroundOverlay.m in Sources */,
 				0C117EF222DD9E4D0061FFC3 /* WhatsOnViewController.swift in Sources */,
+				0CF3B1CC2372B48900B93786 /* DrinkMenuSegment.swift in Sources */,
 				0C0CA21D22E1908200C90409 /* BarSearchViewController.swift in Sources */,
 				0C6DABE42368500E003C3999 /* SharedEventParams.swift in Sources */,
 				0C39F2F6231E72D500596A2B /* GMUPolygon.m in Sources */,
@@ -2452,6 +2467,7 @@
 				0C39F2EB231E72D500596A2B /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				0C478A95215C9DFD002C51FA /* LiveOffersViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
+				0CF3B1CA2372B47600B93786 /* FoodMenuSegment.swift in Sources */,
 				0C0CA21922E0852F00C90409 /* SearchScope.swift in Sources */,
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,

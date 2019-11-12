@@ -49,7 +49,7 @@
                         <rect key="frame" x="156.5" y="146" width="7" height="37"/>
                     </pageControl>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-Lx-xS8">
-                        <rect key="frame" x="16" y="206" width="244" height="19.5"/>
+                        <rect key="frame" x="16" y="206" width="138.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +67,24 @@
                             <action selector="bookmarkButtonTappedWithSender:" destination="CsO-OR-xRH" eventType="touchUpInside" id="s54-NQ-VsO"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgE-wp-hQF">
+                        <rect key="frame" x="224" y="193" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="7dD-A3-vaK"/>
+                            <constraint firstAttribute="width" constant="44" id="8af-CQ-dXf"/>
+                            <constraint firstAttribute="height" constant="44" id="iPr-zA-A3J"/>
+                            <constraint firstAttribute="width" constant="44" id="uK6-AE-iWm"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="icon_share"/>
+                        <connections>
+                            <action selector="shareButtonTappedWithSender:" destination="CsO-OR-xRH" eventType="touchUpInside" id="5vc-vl-AMX"/>
+                        </connections>
+                    </button>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="plr-He-wrm">
+                        <rect key="frame" x="236" y="205" width="20" height="20"/>
+                    </activityIndicatorView>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="oox-j9-KtP">
                         <rect key="frame" x="280" y="204" width="20" height="20"/>
                     </activityIndicatorView>
@@ -123,9 +141,12 @@
                 <constraints>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="071-x0-41K"/>
                     <constraint firstAttribute="trailing" secondItem="6Tc-Mw-7nw" secondAttribute="trailing" constant="16" id="1fY-N5-wzj"/>
+                    <constraint firstItem="plr-He-wrm" firstAttribute="centerX" secondItem="fgE-wp-hQF" secondAttribute="centerX" id="4Iq-Fw-h9r"/>
+                    <constraint firstItem="fgE-wp-hQF" firstAttribute="top" secondItem="8pS-Va-tqg" secondAttribute="bottom" constant="7" id="572-hu-3Pu"/>
                     <constraint firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" constant="16" id="5J9-jp-DKU"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="centerY" secondItem="xfi-6e-e5W" secondAttribute="centerY" id="5Va-5P-cJ6"/>
                     <constraint firstItem="8pS-Va-tqg" firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" id="6Sa-Qy-jIv"/>
+                    <constraint firstItem="plr-He-wrm" firstAttribute="centerY" secondItem="fgE-wp-hQF" secondAttribute="centerY" id="95L-Ug-BsT"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="xfi-6e-e5W" secondAttribute="trailing" constant="8" id="COF-Fy-pq6"/>
                     <constraint firstAttribute="bottom" secondItem="lm4-Vj-yFJ" secondAttribute="bottom" constant="8" id="Cap-EK-XTj"/>
                     <constraint firstItem="hW6-Fn-oCJ" firstAttribute="bottom" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="-3" id="DTl-Ut-ERd"/>
@@ -149,10 +170,10 @@
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="xfi-6e-e5W" secondAttribute="trailing" constant="8" id="oyv-9v-JfK"/>
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="6.5" id="qvx-z0-I7a"/>
                     <constraint firstItem="Ddr-47-qEj" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="sGJ-Yh-RhT"/>
+                    <constraint firstItem="4oO-An-LV1" firstAttribute="leading" secondItem="fgE-wp-hQF" secondAttribute="trailing" id="tCI-fe-4OM"/>
                     <constraint firstItem="oox-j9-KtP" firstAttribute="centerY" secondItem="4oO-An-LV1" secondAttribute="centerY" constant="-1" id="unD-VX-hur"/>
                     <constraint firstItem="oox-j9-KtP" firstAttribute="centerX" secondItem="4oO-An-LV1" secondAttribute="centerX" id="vHl-43-Ngw"/>
                     <constraint firstAttribute="bottom" secondItem="6Tc-Mw-7nw" secondAttribute="bottom" constant="7.5" id="vh0-ka-6aH"/>
-                    <constraint firstItem="4oO-An-LV1" firstAttribute="leading" secondItem="DSu-Lx-xS8" secondAttribute="trailing" constant="8" id="wAb-OE-8pt"/>
                     <constraint firstItem="aBZ-y5-dh9" firstAttribute="leading" secondItem="Ddr-47-qEj" secondAttribute="leading" constant="8" id="zR5-C8-DeS"/>
                 </constraints>
             </tableViewCellContentView>
@@ -166,6 +187,8 @@
                 <outlet property="locationIconImageView" destination="hyz-OS-uPR" id="WrL-bg-ZeL"/>
                 <outlet property="pageControl" destination="hW6-Fn-oCJ" id="gET-kD-oqi"/>
                 <outlet property="pagerView" destination="Ddr-47-qEj" id="krm-Kt-c3p"/>
+                <outlet property="shareButton" destination="fgE-wp-hQF" id="Gn9-Ua-eeW"/>
+                <outlet property="sharingLoader" destination="plr-He-wrm" id="iJm-XG-Bqi"/>
                 <outlet property="statusButton" destination="aBZ-y5-dh9" id="kHe-XV-rlv"/>
                 <outlet property="titleLabel" destination="DSu-Lx-xS8" id="2wR-Su-Ctz"/>
                 <outlet property="topPadding" destination="eZ9-b9-yWQ" id="e7w-BA-TzY"/>
@@ -176,6 +199,7 @@
     </objects>
     <resources>
         <image name="icon_map" width="15" height="20"/>
+        <image name="icon_share" width="20" height="20"/>
         <image name="icon_tab_wallet" width="26" height="26"/>
     </resources>
 </document>

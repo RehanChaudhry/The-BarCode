@@ -59,6 +59,8 @@ let apiPathVersionCheck = "version"
 let apiPathEvents = "establishment-event"
 let apiPathMenu = "establishment-menu"
 
+let apiPathMenuSegments = "establishment-segment"
+
 let apiPathInfluencer = "influencer-counter"
 let apiPathSearchAll = "search/all"
 

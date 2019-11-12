@@ -36,6 +36,9 @@ class OfferDetailViewController: UIViewController {
     @IBOutlet var bookmarkButton: UIButton!
     @IBOutlet var bookmarkLoader: UIActivityIndicatorView!
     
+    @IBOutlet var shareButton: UIButton!
+    @IBOutlet var sharingLoader: UIActivityIndicatorView!
+    
     var images: [String] = []
     
     var deal: Deal!
@@ -48,6 +51,7 @@ class OfferDetailViewController: UIViewController {
     var reloadDataRequest: DataRequest?
 
     var isSharedOffer: Bool = false
+    var loadingShareController: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +75,19 @@ class OfferDetailViewController: UIViewController {
         self.setUpBottomView()
         self.updateBookmarkButton()
 
+        self.shareButton.tintColor = UIColor.appGrayColor()
+        if self.deal.canShare.value {
+            if deal.showSharingLoader {
+                self.shareButton.isHidden = true
+                self.sharingLoader.startAnimating()
+            } else {
+                self.shareButton.isHidden = false
+                self.sharingLoader.stopAnimating()
+            }
+        } else {
+            self.shareButton.isHidden = true
+        }
+        
         self.viewedOffer()
     }
     
@@ -313,6 +330,16 @@ class OfferDetailViewController: UIViewController {
         }
     }
     
+    func updateShareButtonState() {
+        if self.deal.showSharingLoader {
+            self.shareButton.isHidden = true
+            self.sharingLoader.startAnimating()
+        } else {
+            self.shareButton.isHidden = false
+            self.sharingLoader.stopAnimating()
+        }
+    }
+    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
@@ -341,6 +368,26 @@ class OfferDetailViewController: UIViewController {
     
     @IBAction func bookmarkButtonTapped(sender: UIButton) {
         self.updateBookmarkStatus(offer: self.deal, isBookmarked: !self.deal.isBookmarked.value)
+    }
+    
+    @IBAction func shareButtonTapped(sender: UIButton) {
+        guard !self.loadingShareController else {
+            debugPrint("Loading sharing controller is already in progress")
+            return
+        }
+        
+        self.loadingShareController = true
+        
+        self.deal.showSharingLoader = true
+        self.updateShareButtonState()
+        
+        Utility.shared.generateAndShareDynamicLink(deal: self.deal, controller: self, presentationCompletion: {
+            self.deal.showSharingLoader = false
+            self.updateShareButtonState()
+            self.loadingShareController = false
+        }) {
+            
+        }
     }
 }
 

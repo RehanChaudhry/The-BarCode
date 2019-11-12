@@ -25,7 +25,8 @@ class FoodMenuViewController: UIViewController {
     
     weak var delegate: FoodMenuViewControllerDelegate!
     
-    var foods: [Food] = []
+    var segments: [FoodMenuSegment] = []
+//    var foods: [Food] = []
     var bar : Bar!
     
     var dataRequest: DataRequest?
@@ -50,7 +51,7 @@ class FoodMenuViewController: UIViewController {
     func reset() {
         self.dataRequest?.cancel()
         self.loadMore = Pagination()
-        self.foods.removeAll()
+        self.segments.removeAll()
         self.statefulTableView.innerTable.reloadData()
         self.statefulTableView.state = .idle
         self.statefulTableView.triggerInitialLoad()
@@ -70,6 +71,7 @@ class FoodMenuViewController: UIViewController {
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
         
+        self.statefulTableView.innerTable.register(headerFooterViewType: FoodMenuHeaderView.self)
         self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
@@ -91,19 +93,44 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (self.segments[section].name.lowercased() == "other") {
+            return 0.0
+        } else {
+            return 44.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if (self.segments[section].name.lowercased() == "other") {
+            return nil
+        } else {
+            let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
+            headerView?.setupHeader(title: self.segments[section].name)
+            return headerView
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.segments.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.foods.count
+        let segment = self.segments[section]
+        return segment.foods.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-        cell.setupCellForFood(food: self.foods[indexPath.row], topPadding: indexPath.row != 0)
+        let segment = self.segments[indexPath.section]
+        cell.setupCellForFood(food: segment.foods[indexPath.row], topPadding: indexPath.row != 0)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let food = self.foods[indexPath.row]
+        let segment = self.segments[indexPath.section]
+        let food = segment.foods[indexPath.row]
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         self.delegate.foodMenuViewController(controller: self, didSelect: food)
     }
@@ -122,7 +149,7 @@ extension FoodMenuViewController {
                                       "page": self.loadMore.next]
         
         self.loadMore.isLoading = true
-        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathMenu, method: .get) { (response, serverError, error) in
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathMenuSegments, method: .get) { (response, serverError, error) in
             
             self.loadMore.isLoading = false
             
@@ -145,19 +172,19 @@ extension FoodMenuViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 if isRefreshing {
-                    self.foods.removeAll()
+                    self.segments.removeAll()
                 }
                 
-                var importedObjects: [Food] = []
-                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Food>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
+                let segmentsWithItems = responseArray.filter({ (dict) -> Bool in
+                    if let items = dict["items"] as? [[String : Any]], items.count > 0 {
+                        return true
+                    } else {
+                        return false
+                    }
                 })
                 
-                for object in importedObjects {
-                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
-                    self.foods.append(fetchedObject!)
-                }
+                let segments = Mapper<FoodMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                self.segments.append(contentsOf: segments)
                 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
@@ -175,8 +202,8 @@ extension FoodMenuViewController {
 extension FoodMenuViewController: StatefulTableDelegate {
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getDeals(isRefreshing: false) { [unowned self] (error) in
-            debugPrint("deal== \(self.foods.count)")
-            handler(self.foods.count == 0, error)
+            debugPrint("food segments== \(self.segments.count)")
+            handler(self.segments.count == 0, error)
         }
     }
     
@@ -190,7 +217,7 @@ extension FoodMenuViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getDeals(isRefreshing: true) { [unowned self] (error) in
-            handler(self.foods.count == 0, error)
+            handler(self.segments.count == 0, error)
         }
     }
     

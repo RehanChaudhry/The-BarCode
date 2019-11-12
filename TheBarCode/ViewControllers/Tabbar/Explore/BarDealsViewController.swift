@@ -101,6 +101,18 @@ extension BarDealsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? DealTableViewCell {
+            cell.startTimer(deal: self.deals[indexPath.row])
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? DealTableViewCell {
+            cell.stopTimer()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Analytics.logEvent(barClickFromExplore, parameters: nil)
 

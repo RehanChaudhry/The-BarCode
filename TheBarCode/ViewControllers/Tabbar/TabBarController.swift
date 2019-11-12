@@ -37,7 +37,10 @@ class TabBarController: UITabBarController {
         if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
             appDelegate.refreshFiveADay = false
             self.selectedIndex = 1
-        } else if appDelegate.liveOfferBarId != nil {
+        } else if appDelegate.liveOfferBarId != nil ||
+            appDelegate.chalkboardBarId != nil ||
+            appDelegate.exclusiveBarId != nil ||
+            appDelegate.eventBarId != nil {
             self.selectedIndex = 2
             self.shouldPresentBarDetail = true
         } else if appDelegate.sharedOfferParams != nil {
@@ -55,8 +58,19 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(chalkboardOfferNotification(notification:)), name: notificationNameChalkboard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(exclusiveOfferNotification(notification:)), name: notificationNameExclusive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(eventNotification(notification:)), name: notificationNameEvent, object: nil)
+        
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
+        }
+        
+        do {
+            let attrStringFromHtml = try NSMutableAttributedString(data: "<span>html enabled</span>".data(using: .utf8, allowLossyConversion: false)!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+            debugPrint("html as attributed string: \(attrStringFromHtml.string)")
+        } catch {
+            debugPrint("error while loading attributed string: \(error.localizedDescription)")
         }
     }
 
@@ -65,7 +79,7 @@ class TabBarController: UITabBarController {
         
         if self.shouldPresentBarDetail {
             self.shouldPresentBarDetail = false
-            self.showBarDetailForLiveOfferNotification()
+            self.showBarDetail()
         } else if self.shouldHandleSharedOffer {
             self.shouldHandleSharedOffer = false
             self.acceptSharedOffer()
@@ -84,6 +98,12 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameAcceptSharedOffer), object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: notificationNameAcceptSharedEvent, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: notificationNameEvent, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameChalkboard, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameExclusive, object: nil)
         
         debugPrint("Tabbarcontroller deinit called")
         
@@ -116,17 +136,35 @@ class TabBarController: UITabBarController {
         
     }
     
-    @objc func showBarDetailForLiveOfferNotification() {
+    @objc func showBarDetail() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let barId = appDelegate.liveOfferBarId {
-            let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
-            let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
+        if let barId = appDelegate.chalkboardBarId {
             barDetailController.barId = barId
             barDetailController.preSelectedTabIndex = 2
-            self.topMostViewController().present(barDetailNav, animated: true, completion: nil)
+            barDetailController.preSelectedSubTabIndexOffers = 0
+            self.topMostViewController().present(barDetailNav, animated: true) {
+                appDelegate.chalkboardBarId = nil
+            }
+        } else if let barId = appDelegate.exclusiveBarId {
+            barDetailController.barId = barId
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexOffers = 1
+            self.topMostViewController().present(barDetailNav, animated: true) {
+                appDelegate.exclusiveBarId = nil
+            }
+        } else if let barId = appDelegate.eventBarId {
+            barDetailController.barId = barId
+            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedSubTabIndexOffers = 0
+            self.topMostViewController().present(barDetailNav, animated: true) {
+                appDelegate.eventBarId = nil
+            }
         } else {
             debugPrint("Live offer notification AppDelegate object is nil")
         }
+        
     }
     
     func acceptSharedOffer() {
@@ -261,7 +299,19 @@ extension TabBarController {
     }
     
     @objc func liveOfferNotification(notification: Notification) {
-        self.showBarDetailForLiveOfferNotification()
+        self.showBarDetail()
+    }
+    
+    @objc func chalkboardOfferNotification(notification: Notification) {
+        self.showBarDetail()
+    }
+    
+    @objc func exclusiveOfferNotification(notification: Notification) {
+        self.showBarDetail()
+    }
+    
+    @objc func eventNotification(notification: Notification) {
+        self.showBarDetail()
     }
     
     @objc func acceptSharedOfferNotification(notification: Notification) {

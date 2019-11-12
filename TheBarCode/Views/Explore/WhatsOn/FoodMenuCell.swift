@@ -8,7 +8,6 @@
 
 import UIKit
 import Reusable
-import Atributika
 
 class FoodMenuCell: UITableViewCell, NibReusable {
 
@@ -24,7 +23,7 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         
         self.contentView.backgroundColor = UIColor.clear
         self.backgroundColor = UIColor.clear
-                
+        
         self.titleLabel.textColor = UIColor.white
         self.detailLabel.textColor = UIColor.white
     }
@@ -37,84 +36,33 @@ class FoodMenuCell: UITableViewCell, NibReusable {
     
     func setupCellForDrink(drink: Drink, topPadding: Bool = true) {
         
-        self.setupTitle(title: drink.name.value)
-        self.setupDetail(details: drink.detail.value)
+//        self.setupTitle(title: drink.name.value)
+//        self.setupDetail(details: drink.detail.value)
+        
+        self.titleLabel.attributedText = drink.name.value.html2Attributed
+        self.detailLabel.attributedText = drink.detail.value.html2Attributed
         
         let price = Double(drink.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "   £ " + priceString + "   "
         self.priceLabel.isHidden = price == 0.0
         
-        self.topPadding.constant = topPadding ? 8.0 : 0.0
+//        self.topPadding.constant = topPadding ? 8.0 : 0.0
     }
     
     func setupCellForFood(food: Food, topPadding: Bool = true) {
         
-        self.setupTitle(title: food.name.value)
-        self.setupDetail(details: food.detail.value)
-//        self.titleLabel.attributedText = food.name.value.html2Attributed
-//        self.detailLabel.attributedText = food.detail.value.html2Attributed
+//        self.setupTitle(title: food.name.value)
+//        self.setupDetail(details: food.detail.value)
+
+        self.titleLabel.attributedText = food.name.value.html2Attributed
+        self.detailLabel.attributedText = food.detail.value.html2Attributed
         
         let price = Double(food.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "   £ " + priceString + "   "
         self.priceLabel.isHidden = price == 0.0
         
-        self.topPadding.constant = topPadding ? 8.0 : 0.0
-    }
-    
-    func setupTitle(title: String) {
-        let h1 = Style("h1").font(UIFont.appRegularFontOf(size: 22.0))
-        let h2 = Style("h2").font(UIFont.appRegularFontOf(size: 22.0))
-        let h3 = Style("h3").font(UIFont.appRegularFontOf(size: 20.0))
-        let h4 = Style("h3").font(UIFont.appRegularFontOf(size: 18.0))
-        
-        let b = Style("b").font(UIFont.appBoldFontOf(size: 14.0))
-        let u = Style("u").underlineStyle(.styleSingle)
-        let i = Style("i").font(UIFont.italicSystemFont(ofSize: 14.0))
-        
-        let all = Style.foregroundColor(.white)
-        
-        self.titleLabel.attributedText = title
-            .style(tags: h1, h2, h3, h4, b, u, i)
-            .styleAll(all)
-            .styleAll(Style.font(UIFont.boldSystemFont(ofSize: 14.0)))
-            .attributedString
-    }
-    
-    func setupDetail(details: String) {
-        let h1 = Style("h1").font(UIFont.appRegularFontOf(size: 22.0))
-        let h2 = Style("h2").font(UIFont.appRegularFontOf(size: 22.0))
-        let h3 = Style("h3").font(UIFont.appRegularFontOf(size: 20.0))
-        let h4 = Style("h3").font(UIFont.appRegularFontOf(size: 18.0))
-        
-        let b = Style("b").font(UIFont.appBoldFontOf(size: 14.0))
-        let u = Style("u").underlineStyle(.styleSingle)
-        let i = Style("i").font(UIFont.italicSystemFont(ofSize: 14.0))
-        
-        let all = Style.foregroundColor(.white)
-        
-        self.detailLabel.attributedText = details
-            .style(tags: h1, h2, h3, h4, b, u, i)
-            .styleAll(all)
-            .styleAll(Style.font(UIFont.appRegularFontOf(size: 12.0)))
-            .attributedString
-    }
-}
-
-extension String {
-    var html2Attributed: NSAttributedString? {
-        do {
-            guard let data = data(using: String.Encoding.utf8) else {
-                return nil
-            }
-            return try NSAttributedString(data: data,
-                                          options: [.documentType: NSAttributedString.DocumentType.html,
-                                                    .characterEncoding: String.Encoding.utf8.rawValue],
-                                          documentAttributes: nil)
-        } catch {
-            print("error: ", error)
-            return nil
-        }
+//        self.topPadding.constant = topPadding ? 8.0 : 0.0
     }
 }

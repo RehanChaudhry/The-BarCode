@@ -29,6 +29,8 @@ class ExclusiveViewController: UIViewController {
     var dataRequest: DataRequest?
     var loadMore = Pagination()
     
+    var loadingShareController: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,6 +109,18 @@ extension ExclusiveViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? DealTableViewCell {
+            cell.startTimer(deal: self.deals[indexPath.row])
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? DealTableViewCell {
+            cell.stopTimer()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let deal = self.deals[indexPath.row]
@@ -127,6 +141,33 @@ extension ExclusiveViewController: DealTableViewCellDelegate {
         
         let deal = self.deals[indexPath.row]
         self.updateBookmarkStatus(offer: deal, isBookmarked: !deal.isBookmarked.value)
+    }
+    
+    func dealTableViewCell(cell: DealTableViewCell, shareButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        guard !self.loadingShareController else {
+            debugPrint("Loading sharing controller is already in progress")
+            return
+        }
+        
+        let offer = self.deals[indexPath.row]
+        
+        self.loadingShareController = true
+        
+        offer.showSharingLoader = true
+        self.statefulTableView.innerTable.reloadData()
+        
+        Utility.shared.generateAndShareDynamicLink(deal: offer, controller: self, presentationCompletion: {
+            offer.showSharingLoader = false
+            self.statefulTableView.innerTable.reloadData()
+            self.loadingShareController = false
+        }) {
+            
+        }
     }
     
     func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton) {

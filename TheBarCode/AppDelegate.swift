@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var sharedEventParams: SharedEventParams?
     
     var liveOfferBarId: String?
+    var chalkboardBarId: String?
+    var exclusiveBarId: String?
+    var eventBarId: String?
     
     var refreshFiveADay: Bool?
     
@@ -102,12 +105,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let additionalData = result!.notification.payload!.additionalData, let notificationTypeRaw: String = additionalData["type"] as? String, let notificationType = NotificationType(rawValue: notificationTypeRaw) {
                 debugPrint("additionalData = \(additionalData)")
 
-                if notificationType == NotificationType.liveOffer, let barDict = additionalData["bar"] as? [String : Any] {
+                if notificationType == NotificationType.event, let barDict = additionalData["bar"] as? [String : Any] {
                     
                     let barId = "\(barDict["id"]!)"
-                    self.liveOfferBarId = barId
+                    self.eventBarId = barId
+                    NotificationCenter.default.post(name: notificationNameEvent, object: nil)
                     
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
+                } else if notificationType == NotificationType.exclusive, let barDict = additionalData["bar"] as? [String : Any] {
+                    
+                    let barId = "\(barDict["id"]!)"
+                    self.exclusiveBarId = barId
+                    NotificationCenter.default.post(name: notificationNameExclusive, object: nil)
+                    
+                } else if notificationType == NotificationType.chalkboard, let barDict = additionalData["bar"] as? [String : Any] {
+                    
+                    let barId = "\(barDict["id"]!)"
+                    self.chalkboardBarId = barId
+                    NotificationCenter.default.post(name: notificationNameChalkboard, object: nil)
+                    
+                } else if notificationType == NotificationType.liveOffer, let barDict = additionalData["bar"] as? [String : Any] {
+                    
+//                    let barId = "\(barDict["id"]!)"
+//                    self.liveOfferBarId = barId
+//                    
+//                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
                 } else if notificationType == NotificationType.fiveADay {
                     self.refreshFiveADay = true
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)

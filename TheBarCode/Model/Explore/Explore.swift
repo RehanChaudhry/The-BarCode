@@ -17,7 +17,7 @@ enum ExploreMappingType: String {
 class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
-    var userId = Value.Required<String>("user_id", initial: "")
+//    var userId = Value.Required<String>("user_id", initial: "")
     var title = Value.Required<String>("title", initial: "")
     var detail = Value.Required<String>("detail", initial: "")
     var managerName = Value.Required<String>("refresh_token", initial: "")
@@ -91,7 +91,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
         self.id.value = "\(source["id"]!)"
-        self.userId.value = "\(source["user_id"]!)"
+//        self.userId.value = "\(source["user_id"]!)"
         self.title.value = source["title"] as! String
         self.detail.value = source["description"] as! String
         self.managerName.value = source["manager_name"] as! String

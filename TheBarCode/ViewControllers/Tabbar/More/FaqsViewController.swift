@@ -90,8 +90,8 @@ class FaqsViewController: UIViewController {
         self.faqSections.append(section21)
         
         
-        let section22 = FAQSection(title: "What are live offers?", faqs: [FAQ(text: "Live offers are last minute promotions that bars send out to grab your attention . You will receive a notification if you are within 500m of the bar or if you have favourited that bar. The notification flare will be active for 1 hour but the offer length can vary according to the deal. You can check what live offers are on by checking your 'Live' tab.")])
-        self.faqSections.append(section22)
+//        let section22 = FAQSection(title: "What are live offers?", faqs: [FAQ(text: "Live offers are last minute promotions that bars send out to grab your attention . You will receive a notification if you are within 500m of the bar or if you have favourited that bar. The notification flare will be active for 1 hour but the offer length can vary according to the deal. You can check what live offers are on by checking your 'Live' tab.")])
+//        self.faqSections.append(section22)
         
         
         let section23 = FAQSection(title: "Am I able to claim live offers if I haven’t reloaded?", faqs: [FAQ(text: "Yes, unless the offer that is sent out is conditional on you redeeming your offer and you have already redeemed previously in that bar since your last reload period.")])
@@ -103,8 +103,8 @@ class FaqsViewController: UIViewController {
         let section25 = FAQSection(title: "Can I take advantage of offers that have not appeared in my ‘5 a day.’?", faqs: [FAQ(text: "Yes. The 5 a Day deals are just a neat way of you receiving the most relevant offers whilst avoiding being spammed. There are of course though loads of other offers and promotions for you to peruse and use at your leisure.")])
         self.faqSections.append(section25)
         
-        let section26 = FAQSection(title: "Can I get notified of ‘Live Offers’ even if I am not within a 500m radius of the bar?", faqs: [FAQ(text: "Yes. You will receive 'Live Offers' from any of the Bars that you have 'Favourited'.You can 'Favourite' as many bars as you like to receive more great offers. Also, watch out for offers sent through from your friends, they can forward on any 'Live Offers' that they receive if they think you'll like them. You can also simply browse the Live Offers Tab within the app to see what’s happening right now.")])
-        self.faqSections.append(section26)
+//        let section26 = FAQSection(title: "Can I get notified of ‘Live Offers’ even if I am not within a 500m radius of the bar?", faqs: [FAQ(text: "Yes. You will receive 'Live Offers' from any of the Bars that you have 'Favourited'.You can 'Favourite' as many bars as you like to receive more great offers. Also, watch out for offers sent through from your friends, they can forward on any 'Live Offers' that they receive if they think you'll like them. You can also simply browse the Live Offers Tab within the app to see what’s happening right now.")])
+//        self.faqSections.append(section26)
         
         self.tableView.register(headerFooterViewType: FAQHeaderView.self)
         self.tableView.register(cellType: FAQTableViewCell.self)

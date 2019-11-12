@@ -76,7 +76,7 @@ enum SearchScope: String {
         return [SearchScope.all.item(),
                 SearchScope.bar.item(),
                 SearchScope.deal.item(),
-                SearchScope.liveOffer.item(),
+//                SearchScope.liveOffer.item(),
                 SearchScope.food.item(),
                 SearchScope.drink.item(),
                 SearchScope.event.item()

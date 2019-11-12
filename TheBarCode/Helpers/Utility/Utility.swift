@@ -37,7 +37,10 @@ enum NotificationType: String {
     case general = "admin",
     fiveADay = "five_a_day",
     liveOffer = "live_offer",
-    shareOffer = "share_offer"
+    shareOffer = "share_offer",
+    chalkboard = "banner_ads",
+    exclusive = "exclusive",
+    event = "event"
 }
 
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
@@ -47,6 +50,10 @@ let notificationNameSharedOfferRedeemed: String = "notificationNameSharedOfferRe
 let notificationNameFiveADayRefresh: String = "notificationNameFiveADayRefresh"
 let notificationNameLiveOffer: String = "notificationNameLiveOffer"
 let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOffer"
+
+let notificationNameChalkboard = Notification.Name(rawValue: "notificationNameChalkboard")
+let notificationNameExclusive = Notification.Name(rawValue: "notificationNameExclusive")
+let notificationNameEvent = Notification.Name(rawValue: "notificationNameEvent")
 
 let notificationNameAcceptSharedEvent = Notification.Name("notificationNameAcceptSharedEvent")
 
@@ -87,7 +94,7 @@ let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 let tbcLogoUrl = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
 
 enum EnvironmentType: String {
-    case stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
+    case dev = "dev", stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
     static func current() -> EnvironmentType {
         if theBarCodeAPIDomain == staggingAPIDomain {
@@ -96,6 +103,8 @@ enum EnvironmentType: String {
             return EnvironmentType.qa
         } else if theBarCodeAPIDomain == productionAPIDomain {
             return EnvironmentType.production
+        } else if theBarCodeAPIDomain == devAPIDomain {
+            return EnvironmentType.dev
         } else {
             return EnvironmentType.unknown
         }
@@ -475,7 +484,7 @@ class Utility: NSObject {
         
         linkComponents.androidParameters = DynamicLinkAndroidParameters(packageName: androidPackageName)
         
-        let descText = "\(user.fullName.value) has shared an event with you, check it out! Pass on great events, so why not share the love."
+        let descText = "\(user.fullName.value) has shared an event with you, check it out!"
         linkComponents.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
         linkComponents.socialMetaTagParameters?.title = "The Barcode"
         linkComponents.socialMetaTagParameters?.descriptionText = descText
@@ -512,7 +521,7 @@ class Utility: NSObject {
         let currentEnvironment = EnvironmentType.current()
         if currentEnvironment == .stagging {
             return oneSignalStaggingAppId
-        } else if currentEnvironment == .qa {
+        } else if currentEnvironment == .qa || currentEnvironment == .dev {
             return oneSignalQAAppId
         } else if currentEnvironment == .production {
             return oneSignalProdAppId

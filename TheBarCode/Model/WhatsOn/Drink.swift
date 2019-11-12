@@ -24,7 +24,6 @@ class Drink: CoreStoreObject {
     
     var price = Value.Required<String>("price", initial: "")
     var unit = Value.Required<String>("unit", initial: "")
-    
 }
 
 extension Drink: ImportableUniqueObject {

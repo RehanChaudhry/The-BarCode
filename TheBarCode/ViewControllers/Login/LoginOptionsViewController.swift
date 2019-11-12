@@ -129,7 +129,7 @@ class LoginOptionsViewController: UIViewController {
     
         let option2 = IntroOption(title: "5 a day", detail: "Get a daily bundle of offers specific to you", type: .fiveADay)
         
-        let option3 = IntroOption(title: "Live Offers", detail: "Receive real-time offers from your nearest and dearest", type: .liveOffers)
+        let option3 = IntroOption(title: "Live Alerts", detail: "Receive real-time offers from your nearest and dearest", type: .liveOffers)
 
         let option4 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just £1.", type: .reload)
         

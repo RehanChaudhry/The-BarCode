@@ -117,12 +117,16 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let offerCell = cell as? LiveOfferTableViewCell, let liveOffer = self.offers[indexPath.row] as? LiveOffer {
             offerCell.startTimer(deal: liveOffer)
+        } else if let dealCell = cell as? DealTableViewCell, let deal = self.offers[indexPath.row] as? Deal {
+            dealCell.startTimer(deal: deal)
         }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let offerCell = cell as? LiveOfferTableViewCell {
             offerCell.stopTimer()
+        } else if let dealCell = cell as? DealTableViewCell {
+            dealCell.stopTimer()
         }
     }
     
@@ -144,6 +148,36 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
 extension BookmarkedOfferViewController: DealTableViewCellDelegate {
     func dealTableViewCell(cell: DealTableViewCell, distanceButtonTapped sender: UIButton) {
         
+    }
+    
+    func dealTableViewCell(cell: DealTableViewCell, shareButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("Indexpath not found")
+            return
+        }
+        
+        guard !self.loadingShareController else {
+            debugPrint("Loading sharing controller is already in progress")
+            return
+        }
+        
+        guard let offer = self.offers[indexPath.row] as? Deal else {
+            debugPrint("Not a deal")
+            return
+        }
+        
+        self.loadingShareController = true
+
+        offer.showSharingLoader = true
+        self.statefulTableView.innerTable.reloadData()
+        
+        Utility.shared.generateAndShareDynamicLink(deal: offer, controller: self, presentationCompletion: {
+            offer.showSharingLoader = false
+            self.statefulTableView.innerTable.reloadData()
+            self.loadingShareController = false
+        }) {
+            
+        }
     }
     
     func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
@@ -172,7 +206,7 @@ extension BookmarkedOfferViewController: LiveOfferTableViewCellDelegate {
         }
         
         guard let offer = self.offers[indexPath.row] as? LiveOffer else {
-            debugPrint("Only live offers can be shared")
+            debugPrint("Not a live offer")
             return
         }
         

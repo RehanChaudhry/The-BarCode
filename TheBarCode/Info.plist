@@ -67,11 +67,11 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Contact access is required to send invitations via email</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your location will be used to show and notify about the nearby deals and live offers</string>
+	<string>Your location will be used to show and notify about the nearby deals and live alerts</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location will be used to show  the nearby deals and live offers</string>
+	<string>Your location will be used to show  the nearby deals and live alerts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location will be used to show  the nearby deals and live offers</string>
+	<string>Your location will be used to show  the nearby deals and live alerts</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Black.ttf</string>

@@ -38,13 +38,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4u-CK-m5g">
-                        <rect key="frame" x="16" y="206" width="200" height="20"/>
+                        <rect key="frame" x="16" y="206" width="200" height="19"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3no-Ot-Mws">
-                        <rect key="frame" x="16" y="234.5" width="288" height="15"/>
+                        <rect key="frame" x="16" y="233.5" width="288" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="GeO-Od-Kmf"/>
                         </constraints>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="2 deals available" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCW-Ke-VqV">
-                        <rect key="frame" x="16" y="258" width="288" height="14.5"/>
+                        <rect key="frame" x="16" y="257" width="288" height="15.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -139,7 +139,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_share" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="icon_share" width="20" height="20"/>
         <image name="icon_tab_wallet" width="26" height="26"/>
     </resources>
 </document>

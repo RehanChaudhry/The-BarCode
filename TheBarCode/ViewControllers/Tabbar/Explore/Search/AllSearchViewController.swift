@@ -431,6 +431,10 @@ extension AllSearchViewController: DealTableViewCellDelegate {
     func dealTableViewCell(cell: DealTableViewCell, bookmarkButtonTapped sender: UIButton) {
         
     }
+    
+    func dealTableViewCell(cell: DealTableViewCell, shareButtonTapped sender: UIButton) {
+        
+    }
 }
 
 //MARK: EventCellDelegate

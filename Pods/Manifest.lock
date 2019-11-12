@@ -1,6 +1,5 @@
 PODS:
   - Alamofire (4.7.3)
-  - Atributika (4.8.2)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -13,6 +12,23 @@ PODS:
   - CoreStore (6.3.2)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
+  - DTCoreText (1.6.23):
+    - DTCoreText/Core (= 1.6.23)
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTCoreText/Core (1.6.23):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.14)
+  - DTFoundation/DTAnimatedGIF (1.7.14)
+  - DTFoundation/DTHTMLParser (1.7.14):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.14):
+    - DTFoundation/Core
   - Fabric (1.7.13)
   - FBSDKCoreKit (4.37.0):
     - Bolts (~> 1.7)
@@ -107,10 +123,10 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7.3)
-  - Atributika (~> 4.8.2)
   - BugfenderSDK (~> 1.7)
   - CoreStore (~> 6.3.2)
   - Crashlytics (~> 3.10.9)
+  - DTCoreText (~> 1.6.23)
   - Fabric (~> 1.7.13)
   - FBSDKLoginKit (~> 4.37.0)
   - Firebase/Core (~> 5.10.0)
@@ -136,7 +152,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
-    - Atributika
     - Bolts
     - Crashlytics
     - Fabric
@@ -167,6 +182,8 @@ SPEC REPOS:
   trunk:
     - BugfenderSDK
     - CoreStore
+    - DTCoreText
+    - DTFoundation
     - HTTPStatusCodes
     - ObjectMapper
     - PureLayout
@@ -174,11 +191,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  Atributika: 7b3631032cf11f2197b352343e0bd1b783d8ca88
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BugfenderSDK: cc587f83e8cec9ae1567ec1d837969a6df7dcbca
   CoreStore: 690a587902a81c412cf353466d2d2a029934267e
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
+  DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
+  DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
   FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
@@ -209,6 +227,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 029ae44861430dd8f144fea79339b2b6d750a737
+PODFILE CHECKSUM: 94f9554a81f8437e6a006f8b6244e97dfb6beea7
 
 COCOAPODS: 1.8.4
