@@ -29,7 +29,7 @@ extension String {
 }
 
 extension String {
-    var html2Attributed: NSAttributedString? {
+    func html2Attributed(isTitle: Bool) -> NSAttributedString? {
         guard let data = data(using: String.Encoding.unicode, allowLossyConversion: false) else {
             return nil
         }
@@ -57,7 +57,9 @@ extension String {
                 let appFont: UIFont!
                 let fontDescriptor = font.fontDescriptor
                 
-                if fontDescriptor.symbolicTraits.contains(.traitBold) {
+                if isTitle {
+                    appFont = UIFont.appBoldFontOf(size: 16.0)
+                } else if fontDescriptor.symbolicTraits.contains(.traitBold) {
                     if fontDescriptor.symbolicTraits.contains(.traitItalic) {
                         appFont = UIFont.appBoldItalicFontOf(size: fontDescriptor.pointSize <= 12.0 ? 16.0 : fontDescriptor.pointSize)
                     } else {

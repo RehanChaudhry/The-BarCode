@@ -148,10 +148,14 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
-        let offerDetailController = self.storyboard?.instantiateViewController(withIdentifier: "OfferDetailViewController") as! OfferDetailViewController
+        let offerDetailNavigation = self.storyboard!.instantiateViewController(withIdentifier: "OfferDetailNavigation") as! UINavigationController
+        
+        let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.isSharedOffer = true
         offerDetailController.deal = (self.offers[indexPath.row] as! Deal)
-        self.navigationController?.pushViewController(offerDetailController, animated: true)
+        offerDetailController.isPresenting = true
+        
+        self.present(offerDetailNavigation, animated: true, completion: nil)
     }
 }
 
@@ -201,8 +205,8 @@ extension SharedOffersViewController {
                         if offerType == .live {
                             let object = try! transaction.importUniqueObject(Into<LiveOffer>(), source: responseObject)
                             importedObjects.append(object as Any)
-                        } else if offerType == .fiveADay {
-                            let object = try! transaction.importUniqueObject(Into<FiveADayDeal>(), source: responseObject)
+                        } else {
+                            let object = try! transaction.importUniqueObject(Into<Deal>(), source: responseObject)
                             importedObjects.append(object as Any)
                         }
                         
@@ -213,7 +217,7 @@ extension SharedOffersViewController {
                     if let object = object as? LiveOffer {
                         let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                         self.offers.append(fetchedObject!)
-                    } else if let object = object as? FiveADayDeal {
+                    } else if let object = object as? Deal {
                         let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
                         self.offers.append(fetchedObject!)
                     }

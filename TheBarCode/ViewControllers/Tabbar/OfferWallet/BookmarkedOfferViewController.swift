@@ -138,9 +138,13 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
             return
         }
         
-        let offerDetailController = self.storyboard?.instantiateViewController(withIdentifier: "OfferDetailViewController") as! OfferDetailViewController
+        let offerDetailNavigation = self.storyboard!.instantiateViewController(withIdentifier: "OfferDetailNavigation") as! UINavigationController
+        
+        let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.deal = offer
-        self.navigationController?.pushViewController(offerDetailController, animated: true)
+        offerDetailController.isPresenting = true
+        
+        self.present(offerDetailNavigation, animated: true, completion: nil)
     }
 }
 

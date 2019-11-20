@@ -97,7 +97,7 @@ enum EnvironmentType: String {
     case dev = "dev", stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
     static func current() -> EnvironmentType {
-        if theBarCodeAPIDomain == staggingAPIDomain {
+        if theBarCodeAPIDomain == staggingAPIDomain || theBarCodeAPIDomain == barcodeStagingAPIDomain {
             return EnvironmentType.stagging
         } else if theBarCodeAPIDomain == qaAPIDomain {
             return EnvironmentType.qa

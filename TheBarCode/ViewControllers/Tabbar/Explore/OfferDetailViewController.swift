@@ -53,10 +53,17 @@ class OfferDetailViewController: UIViewController {
     var isSharedOffer: Bool = false
     var loadingShareController: Bool = false
     
+    var isPresenting: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if self.isPresenting {
+            let leftBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backBarButtonTapped(sender:)))
+            self.navigationItem.leftBarButtonItem = leftBarButton
+        }
         
         self.collectionView.register(cellType: ExploreDetailHeaderCollectionViewCell.self)
         
@@ -115,6 +122,11 @@ class OfferDetailViewController: UIViewController {
     }
     
     //MARK: My Methods
+    
+    @objc func backBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func setUpBottomView() {
         
         self.redeemButton.updateColor(withGrey: !self.deal.establishment.value!.canRedeemOffer.value)

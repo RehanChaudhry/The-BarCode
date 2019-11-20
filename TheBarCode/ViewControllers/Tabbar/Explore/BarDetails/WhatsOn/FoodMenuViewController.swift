@@ -94,21 +94,13 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (self.segments[section].name.lowercased() == "other") {
-            return 0.0
-        } else {
-            return 44.0
-        }
+        return 44.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if (self.segments[section].name.lowercased() == "other") {
-            return nil
-        } else {
-            let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
-            headerView?.setupHeader(title: self.segments[section].name)
-            return headerView
-        }
+        let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
+        headerView?.setupHeader(title: self.segments[section].name)
+        return headerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

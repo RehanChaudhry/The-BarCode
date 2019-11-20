@@ -14,7 +14,7 @@ enum OfferType: String {
     fiveADay = "5 A Day",
     live = "Live",
     exclusive = "Exclusive",
-    bannerAds = "Banner Ads",
+    bannerAds = "Chalkboard",
     unknown = "unknown"
     
     func serverParamValue() -> String {

@@ -39,8 +39,8 @@ class FoodMenuCell: UITableViewCell, NibReusable {
 //        self.setupTitle(title: drink.name.value)
 //        self.setupDetail(details: drink.detail.value)
         
-        self.titleLabel.attributedText = drink.name.value.html2Attributed
-        self.detailLabel.attributedText = drink.detail.value.html2Attributed
+        self.titleLabel.attributedText = drink.name.value.html2Attributed(isTitle: true)
+        self.detailLabel.attributedText = drink.detail.value.html2Attributed(isTitle: false)
         
         let price = Double(drink.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
@@ -55,8 +55,8 @@ class FoodMenuCell: UITableViewCell, NibReusable {
 //        self.setupTitle(title: food.name.value)
 //        self.setupDetail(details: food.detail.value)
 
-        self.titleLabel.attributedText = food.name.value.html2Attributed
-        self.detailLabel.attributedText = food.detail.value.html2Attributed
+        self.titleLabel.attributedText = food.name.value.html2Attributed(isTitle: true)
+        self.detailLabel.attributedText = food.detail.value.html2Attributed(isTitle: false)
         
         let price = Double(food.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
