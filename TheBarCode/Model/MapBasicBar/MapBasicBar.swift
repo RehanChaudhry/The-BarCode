@@ -19,6 +19,8 @@ class MapBasicBar: NSObject, Mappable {
     
     var title: String!
     
+    var unlimitedRedemptionAllowed: Bool = false
+    
     var standardOfferType: StandardOfferType {
         get {
             if let standardOfferTypeRaw = self.standardOfferTypeRaw {
@@ -26,6 +28,12 @@ class MapBasicBar: NSObject, Mappable {
             } else {
                 return .silver
             }
+        }
+    }
+    
+    var currentlyUnlimitedRedemptionAllowed: Bool {
+        get {
+            return (self.isOpen && self.unlimitedRedemptionAllowed)
         }
     }
     
@@ -68,6 +76,8 @@ class MapBasicBar: NSObject, Mappable {
         } else {
             self.isOpen = false
         }
+        
+        self.unlimitedRedemptionAllowed <- map["is_unlimited_redemption"]
     }
 }
 

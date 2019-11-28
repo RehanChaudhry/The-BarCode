@@ -71,6 +71,28 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lI1-jK-STM" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="137" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_unlimited" translatesAutoresizingMaskIntoConstraints="NO" id="Cm3-mz-9jC">
+                                <rect key="frame" x="9" y="8" width="22" height="24"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Cm3-mz-9jC" firstAttribute="leading" secondItem="lI1-jK-STM" secondAttribute="leading" constant="9" id="9jM-rK-DgO"/>
+                            <constraint firstAttribute="bottom" secondItem="Cm3-mz-9jC" secondAttribute="bottom" constant="8" id="A9t-qS-Gsq"/>
+                            <constraint firstAttribute="height" constant="40" id="LFM-Sa-nnZ"/>
+                            <constraint firstAttribute="trailing" secondItem="Cm3-mz-9jC" secondAttribute="trailing" constant="9" id="Q9u-k2-JWp"/>
+                            <constraint firstItem="Cm3-mz-9jC" firstAttribute="top" secondItem="lI1-jK-STM" secondAttribute="top" constant="8" id="Qyz-X0-kef"/>
+                            <constraint firstAttribute="width" constant="40" id="t4N-Ub-xbO"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDH-uh-GDT">
                         <rect key="frame" x="224" y="190" width="44" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -142,6 +164,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="SAx-gl-dFM" firstAttribute="centerX" secondItem="IDH-uh-GDT" secondAttribute="centerX" id="2ab-n0-13B"/>
+                    <constraint firstItem="lI1-jK-STM" firstAttribute="bottom" secondItem="oyM-7r-nGV" secondAttribute="bottom" constant="-8" id="6bA-9Y-p3G"/>
                     <constraint firstItem="atE-kR-6C3" firstAttribute="top" secondItem="djc-IT-5qt" secondAttribute="bottom" constant="8" id="API-Za-Tx8"/>
                     <constraint firstAttribute="bottom" secondItem="EFD-eR-6bt" secondAttribute="bottom" constant="1" id="B65-mg-Lto"/>
                     <constraint firstItem="e7T-kn-Jzp" firstAttribute="centerY" secondItem="atE-kR-6C3" secondAttribute="centerY" id="Cmk-rF-q17"/>
@@ -153,6 +176,7 @@
                     <constraint firstItem="MBs-CA-MRT" firstAttribute="trailing" secondItem="oyM-7r-nGV" secondAttribute="trailing" id="O7x-3Z-rmw"/>
                     <constraint firstItem="DHB-OH-2Bh" firstAttribute="bottom" secondItem="oyM-7r-nGV" secondAttribute="bottom" constant="-7" id="Qev-9y-cba"/>
                     <constraint firstItem="EFD-eR-6bt" firstAttribute="top" secondItem="IDH-uh-GDT" secondAttribute="bottom" id="R1K-Gc-kIH"/>
+                    <constraint firstItem="lI1-jK-STM" firstAttribute="trailing" secondItem="oyM-7r-nGV" secondAttribute="trailing" constant="-8" id="RLD-7f-9sJ"/>
                     <constraint firstItem="MBs-CA-MRT" firstAttribute="top" secondItem="oyM-7r-nGV" secondAttribute="top" id="TzR-ni-TZl"/>
                     <constraint firstAttribute="trailing" secondItem="aal-xU-qDM" secondAttribute="trailing" constant="8" id="WyF-fZ-6vN"/>
                     <constraint firstItem="SAx-gl-dFM" firstAttribute="centerY" secondItem="IDH-uh-GDT" secondAttribute="centerY" id="WzZ-qq-WDU"/>
@@ -194,6 +218,7 @@
                 <outlet property="statusButton" destination="DHB-OH-2Bh" id="fNq-Bj-nux"/>
                 <outlet property="titleLabel" destination="djc-IT-5qt" id="q1E-fc-PJR"/>
                 <outlet property="topPadding" destination="HPC-J8-NmY" id="c67-9k-6Hi"/>
+                <outlet property="unlimitedRedemptionView" destination="lI1-jK-STM" id="IiT-Bs-ocC"/>
                 <outlet property="validityLabel" destination="EFD-eR-6bt" id="bbv-Wa-pNS"/>
             </connections>
             <point key="canvasLocation" x="80" y="48.575712143928037"/>
@@ -201,7 +226,8 @@
     </objects>
     <resources>
         <image name="icon_map" width="15" height="20"/>
-        <image name="icon_share" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="icon_share" width="20" height="20"/>
         <image name="icon_tab_wallet" width="26" height="26"/>
+        <image name="icon_unlimited" width="30" height="30"/>
     </resources>
 </document>

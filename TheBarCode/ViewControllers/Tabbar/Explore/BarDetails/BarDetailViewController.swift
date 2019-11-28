@@ -112,7 +112,7 @@ class BarDetailViewController: UIViewController {
         self.isSegmentsSetuped = true
         
         let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
-        let headerViewHeight = collectionViewHeight + 83.0
+        let headerViewHeight = ceil(collectionViewHeight + 83.0)
         
         self.headerController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailHeaderViewController") as! BarDetailHeaderViewController)
         headerController.bar = self.selectedBar

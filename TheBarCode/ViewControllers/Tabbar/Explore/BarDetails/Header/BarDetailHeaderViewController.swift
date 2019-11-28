@@ -37,6 +37,8 @@ class BarDetailHeaderViewController: UIViewController {
     @IBOutlet var playerLoaderView: ShadowView!
     @IBOutlet var playerActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet var unlimitedRedemptionView: ShadowView!
+    
     var bar: Bar!
     
     var avplayer: AVPlayer?
@@ -109,23 +111,10 @@ class BarDetailHeaderViewController: UIViewController {
         self.favouriteButton.tintColor = color
         
         UIView.performWithoutAnimation {
-            if let timings = self.bar.timings.value {
-                if timings.dayStatus == .opened {
-                    if timings.isOpen.value {
-                        self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
-                        self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
-                        self.statusButton.setTitle("Open", for: .normal)
-                    } else {
-                        self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
-                        self.statusButton.setTitle("Closed", for: .normal)
-                        self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
-                    }
-                } else {
-                    self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
-                    self.statusButton.setTitle("Closed", for: .normal)
-                    self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
-                }
-                
+            if self.bar.currentlyBarIsOpened {
+                self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
+                self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
+                self.statusButton.setTitle("Open", for: .normal)
             } else {
                 self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
                 self.statusButton.setTitle("Closed", for: .normal)
@@ -134,6 +123,8 @@ class BarDetailHeaderViewController: UIViewController {
             
             self.statusButton.layoutIfNeeded()
         }
+        
+        self.unlimitedRedemptionView.isHidden = !self.bar.currentlyUnlimitedRedemptionAllowed
         
         self.pageControl.numberOfPages = self.bar.images.count
         

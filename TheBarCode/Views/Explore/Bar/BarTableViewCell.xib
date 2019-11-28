@@ -103,10 +103,33 @@
                             <action selector="favouriteButtonTapped:" destination="suM-Yq-PQ4" eventType="touchUpInside" id="uzP-m4-noc"/>
                         </connections>
                     </button>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uPd-tc-4ns" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="138" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_unlimited" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-HC-Vxj">
+                                <rect key="frame" x="9" y="8" width="22" height="24"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="nDy-HC-Vxj" firstAttribute="top" secondItem="uPd-tc-4ns" secondAttribute="top" constant="8" id="4JB-9G-UHf"/>
+                            <constraint firstAttribute="width" constant="40" id="Kx0-nQ-BsQ"/>
+                            <constraint firstAttribute="height" constant="40" id="QGs-oZ-DCU"/>
+                            <constraint firstItem="nDy-HC-Vxj" firstAttribute="leading" secondItem="uPd-tc-4ns" secondAttribute="leading" constant="9" id="bZ5-NA-1fB"/>
+                            <constraint firstAttribute="bottom" secondItem="nDy-HC-Vxj" secondAttribute="bottom" constant="8" id="kyV-eI-RjF"/>
+                            <constraint firstAttribute="trailing" secondItem="nDy-HC-Vxj" secondAttribute="trailing" constant="9" id="wwA-fZ-IaJ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="bii-27-Fef" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-8" id="2af-Kc-xsF"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="8" id="2cV-1Y-GKW"/>
+                    <constraint firstItem="uPd-tc-4ns" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="9Ek-fh-Mof"/>
                     <constraint firstItem="TNh-vE-HpY" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="E41-gZ-a9E"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" id="HO1-jG-Deg"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="leading" secondItem="CR5-uj-0UX" secondAttribute="trailing" constant="8" id="HiM-lS-ypt"/>
@@ -121,6 +144,7 @@
                     <constraint firstItem="lui-2O-2M4" firstAttribute="leading" secondItem="88w-H1-hsa" secondAttribute="trailing" constant="8" id="bdR-cf-Iyv"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="20" id="cGm-Yv-ZHd"/>
                     <constraint firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="16" id="gqI-sl-0Fn"/>
+                    <constraint firstItem="uPd-tc-4ns" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-8" id="h5q-3m-8s0"/>
                     <constraint firstItem="bii-27-Fef" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" constant="8" id="hrQ-YB-VTj"/>
                     <constraint firstItem="88w-H1-hsa" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="hzW-xN-Uvf"/>
                     <constraint firstItem="TNh-vE-HpY" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="shr-dK-P1T"/>
@@ -140,6 +164,7 @@
                 <outlet property="statusButton" destination="bii-27-Fef" id="3sU-GZ-HJ0"/>
                 <outlet property="titleLabel" destination="CR5-uj-0UX" id="WUV-03-M4P"/>
                 <outlet property="topPadding" destination="E41-gZ-a9E" id="Yt4-md-DEM"/>
+                <outlet property="unlimitedRedemptionView" destination="uPd-tc-4ns" id="9eQ-tV-dob"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="136.73163418290855"/>
         </tableViewCell>
@@ -147,5 +172,6 @@
     <resources>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_tab_fav" width="28" height="26"/>
+        <image name="icon_unlimited" width="30" height="30"/>
     </resources>
 </document>

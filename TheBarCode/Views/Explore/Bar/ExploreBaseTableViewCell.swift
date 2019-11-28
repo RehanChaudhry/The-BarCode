@@ -31,6 +31,8 @@ class ExploreBaseTableViewCell: UITableViewCell {
     
     @IBOutlet var topPadding: NSLayoutConstraint!
     
+    @IBOutlet var unlimitedRedemptionView: ShadowView!
+    
     var bar: Explore?
     
     weak var exploreBaseDelegate: ExploreBaseTableViewCellDelegate?
@@ -85,6 +87,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
         
         self.setupStatus(explore: explore)
         
+        self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
     }
     
     func scrollToCurrentImage() {
@@ -105,23 +108,10 @@ class ExploreBaseTableViewCell: UITableViewCell {
     
     func setupStatus(explore: Explore) {
         UIView.performWithoutAnimation {
-            if let timings = explore.timings.value {
-                if timings.dayStatus == .opened {
-                    if timings.isOpen.value {
-                        self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
-                        self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
-                        self.statusButton.setTitle("Open", for: .normal)
-                    } else {
-                        self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
-                        self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
-                        self.statusButton.setTitle("Closed", for: .normal)
-                    }
-                } else {
-                    self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
-                    self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)
-                    self.statusButton.setTitle("Closed", for: .normal)
-                }
-                
+            if explore.currentlyBarIsOpened {
+                self.statusButton.backgroundColor = UIColor.appStatusButtonOpenColor().withAlphaComponent(0.6)
+                self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
+                self.statusButton.setTitle("Open", for: .normal)
             } else {
                 self.statusButton.setTitleColor(UIColor.appRedColor(), for: .normal)
                 self.statusButton.backgroundColor = UIColor.appStatusButtonColor().withAlphaComponent(0.6)

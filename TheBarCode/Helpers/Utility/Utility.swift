@@ -571,11 +571,13 @@ class Utility: NSObject {
     
     func getMapBarPinImage(mapBar: MapBasicBar) -> UIImage {
         
-        var pinImage = UIImage(named: "icon_pin_gold")!
+        var pinImage = UIImage(named: "icon_pin_grayed")!
         if mapBar.isOpen {
-            pinImage = Utility.shared.getPinImage(offerType: mapBar.standardOfferType)
-        } else {
-            pinImage = UIImage(named: "icon_pin_grayed")!
+            if mapBar.currentlyUnlimitedRedemptionAllowed {
+                pinImage = UIImage(named: "icon_pin_platinum")!
+            } else {
+                pinImage = Utility.shared.getPinImage(offerType: mapBar.standardOfferType)
+            }
         }
         
         return pinImage

@@ -44,6 +44,7 @@ class SearchViewController: UIViewController {
     var filteredPreferences: [Category] = []
     
     var selectedStandardOffers: [StandardOffer] = []
+    var selectedRedeemingType: RedeemingTypeModel?
 
     var shouldHidePreferenceButton: Bool = false
     
@@ -185,7 +186,7 @@ class SearchViewController: UIViewController {
     }
     
     func setUpStandardOfferButton() {
-        if self.selectedStandardOffers.count > 0 {
+        if self.selectedStandardOffers.count > 0 || self.selectedRedeemingType != nil {
             self.standardOfferButton.backgroundColor = UIColor.black
             self.standardOfferButton.tintColor = UIColor.appBlueColor()
         } else {
@@ -205,6 +206,7 @@ class SearchViewController: UIViewController {
         for scope in self.scopeItems {
             scope.controller.selectedPreferences = self.filteredPreferences
             scope.controller.selectedStandardOffers = self.selectedStandardOffers
+            scope.controller.selectedRedeemingType = self.selectedRedeemingType
             scope.controller.shouldReset = true
             scope.controller.prepareToReset()
             scope.controller.keyword = self.searchBar.text ?? ""
@@ -250,6 +252,7 @@ class SearchViewController: UIViewController {
     @IBAction func standardOfferButtonTapped(sender: UIButton) {
         let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
         standardOfferController.preSelectedTiers = self.selectedStandardOffers
+        standardOfferController.preSelectedRedeemingType = self.selectedRedeemingType
         standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
@@ -333,7 +336,9 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 
 //MARK: StandardOffersViewControllerDelegate
 extension SearchViewController: StandardOffersViewControllerDelegate {
-    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer]) {
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?) {
+        self.selectedRedeemingType = redeemingType
+        
         self.selectedStandardOffers = selectedOffers
         
         if !self.isViewAlreadyLoaded {

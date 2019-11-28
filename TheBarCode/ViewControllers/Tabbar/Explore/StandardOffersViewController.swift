@@ -10,7 +10,7 @@ import UIKit
 import CoreStore
 
 protocol StandardOffersViewControllerDelegate: class {
-    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer])
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?)
 
 }
 
@@ -32,11 +32,17 @@ class StandardOffersViewController: UIViewController {
     
     var shouldDismiss: Bool = false
     
+    var dataFetched: Bool = false
+    
+    var redeemingTypes: [RedeemingTypeModel] = []
+    var preSelectedRedeemingType: RedeemingTypeModel? = nil
+    
+    var hasChanges: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Filter by Standard Offers"
+        self.title = "Filters"
         let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
         self.navigationItem.leftBarButtonItem = cancelBarButton
         
@@ -51,12 +57,14 @@ class StandardOffersViewController: UIViewController {
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
         
-        self.tableView.estimatedRowHeight = 65.0
-        self.tableView.rowHeight = 65.0
+        self.tableView.estimatedRowHeight = 61.0
+        self.tableView.rowHeight = 61.0
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundView = nil
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.register(cellType: StandardOfferTypeCell.self)
+        self.tableView.register(cellType: RedeemingTypeCell.self)
+        self.tableView.register(headerFooterViewType: FiltersHeaderView.self)
         
         self.getCachedOffers()
         self.setUpPreselectedOffers()
@@ -64,9 +72,18 @@ class StandardOffersViewController: UIViewController {
         if self.offers.count == 0 {
             self.getOffers()
         } else {
+            self.dataFetched = true
             self.statefulView.isHidden = true
         }
         
+        self.redeemingTypes = RedeemingType.allTypes()
+        if let preSelectedRedeemingType = preSelectedRedeemingType,
+            let selectedType = self.redeemingTypes.first(where: {$0.type.rawValue == preSelectedRedeemingType.type.rawValue}) {
+            selectedType.selected = true
+        } else {
+            let redeemingTypeAll = self.redeemingTypes.first!
+            redeemingTypeAll.selected = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,11 +138,18 @@ class StandardOffersViewController: UIViewController {
             let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
             fetchedOffers.append(fetchedObject!)
         }
+        
+        let selectedRedeemingType = self.redeemingTypes.first(where: {$0.selected})!
 
-        if self.shouldDismiss && selectedStandardOffers.count == 0 {
+        if self.shouldDismiss && !self.hasChanges {
             self.dismiss(animated: true, completion: nil)
         } else {
-            self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers)
+            if selectedRedeemingType.type == .all {
+                self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers, redeemingType: nil)
+            } else {
+                self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers, redeemingType: selectedRedeemingType)
+            }
+            
             self.navigationController?.popViewController(animated: true)
         }
         
@@ -135,22 +159,80 @@ class StandardOffersViewController: UIViewController {
 
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard self.dataFetched else {
+            return 0
+        }
+        
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 61.0
+        } else {
+            return 47.0
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.offers.count
+        if section == 0 {
+            return self.offers.count
+        } else {
+            return self.redeemingTypes.count
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = self.tableView.dequeueReusableHeaderFooterView(FiltersHeaderView.self)
+        if section == 0 {
+            headerView?.setupHeader(title: "STANDARD OFFERS")
+        } else {
+            headerView?.setupHeader(title: "REDEEMING TYPES")
+        }
+        
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: StandardOfferTypeCell.self)
-        cell.setUpCell(offer: self.offers[indexPath.row])
-        return cell
+        if indexPath.section == 0 {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: StandardOfferTypeCell.self)
+            cell.setUpCell(offer: self.offers[indexPath.row])
+            cell.separatorInset = UIEdgeInsets(top: 0.0, left: 68.0, bottom: 0.0, right: 0.0)
+            return cell
+        } else {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: RedeemingTypeCell.self)
+            cell.setupCell(redeemingType: self.redeemingTypes[indexPath.row])
+            cell.separatorInset = UIEdgeInsets(top: 0.0, left: 10000.0, bottom: 0.0, right: 0.0)
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let offer = self.offers[indexPath.item]
-        offer.isSelected.value = !offer.isSelected.value
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        self.hasChanges = true
+        
+        if indexPath.section == 0 {
+            let offer = self.offers[indexPath.item]
+            offer.isSelected.value = !offer.isSelected.value
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        } else {
+            for type in self.redeemingTypes {
+                type.selected = false
+            }
+            
+            let type = self.redeemingTypes[indexPath.row]
+            type.selected = true
+            self.tableView.reloadData()
+        }
+        
     }
 }
 
@@ -184,6 +266,9 @@ extension StandardOffersViewController {
                 
                 self.getCachedOffers()
                 self.setUpPreselectedOffers()
+                
+                self.dataFetched = true
+                
                 self.tableView.reloadData()
                 
                 self.statefulView.isHidden = true

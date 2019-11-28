@@ -76,6 +76,8 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.shareButton.isHidden = true
         
         self.setupStatus(explore: explore)
+        
+        self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
     }
     
     func setUpDealCell(deal: Deal, topPadding: Bool = true) {

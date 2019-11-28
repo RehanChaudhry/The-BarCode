@@ -193,6 +193,14 @@ extension DealSearchViewController {
             params["tier_ids"] = ids
         }
         
+        if let selectedRedeemingType = self.selectedRedeemingType {
+            if selectedRedeemingType.type == .unlimited {
+                params["is_unlimited_redemption"] = true
+            } else if selectedRedeemingType.type == .limited {
+                params["is_unlimited_redemption"] = false
+            }
+        }
+        
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiEstablishment, method: .get) { (response, serverError, error) in
             
             defer {
@@ -261,6 +269,14 @@ extension DealSearchViewController {
         if self.selectedStandardOffers.count > 0 {
             let ids = self.selectedStandardOffers.map({$0.id.value})
             params["tier_ids"] = ids
+        }
+        
+        if let selectedRedeemingType = self.selectedRedeemingType {
+            if selectedRedeemingType.type == .unlimited {
+                params["is_unlimited_redemption"] = true
+            } else if selectedRedeemingType.type == .limited {
+                params["is_unlimited_redemption"] = false
+            }
         }
         
         self.mapApiState.isLoading = true

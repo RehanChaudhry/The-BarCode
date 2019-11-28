@@ -24,6 +24,9 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
     
     var dayStatusRaw = Value.Required<String>("day_status", initial: "")
     
+    //Determine weather establishment is opt in for unlimited redemption for the particular day
+    var unlimitedRedemptionAllowed = Value.Required<Bool>("unlimited_redemption_allowed", initial: false)
+    
     var dayStatus: EstablishmentOpenStatus {
         get {
             return EstablishmentOpenStatus(rawValue: self.dayStatusRaw.value) ?? EstablishmentOpenStatus.closed
@@ -57,6 +60,10 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
         
         if let closingDateTimeInfo = source["closed_time_modify"] as? [String : Any], let closingDateTime = closingDateTimeInfo["date"] as? String {
             self.closingTime.value = dateformatter.date(from: closingDateTime)
+        }
+        
+        if let unlimitedRedemptionAllowed = source["is_unlimited_redemption"] as? Bool {
+            self.unlimitedRedemptionAllowed.value = unlimitedRedemptionAllowed
         }
     }
     

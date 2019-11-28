@@ -51,6 +51,7 @@ class BaseSearchScopeViewController: UIViewController {
     var selectedPreferences: [Category] = []
     
     var selectedStandardOffers: [StandardOffer] = []
+    var selectedRedeemingType: RedeemingTypeModel?
     
     var keyword: String = ""
     
@@ -451,8 +452,8 @@ extension BaseSearchScopeViewController: GMSMapViewDelegate {
                 self.present(mapPinsController, animated: true, completion: nil)
                 
                 //Needs little offset to be perfectly in center b/c of other views
-                let convertedCenterPoint = self.mapContainer.convert(mapPinsController.containerView.center, from: mapPinsController.view)
-                mapPinsController.centerYConstraint.constant = self.mapContainer.center.y - convertedCenterPoint.y
+                let adjustedCenterPoint = mapPinsController.view.convert(self.mapContainer.center, from: self.mapContainer)
+                mapPinsController.centerYConstraint.constant = adjustedCenterPoint.y - mapPinsController.view.center.y
                 
 //                debugPrint("Multiple establishments detected: \(filteredBars.map({$0.title}))")
 //                debugPrint("Selected establishment title: \(mapbar.title)")

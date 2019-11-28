@@ -26,7 +26,6 @@ class ExploreSchedule: CoreStoreObject, ImportableObject {
     
     var explore = Relationship.ToOne<Explore>("explore")
     
-    
     typealias ImportSource = [String: Any]
     
     func didInsert(from source: [String : Any], in transaction: BaseDataTransaction) throws {
@@ -53,5 +52,7 @@ class ExploreSchedule: CoreStoreObject, ImportableObject {
         if let closingDateTimeInfo = source["closed_time_modify"] as? [String : Any], let closingDateTime = closingDateTimeInfo["date"] as? String {
             self.closingTime.value = dateformatter.date(from: closingDateTime)
         }
+        
+        
     }
 }

@@ -48,6 +48,9 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var isUserFavourite = Value.Required<Bool>("is_user_favourite", initial: false)
     var credit = Value.Required<Int>("credit", initial: 0)
     
+    //Determine weather establishment is opt in for unlimited redemption
+    var unlimitedRedemptionAllowed = Value.Required<Bool>("unlimited_redemption_allowed", initial: false)
+    
     var videoUrlString = Value.Optional<String>("video_url_string")
     
     var images = Relationship.ToManyOrdered<ImageItem>("images", inverse: { $0.explore })
@@ -57,6 +60,31 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var timings = Relationship.ToOne<EstablishmentTiming>("establishment_timings", inverse: { $0.explore })
     
     var weeklySchedule = Relationship.ToManyOrdered<ExploreSchedule>("weekly_schedule", inverse: {$0.explore})
+    
+    var currentlyBarIsOpened: Bool {
+        get {
+            if let timings = self.timings.value {
+                if timings.dayStatus == .opened {
+                    return timings.isOpen.value
+                }
+            }
+            
+            return false
+        }
+    }
+    
+    var currentlyUnlimitedRedemptionAllowed: Bool {
+        get {
+            if let timings = self.timings.value,
+                self.unlimitedRedemptionAllowed.value,
+                self.currentlyBarIsOpened,
+                timings.unlimitedRedemptionAllowed.value {
+                return true
+            }
+            
+            return false
+        }
+    }
 //}
 
     var currentImageIndex: Int = 0
@@ -195,6 +223,10 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             self.videoUrlString.value = videoUrlString
         } else {
             self.videoUrlString.value = nil
+        }
+        
+        if let unlimitedRedemptionAllowed = source["is_unlimited_redemption"] as? Bool {
+            self.unlimitedRedemptionAllowed.value = unlimitedRedemptionAllowed
         }
         
         //TODO: handle array and object

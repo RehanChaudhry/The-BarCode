@@ -20,7 +20,7 @@ let productionAPIDomain = "https://thebarcode.co"
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = barcodeStagingAPIDomain
+let theBarCodeAPIDomain = devAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
@@ -29,7 +29,7 @@ let grantTypePassword = "password"
 
 let serverTimeZone = TimeZone(identifier: "Europe/London")
 
-let remoteLogginEnabled = true
+let remoteLogginEnabled = false
 
 typealias responseCompletionHandler = (_ response: Any?, _ serverError: ServerError?, _ error: Error?) -> Void
 
