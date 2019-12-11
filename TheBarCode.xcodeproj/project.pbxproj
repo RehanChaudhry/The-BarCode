@@ -151,6 +151,7 @@
 		0C7B6E3E2192BBEC0052D02C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */; };
 		0C7B6E402192F2F40052D02C /* SharedOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */; };
 		0C8082E622B773C700793F4E /* InstagramLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */; };
+		0C80E0A1239135B200491DEB /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C80E0A0239135B200491DEB /* IAPHandler.swift */; };
 		0C82137B2317B965006F898E /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C82137A2317B965006F898E /* Preference.swift */; };
 		0C854B9522804B7F00E2CECD /* EstablishmentTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */; };
 		0C86D02322DEF4DD0034DA5C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C86D02222DEF4DD0034DA5C /* Event.swift */; };
@@ -545,6 +546,7 @@
 		0C7B6E3D2192BBEC0052D02C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C7B6E3F2192F2F40052D02C /* SharedOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOffersViewController.swift; sourceTree = "<group>"; };
 		0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginViewController.swift; sourceTree = "<group>"; };
+		0C80E0A0239135B200491DEB /* IAPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 		0C82137A2317B965006F898E /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentTiming.swift; sourceTree = "<group>"; };
 		0C86D02222DEF4DD0034DA5C /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -1051,6 +1053,7 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0C80E09F2391359600491DEB /* IAPHelper */,
 				0C39F29C231E72D400596A2B /* Google-Maps-iOS-Utils */,
 				0C9FA27722367677008F0B62 /* StringFormatter */,
 				0CC81FB22174A9BC00FDB92D /* LocationManager */,
@@ -1417,6 +1420,14 @@
 			children = (
 			);
 			path = StandardOffer;
+			sourceTree = "<group>";
+		};
+		0C80E09F2391359600491DEB /* IAPHelper */ = {
+			isa = PBXGroup;
+			children = (
+				0C80E0A0239135B200491DEB /* IAPHandler.swift */,
+			);
+			path = IAPHelper;
 			sourceTree = "<group>";
 		};
 		0C86D02122DEF4CF0034DA5C /* WhatsOn */ = {
@@ -2418,6 +2429,7 @@
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
 				0C117EF422DD9E630061FFC3 /* OffersViewController.swift in Sources */,
 				0C955DF22149317100F9385B /* StatefulCollectionView+PullToRefresh.swift in Sources */,
+				0C80E0A1239135B200491DEB /* IAPHandler.swift in Sources */,
 				0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */,
 				0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */,
 				0C23A87B214656AD00DFB281 /* LoginOptionsViewController.swift in Sources */,

@@ -62,6 +62,7 @@ class FiveADayViewController: UIViewController {
         self.reloadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         
         Analytics.logEvent(viewFiveADayScreen, parameters: nil)
     }
@@ -94,6 +95,7 @@ class FiveADayViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameUnlimitedRedemptionPurchased, object: nil)
     }
     
     //MARK: My Methods
@@ -126,23 +128,23 @@ class FiveADayViewController: UIViewController {
         self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
     
-    func moveToRedeemDealViewController(withCredit: Bool, selectedIndex: Int) {
-        
+    func showRedeemDealViewController(redeemType: RedeemType, selectedIndex: Int) {
         guard selectedIndex != NSNotFound else {
             debugPrint("Index not found for deal redumtion")
             return
         }
         
         let deal = self.deals[selectedIndex]
-        
-        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
-        redeemDealViewController.deal = deal
-        redeemDealViewController.redeemWithCredit = withCredit
+        let redeemDealViewController = (self.storyboard!.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+        redeemDealViewController.barId = deal.establishmentId.value
+        redeemDealViewController.dealInfo = deal
+        redeemDealViewController.selectedIndex = selectedIndex
+        redeemDealViewController.offerType = Utility.shared.checkDealType(offerTypeID: deal.offerTypeId.value)
+        redeemDealViewController.redeemingType = redeemType
         redeemDealViewController.delegate = self
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemDealViewController, animated: true, completion: nil)
     }
-    
     
     func redeemWithUserCredit(credit: Int?, index: Int, canReload: Bool) {
         var userCredit: Int!
@@ -175,8 +177,13 @@ class FiveADayViewController: UIViewController {
             }
             
         } else {
+            
+            let offer = self.deals[index]
+            
             let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
             outOfCreditViewController.canReload = canReload
+            outOfCreditViewController.isOfferingUnlimitedRedemption = offer.establishment.value?.currentlyUnlimitedRedemptionAllowed ?? false
+            outOfCreditViewController.barId = offer.establishmentId.value
             outOfCreditViewController.delegate = self
             outOfCreditViewController.modalPresentationStyle = .overCurrentContext
             outOfCreditViewController.selectedIndex = index
@@ -215,6 +222,14 @@ class FiveADayViewController: UIViewController {
         }
     }
     
+    func showRedeemStartViewController(index: Int, redeemType: RedeemType) {
+        let redeemStartViewController = (self.storyboard!.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.delegate = self
+        redeemStartViewController.selectedIndex = index
+        redeemStartViewController.redeemingType = redeemType
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemStartViewController, animated: true, completion: nil)
+    }
 }
 
 //MARK: FSPagerViewDataSource, FSPagerViewDelegate
@@ -360,7 +375,8 @@ extension FiveADayViewController {
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
                 let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
-                if redeemedCount < 2 {
+                let barIsOfferingUnlimitedRedemption = deal.establishment.value?.currentlyUnlimitedRedemptionAllowed ?? false
+                if redeemedCount < 2 || barIsOfferingUnlimitedRedemption {
                     let redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
                     
                     var canReload = false
@@ -429,17 +445,11 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
         if let bar = deal.establishment.value {
             if bar.canRedeemOffer.value {
                 self.pagerView.automaticSlidingInterval = 0.0
-
-                let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-                redeemStartViewController.deal = deal
-                redeemStartViewController.delegate = self
-                redeemStartViewController.selectedIndex = index
-                redeemStartViewController.modalPresentationStyle = .overCurrentContext
-                redeemStartViewController.redeemWithCredit = false
-                self.present(redeemStartViewController, animated: true, completion: nil)
-                
+                self.showRedeemStartViewController(index: index, redeemType: RedeemType.any)
+            } else if bar.canDoUnlimitedRedemption.value && bar.currentlyUnlimitedRedemptionAllowed {
+                self.pagerView.automaticSlidingInterval = 0.0
+                self.showRedeemStartViewController(index: index, redeemType: RedeemType.unlimitedReload)
             } else {
-                //get updated User Credit from server api and this deal establishment redeem count
                 self.getReloadStatus(cell: cell, deal: deal, index: index)
             }
         } else {
@@ -540,20 +550,20 @@ extension FiveADayViewController: InviteViewControllerDelegate {
 
 //MARK: RedeemStartViewControllerDelegate
 extension FiveADayViewController : RedeemStartViewControllerDelegate {
-  
+    
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
+        self.showRedeemDealViewController(redeemType: redeemType, selectedIndex: selectedIndex)
+    }
+    
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0     
     }
-    
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool) {
-        self.moveToRedeemDealViewController(withCredit: false, selectedIndex: selectedIndex)
-    }
 }
 
+//MARK: CreditCosumptionViewControllerDelegate
 extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
-        
-        self.moveToRedeemDealViewController(withCredit: true, selectedIndex:selectedIndex)
+        self.showRedeemStartViewController(index: selectedIndex, redeemType: RedeemType.credit)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -565,6 +575,10 @@ extension FiveADayViewController: CreditCosumptionViewControllerDelegate {
 extension FiveADayViewController {
     
     @objc func reloadSuccessfullNotification(notification: Notification) {
+        self.reloadData()
+    }
+    
+    @objc func unlimitedRedemptionDidPurchasedNotification(notif: Notification) {
         self.reloadData()
     }
 }

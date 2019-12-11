@@ -71,7 +71,7 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
 
-        let validtyPlaceHodler = "Validity period: "
+        let validtyPlaceHodler = ""
         
         if !deal.shouldShowDate.value {
             self.validityLabel.text = ""
@@ -105,8 +105,11 @@ class OfferDetailTableViewCell: UITableViewCell, NibReusable {
                 let finalAttributedText = NSMutableAttributedString()
                 finalAttributedText.append(attributedPlaceholder)
                 finalAttributedText.append(attributedFromDate)
-                finalAttributedText.append(attributedTo)
-                finalAttributedText.append(attributedToDate)
+                
+                if fromDate != toDate {
+                    finalAttributedText.append(attributedTo)
+                    finalAttributedText.append(attributedToDate)
+                }
                 
                 if deal.hasTime.value {
                     finalAttributedText.append(attributedFrom)

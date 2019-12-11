@@ -87,17 +87,17 @@ class EventDetailViewController: UIViewController {
         
         if self.event.shouldShowDate.value {
             let attributedValidity = self.getAttributedValidity()
-            let eventDetailValidity = EventDetailInfo(title: "VALIDITY PERIOD", detail: attributedValidity, showCallToAction: false, callToActionTitle: "", iconName: "icon_timings")
+            let eventDetailValidity = EventDetailInfo(title: "", detail: attributedValidity, showCallToAction: false, callToActionTitle: "", iconName: "icon_timings")
             self.eventDetailInfo.append(eventDetailValidity)
         }
-        
-        let attributedLocation = self.getAttributedLocation()
-        let eventDetailLocation = EventDetailInfo(title: "LOCATION", detail: attributedLocation, showCallToAction: true, callToActionTitle: "Get Driving Directions", iconName: "bar-location")
-        self.eventDetailInfo.append(eventDetailLocation)
         
         let attributedDetail = self.getAttributedDetail()
         let eventDetailsInfo = EventDetailInfo(title: "DESCRIPTION", detail: attributedDetail, showCallToAction: false, callToActionTitle: "", iconName: "icon_info")
         self.eventDetailInfo.append(eventDetailsInfo)
+        
+        let attributedLocation = self.getAttributedLocation()
+        let eventDetailLocation = EventDetailInfo(title: "LOCATION", detail: attributedLocation, showCallToAction: true, callToActionTitle: "Get Driving Directions", iconName: "bar-location")
+        self.eventDetailInfo.append(eventDetailLocation)
         
         self.tableView.reloadData()
     }
@@ -150,9 +150,11 @@ class EventDetailViewController: UIViewController {
         let finalAttributedText = NSMutableAttributedString()
         finalAttributedText.append(attributedPlaceholder)
         finalAttributedText.append(attributedFromDate)
-        finalAttributedText.append(attributedTo)
-        finalAttributedText.append(attributedToDate)
-        
+        if fromDate != toDate {
+            finalAttributedText.append(attributedTo)
+            finalAttributedText.append(attributedToDate)
+        }
+
         if self.event.shouldShowTime.value {
             finalAttributedText.append(attributedFrom)
             finalAttributedText.append(attributedFromTime)

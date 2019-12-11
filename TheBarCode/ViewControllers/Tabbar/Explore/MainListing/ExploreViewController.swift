@@ -469,7 +469,7 @@ extension ExploreViewController: SnackbarViewDelegate {
             return
         }
         
-        self.showCustomAlert(title: "You have \(user.credit) Credits", message: "Use Credits to Redeem unique Barcode offers. Share offers and invite friends and we will reward you with more Credits", typeCredit: true)
+        self.showCustomAlert(title: "You have \(user.credit) Credits", message: "Use credits to redeem unique Barcode offers. Share offers and invite friends and we will reward you with more credits", typeCredit: true)
     }
     
     func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {

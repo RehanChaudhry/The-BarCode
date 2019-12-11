@@ -22,6 +22,8 @@ class EventDetailInfoCell: UITableViewCell, NibReusable {
     
     @IBOutlet var callToActionButton: UIButton!
     
+    @IBOutlet var titleLabelHeight: NSLayoutConstraint!
+    @IBOutlet var titleBottomSpacing: NSLayoutConstraint!
     @IBOutlet var ctaHeight: NSLayoutConstraint!
     @IBOutlet var ctaTopMargin: NSLayoutConstraint!
     
@@ -45,6 +47,14 @@ class EventDetailInfoCell: UITableViewCell, NibReusable {
     func setupCell(eventDetailInfo: EventDetailInfo) {
         self.titleLabel.text = eventDetailInfo.title.uppercased()
         self.detailLabel.attributedText = eventDetailInfo.detail
+        
+        if eventDetailInfo.title == "" {
+            self.titleBottomSpacing.constant = 0.0
+            self.titleLabelHeight.constant = 0.0
+        } else {
+            self.titleBottomSpacing.constant = 8.0
+            self.titleLabelHeight.constant = 17.0
+        }
         
         UIView.performWithoutAnimation {
             if eventDetailInfo.showCallToAction {

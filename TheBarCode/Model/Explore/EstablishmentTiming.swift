@@ -25,7 +25,7 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
     var dayStatusRaw = Value.Required<String>("day_status", initial: "")
     
     //Determine weather establishment is opt in for unlimited redemption for the particular day
-    var unlimitedRedemptionAllowed = Value.Required<Bool>("unlimited_redemption_allowed", initial: false)
+    var isOfferingUnlimitedRedemption = Value.Required<Bool>("unlimited_redemption_allowed", initial: false)
     
     var dayStatus: EstablishmentOpenStatus {
         get {
@@ -63,7 +63,7 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
         }
         
         if let unlimitedRedemptionAllowed = source["is_unlimited_redemption"] as? Bool {
-            self.unlimitedRedemptionAllowed.value = unlimitedRedemptionAllowed
+            self.isOfferingUnlimitedRedemption.value = unlimitedRedemptionAllowed
         }
     }
     

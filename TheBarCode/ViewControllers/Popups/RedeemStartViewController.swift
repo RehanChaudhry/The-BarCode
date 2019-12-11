@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAnalytics
 
 protocol RedeemStartViewControllerDelegate: class {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool)
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType)
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int)
 }
 
@@ -25,15 +25,23 @@ class RedeemStartViewController: UIViewController {
     
     @IBOutlet var standardOfferInfoLabel: UILabel!
     
+    @IBOutlet var popupHeight: NSLayoutConstraint!
+    
+    @IBOutlet var takeMeBackButton: UIButton!
+    
     weak var delegate: RedeemStartViewControllerDelegate!
     
     var selectedIndex: Int = NSNotFound
 
-    var deal : Deal! //for all offers except standard
-    var type: OfferType = .unknown
-    var bar: Bar! //for standard offer
+    var redeemingType: RedeemType!
     
-    var redeemWithCredit: Bool = false
+    var offerType: OfferType!
+    
+//    var deal : Deal! //for all offers except standard
+//    var type: OfferType = .unknown
+//    var bar: Bar! //for standard offer
+//
+//    var redeemWithCredit: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +53,26 @@ class RedeemStartViewController: UIViewController {
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
         
-        self.standardOfferInfoLabel.isHidden = !(self.type == .standard)
-
+        if self.redeemingType == RedeemType.unlimitedReload {
+            self.standardOfferInfoLabel.text = "Unlimited Offer"
+        } else {
+            if self.offerType == OfferType.standard {
+                self.standardOfferInfoLabel.text = "Discount applies only to the first £20.00"
+            } else {
+                self.standardOfferInfoLabel.text = ""
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.popupHeight.constant = self.takeMeBackButton.frame.origin.y + self.takeMeBackButton.frame.size.height + 16.0
     }
     
    /* func setupInitialView() {
@@ -96,7 +117,7 @@ class RedeemStartViewController: UIViewController {
         Analytics.logEvent(bartenderReadyClick, parameters: nil)
         
         self.dismiss(animated: true) {
-            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex, withCredit: self.redeemWithCredit)
+            self.delegate.redeemStartViewController(controller: self, redeemButtonTapped: sender, selectedIndex: self.selectedIndex, redeemType: self.redeemingType)
         }
     }
     
@@ -106,5 +127,3 @@ class RedeemStartViewController: UIViewController {
         }
     }
 }
-
-

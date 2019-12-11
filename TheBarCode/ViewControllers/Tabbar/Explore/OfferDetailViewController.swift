@@ -13,6 +13,7 @@ import ObjectMapper
 import Alamofire
 import FirebaseAnalytics
 import CoreLocation
+import CoreStore
 
 class OfferDetailViewController: UIViewController {
 
@@ -96,6 +97,8 @@ class OfferDetailViewController: UIViewController {
         }
         
         self.viewedOffer()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +122,8 @@ class OfferDetailViewController: UIViewController {
     deinit {
         self.redeemTimer?.invalidate()
         self.redeemTimer = nil
+        
+        NotificationCenter.default.removeObserver(self, name: notificationNameUnlimitedRedemptionPurchased, object: nil)
     }
     
     //MARK: My Methods
@@ -128,10 +133,7 @@ class OfferDetailViewController: UIViewController {
     }
     
     func setUpBottomView() {
-        
-        self.redeemButton.updateColor(withGrey: !self.deal.establishment.value!.canRedeemOffer.value)
-        self.timerButton.updateColor(withGrey: !self.deal.establishment.value!.canRedeemOffer.value)
-        
+    
         self.setUpRedeemButtonView()
         self.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
         if self.offerType == .bannerAds {
@@ -239,35 +241,21 @@ class OfferDetailViewController: UIViewController {
         
     }
     
-    func moveToRedeemDealViewController(withCredit: Bool){
-        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
-        redeemDealViewController.isRedeemingSharedOffer = self.isSharedOffer
-        redeemDealViewController.deal = self.deal
-        redeemDealViewController.redeemWithCredit = withCredit
-        redeemDealViewController.delegate = self
-        redeemDealViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemDealViewController, animated: true, completion: nil)
-    }
-    
-    func moveToRedeemStartViewController(withCredit: Bool){
-        
-        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-        redeemStartViewController.deal = self.deal
-        redeemStartViewController.delegate = self
-        redeemStartViewController.modalPresentationStyle = .overCurrentContext
-        redeemStartViewController.redeemWithCredit = withCredit
-        self.present(redeemStartViewController, animated: true, completion: nil)
-    }
-    
     func setUpRedeemButtonView() {
-        let bar = self.deal.establishment.value
-        if !bar!.canRedeemOffer.value {
-            self.redeemButton.updateColor(withGrey: true)
-        } else {
+        
+        guard let bar = self.deal.establishment.value else {
+            debugPrint("Establishment info not found")
+            return
+        }
+        
+        if bar.canRedeemOffer.value || bar.currentlyUnlimitedRedemptionAllowed {
             self.redeemButton.updateColor(withGrey: false)
+            self.timerButton.updateColor(withGrey: false)
+        } else {
+            self.redeemButton.updateColor(withGrey: true)
+            self.timerButton.updateColor(withGrey: true)
         }
     }
-    
     
     func redeemWithUserCredit(credit: Int?, canReload: Bool) {
         var userCredit: Int!
@@ -301,6 +289,8 @@ class OfferDetailViewController: UIViewController {
             
             let outOfCreditViewController = (self.storyboard?.instantiateViewController(withIdentifier: "OutOfCreditViewController") as! OutOfCreditViewController)
             outOfCreditViewController.canReload = canReload
+            outOfCreditViewController.isOfferingUnlimitedRedemption = self.deal.establishment.value?.currentlyUnlimitedRedemptionAllowed ?? false
+            outOfCreditViewController.barId = self.deal.establishmentId.value
             outOfCreditViewController.delegate = self
             outOfCreditViewController.modalPresentationStyle = .overCurrentContext
             self.present(outOfCreditViewController, animated: true, completion: nil)
@@ -352,26 +342,33 @@ class OfferDetailViewController: UIViewController {
         }
     }
     
+    func showRedeemStartViewController(redeemType: RedeemType) {
+        let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
+        redeemStartViewController.offerType = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
+        redeemStartViewController.delegate = self
+        redeemStartViewController.modalPresentationStyle = .overCurrentContext
+        redeemStartViewController.redeemingType = redeemType
+        self.present(redeemStartViewController, animated: true, completion: nil)
+    }
+    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
         Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
         
-        let bar = self.deal.establishment.value!
+        guard let bar = self.deal.establishment.value else {
+            debugPrint("Establishment info not found")
+            return
+        }
+        
         if bar.canRedeemOffer.value {
-
-            let redeemStartViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
-            redeemStartViewController.deal = self.deal
-            redeemStartViewController.delegate = self
-            redeemStartViewController.modalPresentationStyle = .overCurrentContext
-            redeemStartViewController.redeemWithCredit = false
-            self.present(redeemStartViewController, animated: true, completion: nil)
-
+            self.showRedeemStartViewController(redeemType: RedeemType.any)
+        } else if bar.canDoUnlimitedRedemption.value && bar.currentlyUnlimitedRedemptionAllowed {
+            self.showRedeemStartViewController(redeemType: RedeemType.unlimitedReload)
         } else {
             //get updated User Credit from server api and this establishment redeem count
             self.getReloadStatus()
         }
-    
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
@@ -441,21 +438,28 @@ extension OfferDetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension OfferDetailViewController : RedeemStartViewControllerDelegate {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, withCredit: Bool) {
-        
-        self.moveToRedeemDealViewController(withCredit: withCredit)
+//MARK: RedeemStartViewControllerDelegate
+extension OfferDetailViewController: RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
+        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
+        redeemDealViewController.isRedeemingSharedOffer = self.isSharedOffer
+        redeemDealViewController.barId = self.deal.establishmentId.value
+        redeemDealViewController.dealInfo = self.deal
+        redeemDealViewController.redeemingType = redeemType
+        redeemDealViewController.delegate = self
+        redeemDealViewController.modalPresentationStyle = .overCurrentContext
+        self.present(redeemDealViewController, animated: true, completion: nil)
     }
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+        
     }
 }
 
-
+//MARK: CreditCosumptionViewControllerDelegate
 extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
     func creditConsumptionViewController(controller: CreditCosumptionViewController, yesButtonTapped sender: UIButton, selectedIndex: Int) {
-
-        self.moveToRedeemStartViewController(withCredit: true)
+        self.showRedeemStartViewController(redeemType: RedeemType.credit)
     }
     
     func creditConsumptionViewController(controller: CreditCosumptionViewController, noButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -463,9 +467,10 @@ extension OfferDetailViewController: CreditCosumptionViewControllerDelegate {
     }
 }
 
-
+//MARK: OutOfCreditViewControllerDelegate
 extension OfferDetailViewController: OutOfCreditViewControllerDelegate {
     func outOfCreditViewController(controller: OutOfCreditViewController, closeButtonTapped sender: UIButton, selectedIndex: Int) {
+        
     }
  
     func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -562,7 +567,8 @@ extension OfferDetailViewController {
                 Utility.shared.userCreditUpdate(creditValue: credit)
 
                 let redeemedCount = redeemInfoDict["redeemed_count"] as! Int
-                if redeemedCount < 2 {
+                let barIsOfferingUnlimitedRedemption = self.deal.establishment.value?.currentlyUnlimitedRedemptionAllowed ?? false
+                if redeemedCount < 2 || barIsOfferingUnlimitedRedemption {
                     
                     let redeemInfo = Mapper<RedeemInfo>().map(JSON: redeemInfoDict)!
                     
@@ -639,6 +645,7 @@ extension OfferDetailViewController {
 //MARK: RedeemDealViewControllerDelegate
 extension OfferDetailViewController: RedeemDealViewControllerDelegate {
     func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
+        
     }
     
     func redeemDealViewController(controller: RedeemDealViewController, dealRedeemed error: NSError?, selectedIndex: Int) {
@@ -665,5 +672,19 @@ extension OfferDetailViewController: CannotRedeemViewControllerDelegate {
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
         
+    }
+}
+
+//MARK: Notification Methods
+extension OfferDetailViewController {
+    @objc func unlimitedRedemptionDidPurchasedNotification(notif: Notification) {
+        if let bar = self.deal.establishment.value, let barId = notif.object as? String, bar.id.value == barId {
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedEstablishment = transaction.edit(bar)
+                editedEstablishment?.canDoUnlimitedRedemption.value = true
+            })
+            
+            self.setUpRedeemButtonView()
+        }
     }
 }

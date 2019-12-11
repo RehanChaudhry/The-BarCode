@@ -19,7 +19,8 @@ class MapBasicBar: NSObject, Mappable {
     
     var title: String!
     
-    var unlimitedRedemptionAllowed: Bool = false
+    var isOfferingUnlimitedRedemption: Bool = false
+    var isOfferingUnlimitedRedemptionForCurrentDay: Bool = false
     
     var standardOfferType: StandardOfferType {
         get {
@@ -33,7 +34,7 @@ class MapBasicBar: NSObject, Mappable {
     
     var currentlyUnlimitedRedemptionAllowed: Bool {
         get {
-            return (self.isOpen && self.unlimitedRedemptionAllowed)
+            return (self.isOpen && self.isOfferingUnlimitedRedemption && self.isOfferingUnlimitedRedemptionForCurrentDay)
         }
     }
     
@@ -63,6 +64,8 @@ class MapBasicBar: NSObject, Mappable {
             let dayStatus = EstablishmentOpenStatus(rawValue: dayStatusRaw),
             let isOpen = timings["is_bar_open"] as? Bool {
             
+            self.isOfferingUnlimitedRedemptionForCurrentDay <- map["establishment_timings.is_unlimited_redemption"]
+            
             if dayStatus == .opened {
                 if isOpen {
                     self.isOpen = true
@@ -77,7 +80,7 @@ class MapBasicBar: NSObject, Mappable {
             self.isOpen = false
         }
         
-        self.unlimitedRedemptionAllowed <- map["is_unlimited_redemption"]
+        self.isOfferingUnlimitedRedemption <- map["is_unlimited_redemption"]
     }
 }
 

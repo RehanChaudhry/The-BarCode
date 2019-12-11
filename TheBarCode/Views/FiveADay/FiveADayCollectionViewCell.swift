@@ -66,6 +66,11 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     func setUpCell(deal: Deal) {
         
+        guard let bar = deal.establishment.value else {
+            debugPrint("Bar info is not available")
+            return
+        }
+        
         if deal.showSharingLoader {
             self.sharingLoader.startAnimating()
             self.shareButton.isHidden = true
@@ -74,7 +79,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.shareButton.isHidden = false
         }
     
-        let bar = deal.establishment.value
+        
         
         if deal.showLoader {
             self.redeemButton.showLoader()
@@ -82,8 +87,11 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
             self.redeemButton.hideLoader()
         }
         
-        let withGreyColor = !bar!.canRedeemOffer.value ? true : false
-        self.redeemButton.updateColor(withGrey: withGreyColor)
+        if bar.canRedeemOffer.value || bar.currentlyUnlimitedRedemptionAllowed {
+            self.redeemButton.updateColor(withGrey: false)
+        } else {
+            self.redeemButton.updateColor(withGrey: true)
+        }
         
         self.coverImageView.setImageWith(url: URL(string: deal.imageUrl.value), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         

@@ -30,7 +30,8 @@ let appstoreUrlString = "itms-apps://itunes.apple.com/us/app/the-barcode-app/id1
 enum RedeemType: String {
     case standard = "standard",
     credit = "credit",
-    any = "reload"
+    any = "reload",
+    unlimitedReload = "unlimited"
 }
 
 enum NotificationType: String {
@@ -73,6 +74,8 @@ let notificationNameReloadAllSharedEvents = Notification.Name(rawValue: "notific
 
 let notificationNameSharedOfferRemoved = Notification.Name(rawValue: "notificationNameSharedOfferRemoved")
 let notificationNameSharedEventRemoved = Notification.Name(rawValue: "notificationNameSharedEventRemoved")
+
+let notificationNameUnlimitedRedemptionPurchased = Notification.Name(rawValue: "notificationNameUnlimitedRedemptionPurchased")
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"

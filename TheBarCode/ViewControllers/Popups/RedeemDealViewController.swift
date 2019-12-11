@@ -21,10 +21,20 @@ class RedeemDealViewController: CodeVerificationViewController {
 
     weak var delegate: RedeemDealViewControllerDelegate!
 
-    var deal : Deal!
-    var bar: Bar! //for standard offer
-    var redeemWithCredit: Bool! = false
-    var type: OfferType = .unknown
+    var barId: String!
+    var dealInfo: Deal!
+    
+    var standardOfferId: String!
+    
+    var offerType: OfferType!
+    
+//    var deal: Deal!
+//    var bar: Bar! //for standard offer
+    
+    var redeemingType: RedeemType!
+    
+//    var redeemWithCredit: Bool = false
+//    var type: OfferType = .unknown
     var selectedIndex: Int = NSNotFound
 
     var isRedeemingSharedOffer: Bool = false
@@ -33,9 +43,9 @@ class RedeemDealViewController: CodeVerificationViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if type != .standard {
-            type = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
-        }
+//        if type != .standard {
+//            type = Utility.shared.checkDealType(offerTypeID: self.deal.offerTypeId.value)
+//        }
         
         gradientTitleView.updateGradient(colors: [UIColor.appGreenColor(), UIColor.appBlueColor()], locations: nil, direction: .bottom)
         gradientTitleView.alpha = 0.34
@@ -58,8 +68,8 @@ class RedeemDealViewController: CodeVerificationViewController {
         self.view.endEditing(true)
         
         Analytics.logEvent(submitBartenderCode, parameters: nil)
-
-        redeemDeal(redeemWithCredit: self.redeemWithCredit)
+        
+        self.redeemDeal()
     }
     
     override func closeButtonTapped(_ sender: Any) {
@@ -74,36 +84,26 @@ class RedeemDealViewController: CodeVerificationViewController {
 
 //MARK: WebService Method
 extension RedeemDealViewController {
-    func redeemDeal(redeemWithCredit: Bool) {
+    func redeemDeal() {
         
-        var params: [String: Any]!
-        if self.type == .standard {
-            
-            let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.standard
-            params = ["establishment_id": self.bar.id.value,
-                                         "type": redeemType.rawValue,
-                                         "code": self.hiddenField.text!]
-            
-            if let activeStandardOffer = self.bar.activeStandardOffer.value {
-                params["standard_offer_id"] = activeStandardOffer.id.value
-            }
-            
+        var params: [String: Any] = ["establishment_id" : self.barId!,
+                                     "code" : self.hiddenField.text!,
+                                     "type" : self.redeemingType.rawValue]
+        if self.offerType == OfferType.standard {
+            params["standard_offer_id"] = self.standardOfferId
         } else {
-            let redeemType = redeemWithCredit ? RedeemType.credit : RedeemType.any
+            params["offer_id"] = self.dealInfo.id.value
             
-            params = ["establishment_id": deal.establishmentId.value,
-                                         "type": redeemType.rawValue,
-                                         "offer_id" : deal.id.value,
-                                         "code": self.hiddenField.text!]
-            
-            if let shareId = deal.sharedId.value, self.isRedeemingSharedOffer {
+            if let shareId = self.dealInfo.sharedId.value, self.isRedeemingSharedOffer {
                 params["shared_id"] = shareId
             }
         }
+       
+        debugPrint("params: \(params)")
         
         UIApplication.shared.beginIgnoringInteractionEvents()
         self.actionButton.showLoader()
-        
+
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
             
             UIApplication.shared.endIgnoringInteractionEvents()
@@ -124,21 +124,12 @@ extension RedeemDealViewController {
             if let responseObj = response as? [String : Any] {
                 if  let _ = responseObj["data"] as? [String : Any] {
                     
-                    if self.type == .standard {
-                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.bar.id.value))
-                            for bar in bars {
-                                bar.canRedeemOffer.value = false
-                            }
-                        })
-                    } else {
-                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                            let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishment.value!.id.value))
-                            for bar in bars {
-                                bar.canRedeemOffer.value = false
-                            }
-                        })
-                    }
+                    try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                        let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.barId!))
+                        for bar in bars {
+                            bar.canRedeemOffer.value = false
+                        }
+                    })
                     
                     let msg = "Success! Offer Redeemed"
                     let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
@@ -152,7 +143,7 @@ extension RedeemDealViewController {
                     self.present(alertController, animated: true, completion: nil)
                     
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
-
+                    
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
@@ -162,7 +153,7 @@ extension RedeemDealViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertAndDismiss(msg: genericError.localizedDescription)
                 self.delegate.redeemDealViewController(controller: self, dealRedeemed: genericError, selectedIndex: self.selectedIndex)
-
+                
             }
         }
     }

@@ -66,10 +66,19 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         let fromTime = timeFormatter.string(from: deal.startDateTime)
         let toTime = timeFormatter.string(from: deal.endDateTime)
         
-        let validityDate = "Validity Date: \(fromDate) to \(toDate)"
-        let validityTime = "Validity Time: \(fromTime) to \(toTime)"
+        var validityDate = ""
+        if fromDate != toDate {
+            validityDate = "\(fromDate) to \(toDate)"
+        } else {
+            validityDate = "\(fromDate)"
+        }
         
-        self.validityLabel.text = validityDate + "\n" + validityTime
+        var validityTime = ""
+        if deal.hasTime.value {
+            validityTime = " from \(fromTime) to \(toTime)"
+        }
+
+        self.validityLabel.text = validityDate + validityTime
         
         /*
         let blueAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),

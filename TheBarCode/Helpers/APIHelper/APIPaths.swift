@@ -70,6 +70,8 @@ let apiPathAddRemoveBookmarkedOffer = "user-favorite-offer/update"
 let apiPathBookmarkedEvents = "user-bookmark-event"
 let apiPathAddRemoveBookmarkedEvents = "user-bookmark-event/update"
 
+let apiPathEstablishmentSubscription = "establishment-subscription"
+
 //Analytics Events
 let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()
 let signUpMobileClick = "Clicked on Sign up with Mobile".getFormattedEventName()

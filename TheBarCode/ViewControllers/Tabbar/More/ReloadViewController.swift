@@ -13,8 +13,6 @@ import ObjectMapper
 import StoreKit
 import FirebaseAnalytics
 
-let kProductIdReload = bundleId + ".reload"
-
 @objc protocol ReloadViewControllerDelegate: class {
     @objc optional func reloadController(controller: ReloadViewController, cancelButtonTapped sender: UIBarButtonItem, selectedIndex: Int)
 }
@@ -52,6 +50,8 @@ class ReloadViewController: UIViewController {
     var productIDs: [String] = []
     var products: [SKProduct] = []
     
+    let productIdReload = bundleId + ".reload"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -88,7 +88,7 @@ class ReloadViewController: UIViewController {
         
         self.getReloadStatus()
         
-        self.productIDs = [kProductIdReload]
+        self.productIDs = [productIdReload]
         SKPaymentQueue.default().add(self)
         
         Analytics.logEvent(viewReloadScreen, parameters: nil)
@@ -389,7 +389,7 @@ extension ReloadViewController {
 }
 
 //MARK: InApp Purchase
-extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransactionObserver {
+extension ReloadViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
     func productsRequest (_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         
@@ -424,24 +424,14 @@ extension ReloadViewController : SKProductsRequestDelegate, SKPaymentTransaction
             if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction {
                 switch trans.transactionState {
                 case .purchased:
-                    debugPrint("Product Purchased");
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
                     reloadRedeems(transactionID: trans.transactionIdentifier!)
                     break;
                 case .failed:
-                    debugPrint("Purchased Failed");
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    
-                    self.reloadButton.hideLoader()
-                    UIApplication.shared.endIgnoringInteractionEvents()
-                    self.showAlertController(title: "Reload", msg: trans.error?.localizedDescription ?? genericErrorMessage)
                     break;
                 case .restored:
-                    debugPrint("Already Purchased");
                     SKPaymentQueue.default().restoreCompletedTransactions()
-                    
-                    self.reloadButton.hideLoader()
-                    UIApplication.shared.endIgnoringInteractionEvents()
                 default:
                     break;
                 }

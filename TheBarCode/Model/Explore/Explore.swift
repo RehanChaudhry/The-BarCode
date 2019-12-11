@@ -49,7 +49,8 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var credit = Value.Required<Int>("credit", initial: 0)
     
     //Determine weather establishment is opt in for unlimited redemption
-    var unlimitedRedemptionAllowed = Value.Required<Bool>("unlimited_redemption_allowed", initial: false)
+    var isOfferingUnlimitedRedemption = Value.Required<Bool>("is_offering_unlimited_redemption", initial: false)
+    var canDoUnlimitedRedemption = Value.Required<Bool>("can_do_unlimited_redemption", initial: false)
     
     var videoUrlString = Value.Optional<String>("video_url_string")
     
@@ -76,9 +77,9 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var currentlyUnlimitedRedemptionAllowed: Bool {
         get {
             if let timings = self.timings.value,
-                self.unlimitedRedemptionAllowed.value,
-                self.currentlyBarIsOpened,
-                timings.unlimitedRedemptionAllowed.value {
+                self.isOfferingUnlimitedRedemption.value,
+                timings.dayStatus == .opened,
+                timings.isOfferingUnlimitedRedemption.value {
                 return true
             }
             
@@ -226,7 +227,11 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         }
         
         if let unlimitedRedemptionAllowed = source["is_unlimited_redemption"] as? Bool {
-            self.unlimitedRedemptionAllowed.value = unlimitedRedemptionAllowed
+            self.isOfferingUnlimitedRedemption.value = unlimitedRedemptionAllowed
+        }
+        
+        if let canDoUnlimitedRedemption = source["can_unlimited_redeem"] as? Bool {
+            self.canDoUnlimitedRedemption.value = canDoUnlimitedRedemption
         }
         
         //TODO: handle array and object

@@ -88,7 +88,9 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                 <outlet property="ctaTopMargin" destination="0Kr-D3-0ih" id="kQy-8d-BPF"/>
                 <outlet property="detailLabel" destination="kJT-DJ-if5" id="s3e-ga-aUg"/>
                 <outlet property="iconImageView" destination="eSv-FB-GGV" id="zew-OW-Rzk"/>
+                <outlet property="titleBottomSpacing" destination="1eW-P8-WEq" id="tb3-H3-iV6"/>
                 <outlet property="titleLabel" destination="knj-9O-kYn" id="sVU-ar-ZfG"/>
+                <outlet property="titleLabelHeight" destination="K1h-Rk-laK" id="w2K-KG-jdq"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="172.76785714285714"/>
         </tableViewCell>
