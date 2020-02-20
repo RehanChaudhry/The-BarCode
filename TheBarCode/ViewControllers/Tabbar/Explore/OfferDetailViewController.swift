@@ -142,74 +142,138 @@ class OfferDetailViewController: UIViewController {
             self.bottomViewBottom.constant = self.bottomView.frame.height
         } else {
             
-            let currentDate = Date()
+            /*
+             * for scheduled offers, server assign start date and time, end date and time at 6 am for the next day
+             * for e.g. till 5 Feb 2020 05:59am, offer validity date time are
+             *     start date time: 4 Feb 2020, 06:01am
+             *     end date time: 5 Feb 2020, 05:59am
+             * to get start date as server, we need to convert device to server time zone (london) and subtract 6 hours
+             * for e.g. at 5 Feb 2020 10:59am (Pak Time), server time is 5 Feb 2020 05:59am
+             *     date considered at server is: 5 Feb 2020 05:59am - 6 hours = 4 Feb 2020 (11:59pm)
+             * */
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = serverTimeFormat
+            let status = self.deal.getCurrentStatus()
             
-            let currentTime = dateFormatter.date(from: dateFormatter.string(from: currentDate))!
-            
-            let dealStartTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.startDateTime))!
-            let dealEndTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.endDateTime))!
-            
-            let isDateInRange = currentDate.isDate(inRange: self.deal.startDateTime, toDate: self.deal.endDateTime, inclusive: true)
-            
-            let isTimeInRange = currentTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
-            
-            //Can redeem deal (With in date and time range)
-            if isDateInRange && isTimeInRange {
-                debugPrint("Show Redeem deal")
+            switch status.status {
+            case .notStarted:
+                self.remainingSeconds = self.deal.getStartsInRemainingSeconds()
+                self.startRedeemTimer()
+                
+                self.redeemButton.isHidden = true
+                self.timerButton.isHidden = false
+
+            case .started:
                 self.bottomViewBottom.constant = 0.0
                 
                 self.redeemButton.isHidden = false
                 self.timerButton.isHidden = true
                 
-            } else {
+            case .expired:
+                self.bottomViewBottom.constant = self.bottomView.frame.height
                 
                 self.redeemButton.isHidden = true
                 self.timerButton.isHidden = false
-                
-                //Deal not started yet
-                if Date().compare(self.deal.startDateTime) == .orderedAscending {
-                    self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(Date())) + 1
-                    self.startRedeemTimer()
+
+                UIView.performWithoutAnimation {
+                    self.timerButton.setTitle("Expired", for: .normal)
+                    self.timerButton.layoutIfNeeded()
                 }
-                
-                //Deal expired
-                else if Date().compare(self.deal.endDateTime) == .orderedDescending {
-                    debugPrint("Deal expired")
-                    self.bottomViewBottom.constant = self.bottomView.frame.height
-                } else {
-                    
-                    //TODO: This logic needs to be updated
-                    
-                    dateFormatter.dateFormat = serverDateFormat
-                    let todayDateString = dateFormatter.string(from: Date())
-                    
-                    dateFormatter.dateFormat = serverTimeFormat
-                    let dealStartTime = dateFormatter.string(from: dealStartTime)
-                    
-                    let todayDealDateTimeString = todayDateString + " " + dealStartTime
-                    
-                    dateFormatter.dateFormat = serverDateTimeFormat
-                    let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
-                    
-                    if Date().compare(todayDealDateTime) == .orderedAscending {
-                        self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow) + 1
-                    } else {
-                        let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
-                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow) + 1
-                    }
-                    
-                    if self.remainingSeconds > 0 {
-                        self.startRedeemTimer()
-                    } else {
-                        debugPrint("cannot start timer")
-                    }
-                }
-                
-                debugPrint("Hide Redeem deal")
             }
+            
+            debugPrint("Deal status: \(status.status)")
+            debugPrint("Deal status reason: \(status.statusReason)")
+            
+            debugPrint("\n\n\n\n")
+            
+//            let isTimeInRange = currentDate.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
+            
+            
+//            let dateformatter = DateFormatter()
+//            dateformatter.timeZone = serverTimeZone
+//
+//            var currentDate = Date()
+//            dateformatter.dateFormat = serverDateFormat + " " + serverTimeFormat
+//            currentDate = dateformatter.date(from: dateformatter.string(from: currentDate))!
+//            currentDate = currentDate.addingTimeInterval(-(6.0 * 60.0 * 60.0))
+//
+//            dateformatter.dateFormat = serverDateFormat
+//            let nowDate = dateformatter.date(from: dateformatter.string(from: currentDate))!
+//            let nowDateString = dateformatter.string(from: nowDate)
+//
+//            dateformatter.dateFormat = serverTimeFormat
+//            let nowTime = dateformatter.date(from: dateformatter.string(from: Date()))!
+//            let nowTimeString = dateformatter.string(from: nowTime)
+//
+//            dateformatter.dateFormat = serverDateFormat + " " + serverTimeFormat
+//            let nowDateTimeString = nowDateString + " " + nowTimeString
+//            let nowDateTime = dateformatter.date(from: nowDateTimeString)!
+//
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = serverTimeFormat
+//
+//            let currentTime = dateFormatter.date(from: dateFormatter.string(from: nowDateTime))!
+//
+//            let dealStartTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.startDateTime))!
+//            let dealEndTime = dateFormatter.date(from: dateFormatter.string(from: self.deal.endDateTime))!
+//
+//            let isDateInRange = nowDateTime.isDate(inRange: self.deal.startDateTime, toDate: self.deal.endDateTime, inclusive: true)
+//
+//            let isTimeInRange = currentTime.isDate(inRange: self.deal.startTime, toDate: self.deal.endTime, inclusive: true)
+//
+//            Can redeem deal (With in date and time range)
+//            if isDateInRange && isTimeInRange {
+//                debugPrint("Show Redeem deal")
+//                self.bottomViewBottom.constant = 0.0
+//
+//                self.redeemButton.isHidden = false
+//                self.timerButton.isHidden = true
+//
+//            } else {
+//
+//                self.redeemButton.isHidden = true
+//                self.timerButton.isHidden = false
+//
+//                //Deal not started yet
+//                if Date().compare(self.deal.startDateTime) == .orderedAscending {
+//                    self.remainingSeconds = Int(self.deal.startDateTime.timeIntervalSince(Date())) + 1
+//                    self.startRedeemTimer()
+//                }
+//
+//                //Deal expired
+//                else if Date().compare(self.deal.endDateTime) == .orderedDescending {
+//                    debugPrint("Deal expired")
+//                    self.bottomViewBottom.constant = self.bottomView.frame.height
+//                } else {
+//
+//                    //TODO: This logic needs to be updated
+//
+//                    dateFormatter.dateFormat = serverDateFormat
+//                    let todayDateString = dateFormatter.string(from: Date())
+//
+//                    dateFormatter.dateFormat = serverTimeFormat
+//                    let dealStartTime = dateFormatter.string(from: dealStartTime)
+//
+//                    let todayDealDateTimeString = todayDateString + " " + dealStartTime
+//
+//                    dateFormatter.dateFormat = serverDateTimeFormat
+//                    let todayDealDateTime = dateFormatter.date(from: todayDealDateTimeString)!
+//
+//                    if Date().compare(todayDealDateTime) == .orderedAscending {
+//                        self.remainingSeconds = Int(todayDealDateTime.timeIntervalSinceNow) + 1
+//                    } else {
+//                        let nextDayDateTime = todayDealDateTime.addingTimeInterval(60.0 * 60.0 * 24.0)
+//                        self.remainingSeconds = Int(nextDayDateTime.timeIntervalSinceNow) + 1
+//                    }
+//
+//                    if self.remainingSeconds > 0 {
+//                        self.startRedeemTimer()
+//                    } else {
+//                        debugPrint("cannot start timer")
+//                    }
+//                }
+//
+//                debugPrint("Hide Redeem deal")
+//            }
         }
         
         self.view.layoutIfNeeded()
@@ -219,26 +283,27 @@ class OfferDetailViewController: UIViewController {
         self.redeemTimer?.invalidate()
         self.redeemTimer = nil
         self.redeemTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [unowned self] (sender) in
-            self.updateRedeemTimer(sender: sender)
+            self.updateRedeemTimer()
         })
         RunLoop.current.add(self.redeemTimer!, forMode: .commonModes)
-        self.updateRedeemTimer(sender: self.redeemTimer!)
+        self.updateRedeemTimer()
     }
-    
-    func updateRedeemTimer(sender: Timer) {
 
+    func updateRedeemTimer() {
         if self.remainingSeconds > 0 {
             self.remainingSeconds -= 1
             UIView.performWithoutAnimation {
                 self.timerButton.setTitle("Starts in \(Utility.shared.getFormattedRemainingTime(time: TimeInterval(self.remainingSeconds)))", for: .normal)
                 self.timerButton.layoutIfNeeded()
             }
-            
+
         } else {
             self.redeemTimer?.invalidate()
-            self.setUpBottomView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.setUpBottomView()
+            }
         }
-        
+
     }
     
     func setUpRedeemButtonView() {

@@ -91,7 +91,7 @@ let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
 let oneSignalProdAppId = "a314acb3-b5df-442d-820e-6cfc6731fc70"
 
 
-let googleMapQAAppId = "AIzaSyA8lXiv-u5zrcIcQK5ROoAONbEWYzUHSK8"
+let googleMapQAAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 
 let tbcLogoUrl = URL(string: "https://thebarcode.co/storage/tbc-logo.png")

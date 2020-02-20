@@ -31,10 +31,6 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     var expirationTimer: Timer?
     
-    enum DealStatus: String {
-        case notStarted = "notStarted", started = "started", expired = "expired"
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -219,57 +215,97 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     func startTimer(deal: Deal) {
         
+        self.stopTimer()
+        
         guard deal.shouldShowDate.value && deal.hasTime.value else {
             self.validityLabel.text = ""
             debugPrint("Validity could not be shown")
             return
         }
         
-        //Deal not started yet
-        if Date().compare(deal.startDateTime) == .orderedAscending {
-            var remainingSeconds = Int(deal.startDateTime.timeIntervalSince(Date()))
+        let status = deal.getCurrentStatus()
+        switch status.status {
+        case .notStarted:
+            var remainingSeconds = deal.getStartsInRemainingSeconds()
             self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
             self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-                
                 if remainingSeconds > 0 {
                     remainingSeconds -= 1
                     self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
                 } else {
                     self.stopTimer()
-                    var expiresInSeconds = Int(deal.endDateTime.timeIntervalSinceNow)
-                    if expiresInSeconds > 0 {
-                        self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
-                        self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-                            if expiresInSeconds > 0 {
-                                expiresInSeconds -= 1
-                                self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
-                            } else {
-                                self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
-                            }
-                        })
-                        RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
-                    } else {
-                        self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
-                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                        self?.startTimer(deal: deal)
+                    })
                 }
             })
             RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
-            
-        } else if Int(deal.endDateTime.timeIntervalSinceNow) > 0 {
-            var remainingSeconds = Int(deal.endDateTime.timeIntervalSinceNow)
-            self.updateExpirationLabel(status: .started, remainingSeconds: remainingSeconds)
+            self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+        case .started:
+            var expiresInSeconds = deal.getExpiresInRemainingSeconds()
+            self.updateExpirationLabel(status: .notStarted, remainingSeconds: expiresInSeconds)
             self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-                if remainingSeconds > 0 {
-                    remainingSeconds -= 1
-                    self.updateExpirationLabel(status: .started, remainingSeconds: remainingSeconds)
+                if expiresInSeconds > 0 {
+                    expiresInSeconds -= 1
+                    self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
                 } else {
-                    self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+                    self.stopTimer()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                        self?.startTimer(deal: deal)
+                    })
                 }
             })
             RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
-        } else {
+            self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
+        case .expired:
             self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
         }
+        
+        //Deal not started yet
+//        if Date().compare(deal.startDateTime) == .orderedAscending {
+//            var remainingSeconds = Int(deal.startDateTime.timeIntervalSince(Date()))
+//            self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+//            self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+//                
+//                if remainingSeconds > 0 {
+//                    remainingSeconds -= 1
+//                    self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+//                } else {
+//                    self.stopTimer()
+//                    var expiresInSeconds = Int(deal.endDateTime.timeIntervalSinceNow)
+//                    if expiresInSeconds > 0 {
+//                        self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
+//                        self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+//                            if expiresInSeconds > 0 {
+//                                expiresInSeconds -= 1
+//                                self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
+//                            } else {
+//                                self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+//                            }
+//                        })
+//                        RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+//                    } else {
+//                        self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+//                    }
+//                }
+//            })
+//            RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+//            
+//        } else if Int(deal.endDateTime.timeIntervalSinceNow) > 0 {
+//            var remainingSeconds = Int(deal.endDateTime.timeIntervalSinceNow)
+//            self.updateExpirationLabel(status: .started, remainingSeconds: remainingSeconds)
+//            self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+//                if remainingSeconds > 0 {
+//                    remainingSeconds -= 1
+//                    self.updateExpirationLabel(status: .started, remainingSeconds: remainingSeconds)
+//                } else {
+//                    self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+//                }
+//            })
+//            RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+//        } else {
+//            self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+//        }
     }
     
     func stopTimer() {

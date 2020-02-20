@@ -420,21 +420,28 @@ extension ReloadViewController: SKProductsRequestDelegate, SKPaymentTransactionO
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         debugPrint("Received Payment Transaction Response from Apple");
-        for transaction:AnyObject in transactions {
-            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction {
-                switch trans.transactionState {
-                case .purchased:
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    reloadRedeems(transactionID: trans.transactionIdentifier!)
-                    break;
-                case .failed:
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    break;
-                case .restored:
-                    SKPaymentQueue.default().restoreCompletedTransactions()
-                default:
-                    break;
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                reloadRedeems(transactionID: transaction.transactionIdentifier!)
+                break;
+            case .failed:
+                if let error = transaction.error, error._code != SKError.paymentCancelled.rawValue {
+                    self.showAlertController(title: "Reload", msg: error.localizedDescription)
                 }
+                
+                SKPaymentQueue.default().finishTransaction(transaction)
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.reloadButton.hideLoader()
+                
+                break;
+            case .restored:
+                SKPaymentQueue.default().restoreCompletedTransactions()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.reloadButton.hideLoader()
+            default:
+                break;
             }
         }
     }

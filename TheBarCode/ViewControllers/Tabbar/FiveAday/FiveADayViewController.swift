@@ -266,7 +266,7 @@ extension FiveADayViewController: FSPagerViewDataSource, FSPagerViewDelegate {
     
     func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int) {
         let fiveADayCell = cell as? FiveADayCollectionViewCell
-        fiveADayCell?.setUpRedeemButton(deal: self.deals[index])
+        fiveADayCell?.startTimer(deal: self.deals[index])
     }
     
     func pagerView(_ pagerView: FSPagerView, didEndDisplaying cell: FSPagerViewCell, forItemAt index: Int) {
