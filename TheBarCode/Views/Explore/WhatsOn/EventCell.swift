@@ -110,7 +110,7 @@ class EventCell: MGSwipeTableCell, NibReusable {
         self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
             if secondsLeft > 0 {
                 secondsLeft -= 1
-                self.updateExpirationLabel(offerStatus: offerStatus, remainingSeconds: secondsLeft)
+                self.updateExpirationLabel(status: offerStatus, remainingSeconds: secondsLeft)
             } else {
                 self.stopTimer()
                 self.startTimer(event: event)
@@ -126,6 +126,45 @@ class EventCell: MGSwipeTableCell, NibReusable {
             return
         }
         
+        let status = event.getCurrentStatus()
+        switch status.status {
+        case .notStarted:
+            var remainingSeconds = event.getStartsInRemainingSeconds()
+            self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+            self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                if remainingSeconds > 0 {
+                    remainingSeconds -= 1
+                    self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+                } else {
+                    self.stopTimer()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                        self?.startTimer(event: event)
+                    })
+                }
+            })
+            RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+            self.updateExpirationLabel(status: .notStarted, remainingSeconds: remainingSeconds)
+        case .started:
+            var expiresInSeconds = event.getExpiresInRemainingSeconds()
+            self.updateExpirationLabel(status: .notStarted, remainingSeconds: expiresInSeconds)
+            self.expirationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+                if expiresInSeconds > 0 {
+                    expiresInSeconds -= 1
+                    self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
+                } else {
+                    self.stopTimer()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                        self?.startTimer(event: event)
+                    })
+                }
+            })
+            RunLoop.current.add(self.expirationTimer!, forMode: .commonModes)
+            self.updateExpirationLabel(status: .started, remainingSeconds: expiresInSeconds)
+        case .expired:
+            self.updateExpirationLabel(status: .expired, remainingSeconds: 0)
+        }
+        
+        
         //Not started yet
         //Started but not expired
             //Starts in
@@ -133,6 +172,7 @@ class EventCell: MGSwipeTableCell, NibReusable {
         //Expired
         
         //Not started yet
+        /*
         if Date().compare(event.startDateTime) == .orderedAscending {
             debugPrint("Event is not started yet")
             
@@ -187,6 +227,7 @@ class EventCell: MGSwipeTableCell, NibReusable {
             self.updateExpirationLabel(offerStatus: .expired, remainingSeconds: 0)
             debugPrint("Event is expired")
         }
+        */
         
         /*
         //Deal not started yet
@@ -242,8 +283,8 @@ class EventCell: MGSwipeTableCell, NibReusable {
         self.expirationTimer = nil
     }
 
-    func updateExpirationLabel(offerStatus: EventStatus, remainingSeconds: Int) {
-        switch offerStatus {
+    func updateExpirationLabel(status: EventStatus, remainingSeconds: Int) {
+        switch status {
         case .notStarted:
             let validtyPlaceHodler = "Starts in: "
             let attributesWhite: [NSAttributedStringKey: Any] = [

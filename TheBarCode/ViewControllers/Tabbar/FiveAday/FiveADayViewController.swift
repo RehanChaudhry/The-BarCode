@@ -455,6 +455,8 @@ extension FiveADayViewController: FiveADayCollectionViewCellDelegate {
         } else {
             debugPrint("Bar not found")
         }
+        
+        Analytics.logEvent(redeemOfferButtonClick, parameters: ["offer_id" : deal.id.value])
     }
     
     func fiveADayCell(cell: FiveADayCollectionViewCell, viewDetailButtonTapped sender: UIButton) {

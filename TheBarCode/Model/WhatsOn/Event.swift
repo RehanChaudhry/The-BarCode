@@ -118,6 +118,30 @@ class Event: CoreStoreObject {
     
     var shouldShowDate = Value.Required<Bool>("should_show_date", initial: false)
     var shouldShowTime = Value.Required<Bool>("should_show_time", initial: false)
+    
+    func getCurrentStatus() -> (status: DealStatus, statusReason: String) {
+        let offerStatus = OfferStatus(startDateTime: self.startDateTime,
+                                      endDateTime: self.endDateTime,
+                                      startTime: self.startTime,
+                                      endTime: self.endTime)
+        return offerStatus.getCurrentStatus()
+    }
+    
+    func getStartsInRemainingSeconds() -> Int {
+        let offerStatus = OfferStatus(startDateTime: self.startDateTime,
+                                      endDateTime: self.endDateTime,
+                                      startTime: self.startTime,
+                                      endTime: self.endTime)
+        return offerStatus.getStartsInRemainingSeconds()
+    }
+    
+    func getExpiresInRemainingSeconds() -> Int {
+        let offerStatus = OfferStatus(startDateTime: self.startDateTime,
+                                      endDateTime: self.endDateTime,
+                                      startTime: self.startTime,
+                                      endTime: self.endTime)
+        return offerStatus.getExpiresInRemainingSeconds()
+    }
 }
 
 extension Event: ImportableUniqueObject {

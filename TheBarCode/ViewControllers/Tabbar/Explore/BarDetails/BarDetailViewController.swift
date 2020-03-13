@@ -83,7 +83,11 @@ class BarDetailViewController: UIViewController {
         
         self.viewProfile()
         
-        Analytics.logEvent(viewBarDetailsScreen, parameters: nil)
+        if let bar = self.selectedBar {
+            Analytics.logEvent(viewBarDetailsScreen, parameters: ["bar_id" : bar.id.value])
+        } else {
+            Analytics.logEvent(viewBarDetailsScreen, parameters: ["bar_id" : self.barId ?? ""])
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         

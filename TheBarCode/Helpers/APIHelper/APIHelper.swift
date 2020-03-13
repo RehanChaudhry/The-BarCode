@@ -12,15 +12,15 @@ import ObjectMapper
 import SwiftyJSON
 import BugfenderSDK
 
-let staggingAPIDomain = "https://thebarcode.cygnismedia.com"
-let qaAPIDomain = "https://thebarcode-qa.cygnismedia.com"
-let devAPIDomain = "https://thebarcode-dev.cygnismedia.com"
+let staggingAPIDomain = "https://thebarcode.cygnis.dev"
+let qaAPIDomain = "https://thebarcode-qa.cygnis.dev"
+let devAPIDomain = "https://thebarcode-dev.cygnis.dev"
 let productionAPIDomain = "https://thebarcode.co"
 
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = productionAPIDomain
+let theBarCodeAPIDomain = devAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"

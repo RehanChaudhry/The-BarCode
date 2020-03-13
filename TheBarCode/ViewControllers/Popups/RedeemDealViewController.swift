@@ -67,8 +67,6 @@ class RedeemDealViewController: CodeVerificationViewController {
     @IBAction func actionButtonTapped(sender: UIButton) {
         self.view.endEditing(true)
         
-        Analytics.logEvent(submitBartenderCode, parameters: nil)
-        
         self.redeemDeal()
     }
     
@@ -91,8 +89,13 @@ extension RedeemDealViewController {
                                      "type" : self.redeemingType.rawValue]
         if self.offerType == OfferType.standard {
             params["standard_offer_id"] = self.standardOfferId
+            
+            Analytics.logEvent(submitBartenderCode, parameters: ["offer_id" : self.standardOfferId])
+            
         } else {
             params["offer_id"] = self.dealInfo.id.value
+            
+            Analytics.logEvent(submitBartenderCode, parameters: ["offer_id" : self.dealInfo.id.value])
             
             if let shareId = self.dealInfo.sharedId.value, self.isRedeemingSharedOffer {
                 params["shared_id"] = shareId

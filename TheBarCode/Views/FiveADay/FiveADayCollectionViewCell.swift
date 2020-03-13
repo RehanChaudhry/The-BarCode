@@ -331,7 +331,6 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     //MARK: My IBActions
     @IBAction func redeemDealButtonTapped(_ sender: UIButton) {
-        Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
         self.delegate!.fiveADayCell(cell: self, redeemedButtonTapped: sender)
     }
     

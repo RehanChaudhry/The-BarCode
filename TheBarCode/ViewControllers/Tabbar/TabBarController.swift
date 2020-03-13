@@ -11,6 +11,7 @@ import OneSignal
 import CoreStore
 import FirebaseAnalytics
 import BugfenderSDK
+import Crashlytics
 
 class TabBarController: UITabBarController {
 
@@ -53,6 +54,8 @@ class TabBarController: UITabBarController {
             self.selectedIndex = 2
         }
         
+        Crashlytics.sharedInstance().setUserIdentifier(Utility.shared.getCurrentUser()?.userId.value)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedEventNotification(notification:)), name: notificationNameAcceptSharedEvent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(liveOfferNotification(notification:)), name: Notification.Name(rawValue: notificationNameLiveOffer), object: nil)
@@ -64,13 +67,6 @@ class TabBarController: UITabBarController {
         
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
-        }
-        
-        do {
-            let attrStringFromHtml = try NSMutableAttributedString(data: "<span>html enabled</span>".data(using: .utf8, allowLossyConversion: false)!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
-            debugPrint("html as attributed string: \(attrStringFromHtml.string)")
-        } catch {
-            debugPrint("error while loading attributed string: \(error.localizedDescription)")
         }
     }
 
@@ -345,11 +341,10 @@ extension TabBarController: CannotRedeemViewControllerDelegate {
     }
 }
 
-
+//MARK: UITabBarControllerDelegate
 extension TabBarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let eventName = getSelectedTabEventName(itemTag: tabBar.selectedItem!.tag)
         Analytics.logEvent(eventName, parameters: nil)
-        
     }
 }

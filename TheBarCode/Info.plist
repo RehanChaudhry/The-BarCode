@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://thebarcode.co</string>
+		<string>https://staging.thebarcode.co</string>
+		<string>https://thebarcode.cygnis.dev</string>
+		<string>https://thebarcode-qa.cygnis.dev</string>
+		<string>https://thebarcode-dev.cygnis.dev</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

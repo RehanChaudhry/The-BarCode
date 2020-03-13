@@ -157,7 +157,7 @@ extension InviteViewController {
         let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
         iOSNavigationParams.isForcedRedirectEnabled = false
         
-        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkInviteDomain)
+        let linkComponents = DynamicLinkComponents(link: url, domainURIPrefix: dynamicLinkInviteDomain)!
         linkComponents.navigationInfoParameters = iOSNavigationParams
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId

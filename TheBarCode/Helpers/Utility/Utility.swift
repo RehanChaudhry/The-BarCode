@@ -12,6 +12,7 @@ import CoreStore
 import GoogleMaps
 import Firebase
 import FirebaseDynamicLinks
+import Crashlytics
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.milnesmayltd.thebarcode"
@@ -82,9 +83,9 @@ let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
 let defaultUKLocation =  CLLocationCoordinate2D(latitude: 52.705674, longitude: -2.480438)
 
-let dynamicLinkInviteDomain = "thebarcodeapp.page.link"
-let dynamicLinkShareOfferDomain = "barcodeoffer.page.link"
-let dynamicLinkGenaricDomain = "thebarcode.page.link"
+let dynamicLinkInviteDomain = "https://thebarcodeapp.page.link"
+let dynamicLinkShareOfferDomain = "https://barcodeoffer.page.link"
+let dynamicLinkGenaricDomain = "https://thebarcode.page.link"
 
 let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
@@ -193,6 +194,8 @@ class Utility: NSObject {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.stopVisitLocationManager()
+        
+        Crashlytics.sharedInstance().setUserIdentifier(nil)
         
         debugPrint("cleared user info from local db")
     }
@@ -427,7 +430,7 @@ class Utility: NSObject {
         let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
         iOSNavigationParams.isForcedRedirectEnabled = false
         
-        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkShareOfferDomain)
+        let linkComponents = DynamicLinkComponents(link: url, domainURIPrefix: dynamicLinkShareOfferDomain)!
         linkComponents.navigationInfoParameters = iOSNavigationParams
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId
@@ -479,7 +482,7 @@ class Utility: NSObject {
         let iOSNavigationParams = DynamicLinkNavigationInfoParameters()
         iOSNavigationParams.isForcedRedirectEnabled = false
         
-        let linkComponents = DynamicLinkComponents(link: url, domain: dynamicLinkGenaricDomain)
+        let linkComponents = DynamicLinkComponents(link: url, domainURIPrefix: dynamicLinkGenaricDomain)!
         linkComponents.navigationInfoParameters = iOSNavigationParams
         linkComponents.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleId)
         linkComponents.iOSParameters?.appStoreID = kAppStoreId

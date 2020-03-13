@@ -143,6 +143,7 @@
 		0C694B01236C01FC002A08CC /* SharedEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C694AFF236C01FC002A08CC /* SharedEventCell.swift */; };
 		0C694B02236C01FC002A08CC /* SharedEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C694B00236C01FC002A08CC /* SharedEventCell.xib */; };
 		0C6DABE42368500E003C3999 /* SharedEventParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6DABE32368500E003C3999 /* SharedEventParams.swift */; };
+		0C71EEF9241227FD00505F97 /* OfferStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C71EEF8241227FD00505F97 /* OfferStatus.swift */; };
 		0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */; };
 		0C72AB58219591EE00D6CD6B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB57219591EE00D6CD6B /* SearchViewController.swift */; };
 		0C7477F0221A76360057502F /* StandardOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7477EF221A76360057502F /* StandardOffersViewController.swift */; };
@@ -538,6 +539,7 @@
 		0C694AFF236C01FC002A08CC /* SharedEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventCell.swift; sourceTree = "<group>"; };
 		0C694B00236C01FC002A08CC /* SharedEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedEventCell.xib; sourceTree = "<group>"; };
 		0C6DABE32368500E003C3999 /* SharedEventParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventParams.swift; sourceTree = "<group>"; };
+		0C71EEF8241227FD00505F97 /* OfferStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferStatus.swift; sourceTree = "<group>"; };
 		0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOfferParams.swift; sourceTree = "<group>"; };
 		0C72AB57219591EE00D6CD6B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = TheBarCode/ViewControllers/Tabbar/Explore/SearchViewController.swift; sourceTree = SOURCE_ROOT; };
 		0C7477EF221A76360057502F /* StandardOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardOffersViewController.swift; sourceTree = "<group>"; };
@@ -1053,6 +1055,7 @@
 		0C23A890214686F000DFB281 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0C71EEF72412275100505F97 /* OfferStatus */,
 				0C80E09F2391359600491DEB /* IAPHelper */,
 				0C39F29C231E72D400596A2B /* Google-Maps-iOS-Utils */,
 				0C9FA27722367677008F0B62 /* StringFormatter */,
@@ -1405,6 +1408,14 @@
 				0C6DABE32368500E003C3999 /* SharedEventParams.swift */,
 			);
 			path = SharedEventParams;
+			sourceTree = "<group>";
+		};
+		0C71EEF72412275100505F97 /* OfferStatus */ = {
+			isa = PBXGroup;
+			children = (
+				0C71EEF8241227FD00505F97 /* OfferStatus.swift */,
+			);
+			path = OfferStatus;
 			sourceTree = "<group>";
 		};
 		0C72AB54219403C700D6CD6B /* SharedOfferParams */ = {
@@ -2380,6 +2391,7 @@
 				0CEBCECC2369A982004E6985 /* EventDetailExternalCTACell.swift in Sources */,
 				0C86D02722DEF4F50034DA5C /* Food.swift in Sources */,
 				0C39F2EC231E72D500596A2B /* GMUDefaultClusterRenderer.m in Sources */,
+				0C71EEF9241227FD00505F97 /* OfferStatus.swift in Sources */,
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,

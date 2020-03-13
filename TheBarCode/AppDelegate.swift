@@ -236,22 +236,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleUserActivity(userActivity: NSUserActivity) -> Bool {
-        let universalUrl = userActivity.webpageURL
-        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(universalUrl!) { (dynamicLink, error) in
+        
+        guard let universalUrl = userActivity.webpageURL else {
+            debugPrint("Universal url is nil")
+            
+            let error = NSError(domain: "DynamicLinkNotFound", code: -1001, userInfo: [NSLocalizedDescriptionKey : "User activity webpage url property is nil"])
+            Crashlytics.sharedInstance().recordError(error)
+            
+            return false
+        }
+        
+        
+        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(universalUrl) { (dynamicLink, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting dynamic link: \(error!.localizedDescription)")
                 return
             }
             
-            if universalUrl?.host == dynamicLinkInviteDomain {
+            if universalUrl.host == URL(string: dynamicLinkInviteDomain)!.host {
                 if let code = Utility.shared.getReferralCodeFromUrlString(urlString: dynamicLink!.url!.absoluteString) {
                     self.referralCode = code
                 } else {
                     debugPrint("Unable to parse referral code: ")
                 }
                 
-            } else if universalUrl?.host == dynamicLinkShareOfferDomain {
+            } else if universalUrl.host == URL(string: dynamicLinkShareOfferDomain)!.host {
                 if let sharedOfferParams = Utility.shared.getSharedOfferParams(urlString: dynamicLink!.url!.absoluteString) {
                     self.sharedOfferParams = sharedOfferParams
                     self.referralCode = sharedOfferParams.referral!
@@ -259,7 +269,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } else {
                     debugPrint("Unable to parse shared offer params: ")
                 }
-            } else if universalUrl?.host == dynamicLinkGenaricDomain {
+            } else if universalUrl.host == URL(string: dynamicLinkGenaricDomain)!.host {
                 if let sharedEventParams = Utility.shared.getSharedEventParams(urlString: dynamicLink!.url!.absoluteString) {
                     self.sharedEventParams = sharedEventParams
                     self.referralCode = sharedEventParams.referral

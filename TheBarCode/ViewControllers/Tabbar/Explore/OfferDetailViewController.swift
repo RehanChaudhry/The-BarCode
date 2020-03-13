@@ -419,7 +419,7 @@ class OfferDetailViewController: UIViewController {
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
-        Analytics.logEvent(redeemOfferButtonClick, parameters: nil)
+        Analytics.logEvent(redeemOfferButtonClick, parameters: ["offer_id" : self.deal.id.value])
         
         guard let bar = self.deal.establishment.value else {
             debugPrint("Establishment info not found")

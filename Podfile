@@ -21,13 +21,15 @@ target 'TheBarCode' do
   pod 'FBSDKLoginKit', '~> 4.37.0'
   pod 'SDWebImage', '~> 4.4.2'
   pod 'HTTPStatusCodes', '~> 3.3.1'
-  pod 'Firebase/DynamicLinks', '~> 5.10.0'
+  
+  pod 'Firebase/Core', '~> 6.16.0'
+  pod 'Firebase/DynamicLinks', '~> 6.16.0'
+  
   pod 'Fabric', '~> 1.7.13'
   pod 'Crashlytics', '~> 3.10.9'
   pod 'OneSignal', '~> 2.9.0'
   pod 'MGSwipeTableCell', '~> 1.6.7'
   pod 'GBDeviceInfo', '~> 5.5.0'
-  pod 'Firebase/Core', '~> 5.10.0'
   pod 'BugfenderSDK', '~> 1.7'
   pod 'DTCoreText', '~> 1.6.23'
   
