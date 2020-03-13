@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import FirebaseAnalytics
 
 protocol ExploreAboutTableViewCellDelegate: class {
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, websiteButtonTapped sender: UIButton)
@@ -89,6 +90,13 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
                 self.currentTimeHeaderLabel.textColor = UIColor.appRedColor()
                 self.currentDayTimingLabel.text = ""
             } else {
+                
+                if timings.openingTime.value == nil || timings.closingTime.value == nil {
+                    Analytics.logEvent("bar_open_or_close_time_nil", parameters: ["opening_time" : timings.openingTimeRaw.value,
+                                                                                  "closing_time" : timings.closingTimeRaw.value,
+                                                                                  "bar_id" : explore.id.value])
+                }
+                
                 let timingString = dateformatter.string(from: timings.openingTime.value!) + " - " + dateformatter.string(from: timings.closingTime.value!)
                 
                 if timings.isOpen.value {

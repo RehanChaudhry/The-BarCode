@@ -20,6 +20,9 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
     var openingTime = Value.Optional<Date>("opening_time")
     var closingTime = Value.Optional<Date>("closing_time")
     
+    var openingTimeRaw = Value.Required<String>("opening_time_raw", initial: "")
+    var closingTimeRaw = Value.Required<String>("closing_time_raw", initial: "")
+    
     var day = Value.Required<String>("day", initial: "")
     
     var dayStatusRaw = Value.Required<String>("day_status", initial: "")
@@ -51,14 +54,16 @@ class EstablishmentTiming: CoreStoreObject, ImportableObject {
         self.day.value = source["day"] as? String ?? ""
         
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         dateformatter.timeZone = serverTimeZone
         
         if let openingDateTimeInfo = source["opening_time_modify"] as? [String : Any], let openingDateTime = openingDateTimeInfo["date"] as? String {
+            self.openingTimeRaw.value = openingDateTime
             self.openingTime.value = dateformatter.date(from: openingDateTime)
         }
         
         if let closingDateTimeInfo = source["closed_time_modify"] as? [String : Any], let closingDateTime = closingDateTimeInfo["date"] as? String {
+            self.closingTimeRaw.value = closingDateTime
             self.closingTime.value = dateformatter.date(from: closingDateTime)
         }
         

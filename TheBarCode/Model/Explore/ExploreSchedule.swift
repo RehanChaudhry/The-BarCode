@@ -42,7 +42,7 @@ class ExploreSchedule: CoreStoreObject, ImportableObject {
         self.dayStatusRaw.value = source["status"] as? String ?? ""
         
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
+        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         dateformatter.timeZone = serverTimeZone
         
         if let openingDateTimeInfo = source["opening_time_modify"] as? [String : Any], let openingDateTime = openingDateTimeInfo["date"] as? String {
