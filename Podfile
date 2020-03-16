@@ -10,7 +10,7 @@ target 'TheBarCode' do
   pod 'Reusable', '~> 4.0.3'
   pod 'UIColor_Hex_Swift', '~> 4.0.2'
   pod 'PureLayout', '~> 3.1.5'
-  pod 'GoogleMaps', '~> 2.7.0'
+  pod 'GoogleMaps', '~> 3.8.0'
   pod 'StatefulTableView', '~> 0.1.5'
   pod 'TPKeyboardAvoiding', '~> 1.3.2'
   pod 'FSPagerView', '~> 0.7.2'
@@ -24,9 +24,9 @@ target 'TheBarCode' do
   
   pod 'Firebase/Core', '~> 6.16.0'
   pod 'Firebase/DynamicLinks', '~> 6.16.0'
+  pod 'Firebase/Crashlytics', '~> 6.16.0'
+  pod 'Firebase/Analytics', '~> 6.16.0'
   
-  pod 'Fabric', '~> 1.7.13'
-  pod 'Crashlytics', '~> 3.10.9'
   pod 'OneSignal', '~> 2.9.0'
   pod 'MGSwipeTableCell', '~> 1.6.7'
   pod 'GBDeviceInfo', '~> 5.5.0'

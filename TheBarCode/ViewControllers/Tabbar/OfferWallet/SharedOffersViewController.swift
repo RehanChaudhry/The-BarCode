@@ -98,6 +98,8 @@ class SharedOffersViewController: UIViewController {
     
     func showBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
         barDetailController.delegate = self
@@ -149,6 +151,7 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
         let offerDetailNavigation = self.storyboard!.instantiateViewController(withIdentifier: "OfferDetailNavigation") as! UINavigationController
+        offerDetailNavigation.modalPresentationStyle = .fullScreen
         
         let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.isSharedOffer = true

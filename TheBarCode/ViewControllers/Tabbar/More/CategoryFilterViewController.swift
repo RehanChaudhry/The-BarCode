@@ -425,6 +425,8 @@ extension CategoryFilterViewController {
             
             if self.comingFromSplash {
                 let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                tabbarController?.modalPresentationStyle = .fullScreen
+                
                 self.navigationController?.present(tabbarController!, animated: false, completion: {
                     let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
                     self.navigationController?.popToViewController(loginOptions, animated: false)

@@ -12,7 +12,7 @@ import CoreStore
 import GoogleMaps
 import Firebase
 import FirebaseDynamicLinks
-import Crashlytics
+import FirebaseCrashlytics
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.milnesmayltd.thebarcode"
@@ -195,7 +195,7 @@ class Utility: NSObject {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.stopVisitLocationManager()
         
-        Crashlytics.sharedInstance().setUserIdentifier(nil)
+        Crashlytics.crashlytics().setUserID("")
         
         debugPrint("cleared user info from local db")
     }

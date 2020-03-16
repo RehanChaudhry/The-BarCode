@@ -144,6 +144,8 @@ class ExploreViewController: UIViewController {
     
     func moveToBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = bar.id.value
         
@@ -167,6 +169,8 @@ class ExploreViewController: UIViewController {
     
     func moveToBarDetail(barId: String) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = barId
         barDetailController.delegate = self
@@ -275,6 +279,8 @@ class ExploreViewController: UIViewController {
     
     func moveToReloadVC() {
         let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        reloadNavigation.modalPresentationStyle = .fullScreen
+        
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
         self.present(reloadNavigation, animated: true, completion: nil)
@@ -282,6 +288,8 @@ class ExploreViewController: UIViewController {
     
     func moveToInvite() {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        inviteNavigation.modalPresentationStyle = .fullScreen
+        
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         inviteController.shouldShowCancelBarButton = true
         self.present(inviteNavigation, animated: true, completion: nil)
@@ -289,6 +297,8 @@ class ExploreViewController: UIViewController {
     
     func moveToSearch(withPreferences: Bool, withStandardOffer: Bool) {
         let searchNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "SearchNavigationController") as! UINavigationController
+        searchNavigationController.modalPresentationStyle = .fullScreen
+        
         searchNavigationController.modalTransitionStyle = .crossDissolve
         let searchController = searchNavigationController.viewControllers.first as! SearchViewController
 //        searchController.searchType = self.exploreType

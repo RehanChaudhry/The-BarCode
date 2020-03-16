@@ -51,6 +51,8 @@ class ReloadSnackBarViewController: UIViewController {
     //MARK: My Methods
     func moveToReloadVC() {
         let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        reloadNavigation.modalPresentationStyle = .fullScreen
+        
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
         self.present(reloadNavigation, animated: true, completion: nil)
@@ -58,6 +60,8 @@ class ReloadSnackBarViewController: UIViewController {
     
     func moveToInvite() {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        inviteNavigation.modalPresentationStyle = .fullScreen
+        
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         inviteController.shouldShowCancelBarButton = true
         self.present(inviteNavigation, animated: true, completion: nil)

@@ -394,6 +394,7 @@ class LoginViaViewController: UIViewController {
     
     func presentTabbarController() {
         let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+        tabbarController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(tabbarController!, animated: true, completion: {
             let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
             self.navigationController?.popToViewController(loginOptions, animated: false)
@@ -446,6 +447,7 @@ class LoginViaViewController: UIViewController {
         
         
         let instaNavController = self.storyboard?.instantiateViewController(withIdentifier: "InstagramLoginNavController") as! UINavigationController
+        instaNavController.modalPresentationStyle = .fullScreen
         let instaSignInController = (instaNavController.viewControllers.first as! InstagramLoginViewController)
         instaSignInController.delegate = self
         instaSignInController.isSigningUp = self.forSignUp

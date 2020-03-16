@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FirebaseDynamicLinksCustomDomains</key>
-	<array>
-		<string>https://thebarcode.co</string>
-		<string>https://staging.thebarcode.co</string>
-		<string>https://thebarcode.cygnis.dev</string>
-		<string>https://thebarcode-qa.cygnis.dev</string>
-		<string>https://thebarcode-dev.cygnis.dev</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -25,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.2</string>
+	<string>6.3</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -56,6 +48,14 @@
 	<string>182951649264383</string>
 	<key>FacebookDisplayName</key>
 	<string>TheBarCode</string>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://thebarcode.co</string>
+		<string>https://staging.thebarcode.co</string>
+		<string>https://thebarcode.cygnis.dev</string>
+		<string>https://thebarcode-qa.cygnis.dev</string>
+		<string>https://thebarcode-dev.cygnis.dev</string>
+	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>theBarCodeInviteScheme</string>

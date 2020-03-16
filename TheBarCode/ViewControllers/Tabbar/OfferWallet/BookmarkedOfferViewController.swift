@@ -139,6 +139,7 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
         }
         
         let offerDetailNavigation = self.storyboard!.instantiateViewController(withIdentifier: "OfferDetailNavigation") as! UINavigationController
+        offerDetailNavigation.modalPresentationStyle = .fullScreen
         
         let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.deal = offer

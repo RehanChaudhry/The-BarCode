@@ -11,7 +11,7 @@ import OneSignal
 import CoreStore
 import FirebaseAnalytics
 import BugfenderSDK
-import Crashlytics
+import FirebaseCrashlytics
 
 class TabBarController: UITabBarController {
 
@@ -54,7 +54,7 @@ class TabBarController: UITabBarController {
             self.selectedIndex = 2
         }
         
-        Crashlytics.sharedInstance().setUserIdentifier(Utility.shared.getCurrentUser()?.userId.value)
+        Crashlytics.crashlytics().setUserID(Utility.shared.getCurrentUser()?.userId.value ?? "")
         
         NotificationCenter.default.addObserver(self, selector: #selector(acceptSharedEventNotification(notification:)), name: notificationNameAcceptSharedEvent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshFiveADayNotification(notification:)), name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
@@ -135,6 +135,8 @@ class TabBarController: UITabBarController {
     @objc func showBarDetail() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         if let barId = appDelegate.chalkboardBarId {
             barDetailController.barId = barId
@@ -325,9 +327,11 @@ extension TabBarController: CannotRedeemViewControllerDelegate {
         
         if self.showingSharedEventAlert {
             let sharedEventNavigation = self.storyboard!.instantiateViewController(withIdentifier: "SharedEventNavigation") as! UINavigationController
+            sharedEventNavigation.modalPresentationStyle = .fullScreen
             self.topMostViewController().present(sharedEventNavigation, animated: true, completion: nil)
         } else if self.showingSharedOfferAlert {
             let liveOfferNavigation = self.storyboard?.instantiateViewController(withIdentifier: "SharedOffersNavigation")
+            liveOfferNavigation?.modalPresentationStyle = .fullScreen
             self.topMostViewController().present(liveOfferNavigation!, animated: true, completion: nil)
         }
         

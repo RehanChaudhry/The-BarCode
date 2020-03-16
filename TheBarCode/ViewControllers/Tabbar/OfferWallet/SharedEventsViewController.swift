@@ -451,6 +451,8 @@ extension SharedEventsViewController: SharedEventCellDelegate {
         let barId = event.establishmentId.value
         
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = barId
         self.present(barDetailNav, animated: true, completion: nil)

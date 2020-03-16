@@ -11,8 +11,7 @@ import GoogleMaps
 import FBSDKLoginKit
 import Firebase
 import FirebaseDynamicLinks
-import Fabric
-import Crashlytics
+import FirebaseCrashlytics
 import OneSignal
 import CoreStore
 import CoreLocation
@@ -91,7 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = theBarCodeInviteScheme
         FirebaseApp.configure()
         
-        Fabric.with([Crashlytics.self])
+        Crashlytics.crashlytics().setCustomValue(EnvironmentType.current().rawValue, forKey: "ENV")
+        
         Bugfender.activateLogger("WD6RXFEeYgdRgCrl5bdRVwaBTbbICqAq")
         
         let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             debugPrint("Universal url is nil")
             
             let error = NSError(domain: "DynamicLinkNotFound", code: -1001, userInfo: [NSLocalizedDescriptionKey : "User activity webpage url property is nil"])
-            Crashlytics.sharedInstance().recordError(error)
+            Crashlytics.crashlytics().record(error: error)
             
             return false
         }
@@ -444,15 +444,32 @@ extension AppDelegate {
         tabbar.unselectedItemTintColor = UIColor.appGrayColor()
         tabbar.shadowImage = UIImage()
         
+        let searchBar = UISearchBar.appearance()
+        searchBar.tintColor = UIColor.white
+        
         let searchBarTextField = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self, SearchViewController.self])
+        searchBarTextField.tintColor = UIColor.white
         searchBarTextField.font = UIFont.appRegularFontOf(size: 14.0)
         
         UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.appRegularFontOf(size: 14.0)
-
-        
-//        searchBarTextField.clearButtonMode = .never
-        
         UIPickerView.appearance(whenContainedInInstancesOf: [UIView.self]).backgroundColor = UIColor.clear
+        
+        let segmentedControl = UISegmentedControl.appearance()
+        if #available(iOS 13.0, *) {
+            segmentedControl.selectedSegmentTintColor = UIColor.appBlueColor()
+            segmentedControl.backgroundColor = UIColor.appDarkGrayColor()
+        }
+        
+        segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                                                 NSAttributedStringKey.foregroundColor : UIColor.white], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 14.0),
+                                                 NSAttributedStringKey.foregroundColor : UIColor.black], for: .selected)
+        
+        UIRefreshControl.appearance().tintColor = UIColor.white
+        UIActivityIndicatorView.appearance().tintColor = UIColor.white
+        
+        let tableView = UITableView.appearance()
+        tableView.separatorColor = UIColor.lightGray
     }
 }
 

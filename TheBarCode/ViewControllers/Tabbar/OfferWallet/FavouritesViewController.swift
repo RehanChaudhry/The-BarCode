@@ -86,6 +86,8 @@ class FavouritesViewController: UIViewController {
     
     func moveToBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
         barDetailController.delegate = self

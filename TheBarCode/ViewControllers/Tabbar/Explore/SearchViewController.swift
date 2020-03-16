@@ -426,6 +426,8 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
     func baseSearchScopeViewController(controller: BaseSearchScopeViewController, moveToBarDetails barId: String, scopeType: SearchScope, dealsSubType: BarDetailDealsPreSelectedSubTabType) {
         
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = barId
         barDetailController.delegate = self

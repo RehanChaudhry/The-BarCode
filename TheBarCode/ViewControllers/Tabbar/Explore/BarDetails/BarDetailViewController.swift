@@ -552,6 +552,8 @@ extension BarDetailViewController: OutOfCreditViewControllerDelegate {
     
     func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
         let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        reloadNavigation.modalPresentationStyle = .fullScreen
+        
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
         reloadController.delegate = self
@@ -563,6 +565,8 @@ extension BarDetailViewController: OutOfCreditViewControllerDelegate {
     func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int) {
         
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        inviteNavigation.modalPresentationStyle = .fullScreen
+        
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         inviteController.shouldShowCancelBarButton = true
         inviteController.isRedeemingDeal = true

@@ -154,6 +154,7 @@ extension ReferralViewController {
                 self.performSegue(withIdentifier: "SignInToPermissionSegue", sender: nil)
             } else {
                 let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
+                tabbarController?.modalPresentationStyle = .fullScreen
                 self.navigationController?.present(tabbarController!, animated: true, completion: {
                     let loginOptions = self.navigationController?.viewControllers[1] as! LoginOptionsViewController
                     self.navigationController?.popToViewController(loginOptions, animated: false)

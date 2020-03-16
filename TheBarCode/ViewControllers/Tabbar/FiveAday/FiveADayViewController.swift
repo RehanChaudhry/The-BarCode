@@ -107,6 +107,8 @@ class FiveADayViewController: UIViewController {
     
     func showBarDetail(bar: Bar) {
         let barDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailNavigation") as! UINavigationController)
+        barDetailNav.modalPresentationStyle = .fullScreen
+        
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.selectedBar = bar
         barDetailController.delegate = self
@@ -518,6 +520,8 @@ extension FiveADayViewController: OutOfCreditViewControllerDelegate {
     
     func outOfCreditViewController(controller: OutOfCreditViewController, reloadButtonTapped sender: UIButton, selectedIndex: Int) {
         let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        reloadNavigation.modalPresentationStyle = .fullScreen
+        
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
         reloadController.delegate = self
@@ -527,6 +531,8 @@ extension FiveADayViewController: OutOfCreditViewControllerDelegate {
     
     func outOfCreditViewController(controller: OutOfCreditViewController, inviteButtonTapped sender: UIButton, selectedIndex: Int) {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
+        inviteNavigation.modalPresentationStyle = .fullScreen
+        
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         inviteController.shouldShowCancelBarButton = true
         inviteController.isRedeemingDeal = true

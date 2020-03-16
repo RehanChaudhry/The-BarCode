@@ -10,8 +10,6 @@ PODS:
     - BugfenderSDK/Swift (= 1.7.0)
   - BugfenderSDK/Swift (1.7.0)
   - CoreStore (6.3.2)
-  - Crashlytics (3.10.9):
-    - Fabric (~> 1.7.13)
   - DTCoreText (1.6.23):
     - DTCoreText/Core (= 1.6.23)
     - DTFoundation/Core (~> 1.7.5)
@@ -29,16 +27,20 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.14):
     - DTFoundation/Core
-  - Fabric (1.7.13)
   - FBSDKCoreKit (4.37.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.37.0):
     - FBSDKCoreKit
+  - Firebase/Analytics (6.16.0):
+    - Firebase/Core
   - Firebase/Core (6.16.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.2.2)
   - Firebase/CoreOnly (6.16.0):
     - FirebaseCore (= 6.6.1)
+  - Firebase/Crashlytics (6.16.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 4.0.0-beta.2)
   - Firebase/DynamicLinks (6.16.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 4.0.6)
@@ -64,6 +66,11 @@ PODS:
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseCrashlytics (4.0.0-beta.5):
+    - FirebaseAnalyticsInterop (~> 1.2)
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.1)
+    - PromisesObjC (~> 1.2)
   - FirebaseDynamicLinks (4.0.6):
     - FirebaseAnalyticsInterop (~> 1.3)
     - FirebaseCore (~> 6.2)
@@ -90,10 +97,10 @@ PODS:
   - GoogleDataTransportCCTSupport (1.3.1):
     - GoogleDataTransport (~> 3.3)
     - nanopb (~> 0.3.901)
-  - GoogleMaps (2.7.0):
-    - GoogleMaps/Maps (= 2.7.0)
-  - GoogleMaps/Base (2.7.0)
-  - GoogleMaps/Maps (2.7.0):
+  - GoogleMaps (3.8.0):
+    - GoogleMaps/Maps (= 3.8.0)
+  - GoogleMaps/Base (3.8.0)
+  - GoogleMaps/Maps (3.8.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
@@ -144,15 +151,15 @@ DEPENDENCIES:
   - Alamofire (~> 4.7.3)
   - BugfenderSDK (~> 1.7)
   - CoreStore (~> 6.3.2)
-  - Crashlytics (~> 3.10.9)
   - DTCoreText (~> 1.6.23)
-  - Fabric (~> 1.7.13)
   - FBSDKLoginKit (~> 4.37.0)
+  - Firebase/Analytics (~> 6.16.0)
   - Firebase/Core (~> 6.16.0)
+  - Firebase/Crashlytics (~> 6.16.0)
   - Firebase/DynamicLinks (~> 6.16.0)
   - FSPagerView (~> 0.7.2)
   - GBDeviceInfo (~> 5.5.0)
-  - GoogleMaps (~> 2.7.0)
+  - GoogleMaps (~> 3.8.0)
   - Gradientable (~> 0.0.2)
   - HTTPStatusCodes (~> 3.3.1)
   - KeychainAccess (~> 3.1.2)
@@ -172,13 +179,10 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Bolts
-    - Crashlytics
-    - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FSPagerView
     - GBDeviceInfo
-    - GoogleMaps
     - Gradientable
     - KeychainAccess
     - MGSwipeTableCell
@@ -200,12 +204,14 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
+    - FirebaseCrashlytics
     - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseInstanceID
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleMaps
     - GoogleUtilities
     - HTTPStatusCodes
     - nanopb
@@ -219,10 +225,8 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BugfenderSDK: cc587f83e8cec9ae1567ec1d837969a6df7dcbca
   CoreStore: 690a587902a81c412cf353466d2d2a029934267e
-  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
   DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
-  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
   FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
@@ -231,6 +235,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 85064903ed6c28e47fec9c7bd149d94ba1b6b6e7
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseCrashlytics: 7c95218730d1debf493e987233c7b41dd7ba1329
   FirebaseDynamicLinks: 5ba2a0d46ba1615c6c08819fc964c495ca1d0845
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
@@ -239,7 +244,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: d0560d915abf15e692e8538ba1d58442217b6aff
   GoogleDataTransport: 0048df6388dab1c254799f2a30365b1dffe20422
   GoogleDataTransportCCTSupport: f880d70972efa2ed1be4e9173a0f4c5f3dc2d176
-  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
   HTTPStatusCodes: a07dff597042a9f692cf4f979cb0fd91fc938835
@@ -258,6 +263,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 239d35b7ca5fe82a9dbab9c07d85c90d62e3bae1
+PODFILE CHECKSUM: 926c7ec4ffb3af3f3a6c15bac7586b31c7270264
 
 COCOAPODS: 1.8.4

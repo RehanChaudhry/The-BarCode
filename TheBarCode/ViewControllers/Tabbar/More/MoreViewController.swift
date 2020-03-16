@@ -115,12 +115,15 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             self.tabBarController?.present(alertController, animated: true, completion: nil)
         } else if menuItem.type == .preferences {
             let navController = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId) as! UINavigationController
+            navController.modalPresentationStyle = .fullScreen
+            
             let categoriesController = navController.viewControllers.first as! CategoryFilterViewController
             categoriesController.comingForUpdatingPreference = true
             self.tabBarController?.present(navController, animated: true, completion: nil)
         }
         else {
             let controller = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId)
+            controller?.modalPresentationStyle = .fullScreen
             self.tabBarController?.present(controller!, animated: true, completion: nil)
         }
     }
