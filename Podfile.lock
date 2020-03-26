@@ -97,10 +97,10 @@ PODS:
   - GoogleDataTransportCCTSupport (1.3.1):
     - GoogleDataTransport (~> 3.3)
     - nanopb (~> 0.3.901)
-  - GoogleMaps (3.8.0):
-    - GoogleMaps/Maps (= 3.8.0)
-  - GoogleMaps/Base (3.8.0)
-  - GoogleMaps/Maps (3.8.0):
+  - GoogleMaps (3.7.0):
+    - GoogleMaps/Maps (= 3.7.0)
+  - GoogleMaps/Base (3.7.0)
+  - GoogleMaps/Maps (3.7.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
@@ -159,7 +159,7 @@ DEPENDENCIES:
   - Firebase/DynamicLinks (~> 6.16.0)
   - FSPagerView (~> 0.7.2)
   - GBDeviceInfo (~> 5.5.0)
-  - GoogleMaps (~> 3.8.0)
+  - GoogleMaps (~> 3.7.0)
   - Gradientable (~> 0.0.2)
   - HTTPStatusCodes (~> 3.3.1)
   - KeychainAccess (~> 3.1.2)
@@ -244,7 +244,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: d0560d915abf15e692e8538ba1d58442217b6aff
   GoogleDataTransport: 0048df6388dab1c254799f2a30365b1dffe20422
   GoogleDataTransportCCTSupport: f880d70972efa2ed1be4e9173a0f4c5f3dc2d176
-  GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
+  GoogleMaps: 55da829c68aa931f3ae982b9e341cc2f3d89c587
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   Gradientable: 3b54e0d24da74e157848bd4831701cb33f7e37df
   HTTPStatusCodes: a07dff597042a9f692cf4f979cb0fd91fc938835
@@ -263,6 +263,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 926c7ec4ffb3af3f3a6c15bac7586b31c7270264
+PODFILE CHECKSUM: cfc8bf306581e88bc1f4bd613526f561e819e6f3
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

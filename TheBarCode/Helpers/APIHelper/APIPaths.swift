@@ -73,6 +73,8 @@ let apiPathAddRemoveBookmarkedEvents = "user-bookmark-event/update"
 let apiPathEstablishmentSubscription = "establishment-subscription"
 
 //Analytics Events
+let appLaunched = "App Launched".getFormattedEventName()
+
 let signUpFacebookClick = "Clicked on Sign up with Facebook".getFormattedEventName()
 let signUpMobileClick = "Clicked on Sign up with Mobile".getFormattedEventName()
 let signUpEmailClick = "Clicked on Sign up with Email".getFormattedEventName()

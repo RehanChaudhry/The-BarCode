@@ -10,7 +10,7 @@ target 'TheBarCode' do
   pod 'Reusable', '~> 4.0.3'
   pod 'UIColor_Hex_Swift', '~> 4.0.2'
   pod 'PureLayout', '~> 3.1.5'
-  pod 'GoogleMaps', '~> 3.8.0'
+  pod 'GoogleMaps', '~> 3.7.0'
   pod 'StatefulTableView', '~> 0.1.5'
   pod 'TPKeyboardAvoiding', '~> 1.3.2'
   pod 'FSPagerView', '~> 0.7.2'

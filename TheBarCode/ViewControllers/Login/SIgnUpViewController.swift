@@ -16,7 +16,11 @@ import CoreLocation
 import FirebaseAnalytics
 
 enum Gender: String {
-    case male = "male", female = "female", other = "other"
+    case male = "male", female = "female", other = "other", nonBinary = "non_binary"
+    
+    static func allGenders() -> [Gender] {
+        return [.male, .female, .nonBinary, .other]
+    }
     
     func description() -> String {
         switch self {
@@ -24,8 +28,10 @@ enum Gender: String {
             return "Male"
         case .female:
             return "Female"
+        case .nonBinary:
+            return "Non-Binary"
         default:
-            return "Other"
+            return "Prefer not to say"
         }
     }
 }
@@ -78,7 +84,7 @@ class SIgnUpViewController: UIViewController {
     var selectedGender: Gender = Gender.male
     var selectedDob: Date = Date()
     
-    var genders: [Gender] = [Gender.male, Gender.female]
+    var genders: [Gender] = Gender.allGenders()
     
     var phoneNo: String = ""
     
@@ -632,7 +638,7 @@ extension SIgnUpViewController {
             
         }
 
-        params["gender"] =  self.selectedGender != Gender.other ? gender : ""
+        params["gender"] = gender
         
         self.signUpButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()

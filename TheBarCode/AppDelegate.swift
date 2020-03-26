@@ -159,6 +159,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        Analytics.logEvent(appLaunched, parameters: nil)
+        
         return true
     }
 

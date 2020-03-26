@@ -48,7 +48,7 @@ class AccountSettingsViewController: UIViewController {
     var selectedGender: Gender = Gender.male
     var selectedDob: Date = Date()
     
-    var genders: [Gender] = [Gender.male, Gender.female]
+    var genders: [Gender] = Gender.allGenders()
     
     var phoneNoFieldView: FieldView!
     
@@ -503,8 +503,7 @@ extension AccountSettingsViewController {
         var params = ["full_name" : self.fullNameFieldView.textField.text!,
                       "date_of_birth" : dob]
         
-        params["gender"] = self.selectedGender != Gender.other ?
-                           self.selectedGender.rawValue : ""
+        params["gender"] = self.selectedGender.rawValue
         
         if isUpdatingPassword() {
             params["old_password"] = self.currentPasswordFieldView.textField.text!
