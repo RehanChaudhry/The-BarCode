@@ -20,7 +20,7 @@ let productionAPIDomain = "https://thebarcode.co"
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = productionAPIDomain
+let theBarCodeAPIDomain = devAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"

@@ -68,6 +68,8 @@ class TabBarController: UITabBarController {
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
         }
+        
+        self.saveLastAppOpen()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -350,5 +352,33 @@ extension TabBarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         let eventName = getSelectedTabEventName(itemTag: tabBar.selectedItem!.tag)
         Analytics.logEvent(eventName, parameters: nil)
+    }
+}
+
+//MARK: Webservices Methods
+extension TabBarController {
+    func saveLastAppOpen() {
+        
+        let params: [String: Any] = ["type" : "app_view"]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathView, method: .post) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("error while view api : \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror while view api : \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            if let _ = (response as? [String : Any])?["response"] as? [String : Any] {
+                debugPrint("view has been updated successfully")
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("genericerror while view api : \(genericError.localizedDescription)")
+            }
+        }
     }
 }
