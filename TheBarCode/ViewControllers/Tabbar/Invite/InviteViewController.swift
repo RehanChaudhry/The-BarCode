@@ -83,24 +83,6 @@ class InviteViewController: UITableViewController {
         Analytics.logEvent(inviteFriendsClick, parameters: nil)
 
         self.generateAndShareDynamicLink()
-        
-       /* let status = CNContactStore.authorizationStatus(for: .contacts)
-        if status == .notDetermined {
-            let contactStore = CNContactStore()
-            contactStore.requestAccess(for: .contacts) { (granted, error) in
-                DispatchQueue.main.async {
-                    if granted {
-                        self.performSegue(withIdentifier: "InviteToContactsSegue", sender: nil)
-                    } else {
-                        self.showContactsPermissionAlert()
-                    }
-                }
-            }
-        } else if status == .authorized {
-            self.performSegue(withIdentifier: "InviteToContactsSegue", sender: nil)
-        } else {
-            self.showContactsPermissionAlert()
-        }*/
     }
     
     @IBAction func shareInviteCodeButtonTapped(sender: UIButton) {
@@ -191,7 +173,38 @@ extension InviteViewController {
             self.present(activityViewController, animated: true, completion: {
                 self.inviteFriendCodeButton.hideLoader()
             })
+            
+            activityViewController.completionWithItemsHandler = { activity, success, items, error in
+                if success {
+                    self.logAppShared()
+                }
+            }
         }
         
+    }
+}
+
+//MARK: Webservices Methods
+extension InviteViewController {
+    func logAppShared() {
+        let apiPath = apiPathAppShared
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPath, method: .post) { (response, serverError, error) in
+            guard error == nil else {
+                debugPrint("error while app shared : \(String(describing: error?.localizedDescription))")
+                return
+            }
+            
+            guard serverError == nil else {
+                debugPrint("servererror while app shared : \(String(describing: serverError?.errorMessages()))")
+                return
+            }
+            
+            if let _ = (response as? [String : Any])?["response"] as? [String : Any] {
+                debugPrint("app shared successfully")
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                debugPrint("genericerror while app shared : \(genericError.localizedDescription)")
+            }
+        }
     }
 }

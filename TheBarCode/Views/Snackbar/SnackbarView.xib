@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,8 +25,8 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-iG-heo">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GET 25% OFF YOUR FIRST ROUND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3tj-SJ-3Lz">
-                            <rect key="frame" x="16" y="8" width="299" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="GET 25% OFF YOUR FIRST ROUND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3tj-SJ-3Lz">
+                            <rect key="frame" x="16" y="8" width="287" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -40,10 +38,10 @@
                             </connections>
                         </button>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="34D-AU-jiB">
-                            <rect key="frame" x="325" y="5" width="34" height="34"/>
+                            <rect key="frame" x="313" y="5" width="46" height="34"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fe-w5-UnA">
-                                    <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                    <rect key="frame" x="8" y="0.0" width="30" height="34"/>
                                     <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                     <state key="normal" title="5">
                                         <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,11 +54,11 @@
                             <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="8fe-w5-UnA" firstAttribute="top" secondItem="34D-AU-jiB" secondAttribute="top" id="5vk-Kj-qtk"/>
-                                <constraint firstAttribute="width" constant="34" id="Aea-uj-8TO"/>
-                                <constraint firstItem="8fe-w5-UnA" firstAttribute="leading" secondItem="34D-AU-jiB" secondAttribute="leading" id="KLa-Vi-2g1"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="Aea-uj-8TO"/>
+                                <constraint firstItem="8fe-w5-UnA" firstAttribute="leading" secondItem="34D-AU-jiB" secondAttribute="leading" constant="8" id="KLa-Vi-2g1"/>
                                 <constraint firstAttribute="height" constant="34" id="dPx-br-Rp7"/>
                                 <constraint firstAttribute="bottom" secondItem="8fe-w5-UnA" secondAttribute="bottom" id="r1x-Fe-zw5"/>
-                                <constraint firstAttribute="trailing" secondItem="8fe-w5-UnA" secondAttribute="trailing" id="u4j-Ga-NQa"/>
+                                <constraint firstAttribute="trailing" secondItem="8fe-w5-UnA" secondAttribute="trailing" constant="8" id="u4j-Ga-NQa"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -92,17 +90,17 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-Ik-Fdg">
-                            <rect key="frame" x="108" y="8" width="197" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="07:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-Ik-Fdg">
+                            <rect key="frame" x="108" y="8" width="185" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3n-Kt-BdS">
-                            <rect key="frame" x="325" y="5" width="34" height="34"/>
+                            <rect key="frame" x="313" y="5" width="46" height="34"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VH-DM-zVT">
-                                    <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                    <rect key="frame" x="8" y="0.0" width="30" height="34"/>
                                     <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                     <state key="normal" title="5">
                                         <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -112,11 +110,11 @@
                             <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="34" id="0Dz-vm-4Sz"/>
-                                <constraint firstItem="6VH-DM-zVT" firstAttribute="leading" secondItem="F3n-Kt-BdS" secondAttribute="leading" id="DLc-bx-lDP"/>
+                                <constraint firstItem="6VH-DM-zVT" firstAttribute="leading" secondItem="F3n-Kt-BdS" secondAttribute="leading" constant="8" id="DLc-bx-lDP"/>
                                 <constraint firstItem="6VH-DM-zVT" firstAttribute="top" secondItem="F3n-Kt-BdS" secondAttribute="top" id="bB1-lO-8fg"/>
                                 <constraint firstAttribute="bottom" secondItem="6VH-DM-zVT" secondAttribute="bottom" id="dgI-pb-WaM"/>
-                                <constraint firstAttribute="trailing" secondItem="6VH-DM-zVT" secondAttribute="trailing" id="jOM-VM-9aM"/>
-                                <constraint firstAttribute="width" constant="34" id="mGo-OF-OSu"/>
+                                <constraint firstAttribute="trailing" secondItem="6VH-DM-zVT" secondAttribute="trailing" constant="8" id="jOM-VM-9aM"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="mGo-OF-OSu"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -158,8 +156,8 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
-                            <rect key="frame" x="108.5" y="8" width="206.5" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="00:00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-0H-Vzk">
+                            <rect key="frame" x="108.5" y="8" width="196.5" height="28"/>
                             <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -172,10 +170,10 @@
                             </connections>
                         </button>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-Ey-lOP">
-                            <rect key="frame" x="325" y="5" width="34" height="34"/>
+                            <rect key="frame" x="313" y="5" width="46" height="34"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GrB-g4-NoO">
-                                    <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                                    <rect key="frame" x="8" y="0.0" width="30" height="34"/>
                                     <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="16"/>
                                     <state key="normal" title="5">
                                         <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -187,9 +185,9 @@
                             </subviews>
                             <color key="backgroundColor" red="0.17254901960784313" green="0.17254901960784313" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="GrB-g4-NoO" firstAttribute="leading" secondItem="Oax-Ey-lOP" secondAttribute="leading" id="Ddu-J7-fBu"/>
-                                <constraint firstAttribute="width" constant="34" id="FwO-fi-S2h"/>
-                                <constraint firstAttribute="trailing" secondItem="GrB-g4-NoO" secondAttribute="trailing" id="Rc8-ep-ZBl"/>
+                                <constraint firstItem="GrB-g4-NoO" firstAttribute="leading" secondItem="Oax-Ey-lOP" secondAttribute="leading" constant="8" id="Ddu-J7-fBu"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="34" id="FwO-fi-S2h"/>
+                                <constraint firstAttribute="trailing" secondItem="GrB-g4-NoO" secondAttribute="trailing" constant="8" id="Rc8-ep-ZBl"/>
                                 <constraint firstAttribute="bottom" secondItem="GrB-g4-NoO" secondAttribute="bottom" id="U2V-1L-yKx"/>
                                 <constraint firstItem="GrB-g4-NoO" firstAttribute="top" secondItem="Oax-Ey-lOP" secondAttribute="top" id="hG2-R8-zWZ"/>
                                 <constraint firstAttribute="height" constant="34" id="tdQ-3U-TKb"/>
@@ -209,7 +207,7 @@
                         <constraint firstItem="knP-zz-RAM" firstAttribute="top" secondItem="hXT-VG-QdE" secondAttribute="top" constant="8" id="cBi-Bd-jT3"/>
                         <constraint firstItem="knP-zz-RAM" firstAttribute="leading" secondItem="hXT-VG-QdE" secondAttribute="leading" constant="16" id="cqu-8Q-Fns"/>
                         <constraint firstItem="w0d-0H-Vzk" firstAttribute="leading" secondItem="knP-zz-RAM" secondAttribute="trailing" constant="8.5" id="ifg-Za-Ure"/>
-                        <constraint firstItem="Oax-Ey-lOP" firstAttribute="leading" secondItem="w0d-0H-Vzk" secondAttribute="trailing" constant="10" id="oD9-xs-Q0r"/>
+                        <constraint firstItem="Oax-Ey-lOP" firstAttribute="leading" secondItem="w0d-0H-Vzk" secondAttribute="trailing" constant="8" id="oD9-xs-Q0r"/>
                         <constraint firstItem="Oax-Ey-lOP" firstAttribute="centerY" secondItem="hXT-VG-QdE" secondAttribute="centerY" id="qz6-83-hIi"/>
                         <constraint firstAttribute="bottom" secondItem="knP-zz-RAM" secondAttribute="bottom" constant="8" id="xeg-d9-weD"/>
                     </constraints>

@@ -34,7 +34,9 @@ extension String {
             return nil
         }
         
-        guard let attributedString = NSMutableAttributedString(htmlData: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) else {
+        let options = [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html,
+                       DTDefaultTextColor : UIColor.white] as [AnyHashable : Any]
+        guard let attributedString = NSMutableAttributedString(htmlData: data, options: options, documentAttributes: nil) else {
             return nil
         }
         

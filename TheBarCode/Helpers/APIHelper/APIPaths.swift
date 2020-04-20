@@ -72,6 +72,8 @@ let apiPathAddRemoveBookmarkedEvents = "user-bookmark-event/update"
 
 let apiPathEstablishmentSubscription = "establishment-subscription"
 
+let apiPathAppShared = "app-shared"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

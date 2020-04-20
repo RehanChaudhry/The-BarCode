@@ -78,18 +78,19 @@ class SnackbarView: GradientView, NibLoadable {
     
     //MARK: My Methods
     func updateAppearanceForType(type: SnackbarType, gradientType: GradientType) {
-       
+
         self.type = type
         
         let user = Utility.shared.getCurrentUser()
-        self.creditsLeftButton.setTitle("\(user!.credit)", for: .normal)
+        let credit = user!.credit > 100 ? "99+" : "\(user!.credit)"
+        self.creditsLeftButton.setTitle(credit, for: .normal)
 
         if type == .discount {
             self.reloadInfoView.isHidden = true
             self.congratesInfoView.isHidden = true
             self.discountInfoView.isHidden = false
             self.discountInfoLabel.text = "07:00:00:00"
-            self.discountCreditLeftButton.setTitle("\(user!.credit)", for: .normal)
+            self.discountCreditLeftButton.setTitle(credit, for: .normal)
             
         } else if type == .reload {
             self.reloadInfoView.isHidden = false
@@ -102,7 +103,7 @@ class SnackbarView: GradientView, NibLoadable {
             self.discountInfoView.isHidden = true
             self.congratesInfoView.isHidden = false
             self.congratesInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
-            self.congratesCreditsLeftButton.setTitle("\(user!.credit)", for: .normal)
+            self.congratesCreditsLeftButton.setTitle(credit, for: .normal)
 
         }
         
