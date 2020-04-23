@@ -289,6 +289,12 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
     
+    //typeahead functionality 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.lastSearchQuery = searchBar.text!
+        self.resetSearchScopeControllers()
+    }
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: false)
         UIView.animate(withDuration: 0.25) {

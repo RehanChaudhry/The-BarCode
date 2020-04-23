@@ -235,7 +235,12 @@ class CategoryFilterViewController: UIViewController {
     @IBAction func continueButtonTapped(sender: UIButton) {
         
         if self.comingForUpdatingPreference {
-            self.updatePreferences()
+            let selectedCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true))
+            if selectedCategories.count == 0 {
+                self.showAlertController(title: "", msg: "Select at least one to proceed")
+            } else {
+                self.updatePreferences()
+            }
         } else {
             let selectedCategories = try! self.transaction.fetchAll(From<Category>().where(\Category.isSelected == true))
             

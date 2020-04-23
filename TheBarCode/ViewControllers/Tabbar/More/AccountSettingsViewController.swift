@@ -253,7 +253,7 @@ class AccountSettingsViewController: UIViewController {
         
     }
     
-    func setUpUserProfile() {
+    func setUpUserProfile(showSuccessAlert: Bool = false) {
         
         guard let user = Utility.shared.getCurrentUser() else {
             debugPrint("User not found")
@@ -302,6 +302,10 @@ class AccountSettingsViewController: UIViewController {
             
         } else {
             self.profileImageView.image = UIImage(named: "profile_placeholder")
+        }
+        
+        if showSuccessAlert {
+            self.showAlertController(title: "", msg: "Record has been updated successfully.")
         }
     }
     
@@ -359,21 +363,30 @@ class AccountSettingsViewController: UIViewController {
         
         if self.isUpdatingPassword() {
             
-            if self.currentPasswordFieldView.textField.text!.count < 8 {
+            if self.currentPasswordFieldView.textField.text! == "" {
+                isValid = false
+                self.currentPasswordFieldView.showValidationMessage(message: "This field is required")
+            } else if self.currentPasswordFieldView.textField.text!.count < 8 {
                 isValid = false
                 self.currentPasswordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
             } else {
                 self.currentPasswordFieldView.reset()
             }
             
-            if self.passwordFieldView.textField.text!.count < 8 {
+            if self.passwordFieldView.textField.text! == "" {
+                isValid = false
+                self.passwordFieldView.showValidationMessage(message: "This field is required")
+            } else if self.passwordFieldView.textField.text!.count < 8 {
                 isValid = false
                 self.passwordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
             } else {
                 self.passwordFieldView.reset()
             }
             
-            if self.confirmPasswordFieldView.textField.text! != self.passwordFieldView.textField.text! {
+            if self.confirmPasswordFieldView.textField.text! == "" {
+                isValid = false
+                self.confirmPasswordFieldView.showValidationMessage(message: "This field is required")
+            } else if self.confirmPasswordFieldView.textField.text! != self.passwordFieldView.textField.text! {
                 isValid = false
                 self.confirmPasswordFieldView.showValidationMessage(message: "Password and confirm password mismatched.")
             } else {
@@ -537,7 +550,7 @@ extension AccountSettingsViewController {
                     editedUser?.genderString.value = "\(responseData["gender"]!)"
                 })
                 
-                self.setUpUserProfile()
+                self.setUpUserProfile(showSuccessAlert: true)
             } else {
                 let genericError = APIHelper.shared.getGenericError()
                 self.showAlertController(title: "", msg: genericError.localizedDescription)

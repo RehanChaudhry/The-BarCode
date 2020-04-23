@@ -140,7 +140,8 @@ class ReloadViewController: UIViewController {
     func setUpRedeemInfoView(type: ReloadState) {
         
         let user = Utility.shared.getCurrentUser()
-        self.creditsLabel.text = "\(user!.credit)"
+        let credit = user!.credit > 100 ? "99+" : "\(user!.credit)"
+        self.creditsLabel.text = credit
         
         self.type = type
         
