@@ -365,7 +365,7 @@ class AccountSettingsViewController: UIViewController {
             
             if self.currentPasswordFieldView.textField.text! == "" {
                 isValid = false
-                self.currentPasswordFieldView.showValidationMessage(message: "This field is required")
+                self.currentPasswordFieldView.showValidationMessage(message: "This field is required.")
             } else if self.currentPasswordFieldView.textField.text!.count < 8 {
                 isValid = false
                 self.currentPasswordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
@@ -375,7 +375,7 @@ class AccountSettingsViewController: UIViewController {
             
             if self.passwordFieldView.textField.text! == "" {
                 isValid = false
-                self.passwordFieldView.showValidationMessage(message: "This field is required")
+                self.passwordFieldView.showValidationMessage(message: "This field is required.")
             } else if self.passwordFieldView.textField.text!.count < 8 {
                 isValid = false
                 self.passwordFieldView.showValidationMessage(message: "Please enter password of atleast 8 characters.")
@@ -385,7 +385,7 @@ class AccountSettingsViewController: UIViewController {
             
             if self.confirmPasswordFieldView.textField.text! == "" {
                 isValid = false
-                self.confirmPasswordFieldView.showValidationMessage(message: "This field is required")
+                self.confirmPasswordFieldView.showValidationMessage(message: "This field is required.")
             } else if self.confirmPasswordFieldView.textField.text! != self.passwordFieldView.textField.text! {
                 isValid = false
                 self.confirmPasswordFieldView.showValidationMessage(message: "Password and confirm password mismatched.")

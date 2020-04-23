@@ -56,7 +56,10 @@ class ForgotPasswordViewController: UIViewController {
         
         var isValid = true
         
-        if !self.emailFieldView.textField.text!.isValidEmail() {
+        if self.emailFieldView.textField.text! == "" {
+            isValid = false
+            self.emailFieldView.showValidationMessage(message: "Email field is required.")
+        } else  if !self.emailFieldView.textField.text!.isValidEmail() {
             isValid = false
             self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
         } else {

@@ -108,15 +108,21 @@ class LoginViewController: UIViewController {
     
     func isDataValid() -> Bool {
         var isValid = true
-        
-        if !self.emailFieldView.textField.text!.isValidEmail() {
+       
+        if self.emailFieldView.textField.text! == "" {
+            isValid = false
+            self.emailFieldView.showValidationMessage(message: "Email field is required.")
+        } else if !self.emailFieldView.textField.text!.isValidEmail() {
             isValid = false
             self.emailFieldView.showValidationMessage(message: "Please enter valid email address.")
         } else {
             self.emailFieldView.reset()
         }
         
-        if self.passwordFieldView.textField.text!.count < 6 {
+        if self.passwordFieldView.textField.text! == "" {
+            isValid = false
+            self.passwordFieldView.showValidationMessage(message: "Password field is required.")
+        } else if self.passwordFieldView.textField.text!.count < 6 {
             isValid = false
             self.passwordFieldView.showValidationMessage(message: "Please enter valid password.")
         } else {
