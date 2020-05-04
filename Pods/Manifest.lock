@@ -130,7 +130,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - ObjectMapper (3.5.1)
-  - OneSignal (2.9.3)
+  - OneSignal (2.13.0)
   - PromisesObjC (1.2.8)
   - PureLayout (3.1.5)
   - Reusable (4.0.3):
@@ -165,7 +165,7 @@ DEPENDENCIES:
   - KeychainAccess (~> 3.1.2)
   - MGSwipeTableCell (~> 1.6.7)
   - ObjectMapper (~> 3.5.1)
-  - OneSignal (~> 2.9.0)
+  - OneSignal (~> 2.13.0)
   - PureLayout (~> 3.1.5)
   - Reusable (~> 4.0.3)
   - SDWebImage (~> 4.4.2)
@@ -176,28 +176,15 @@ DEPENDENCIES:
   - UIColor_Hex_Swift (~> 4.0.2)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - Bolts
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FSPagerView
-    - GBDeviceInfo
-    - Gradientable
-    - KeychainAccess
-    - MGSwipeTableCell
-    - OneSignal
-    - Reusable
-    - SDWebImage
-    - SJSegmentedScrollView
-    - SwiftyJSON
-    - TPKeyboardAvoiding
-    - UIColor_Hex_Swift
-  trunk:
     - BugfenderSDK
     - CoreStore
     - DTCoreText
     - DTFoundation
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -208,17 +195,29 @@ SPEC REPOS:
     - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseInstanceID
+    - FSPagerView
+    - GBDeviceInfo
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleMaps
     - GoogleUtilities
+    - Gradientable
     - HTTPStatusCodes
+    - KeychainAccess
+    - MGSwipeTableCell
     - nanopb
     - ObjectMapper
+    - OneSignal
     - PromisesObjC
     - PureLayout
+    - Reusable
+    - SDWebImage
+    - SJSegmentedScrollView
     - StatefulTableView
+    - SwiftyJSON
+    - TPKeyboardAvoiding
+    - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
@@ -252,7 +251,7 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
-  OneSignal: a506e3bc61d2030f0757faf9bd783a9b211c6e3c
+  OneSignal: 09c9fe1e7a097af5fda94e00c1598c3c945552b9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   Reusable: 12b67a60e1f3e8c523cc910795dab733f58fbc7e
@@ -263,6 +262,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: cfc8bf306581e88bc1f4bd613526f561e819e6f3
+PODFILE CHECKSUM: d352111bf8ee79e151834fe185ecd4b5471cc53f
 
 COCOAPODS: 1.9.1

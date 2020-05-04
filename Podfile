@@ -27,7 +27,7 @@ target 'TheBarCode' do
   pod 'Firebase/Crashlytics', '~> 6.16.0'
   pod 'Firebase/Analytics', '~> 6.16.0'
   
-  pod 'OneSignal', '~> 2.9.0'
+  pod 'OneSignal', '~> 2.13.0'
   pod 'MGSwipeTableCell', '~> 1.6.7'
   pod 'GBDeviceInfo', '~> 5.5.0'
   pod 'BugfenderSDK', '~> 1.7'
@@ -46,5 +46,5 @@ target 'TheBarCode' do
 end
 
 target 'OneSignalNotificationServiceExtension' do
-    pod 'OneSignal', '~> 2.9.0'
+    pod 'OneSignal', '~> 2.13.0'
 end
