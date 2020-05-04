@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var chalkboardBarId: String?
     var exclusiveBarId: String?
     var eventBarId: String?
-    
+    var voucherTitle: String? 
+
     var refreshFiveADay: Bool?
     
     var visitLocationManager: CLLocationManager?
@@ -134,6 +135,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
                 } else if notificationType == NotificationType.shareOffer {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+                    
+                } else if notificationType == NotificationType.voucher, let offerDict = additionalData["offer"] as? [String: Any] {
+                    
+                    let title = "\(offerDict["title"]!)"
+                    self.voucherTitle = title
+                    NotificationCenter.default.post(name: notificationNameVoucher, object: nil)
+                
                 } else {
                     
                 }

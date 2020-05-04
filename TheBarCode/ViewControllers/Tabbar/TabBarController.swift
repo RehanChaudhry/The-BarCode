@@ -65,11 +65,14 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(exclusiveOfferNotification(notification:)), name: notificationNameExclusive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(eventNotification(notification:)), name: notificationNameEvent, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(voucherNotification(notification:)), name: notificationNameVoucher, object: nil)
+
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
         }
         
         self.saveLastAppOpen()
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -103,6 +106,8 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self, name: notificationNameChalkboard, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameExclusive, object: nil)
         
+        NotificationCenter.default.removeObserver(self, name: notificationNameVoucher, object: nil)
+
         debugPrint("Tabbarcontroller deinit called")
         
     }
@@ -272,6 +277,26 @@ class TabBarController: UITabBarController {
             return "default case tab clicked"
         }
     }
+    
+    func voucherRedirection() {
+        let exploreViewController = ((self.viewControllers![2] as! UINavigationController).viewControllers[0] as! ExploreViewController)
+        
+        if exploreViewController.isViewLoaded {
+            exploreViewController.reloadData()
+        } else {
+            let _ = exploreViewController.view
+        }
+                 
+        if exploreViewController.topMostViewController() != exploreViewController {
+            exploreViewController.dismiss(animated: false, completion: nil)
+        }
+
+        self.presentedViewController?.dismiss(animated: false, completion: nil)
+                 
+        self.selectedIndex = 2
+        
+        NotificationCenter.default.post(name: notificationNameSearchVoucher, object: nil)
+    }
 }
 
 //MARK: Notification Methods
@@ -320,6 +345,10 @@ extension TabBarController {
     
     @objc func acceptSharedEventNotification(notification: Notification) {
         self.acceptSharedEvent()
+    }
+    
+    @objc func voucherNotification(notification: Notification) {
+        self.voucherRedirection()
     }
 }
 

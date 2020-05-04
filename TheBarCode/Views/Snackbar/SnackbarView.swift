@@ -10,6 +10,7 @@ import UIKit
 import Gradientable
 import Reusable
 import FirebaseAnalytics
+import GBDeviceInfo
 
 enum SnackbarType: String {
     case discount = "discount", reload = "reload", congrates = "congrates"
@@ -104,7 +105,11 @@ class SnackbarView: GradientView, NibLoadable {
             self.congratesInfoView.isHidden = false
             self.congratesInfoLabel.text = "CONGRATS YOU ARE ABLE TO RELOAD"
             self.congratesCreditsLeftButton.setTitle(credit, for: .normal)
-
+            
+            let deviceInfo = GBDeviceInfo.deviceInfo()
+            if deviceInfo!.model == .modeliPhone6 || deviceInfo!.model == .modeliPhone7 {
+                self.congratesInfoLabel.font = UIFont.appBoldFontOf(size: 15.0)
+            }
         }
         
         self.gradientType = gradientType

@@ -77,7 +77,8 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(sharedOfferRedeemedNotification(notification:)), name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(searchVoucherNotification(notification:)), name: notificationNameSearchVoucher, object: nil)
+
         Analytics.logEvent(viewExploreScreen, parameters: nil)
     }
 
@@ -103,7 +104,8 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
-        
+        NotificationCenter.default.removeObserver(self, name: notificationNameSearchVoucher, object: nil)
+
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
     }
@@ -462,6 +464,9 @@ extension ExploreViewController {
         }
     }
     
+    @objc func searchVoucherNotification(notification: Notification) {
+         self.moveToSearch(withPreferences: false, withStandardOffer: false)
+     }
 }
 
 //MARK: BarDetailViewControllerDelegate

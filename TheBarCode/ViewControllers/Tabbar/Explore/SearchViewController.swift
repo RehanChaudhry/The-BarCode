@@ -203,6 +203,19 @@ class SearchViewController: UIViewController {
     }
     
     func resetSearchScopeControllers() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let voucherTitle = appDelegate.voucherTitle {
+            self.searchBar.text = voucherTitle
+            appDelegate.voucherTitle = nil
+            
+            //Forcefully select deal scoope
+            if let index = self.scopeItems.firstIndex(where: { $0.scopeType == .deal }) {
+                let indexPath = IndexPath(row: index, section: 0)
+                self.selectScope(indexPath: indexPath)
+            }
+        }
+        
         for scope in self.scopeItems {
             scope.controller.selectedPreferences = self.filteredPreferences
             scope.controller.selectedStandardOffers = self.selectedStandardOffers

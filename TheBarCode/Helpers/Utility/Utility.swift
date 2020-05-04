@@ -32,7 +32,8 @@ enum RedeemType: String {
     case standard = "standard",
     credit = "credit",
     any = "reload",
-    unlimitedReload = "unlimited"
+    unlimitedReload = "unlimited",
+    voucher = "voucher"
 }
 
 enum NotificationType: String {
@@ -42,7 +43,8 @@ enum NotificationType: String {
     shareOffer = "share_offer",
     chalkboard = "banner_ads",
     exclusive = "exclusive",
-    event = "event"
+    event = "event",
+    voucher = "voucher"
 }
 
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
@@ -77,6 +79,9 @@ let notificationNameSharedOfferRemoved = Notification.Name(rawValue: "notificati
 let notificationNameSharedEventRemoved = Notification.Name(rawValue: "notificationNameSharedEventRemoved")
 
 let notificationNameUnlimitedRedemptionPurchased = Notification.Name(rawValue: "notificationNameUnlimitedRedemptionPurchased")
+
+let notificationNameVoucher = Notification.Name(rawValue: "notificationNameVoucher")
+let notificationNameSearchVoucher = Notification.Name(rawValue: "notificationNameSearchVoucher")
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
