@@ -56,8 +56,6 @@ class OfferDetailViewController: UIViewController {
     
     var isPresenting: Bool = false
  
-    var locationManager: MyLocationManager!
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -326,61 +324,12 @@ class OfferDetailViewController: UIViewController {
         redeemStartViewController.delegate = self
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         redeemStartViewController.redeemingType = redeemType
+        redeemStartViewController.isRedeemingSharedOffer = self.isSharedOffer
+        redeemStartViewController.barId = self.deal.establishmentId.value
+        redeemStartViewController.dealInfo = self.deal
         self.present(redeemStartViewController, animated: true, completion: nil)
     }
-    
-    func getLocation(completionHandler: @escaping (_ location: CLLocation?, _ error: Error?) -> Void) {
         
-        func showSettingsAlert() {
-           
-            let alertController = UIAlertController(title: "Settings Alert", message: "Please turn on the location services of the app by going into the Settings.", preferredStyle: .alert)
-                        
-            let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                     
-            let settingAction = UIAlertAction(title: "Settings", style: UIAlertAction.Style.default) {
-                    UIAlertAction in
-                          
-                let url = URL(string: UIApplicationOpenSettingsURLString)!
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    } else {
-                              
-                        // Fallback on earlier versions
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.openURL(url)
-                        }
-                    }
-                }
-                     
-            alertController.addAction(okAction)
-            alertController.addAction(settingAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
-        
-        
-        debugPrint("Getting location")
-        
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        self.redeemButton.showLoader()
-        
-        self.locationManager = MyLocationManager()
-        self.locationManager.locationPreferenceAlways = true
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) {  (location, error) in
-                   
-            debugPrint("Getting location finished")
-            
-            UIApplication.shared.endIgnoringInteractionEvents()
-
-            if error != nil  {
-                debugPrint("Error while getting location:  \(String(describing: error?.localizedDescription))")
-                showSettingsAlert()
-                completionHandler(nil, error)
-            }
-                   
-           completionHandler(location, nil)
-        }
-    }
-    
     //MARK: IBAction
     @IBAction func redeemDealButtonTapped(_ sender: Any) {
         
@@ -472,23 +421,18 @@ extension OfferDetailViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: RedeemStartViewControllerDelegate
 extension OfferDetailViewController: RedeemStartViewControllerDelegate {
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
+   
+    func redeemStartViewController(controller: RedeemStartViewController, redeemStatus successful: Bool, selectedIndex: Int) {
         
-        self.getLocation { (location, error) in
-
-            guard error == nil else {
-                self.redeemButton.hideLoader()
-                
-                debugPrint("Error while getting location:  \(String(describing: error?.localizedDescription))")
-                return
-            }
-            if location != nil  {
-                self.redeemDeal(redeemingType: redeemType, location: location ?? CLLocation(latitude: 0.0, longitude: 0.0   ))
-            } else {
-                  debugPrint("location is nil")
-            }
+        if successful {
+            self.setUpBottomView()
         }
-/*
+    }
+    
+    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
+     }
+    
+  /*  func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
         let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
         redeemDealViewController.isRedeemingSharedOffer = self.isSharedOffer
         redeemDealViewController.barId = self.deal.establishmentId.value
@@ -496,12 +440,8 @@ extension OfferDetailViewController: RedeemStartViewControllerDelegate {
         redeemDealViewController.redeemingType = redeemType
         redeemDealViewController.delegate = self
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemDealViewController, animated: true, completion: nil)*/
-    }
-    
-    func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
-        
-    }
+        self.present(redeemDealViewController, animated: true, completion: nil)
+    }*/
 }
 
 //MARK: CreditCosumptionViewControllerDelegate
@@ -689,77 +629,10 @@ extension OfferDetailViewController {
                 NotificationCenter.default.post(name: notificationNameBookmarkRemoved, object: offer)
             }
         }
-        
     }
-    
-    func redeemDeal(redeemingType: RedeemType, location: CLLocation) {
-                
-        var params: [String: Any] = ["establishment_id" : self.deal.establishmentId.value,
-                                     "type" : redeemingType.rawValue,
-                                     "offer_id" : self.deal.id.value]
-            
-        Analytics.logEvent(submitBartenderCode, parameters: ["offer_id" : self.deal.id.value])
-            
-        if let shareId = self.deal.sharedId.value, self.isSharedOffer {
-            params["shared_id"] = shareId
-        }
-       
-        debugPrint("params: \(params)")
-        
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        self.redeemButton.showLoader()
-
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiOfferRedeem, method: .post) { (response, serverError, error) in
-            
-            UIApplication.shared.endIgnoringInteractionEvents()
-            self.redeemButton.hideLoader()
-            
-            guard error == nil else {
-                self.showAlertController(title: "", msg: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError!.errorMessages())
-                return
-            }
-            
-            if let responseObj = response as? [String : Any] {
-                if  let _ = responseObj["data"] as? [String : Any] {
-                    
-                    try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                        let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.deal.establishmentId.value))
-                        for bar in bars {
-                            bar.canRedeemOffer.value = false
-                        }
-                    })
-                    
-                    let msg = "Success! Offer Redeemed"
-                    let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
-                      self.setUpRedeemButtonView()
-                        
-                    }))
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
-                    
-                    
-                } else {
-                    let genericError = APIHelper.shared.getGenericError()
-                    self.showAlertController(title: "", msg: genericError.localizedDescription)
-                }
-            } else {
-                let genericError = APIHelper.shared.getGenericError()
-                self.showAlertController(title: "", msg: genericError.localizedDescription)
-                
-            }
-        }
-    }
-
-    
 }
 
+/*
 //MARK: RedeemDealViewControllerDelegate
 extension OfferDetailViewController: RedeemDealViewControllerDelegate {
     func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -772,7 +645,7 @@ extension OfferDetailViewController: RedeemDealViewControllerDelegate {
             self.setUpRedeemButtonView()
         }
     }
-}
+}*/
 
 //MARK: OfferDetailTableViewCellDelegate
 extension OfferDetailViewController: OfferDetailTableViewCellDelegate{

@@ -269,6 +269,8 @@ class BarDetailViewController: UIViewController {
         let redeemStartViewController = (self.storyboard!.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
         redeemStartViewController.offerType = offerType
         redeemStartViewController.redeemingType = redeemType
+        redeemStartViewController.barId = self.selectedBar!.id.value
+        redeemStartViewController.standardOfferId = self.selectedBar!.activeStandardOffer.value!.id.value
         redeemStartViewController.delegate = self
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemStartViewController, animated: true, completion: nil)
@@ -355,6 +357,13 @@ extension BarDetailViewController: SJSegmentedViewControllerDelegate {
 
 //MARK: RedeemStartViewControllerDelegate
 extension BarDetailViewController: RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemStatus successful: Bool, selectedIndex: Int) {
+        
+        if successful {
+            self.setUpBottomView()
+        }
+    }
+    /*
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
         let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
         redeemDealViewController.redeemingType = redeemType
@@ -364,7 +373,7 @@ extension BarDetailViewController: RedeemStartViewControllerDelegate {
         redeemDealViewController.delegate = self
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemDealViewController, animated: true, completion: nil)
-    }
+    }*/
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
         
@@ -592,6 +601,7 @@ extension BarDetailViewController : InviteViewControllerDelegate {
 }
 
 //MARK: RedeemDealViewControllerDelegate
+/*
 extension BarDetailViewController: RedeemDealViewControllerDelegate {
     func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
     }
@@ -602,7 +612,7 @@ extension BarDetailViewController: RedeemDealViewControllerDelegate {
             self.setUpBottomView()
         }
     }
-}
+}*/
 
 //MARK: CannotRedeemViewControllerDelegate
 extension BarDetailViewController: CannotRedeemViewControllerDelegate {

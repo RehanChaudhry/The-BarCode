@@ -129,7 +129,7 @@ class FiveADayViewController: UIViewController {
         fiveADayDetailViewController.delegate = self
         self.present(fiveADayDetailViewController, animated: true, completion: nil)
     }
-    
+    /*
     func showRedeemDealViewController(redeemType: RedeemType, selectedIndex: Int) {
         guard selectedIndex != NSNotFound else {
             debugPrint("Index not found for deal redumtion")
@@ -146,7 +146,7 @@ class FiveADayViewController: UIViewController {
         redeemDealViewController.delegate = self
         redeemDealViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemDealViewController, animated: true, completion: nil)
-    }
+    }*/
     
     func redeemWithUserCredit(credit: Int?, index: Int, canReload: Bool) {
         var userCredit: Int!
@@ -225,10 +225,16 @@ class FiveADayViewController: UIViewController {
     }
     
     func showRedeemStartViewController(index: Int, redeemType: RedeemType) {
+       
+        let deal = self.deals[index]
+
         let redeemStartViewController = (self.storyboard!.instantiateViewController(withIdentifier: "RedeemStartViewController") as! RedeemStartViewController)
         redeemStartViewController.delegate = self
         redeemStartViewController.selectedIndex = index
         redeemStartViewController.redeemingType = redeemType
+        redeemStartViewController.barId = deal.establishmentId.value
+        redeemStartViewController.dealInfo = deal
+        redeemStartViewController.offerType = Utility.shared.checkDealType(offerTypeID: deal.offerTypeId.value)
         redeemStartViewController.modalPresentationStyle = .overCurrentContext
         self.present(redeemStartViewController, animated: true, completion: nil)
     }
@@ -558,10 +564,18 @@ extension FiveADayViewController: InviteViewControllerDelegate {
 
 //MARK: RedeemStartViewControllerDelegate
 extension FiveADayViewController : RedeemStartViewControllerDelegate {
+    func redeemStartViewController(controller: RedeemStartViewController, redeemStatus successful: Bool, selectedIndex: Int) {
+        
+        self.pagerView.automaticSlidingInterval = 4.0
+        if successful {
+            self.pagerView.reloadData()
+        }
+    }
     
+   /*
     func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
         self.showRedeemDealViewController(redeemType: redeemType, selectedIndex: selectedIndex)
-    }
+    }*/
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
         self.pagerView.automaticSlidingInterval = 4.0     
@@ -605,6 +619,7 @@ extension FiveADayViewController: FiveADayDetailViewControllerDelegate {
     }
 }
 
+/*
 //MARK: RedeemDealViewControllerDelegate
 extension FiveADayViewController: RedeemDealViewControllerDelegate {
     func redeemDealViewController(controller: RedeemDealViewController, cancelButtonTapped sender: UIButton, selectedIndex: Int) {
@@ -619,7 +634,7 @@ extension FiveADayViewController: RedeemDealViewControllerDelegate {
         }
 
     }    
-}
+}*/
 
 
 //MARK: CannotRedeemViewControllerDelegate
