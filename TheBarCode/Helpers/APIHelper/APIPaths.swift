@@ -104,6 +104,7 @@ let preferencesMenuClick = "Clicked on Preferences".getFormattedEventName()
 let reloadMenuClick = "Clicked on Reload".getFormattedEventName()
 let shareOffersMenuClick = "Clicked on Shared offers".getFormattedEventName()
 let redemptionReloadRulesMenuClick = "Clicked on redemption and reload rules".getFormattedEventName()
+let notificationMenuClick =  "Clicked on Notifications".getFormattedEventName()
 
 let updateAccountSettings = "Clicked on update account settings".getFormattedEventName()
 
@@ -159,3 +160,8 @@ let viewRedemptionRulesScreen = "Viewed redemption reload rules screen".getForma
 //"Viewed redemption and reload rules screen".getFormattedEventName()
 let viewPrivacyPolicyScreen = "Viewed privacy policy screen".getFormattedEventName()
 let viewFavouriteScreen = "Viewed favourites screen".getFormattedEventName()
+
+
+//
+let notificationClickFromNotifications = "Clicked on a notification on Notification screen".getFormattedEventName()
+

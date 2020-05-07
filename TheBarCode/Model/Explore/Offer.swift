@@ -17,7 +17,7 @@ class Offer: CoreStoreObject {
     var title = Value.Required<String>("title", initial: "")
     
     var typeRaw = Value.Required<String>("type", initial: "")
-    var isVoucher = Value.Required<Bool>("is_voucher", initial: true)  //TODO FOR TESTING ONLY
+    var isVoucher = Value.Required<Bool>("is_voucher", initial: false)  //TODO True FOR TESTING ONLY
     
     var type: OfferType {
         get {

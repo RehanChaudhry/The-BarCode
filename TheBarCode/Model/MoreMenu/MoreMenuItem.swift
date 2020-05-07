@@ -18,7 +18,8 @@ enum MenuItemType: String {
     faqs = "faqs",
     rules = "rules",
     privacyPolicy = "privacyPolicy",
-    signOut = "signOut"
+    signOut = "signOut",
+    notification = "notification"
     
     
     func description() -> (title: String, icon: String?, storyboardId: String, showSeparator: Bool, fontSize: Float) {
@@ -41,13 +42,16 @@ enum MenuItemType: String {
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:
             return ("Sign Out", "icon_signout", "", false, 16.0)
-            
+        case .notification:
+            return ("Notification", "icon_notification_settings", "NotificationNavigation", true, 16.0)
+
         }
     }
     
     static func allMenuItems() -> [MenuItem] {
         return [
 //        MenuItem(type: .sharedOffer),
+        MenuItem(type: .notification),
         MenuItem(type: .accountSettings),
         MenuItem(type: .notificationSettings),
         MenuItem(type: .preferences),

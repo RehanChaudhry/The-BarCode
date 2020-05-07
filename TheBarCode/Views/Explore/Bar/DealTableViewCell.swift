@@ -86,7 +86,6 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         let url = URL(string: deal.imageUrl.value)
         coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         
-        self.titleLabel.text = deal.title.value
         self.locationIconImageView.isHidden = true
         self.distanceButton.isHidden = true
         self.detailLabel.isHidden = true
@@ -211,6 +210,15 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         }
         
         self.topPadding.constant = topPadding ? 24.0 : 0.0
+        
+        //Voucher
+        if deal.isVoucher.value {
+            self.bookmarkButton.isHidden = true
+            self.titleLabel.attributedText = getAttributedTitle(title: deal.title.value, isVoucher: true)
+        } else {
+            self.bookmarkButton.isHidden = false
+            self.titleLabel.text = deal.title.value
+        }
     }
     
     func startTimer(deal: Deal) {
@@ -330,6 +338,29 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             
             self.validityLabel.attributedText = finalAttributedString
         }
+    }
+    
+    func getAttributedTitle(title: String, isVoucher: Bool) -> NSMutableAttributedString {
+                
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .left
+        paraStyle.paragraphSpacing = 5.0
+        
+        let attributesWhite: [NSAttributedStringKey: Any] = [.font: UIFont.appBoldFontOf(size: 16.0),
+                                                             .foregroundColor: UIColor.white,
+                                                             .paragraphStyle : paraStyle]
+        
+        let attributesBlue: [NSAttributedStringKey: Any] = [.font: UIFont.appBoldFontOf(size: 12.0),
+                                                            .foregroundColor: UIColor.appBlueColor()]
+                    
+        let titleAttributedString = NSAttributedString(string: title, attributes: attributesWhite)
+        let voucherAttributedString = NSAttributedString(string: "\nVOUCHER OFFER", attributes: attributesBlue)
+                    
+        let finalAttributedString = NSMutableAttributedString()
+        finalAttributedString.append(titleAttributedString)
+        finalAttributedString.append(voucherAttributedString)
+                
+        return finalAttributedString
     }
     
     @IBAction func distanceButtonTapped(_ sender: UIButton) {

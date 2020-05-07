@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationTableViewCell" id="uHu-p8-Ewt" customClass="NotificationTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uHu-p8-Ewt" id="6Nl-ay-K0F">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z31-my-gIj">
+                        <rect key="frame" x="16" y="12" width="382" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="FPb-vr-yb7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get 25% cash back on your first purchase and 20% cash back on other purchase." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30l-q3-qLW">
+                        <rect key="frame" x="16" y="35" width="382" height="31.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22 hours ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPB-sa-4da">
+                        <rect key="frame" x="16" y="71.5" width="382" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="Ae7-Tf-96W"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="30l-q3-qLW" secondAttribute="trailing" constant="16" id="0q9-MV-Fst"/>
+                    <constraint firstAttribute="bottom" secondItem="nPB-sa-4da" secondAttribute="bottom" constant="12" id="7Iv-hI-whN"/>
+                    <constraint firstItem="z31-my-gIj" firstAttribute="leading" secondItem="6Nl-ay-K0F" secondAttribute="leading" constant="16" id="Hdv-8H-Rpb"/>
+                    <constraint firstItem="30l-q3-qLW" firstAttribute="top" secondItem="z31-my-gIj" secondAttribute="bottom" constant="5" id="PrW-Vs-Vmb"/>
+                    <constraint firstItem="nPB-sa-4da" firstAttribute="top" secondItem="30l-q3-qLW" secondAttribute="bottom" constant="5" id="b5l-hj-5eS"/>
+                    <constraint firstItem="z31-my-gIj" firstAttribute="top" secondItem="6Nl-ay-K0F" secondAttribute="top" constant="12" id="bp9-me-myx"/>
+                    <constraint firstItem="nPB-sa-4da" firstAttribute="leading" secondItem="6Nl-ay-K0F" secondAttribute="leading" constant="16" id="bqO-VR-22r"/>
+                    <constraint firstAttribute="trailing" secondItem="z31-my-gIj" secondAttribute="trailing" constant="16" id="n8D-Tr-WdV"/>
+                    <constraint firstAttribute="trailing" secondItem="nPB-sa-4da" secondAttribute="trailing" constant="16" id="nRQ-R3-nt6"/>
+                    <constraint firstItem="30l-q3-qLW" firstAttribute="leading" secondItem="6Nl-ay-K0F" secondAttribute="leading" constant="16" id="oam-Al-bPS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="descLabel" destination="30l-q3-qLW" id="gfb-6j-H6n"/>
+                <outlet property="timeLabel" destination="nPB-sa-4da" id="wfp-A7-Qhi"/>
+                <outlet property="titleLabel" destination="z31-my-gIj" id="fKZ-wv-GxM"/>
+            </connections>
+            <point key="canvasLocation" x="31.884057971014496" y="52.901785714285715"/>
+        </tableViewCell>
+    </objects>
+</document>

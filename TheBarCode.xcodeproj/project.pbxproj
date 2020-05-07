@@ -313,6 +313,9 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
+		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
+		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
+		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -721,6 +724,9 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1329,6 +1335,7 @@
 				0C8E9A96214A8A8800224720 /* ReloadViewController.swift */,
 				0C8E9A98214A908800224720 /* FaqsViewController.swift */,
 				0C8E9A9A214A909E00224720 /* RulesViewController.swift */,
+				FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -1547,6 +1554,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA48A67F2463C75D007EB785 /* Notifications */,
 				0C9BB9D9238E3DA400B84346 /* Filters */,
 				0C694AFE236C01E1002A08CC /* SharedEventCell */,
 				0CEBCEBE2369937C004E6985 /* EventDetail */,
@@ -1965,6 +1973,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA48A67F2463C75D007EB785 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */,
+				FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2161,6 +2178,7 @@
 				0C48E16A2191BAC100B81ADD /* ShareOfferCell.xib in Resources */,
 				0CEBCEC623699470004E6985 /* EventDetailInfoCell.xib in Resources */,
 				0CAAAB3023169D54008A7159 /* CategoryFilterLevel2Cell.xib in Resources */,
+				FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */,
 				838B4E4221B1688100C32214 /* ReloadPriceTVC.xib in Resources */,
 				0C23A8A82146873400DFB281 /* Lato-Regular.ttf in Resources */,
 				0C23A8B02146873400DFB281 /* Lato-Medium.ttf in Resources */,
@@ -2359,6 +2377,7 @@
 				0C23A8B92146876B00DFB281 /* UIFontAdditions.swift in Sources */,
 				0C5A88EB21647E8200F16851 /* ContactsViewController.swift in Sources */,
 				0C0CA22322E19AF400C90409 /* BaseSearchScopeViewController.swift in Sources */,
+				FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */,
 				0C23A87D214656BA00DFB281 /* LoginViewController.swift in Sources */,
 				0CC81F9F216DCC8F00FDB92D /* APIHelper.swift in Sources */,
 				0C955DF32149317100F9385B /* StatefulCollectionView.swift in Sources */,
@@ -2480,6 +2499,7 @@
 				0CEFD5DC2361BD77000E2FBC /* MapPinsViewController.swift in Sources */,
 				8372F62B217784D7005F3E6D /* DateAdditions.swift in Sources */,
 				0C955DDC2149264100F9385B /* CategoriesViewController.swift in Sources */,
+				FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */,
 				0C39F2EA231E72D500596A2B /* GMUSimpleClusterAlgorithm.m in Sources */,
 				0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */,
 				8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */,

@@ -75,6 +75,8 @@ class MoreViewController: UIViewController {
             return signOutClick
         case .rules:
             return redemptionReloadRulesMenuClick
+        case .notification:
+            return notificationMenuClick
         }
     }
     
