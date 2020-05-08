@@ -140,51 +140,58 @@ class OfferDetailViewController: UIViewController {
             self.redeemButton.isHidden = true
             self.timerButton.isHidden = true
             self.bottomViewBottom.constant = self.bottomView.frame.height
+            
         } else {
             
-            /*
-             * for scheduled offers, server assign start date and time, end date and time at 6 am for the next day
-             * for e.g. till 5 Feb 2020 05:59am, offer validity date time are
-             *     start date time: 4 Feb 2020, 06:01am
-             *     end date time: 5 Feb 2020, 05:59am
-             * to get start date as server, we need to convert device to server time zone (london) and subtract 6 hours
-             * for e.g. at 5 Feb 2020 10:59am (Pak Time), server time is 5 Feb 2020 05:59am
-             *     date considered at server is: 5 Feb 2020 05:59am - 6 hours = 4 Feb 2020 (11:59pm)
-             * */
-            
-            let status = self.deal.getCurrentStatus()
-            
-            switch status.status {
-            case .notStarted:
-                self.remainingSeconds = self.deal.getStartsInRemainingSeconds()
-                self.startRedeemTimer()
-                
-                self.redeemButton.isHidden = true
-                self.timerButton.isHidden = false
-
-            case .started:
-                self.bottomViewBottom.constant = 0.0
+            if self.deal.isVoucher.value {
                 
                 self.redeemButton.isHidden = false
                 self.timerButton.isHidden = true
-                
-            case .expired:
-                self.bottomViewBottom.constant = self.bottomView.frame.height
-                
-                self.redeemButton.isHidden = true
-                self.timerButton.isHidden = false
+                self.bottomViewBottom.constant = 0.0
 
-                UIView.performWithoutAnimation {
-                    self.timerButton.setTitle("Expired", for: .normal)
-                    self.timerButton.layoutIfNeeded()
+            } else  {
+                /*
+                 * for scheduled offers, server assign start date and time, end date and time at 6 am for the next day
+                 * for e.g. till 5 Feb 2020 05:59am, offer validity date time are
+                 *     start date time: 4 Feb 2020, 06:01am
+                 *     end date time: 5 Feb 2020, 05:59am
+                 * to get start date as server, we need to convert device to server time zone (london) and subtract 6 hours
+                 * for e.g. at 5 Feb 2020 10:59am (Pak Time), server time is 5 Feb 2020 05:59am
+                 *     date considered at server is: 5 Feb 2020 05:59am - 6 hours = 4 Feb 2020 (11:59pm)
+                 * */
+                        
+                let status = self.deal.getCurrentStatus()
+                        
+                switch status.status {
+                case .notStarted:
+                    self.remainingSeconds = self.deal.getStartsInRemainingSeconds()
+                    self.startRedeemTimer()
+                            
+                    self.redeemButton.isHidden = true
+                    self.timerButton.isHidden = false
+                        
+                case .started:
+                    self.bottomViewBottom.constant = 0.0
+                            
+                    self.redeemButton.isHidden = false
+                    self.timerButton.isHidden = true
+                            
+                case .expired:
+                    self.bottomViewBottom.constant = self.bottomView.frame.height
+                       
+                    self.redeemButton.isHidden = true
+                    self.timerButton.isHidden = false
+                      
+                    UIView.performWithoutAnimation {
+                        self.timerButton.setTitle("Expired", for: .normal)
+                        self.timerButton.layoutIfNeeded()
+                    }
                 }
+                     
+                debugPrint("Deal status: \(status.status)")
+                debugPrint("Deal status reason: \(status.statusReason)")
+                debugPrint("\n\n\n\n")
             }
-            
-            debugPrint("Deal status: \(status.status)")
-            debugPrint("Deal status reason: \(status.statusReason)")
-            
-            debugPrint("\n\n\n\n")
-
         }
         
         self.view.layoutIfNeeded()
@@ -292,7 +299,11 @@ class OfferDetailViewController: UIViewController {
     }
     
     func updateBookmarkButton() {
-        if self.deal.savingBookmarkStatus {
+        
+        if self.deal.isVoucher.value  {
+            self.bookmarkButton.isHidden = true
+
+        } else if self.deal.savingBookmarkStatus {
             self.bookmarkButton.isHidden = true
             self.bookmarkLoader.startAnimating()
         } else {
@@ -425,6 +436,16 @@ extension OfferDetailViewController: RedeemStartViewControllerDelegate {
     func redeemStartViewController(controller: RedeemStartViewController, redeemStatus successful: Bool, selectedIndex: Int) {
         
         if successful {
+            if self.deal.isVoucher.value {
+                NotificationCenter.default.post(name: notificationNameRefreshExclusive, object: nil)
+
+                if self.isPresenting {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.navigationController?.popViewController(animated: true)
+                }
+              
+            }
             self.setUpBottomView()
         }
     }

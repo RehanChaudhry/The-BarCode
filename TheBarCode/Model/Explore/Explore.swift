@@ -62,6 +62,8 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var weeklySchedule = Relationship.ToManyOrdered<ExploreSchedule>("weekly_schedule", inverse: {$0.explore})
     
+    var isVoucherOn = Value.Required<Bool>("is_voucher_on", initial: false)
+    
     var currentlyBarIsOpened: Bool {
         get {
             if let timings = self.timings.value {
@@ -233,6 +235,8 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         if let canDoUnlimitedRedemption = source["can_unlimited_redeem"] as? Bool {
             self.canDoUnlimitedRedemption.value = canDoUnlimitedRedemption
         }
+        
+        self.isVoucherOn.value = source["is_voucher_on"] as! Bool
         
         //TODO: handle array and object
 //        self.images.value = source["images"] as! String

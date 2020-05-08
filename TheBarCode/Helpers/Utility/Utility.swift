@@ -58,6 +58,7 @@ let notificationNameAcceptSharedOffer: String = "notificationNameAcceptSharedOff
 let notificationNameChalkboard = Notification.Name(rawValue: "notificationNameChalkboard")
 let notificationNameExclusive = Notification.Name(rawValue: "notificationNameExclusive")
 let notificationNameEvent = Notification.Name(rawValue: "notificationNameEvent")
+let notificationNameRefreshExclusive = Notification.Name(rawValue: "notificationNameRefreshExclusive")
 
 let notificationNameAcceptSharedEvent = Notification.Name("notificationNameAcceptSharedEvent")
 

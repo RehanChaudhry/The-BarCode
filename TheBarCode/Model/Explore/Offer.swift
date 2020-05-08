@@ -17,7 +17,6 @@ class Offer: CoreStoreObject {
     var title = Value.Required<String>("title", initial: "")
     
     var typeRaw = Value.Required<String>("type", initial: "")
-    var isVoucher = Value.Required<Bool>("is_voucher", initial: false)  //TODO True FOR TESTING ONLY
     
     var type: OfferType {
         get {
@@ -57,11 +56,7 @@ extension Offer: ImportableUniqueObject {
         
         self.title.value = source["title"] as! String
         self.typeRaw.value = source["title"] as! String
-        self.isVoucher.value = true
-
-        if let isVoucher = source["is_voucher"] as? Bool {
-            self.isVoucher.value = isVoucher
-        }
+        
 //        if let items = source["deals"] as? [[String : Any]] {
 //            let importedObjects = try! transaction.importObjects(Into<ImageItem>(), sourceArray: items)
 //

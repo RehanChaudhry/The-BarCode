@@ -73,7 +73,7 @@ class Deal: CoreStoreObject {
     
     var isScheduled = Value.Required<Bool>("is_scheduled", initial: false)
     
-    var isVoucher = Value.Required<Bool>("is_voucher", initial: false)  //TODO True FOR TESTING ONLY
+    var isVoucher = Value.Required<Bool>("is_voucher", initial: false) 
 
     var startDate: Date {
         get {
@@ -186,17 +186,31 @@ extension Deal: ImportableUniqueObject {
         self.subTitle.value = source["sub_title"]! as! String
         self.image.value = source["image"]! as! String
         self.detail.value = source["description"]! as! String
-        self.startDateRaw.value = source["start_date"]! as! String
-        self.endDateRaw.value = source["end_date"]! as! String
-        self.startTimeRaw.value = source["start_time"]! as! String
-        self.endTimeRaw.value = source["end_time"]! as! String
-        self.status.value = source["status"]! as! Bool
-        self.isNotified.value = source["is_notified"]! as! Bool
-        self.imageUrl.value = source["image_url"] as! String
-        self.startDateTimeRaw.value = source["start_date_time"]! as! String
-        self.endDateTimeRaw.value = source["end_date_time"]! as! String
-        self.statusText.value = source["status_text"] as! String
         
+        self.isVoucher.value = source["is_voucher"] as! Bool
+
+        if self.isVoucher.value {
+            
+            self.startDateRaw.value = source["start_date"]! as? String ?? self.getDefaultDateString()
+            self.endDateRaw.value = source["end_date"]! as? String ?? self.getDefaultDateString()
+            self.startTimeRaw.value = source["start_time"]! as? String ?? self.getDefaultTimeString()
+            self.endTimeRaw.value = source["end_time"]! as? String ??  self.getDefaultTimeString()
+            self.startDateTimeRaw.value = source["start_date_time"]! as? String ?? self.getDefaultDateTimeString()
+            self.endDateTimeRaw.value = source["end_date_time"]! as? String ?? self.getDefaultDateTimeString()
+            
+        } else {
+            self.startDateRaw.value = source["start_date"]! as! String
+            self.endDateRaw.value = source["end_date"]! as! String
+            self.startTimeRaw.value = source["start_time"]! as! String
+            self.endTimeRaw.value = source["end_time"]! as! String
+            self.startDateTimeRaw.value = source["start_date_time"]! as! String
+            self.endDateTimeRaw.value = source["end_date_time"]! as! String
+        }
+                
+        self.status.value = source["status"]! as! Bool
+        //self.isNotified.value = source["is_notified"]! as! Bool
+        self.imageUrl.value = source["image_url"] as! String
+        self.statusText.value = source["status_text"] as! String
         self.isBookmarked.value = source["is_user_favourite"] as? Bool ?? false
        
         if let isScheduled = source["is_scheduler"] as? Bool {
@@ -225,5 +239,31 @@ extension Deal: ImportableUniqueObject {
         
         self.shouldShowDate.value = source["is_date_show"] as? Bool ?? false
         self.hasTime.value = source["should_show_time"] as? Bool ?? true
+        
+    }
+}
+
+
+extension Deal {
+
+    func getDefaultDateString() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+
+    func getDefaultTimeString() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
+    
+    func getDefaultDateTimeString() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: date)
     }
 }

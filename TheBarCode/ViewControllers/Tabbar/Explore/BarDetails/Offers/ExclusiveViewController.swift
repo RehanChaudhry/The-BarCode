@@ -38,6 +38,8 @@ class ExclusiveViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.reset()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshExclusiveOfferNotification(notification:)), name: notificationNameRefreshExclusive, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +51,10 @@ class ExclusiveViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameRefreshExclusive, object: nil)
     }
     
     //MARK: My Methods
@@ -381,5 +387,13 @@ extension ExclusiveViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+
+//MARK: Notification Methods
+extension ExclusiveViewController {
+    @objc func refreshExclusiveOfferNotification(notification: Notification) {
+        self.reset()
     }
 }
