@@ -80,6 +80,11 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(searchVoucherNotification(notification:)), name: notificationNameSearchVoucher, object: nil)
 
         Analytics.logEvent(viewExploreScreen, parameters: nil)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let _ = appDelegate.voucherTitle {
+            self.moveToSearch(withPreferences: false, withStandardOffer: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
