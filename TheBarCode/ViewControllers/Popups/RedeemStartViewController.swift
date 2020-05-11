@@ -201,7 +201,7 @@ extension RedeemStartViewController {
           
         self.locationManager = MyLocationManager()
         self.locationManager.locationPreferenceAlways = true
-        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) {  (location, error) in
+        self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBest, timeOut: 20.0) {  (location, error) in
                      
             debugPrint("Getting location finished")
               
