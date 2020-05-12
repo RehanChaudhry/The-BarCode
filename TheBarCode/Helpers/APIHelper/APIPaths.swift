@@ -74,6 +74,8 @@ let apiPathEstablishmentSubscription = "establishment-subscription"
 
 let apiPathAppShared = "app-shared"
 
+let apiPathUserNotification = "user-notification"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

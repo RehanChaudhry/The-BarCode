@@ -26,7 +26,12 @@ class NotificationTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
 
-    func setUpCell() {
-        
+    func setUpCell(notification: NotificationItem) {
+        self.titleLabel.text = notification.title
+        self.descLabel.text = notification.message
+        self.timeLabel.text = notification.createdAtDate.timeAgoSinceDate(numericDates: true)
     }
 }
+
+
+

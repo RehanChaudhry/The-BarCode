@@ -18,7 +18,7 @@ class NotificationsController: UIViewController {
   
     @IBOutlet var statefulTableView: StatefulTableView!
   
-    var deals: [Deal] = []
+    var notifications: [NotificationItem] = []
 
     var dataRequest: DataRequest?
     var loadMore = Pagination()
@@ -28,7 +28,14 @@ class NotificationsController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.setUpStatefulTableView()
+        self.statefulTableView.triggerInitialLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshNotification(notification:)), name: notificationNameRefreshNotifications, object: nil)
 
+    }
+    
+    deinit {
+         NotificationCenter.default.removeObserver(self, name: notificationNameRefreshNotifications, object: nil)
     }
     
     func setUpStatefulTableView() {
@@ -74,32 +81,18 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10//self.deals.count
+        return self.notifications.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: NotificationTableViewCell.self)
-    //    cell.setUpDealCell(deal: self.deals[indexPath.row])
+        cell.setUpCell(notification: self.notifications[indexPath.row])
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? NotificationTableViewCell {
-        //    cell.startTimer(deal: self.deals[indexPath.row])
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? NotificationTableViewCell {
-         //   cell.stopTimer()
-        }
-    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Analytics.logEvent(notificationClickFromNotifications, parameters: nil)
-
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-        
     }
 }
 
@@ -107,9 +100,9 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
 
 extension NotificationsController: StatefulTableDelegate {
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
-        self.getNotifications(isRefreshing: false) { [unowned self] (error) in
-            debugPrint("deal== \(self.deals.count)")
-            handler(self.deals.count == 0, error)
+        self.getNotifications(isRefreshing: true) { [unowned self] (error) in
+            debugPrint("notifications== \(self.notifications.count)")
+            handler(self.notifications.count == 0, error)
         }
     }
     
@@ -123,7 +116,7 @@ extension NotificationsController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getNotifications(isRefreshing: true) { [unowned self] (error) in
-            handler(self.deals.count == 0, error)
+            handler(self.notifications.count == 0, error)
         }
     }
     
@@ -131,13 +124,8 @@ extension NotificationsController: StatefulTableDelegate {
         let initialErrorView = LoadingAndErrorView.loadFromNib()
         initialErrorView.backgroundColor = .clear
         initialErrorView.showLoading()
-        
-        initialErrorView.clearConstraints()
-        
-        initialErrorView.activityIndicator.autoPinEdge(ALEdge.top, to: ALEdge.top, of: initialErrorView, withOffset: 26.0)
-        initialErrorView.activityIndicator.autoAlignAxis(ALAxis.vertical, toSameAxisOf: initialErrorView)
-        
         return initialErrorView
+        
     }
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
@@ -209,10 +197,11 @@ extension NotificationsController {
         }
         
         let params: [String : Any] = ["pagination" : true,
-                                      "page": self.loadMore.next]
+                                      "page": self.loadMore.next,
+                                      "limit" : 10]
         
         self.loadMore.isLoading = true
-        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apioffer, method: .get) { (response, serverError, error) in
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathUserNotification, method: .get) { (response, serverError, error) in
             
             self.loadMore.isLoading = false
             
@@ -235,20 +224,15 @@ extension NotificationsController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 if isRefreshing {
-                    self.deals.removeAll()
+                    self.notifications.removeAll()
                 }
                 
-                var importedObjects: [Deal] = []
-                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                    let objects = try! transaction.importUniqueObjects(Into<Deal>(), sourceArray: responseArray)
-                    importedObjects.append(contentsOf: objects)
-                })
+                var mappedObjects: [NotificationItem] = []
+                mappedObjects = Mapper<NotificationItem>().mapArray(JSONArray: responseArray)
+                self.notifications.append(contentsOf: mappedObjects)
                 
-                for object in importedObjects {
-                    let fetchedObject = Utility.barCodeDataStack.fetchExisting(object)
-                    self.deals.append(fetchedObject!)
-                }
-                
+                self.statefulTableView.canPullToRefresh = self.notifications.count > 0
+
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
@@ -259,5 +243,12 @@ extension NotificationsController {
                 completion(genericError)
             }
         }
+    }
+}
+
+//MARK: Notification Methods
+extension NotificationsController {
+    @objc func refreshNotification(notification: Notification) {
+        self.statefulTableView.triggerInitialLoad()
     }
 }

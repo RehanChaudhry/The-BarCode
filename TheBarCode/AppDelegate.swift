@@ -148,12 +148,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        let notificationReceivedBlock: OSHandleNotificationReceivedBlock = { notification in
+            debugPrint("Received Notification")
+            //Auto fresh notification List
+            NotificationCenter.default.post(name: notificationNameRefreshNotifications, object: nil)
+        }
+        
         let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
         
         OneSignal.setRequiresUserPrivacyConsent(false)
         OneSignal.inFocusDisplayType = .notification
         OneSignal.initWithLaunchOptions(launchOptions,
                                         appId: Utility.shared.oneSignalAppId(),
+                                        handleNotificationReceived: notificationReceivedBlock,
                                         handleNotificationAction: notificationOpenedBlock,
                                         settings: onesignalInitSettings)
         

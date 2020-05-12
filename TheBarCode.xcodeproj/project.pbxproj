@@ -315,6 +315,7 @@
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
+		FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA65D1D9246A81150084B6F7 /* NotificationItem.swift */; };
 		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
 /* End PBXBuildFile section */
 
@@ -726,6 +727,7 @@
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		FA65D1D9246A81150084B6F7 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
 		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1608,6 +1610,7 @@
 		0C955DBE214792F500F9385B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FA65D1D8246A80FC0084B6F7 /* Notification */,
 				0C9BB9DE238E406400B84346 /* RedeemingType */,
 				0CEBCEC723699660004E6985 /* EventDetail */,
 				0C39F299231D348E00596A2B /* MapBasicBar */,
@@ -1980,6 +1983,14 @@
 				FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		FA65D1D8246A80FC0084B6F7 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				FA65D1D9246A81150084B6F7 /* NotificationItem.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2398,6 +2409,7 @@
 				0C05DDDC23213BD20073A2BA /* AllSearchExpandModel.swift in Sources */,
 				0C478A91215C9D7F002C51FA /* BarDetailAboutViewController.swift in Sources */,
 				0C05DDD42321334D0073A2BA /* AllSearchFoodModel.swift in Sources */,
+				FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */,
 				0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */,
 				0C94FCC82366D29C00B7B18D /* BookmarkedViewController.swift in Sources */,
 				0C86D02522DEF4E90034DA5C /* Drink.swift in Sources */,

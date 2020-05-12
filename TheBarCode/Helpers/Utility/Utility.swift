@@ -84,6 +84,9 @@ let notificationNameUnlimitedRedemptionPurchased = Notification.Name(rawValue: "
 let notificationNameVoucher = Notification.Name(rawValue: "notificationNameVoucher")
 let notificationNameSearchVoucher = Notification.Name(rawValue: "notificationNameSearchVoucher")
 
+let notificationNameRefreshNotifications = Notification.Name(rawValue: "notificationNameRefreshNotifications")
+
+
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"
