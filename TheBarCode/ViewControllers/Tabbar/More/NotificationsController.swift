@@ -64,6 +64,7 @@ class NotificationsController: UIViewController {
                }
            }
        }
+
     
     //MARK: IBActions
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -93,6 +94,53 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Analytics.logEvent(notificationClickFromNotifications, parameters: nil)
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
+        
+        let notification = self.notifications[indexPath.row]
+        
+        if notification.notificationType == NotificationType.event {
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.eventBarId = notification.establishmentId
+            NotificationCenter.default.post(name: notificationNameEvent, object: nil)
+                        
+        } else if notification.notificationType == NotificationType.exclusive {
+    
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.exclusiveBarId = notification.establishmentId
+            NotificationCenter.default.post(name: notificationNameExclusive, object: nil)
+                            
+        } else if notification.notificationType == NotificationType.chalkboard {
+
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.chalkboardBarId = notification.establishmentId
+            NotificationCenter.default.post(name: notificationNameChalkboard, object: nil)
+                            
+        } else if notification.notificationType == NotificationType.fiveADay {
+           
+            self.dismiss(animated: true) {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.refreshFiveADay = true
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
+            }
+            
+        } else if notification.notificationType == NotificationType.shareOffer {
+            self.dismiss(animated: true) {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+            }
+                            
+        } else if notification.notificationType == NotificationType.voucher {
+
+            self.dismiss(animated: true) {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.voucherTitle = notification.offerTitle
+                NotificationCenter.default.post(name: notificationNameVoucher, object: nil)
+            }
+                        
+        } else {
+                            
+        }
+        
+        
     }
 }
 

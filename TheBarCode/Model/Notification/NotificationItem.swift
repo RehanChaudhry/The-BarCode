@@ -13,13 +13,19 @@ class NotificationItem: Mappable {
     
     var title: String = ""
     var offerTitle: String = ""
-    var type: String = ""
+    var notificationTypeRaw: String = ""
     var establishmentId: String = ""
     var message: String = ""
     
     var createdAtDateRaw: String = ""
     var createdAtTimezoneType : Int = 0
     var createdAtTimezone: String = ""
+    
+    var notificationType: NotificationType? {
+        get{
+            return NotificationType(rawValue: notificationTypeRaw)
+        }
+    }
 
     var createdAtDate: Date {
         get{
@@ -38,8 +44,10 @@ class NotificationItem: Mappable {
         
         self.title <- map["title"]
         self.offerTitle <- map["offer_title"]
-        self.type <- map["type"]
-        self.establishmentId <- map["establishment_id"]
+        self.notificationTypeRaw <- map["type"]
+        if let establishmentId = map.JSON["establishment_id"] {
+             self.establishmentId = "\(establishmentId)"
+        }
         self.message <- map["message"]
         self.establishmentId <- map["establishment_id"]
         self.createdAtDateRaw <- map["created_at.date"]
