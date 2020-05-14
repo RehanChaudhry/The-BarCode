@@ -124,9 +124,9 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
             }
             
         } else if notification.notificationType == NotificationType.shareOffer {
-            self.dismiss(animated: true) {
-                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
-            }
+//            self.dismiss(animated: true) {
+//                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
+//            }
                             
         } else if notification.notificationType == NotificationType.voucher {
 
