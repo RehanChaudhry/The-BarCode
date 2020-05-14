@@ -231,7 +231,11 @@ class OfferDetailViewController: UIViewController {
             return
         }
         
-        if bar.canRedeemOffer.value || bar.currentlyUnlimitedRedemptionAllowed {
+        if self.deal.isVoucher.value {
+            self.redeemButton.updateColor(withGrey: false)
+            self.timerButton.updateColor(withGrey: false)
+            
+        } else if bar.canRedeemOffer.value || bar.currentlyUnlimitedRedemptionAllowed {
             self.redeemButton.updateColor(withGrey: false)
             self.timerButton.updateColor(withGrey: false)
         } else {

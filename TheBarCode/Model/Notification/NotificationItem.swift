@@ -16,10 +16,7 @@ class NotificationItem: Mappable {
     var notificationTypeRaw: String = ""
     var establishmentId: String = ""
     var message: String = ""
-    
     var createdAtDateRaw: String = ""
-    var createdAtTimezoneType : Int = 0
-    var createdAtTimezone: String = ""
     
     var notificationType: NotificationType? {
         get{
@@ -51,8 +48,7 @@ class NotificationItem: Mappable {
         self.message <- map["message"]
         self.establishmentId <- map["establishment_id"]
         self.createdAtDateRaw <- map["created_at.date"]
-        self.createdAtTimezoneType <- map["created_at.timezone_type"]
-        self.createdAtTimezone <- map["created_at.timezone"]
+  
     }
     
 }
