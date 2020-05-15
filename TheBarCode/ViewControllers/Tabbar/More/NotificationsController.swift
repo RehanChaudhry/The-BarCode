@@ -56,13 +56,7 @@ class NotificationsController: UIViewController {
            self.statefulTableView.innerTable.delegate = self
            self.statefulTableView.innerTable.dataSource = self
            self.statefulTableView.statefulDelegate = self
-           
-           for aView in self.statefulTableView.innerTable.subviews {
-               if aView.isMember(of: UIRefreshControl.self) {
-                   aView.removeFromSuperview()
-                   break
-               }
-           }
+
        }
 
     
@@ -279,10 +273,10 @@ extension NotificationsController {
                 mappedObjects = Mapper<NotificationItem>().mapArray(JSONArray: responseArray)
                 self.notifications.append(contentsOf: mappedObjects)
                 
-                self.statefulTableView.canPullToRefresh = self.notifications.count > 0
 
                 self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
+                self.statefulTableView.canPullToRefresh = self.notifications.count > 0 
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
                 

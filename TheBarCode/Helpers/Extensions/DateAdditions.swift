@@ -24,78 +24,52 @@ extension Date {
 extension Date {
     
     func timeAgoSinceDate(numericDates:Bool) -> String {
-        
-          let calendar = Calendar.current
-          let now = Date()
-          let earliest = self < now ? self : now
-          let latest =  self > now ? self : now
-          
-          let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfMonth, .month, .year, .second]
-          let components: DateComponents = calendar.dateComponents(unitFlags, from: earliest, to: latest)
-          
-          if let year = components.year {
-              if (year >= 2) {
-                  return "\(year) years ago"
-              } else if (year >= 1) {
-                  return stringToReturn(flag: numericDates, strings: ("1 year ago", "Last year"))
-              }
-          }
-          
-          if let month = components.month {
-              if (month >= 2) {
-                  return "\(month) months ago"
-              } else if (month >= 2) {
-                  return stringToReturn(flag: numericDates, strings: ("1 month ago", "Last month"))
-              }
-          }
-          
-          if let weekOfYear = components.weekOfYear {
-              if (weekOfYear >= 2) {
-                  return "\(weekOfYear) months ago"
-              } else if (weekOfYear >= 2) {
-                  return stringToReturn(flag: numericDates, strings: ("1 week ago", "Last week"))
-              }
-          }
-          
-          if let day = components.day {
-              if (day >= 2) {
-                  return "\(day) days ago"
-              } else if (day >= 2) {
-                  return stringToReturn(flag: numericDates, strings: ("1 day ago", "Yesterday"))
-              }
-          }
-          
-          if let hour = components.hour {
-              if (hour >= 2) {
-                  return "\(hour) hours ago"
-              } else if (hour >= 2) {
-                  return stringToReturn(flag: numericDates, strings: ("1 hour ago", "An hour ago"))
-              }
-          }
-          
-          if let minute = components.minute {
-              if (minute >= 2) {
-                  return "\(minute) minutes ago"
-              } else if (minute >= 2) {
-                  return stringToReturn(flag: numericDates, strings: ("1 minute ago", "A minute ago"))
-              }
-          }
-          
-          if let second = components.second {
-              if (second >= 3) {
-                  return "\(second) seconds ago"
-              }
-          }
-          
-          return "Just now"
-      }
       
-      private func stringToReturn(flag:Bool, strings: (String, String)) -> String {
-          if (flag){
-              return strings.0
-          } else {
-              return strings.1
-          }
-      }
+        let calendar = Calendar.current
+        let minuteAgo = calendar.date(byAdding: .minute, value: -1, to: Date())!
+        let hourAgo = calendar.date(byAdding: .hour, value: -1, to: Date())!
+        let dayAgo = calendar.date(byAdding: .day, value: -1, to: Date())!
+        let weekAgo = calendar.date(byAdding: .day, value: -8, to: Date())!
 
+        if minuteAgo < self {
+            let diff = Calendar.current.dateComponents([.second], from: self, to: Date()).second ?? 0
+           
+            if (diff >= 2) {
+                return "\(diff) seconds ago"
+            } else if (diff < 2) {
+                return "1 second ago"
+            }
+            
+        } else if hourAgo < self {
+            let diff = Calendar.current.dateComponents([.minute], from: self, to: Date()).minute ?? 0
+               
+            if (diff >= 2) {
+                return "\(diff) minutes ago"
+            } else if (diff < 2) {
+                return "1 minute ago"
+            }
+                
+        } else if dayAgo < self {
+            let diff = Calendar.current.dateComponents([.hour], from: self, to: Date()).hour ?? 0
+                
+            if (diff >= 2) {
+                return "\(diff) hours ago"
+            } else if (diff < 2) {
+                return  "1 hour ago"
+            }
+                
+        } else if weekAgo < self {
+                
+            let diff = Calendar.current.dateComponents([.day], from: self, to: Date()).day ?? 0
+            if (diff >= 2) {
+                return "\(diff) days ago"
+            } else if (diff < 2) {
+                return  "Yesterday"
+            }
+        }
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        return dateFormatterPrint.string(from: self)
+    }
 }
