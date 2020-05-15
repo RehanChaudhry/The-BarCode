@@ -117,20 +117,20 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
                             
         } else if notification.notificationType == NotificationType.fiveADay {
            
-            self.dismiss(animated: true) {
+            self.dismiss(animated: false) {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.refreshFiveADay = true
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameFiveADayRefresh), object: nil)
             }
             
         } else if notification.notificationType == NotificationType.shareOffer {
-//            self.dismiss(animated: true) {
+//            self.dismiss(animated: false) {
 //                NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
 //            }
                             
         } else if notification.notificationType == NotificationType.voucher {
 
-            self.dismiss(animated: true) {
+            self.dismiss(animated: false) {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.voucherTitle = notification.offerTitle
                 NotificationCenter.default.post(name: notificationNameVoucher, object: nil)

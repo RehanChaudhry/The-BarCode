@@ -23,13 +23,13 @@ class FaqsViewController: UIViewController {
         // Do any additional setup after loading the view.
         Analytics.logEvent(viewFaqsScreen, parameters: nil)
         
-        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 50% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
+        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 25% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
         self.faqSections.append(section1)
         
         let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20.")])
         self.faqSections.append(section2)
         
-        let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. When it is time to pay, press \"Redeem\" and when asked hand your phone over to the Bartender. They will enter in their Bars unique code, the offer will be redeemed and the discount applied to your bill. Simple!")])
+        let section3 = FAQSection(title: "Redemption of offer in the Vicinity of the bar?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the bar and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
         self.faqSections.append(section3)
         
         let section4 = FAQSection(title: "How often can I reload?", faqs: [FAQ(text: "You can reload a maximum of once every 7 days but can reload anytime after 7 days from the previous reload. The timer at the top of the screen will let you know how long to wait until you can next Reload. Your 7 day timer starts after you first Redeem one of our many great offers.")])
@@ -42,7 +42,7 @@ class FaqsViewController: UIViewController {
         self.faqSections.append(section6)
         
         
-        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 at all times. However this can vary from 10%, 15%, 25% and 50% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
+        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 at all times. However this can vary from 10%, 15% and 25% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
         self.faqSections.append(section7)
         
         let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "10% off the first round up to a value of £20, on any day of the week and at any time.")])
