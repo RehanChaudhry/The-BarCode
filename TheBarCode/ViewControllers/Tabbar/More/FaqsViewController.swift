@@ -29,7 +29,7 @@ class FaqsViewController: UIViewController {
         let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20.")])
         self.faqSections.append(section2)
         
-        let section3 = FAQSection(title: "Redemption of offer in the Vicinity of the bar?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the bar and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
+        let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the bar and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
         self.faqSections.append(section3)
         
         let section4 = FAQSection(title: "How often can I reload?", faqs: [FAQ(text: "You can reload a maximum of once every 7 days but can reload anytime after 7 days from the previous reload. The timer at the top of the screen will let you know how long to wait until you can next Reload. Your 7 day timer starts after you first Redeem one of our many great offers.")])
