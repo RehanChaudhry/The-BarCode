@@ -48,6 +48,7 @@ enum V1 {
         var mobileNumber = Value.Optional<String>("mobile_number")
         
         var providerRaw = Value.Required<String>("signup_provider", initial: "")
+        var postcode = Value.Optional<String>("postcode")
         
         var provider: SignUpProvider {
             get {
@@ -158,7 +159,7 @@ enum V1 {
                 self.referralCode.value = referralCode
             }
             
-            
+            self.postcode.value = source["postcode"] as? String
             
         }
 

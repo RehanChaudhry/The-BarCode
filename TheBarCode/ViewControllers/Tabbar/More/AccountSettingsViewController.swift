@@ -40,7 +40,8 @@ class AccountSettingsViewController: UIViewController {
     var emailFieldView: FieldView!
     var dobFieldView: FieldView!
     var genderFieldView: FieldView!
-    
+    var postcodeFieldView: FieldView!
+
     var currentPasswordFieldView: FieldView!
     var passwordFieldView: FieldView!
     var confirmPasswordFieldView: FieldView!
@@ -168,6 +169,12 @@ class AccountSettingsViewController: UIViewController {
         self.genderFieldView.setKeyboardType(inputView: self.pickerInputView)
         self.contentView.addSubview(self.genderFieldView)
         
+        self.postcodeFieldView = FieldView.loadFromNib()
+        self.postcodeFieldView.setUpFieldView(placeholder: "POSTCODE", fieldPlaceholder: "Enter your postcode", iconImage: nil)
+        self.postcodeFieldView.setKeyboardType()
+        self.postcodeFieldView.setReturnKey(returnKey: .next)
+        self.contentView.addSubview(self.postcodeFieldView)
+        
         if self.signupProvider == .contactNumber {
             self.genderFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.phoneNoFieldView, withOffset: 5.0)
         } else if self.signupProvider == .email {
@@ -181,6 +188,11 @@ class AccountSettingsViewController: UIViewController {
         
         self.genderFieldView.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.dobFieldView)
         self.genderFieldView.autoMatch(ALDimension.width, to: ALDimension.width, of: self.dobFieldView)
+        
+        self.postcodeFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 5.0)
+        self.postcodeFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+        self.postcodeFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+        self.postcodeFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
         self.currentPasswordFieldView = FieldView.loadFromNib()
         self.currentPasswordFieldView.setUpFieldView(placeholder: "CURRENT PASSWORD", fieldPlaceholder: "Enter your current password", iconImage: nil)
@@ -205,7 +217,7 @@ class AccountSettingsViewController: UIViewController {
         if self.signupProvider == .email {
             self.contentView.addSubview(self.passwordSectionHeaderView)
             
-            self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
+            self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 0.0)
             self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.passwordSectionHeaderView.autoSetDimension(ALDimension.height, toSize: 46.0)
@@ -273,6 +285,8 @@ class AccountSettingsViewController: UIViewController {
         self.datePicker.date = self.selectedDob
         
         self.selectedGender = user.gender ?? Gender.male
+    
+        self.postcodeFieldView.textField.text = user.postcode.value ?? ""
         
         self.updateDobField()
         self.updateGenderField()
@@ -359,6 +373,13 @@ class AccountSettingsViewController: UIViewController {
             self.genderFieldView.showValidationMessage(message: "Please select your gender.")
         } else {
             self.genderFieldView.reset()
+        }
+        
+       if !self.postcodeFieldView.textField.text!.isValidPostCode() {
+            isValid = false
+            self.postcodeFieldView.showValidationMessage(message: "Please enter your postcode.")
+        } else {
+            self.postcodeFieldView.reset()
         }
         
         if self.isUpdatingPassword() {
@@ -517,7 +538,8 @@ extension AccountSettingsViewController {
                       "date_of_birth" : dob]
         
         params["gender"] = self.selectedGender.rawValue
-        
+        params["postcode"] = self.postcodeFieldView.textField.text!
+
         if isUpdatingPassword() {
             params["old_password"] = self.currentPasswordFieldView.textField.text!
             params["new_password"] = self.passwordFieldView.textField.text!
@@ -548,6 +570,9 @@ extension AccountSettingsViewController {
                     editedUser?.fullName.value = "\(responseData["full_name"]!)"
                     editedUser?.dobString.value = "\(responseData["date_of_birth"]!)"
                     editedUser?.genderString.value = "\(responseData["gender"]!)"
+                    if let postcode = responseData["postcode"] {
+                        editedUser?.postcode.value = "\(postcode)"
+                    }
                 })
                 
                 self.setUpUserProfile(showSuccessAlert: true)

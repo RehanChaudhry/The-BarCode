@@ -18,6 +18,12 @@ extension String {
         return emailPredicate.evaluate(with: self)
     }
     
+    func isValidPostCode() -> Bool {
+        let postcodeFormat = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$"
+        let postcodePredicate = NSPredicate(format:"SELF MATCHES %@", postcodeFormat)
+        return postcodePredicate.evaluate(with: self)
+    }
+    
     func trimWhiteSpaces() -> String {
         return trimmingCharacters(in: CharacterSet.whitespaces)
     }

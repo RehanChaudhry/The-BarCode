@@ -69,7 +69,8 @@ class SIgnUpViewController: UIViewController {
     var passwordFieldView: FieldView!
     var dobFieldView: FieldView!
     var genderFieldView: FieldView!
-    
+    var postcodeFieldView: FieldView!
+
     @IBOutlet var dateInputView: UIView!
     @IBOutlet var pickerInputView: UIView!
     
@@ -187,6 +188,12 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView.setReturnKey(returnKey: .next)
         self.passwordFieldView.makeSecure(secure: true)
         
+        self.postcodeFieldView = FieldView.loadFromNib()
+        self.postcodeFieldView.setUpFieldView(placeholder: "POSTCODE", fieldPlaceholder: "Enter your postcode", iconImage: nil)
+        self.postcodeFieldView.setKeyboardType()
+        self.postcodeFieldView.setReturnKey(returnKey: .next)
+        self.contentView.addSubview(self.postcodeFieldView)
+        
         if self.signupProvider == .contactNumber {
             self.contentView.addSubview(self.phoneNoFieldView)
             
@@ -252,9 +259,14 @@ class SIgnUpViewController: UIViewController {
         self.genderFieldView.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.dobFieldView)
         self.genderFieldView.autoMatch(ALDimension.width, to: ALDimension.width, of: self.dobFieldView)
         
+        self.postcodeFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 5.0)
+        self.postcodeFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+        self.postcodeFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+        self.postcodeFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        
         self.contentView.addSubview(self.bottomView)
         
-        self.bottomView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 0.0)
+        self.bottomView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 0.0)
         self.bottomView.autoPinEdge(toSuperviewEdge: ALEdge.left)
         self.bottomView.autoPinEdge(toSuperviewEdge: ALEdge.right)
         self.bottomView.autoSetDimension(ALDimension.height, toSize: 182.0)
@@ -348,6 +360,13 @@ class SIgnUpViewController: UIViewController {
             self.genderFieldView.showValidationMessage(message: "Please select your gender.")
         } else {
             self.genderFieldView.reset()
+        }
+        
+        if !self.postcodeFieldView.textField.text!.isValidPostCode() {
+            isValid = false
+            self.postcodeFieldView.showValidationMessage(message: "Please enter your postcode.")
+        } else {
+            self.postcodeFieldView.reset()
         }
         
         return isValid
@@ -639,6 +658,7 @@ extension SIgnUpViewController {
         }
 
         params["gender"] = gender
+        params["postcode"] = self.postcodeFieldView.textField.text!
         
         self.signUpButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
