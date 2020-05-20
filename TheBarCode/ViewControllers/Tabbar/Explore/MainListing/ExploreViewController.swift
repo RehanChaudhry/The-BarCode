@@ -245,14 +245,16 @@ class ExploreViewController: UIViewController {
             return
         }
         
-        if redeemInfo.remainingSeconds > 0 {
+        if self.redeemInfo!.isFirstRedeem {
+            self.reloadTimer?.invalidate()
+            self.updateSnackBarForType(type: .discount)
+        } else if redeemInfo.remainingSeconds > 0 {
             self.redeemInfo!.remainingSeconds -= 1
             self.barsController.snackBar.updateTimer(remainingSeconds: self.redeemInfo!.remainingSeconds)
         } else {
             self.reloadTimer?.invalidate()
             self.updateSnackBarForType(type: .congrates)
         }
-        
     }
     
     func showSnackBarSpinner() {
