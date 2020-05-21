@@ -14,6 +14,11 @@ enum ExploreMappingType: String {
     case bars = "bars", deals = "deals", liveOffers = "liveOffers"
 }
 
+enum BarType: String {
+    case standardBar = "standard",
+    exclusiveBar = "exclusive"
+}
+
 class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
@@ -64,6 +69,15 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var isVoucherOn = Value.Required<Bool>("is_voucher_on", initial: false)
     
+    var barTypeRaw = Value.Required<String>("bar_type_raw", initial: "")
+    
+    var barType: BarType {
+        get {
+            return BarType(rawValue: self.barTypeRaw.value) ?? .standardBar
+        }
+    }
+    
+
     var currentlyBarIsOpened: Bool {
         get {
             if let timings = self.timings.value {
@@ -237,6 +251,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         }
         
         self.isVoucherOn.value = source["is_voucher_on"] as! Bool
+        self.barTypeRaw.value = source["type"] as! String
         
         //TODO: handle array and object
 //        self.images.value = source["images"] as! String

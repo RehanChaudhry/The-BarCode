@@ -196,7 +196,12 @@ class BarDetailViewController: UIViewController {
             return
         }
         
-        if let standardOffer = self.selectedBar!.activeStandardOffer.value {
+        if self.selectedBar!.barType == .exclusiveBar {
+            self.standardRedeemButton.isHidden = true
+            self.bottomView.isHidden = true
+            self.bottomViewBottom.constant = self.bottomView.frame.height
+
+        } else if let standardOffer = self.selectedBar!.activeStandardOffer.value {
             standardRedeemButton.buttonStandardOfferType = standardOffer.type
             standardRedeemButton.setTitle(standardOffer.displayValue, for: .normal)
             standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
