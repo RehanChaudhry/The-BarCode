@@ -16,10 +16,10 @@ import CoreLocation
 import FirebaseAnalytics
 
 enum Gender: String {
-    case male = "male", female = "female", other = "other", nonBinary = "non_binary"
+    case male = "male", female = "female", ratherNotSay = "other", nonBinary = "non_binary"
     
     static func allGenders() -> [Gender] {
-        return [.male, .female, .nonBinary, .other]
+        return [.male, .female, .nonBinary, .ratherNotSay]
     }
     
     func description() -> String {
@@ -31,7 +31,7 @@ enum Gender: String {
         case .nonBinary:
             return "Non-Binary"
         default:
-            return "Prefer not to say"
+            return "Rather not say"
         }
     }
 }
@@ -364,7 +364,7 @@ class SIgnUpViewController: UIViewController {
         
         if !self.postcodeFieldView.textField.text!.isValidPostCode() {
             isValid = false
-            self.postcodeFieldView.showValidationMessage(message: "Please enter your postcode.")
+            self.postcodeFieldView.showValidationMessage(message: "Please enter valid postcode.")
         } else {
             self.postcodeFieldView.reset()
         }

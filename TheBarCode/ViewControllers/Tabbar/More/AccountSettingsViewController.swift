@@ -377,7 +377,7 @@ class AccountSettingsViewController: UIViewController {
         
        if !self.postcodeFieldView.textField.text!.isValidPostCode() {
             isValid = false
-            self.postcodeFieldView.showValidationMessage(message: "Please enter your postcode.")
+            self.postcodeFieldView.showValidationMessage(message: "Please enter valid postcode.")
         } else {
             self.postcodeFieldView.reset()
         }
