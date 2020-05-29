@@ -247,7 +247,7 @@ class AccountSettingsViewController: UIViewController {
             self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.confirmPasswordFieldView, withOffset: 16.0)
         } else {
             self.contentView.addSubview(self.updateButton)
-            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.genderFieldView, withOffset: 16.0)
+            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 16.0)
         }
 
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.left, withInset: 16.0)
