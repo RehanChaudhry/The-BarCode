@@ -13,6 +13,7 @@ import GoogleMaps
 import Firebase
 import FirebaseDynamicLinks
 import FirebaseCrashlytics
+import OneSignal
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.milnesmayltd.thebarcode"
@@ -596,5 +597,40 @@ class Utility: NSObject {
         }
         
         return pinImage
+    }
+    
+    static func popToSignIn(){
+   
+        
+        DispatchQueue.main.async {
+            
+            OneSignal.deleteTag("user_id")
+            Utility.shared.removeUser()
+            APIHelper.shared.setUpOAuthHandler(accessToken: nil, refreshToken: nil)
+            
+            if let topController = UIApplication.topViewController() {
+                
+                if let tabBarVC = topController.tabBarController {
+                    tabBarVC.dismiss(animated: true, completion: nil)
+                } else {
+                    self.dismissTopController()
+                }
+            } else {
+                debugPrint("no topController ")
+            }
+        }
+    }
+    
+   static func dismissTopController() {
+        let topController = UIApplication.topViewController()!
+        topController.dismiss(animated: false, completion: {
+                              
+            let topController = UIApplication.topViewController()!
+            if let tabBarVC = topController.tabBarController {
+                tabBarVC.dismiss(animated: true, completion: nil)
+            } else {
+                self.dismissTopController()
+            }
+        })
     }
 }

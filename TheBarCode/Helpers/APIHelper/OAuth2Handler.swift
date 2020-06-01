@@ -58,6 +58,11 @@ final class OAuth2Handler: RequestAdapter, RequestRetrier {
         lock.lock() ; defer { lock.unlock() }
         
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
+            
+            // moveto login options screen
+            Utility.popToSignIn()
+            completion(false, 0.0)
+            
             requestsToRetry.append(completion)
             
             if !isRefreshing {
