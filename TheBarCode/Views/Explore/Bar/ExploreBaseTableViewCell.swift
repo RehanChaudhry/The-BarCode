@@ -32,7 +32,9 @@ class ExploreBaseTableViewCell: UITableViewCell {
     @IBOutlet var topPadding: NSLayoutConstraint!
     
     @IBOutlet var unlimitedRedemptionView: ShadowView!
-    
+
+    @IBOutlet var barTypeView: ShadowView!
+
     var bar: Explore?
     
     weak var exploreBaseDelegate: ExploreBaseTableViewCellDelegate?
@@ -88,6 +90,8 @@ class ExploreBaseTableViewCell: UITableViewCell {
         self.setupStatus(explore: explore)
         
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
+        self.barTypeView.isHidden = explore.barType == .exclusiveBar
+
     }
     
     func scrollToCurrentImage() {

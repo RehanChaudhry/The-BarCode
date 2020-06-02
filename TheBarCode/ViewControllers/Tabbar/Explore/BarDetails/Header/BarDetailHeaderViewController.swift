@@ -39,6 +39,9 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet var unlimitedRedemptionView: ShadowView!
     
+    @IBOutlet weak var barTypeView: ShadowView!
+    @IBOutlet weak var barTypeImageView: UIImageView!
+    
     var bar: Bar!
     
     var avplayer: AVPlayer?
@@ -125,6 +128,7 @@ class BarDetailHeaderViewController: UIViewController {
         }
         
         self.unlimitedRedemptionView.isHidden = !self.bar.currentlyUnlimitedRedemptionAllowed
+        self.barTypeView.isHidden = self.bar.barType == .exclusiveBar
         
         self.pageControl.numberOfPages = self.bar.images.count
         

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="suM-Yq-PQ4" id="Uz3-UE-iJo">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="249.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ind-3c-R0V" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
@@ -66,20 +64,20 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-uj-0UX">
-                        <rect key="frame" x="16" y="206" width="246" height="19.5"/>
+                        <rect key="frame" x="16" y="206" width="246" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="88w-H1-hsa">
-                        <rect key="frame" x="16" y="234" width="10" height="15"/>
+                        <rect key="frame" x="16" y="234.5" width="10" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="CSS-7h-zYC"/>
                             <constraint firstAttribute="height" constant="15" id="UKG-JA-Aot"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-2O-2M4">
-                        <rect key="frame" x="34" y="234" width="68" height="15"/>
+                        <rect key="frame" x="34" y="234.5" width="70" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="RW5-GJ-DoU"/>
                         </constraints>
@@ -125,10 +123,34 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlj-J8-B4g" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="32" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-standardBar" translatesAutoresizingMaskIntoConstraints="NO" id="T8u-4t-wTh">
+                                <rect key="frame" x="9" y="8" width="22" height="24"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="T8u-4t-wTh" secondAttribute="trailing" constant="9" id="6ST-Wa-r99"/>
+                            <constraint firstAttribute="height" constant="40" id="GTv-PJ-uGc"/>
+                            <constraint firstItem="T8u-4t-wTh" firstAttribute="top" secondItem="Zlj-J8-B4g" secondAttribute="top" constant="8" id="K3f-H5-Ske"/>
+                            <constraint firstAttribute="width" constant="40" id="N7p-gs-45S"/>
+                            <constraint firstAttribute="bottom" secondItem="T8u-4t-wTh" secondAttribute="bottom" constant="8" id="gxT-es-pvR"/>
+                            <constraint firstItem="T8u-4t-wTh" firstAttribute="leading" secondItem="Zlj-J8-B4g" secondAttribute="leading" constant="9" id="q2D-Sb-fWJ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="bii-27-Fef" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-8" id="2af-Kc-xsF"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="8" id="2cV-1Y-GKW"/>
+                    <constraint firstItem="Zlj-J8-B4g" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="7Hw-ml-FX5"/>
+                    <constraint firstItem="Zlj-J8-B4g" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="8jz-89-GoF"/>
                     <constraint firstItem="uPd-tc-4ns" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="9Ek-fh-Mof"/>
                     <constraint firstItem="TNh-vE-HpY" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="E41-gZ-a9E"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" id="HO1-jG-Deg"/>
@@ -154,6 +176,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="cuJ-Hl-gUF"/>
             <connections>
+                <outlet property="barTypeView" destination="Zlj-J8-B4g" id="afc-ht-G3M"/>
                 <outlet property="bottomPadding" destination="t3a-Gn-4Zs" id="nkx-Ti-agc"/>
                 <outlet property="coverImageView" destination="ind-3c-R0V" id="Utf-tb-2IR"/>
                 <outlet property="distanceButton" destination="lui-2O-2M4" id="tuN-sk-SVI"/>
@@ -170,6 +193,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon-standardBar" width="21.333333969116211" height="21.333333969116211"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_tab_fav" width="28" height="26"/>
         <image name="icon_unlimited" width="30" height="30"/>
