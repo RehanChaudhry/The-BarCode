@@ -9,6 +9,7 @@
 import UIKit
 import Reusable
 import FirebaseAnalytics
+import DTCoreText
 
 protocol DealDetailTableViewCellDelegate: class {
     func dealDetailCell(cell: DealDetailTableViewCell, viewBarDetailButtonTapped sender: UIButton)
@@ -19,7 +20,7 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var detailLabel: DTAttributedLabel!
     
     @IBOutlet weak var barNameButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
@@ -39,8 +40,30 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         
         self.titleLabel.text = deal.subTitle.value.uppercased()
         self.subTitleLabel.text = deal.title.value
+                
+        let attributedString = NSMutableAttributedString(attributedString: deal.detail.value.html2Attributed(isTitle: false) ?? NSMutableAttributedString(string: ""))
+        let range = NSRange(location: 0, length: attributedString.length)
         
-        self.detailLabel.text =  deal.detail.value
+        let enumerationOption = NSAttributedString.EnumerationOptions(rawValue: 0)
+        
+        attributedString.enumerateAttribute(NSAttributedStringKey(DTBackgroundColorAttribute), in: range, options: enumerationOption) { (value, range, stop) in
+            attributedString.removeAttribute(NSAttributedStringKey(DTBackgroundColorAttribute), range: range)
+            attributedString.addAttributes([NSAttributedStringKey(DTBackgroundColorAttribute) : UIColor.clear.cgColor], range: range)
+        }
+        
+        attributedString.enumerateAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), in: range, options: enumerationOption) { (value, range, stop) in
+            attributedString.removeAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), range: range)
+                attributedString.addAttributes([NSAttributedStringKey(String(kCTForegroundColorAttributeName)) : UIColor.gray.cgColor], range: range)
+        }
+        
+        attributedString.enumerateAttribute(NSAttributedStringKey.link, in: range, options: enumerationOption) { (value, range, stop) in
+            attributedString.removeAttribute(NSAttributedStringKey.foregroundColor, range: range)
+            attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()], range: range)
+        }
+        
+        self.detailLabel.attributedString = attributedString
+        self.detailLabel.delegate = self
+        
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
        
         if let distance = deal.establishment.value?.distance {
@@ -120,5 +143,23 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
     @IBAction func viewDirectionButtonTapped(_ sender: UIButton) {
         Analytics.logEvent(locationMapClick, parameters: nil)
         self.delegate.dealDetailCell(cell: self, viewDirectionButtonTapped: sender)
+    }
+}
+
+
+//MARK: DTAttributedTextContentViewDelegate
+extension DealDetailTableViewCell: DTAttributedTextContentViewDelegate {
+    
+    func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, viewForLink url: URL!, identifier: String!, frame: CGRect) -> UIView! {
+        let button = DTLinkButton(frame: frame)
+        button.addTarget(self, action: #selector(dtLinkButtonTapped(sender:)), for: .touchUpInside)
+        button.url = url
+        button.minimumHitSize = CGSize(width: 25.0, height: 25.0)
+        button.guid = identifier
+        return button
+    }
+    
+    @objc func dtLinkButtonTapped(sender: DTLinkButton) {
+        UIApplication.shared.open(sender.url, options: [:], completionHandler: nil)
     }
 }

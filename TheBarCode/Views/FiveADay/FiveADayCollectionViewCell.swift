@@ -11,6 +11,7 @@ import Reusable
 import FSPagerView
 import Gradientable
 import FirebaseAnalytics
+import DTCoreText
 
 protocol FiveADayCollectionViewCellDelegate: class {
     func fiveADayCell(cell: FiveADayCollectionViewCell, redeemedButtonTapped sender: UIButton)
@@ -30,7 +31,7 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     @IBOutlet var dealTitleButton: UIButton!
     @IBOutlet var dealSubTitleButton: UIButton!
     
-    @IBOutlet var dealDetailLabel: UILabel!
+    @IBOutlet var dealDetailLabel: DTAttributedLabel!
     @IBOutlet var barNameButton: UIButton!
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var redeemButton: GradientButton!
@@ -95,9 +96,32 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
         
         self.dealTitleButton.setTitle(deal.subTitle.value.uppercased(), for: .normal)
         self.dealSubTitleButton.setTitle(deal.title.value, for: .normal)
-        self.dealDetailLabel.text = deal.detail.value
+        
+        let attributedString = NSMutableAttributedString(attributedString: deal.detail.value.html2Attributed(isTitle: false) ?? NSMutableAttributedString(string: ""))
+         let range = NSRange(location: 0, length: attributedString.length)
+         
+         let enumerationOption = NSAttributedString.EnumerationOptions(rawValue: 0)
+         
+         attributedString.enumerateAttribute(NSAttributedStringKey(DTBackgroundColorAttribute), in: range, options: enumerationOption) { (value, range, stop) in
+             attributedString.removeAttribute(NSAttributedStringKey(DTBackgroundColorAttribute), range: range)
+             attributedString.addAttributes([NSAttributedStringKey(DTBackgroundColorAttribute) : UIColor.clear.cgColor], range: range)
+         }
+         
+         attributedString.enumerateAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), in: range, options: enumerationOption) { (value, range, stop) in
+             attributedString.removeAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), range: range)
+                 attributedString.addAttributes([NSAttributedStringKey(String(kCTForegroundColorAttributeName)) : UIColor.white.cgColor], range: range)
+         }
+         
+         attributedString.enumerateAttribute(NSAttributedStringKey.link, in: range, options: enumerationOption) { (value, range, stop) in
+             attributedString.removeAttribute(NSAttributedStringKey.foregroundColor, range: range)
+             attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()], range: range)
+         }
+         
+         self.dealDetailLabel.attributedString = attributedString
+         self.dealDetailLabel.delegate = self
+        
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
-    self.barTitleButton.setTitle(deal.establishment.value!.title.value.uppercased(), for: .normal)
+        self.barTitleButton.setTitle(deal.establishment.value!.title.value.uppercased(), for: .normal)
         
         if let distance = deal.establishment.value?.distance {
             self.distanceLabel.isHidden = false
@@ -116,11 +140,11 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
 
         self.layoutIfNeeded()
         
-        if self.dealDetailLabel.isTruncated {
-            self.detailButton.isHidden = false
-        } else {
-            self.detailButton.isHidden = true
-        }
+//        if self.dealDetailLabel.isTruncated {
+//            self.detailButton.isHidden = false
+//        } else {
+//            self.detailButton.isHidden = true
+//        }
         
     }
     
@@ -352,5 +376,23 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     @IBAction func shareOfferButtonTapped(sender: UIButton) {
         Analytics.logEvent(fiveADayShareClick, parameters: nil)
         self.delegate.fiveADayCell(cell: self, shareButtonTapped: sender)
+    }
+}
+
+
+//MARK: DTAttributedTextContentViewDelegate
+extension FiveADayCollectionViewCell: DTAttributedTextContentViewDelegate {
+    
+    func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, viewForLink url: URL!, identifier: String!, frame: CGRect) -> UIView! {
+        let button = DTLinkButton(frame: frame)
+        button.addTarget(self, action: #selector(dtLinkButtonTapped(sender:)), for: .touchUpInside)
+        button.url = url
+        button.minimumHitSize = CGSize(width: 25.0, height: 25.0)
+        button.guid = identifier
+        return button
+    }
+    
+    @objc func dtLinkButtonTapped(sender: DTLinkButton) {
+        UIApplication.shared.open(sender.url, options: [:], completionHandler: nil)
     }
 }
