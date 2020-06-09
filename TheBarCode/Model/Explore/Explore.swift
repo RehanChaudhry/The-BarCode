@@ -250,8 +250,15 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             self.canDoUnlimitedRedemption.value = canDoUnlimitedRedemption
         }
         
-        self.isVoucherOn.value = source["is_voucher_on"] as! Bool
-        self.barTypeRaw.value = source["type"] as! String
+        if let voucherOn = source["is_voucher_on"] as? Bool {
+            self.isVoucherOn.value = voucherOn
+        }
+        
+        if let type = source["type"] as? String {
+            self.barTypeRaw.value = type
+        }
+        
+        
         
         //TODO: handle array and object
 //        self.images.value = source["images"] as! String
