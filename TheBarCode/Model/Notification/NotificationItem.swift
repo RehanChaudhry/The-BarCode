@@ -18,9 +18,9 @@ class NotificationItem: Mappable {
     var message: String = ""
     var createdAtDateRaw: String = ""
     
-    var notificationType: NotificationType? {
+    var notificationType: NotificationType {
         get{
-            return NotificationType(rawValue: notificationTypeRaw)
+            return NotificationType(rawValue: notificationTypeRaw) ?? .defaultNotification
         }
     }
 

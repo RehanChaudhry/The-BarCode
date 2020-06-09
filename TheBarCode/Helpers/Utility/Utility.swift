@@ -45,7 +45,8 @@ enum NotificationType: String {
     chalkboard = "banner_ads",
     exclusive = "exclusive",
     event = "event",
-    voucher = "voucher"
+    voucher = "voucher",
+    defaultNotification = "defaultNotification"
 }
 
 let notificationNameReloadSuccess: String = "notificationNameReloadSuccess"
@@ -86,7 +87,7 @@ let notificationNameVoucher = Notification.Name(rawValue: "notificationNameVouch
 let notificationNameSearchVoucher = Notification.Name(rawValue: "notificationNameSearchVoucher")
 
 let notificationNameRefreshNotifications = Notification.Name(rawValue: "notificationNameRefreshNotifications")
-
+let notificationNameUpdateNotificationCount = Notification.Name(rawValue: "notificationNameUpdateNotificationCount")
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
@@ -128,7 +129,9 @@ enum EnvironmentType: String {
 class Utility: NSObject {
     
     static let shared = Utility()
-    
+   
+    var notificationCount: Int = 0
+
     static let barCodeDataStack = DataStack(
         CoreStoreSchema(
             modelVersion: "V1",

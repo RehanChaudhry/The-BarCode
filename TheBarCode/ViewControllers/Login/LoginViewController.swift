@@ -237,7 +237,7 @@ extension LoginViewController {
             if let responseUser = (responseDict?["data"] as? [String : Any]) {
                 let user = Utility.shared.saveCurrentUser(userDict: responseUser)
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
-                
+                self.getUnreadNotificationCount()
                 self.userVerifiedSuccessfully(canShowReferral: false)
 
             } else {
@@ -329,6 +329,42 @@ extension LoginViewController {
                 self.presentTabbarController()
                 
             })
+        }
+    }
+    
+    
+    func getUnreadNotificationCount() {
+    
+        let params: [String : Any] = [:]
+        
+        self.signInButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathNotificationCount, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.signInButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            
+            guard error == nil else {
+                self.showAlertController(title: "Authentication", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let dataDict = (responseDict?["data"] as? [String : Any]), let unreadCount = dataDict["unread_count"] as? Int  {
+                Utility.shared.notificationCount = unreadCount
+            } else {
+                Utility.shared.notificationCount = 0
+            }
+            
+            debugPrint(" Utility.shared.notificationCount == \( Utility.shared.notificationCount)")
         }
     }
     

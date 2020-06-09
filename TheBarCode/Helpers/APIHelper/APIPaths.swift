@@ -76,6 +76,8 @@ let apiPathAppShared = "app-shared"
 
 let apiPathUserNotification = "user-notification"
 
+let apiPathNotificationCount = "user-not-read-notification"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 
@@ -164,6 +166,6 @@ let viewPrivacyPolicyScreen = "Viewed privacy policy screen".getFormattedEventNa
 let viewFavouriteScreen = "Viewed favourites screen".getFormattedEventName()
 
 
-//
+//Notifications
 let notificationClickFromNotifications = "Clicked on a notification on Notification screen".getFormattedEventName()
 

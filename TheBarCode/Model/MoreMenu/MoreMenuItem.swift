@@ -43,7 +43,7 @@ enum MenuItemType: String {
         case .signOut:
             return ("Sign Out", "icon_signout", "", false, 16.0)
         case .notification:
-            return ("Notification", "icon_notification_settings", "NotificationNavigation", true, 16.0)
+            return ("Notifications", "icon_notification_settings", "NotificationNavigation", true, 16.0)
 
         }
     }

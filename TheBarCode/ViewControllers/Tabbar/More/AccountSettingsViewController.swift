@@ -286,7 +286,7 @@ class AccountSettingsViewController: UIViewController {
         
         self.selectedGender = user.gender ?? Gender.male
     
-        self.postcodeFieldView.textField.text = user.postcode.value ?? ""
+        self.postcodeFieldView.textField.text = (user.postcode.value == "<null>") ? "" : user.postcode.value
         
         self.updateDobField()
         self.updateGenderField()
@@ -375,7 +375,9 @@ class AccountSettingsViewController: UIViewController {
             self.genderFieldView.reset()
         }
         
-       if !self.postcodeFieldView.textField.text!.isValidPostCode() {
+        if self.postcodeFieldView.textField.text! == "" {
+            
+        } else if !self.postcodeFieldView.textField.text!.uppercased().isValidPostCode() {
             isValid = false
             self.postcodeFieldView.showValidationMessage(message: "Please enter valid postcode.")
         } else {
@@ -538,7 +540,7 @@ extension AccountSettingsViewController {
                       "date_of_birth" : dob]
         
         params["gender"] = self.selectedGender.rawValue
-        params["postcode"] = self.postcodeFieldView.textField.text!
+        params["postcode"] = self.postcodeFieldView.textField.text!.uppercased()
 
         if isUpdatingPassword() {
             params["old_password"] = self.currentPasswordFieldView.textField.text!

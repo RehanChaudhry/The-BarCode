@@ -231,6 +231,7 @@ extension NotificationsController: StatefulTableDelegate {
     }
 }
 
+//MARK: Web-services
 extension NotificationsController {
     func getNotifications(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
@@ -269,6 +270,10 @@ extension NotificationsController {
                     self.notifications.removeAll()
                 }
                 
+                //Reset Notification Count
+                Utility.shared.notificationCount = 0
+                NotificationCenter.default.post(name: notificationNameUpdateNotificationCount, object: nil)
+
                 var mappedObjects: [NotificationItem] = []
                 mappedObjects = Mapper<NotificationItem>().mapArray(JSONArray: responseArray)
                 self.notifications.append(contentsOf: mappedObjects)

@@ -40,6 +40,7 @@ class MoreViewController: UIViewController {
         
         self.tableView.register(cellType: MenuCell.self)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBadgeCountNotification(notif:)), name: notificationNameUpdateNotificationCount, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +52,10 @@ class MoreViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameUpdateNotificationCount, object: nil)
     }
     
     
@@ -80,6 +85,10 @@ class MoreViewController: UIViewController {
         }
     }
     
+    
+    @objc func updateBadgeCountNotification(notif: Notification) {
+        self.tableView.reloadData()
+     }
 }
 
 //MARK: UITableViewDelegate, UITableViewDataSource

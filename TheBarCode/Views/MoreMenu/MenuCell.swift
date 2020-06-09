@@ -14,6 +14,10 @@ class MenuCell: UITableViewCell, NibReusable {
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     
+    @IBOutlet var badgeView: UIView!
+    @IBOutlet weak var badgeLabel: UILabel!
+    
+    
     @IBOutlet var titleLabelLeftMargin: NSLayoutConstraint!
     
     override func awakeFromNib() {
@@ -53,6 +57,14 @@ class MenuCell: UITableViewCell, NibReusable {
             separatorInset = UIEdgeInsetsMake(0.0, titleLabel.frame.origin.x, 0.0, 0.0)
         } else {
             separatorInset = UIEdgeInsetsMake(0.0, 20000, 0.0, 0.0)
+        }
+        
+        if menuItem.type == .notification {
+            self.badgeView.isHidden = Utility.shared.notificationCount == 0
+            let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
+            self.badgeLabel.text = unreadCount
+        } else {
+            self.badgeView.isHidden = true
         }
     }
     

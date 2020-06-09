@@ -362,7 +362,9 @@ class SIgnUpViewController: UIViewController {
             self.genderFieldView.reset()
         }
         
-        if !self.postcodeFieldView.textField.text!.isValidPostCode() {
+        if self.postcodeFieldView.textField.text! == "" {
+        
+        } else if !self.postcodeFieldView.textField.text!.uppercased().isValidPostCode() {
             isValid = false
             self.postcodeFieldView.showValidationMessage(message: "Please enter valid postcode.")
         } else {
@@ -658,7 +660,7 @@ extension SIgnUpViewController {
         }
 
         params["gender"] = gender
-        params["postcode"] = self.postcodeFieldView.textField.text!
+        params["postcode"] = self.postcodeFieldView.textField.text!.uppercased()
         
         self.signUpButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
