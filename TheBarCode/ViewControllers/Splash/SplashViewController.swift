@@ -121,12 +121,14 @@ extension SplashViewController {
             guard error == nil else {
                 debugPrint("Error while getting version: \(error!.localizedDescription)")
                 self.updateLocationIfNeed()
+                self.getUnreadNotificationCount()
                 return
             }
             
             guard serverError == nil else {
                 debugPrint("Server error while getting version: \(serverError!.errorMessages())")
                 self.updateLocationIfNeed()
+                self.getUnreadNotificationCount()
                 return
             }
             
@@ -137,10 +139,12 @@ extension SplashViewController {
                     self.showForceUpdateAlert()
                 } else {
                     self.updateLocationIfNeed()
+                    self.getUnreadNotificationCount()
                 }
                 
             } else {
                 self.updateLocationIfNeed()
+                self.getUnreadNotificationCount()
             }
         })
     }
@@ -229,6 +233,40 @@ extension SplashViewController {
                 
                 
             })
+        }
+    }
+    
+    func getUnreadNotificationCount() {
+       
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists for getting UnreadNotificationCount")
+            return
+        }
+        
+        let params: [String : Any] = [:]
+           
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathNotificationCount, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting UnreadNotificationCount: \(error!.localizedDescription)")
+                return
+            }
+               
+            guard serverError == nil else {
+                debugPrint("Error while getting UnreadNotificationCount: \(error!.localizedDescription)")
+                return
+            }
+            
+            debugPrint("UnreadNotificationCount get successfully")
+
+               
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let dataDict = (responseDict?["data"] as? [String : Any]), let unreadCount = dataDict["unread_count"] as? Int  {
+                Utility.shared.notificationCount = unreadCount
+                NotificationCenter.default.post(name: notificationNameUpdateNotificationCount, object: nil)
+
+            }
+            debugPrint(" Utility.shared.notificationCount == \( Utility.shared.notificationCount)")
         }
     }
 }

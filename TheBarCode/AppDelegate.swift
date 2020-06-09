@@ -137,6 +137,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let notificationReceivedBlock: OSHandleNotificationReceivedBlock = { notification in
             debugPrint("Received Notification")
+            //Inc Notification Count
+            Utility.shared.notificationCount = Utility.shared.notificationCount + 1
+            NotificationCenter.default.post(name: notificationNameUpdateNotificationCount, object: nil)
             //Auto fresh notification List
             NotificationCenter.default.post(name: notificationNameRefreshNotifications, object: nil)
         }
@@ -180,6 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         
         self.updateLocationComingFromBackground()
+        self.getUnreadNotificationCountComingFromBackground()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -552,6 +556,40 @@ extension AppDelegate {
                 })
                 
             })
+        }
+    }
+    
+    func getUnreadNotificationCountComingFromBackground() {
+       
+        guard let _ = Utility.shared.getCurrentUser() else {
+            debugPrint("User does not exists for getting UnreadNotificationCount")
+            return
+        }
+        
+        let params: [String : Any] = [:]
+           
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathNotificationCount, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting UnreadNotificationCount: \(error!.localizedDescription)")
+                return
+            }
+               
+            guard serverError == nil else {
+                debugPrint("Error while getting UnreadNotificationCount: \(error!.localizedDescription)")
+                return
+            }
+            
+            debugPrint("UnreadNotificationCount get successfully")
+
+               
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let dataDict = (responseDict?["data"] as? [String : Any]), let unreadCount = dataDict["unread_count"] as? Int  {
+                Utility.shared.notificationCount = unreadCount
+                NotificationCenter.default.post(name: notificationNameUpdateNotificationCount, object: nil)
+
+            }
+            debugPrint(" Utility.shared.notificationCount == \( Utility.shared.notificationCount)")
         }
     }
 }

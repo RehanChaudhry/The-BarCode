@@ -27,6 +27,8 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
     @IBOutlet var bookmarkActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var sharingLoader: UIActivityIndicatorView!
     
+    @IBOutlet weak var priceLabel: UILabel!
+    
     weak var delegate: DealTableViewCellDelegate?
     
     var expirationTimer: Timer?
@@ -214,10 +216,16 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         //Voucher
         if deal.isVoucher.value {
             self.bookmarkButton.isHidden = true
-            self.titleLabel.attributedText = getAttributedTitle(title: deal.title.value, isVoucher: true)
+            self.titleLabel.attributedText = getAttributedTitle(title: deal.title.value)
+            
+            let priceString = String(format: "%.2f", deal.voucherAmount.value ?? 0.0)
+            self.priceLabel.text = "   £ " + priceString + "   "
+            self.priceLabel.isHidden = deal.voucherAmount.value == 0.0
+            
         } else {
             self.bookmarkButton.isHidden = false
             self.titleLabel.text = deal.title.value
+            self.priceLabel.isHidden = true
         }
     }
     
@@ -340,7 +348,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         }
     }
     
-    func getAttributedTitle(title: String, isVoucher: Bool) -> NSMutableAttributedString {
+    func getAttributedTitle(title: String) -> NSMutableAttributedString {
                 
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .left

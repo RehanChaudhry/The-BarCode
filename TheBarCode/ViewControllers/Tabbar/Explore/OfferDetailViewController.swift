@@ -421,7 +421,7 @@ extension OfferDetailViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(for: indexPath, cellType: ExploreDetailHeaderCollectionViewCell.self)
-        cell.setUpCell(imageName: self.images[indexPath.item])
+        cell.setUpCell(imageName: self.images[indexPath.item], deal: self.deal )
         return cell
     }
     

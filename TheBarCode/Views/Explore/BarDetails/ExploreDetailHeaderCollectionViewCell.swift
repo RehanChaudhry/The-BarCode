@@ -14,6 +14,8 @@ class ExploreDetailHeaderCollectionViewCell: FSPagerViewCell, NibReusable {
 
     @IBOutlet var coverImageView: AsyncImageView!
     
+    @IBOutlet weak var priceLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,6 +27,25 @@ class ExploreDetailHeaderCollectionViewCell: FSPagerViewCell, NibReusable {
         let url = URL(string: imageName)
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
             , shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        self.priceLabel.isHidden = true
+    }
+    
+    
+    func setUpCell(imageName: String, deal: Deal) {
+        
+        let url = URL(string: imageName)
+        self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
+                   , shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        
+        if deal.isVoucher.value {
+            let price = deal.voucherAmount.value ?? 0.0
+            let priceString = String(format: "%.2f", price)
+            self.priceLabel.text = "   £ " + priceString + "   "
+            self.priceLabel.isHidden = price == 0.0
+        } else {
+             self.priceLabel.isHidden = true
+        }
+        
     }
 
 }

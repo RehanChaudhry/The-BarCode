@@ -66,6 +66,8 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(eventNotification(notification:)), name: notificationNameEvent, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(voucherNotification(notification:)), name: notificationNameVoucher, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateMoreBadgeCount(notification:)), name: notificationNameUpdateNotificationCount, object: nil)
 
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
@@ -88,6 +90,13 @@ class TabBarController: UITabBarController {
             self.shouldHandleSharedEvent = false
             self.acceptSharedEvent()
         }
+        
+        if  Utility.shared.notificationCount > 0 {
+            let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
+            self.tabBar.items?[4].badgeValue = unreadCount
+        } else {
+            self.tabBar.items?[4].badgeValue = nil
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,6 +116,7 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self, name: notificationNameExclusive, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: notificationNameVoucher, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameUpdateNotificationCount, object: nil)
 
         debugPrint("Tabbarcontroller deinit called")
         
@@ -349,6 +359,16 @@ extension TabBarController {
     
     @objc func voucherNotification(notification: Notification) {
         self.voucherRedirection()
+    }
+    
+    @objc func updateMoreBadgeCount(notification: Notification) {
+        debugPrint("updateMoreBadgeCount")
+        if  Utility.shared.notificationCount > 0 {
+            let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
+            self.tabBar.items?[4].badgeValue = unreadCount
+        } else {
+            self.tabBar.items?[4].badgeValue = nil
+        }
     }
 }
 

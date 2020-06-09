@@ -75,6 +75,8 @@ class Deal: CoreStoreObject {
     
     var isVoucher = Value.Required<Bool>("is_voucher", initial: false) 
 
+    var voucherAmount = Value.Optional<Double>("amount")
+    
     var startDate: Date {
         get {
             return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
@@ -197,6 +199,8 @@ extension Deal: ImportableUniqueObject {
             self.endTimeRaw.value = source["end_time"]! as? String ??  self.getDefaultTimeString()
             self.startDateTimeRaw.value = source["start_date_time"]! as? String ?? self.getDefaultDateTimeString()
             self.endDateTimeRaw.value = source["end_date_time"]! as? String ?? self.getDefaultDateTimeString()
+            
+            self.voucherAmount.value = source["amount"] as? Double
             
         } else {
             self.startDateRaw.value = source["start_date"]! as! String
