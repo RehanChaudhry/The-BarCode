@@ -44,31 +44,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let v1Schema = CoreStoreSchema(
-            modelVersion: "V2",
+            modelVersion: "V3",
             entities: [
                 Entity<V1.User>("User")
             ]
         )
     
-        let schemaHistory = SchemaHistory(allSchema: [v1Schema], migrationChain: ["V2"])
+        let schemaHistory = SchemaHistory(allSchema: [v1Schema], migrationChain: ["V3"])
         
         let persistantDataStack = DataStack(schemaHistory: schemaHistory)
         CoreStore.defaultStack = persistantDataStack
         
-        let localStorage = SQLiteStore(fileName: "TheBarCode.sqlite", localStorageOptions: .allowSynchronousLightweightMigration)
-        
-        let currentVersion = "V2"
-        let lastVersion = UserDefaults.standard.string(forKey: "storeversion") ?? ""
-        if FileManager.default.fileExists(atPath: localStorage.fileURL.path), lastVersion != currentVersion {
-            do {
-                try FileManager.default.removeItem(at: localStorage.fileURL)
-            } catch {
-                debugPrint("Error while deleting mismatched model version: \(error.localizedDescription)")
-            }
-        }
-
-        UserDefaults.standard.set(currentVersion, forKey: "storeversion")
-        try! CoreStore.addStorageAndWait()
+        let localStorage = SQLiteStore(fileName: "TheBarCode.sqlite", localStorageOptions: .recreateStoreOnModelMismatch)
+        try! CoreStore.addStorageAndWait(localStorage)
         
         let dataStorage = SQLiteStore(fileName: "TheBarCode_Data.sqlite", localStorageOptions: .allowSynchronousLightweightMigration)
         if FileManager.default.fileExists(atPath: dataStorage.fileURL.path) {
@@ -81,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let dataStack = Utility.barCodeDataStack
         try! dataStack.addStorageAndWait(dataStorage)
-//        try! dataStack.addStorageAndWait(InMemoryStore())
         
         self.setupAuthIfNeeded()
         
