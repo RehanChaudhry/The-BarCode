@@ -24,6 +24,7 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
     
     @IBOutlet weak var barNameButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var dtLabel: UILabel!
     
     @IBOutlet weak var validityLabel: UILabel!
     
@@ -53,7 +54,7 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
         
         attributedString.enumerateAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), in: range, options: enumerationOption) { (value, range, stop) in
             attributedString.removeAttribute(NSAttributedStringKey(String(kCTForegroundColorAttributeName)), range: range)
-                attributedString.addAttributes([NSAttributedStringKey(String(kCTForegroundColorAttributeName)) : UIColor.gray.cgColor], range: range)
+            attributedString.addAttributes([NSAttributedStringKey(String(kCTForegroundColorAttributeName)) : UIColor.init(red: 73.0/255.0, green: 73.0/255.0, blue: 73.0/255.0, alpha: 1).cgColor], range: range)
         }
         
         attributedString.enumerateAttribute(NSAttributedStringKey.link, in: range, options: enumerationOption) { (value, range, stop) in
@@ -61,8 +62,12 @@ class DealDetailTableViewCell: UITableViewCell, NibReusable {
             attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()], range: range)
         }
         
+        self.detailLabel.numberOfLines = 0
         self.detailLabel.attributedString = attributedString
         self.detailLabel.delegate = self
+            
+        //to resolve Height issue in DTAttributedLabel we set constraint of detailLabel to dtLabel constraint i.e remove removeHTMLTag from detail so we have exact same height required for detailLabel
+        self.dtLabel.text = deal.detail.value.removeHTMLTag()
         
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
        

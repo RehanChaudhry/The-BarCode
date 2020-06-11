@@ -45,6 +45,8 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
     
     @IBOutlet var sharingLoader: UIActivityIndicatorView!
     
+    @IBOutlet var dtLabel: UILabel!
+    
     weak var delegate : FiveADayCollectionViewCellDelegate!
 
     var expirationTimer: Timer?
@@ -119,6 +121,10 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
          
          self.dealDetailLabel.attributedString = attributedString
          self.dealDetailLabel.delegate = self
+         self.dealDetailLabel.numberOfLines = 0
+        
+        //to resolve Height issue in DTAttributedLabel we set constraint of dealDetailLabel to dtLabel constraint i.e remove removeHTMLTag from detail so we have exact same height required for detailLabel
+        self.dtLabel.text = deal.detail.value.removeHTMLTag()
         
         self.barNameButton.setTitle(deal.establishment.value!.title.value, for: .normal)
         self.barTitleButton.setTitle(deal.establishment.value!.title.value.uppercased(), for: .normal)
@@ -140,11 +146,12 @@ class FiveADayCollectionViewCell: FSPagerViewCell , NibReusable {
 
         self.layoutIfNeeded()
         
-//        if self.dealDetailLabel.isTruncated {
-//            self.detailButton.isHidden = false
-//        } else {
-//            self.detailButton.isHidden = true
-//        }
+
+        if self.dtLabel.isTruncated {
+            self.detailButton.isHidden = false
+        } else {
+            self.detailButton.isHidden = true
+        }
         
     }
     
@@ -396,3 +403,5 @@ extension FiveADayCollectionViewCell: DTAttributedTextContentViewDelegate {
         UIApplication.shared.open(sender.url, options: [:], completionHandler: nil)
     }
 }
+
+

@@ -40,9 +40,10 @@
                         <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lunch and get 2 for 1 on smoothies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwW-dp-hX8">
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="When you are in a hurry smoothies are a special blend of drinkable happiness. Come in for lun" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwW-dp-hX8">
                         <rect key="frame" x="16" y="66.5" width="339" height="53"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                         <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -95,22 +96,22 @@
                     <constraint firstItem="XZi-cw-nKK" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="7No-Pb-PmX"/>
                     <constraint firstItem="Gvi-aq-7HF" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="8Es-Wq-NKm"/>
                     <constraint firstAttribute="trailing" secondItem="Gvi-aq-7HF" secondAttribute="trailing" constant="16" id="Adc-kD-ahL"/>
-                    <constraint firstItem="gfm-YT-Osb" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="BlZ-iF-KRY"/>
                     <constraint firstItem="imx-qr-Q7z" firstAttribute="centerY" secondItem="XZi-cw-nKK" secondAttribute="centerY" id="Doj-db-B5i"/>
+                    <constraint firstItem="gfm-YT-Osb" firstAttribute="leading" secondItem="qwW-dp-hX8" secondAttribute="leading" id="FpH-tB-W46"/>
                     <constraint firstItem="JFZ-fb-Tbr" firstAttribute="top" secondItem="qwW-dp-hX8" secondAttribute="bottom" constant="10" id="GQD-j8-iT3"/>
                     <constraint firstItem="JFZ-fb-Tbr" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="HqI-3h-05P"/>
-                    <constraint firstItem="gfm-YT-Osb" firstAttribute="top" secondItem="ABg-bh-W2C" secondAttribute="bottom" constant="8.5" id="JEM-zW-Drf"/>
                     <constraint firstItem="ABg-bh-W2C" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="JgM-mN-PMZ"/>
                     <constraint firstAttribute="trailing" secondItem="ABg-bh-W2C" secondAttribute="trailing" constant="16" id="L3O-3O-Mtr"/>
                     <constraint firstItem="imx-qr-Q7z" firstAttribute="leading" secondItem="XZi-cw-nKK" secondAttribute="trailing" constant="4" id="L8o-bI-8UG"/>
+                    <constraint firstItem="qwW-dp-hX8" firstAttribute="bottom" secondItem="gfm-YT-Osb" secondAttribute="bottom" id="LLz-De-q2B"/>
+                    <constraint firstItem="gfm-YT-Osb" firstAttribute="trailing" secondItem="qwW-dp-hX8" secondAttribute="trailing" id="LNh-Yw-aLa"/>
                     <constraint firstAttribute="trailing" secondItem="JFZ-fb-Tbr" secondAttribute="trailing" constant="16" id="PPp-Ox-DaT"/>
                     <constraint firstItem="pIE-uK-WlY" firstAttribute="leading" secondItem="imx-qr-Q7z" secondAttribute="trailing" constant="10" id="QnM-JG-Zpa"/>
-                    <constraint firstItem="JFZ-fb-Tbr" firstAttribute="top" secondItem="gfm-YT-Osb" secondAttribute="bottom" constant="10" id="TLF-23-nLl"/>
                     <constraint firstAttribute="bottom" secondItem="XZi-cw-nKK" secondAttribute="bottom" constant="16" id="WAu-oo-NQ9"/>
                     <constraint firstItem="ABg-bh-W2C" firstAttribute="top" secondItem="Gvi-aq-7HF" secondAttribute="bottom" constant="8" id="Zfq-S4-IVf"/>
                     <constraint firstItem="XZi-cw-nKK" firstAttribute="top" secondItem="JFZ-fb-Tbr" secondAttribute="bottom" constant="8" id="bew-RE-xgJ"/>
                     <constraint firstAttribute="trailing" secondItem="qwW-dp-hX8" secondAttribute="trailing" constant="16" id="dF0-jP-vJz"/>
-                    <constraint firstAttribute="trailing" secondItem="gfm-YT-Osb" secondAttribute="trailing" constant="16" id="ffV-xo-QUa"/>
+                    <constraint firstItem="gfm-YT-Osb" firstAttribute="top" secondItem="qwW-dp-hX8" secondAttribute="top" id="eOW-li-hXX"/>
                     <constraint firstAttribute="trailing" secondItem="pIE-uK-WlY" secondAttribute="trailing" constant="16" id="gKV-Ao-ZVm"/>
                     <constraint firstItem="Gvi-aq-7HF" firstAttribute="top" secondItem="uHi-Q2-J2c" secondAttribute="top" constant="16" id="k54-So-ShR"/>
                     <constraint firstItem="qwW-dp-hX8" firstAttribute="leading" secondItem="uHi-Q2-J2c" secondAttribute="leading" constant="16" id="rzC-9o-fbW"/>
@@ -120,6 +121,7 @@
             <connections>
                 <outlet property="barNameButton" destination="imx-qr-Q7z" id="tlO-g9-arb"/>
                 <outlet property="detailLabel" destination="gfm-YT-Osb" id="oet-EY-dzm"/>
+                <outlet property="dtLabel" destination="qwW-dp-hX8" id="tgu-aY-wU9"/>
                 <outlet property="locationLabel" destination="pIE-uK-WlY" id="Rg6-1A-rAY"/>
                 <outlet property="subTitleLabel" destination="ABg-bh-W2C" id="Ra7-es-XJM"/>
                 <outlet property="titleLabel" destination="Gvi-aq-7HF" id="i2Z-3U-8AE"/>
