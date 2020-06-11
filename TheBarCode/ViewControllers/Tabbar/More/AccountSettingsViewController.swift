@@ -173,6 +173,8 @@ class AccountSettingsViewController: UIViewController {
         self.postcodeFieldView.setUpFieldView(placeholder: "POSTCODE", fieldPlaceholder: "Enter your postcode", iconImage: nil)
         self.postcodeFieldView.setKeyboardType()
         self.postcodeFieldView.setReturnKey(returnKey: .next)
+        self.postcodeFieldView.delegate = self
+
         self.contentView.addSubview(self.postcodeFieldView)
         
         if self.signupProvider == .contactNumber {
@@ -527,6 +529,18 @@ extension AccountSettingsViewController: FieldViewDelegate {
     func fieldView(fieldView: FieldView, didEndEditing textField: UITextField) {
         
     }
+    
+    func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
+          
+          if fieldView == self.postcodeFieldView {
+              let maxLength = 8
+              let currentString: NSString = textField.text! as NSString
+              let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+              return newString.length <= maxLength
+          }
+
+          return true
+      }
     
 }
 
