@@ -90,7 +90,6 @@ class ExploreBaseTableViewCell: UITableViewCell {
         self.setupStatus(explore: explore)
         
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
-        self.barTypeView.isHidden = explore.barType == .exclusiveBar
 
     }
     

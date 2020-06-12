@@ -264,13 +264,18 @@ extension RedeemStartViewController {
             if let responseObj = response as? [String : Any] {
                 if  let _ = responseObj["data"] as? [String : Any] {
                     
-                    try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                        let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.barId!))
-                        for bar in bars {
-                            bar.canRedeemOffer.value = false
-                        }
-                    })
                     
+                    if self.redeemingType != RedeemType.voucher {
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                                          let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.barId!))
+                                          for bar in bars {
+                                              bar.canRedeemOffer.value = false
+                                          }
+                                      })
+                        
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+                        }
+                                        
                     let msg = "Success! Offer Redeemed"
                     let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
@@ -281,8 +286,7 @@ extension RedeemStartViewController {
                     }))
                     self.present(alertController, animated: true, completion: nil)
                     
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
-                    
+                   
                     
                 } else {
                     let genericError = APIHelper.shared.getGenericError()
