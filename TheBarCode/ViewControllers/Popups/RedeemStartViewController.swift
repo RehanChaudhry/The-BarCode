@@ -240,6 +240,10 @@ extension RedeemStartViewController {
                 params["shared_id"] = shareId
             }
         }
+        
+        if self.redeemingType == RedeemType.voucher{
+            params["user_voucher_id"] = self.dealInfo.userVoucherId.value
+        }
        
         debugPrint("params: \(params)")
         

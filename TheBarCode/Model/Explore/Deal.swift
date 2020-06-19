@@ -77,6 +77,8 @@ class Deal: CoreStoreObject {
 
     var voucherAmount = Value.Optional<Double>("amount")
     
+    var userVoucherId = Value.Optional<String>("user_voucher_id")
+    
     var startDate: Date {
         get {
             return Utility.shared.serverFormattedDate(date: self.startDateRaw.value)
@@ -244,6 +246,10 @@ extension Deal: ImportableUniqueObject {
         self.shouldShowDate.value = source["is_date_show"] as? Bool ?? false
         self.hasTime.value = source["should_show_time"] as? Bool ?? true
         
+        if let userVoucherId = source["user_voucher_id"] {
+            self.userVoucherId.value = "\(userVoucherId)"
+        }
+
     }
 }
 
