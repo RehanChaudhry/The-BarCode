@@ -348,12 +348,16 @@ extension LoginViewController {
             }
             
             guard error == nil else {
-                self.showAlertController(title: "Authentication", msg: error!.localizedDescription)
+                Utility.shared.notificationCount = 0
+
+              //  self.showAlertController(title: "Authentication", msg: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
-                self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
+                Utility.shared.notificationCount = 0
+
+             //   self.showAlertController(title: "Authentication", msg: serverError!.errorMessages())
                 return
             }
             

@@ -191,8 +191,10 @@ extension Deal: ImportableUniqueObject {
         self.image.value = source["image"]! as! String
         self.detail.value = source["description"]! as! String
         
-        self.isVoucher.value = source["is_voucher"] as! Bool
-
+        if let isVoucher = source["is_voucher"] as? Bool {
+            self.isVoucher.value = isVoucher
+        }
+        
         if self.isVoucher.value {
             
             self.startDateRaw.value = source["start_date"]! as? String ?? self.getDefaultDateString()
