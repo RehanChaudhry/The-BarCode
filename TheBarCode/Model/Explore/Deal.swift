@@ -188,8 +188,11 @@ extension Deal: ImportableUniqueObject {
         self.offerTypeId.value = "\(source["offer_type_id"]!)"
         self.title.value = source["title"]! as! String
         self.subTitle.value = source["sub_title"]! as! String
-        self.image.value = source["image"]! as! String
         self.detail.value = source["description"]! as! String
+        
+        if let image = source["image"] as? String {
+            self.image.value = image
+        }
         
         if let isVoucher = source["is_voucher"] as? Bool {
             self.isVoucher.value = isVoucher
@@ -216,8 +219,9 @@ extension Deal: ImportableUniqueObject {
         }
                 
         self.status.value = source["status"]! as! Bool
-        //self.isNotified.value = source["is_notified"]! as! Bool
-        self.imageUrl.value = source["image_url"] as! String
+        if let imageUrl = source["image_url"] as? String {
+            self.imageUrl.value = imageUrl
+        }
         self.statusText.value = source["status_text"] as! String
         self.isBookmarked.value = source["is_user_favourite"] as? Bool ?? false
        
