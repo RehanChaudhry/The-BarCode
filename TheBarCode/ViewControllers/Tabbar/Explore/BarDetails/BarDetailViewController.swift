@@ -582,7 +582,6 @@ extension BarDetailViewController: OutOfCreditViewControllerDelegate {
         inviteNavigation.modalPresentationStyle = .fullScreen
         
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
-        inviteController.shouldShowCancelBarButton = true
         inviteController.isRedeemingDeal = true
         inviteController.delegate = self
         inviteController.selectedIndex = selectedIndex

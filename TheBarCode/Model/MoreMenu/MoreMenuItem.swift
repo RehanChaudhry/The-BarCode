@@ -10,47 +10,53 @@ import UIKit
 
 enum MenuItemType: String {
     
-    case accountSettings = "accountSettings",
+    case invite = "invite",
+    myReservations = "myReservations",
+    splitPayment = "splitPayment",
+    notification = "notification",
+    accountSettings = "accountSettings",
     notificationSettings = "notificationSettings",
-    sharedOffer = "sharedOffer",
     preferences = "preferences",
     reload = "reload",
     faqs = "faqs",
     rules = "rules",
     privacyPolicy = "privacyPolicy",
-    signOut = "signOut",
-    notification = "notification"
-    
+    signOut = "signOut"
     
     func description() -> (title: String, icon: String?, storyboardId: String, showSeparator: Bool, fontSize: Float) {
         switch self {
+        case .invite:
+            return ("Invite", "icon_invite", "InviteNavigation", true, 16.0)
+        case .myReservations:
+            return ("My Reservations", "icon_reservation", "AccountSettingsNavigation", true, 16.0)
+        case .splitPayment:
+            return ("Split Payment Scanner", "icon_split_payment", "AccountSettingsNavigation", true, 16.0)
+        case .notification:
+            return ("Notifications", "icon_notification", "NotificationNavigation", true, 16.0)
         case .accountSettings:
             return ("Account Settings", "icon_account_settings", "AccountSettingsNavigation", true, 16.0)
         case .notificationSettings:
-            return ("Notification Settings", "icon_notification_settings", "NotificationSettingsNavigation", true, 16.0)
-        case .sharedOffer:
-            return ("Shared Offers", "icon_shared_offer", "SharedOffersNavigation", true, 16.0)
+            return ("Notification Settings", "icon_notif_settings", "NotificationSettingsNavigation", true, 16.0)
         case .preferences:
-            return ("Preferences", "icon_preference", "CategoryFilterNavigation", true, 16.0)
+            return ("Preferences", "icon_preferences", "CategoryFilterNavigation", true, 16.0)
         case .reload:
             return ("Reload", "icon_reload", "ReloadNavigation", true, 16.0)
         case .faqs:
-            return ("Frequently Asked Questions", "icon_faqs", "FaqsNavigation", true, 16.0)
+            return ("Frequently Asked Questions", "icon_faq", "FaqsNavigation", true, 16.0)
         case .rules:
             return ("Redemption & Reload Rules", "icon_rules", "RulesNavigation", true, 16.0)
         case .privacyPolicy:
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:
             return ("Sign Out", "icon_signout", "", false, 16.0)
-        case .notification:
-            return ("Notifications", "icon_notification_settings", "NotificationNavigation", true, 16.0)
-
         }
     }
     
     static func allMenuItems() -> [MenuItem] {
         return [
-//        MenuItem(type: .sharedOffer),
+        MenuItem(type: .invite),
+        MenuItem(type: .myReservations),
+        MenuItem(type: .splitPayment),
         MenuItem(type: .notification),
         MenuItem(type: .accountSettings),
         MenuItem(type: .notificationSettings),
@@ -59,7 +65,7 @@ enum MenuItemType: String {
         MenuItem(type: .faqs),
         MenuItem(type: .rules),
         MenuItem(type: .privacyPolicy),
-        MenuItem(type: .signOut)
+        MenuItem(type: .signOut),
         ]
     }
     

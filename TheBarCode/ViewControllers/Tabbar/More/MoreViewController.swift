@@ -62,8 +62,14 @@ class MoreViewController: UIViewController {
     //MARK: MyMethods
     func getAnalyticsEventNameForMenuItemType(itemType: MenuItemType) -> String {
         switch itemType {
-        case .sharedOffer:
-            return shareOffersMenuClick
+        case .invite:
+            return inviteMenuClick
+        case .myReservations:
+            return myReservationMenuClick
+        case .splitPayment:
+            return splitPaymentMenuClick
+        case .notification:
+            return notificationMenuClick
         case .accountSettings:
             return accountSettingsClick
         case .notificationSettings:
@@ -74,14 +80,12 @@ class MoreViewController: UIViewController {
             return  reloadMenuClick
         case .faqs:
             return faqMenuClick
+        case .rules:
+            return redemptionReloadRulesMenuClick
         case .privacyPolicy:
             return privacyPolicyClick
         case .signOut:
             return signOutClick
-        case .rules:
-            return redemptionReloadRulesMenuClick
-        case .notification:
-            return notificationMenuClick
         }
     }
     

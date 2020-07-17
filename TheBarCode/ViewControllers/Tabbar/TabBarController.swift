@@ -37,7 +37,7 @@ class TabBarController: UITabBarController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
             appDelegate.refreshFiveADay = false
-            self.selectedIndex = 1
+            self.selectedIndex = 0
         } else if appDelegate.liveOfferBarId != nil ||
             appDelegate.chalkboardBarId != nil ||
             appDelegate.exclusiveBarId != nil ||
@@ -91,14 +91,14 @@ class TabBarController: UITabBarController {
             self.acceptSharedEvent()
         }
         
-        self.tabBar.items?[4].badgeValue = "3"
+        self.tabBar.items?[3].badgeValue = "3"
 
         
         if  Utility.shared.notificationCount > 0 {
             let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
-            self.tabBar.items?[3].badgeValue = unreadCount
+            self.tabBar.items?[4].badgeValue = unreadCount
         } else {
-            self.tabBar.items?[3].badgeValue = nil
+            self.tabBar.items?[4].badgeValue = nil
         }
     }
     
@@ -332,7 +332,7 @@ extension TabBarController {
 
             self.presentedViewController?.dismiss(animated: false, completion: nil)
             
-            self.selectedIndex = 1
+            self.selectedIndex = 0
         }
     }
     
