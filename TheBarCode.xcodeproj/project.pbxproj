@@ -315,6 +315,11 @@
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
+		FA0440EA24C1698300F09F61 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */; };
+		FA0440EC24C169B300F09F61 /* OrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */; };
+		FA5F238E24C0607700B4FA5E /* CartBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */; };
+		FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */; };
+		FA5F239224C068CB00B4FA5E /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */; };
 		FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA65D1D9246A81150084B6F7 /* NotificationItem.swift */; };
 		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
 /* End PBXBuildFile section */
@@ -727,6 +732,11 @@
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderTableViewCell.xib; sourceTree = "<group>"; };
+		FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBaseViewController.swift; sourceTree = "<group>"; };
+		FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
+		FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
 		FA65D1D9246A81150084B6F7 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
 		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1556,6 +1566,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA0440E824C1695100F09F61 /* Cart */,
 				FA48A67F2463C75D007EB785 /* Notifications */,
 				0C9BB9D9238E3DA400B84346 /* Filters */,
 				0C694AFE236C01E1002A08CC /* SharedEventCell */,
@@ -1593,6 +1604,7 @@
 				0C44DD2B214A7DE3000F5D64 /* FiveAday */,
 				0C44DD2C214A7E19000F5D64 /* Explore */,
 				0C0BD8D622F411BB00668DF7 /* OfferWallet */,
+				FA5F238A24C05FFB00B4FA5E /* Cart */,
 				0C44DD2E214A7E36000F5D64 /* More */,
 				0C44DD2F214A7E45000F5D64 /* Others */,
 			);
@@ -1976,6 +1988,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA0440E824C1695100F09F61 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */,
+				FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
 		FA48A67F2463C75D007EB785 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -1983,6 +2004,16 @@
 				FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		FA5F238A24C05FFB00B4FA5E /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */,
+				FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */,
+				FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		FA65D1D8246A80FC0084B6F7 /* Notification */ = {
@@ -2178,6 +2209,7 @@
 				0C955DBB2147896D00F9385B /* LoginIntroCollectionViewCell.xib in Resources */,
 				0C23A8532146550000DFB281 /* Assets.xcassets in Resources */,
 				0C23A8AB2146873400DFB281 /* Lato-BoldItalic.ttf in Resources */,
+				FA0440EC24C169B300F09F61 /* OrderTableViewCell.xib in Resources */,
 				0C5A88F021647F8A00F16851 /* ContactTableViewCell.xib in Resources */,
 				0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */,
 				0C8BDCD82150D0CD00D5117B /* LiveOfferTableViewCell.xib in Resources */,
@@ -2427,6 +2459,7 @@
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,
+				FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */,
 				0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */,
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
 				CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */,
@@ -2499,7 +2532,9 @@
 				CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */,
 				0C86D02322DEF4DD0034DA5C /* Event.swift in Sources */,
 				0C955DBD21478B7500F9385B /* GradientView.swift in Sources */,
+				FA5F239224C068CB00B4FA5E /* MyCartViewController.swift in Sources */,
 				0CD74A6D21996518007DC6E1 /* CategoryFilterViewController.swift in Sources */,
+				FA5F238E24C0607700B4FA5E /* CartBaseViewController.swift in Sources */,
 				0C955DE32149312100F9385B /* CategoryCollectionViewCell.swift in Sources */,
 				0C9BB9DB238E3E0300B84346 /* FiltersHeaderView.swift in Sources */,
 				83A4B6352175ADC600730056 /* Offer.swift in Sources */,
@@ -2548,6 +2583,7 @@
 				0C05DDD62321335F0073A2BA /* AllSearchDrinkModel.swift in Sources */,
 				0C94FCCA2366D2A900B7B18D /* SharedViewController.swift in Sources */,
 				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
+				FA0440EA24C1698300F09F61 /* OrderTableViewCell.swift in Sources */,
 				0C5A88FA2164D91C00F16851 /* OfferDetailTableViewCell.swift in Sources */,
 				0C9BB9E0238E407E00B84346 /* RedeemingType.swift in Sources */,
 				0C05DDD9232139690073A2BA /* AllSearchFooterCell.swift in Sources */,
