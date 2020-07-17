@@ -11,6 +11,13 @@ import Reusable
 
 class OrderTableViewCell: UITableViewCell, NibReusable {
 
+    @IBOutlet weak var orderNoLabel: UILabel!
+    @IBOutlet weak var barNameLabel: UILabel!
+    
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    @IBOutlet weak var statusButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,5 +28,21 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
 
         // Configure the view for the selected state
     }
+    
+    func setUpCell(order: Order) {
+        
+        self.orderNoLabel.text = order.orderNo
+        self.barNameLabel.text = order.barName
+        self.priceLabel.text = order.price
+        
+        self.statusButton.setTitle(order.status.rawValue.uppercased(), for: .normal)
+        
+        
+        if order.status ==  .completed {
+            self.statusButton.backgroundColor = UIColor.appGreenColor()
+        } else if order.status == .received || order.status == .inProgress {
+            self.statusButton.backgroundColor = UIColor.appBlueColor()
 
+        }
+    }
 }

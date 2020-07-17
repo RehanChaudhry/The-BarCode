@@ -13,11 +13,14 @@ import ObjectMapper
 import Alamofire
 import FirebaseAnalytics
 
+
 class MyOrdersViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
   
-    var segments: [String] = ["Ongoing Orders" , "Completed Orders"]
+    var segments: [OrderCategory] = OrderCategory.getAllDummyOrders()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +33,7 @@ class MyOrdersViewController: UIViewController {
    func setUpStatefulTableView() {
         
         self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)
-        self.statefulTableView.innerTable.register(headerFooterViewType: FoodMenuHeaderView.self)
+        self.statefulTableView.innerTable.register(headerFooterViewType: SectionHeaderView.self)
 
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
@@ -63,7 +66,7 @@ extension MyOrdersViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30.0
+        return 44.0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -71,17 +74,18 @@ extension MyOrdersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return self.segments[section].orders.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
-        headerView?.setupHeader(title: self.segments[section])
+        let headerView = tableView.dequeueReusableHeaderFooterView(SectionHeaderView.self)
+        headerView?.setupHeader(title: self.segments[section].getTitle())
         return headerView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: OrderTableViewCell.self)
+        cell.setUpCell(order: self.segments[indexPath.section].orders[indexPath.item])
         return cell
     }
          

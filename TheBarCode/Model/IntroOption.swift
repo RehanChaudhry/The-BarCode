@@ -51,7 +51,7 @@ class IntroOption {
         }
     }
     
-    func getImagePostfix() -> String {
+        func getImagePostfix() -> String {
         
         let deviceInfo = GBDeviceInfo.deviceInfo()
         

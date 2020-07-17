@@ -28,7 +28,7 @@
                         <rect key="frame" x="16" y="8" width="382" height="85"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ORDER NO. 823488234" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GU-zT-Juc">
-                                <rect key="frame" x="8" y="12" width="151" height="17"/>
+                                <rect key="frame" x="8" y="12" width="153.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Albert's Schloss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aN-II-GSJ">
-                                <rect key="frame" x="8" y="34" width="101.5" height="17"/>
+                                <rect key="frame" x="8" y="34" width="91.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -53,19 +53,19 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf8-di-wO6">
-                                <rect key="frame" x="284" y="44" width="90" height="25"/>
+                                <rect key="frame" x="274" y="40.5" width="100" height="32"/>
                                 <color key="backgroundColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="svk-wG-hx0"/>
-                                    <constraint firstAttribute="height" constant="25" id="wDA-cK-43x"/>
+                                    <constraint firstAttribute="width" constant="100" id="svk-wG-hx0"/>
+                                    <constraint firstAttribute="height" constant="32" id="wDA-cK-43x"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="RECEIVED">
                                     <color key="titleColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="12"/>
+                                        <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
@@ -99,6 +99,12 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="barNameLabel" destination="8aN-II-GSJ" id="cdp-3v-BSx"/>
+                <outlet property="orderNoLabel" destination="3GU-zT-Juc" id="clQ-Ay-YOY"/>
+                <outlet property="priceLabel" destination="mRw-3L-Jau" id="O7G-9l-xOn"/>
+                <outlet property="statusButton" destination="Uf8-di-wO6" id="wgS-wo-uhH"/>
+            </connections>
             <point key="canvasLocation" x="60.869565217391312" y="113.50446428571428"/>
         </tableViewCell>
     </objects>
