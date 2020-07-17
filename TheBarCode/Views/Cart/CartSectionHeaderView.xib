@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CartSectionHeaderView" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SI9-Qn-qcu">
+                    <rect key="frame" x="8" y="8" width="398" height="38"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albert's Schloss" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhE-Dz-qAG">
+                            <rect key="frame" x="32" y="12" width="87" height="14"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRJ-ai-e9Z">
+                            <rect key="frame" x="8" y="11" width="16" height="16"/>
+                            <color key="backgroundColor" red="0.22352941179999999" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="Ov0-M3-TNE"/>
+                                <constraint firstAttribute="width" constant="16" id="rF2-yA-hWE"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                    <color key="value" red="0.22352941176470587" green="0.22745098039215686" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="centerY" secondItem="WRJ-ai-e9Z" secondAttribute="centerY" id="7mJ-E9-BXt"/>
+                        <constraint firstItem="WRJ-ai-e9Z" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="11" id="9GF-No-Pe1"/>
+                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="leading" secondItem="WRJ-ai-e9Z" secondAttribute="trailing" constant="8" id="BdW-LA-JJy"/>
+                        <constraint firstItem="WRJ-ai-e9Z" firstAttribute="leading" secondItem="SI9-Qn-qcu" secondAttribute="leading" constant="8" id="Mxc-UJ-KFJ"/>
+                        <constraint firstAttribute="bottom" secondItem="WRJ-ai-e9Z" secondAttribute="bottom" constant="11" id="x7c-Ge-zCc"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbz-Y6-iDt">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+                    <connections>
+                        <action selector="selectionButtonTapped:" destination="-2" eventType="touchUpInside" id="Unx-7Z-AMn"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Qbz-Y6-iDt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8bQ-Yc-y97"/>
+                <constraint firstItem="SI9-Qn-qcu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="SgG-DS-Jnf"/>
+                <constraint firstItem="Qbz-Y6-iDt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Th4-j2-J7t"/>
+                <constraint firstAttribute="trailing" secondItem="Qbz-Y6-iDt" secondAttribute="trailing" id="eIm-hN-8Sg"/>
+                <constraint firstItem="SI9-Qn-qcu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="fFg-gl-Ith"/>
+                <constraint firstItem="Qo3-kx-fBx" firstAttribute="bottom" secondItem="SI9-Qn-qcu" secondAttribute="bottom" constant="8" id="ica-rH-raR"/>
+                <constraint firstItem="Qbz-Y6-iDt" firstAttribute="bottom" secondItem="Qo3-kx-fBx" secondAttribute="bottom" id="pGd-Te-eoi"/>
+                <constraint firstAttribute="trailing" secondItem="SI9-Qn-qcu" secondAttribute="trailing" constant="8" id="q2J-47-mdd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Qo3-kx-fBx"/>
+            <connections>
+                <outlet property="selectionView" destination="WRJ-ai-e9Z" id="IXN-XB-RFm"/>
+                <outlet property="titleLabel" destination="zhE-Dz-qAG" id="jeD-To-yPO"/>
+            </connections>
+            <point key="canvasLocation" x="128.98550724637681" y="111.83035714285714"/>
+        </view>
+    </objects>
+</document>

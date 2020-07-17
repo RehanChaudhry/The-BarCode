@@ -161,4 +161,7 @@ extension UIColor {
         return UIColor("#44b2be")
     }
     
+    static func appCartUnSelectedColor() -> UIColor {
+        return UIColor("#393A3B")
+    }
 }

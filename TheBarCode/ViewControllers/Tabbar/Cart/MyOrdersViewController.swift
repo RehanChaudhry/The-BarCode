@@ -13,15 +13,12 @@ import ObjectMapper
 import Alamofire
 import FirebaseAnalytics
 
-
 class MyOrdersViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
   
     var segments: [OrderCategory] = OrderCategory.getAllDummyOrders()
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,7 +26,7 @@ class MyOrdersViewController: UIViewController {
         self.setUpStatefulTableView()
     }
     
-
+    //MARK: My Methods
    func setUpStatefulTableView() {
         
         self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)

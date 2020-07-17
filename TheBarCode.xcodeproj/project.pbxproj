@@ -321,6 +321,11 @@
 		FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */; };
 		FA5F239224C068CB00B4FA5E /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */; };
 		FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA65D1D9246A81150084B6F7 /* NotificationItem.swift */; };
+		FA90769D24C1E0350035AAA3 /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA90769C24C1E0340035AAA3 /* OrderItem.swift */; };
+		FA9076A224C1E1320035AAA3 /* OrderItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA90769E24C1E1270035AAA3 /* OrderItemTableViewCell.xib */; };
+		FA9076A324C1E1320035AAA3 /* CartSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA90769F24C1E1290035AAA3 /* CartSectionHeaderView.xib */; };
+		FA9076A424C1E1320035AAA3 /* OrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9076A024C1E12A0035AAA3 /* OrderItemTableViewCell.swift */; };
+		FA9076A524C1E1320035AAA3 /* CartSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9076A124C1E12C0035AAA3 /* CartSectionHeaderView.swift */; };
 		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
 		FAFEC59E24C1834F001E63EA /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */; };
 		FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */; };
@@ -742,6 +747,11 @@
 		FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
 		FA65D1D9246A81150084B6F7 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
+		FA90769C24C1E0340035AAA3 /* OrderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
+		FA90769E24C1E1270035AAA3 /* OrderItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderItemTableViewCell.xib; sourceTree = "<group>"; };
+		FA90769F24C1E1290035AAA3 /* CartSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartSectionHeaderView.xib; sourceTree = "<group>"; };
+		FA9076A024C1E12A0035AAA3 /* OrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItemTableViewCell.swift; sourceTree = "<group>"; };
+		FA9076A124C1E12C0035AAA3 /* CartSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartSectionHeaderView.swift; sourceTree = "<group>"; };
 		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -2000,6 +2010,10 @@
 		FA0440E824C1695100F09F61 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				FA9076A124C1E12C0035AAA3 /* CartSectionHeaderView.swift */,
+				FA90769F24C1E1290035AAA3 /* CartSectionHeaderView.xib */,
+				FA9076A024C1E12A0035AAA3 /* OrderItemTableViewCell.swift */,
+				FA90769E24C1E1270035AAA3 /* OrderItemTableViewCell.xib */,
 				FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */,
 				FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */,
 				FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */,
@@ -2039,6 +2053,7 @@
 			isa = PBXGroup;
 			children = (
 				FAFEC5A224C18748001E63EA /* Order.swift */,
+				FA90769C24C1E0340035AAA3 /* OrderItem.swift */,
 				FAFEC5A424C189C2001E63EA /* OrderSection.swift */,
 			);
 			path = Cart;
@@ -2230,12 +2245,14 @@
 				0C955DBB2147896D00F9385B /* LoginIntroCollectionViewCell.xib in Resources */,
 				0C23A8532146550000DFB281 /* Assets.xcassets in Resources */,
 				0C23A8AB2146873400DFB281 /* Lato-BoldItalic.ttf in Resources */,
+				FA9076A324C1E1320035AAA3 /* CartSectionHeaderView.xib in Resources */,
 				FA0440EC24C169B300F09F61 /* OrderTableViewCell.xib in Resources */,
 				0C5A88F021647F8A00F16851 /* ContactTableViewCell.xib in Resources */,
 				0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */,
 				0C8BDCD82150D0CD00D5117B /* LiveOfferTableViewCell.xib in Resources */,
 				0CAAAB342316A1B5008A7159 /* CategoryFilterLevel4Cell.xib in Resources */,
 				0CEBCECD2369A982004E6985 /* EventDetailExternalCTACell.xib in Resources */,
+				FA9076A224C1E1320035AAA3 /* OrderItemTableViewCell.xib in Resources */,
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0CFECFD822EAC64B0033BE20 /* AllSearchHeaderView.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
@@ -2525,6 +2542,7 @@
 				0C4252ED2338952B0088068A /* GMUCustomClusterIconGenerator.swift in Sources */,
 				0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */,
 				0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */,
+				FA9076A524C1E1320035AAA3 /* CartSectionHeaderView.swift in Sources */,
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
 				0C117EF422DD9E630061FFC3 /* OffersViewController.swift in Sources */,
 				0C955DF22149317100F9385B /* StatefulCollectionView+PullToRefresh.swift in Sources */,
@@ -2571,6 +2589,7 @@
 				0C955DDC2149264100F9385B /* CategoriesViewController.swift in Sources */,
 				FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */,
 				0C39F2EA231E72D500596A2B /* GMUSimpleClusterAlgorithm.m in Sources */,
+				FA90769D24C1E0350035AAA3 /* OrderItem.swift in Sources */,
 				0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */,
 				8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */,
 				0C9ECA8E2295284800DEC34F /* SocialLinksCell.swift in Sources */,
@@ -2584,6 +2603,7 @@
 				0C48E1692191BAC100B81ADD /* ShareOfferCell.swift in Sources */,
 				0CAAAB212316843B008A7159 /* CategoryFilterLevel2ViewController.swift in Sources */,
 				0C8848652167370500DB222F /* UILableAdditions.swift in Sources */,
+				FA9076A424C1E1320035AAA3 /* OrderItemTableViewCell.swift in Sources */,
 				0C44DD29214A6580000F5D64 /* TabBarController.swift in Sources */,
 				838C56A721789C1100E47678 /* CannotRedeemViewController.swift in Sources */,
 				0C39F2FC231E72D500596A2B /* GMUPair.m in Sources */,

@@ -23,12 +23,15 @@ class Order {
     var price: String = ""
     var status: OrderStatus =  .other
     
-    init(orderNo: String, barName: String, price: String, status: OrderStatus) {
-           self.orderNo = orderNo
-           self.barName = barName
-           self.price = price
-           self.status = status
-       }
+    var orderItems: [OrderItem] = []
+    
+    init(orderNo: String, barName: String, price: String, status: OrderStatus, orderItems: [OrderItem]) {
+        self.orderNo = orderNo
+        self.barName = barName
+        self.price = price
+        self.status = status
+        self.orderItems = orderItems
+    }
     
 }
 
@@ -36,16 +39,23 @@ class Order {
 extension Order {
     
     static func getOngoingDummyOrders() -> [Order] {
-        let order1 = Order(orderNo: "ORDER NO. 823488234", barName: "Albert's Schloss", price: "£ 23.00", status: .received)
-        let order2 = Order(orderNo: "ORDER NO. 823488234", barName: "The Blue Bar at The Berkeley", price: "£ 14.00", status: .inProgress)
+        let order1 = Order(orderNo: "ORDER NO. 823488234", barName: "Albert's Schloss", price: "£ 23.00", status: .received, orderItems: OrderItem.getOrderItemList2())
+        let order2 = Order(orderNo: "ORDER NO. 74737473", barName: "The Blue Bar at The Berkeley", price: "£ 14.00", status: .inProgress, orderItems: OrderItem.getOrderItemList1())
         return [order1, order2]
 
     }
     
     static func getCompletedDummyOrders() -> [Order] {
-        let order1 = Order(orderNo: "ORDER NO. 823488234", barName: "Neighbourhood", price: "£ 32.00", status: .completed)
+        let order1 = Order(orderNo: "ORDER NO. 434267378", barName: "Neighbourhood", price: "£ 32.00", status: .completed, orderItems: OrderItem.getOrderItemList2())
         return [order1]
 
       }
+    
+    static func getMyCartDummyOrders() ->  [Order] {
+        
+        let order1 = Order(orderNo: "ORDER NO. 823488234", barName: "Albert's Schloss", price: "£ 22.00", status: .received, orderItems: OrderItem.getOrderItemList2())
+        let order2 = Order(orderNo: "ORDER NO. 74737473", barName: "The Blue Bar at The Berkeley", price: "£ 12.00", status: .inProgress,  orderItems: OrderItem.getOrderItemList1())
+        return [order1, order2]
+    }
 }
 
