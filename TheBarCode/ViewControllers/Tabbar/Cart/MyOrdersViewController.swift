@@ -30,6 +30,8 @@ class MyOrdersViewController: UIViewController {
    func setUpStatefulTableView() {
         
         self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)
+        self.statefulTableView.innerTable.register(headerFooterViewType: FoodMenuHeaderView.self)
+
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         
@@ -60,7 +62,7 @@ extension MyOrdersViewController: UITableViewDataSource, UITableViewDelegate {
         self.statefulTableView.scrollViewDidScroll(scrollView)
     }
     
-      func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
     

@@ -13,11 +13,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner">
-            <connections>
-                <outlet property="mainView" destination="57z-J7-hYX" id="Lo7-cY-Fqs"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FoodMenuHeaderView" customModule="TheBarCode" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>

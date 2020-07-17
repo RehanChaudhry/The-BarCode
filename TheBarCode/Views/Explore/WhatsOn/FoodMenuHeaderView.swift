@@ -11,7 +11,6 @@ import Reusable
 
 class FoodMenuHeaderView: UITableViewHeaderFooterView, NibReusable {
 
-    @IBOutlet weak var mainView: UIView!
     @IBOutlet var titleLabel: UILabel!
     
     
