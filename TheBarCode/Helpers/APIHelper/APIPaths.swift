@@ -109,6 +109,9 @@ let reloadMenuClick = "Clicked on Reload".getFormattedEventName()
 let shareOffersMenuClick = "Clicked on Shared offers".getFormattedEventName()
 let redemptionReloadRulesMenuClick = "Clicked on redemption and reload rules".getFormattedEventName()
 let notificationMenuClick =  "Clicked on Notifications".getFormattedEventName()
+let inviteMenuClick = "Clicked on Invite".getFormattedEventName()
+let myReservationMenuClick = "Clicked on My Reservations".getFormattedEventName()
+let splitPaymentMenuClick = "Clicked on Split Payment".getFormattedEventName()
 
 let updateAccountSettings = "Clicked on update account settings".getFormattedEventName()
 

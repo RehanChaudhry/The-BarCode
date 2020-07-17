@@ -300,7 +300,6 @@ class ExploreViewController: UIViewController {
         inviteNavigation.modalPresentationStyle = .fullScreen
         
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
-        inviteController.shouldShowCancelBarButton = true
         self.present(inviteNavigation, animated: true, completion: nil)
     }
     

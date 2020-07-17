@@ -24,8 +24,6 @@ class InviteViewController: UITableViewController {
     @IBOutlet var shareInviteCodeButton: GradientButton!
     
     @IBOutlet var inviteFriendCodeButton: GradientButton!
-
-    var shouldShowCancelBarButton: Bool = false
     
     var isRedeemingDeal: Bool = false
     
@@ -39,10 +37,6 @@ class InviteViewController: UITableViewController {
         // Do any additional setup after loading the view.
         
         self.addBackButton()
-        
-        if !self.shouldShowCancelBarButton {
-            self.navigationItem.leftBarButtonItem = nil
-        }
         
         let coverHeight = ((307.0 / 375.0) * self.view.frame.width)
         var headerFrame = headerView.frame
@@ -77,6 +71,10 @@ class InviteViewController: UITableViewController {
     }
     
     //MARK: My IBActions
+    
+    @IBAction func barBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func inviteContactButtonTapped(sender: UIButton) {
     
