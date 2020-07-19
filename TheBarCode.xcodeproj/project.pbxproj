@@ -327,6 +327,7 @@
 		FA9076A424C1E1320035AAA3 /* OrderItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9076A024C1E12A0035AAA3 /* OrderItemTableViewCell.swift */; };
 		FA9076A524C1E1320035AAA3 /* CartSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9076A124C1E12C0035AAA3 /* CartSectionHeaderView.swift */; };
 		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
+		FAF12B7424C464140004C0C7 /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF12B7324C464130004C0C7 /* StepperView.swift */; };
 		FAFEC59E24C1834F001E63EA /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */; };
 		FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */; };
 		FAFEC5A324C18748001E63EA /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC5A224C18748001E63EA /* Order.swift */; };
@@ -753,6 +754,7 @@
 		FA9076A024C1E12A0035AAA3 /* OrderItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItemTableViewCell.swift; sourceTree = "<group>"; };
 		FA9076A124C1E12C0035AAA3 /* CartSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartSectionHeaderView.swift; sourceTree = "<group>"; };
 		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
+		FAF12B7324C464130004C0C7 /* StepperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FAFEC5A224C18748001E63EA /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -1584,6 +1586,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FAF12B7224C464130004C0C7 /* Stepper */,
 				FA0440E824C1695100F09F61 /* Cart */,
 				FA48A67F2463C75D007EB785 /* Notifications */,
 				0C9BB9D9238E3DA400B84346 /* Filters */,
@@ -2049,6 +2052,15 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		FAF12B7224C464130004C0C7 /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				FAF12B7324C464130004C0C7 /* StepperView.swift */,
+			);
+			name = Stepper;
+			path = "../../../stash-customers-ios/stashcustomer/Views/Stepper";
+			sourceTree = "<group>";
+		};
 		FAFEC5A124C18738001E63EA /* Cart */ = {
 			isa = PBXGroup;
 			children = (
@@ -2502,6 +2514,7 @@
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
 				CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */,
 				0C302E2C21762AB100FA993F /* LoadingButton.swift in Sources */,
+				FAF12B7424C464140004C0C7 /* StepperView.swift in Sources */,
 				0C302E2F2177083000FA993F /* ServerMessage.swift in Sources */,
 				0C854B9522804B7F00E2CECD /* EstablishmentTiming.swift in Sources */,
 				0C1947EA23154E5900498934 /* AllSearchViewMoreModel.swift in Sources */,

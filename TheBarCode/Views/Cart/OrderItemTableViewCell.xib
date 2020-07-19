@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,36 +31,49 @@
                         <rect key="frame" x="8" y="8" width="398" height="92"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Lobster Bisque with Bread &amp; Butter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbK-l7-Fk8">
-                                <rect key="frame" x="8" y="12" width="221" height="17"/>
+                                <rect key="frame" x="8" y="12" width="352" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_trash" translatesAutoresizingMaskIntoConstraints="NO" id="0zl-SA-5dV">
-                                <rect key="frame" x="360" y="10.5" width="30" height="20"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOE-v6-ezH">
+                                <rect key="frame" x="365" y="8" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="Liq-x5-UBo"/>
-                                    <constraint firstAttribute="height" constant="20" id="lUb-en-MaL"/>
+                                    <constraint firstAttribute="height" constant="25" id="gvE-HT-SEL"/>
+                                    <constraint firstAttribute="width" constant="25" id="m7b-HZ-m20"/>
                                 </constraints>
-                            </imageView>
+                                <color key="tintColor" red="0.22352941179999999" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" image="icon_trash"/>
+                                <connections>
+                                    <action selector="deleteButtonTapped:" destination="pOb-XI-e3w" eventType="touchUpInside" id="D8K-2U-Bty"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ebE-Er-tyl">
                                 <rect key="frame" x="0.0" y="37" width="398" height="1"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="o3z-cB-54r"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Yh-JS-7fE" userLabel="Stepper View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Yh-JS-7fE" userLabel="Stepper View" customClass="StepperView" customModule="TheBarCode" customModuleProvider="target">
                                 <rect key="frame" x="8" y="50" width="98" height="30"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="98" id="7k8-Qb-YX2"/>
                                     <constraint firstAttribute="height" constant="30" id="8Bc-Ql-zFV"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonBackgroundColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="x £ 12.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYv-Eb-3Xv">
-                                <rect key="frame" x="114" y="56.5" width="58" height="17"/>
+                                <rect key="frame" x="114" y="56.5" width="57" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -75,17 +89,18 @@
                         <constraints>
                             <constraint firstItem="ZbK-l7-Fk8" firstAttribute="top" secondItem="wtR-hE-ygD" secondAttribute="top" constant="12" id="B2b-eu-uKN"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="top" secondItem="ebE-Er-tyl" secondAttribute="bottom" constant="12" id="EfE-3t-EZ9"/>
-                            <constraint firstItem="0zl-SA-5dV" firstAttribute="centerY" secondItem="ZbK-l7-Fk8" secondAttribute="centerY" id="I0Z-zR-pTi"/>
                             <constraint firstItem="ebE-Er-tyl" firstAttribute="top" secondItem="ZbK-l7-Fk8" secondAttribute="bottom" constant="8" id="JgS-1d-2Ck"/>
                             <constraint firstItem="mYv-Eb-3Xv" firstAttribute="centerY" secondItem="6Yh-JS-7fE" secondAttribute="centerY" id="Lrg-bx-W6B"/>
                             <constraint firstAttribute="trailing" secondItem="1Tw-eQ-jHr" secondAttribute="trailing" constant="8" id="SZj-J3-lov"/>
                             <constraint firstItem="mYv-Eb-3Xv" firstAttribute="leading" secondItem="6Yh-JS-7fE" secondAttribute="trailing" constant="8" id="T0K-ej-hxq"/>
                             <constraint firstAttribute="bottom" secondItem="6Yh-JS-7fE" secondAttribute="bottom" constant="12" id="ZUf-FQ-2sa"/>
-                            <constraint firstAttribute="trailing" secondItem="0zl-SA-5dV" secondAttribute="trailing" constant="8" id="fY4-Np-87E"/>
+                            <constraint firstAttribute="trailing" secondItem="EOE-v6-ezH" secondAttribute="trailing" constant="8" id="aQm-KF-C18"/>
                             <constraint firstItem="ebE-Er-tyl" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" id="iYw-sw-cBY"/>
+                            <constraint firstItem="EOE-v6-ezH" firstAttribute="centerY" secondItem="ZbK-l7-Fk8" secondAttribute="centerY" id="ivD-So-jdO"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" constant="8" id="olm-s6-RBR"/>
                             <constraint firstItem="ZbK-l7-Fk8" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" constant="8" id="ppj-JA-a0a"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="top" secondItem="ebE-Er-tyl" secondAttribute="bottom" constant="12" id="q8I-av-02j"/>
+                            <constraint firstItem="EOE-v6-ezH" firstAttribute="leading" secondItem="ZbK-l7-Fk8" secondAttribute="trailing" constant="5" id="sgL-SD-pSq"/>
                             <constraint firstItem="1Tw-eQ-jHr" firstAttribute="centerY" secondItem="mYv-Eb-3Xv" secondAttribute="centerY" id="xeH-G9-S4k"/>
                             <constraint firstAttribute="trailing" secondItem="ebE-Er-tyl" secondAttribute="trailing" id="zAW-aa-iJO"/>
                         </constraints>
@@ -105,6 +120,13 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="deleteButton" destination="EOE-v6-ezH" id="cJ8-Lc-SUc"/>
+                <outlet property="nameLabel" destination="ZbK-l7-Fk8" id="J2U-TK-hHR"/>
+                <outlet property="stepperView" destination="6Yh-JS-7fE" id="4mO-Ap-Pm0"/>
+                <outlet property="totalPriceLabel" destination="1Tw-eQ-jHr" id="h8j-ZA-tMx"/>
+                <outlet property="unitPriceLabel" destination="mYv-Eb-3Xv" id="QVx-Id-OjB"/>
+            </connections>
             <point key="canvasLocation" x="140.57971014492756" y="-11.383928571428571"/>
         </tableViewCell>
     </objects>

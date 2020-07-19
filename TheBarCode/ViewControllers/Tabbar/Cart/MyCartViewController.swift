@@ -43,6 +43,20 @@ class MyCartViewController: UIViewController {
          self.statefulTableView.innerTable.tableFooterView = UIView()
          self.statefulTableView.innerTable.separatorStyle = .none
      }
+    
+    func calculateBill(order: Order) {
+          
+         // let productInfoSection = self.viewModels.compactMap({$0 as? StoreOrderProductsInfoSection}).first!
+          
+          var total: Double = 0.0
+          
+          for orderItem in order.orderItems {
+              total += ( orderItem.unitPrice * Double(orderItem.quantity))
+          }
+                                    
+          
+          self.statefulTableView.innerTable.reloadData()
+      }
 }
 
 
@@ -74,7 +88,9 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: OrderItemTableViewCell.self)
-      //  cell.setUpCell(order: self.order[indexPath.section].orderItems[indexPath.item])
+        cell.orderItem = self.orders[indexPath.section].orderItems[indexPath.item]
+        cell.setUpCell(orderItem: self.orders[indexPath.section].orderItems[indexPath.item])
+        cell.delegate = self
         return cell
     }
          
@@ -82,5 +98,27 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
+    }
+}
+
+//MARK: OrderItemTableViewCellDelegate
+extension MyCartViewController: OrderItemTableViewCellDelegate {
+    func orderItemTableViewCell(cell: OrderItemTableViewCell, deleteButtonTapped sender: UIButton) {
+        
+    }
+    
+    func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            debugPrint("IndexPath not found")
+            return
+        }
+               
+        guard let order = self.orders[indexPath.section] as? Order else {
+            debugPrint("Not a order info section")
+            return
+        }
+        
+        self.calculateBill(order: order)
+
     }
 }
