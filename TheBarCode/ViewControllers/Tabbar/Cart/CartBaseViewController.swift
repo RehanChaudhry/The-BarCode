@@ -20,6 +20,8 @@ class CartBaseViewController: UIViewController {
     
     @IBOutlet var segmentContainerView: UIView!
 
+    @IBOutlet weak var myCartCountLabel: UILabel!
+    
     var myCartViewController: MyCartViewController!
     var myOrdersViewController: MyOrdersViewController!
     
@@ -41,6 +43,10 @@ class CartBaseViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.myCartCountLabel.layer.cornerRadius = 8
+        self.myCartCountLabel.clipsToBounds = true
+
+
         self.defaultButtonTitleColor = self.myCartButton.titleColor(for: .normal)
               
         self.myCartViewController = (self.storyboard!.instantiateViewController(withIdentifier: "MyCartViewController") as! MyCartViewController)

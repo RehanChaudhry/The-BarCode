@@ -26,6 +26,7 @@ class MyCartViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         self.setUpStatefulTableView()
         self.selectFirstOrderByDefaultIfPossible()
     }
@@ -56,6 +57,9 @@ class MyCartViewController: UIViewController {
         if self.orders.count > 1 {
             self.selectedOrder = self.orders.first
             self.calculateBill(order:  self.orders.first!)
+        } else {
+            self.bottomView.isHidden = true
+            self.bottomViewHeightConstraint.constant = 0
         }
     }
     
@@ -129,6 +133,22 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
 extension MyCartViewController: OrderItemTableViewCellDelegate {
     func orderItemTableViewCell(cell: OrderItemTableViewCell, deleteButtonTapped sender: UIButton) {
         
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+             debugPrint("IndexPath not found")
+             return
+         }
+                
+        let order = self.orders[indexPath.section]
+        order.orderItems.remove(at: indexPath.item)
+        self.orders[indexPath.section] = order
+
+        if order.orderItems.count == 0 {
+            self.orders.remove(at: indexPath.section)
+            self.statefulTableView.innerTable.reloadData()
+            self.selectFirstOrderByDefaultIfPossible()
+        }
+        self.calculateBill(order: order)
+
     }
     
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
