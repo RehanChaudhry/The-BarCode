@@ -51,6 +51,8 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
 
         self.stepperView.delegate = self
         
+        self.stepperView.value = orderItem.quantity
+        
         let image = UIImage(named: "icon_trash")?.withRenderingMode(.alwaysTemplate)
         self.deleteButton.setImage(image, for: .normal)
         self.deleteButton.tintColor = UIColor.white

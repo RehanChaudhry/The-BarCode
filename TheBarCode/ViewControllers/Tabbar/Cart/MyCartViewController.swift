@@ -13,13 +13,21 @@ class MyCartViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var barNameLabel: UILabel!
+    
+    @IBOutlet weak var checkOutButton: GradientButton!
+    @IBOutlet weak var bottomViewHeightConstraint: NSLayoutConstraint!
+        
     var orders: [Order] = Order.getMyCartDummyOrders()
+    var selectedOrder: Order?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.setUpStatefulTableView()
+        self.selectFirstOrderByDefaultIfPossible()
     }
     
     //MARK: My Methods
@@ -44,20 +52,33 @@ class MyCartViewController: UIViewController {
          self.statefulTableView.innerTable.separatorStyle = .none
      }
     
+    func selectFirstOrderByDefaultIfPossible() {
+        if self.orders.count > 1 {
+            self.selectedOrder = self.orders.first
+            self.calculateBill(order:  self.orders.first!)
+        }
+    }
+    
+
+
     func calculateBill(order: Order) {
+        
+        self.barNameLabel.text = order.barName
+        
+        var total: Double = 0.0
           
-         // let productInfoSection = self.viewModels.compactMap({$0 as? StoreOrderProductsInfoSection}).first!
-          
-          var total: Double = 0.0
-          
-          for orderItem in order.orderItems {
-              total += ( orderItem.unitPrice * Double(orderItem.quantity))
-          }
+        for orderItem in order.orderItems {
+            total += ( orderItem.unitPrice * Double(orderItem.quantity))
+        }
                                     
-          
-          self.statefulTableView.innerTable.reloadData()
+        let priceString = String(format: "%.2f", total)
+        let buttonTitle = "Checkout - £ " + priceString
+        
+        self.checkOutButton.setTitle(buttonTitle, for: .normal)
+        self.statefulTableView.innerTable.reloadData()
       }
 }
+
 
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -82,7 +103,10 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(CartSectionHeaderView.self)
-        headerView?.setupHeader(title: self.orders[section].barName)
+        let isSelected =  self.orders[section].barName == self.selectedOrder?.barName
+        headerView?.setupHeader(title: self.orders[section].barName, isSelected: isSelected)
+        headerView?.delegate = self
+        headerView?.barId =  self.orders[section].barId
         return headerView
     }
     
@@ -119,6 +143,24 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
         }
         
         self.calculateBill(order: order)
+
+    }
+}
+
+//MARK: CartSectionHeaderViewDelegate
+extension MyCartViewController: CartSectionHeaderViewDelegate {
+    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String) {
+      
+        let filteredOrders = self.orders.filter { (order) -> Bool in
+            return order.barId == selectedBarId
+        }
+       
+        if filteredOrders.count > 0 {
+            self.selectedOrder = filteredOrders.first!
+            self.calculateBill(order: self.selectedOrder!)
+        } else {
+                debugPrint("some error finding the selected bar order")
+        }
 
     }
 }

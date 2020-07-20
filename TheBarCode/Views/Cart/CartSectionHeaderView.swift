@@ -9,15 +9,22 @@
 import UIKit
 import Reusable
 
+protocol CartSectionHeaderViewDelegate : class {
+    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String)
+}
+
 class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
  
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var selectionView: UIView!
     
-    func setupHeader(title: String) {
+    var delegate: CartSectionHeaderViewDelegate!
+    var barId: String!
+    
+    func setupHeader(title: String, isSelected: Bool) {
         self.titleLabel.text = title
         
-        self.selectionView.backgroundColor = UIColor.appCartUnSelectedColor()
+        self.selectionView.backgroundColor = isSelected ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()
         
         self.selectionView.layer.cornerRadius = 8
         self.selectionView.layer.borderWidth = 2
@@ -28,7 +35,7 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
     @IBAction func selectionButtonTapped(_ sender: Any) {
         
         self.selectionView.backgroundColor = UIColor.appBlueColor()
-
+        self.delegate.cartSectionHeaderView(view: self, selectedBarId: self.barId)
         
     }
 }
