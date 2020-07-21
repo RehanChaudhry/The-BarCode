@@ -31,7 +31,7 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
     
     func setUpCell(order: Order) {
         
-        self.orderNoLabel.text = order.orderNo
+        self.orderNoLabel.text = "ORDER NO. " + order.orderNo
         self.barNameLabel.text = order.barName
         self.priceLabel.text = order.price
         

@@ -49,7 +49,16 @@ class MyOrdersViewController: UIViewController {
 
     }
     
-    
+    func moveToOrderDetailsVC(order: Order) {
+        
+        let orderDetailsNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "OrderDetailsNavigation") as! UINavigationController)
+        orderDetailsNavigation.modalPresentationStyle = .fullScreen
+               
+        let orderDetailsViewController = orderDetailsNavigation.viewControllers.first as! OrderDetailsViewController
+        orderDetailsViewController.order = order
+        
+        self.present(orderDetailsNavigation, animated: true, completion: nil)
+    }
 
 }
 
@@ -89,6 +98,7 @@ extension MyOrdersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-        
+        let order =  self.segments[indexPath.section].orders[indexPath.item]
+        self.moveToOrderDetailsVC(order: order)
     }
 }
