@@ -10,6 +10,7 @@ import UIKit
 
 enum OrderSectionType: String {
     case statusHeading = "statusHeading",
+    barDetails = "barDetails",
     productDetails = "productDetails",
     discountDetails = "discountDetails",
     deliveryChargesDetails = "deliveryChargesDetails",
@@ -20,6 +21,8 @@ enum OrderSectionType: String {
 
 protocol OrderViewModel: class {
     
+    var shouldShowSeparator: Bool { get }
+
     var type: OrderSectionType { get }
     
     var rowCount: Int { get }
@@ -27,7 +30,7 @@ protocol OrderViewModel: class {
     var rowHeight: CGFloat { get }
 }
 
-//MARK: OrderStatusInfo
+//MARK: OrderStatusInfo e.g ORDER #
 class OrderStatusInfo: NSObject {
     
     var orderNo: String = ""
@@ -41,7 +44,11 @@ class OrderStatusInfo: NSObject {
 }
 
 class OrderStatusSection: OrderViewModel {
-    
+  
+    var shouldShowSeparator: Bool {
+        return false
+    }
+
     var type: OrderSectionType {
         return .statusHeading
     }
@@ -61,21 +68,24 @@ class OrderStatusSection: OrderViewModel {
     }
 }
 
-//MARK: Heading e.g Payment split
-
-class Heading: NSObject {
+//MARK: BarDetails
+class BarInfo: NSObject {
     
-    var title: String = ""
+    var barName: String = ""
 
-    init(title: String) {
-        self.title = title
+    init(barName: String) {
+        self.barName = barName
     }
 }
 
-class HeadingSection: OrderViewModel {
+class BarInfoSection: OrderViewModel {
+    
+    var shouldShowSeparator: Bool {
+        return true
+    }
     
     var type: OrderSectionType {
-        return .heading
+        return .barDetails
     }
     
     var rowCount: Int {
@@ -86,9 +96,9 @@ class HeadingSection: OrderViewModel {
         return UITableViewAutomaticDimension
     }
     
-    var items: [Heading]
+    var items: [BarInfo]
     
-    init(items: [Heading]) {
+    init(items: [BarInfo]) {
         self.items = items
     }
 }
@@ -96,6 +106,10 @@ class HeadingSection: OrderViewModel {
 
 //MARK: Product
 class OrderProductsInfoSection: OrderViewModel {
+   
+    var shouldShowSeparator: Bool {
+        return false
+    }
     
     var type: OrderSectionType {
         return .productDetails
@@ -131,6 +145,10 @@ class OrderDiscountInfo: NSObject {
 
 class OrderDiscountSection: OrderViewModel {
     
+    var shouldShowSeparator: Bool {
+        return false
+    }
+    
     var type: OrderSectionType {
         return .discountDetails
     }
@@ -165,6 +183,10 @@ class OrderDeliveryInfo: NSObject {
 }
 
 class OrderDeliveryInfoSection: OrderViewModel {
+   
+    var shouldShowSeparator: Bool {
+        return true
+    }
     
     var type: OrderSectionType {
         return .deliveryChargesDetails
@@ -200,6 +222,9 @@ class OrderTotalBillInfo: NSObject {
 }
 
 class OrderTotalBillInfoSection: OrderViewModel {
+    var shouldShowSeparator: Bool {
+        return false
+    }
     
     var type: OrderSectionType {
         return .totalBill
@@ -216,6 +241,41 @@ class OrderTotalBillInfoSection: OrderViewModel {
     var items: [OrderTotalBillInfo]
     
     init(items: [OrderTotalBillInfo]) {
+        self.items = items
+    }
+}
+
+//MARK: Heading e.g Payment split
+class Heading: NSObject {
+    
+    var title: String = ""
+
+    init(title: String) {
+        self.title = title
+    }
+}
+
+class HeadingSection: OrderViewModel {
+    
+    var shouldShowSeparator: Bool {
+           return false
+       }
+    
+    var type: OrderSectionType {
+        return .heading
+    }
+    
+    var rowCount: Int {
+        return self.items.count
+    }
+    
+    var rowHeight: CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    var items: [Heading]
+    
+    init(items: [Heading]) {
         self.items = items
     }
 }
@@ -238,6 +298,10 @@ class OrderPaymentInfo: NSObject {
 }
 
 class OrderPaymentInfoSection: OrderViewModel {
+    
+    var shouldShowSeparator: Bool {
+           return false
+    }
     
     var type: OrderSectionType {
         return .payment

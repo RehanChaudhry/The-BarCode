@@ -59,6 +59,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="detailsLabel" destination="xa1-Vp-YTD" id="uAj-3p-8cp"/>
+                <outlet property="mainView" destination="bn1-N7-We2" id="a2c-zY-tTA"/>
                 <outlet property="priceLabel" destination="DCv-De-lLr" id="ZeV-wO-sfG"/>
             </connections>
             <point key="canvasLocation" x="-181" y="-70"/>
