@@ -70,4 +70,9 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         
       }
 
+    func setupCell(reservationInfo: ReservationInfo) {
+        self.detailsLabel.text =  reservationInfo.title
+        self.priceLabel.text =  reservationInfo.value
+
+    }
 }

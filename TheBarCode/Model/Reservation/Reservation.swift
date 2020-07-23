@@ -24,14 +24,13 @@ class Reservation {
     var time: String = ""
     var orderNo: String = ""
     var status: ReservationStatus =  .other
-
-
     
     init(barName: String, noOfPersons: Int, visaCardInfo: String, date: String, time: String, status: ReservationStatus) {
         self.barName = barName
         self.noOfPersons = noOfPersons
         self.date = date
         self.visaCardInfo = visaCardInfo
+        
         self.status = status
         self.time = time
     }
@@ -51,14 +50,14 @@ class Reservation {
 
 extension Reservation {
   static  func getDummyOnGoingReservations() -> [Reservation] {
-        let reservation1 = Reservation(barName: "Albert's Schloss", noOfPersons: 6, visaCardInfo: "String", date: "Wed,July 15,29", time: "9:00AM", status: .valid)
-    let reservation2 = Reservation(barName: "The Blue Bar at The Berkeley", noOfPersons: 6, visaCardInfo: "String", date: "Wed,July 15,29", time: "8:00AM", status: .cancelled)
+        let reservation1 = Reservation(barName: "Albert's Schloss", noOfPersons: 6, visaCardInfo: "Visa Ending in 1881", date: "Wed,July 15,29", time: "9:00AM", status: .valid)
+    let reservation2 = Reservation(barName: "The Blue Bar at The Berkeley", noOfPersons: 6, visaCardInfo: "Visa Ending in 1881", date: "Wed,July 15,29", time: "8:00AM", status: .cancelled)
 
         return [reservation1, reservation2]
     }
     
    static func getDummyCompletedReservations() -> [Reservation] {
-        let reservation1 = Reservation(orderNo: "434267378", barName: "Neighbourhood", noOfPersons: 3, visaCardInfo: "String", date: "Wed,July 15,29", time: "9:00AM", status: .completed)
+        let reservation1 = Reservation(orderNo: "434267378", barName: "Neighbourhood", noOfPersons: 3, visaCardInfo: "Visa Ending in 1881", date: "Wed,July 15,29", time: "9:00AM", status: .completed)
         return [reservation1]
     }
     

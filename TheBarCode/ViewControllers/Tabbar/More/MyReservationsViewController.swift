@@ -12,6 +12,7 @@ import StatefulTableView
 class MyReservationsViewController: UIViewController {
     
     @IBOutlet var statefulTableView: StatefulTableView!
+    @IBOutlet var closeBarButton: UIBarButtonItem!
     
     var segments: [ReservationCategory] = ReservationCategory.getAllDummyReservations()
 
@@ -19,6 +20,7 @@ class MyReservationsViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.title = "My Reservations"
         self.setUpStatefulTableView()
 
     }
@@ -46,7 +48,21 @@ class MyReservationsViewController: UIViewController {
            self.statefulTableView.innerTable.separatorStyle = .none
 
        }
+    
+    func moveToreservationDetailsVC(reservation: Reservation) {
+          
+          let reservationDetailsNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReservationDetailsNavigation") as! UINavigationController)
+          reservationDetailsNavigation.modalPresentationStyle = .fullScreen
+                 
+          let reservationDetailsViewController = reservationDetailsNavigation.viewControllers.first as! ReservationDetailsViewController
+          reservationDetailsViewController.reservation = reservation
+          
+          self.present(reservationDetailsNavigation, animated: true, completion: nil)
+      }
 
+    @IBAction func closeButtonTapped(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 
@@ -87,7 +103,7 @@ extension MyReservationsViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-       // let order =  self.segments[indexPath.section].reservations[indexPath.item]
-   //     self.moveToOrderDetailsVC(order: order)
+        let reservation =  self.segments[indexPath.section].reservations[indexPath.item]
+        self.moveToreservationDetailsVC(reservation: reservation)
     }
 }
