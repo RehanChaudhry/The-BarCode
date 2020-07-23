@@ -28,7 +28,7 @@ enum MenuItemType: String {
         case .invite:
             return ("Invite", "icon_invite", "InviteNavigation", true, 16.0)
         case .myReservations:
-            return ("My Reservations", "icon_reservation", "AccountSettingsNavigation", true, 16.0)
+            return ("My Reservations", "icon_reservation", "MyReservationsNavigation", true, 16.0)
         case .splitPayment:
             return ("Split Payment Scanner", "icon_split_payment", "AccountSettingsNavigation", true, 16.0)
         case .notification:

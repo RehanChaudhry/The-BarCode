@@ -45,4 +45,28 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
 
         }
     }
+    
+    func setUpCell(reservation: Reservation) {
+        
+        self.barNameLabel.text = reservation.barName
+        self.priceLabel.text = "\( reservation.noOfPersons) Persons"
+        self.statusButton.setTitle(reservation.status.rawValue.uppercased(), for: .normal)
+        
+        if reservation.status ==  .completed {
+            
+            self.statusButton.backgroundColor = UIColor.appGreenColor()
+            self.orderNoLabel.text = "ORDER NO. " + reservation.orderNo
+
+        } else if reservation.status == .valid {
+            
+            self.orderNoLabel.text = reservation.date + " at " + reservation.time
+            self.statusButton.backgroundColor = UIColor.appBlueColor()
+            
+        } else if reservation.status == .cancelled {
+            
+            self.orderNoLabel.text = reservation.date + " at " + reservation.time
+            self.statusButton.backgroundColor = UIColor.appRedColor()
+
+        }
+    }
 }
