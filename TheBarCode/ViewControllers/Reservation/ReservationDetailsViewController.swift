@@ -20,7 +20,7 @@ class ReservationDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Table Resabervations"
+        self.title = "Table Reservations"
         self.setUpStatefulTableView() 
         self.setupViewModel()
 
@@ -63,9 +63,9 @@ class ReservationDetailsViewController: UIViewController {
         self.viewModels.append(reservationInfoViewModel)
     
         
-        let orderTotalBillInfo = OrderTotalBillInfo(title: "Reservation status", price: 23.0 )
-        let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
-        self.viewModels.append(orderTotalBillInfoSection)
+        let reservationStatusInfo = ReservationInfo(title: "Reservation status", value: self.reservation.status.rawValue )
+        let reservationStatusViewModel = ReservationStatusViewModel(items: [reservationStatusInfo])
+        self.viewModels.append(reservationStatusViewModel)
 
     }
 
@@ -123,10 +123,10 @@ extension ReservationDetailsViewController: UITableViewDataSource, UITableViewDe
             }
             return cell
                    
-        } else if let section = viewModel as? OrderTotalBillInfoSection {
+        } else if let section = viewModel as? ReservationStatusViewModel {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row])
+            cell.setupCell(reservationInfo: section.items[indexPath.row], status: self.reservation.status)
             
             if section.shouldShowSeparator {
                 cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)

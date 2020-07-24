@@ -73,6 +73,19 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     func setupCell(reservationInfo: ReservationInfo) {
         self.detailsLabel.text =  reservationInfo.title
         self.priceLabel.text =  reservationInfo.value
-
     }
+    
+    func setupCell(reservationInfo: ReservationInfo, status: ReservationStatus) {
+        self.detailsLabel.text =  reservationInfo.title
+        self.detailsLabel.textColor  = UIColor.appBlueColor()
+
+
+        self.priceLabel.text =  reservationInfo.value.capitalized
+        
+        self.priceLabel.isHidden = false
+        self.priceLabel.textColor  = UIColor.appBlueColor()
+        self.priceLabel.font = UIFont.appBoldFontOf(size: 14)
+        self.mainView.backgroundColor = UIColor.black
+    }
+
 }

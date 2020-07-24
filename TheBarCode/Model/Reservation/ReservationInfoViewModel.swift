@@ -27,7 +27,33 @@ class ReservationInfoViewModel: OrderViewModel {
     }
     
     var type: OrderSectionType {
-        return .discountDetails
+        return .reservationDetails
+    }
+    
+    var rowCount: Int {
+        return self.items.count
+    }
+    
+    var rowHeight: CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    var items: [ReservationInfo]
+    
+    init(items: [ReservationInfo]) {
+        self.items = items
+    }
+    
+}
+
+class ReservationStatusViewModel: OrderViewModel {
+    
+    var shouldShowSeparator: Bool {
+        return false
+    }
+    
+    var type: OrderSectionType {
+        return .reservationStatus
     }
     
     var rowCount: Int {
