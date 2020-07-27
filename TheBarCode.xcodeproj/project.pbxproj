@@ -333,6 +333,7 @@
 		FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */; };
 		FA5F239224C068CB00B4FA5E /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */; };
 		FA5F38F324C6D7F000886144 /* OrderInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F38F224C6D7F000886144 /* OrderInfoTableViewCell.swift */; };
+		FA5F8B0324CAB91800356DCD /* TableReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F8B0224CAB91800356DCD /* TableReservationViewController.swift */; };
 		FA6009DF24C5860E00F51895 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6009DE24C5860E00F51895 /* OrderDetailsViewController.swift */; };
 		FA6009E124C593D400F51895 /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6009E024C593D400F51895 /* OrderViewModel.swift */; };
 		FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA65D1D9246A81150084B6F7 /* NotificationItem.swift */; };
@@ -780,6 +781,7 @@
 		FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
 		FA5F38F224C6D7F000886144 /* OrderInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoTableViewCell.swift; sourceTree = "<group>"; };
+		FA5F8B0224CAB91800356DCD /* TableReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableReservationViewController.swift; sourceTree = "<group>"; };
 		FA6009DE24C5860E00F51895 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		FA6009E024C593D400F51895 /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
 		FA65D1D9246A81150084B6F7 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
@@ -2088,6 +2090,7 @@
 			isa = PBXGroup;
 			children = (
 				FA42BF8924C972A6003C3970 /* ReservationDetailsViewController.swift */,
+				FA5F8B0224CAB91800356DCD /* TableReservationViewController.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -2654,6 +2657,7 @@
 				837B48B32175FB2C00841419 /* Pagination.swift in Sources */,
 				83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */,
 				0C955DC92147CB5200F9385B /* UIImageAdditions.swift in Sources */,
+				FA5F8B0324CAB91800356DCD /* TableReservationViewController.swift in Sources */,
 				FA42BF8124C97059003C3970 /* OrderTotalBillInfoSection.swift in Sources */,
 				0C8BDCE12150D79B00D5117B /* LiveOffer.swift in Sources */,
 				0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */,

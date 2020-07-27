@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +14,9 @@
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
         </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="558"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="557.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="558"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_info" translatesAutoresizingMaskIntoConstraints="NO" id="lRp-dB-lai">
@@ -34,14 +35,14 @@
                             <constraint firstAttribute="height" constant="16" id="sge-dF-wOV"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_timings" translatesAutoresizingMaskIntoConstraints="NO" id="6Ez-wl-zo8">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="icon_timings" translatesAutoresizingMaskIntoConstraints="NO" id="6Ez-wl-zo8">
                         <rect key="frame" x="16" y="223.5" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="ZQ8-S6-5AR"/>
                             <constraint firstAttribute="height" constant="16" id="m41-tu-hqa"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_contact" translatesAutoresizingMaskIntoConstraints="NO" id="4Br-wZ-XJv">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="icon_contact" translatesAutoresizingMaskIntoConstraints="NO" id="4Br-wZ-XJv">
                         <rect key="frame" x="16" y="318" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="HWj-HH-F1L"/>
@@ -57,7 +58,7 @@
                         <color key="textColor" red="0.71764705882352942" green="0.71764705882352942" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LA-UJ-j43">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LA-UJ-j43">
                         <rect key="frame" x="40" y="68.5" width="264" height="134.5"/>
                         <string key="text">Ye Olde Fighting Cocks dates back to the 8th Century. The pub you can see today was built in the 11th Century.
 
@@ -66,13 +67,13 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Monday To Saturday" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQZ-hh-5Hh">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" text="Monday To Saturday" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQZ-hh-5Hh">
                         <rect key="frame" x="40" y="281" width="224.5" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OPENING TIMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFq-5j-CVk">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="OPENING TIMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFq-5j-CVk">
                         <rect key="frame" x="40" y="223" width="108.5" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="pbo-qz-Fz5"/>
@@ -81,7 +82,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACT INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxM-Yh-W57">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="CONTACT INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxM-Yh-W57">
                         <rect key="frame" x="40" y="317.5" width="103" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="TuS-YO-5on"/>
@@ -90,13 +91,13 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oI-IK-CdD">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oI-IK-CdD">
                         <rect key="frame" x="271" y="281" width="33" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sa8-5b-lPH">
+                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sa8-5b-lPH">
                         <rect key="frame" x="40" y="248" width="264" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="gSu-ay-FYZ"/>
@@ -110,13 +111,13 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                             <action selector="showMoreButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5wJ-Mp-BCe"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8m-km-LeQ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8m-km-LeQ">
                         <rect key="frame" x="157" y="223" width="148" height="17"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Na3-14-dTn">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Website:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Na3-14-dTn">
                         <rect key="frame" x="40" y="335" width="90" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -127,7 +128,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hch-EQ-4QN">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Phone:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hch-EQ-4QN">
                         <rect key="frame" x="40" y="375" width="90" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -138,7 +139,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3T-fZ-hrt">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3T-fZ-hrt">
                         <rect key="frame" x="138" y="335" width="166" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -149,7 +150,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                             <action selector="websiteButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cLk-nM-R2g"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs9-GE-FgW">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs9-GE-FgW">
                         <rect key="frame" x="138" y="375" width="166" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -160,7 +161,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                             <action selector="callButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0eG-m6-m3K"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ded-Jh-c3F">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Email Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ded-Jh-c3F">
                         <rect key="frame" x="40" y="415" width="90" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -171,7 +172,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2NQ-pw-aAJ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Address:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2NQ-pw-aAJ">
                         <rect key="frame" x="40" y="470" width="90" height="17"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -181,13 +182,13 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16 Abbey Mill Lane, St Albans,  Herts, AL3 4HE" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8c-xh-cze">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="16 Abbey Mill Lane, St Albans,  Herts, AL3 4HE" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8c-xh-cze">
                         <rect key="frame" x="138" y="470" width="166" height="34"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPn-zR-PNb">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPn-zR-PNb">
                         <rect key="frame" x="138" y="415" width="166" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -198,7 +199,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                             <action selector="emailButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jY7-a7-Cbh"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQO-1k-7ft">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQO-1k-7ft">
                         <rect key="frame" x="138" y="520" width="138" height="29"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -207,6 +208,22 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                         </state>
                         <connections>
                             <action selector="directionsButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H01-Bi-nlU"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqL-CH-kVb">
+                        <rect key="frame" x="194" y="31" width="110" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="110" id="5OZ-Nb-jNM"/>
+                            <constraint firstAttribute="height" constant="18" id="uof-lB-971"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="12"/>
+                        <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                        <state key="normal" title="Reserve Table" image="calendar" catalog="system">
+                            <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="reserveTableButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MHc-Vz-gql"/>
                         </connections>
                     </button>
                 </subviews>
@@ -225,6 +242,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                     <constraint firstItem="YQO-1k-7ft" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="138" id="ByT-uQ-GTM"/>
                     <constraint firstItem="E3T-fZ-hrt" firstAttribute="height" secondItem="Na3-14-dTn" secondAttribute="height" id="F1N-ys-6AO"/>
                     <constraint firstItem="tPn-zR-PNb" firstAttribute="top" secondItem="bs9-GE-FgW" secondAttribute="bottom" id="Gvc-dc-Out"/>
+                    <constraint firstAttribute="trailing" secondItem="eqL-CH-kVb" secondAttribute="trailing" constant="16" id="JHP-YZ-M4a"/>
                     <constraint firstItem="2NQ-pw-aAJ" firstAttribute="top" secondItem="Ded-Jh-c3F" secondAttribute="bottom" constant="15" id="Nef-pM-IKa"/>
                     <constraint firstAttribute="trailing" secondItem="5LA-UJ-j43" secondAttribute="trailing" constant="16" id="Ov8-rR-bhk"/>
                     <constraint firstItem="Sa8-5b-lPH" firstAttribute="top" secondItem="QFq-5j-CVk" secondAttribute="bottom" constant="8" id="Q5w-Oy-JSB"/>
@@ -263,6 +281,7 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                     <constraint firstItem="E3T-fZ-hrt" firstAttribute="leading" secondItem="Na3-14-dTn" secondAttribute="trailing" constant="8" id="vtf-mN-hIK"/>
                     <constraint firstItem="5LA-UJ-j43" firstAttribute="top" secondItem="gPI-8c-fzG" secondAttribute="bottom" constant="20" id="w6h-YH-JI2"/>
                     <constraint firstItem="4Br-wZ-XJv" firstAttribute="top" secondItem="cQZ-hh-5Hh" secondAttribute="bottom" constant="20" id="xeh-kX-enT"/>
+                    <constraint firstItem="eqL-CH-kVb" firstAttribute="centerY" secondItem="gPI-8c-fzG" secondAttribute="centerY" id="zGx-cH-WxC"/>
                     <constraint firstItem="QFq-5j-CVk" firstAttribute="leading" secondItem="6Ez-wl-zo8" secondAttribute="trailing" constant="8" id="zJL-ac-w72"/>
                 </constraints>
             </tableViewCellContentView>
@@ -281,16 +300,18 @@ Reputed to be the oldest pub in England by Guinness Book of Records 2016 Award w
                 <outlet property="phoneNumberPlaceholderLabel" destination="Hch-EQ-4QN" id="4dK-bq-lNO"/>
                 <outlet property="showMoreBottomMargin" destination="9Lv-eK-PaP" id="JsO-sM-G6u"/>
                 <outlet property="showMoreTimingsButton" destination="Sa8-5b-lPH" id="ewY-Cx-Y0j"/>
+                <outlet property="tableReservationButton" destination="eqL-CH-kVb" id="6dN-so-glU"/>
                 <outlet property="timingPlaceholderLabel" destination="cQZ-hh-5Hh" id="uAM-92-lvX"/>
                 <outlet property="timingsLabel" destination="0oI-IK-CdD" id="TFK-ld-djP"/>
                 <outlet property="websiteButton" destination="E3T-fZ-hrt" id="Dau-du-fWg"/>
                 <outlet property="websiteLabelHeight" destination="SXw-1V-6AV" id="1KY-ix-PVz"/>
                 <outlet property="websitePlaceholderLabel" destination="Na3-14-dTn" id="1nx-aJ-Sbt"/>
             </connections>
-            <point key="canvasLocation" x="-81.599999999999994" y="162.3688155922039"/>
+            <point key="canvasLocation" x="-81.599999999999994" y="161.91904047976013"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="calendar" catalog="system" width="64" height="52"/>
         <image name="icon_accordion" width="12" height="8"/>
         <image name="icon_contact" width="16" height="16"/>
         <image name="icon_info" width="16" height="16"/>

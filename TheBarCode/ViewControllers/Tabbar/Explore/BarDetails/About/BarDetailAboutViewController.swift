@@ -175,6 +175,17 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
             present(mailComposerController, animated: true, completion: nil)
         }
     }
+    
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, reserveTableButtonTapped sender: UIButton) {
+            
+        let tableReservationNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "TableReservationNavigation") as! UINavigationController)
+        tableReservationNavigation.modalPresentationStyle = .fullScreen
+                   
+        let tableReservationViewController = tableReservationNavigation.viewControllers.first as! TableReservationViewController
+        tableReservationViewController.bar = self.bar
+            
+        self.present(tableReservationNavigation, animated: true, completion: nil)
+    }
 }
 
 //MARK: MFMailComposeViewControllerDelegate

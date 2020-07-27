@@ -16,6 +16,8 @@ protocol ExploreAboutTableViewCellDelegate: class {
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, callButtonTapped sender: UIButton)
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, emailButtonTapped sender: UIButton)
     func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, showButtonTapped sender: UIButton)
+    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, reserveTableButtonTapped sender: UIButton)
+
 }
 
 class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
@@ -43,6 +45,8 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var phoneNumberLabelHeight: NSLayoutConstraint!
 
     @IBOutlet var showMoreTimingsButton: UIButton!
+    
+    @IBOutlet var tableReservationButton: UIButton!
     
     weak var delegate: ExploreAboutTableViewCellDelegate!
     
@@ -272,5 +276,9 @@ class ExploreAboutTableViewCell: UITableViewCell, NibReusable {
     
     @IBAction func showMoreButtonTapped(sender: UIButton) {
         self.delegate.exploreAboutTableViewCell(cell: self, showButtonTapped: sender)
+    }
+    
+    @IBAction func reserveTableButtonTapped(_ sender: UIButton) {
+        self.delegate.exploreAboutTableViewCell(cell: self, reserveTableButtonTapped: sender)
     }
 }
