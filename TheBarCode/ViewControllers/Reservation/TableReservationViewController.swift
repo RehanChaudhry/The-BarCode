@@ -81,6 +81,8 @@ class TableReservationViewController: UIViewController {
     @IBAction func addPaymentMethodButtonTapped(_ sender: UIButton) {
     }
     
+    @IBAction func reserveTableButtonTapped(_ sender: UIButton) {
+    }
 }
 
 
