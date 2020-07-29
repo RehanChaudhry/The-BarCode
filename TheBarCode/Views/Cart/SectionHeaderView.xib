@@ -19,6 +19,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="663-gZ-mby">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <color key="backgroundColor" red="0.22352941176470587" green="0.22745098039215686" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ongoing Orders" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkq-Ce-haH">
                     <rect key="frame" x="16" y="8" width="382" height="28"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
@@ -26,12 +30,15 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="tkq-Ce-haH" secondAttribute="trailing" constant="16" id="5gi-iG-HuB"/>
+                <constraint firstItem="663-gZ-mby" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6Kx-NW-k2D"/>
+                <constraint firstItem="663-gZ-mby" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="CGz-PX-RLC"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="tkq-Ce-haH" secondAttribute="bottom" constant="8" id="MLR-s9-BJE"/>
                 <constraint firstItem="tkq-Ce-haH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="PMb-iz-CKv"/>
+                <constraint firstItem="663-gZ-mby" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cPZ-h7-KK0"/>
                 <constraint firstItem="tkq-Ce-haH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="cfe-hP-8VZ"/>
+                <constraint firstAttribute="trailing" secondItem="663-gZ-mby" secondAttribute="trailing" id="q0s-84-WCd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

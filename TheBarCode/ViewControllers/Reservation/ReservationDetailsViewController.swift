@@ -102,37 +102,19 @@ extension ReservationDetailsViewController: UITableViewDataSource, UITableViewDe
         if let section = viewModel as? BarInfoSection {
                
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(barInfo: section.items[indexPath.row])
-                
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(barInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator)
             return cell
             
         } else  if let section = viewModel as? ReservationInfoViewModel {
                    
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(reservationInfo: section.items[indexPath.row])
-                   
-            if section.items.count > indexPath.item + 1 {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            }
+            cell.setupCell(reservationInfo: section.items[indexPath.row], showSeparator: (section.items.count > indexPath.item + 1))
             return cell
                    
         } else if let section = viewModel as? ReservationStatusViewModel {
-            
+
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(reservationInfo: section.items[indexPath.row], status: self.reservation.status)
-            
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(reservationInfo: section.items[indexPath.row], status: self.reservation.status, showSeparator: section.shouldShowSeparator)
             return cell
             
         } else {

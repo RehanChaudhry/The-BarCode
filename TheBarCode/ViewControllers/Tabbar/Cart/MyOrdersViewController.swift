@@ -46,6 +46,10 @@ class MyOrdersViewController: UIViewController {
         self.statefulTableView.innerTable.estimatedRowHeight = 200.0
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
+    
+        let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 8))
+        tableHeaderView.backgroundColor = UIColor.clear
+        self.statefulTableView.innerTable.tableHeaderView = tableHeaderView
 
     }
     

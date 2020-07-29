@@ -119,100 +119,62 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let viewModel = self.viewModels[indexPath.section]
+        
+        let isFirstCell = indexPath.row == 0
+        let isLastCell = indexPath.row == viewModel.rowCount - 1
         
         if let section = viewModel as? OrderStatusSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderStatusTableViewCell.self)
-            cell.setupCell(orderStatusInfo: section.items[indexPath.row])
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(orderStatusInfo: section.items[indexPath.row], showSeparator: false)
             return cell
 
         } else if let section = viewModel as? BarInfoSection {
-        
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(barInfo: section.items[indexPath.row])
-         
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(barInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
         
         } else if let section = viewModel as? OrderProductsInfoSection {
      
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderItem: section.items[indexPath.row])
-            
-            if section.items.count > indexPath.item + 1 {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            }
+            cell.setupCell(orderItem: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
 
         } else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDiscountInfo: section.items[indexPath.row])
-            
-            if section.items.count > indexPath.item + 1 {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            }
+            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderDeliveryInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row])
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row])
-            
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? HeadingSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderStatusTableViewCell.self)
-            cell.setupCell(heading: section.items[indexPath.row])
-           
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(heading: section.items[indexPath.row], showSeparator: section.shouldShowSeparator)
             return cell
             
         } else if let section = viewModel as? OrderPaymentInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPaymentTableViewCell.self)
-            cell.setupCell(orderPaymentInfo: section.items[indexPath.row])
-            
-            if section.shouldShowSeparator {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
-            } else {
-                cell.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
-            }
+            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator)
             return cell
             
         } else {

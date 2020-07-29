@@ -29,25 +29,29 @@ class MyReservationsViewController: UIViewController {
        //MARK: My Methods
       func setUpStatefulTableView() {
            
-           self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)
-           self.statefulTableView.innerTable.register(headerFooterViewType: SectionHeaderView.self)
+        self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)
+        self.statefulTableView.innerTable.register(headerFooterViewType: SectionHeaderView.self)
 
-           self.statefulTableView.innerTable.delegate = self
-           self.statefulTableView.innerTable.dataSource = self
-           
-           self.statefulTableView.backgroundColor = .clear
-           for aView in self.statefulTableView.subviews {
-               aView.backgroundColor = .clear
-           }
-           
-           self.statefulTableView.canLoadMore = false
-           self.statefulTableView.canPullToRefresh = false
-           self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-           self.statefulTableView.innerTable.estimatedRowHeight = 200.0
-           self.statefulTableView.innerTable.tableFooterView = UIView()
-           self.statefulTableView.innerTable.separatorStyle = .none
+        self.statefulTableView.innerTable.delegate = self
+        self.statefulTableView.innerTable.dataSource = self
+        
+        self.statefulTableView.backgroundColor = .clear
+        for aView in self.statefulTableView.subviews {
+            aView.backgroundColor = .clear
+        }
+        
+        self.statefulTableView.canLoadMore = false
+        self.statefulTableView.canPullToRefresh = false
+        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
+        self.statefulTableView.innerTable.estimatedRowHeight = 200.0
+        self.statefulTableView.innerTable.tableFooterView = UIView()
+        self.statefulTableView.innerTable.separatorStyle = .none
+        
+        let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 8))
+        tableHeaderView.backgroundColor = UIColor.clear
+        self.statefulTableView.innerTable.tableHeaderView = tableHeaderView
 
-       }
+    }
     
     func moveToreservationDetailsVC(reservation: Reservation) {
           

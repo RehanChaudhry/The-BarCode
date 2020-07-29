@@ -28,32 +28,32 @@
                         <rect key="frame" x="16" y="8" width="382" height="85"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ORDER NO. 823488234" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GU-zT-Juc">
-                                <rect key="frame" x="8" y="12" width="153.5" height="17"/>
+                                <rect key="frame" x="12" y="12" width="153.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="£ 23.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRw-3L-Jau">
-                                <rect key="frame" x="8" y="56" width="47" height="17"/>
+                                <rect key="frame" x="12" y="56" width="47" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Albert's Schloss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aN-II-GSJ">
-                                <rect key="frame" x="8" y="34" width="91.5" height="17"/>
+                                <rect key="frame" x="12" y="34" width="91.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward-arrow-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vdx-4a-ytg">
-                                <rect key="frame" x="349" y="10.5" width="30" height="20"/>
+                                <rect key="frame" x="354" y="8.5" width="24" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="JE4-Bq-q9n"/>
-                                    <constraint firstAttribute="height" constant="20" id="zzn-lH-WID"/>
+                                    <constraint firstAttribute="height" constant="24" id="mUl-uO-MKa"/>
+                                    <constraint firstAttribute="width" constant="24" id="wlz-ul-wQB"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf8-di-wO6">
-                                <rect key="frame" x="274" y="40.5" width="100" height="32"/>
+                                <rect key="frame" x="270" y="40.5" width="100" height="32"/>
                                 <color key="backgroundColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="svk-wG-hx0"/>
@@ -70,17 +70,17 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="mRw-3L-Jau" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="8" id="0Dk-Hl-zld"/>
+                            <constraint firstItem="mRw-3L-Jau" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="12" id="0Dk-Hl-zld"/>
                             <constraint firstItem="mRw-3L-Jau" firstAttribute="top" secondItem="8aN-II-GSJ" secondAttribute="bottom" constant="5" id="2UH-1T-0rZ"/>
-                            <constraint firstItem="3GU-zT-Juc" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="8" id="2ef-to-0IF"/>
+                            <constraint firstItem="3GU-zT-Juc" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="12" id="2ef-to-0IF"/>
                             <constraint firstAttribute="bottom" secondItem="mRw-3L-Jau" secondAttribute="bottom" constant="12" id="4sc-Pf-Mng"/>
                             <constraint firstItem="3GU-zT-Juc" firstAttribute="top" secondItem="Tk3-KU-l2Q" secondAttribute="top" constant="12" id="A8M-H2-okF"/>
                             <constraint firstItem="8aN-II-GSJ" firstAttribute="top" secondItem="3GU-zT-Juc" secondAttribute="bottom" constant="5" id="DPp-d5-S1v"/>
-                            <constraint firstItem="8aN-II-GSJ" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="8" id="HFN-fh-AmS"/>
-                            <constraint firstAttribute="trailing" secondItem="Vdx-4a-ytg" secondAttribute="trailing" constant="3" id="uIt-pK-TdS"/>
-                            <constraint firstAttribute="trailing" secondItem="Uf8-di-wO6" secondAttribute="trailing" constant="8" id="v6r-lp-ewL"/>
+                            <constraint firstItem="8aN-II-GSJ" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="12" id="HFN-fh-AmS"/>
+                            <constraint firstAttribute="trailing" secondItem="Vdx-4a-ytg" secondAttribute="trailing" constant="4" id="uIt-pK-TdS"/>
+                            <constraint firstAttribute="trailing" secondItem="Uf8-di-wO6" secondAttribute="trailing" constant="12" id="v6r-lp-ewL"/>
                             <constraint firstItem="Uf8-di-wO6" firstAttribute="centerY" secondItem="mRw-3L-Jau" secondAttribute="centerY" constant="-8" id="wbT-Hx-2Lu"/>
                             <constraint firstItem="Vdx-4a-ytg" firstAttribute="centerY" secondItem="3GU-zT-Juc" secondAttribute="centerY" id="zel-Bj-742"/>
                         </constraints>

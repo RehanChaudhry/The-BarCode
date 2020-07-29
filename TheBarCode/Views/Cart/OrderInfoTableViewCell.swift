@@ -12,8 +12,12 @@ import Reusable
 class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     @IBOutlet var mainView: UIView!
-    @IBOutlet var detailsLabel: UILabel!
-    @IBOutlet var priceLabel: UILabel!
+    
+    @IBOutlet var leftLabel: UILabel!
+    @IBOutlet var rightLabel: UILabel!
+    
+    @IBOutlet var topMargin: NSLayoutConstraint!
+    @IBOutlet var bottomMargin: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,66 +30,113 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setupCell(barInfo: BarInfo) {
-        self.detailsLabel.text = barInfo.barName
-        self.detailsLabel.font = UIFont.appBoldFontOf(size: 14)
-
-        self.priceLabel.isHidden = true
+    func adjustMargins(adjustTop: Bool, adjustBottom: Bool) {
+        self.topMargin.constant = adjustTop ? 16.0 : 8.0
+        self.bottomMargin.constant = adjustBottom ? 16.0 : 8.0
     }
     
-    func setupCell(orderItem: OrderItem) {
-        self.detailsLabel.text = "\(orderItem.quantity) x " + orderItem.name
+    func showSeparator(show: Bool) {
+        if show {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
+        } else {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 4000, 0.0, 0.0)
+        }
+    }
+    
+    func maskCorners(radius: CGFloat, mask: CACornerMask) {
+        if #available(iOS 11.0, *) {
+            self.mainView.layer.cornerRadius = 8.0
+            self.mainView.layer.maskedCorners = mask
+        }
+    }
+
+    func setupCell(barInfo: BarInfo, showSeparator: Bool) {
+        self.leftLabel.text = barInfo.barName
+        self.leftLabel.font = UIFont.appBoldFontOf(size: 14)
+
+        self.rightLabel.isHidden = true
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 8.0, mask: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+    }
+    
+    func setupCell(orderItem: OrderItem, showSeparator: Bool) {
+        self.leftLabel.text = "\(orderItem.quantity) x " + orderItem.name
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
-        self.priceLabel.text = "£ " + totalPriceString
-        self.priceLabel.isHidden = false
+        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.isHidden = false
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
     }
     
-    func setupCell(orderDiscountInfo: OrderDiscountInfo) {
-        self.detailsLabel.text =  orderDiscountInfo.title
+    func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool) {
+        self.leftLabel.text =  orderDiscountInfo.title
         
         let totalPriceString = String(format: "%.2f", orderDiscountInfo.price)
-        self.priceLabel.text = "£ " + totalPriceString
-        self.priceLabel.isHidden = false
+        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.isHidden = false
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
     }
     
-    func setupCell(orderDeliveryInfo: OrderDeliveryInfo) {
-          self.detailsLabel.text =  orderDeliveryInfo.title
-          
-          let totalPriceString = String(format: "%.2f", orderDeliveryInfo.price)
-          self.priceLabel.text = "£ " + totalPriceString
-          self.priceLabel.isHidden = false
-      }
+    func setupCell(orderDeliveryInfo: OrderDeliveryInfo, showSeparator: Bool) {
+        self.leftLabel.text =  orderDeliveryInfo.title
+                
+        let totalPriceString = String(format: "%.2f", orderDeliveryInfo.price)
+        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.isHidden = false
+              
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
+    }
     
-    func setupCell(orderTotalBillInfo: OrderTotalBillInfo) {
-        self.detailsLabel.text =  orderTotalBillInfo.title
-        self.detailsLabel.textColor  = UIColor.appBlueColor()
+    func setupCell(orderTotalBillInfo: OrderTotalBillInfo, showSeparator: Bool) {
+        self.leftLabel.text =  orderTotalBillInfo.title
+        self.leftLabel.textColor  = UIColor.appBlueColor()
 
         let totalPriceString = String(format: "%.2f", orderTotalBillInfo.price)
-        self.priceLabel.text = "£ " + totalPriceString
-        self.priceLabel.isHidden = false
-        self.priceLabel.textColor  = UIColor.appBlueColor()
-        self.priceLabel.font = UIFont.appBoldFontOf(size: 14)
+        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.isHidden = false
+        self.rightLabel.textColor  = UIColor.appBlueColor()
+        self.rightLabel.font = UIFont.appBoldFontOf(size: 14)
         self.mainView.backgroundColor = UIColor.black
         
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 8.0, mask: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
       }
 
-    func setupCell(reservationInfo: ReservationInfo) {
-        self.detailsLabel.text =  reservationInfo.title
-        self.priceLabel.text =  reservationInfo.value
+    func setupCell(reservationInfo: ReservationInfo, showSeparator: Bool) {
+        self.leftLabel.text =  reservationInfo.title
+        self.rightLabel.text =  reservationInfo.value
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
     }
     
-    func setupCell(reservationInfo: ReservationInfo, status: ReservationStatus) {
-        self.detailsLabel.text =  reservationInfo.title
-        self.detailsLabel.textColor  = UIColor.appBlueColor()
+    func setupCell(reservationInfo: ReservationInfo, status: ReservationStatus, showSeparator: Bool) {
+        self.leftLabel.text =  reservationInfo.title
+        self.leftLabel.textColor  = UIColor.appBlueColor()
 
 
-        self.priceLabel.text =  reservationInfo.value.capitalized
+        self.rightLabel.text =  reservationInfo.value.capitalized
         
-        self.priceLabel.isHidden = false
-        self.priceLabel.textColor  = UIColor.appBlueColor()
-        self.priceLabel.font = UIFont.appBoldFontOf(size: 14)
+        self.rightLabel.isHidden = false
+        self.rightLabel.textColor  = UIColor.appBlueColor()
+        self.rightLabel.font = UIFont.appBoldFontOf(size: 14)
         self.mainView.backgroundColor = UIColor.black
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
     }
 
 }

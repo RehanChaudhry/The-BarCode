@@ -30,7 +30,15 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setupCell(orderPaymentInfo: OrderPaymentInfo) {
+    func showSeparator(show: Bool) {
+        if show {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
+        } else {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
+        }
+    }
+    
+    func setupCell(orderPaymentInfo: OrderPaymentInfo, showSeparator: Bool) {
 
         self.mainView.layer.cornerRadius = 8
 
@@ -40,6 +48,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
         self.priceLabel.text =  "£ " + priceString
 
+        self.showSeparator(show: showSeparator)
     }
 
 }

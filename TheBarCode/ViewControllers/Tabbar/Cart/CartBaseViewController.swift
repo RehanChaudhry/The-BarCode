@@ -25,7 +25,6 @@ class CartBaseViewController: UIViewController {
     var myCartViewController: MyCartViewController!
     var myOrdersViewController: MyOrdersViewController!
     
-    
     var controllers: [UIViewController] = []
     
     var pageController: UIPageViewController!
@@ -58,7 +57,7 @@ class CartBaseViewController: UIViewController {
         self.setupPageController()
         self.moveToController(controller: self.myCartViewController, direction: .forward, animated: false)
         self.resetSegmentedButton()
-       // self.myCartButton.backgroundColor = UIColor.black
+       
         self.myCartButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         self.myCartLineView.isHidden = false
         self.myCartLineView.backgroundColor = UIColor.appBlueColor()

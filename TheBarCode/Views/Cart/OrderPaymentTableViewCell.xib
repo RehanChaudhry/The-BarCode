@@ -28,19 +28,19 @@
                         <rect key="frame" x="16" y="8" width="382" height="55"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEN MILNES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emg-Rj-bfc">
-                                <rect key="frame" x="8" y="8" width="366" height="17"/>
+                                <rect key="frame" x="12" y="8" width="358" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid(50%)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fX-s9-ANh">
-                                <rect key="frame" x="8" y="30" width="61.5" height="17"/>
+                                <rect key="frame" x="12" y="30" width="61.5" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11.5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jd-cN-gb5">
-                                <rect key="frame" x="346" y="30" width="28" height="17"/>
+                                <rect key="frame" x="342" y="30" width="28" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -52,11 +52,11 @@
                             <constraint firstItem="2fX-s9-ANh" firstAttribute="top" secondItem="Emg-Rj-bfc" secondAttribute="bottom" constant="5" id="RLy-fo-XUZ"/>
                             <constraint firstItem="4Jd-cN-gb5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2fX-s9-ANh" secondAttribute="trailing" constant="8" id="YHc-uw-Xph"/>
                             <constraint firstAttribute="bottom" secondItem="2fX-s9-ANh" secondAttribute="bottom" constant="8" id="aoG-BV-laC"/>
-                            <constraint firstAttribute="trailing" secondItem="4Jd-cN-gb5" secondAttribute="trailing" constant="8" id="d0c-2q-2Ct"/>
-                            <constraint firstItem="2fX-s9-ANh" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="8" id="fvi-ES-kNM"/>
-                            <constraint firstItem="Emg-Rj-bfc" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="8" id="pxZ-TI-gsb"/>
+                            <constraint firstAttribute="trailing" secondItem="4Jd-cN-gb5" secondAttribute="trailing" constant="12" id="d0c-2q-2Ct"/>
+                            <constraint firstItem="2fX-s9-ANh" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="12" id="fvi-ES-kNM"/>
+                            <constraint firstItem="Emg-Rj-bfc" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="12" id="pxZ-TI-gsb"/>
                             <constraint firstItem="4Jd-cN-gb5" firstAttribute="centerY" secondItem="2fX-s9-ANh" secondAttribute="centerY" id="smS-LA-7EP"/>
-                            <constraint firstAttribute="trailing" secondItem="Emg-Rj-bfc" secondAttribute="trailing" constant="8" id="x9f-W3-OMY"/>
+                            <constraint firstAttribute="trailing" secondItem="Emg-Rj-bfc" secondAttribute="trailing" constant="12" id="x9f-W3-OMY"/>
                         </constraints>
                     </view>
                 </subviews>

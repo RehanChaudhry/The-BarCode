@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +23,7 @@
                     <rect key="frame" x="8" y="8" width="398" height="38"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Albert's Schloss" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhE-Dz-qAG">
-                            <rect key="frame" x="32" y="12" width="87" height="14"/>
+                            <rect key="frame" x="32" y="8" width="358" height="22"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -49,10 +50,13 @@
                     </subviews>
                     <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="zhE-Dz-qAG" secondAttribute="trailing" constant="8" id="6Wh-KK-mvK"/>
                         <constraint firstItem="zhE-Dz-qAG" firstAttribute="centerY" secondItem="WRJ-ai-e9Z" secondAttribute="centerY" id="7mJ-E9-BXt"/>
                         <constraint firstItem="WRJ-ai-e9Z" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="11" id="9GF-No-Pe1"/>
                         <constraint firstItem="zhE-Dz-qAG" firstAttribute="leading" secondItem="WRJ-ai-e9Z" secondAttribute="trailing" constant="8" id="BdW-LA-JJy"/>
+                        <constraint firstAttribute="bottom" secondItem="zhE-Dz-qAG" secondAttribute="bottom" constant="8" id="CLs-Ac-DZP"/>
                         <constraint firstItem="WRJ-ai-e9Z" firstAttribute="leading" secondItem="SI9-Qn-qcu" secondAttribute="leading" constant="8" id="Mxc-UJ-KFJ"/>
+                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="8" id="hWD-WS-Oj3"/>
                         <constraint firstAttribute="bottom" secondItem="WRJ-ai-e9Z" secondAttribute="bottom" constant="11" id="x7c-Ge-zCc"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
@@ -68,7 +72,6 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Qbz-Y6-iDt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8bQ-Yc-y97"/>
                 <constraint firstItem="SI9-Qn-qcu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="SgG-DS-Jnf"/>

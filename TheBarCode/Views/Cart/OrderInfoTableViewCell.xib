@@ -21,17 +21,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-N7-We2">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-N7-We2">
                         <rect key="frame" x="16" y="0.0" width="382" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 x ProductName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-Vp-YTD">
-                                <rect key="frame" x="8" y="8" width="107" height="14"/>
+                                <rect key="frame" x="12" y="8" width="107" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCv-De-lLr">
-                                <rect key="frame" x="346" y="5" width="28" height="17"/>
+                                <rect key="frame" x="342" y="8" width="28" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -39,11 +39,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="DCv-De-lLr" firstAttribute="top" secondItem="bn1-N7-We2" secondAttribute="top" constant="5" id="0rj-BA-xi6"/>
+                            <constraint firstItem="DCv-De-lLr" firstAttribute="top" secondItem="xa1-Vp-YTD" secondAttribute="top" id="3FY-lQ-IqM"/>
                             <constraint firstItem="DCv-De-lLr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xa1-Vp-YTD" secondAttribute="trailing" constant="8" id="Vsm-BP-Xqx"/>
                             <constraint firstAttribute="bottom" secondItem="xa1-Vp-YTD" secondAttribute="bottom" constant="8" id="hNi-Pq-Nwu"/>
-                            <constraint firstAttribute="trailing" secondItem="DCv-De-lLr" secondAttribute="trailing" constant="8" id="naT-Ec-NRM"/>
-                            <constraint firstItem="xa1-Vp-YTD" firstAttribute="leading" secondItem="bn1-N7-We2" secondAttribute="leading" constant="8" id="oYg-N6-l03"/>
+                            <constraint firstAttribute="trailing" secondItem="DCv-De-lLr" secondAttribute="trailing" constant="12" id="naT-Ec-NRM"/>
+                            <constraint firstItem="xa1-Vp-YTD" firstAttribute="leading" secondItem="bn1-N7-We2" secondAttribute="leading" constant="12" id="oYg-N6-l03"/>
                             <constraint firstItem="xa1-Vp-YTD" firstAttribute="top" secondItem="bn1-N7-We2" secondAttribute="top" constant="8" id="tKI-ox-Byg"/>
                         </constraints>
                     </view>
@@ -58,9 +58,11 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="detailsLabel" destination="xa1-Vp-YTD" id="uAj-3p-8cp"/>
+                <outlet property="bottomMargin" destination="hNi-Pq-Nwu" id="E4z-gu-bhZ"/>
+                <outlet property="leftLabel" destination="xa1-Vp-YTD" id="uAj-3p-8cp"/>
                 <outlet property="mainView" destination="bn1-N7-We2" id="a2c-zY-tTA"/>
-                <outlet property="priceLabel" destination="DCv-De-lLr" id="ZeV-wO-sfG"/>
+                <outlet property="rightLabel" destination="DCv-De-lLr" id="ZeV-wO-sfG"/>
+                <outlet property="topMargin" destination="tKI-ox-Byg" id="pVC-CY-76Q"/>
             </connections>
             <point key="canvasLocation" x="-181" y="-70"/>
         </tableViewCell>

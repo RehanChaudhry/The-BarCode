@@ -25,8 +25,15 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
 
-
-    func setupCell(orderStatusInfo: OrderStatusInfo) {
+    func showSeparator(show: Bool) {
+        if show {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 16.0, 0.0, 16.0)
+        } else {
+            self.separatorInset = UIEdgeInsetsMake(0.0, 2000, 0.0, 0.0)
+        }
+    }
+    
+    func setupCell(orderStatusInfo: OrderStatusInfo, showSeparator: Bool) {
         
         self.titleLabel.text = "ORDER # \(orderStatusInfo.orderNo) STATUS:"
         self.statusButton.isHidden = false
@@ -37,11 +44,14 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         } else if orderStatusInfo.status == .received || orderStatusInfo.status == .inProgress {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
         }
+        
+        self.showSeparator(show: showSeparator)
     }
     
-    func setupCell(heading: Heading) {
+    func setupCell(heading: Heading, showSeparator: Bool) {
         self.titleLabel.text = heading.title
         self.statusButton.isHidden = true
 
+        self.showSeparator(show: showSeparator)
     }
 }
