@@ -348,7 +348,6 @@
 		FA90A87724C7191D008B056C /* OrderPaymentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA90A87624C7191D008B056C /* OrderPaymentTableViewCell.xib */; };
 		FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */; };
 		FAC2347E24C6DC3400284F36 /* OrderInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAC2347D24C6DC3400284F36 /* OrderInfoTableViewCell.xib */; };
-		FAC75F6824D07C9D00E677DB /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC75F6724D07C9C00E677DB /* StepperView.swift */; };
 		FAFEC59E24C1834F001E63EA /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */; };
 		FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */; };
 		FAFEC5A324C18748001E63EA /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC5A224C18748001E63EA /* Order.swift */; };
@@ -796,7 +795,6 @@
 		FA90A87624C7191D008B056C /* OrderPaymentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderPaymentTableViewCell.xib; sourceTree = "<group>"; };
 		FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		FAC2347D24C6DC3400284F36 /* OrderInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderInfoTableViewCell.xib; sourceTree = "<group>"; };
-		FAC75F6724D07C9C00E677DB /* StepperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FAFEC5A224C18748001E63EA /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -2126,7 +2124,6 @@
 		FAF12B7224C464130004C0C7 /* Stepper */ = {
 			isa = PBXGroup;
 			children = (
-				FAC75F6724D07C9C00E677DB /* StepperView.swift */,
 			);
 			name = Stepper;
 			path = "../../../stash-customers-ios/stashcustomer/Views/Stepper";
@@ -2635,7 +2632,6 @@
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,
 				0C117EFE22DDA13C0061FFC3 /* FoodMenuViewController.swift in Sources */,
-				FAC75F6824D07C9D00E677DB /* StepperView.swift in Sources */,
 				0C8E9A99214A908800224720 /* FaqsViewController.swift in Sources */,
 				0C86D02C22DF2F5F0034DA5C /* WhatsOnDetailFoodCell.swift in Sources */,
 				0C39F2F7231E72D500596A2B /* GMUStyleMap.m in Sources */,
