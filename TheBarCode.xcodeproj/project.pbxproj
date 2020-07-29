@@ -315,6 +315,7 @@
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
+		FA042EAD24D15430006D757B /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA042EAC24D15430006D757B /* StepperView.swift */; };
 		FA0440EA24C1698300F09F61 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */; };
 		FA0440EC24C169B300F09F61 /* OrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */; };
 		FA42B4B724C87E250000ED15 /* MyReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42B4B624C87E250000ED15 /* MyReservationsViewController.swift */; };
@@ -762,6 +763,7 @@
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		FA042EAC24D15430006D757B /* StepperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		FA0440E924C1698300F09F61 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		FA0440EB24C169B300F09F61 /* OrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderTableViewCell.xib; sourceTree = "<group>"; };
 		FA42B4B624C87E250000ED15 /* MyReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewController.swift; sourceTree = "<group>"; };
@@ -1628,7 +1630,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FAF12B7224C464130004C0C7 /* Stepper */,
+				FA042EAC24D15430006D757B /* StepperView.swift */,
 				FA0440E824C1695100F09F61 /* Cart */,
 				FA48A67F2463C75D007EB785 /* Notifications */,
 				0C9BB9D9238E3DA400B84346 /* Filters */,
@@ -2119,14 +2121,6 @@
 				FA65D1D9246A81150084B6F7 /* NotificationItem.swift */,
 			);
 			path = Notification;
-			sourceTree = "<group>";
-		};
-		FAF12B7224C464130004C0C7 /* Stepper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Stepper;
-			path = "../../../stash-customers-ios/stashcustomer/Views/Stepper";
 			sourceTree = "<group>";
 		};
 		FAFEC5A124C18738001E63EA /* Cart */ = {
@@ -2632,6 +2626,7 @@
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,
 				0C117EFE22DDA13C0061FFC3 /* FoodMenuViewController.swift in Sources */,
+				FA042EAD24D15430006D757B /* StepperView.swift in Sources */,
 				0C8E9A99214A908800224720 /* FaqsViewController.swift in Sources */,
 				0C86D02C22DF2F5F0034DA5C /* WhatsOnDetailFoodCell.swift in Sources */,
 				0C39F2F7231E72D500596A2B /* GMUStyleMap.m in Sources */,
