@@ -14,7 +14,6 @@ protocol OrderItemTableViewCellDelegate : class {
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView)
 }
 
-
 class OrderItemTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var nameLabel: UILabel!
@@ -63,9 +62,6 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
         self.delegate.orderItemTableViewCell(cell: self, deleteButtonTapped: sender)
     }
 }
-
-
-
 
 //MARK: StepperViewDelegate
 extension OrderItemTableViewCell: StepperViewDelegate {

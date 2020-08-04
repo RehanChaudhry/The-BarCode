@@ -30,6 +30,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
+    //MARK: My Methods
     func adjustMargins(adjustTop: Bool, adjustBottom: Bool) {
         self.topMargin.constant = adjustTop ? 16.0 : 8.0
         self.bottomMargin.constant = adjustBottom ? 16.0 : 8.0
@@ -45,7 +46,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     func maskCorners(radius: CGFloat, mask: CACornerMask) {
         if #available(iOS 11.0, *) {
-            self.mainView.layer.cornerRadius = 8.0
+            self.mainView.layer.cornerRadius = radius
             self.mainView.layer.maskedCorners = mask
         }
     }
@@ -114,9 +115,31 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
       }
 
     func setupCell(reservationInfo: ReservationInfo, showSeparator: Bool) {
-        self.leftLabel.text =  reservationInfo.title
-        self.rightLabel.text =  reservationInfo.value
         
+        if reservationInfo.type == .card {
+            
+            let components = reservationInfo.value.components(separatedBy: "-->")
+            
+            let boldAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white,
+                                  NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0)]
+            let regularAttributes = [NSAttributedString.Key.foregroundColor : UIColor.appGrayColor(),
+                                     NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0)]
+            
+            let cardType = NSMutableAttributedString(string: components.first ?? "", attributes: boldAttributes)
+            let placeholder = NSMutableAttributedString(string: " Ending In ", attributes: regularAttributes)
+            let cardNo = NSMutableAttributedString(string: components.last ?? "", attributes: boldAttributes)
+            
+            let attributesInfo = NSMutableAttributedString()
+            attributesInfo.append(cardType)
+            attributesInfo.append(placeholder)
+            attributesInfo.append(cardNo)
+            
+            self.rightLabel.attributedText = attributesInfo
+        } else {
+            self.rightLabel.text =  reservationInfo.value
+        }
+        
+        self.leftLabel.text =  reservationInfo.title
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 0.0, mask: [])

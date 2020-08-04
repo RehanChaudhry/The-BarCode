@@ -15,6 +15,8 @@ class OrderDetailsViewController: UIViewController {
     @IBOutlet var statefulTableView: StatefulTableView!
     @IBOutlet var cancelBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet var tableFooterView: UIView!
+    
     var order: Order!
     var viewModels: [OrderViewModel] = []
 
@@ -26,30 +28,30 @@ class OrderDetailsViewController: UIViewController {
         self.setUpStatefulTableView()
         self.setupViewModel()
 
+        self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
     }
     
 
      //MARK: My Methods
     func setUpStatefulTableView() {
          
-         self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
-         self.statefulTableView.innerTable.register(cellType: OrderStatusTableViewCell.self)
-         self.statefulTableView.innerTable.register(cellType: OrderPaymentTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: OrderStatusTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: OrderPaymentTableViewCell.self)
 
-         self.statefulTableView.innerTable.delegate = self
-         self.statefulTableView.innerTable.dataSource = self
-         
-         self.statefulTableView.backgroundColor = .clear
-         for aView in self.statefulTableView.subviews {
-             aView.backgroundColor = .clear
-         }
-         
-         self.statefulTableView.canLoadMore = false
-         self.statefulTableView.canPullToRefresh = false
-         self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-         self.statefulTableView.innerTable.estimatedRowHeight = 200.0
-         self.statefulTableView.innerTable.tableFooterView = UIView()
-     //    self.statefulTableView.innerTable.separatorStyle = .none
+        self.statefulTableView.innerTable.delegate = self
+        self.statefulTableView.innerTable.dataSource = self
+        
+        self.statefulTableView.backgroundColor = .clear
+        for aView in self.statefulTableView.subviews {
+            aView.backgroundColor = .clear
+        }
+        
+        self.statefulTableView.canLoadMore = false
+        self.statefulTableView.canPullToRefresh = false
+        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
+        self.statefulTableView.innerTable.estimatedRowHeight = 200.0
+        self.statefulTableView.innerTable.tableFooterView = UIView()
 
      }
     

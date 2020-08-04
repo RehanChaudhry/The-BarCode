@@ -23,11 +23,12 @@ class MyReservationsViewController: UIViewController {
         self.title = "My Reservations"
         self.setUpStatefulTableView()
 
+        self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
     }
     
     
-       //MARK: My Methods
-      func setUpStatefulTableView() {
+    //MARK: My Methods
+    func setUpStatefulTableView() {
            
         self.statefulTableView.innerTable.register(cellType: OrderTableViewCell.self)
         self.statefulTableView.innerTable.register(headerFooterViewType: SectionHeaderView.self)

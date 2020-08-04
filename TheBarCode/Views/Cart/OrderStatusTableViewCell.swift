@@ -14,6 +14,9 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var statusButton: UIButton!
 
+    @IBOutlet var topMargin: NSLayoutConstraint!
+    @IBOutlet var bottomMargin: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -46,6 +49,9 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.showSeparator(show: showSeparator)
+        
+        self.topMargin.constant = 29.0
+        self.bottomMargin.constant = 29.0
     }
     
     func setupCell(heading: Heading, showSeparator: Bool) {
@@ -53,5 +59,8 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         self.statusButton.isHidden = true
 
         self.showSeparator(show: showSeparator)
+        
+        self.topMargin.constant = 24.0
+        self.bottomMargin.constant = 16.0
     }
 }

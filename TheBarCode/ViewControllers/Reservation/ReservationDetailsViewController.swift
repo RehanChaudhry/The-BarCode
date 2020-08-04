@@ -14,6 +14,10 @@ class ReservationDetailsViewController: UIViewController {
     @IBOutlet var statefulTableView: StatefulTableView!
     @IBOutlet var closeBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet var headerView: UIView!
+    
+    var showHeader: Bool = false
+    
     var reservation: Reservation!
     var viewModels: [OrderViewModel] = []
 
@@ -24,6 +28,15 @@ class ReservationDetailsViewController: UIViewController {
         self.setUpStatefulTableView() 
         self.setupViewModel()
 
+        if self.showHeader {
+            self.statefulTableView.innerTable.tableHeaderView = self.headerView
+        } else {
+            let aView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 16.0))
+            aView.backgroundColor = UIColor.clear
+            self.statefulTableView.innerTable.tableHeaderView = aView
+        }
+        
+        self.closeBarButtonItem.image = self.closeBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
     }
     
     //MARK: My Methods
@@ -57,7 +70,7 @@ class ReservationDetailsViewController: UIViewController {
         let reservationInfo1 = ReservationInfo(title: "Date", value: self.reservation.date)
         let reservationInfo2 = ReservationInfo(title: "Time", value: self.reservation.time )
         let reservationInfo3 = ReservationInfo(title: "Number of People", value: "\(self.reservation.noOfPersons)" )
-        let reservationInfo4 = ReservationInfo(title: "Card selected", value: self.reservation.visaCardInfo)
+        let reservationInfo4 = ReservationInfo(title: "Card selected", value: "Visa-->Ending In-->1881", type: .card)
 
         let reservationInfoViewModel = ReservationInfoViewModel(items: [reservationInfo1, reservationInfo2, reservationInfo3, reservationInfo4])
         self.viewModels.append(reservationInfoViewModel)
@@ -98,23 +111,31 @@ extension ReservationDetailsViewController: UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let viewModel = self.viewModels[indexPath.section]
-
+        
         if let section = viewModel as? BarInfoSection {
                
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(barInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator)
+            cell.setupCell(barInfo: section.items[indexPath.row], showSeparator: true)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
             return cell
             
         } else  if let section = viewModel as? ReservationInfoViewModel {
-                   
+            
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(reservationInfo: section.items[indexPath.row], showSeparator: (section.items.count > indexPath.item + 1))
+            let reservationInfo = section.items[indexPath.row]
+            
+            cell.setupCell(reservationInfo: reservationInfo, showSeparator: true)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
+            cell.maskCorners(radius: 0.0, mask: [])
             return cell
                    
         } else if let section = viewModel as? ReservationStatusViewModel {
 
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(reservationInfo: section.items[indexPath.row], status: self.reservation.status, showSeparator: section.shouldShowSeparator)
+            cell.setupCell(reservationInfo: section.items[indexPath.row], status: self.reservation.status, showSeparator: false)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
+            cell.maskCorners(radius: 8.0, mask: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            
             return cell
             
         } else {

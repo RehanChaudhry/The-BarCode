@@ -9,14 +9,22 @@
 
 import Foundation
 
+enum ReservationInfoType: String {
+    case general = "general", card = "card"
+}
+
 class ReservationInfo: NSObject {
     
     var title: String = ""
     var value: String = ""
     
-    init(title: String, value: String) {
+    var type: ReservationInfoType = .general
+    
+    init(title: String, value: String, type: ReservationInfoType = .general) {
         self.title = title
         self.value = value
+        
+        self.type = type
     }
 }
 

@@ -18,7 +18,9 @@ enum OrderSectionType: String {
     heading = "heading",
     payment = "payment",
     reservationDetails = "reservationDetails",
-    reservationStatus = "reservationStatus"
+    reservationStatus = "reservationStatus",
+    vouchers = "vouchers",
+    offers = "offers"
 }
 
 protocol OrderViewModel: class {

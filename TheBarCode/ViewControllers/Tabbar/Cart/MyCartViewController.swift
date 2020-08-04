@@ -67,24 +67,37 @@ class MyCartViewController: UIViewController {
         }
     }
     
-
-
     func calculateBill(order: Order) {
+      
+      self.barNameLabel.text = order.barName
+      
+      var total: Double = 0.0
         
-        self.barNameLabel.text = order.barName
-        
-        var total: Double = 0.0
-          
-        for orderItem in order.orderItems {
-            total += ( orderItem.unitPrice * Double(orderItem.quantity))
-        }
-                                    
-        let priceString = String(format: "%.2f", total)
-        let buttonTitle = "Checkout - £ " + priceString
-        
-        self.checkOutButton.setTitle(buttonTitle, for: .normal)
-        self.statefulTableView.innerTable.reloadData()
+      for orderItem in order.orderItems {
+          total += ( orderItem.unitPrice * Double(orderItem.quantity))
       }
+                                  
+      let priceString = String(format: "%.2f", total)
+      let buttonTitle = "Checkout - £ " + priceString
+      
+      self.checkOutButton.setTitle(buttonTitle, for: .normal)
+      self.statefulTableView.innerTable.reloadData()
+    }
+    
+    //MARK: My IBActions
+    @IBAction func checkOutButtonTapped(sender: UIButton) {
+        
+        if let order = self.selectedOrder {
+            let checkNavigation = self.storyboard!.instantiateViewController(withIdentifier: "CheckOutNavigation") as! UINavigationController
+            checkNavigation.modalPresentationStyle = .fullScreen
+            
+            let checkoutController = checkNavigation.viewControllers.first! as! CheckOutViewController
+            checkoutController.order = order
+            
+            self.present(checkNavigation, animated: true, completion: nil)
+        }
+        
+    }
 }
 
 
@@ -161,13 +174,8 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
             return
         }
                
-        guard let order = self.orders[indexPath.section] as? Order else {
-            debugPrint("Not a order info section")
-            return
-        }
-        
+        let order = self.orders[indexPath.section]
         self.calculateBill(order: order)
-
     }
 }
 
