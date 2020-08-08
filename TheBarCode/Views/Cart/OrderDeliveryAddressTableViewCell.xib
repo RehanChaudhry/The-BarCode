@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="76" id="KGk-i7-Jjw" customClass="OrderDeliveryAddressTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7A-lX-dkn">
+                        <rect key="frame" x="44" y="8" width="260" height="67"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Delivery Details: Work" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ser-dv-8e0">
+                                <rect key="frame" x="12" y="8" width="208" height="15"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forward-arrow-icon" translatesAutoresizingMaskIntoConstraints="NO" id="4B6-6o-DPT">
+                                <rect key="frame" x="228" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="k2U-I2-eeV"/>
+                                    <constraint firstAttribute="width" constant="24" id="tVj-P1-15q"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYd-Nx-Tbq">
+                                <rect key="frame" x="12" y="31" width="236" height="28"/>
+                                <string key="text">L - 591 Sector 11-A North Karachi, Karachi
+Note to rider: First Floor</string>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="NYd-Nx-Tbq" secondAttribute="trailing" constant="12" id="2Hd-dH-TZX"/>
+                            <constraint firstItem="4B6-6o-DPT" firstAttribute="top" secondItem="ser-dv-8e0" secondAttribute="top" id="DP6-Mh-LUC"/>
+                            <constraint firstAttribute="bottom" secondItem="NYd-Nx-Tbq" secondAttribute="bottom" constant="8" id="USB-Dd-LP8"/>
+                            <constraint firstItem="ser-dv-8e0" firstAttribute="top" secondItem="Y7A-lX-dkn" secondAttribute="top" constant="8" id="e89-6T-8Ps"/>
+                            <constraint firstItem="NYd-Nx-Tbq" firstAttribute="top" secondItem="ser-dv-8e0" secondAttribute="bottom" constant="8" id="lYP-xb-Dkd"/>
+                            <constraint firstItem="NYd-Nx-Tbq" firstAttribute="leading" secondItem="Y7A-lX-dkn" secondAttribute="leading" constant="12" id="ohe-bc-wMD"/>
+                            <constraint firstItem="4B6-6o-DPT" firstAttribute="leading" secondItem="ser-dv-8e0" secondAttribute="trailing" constant="8" id="u9V-Dn-rGj"/>
+                            <constraint firstAttribute="trailing" secondItem="4B6-6o-DPT" secondAttribute="trailing" constant="8" id="zQa-nT-hZ2"/>
+                            <constraint firstItem="ser-dv-8e0" firstAttribute="leading" secondItem="Y7A-lX-dkn" secondAttribute="leading" constant="12" id="zvi-2G-Dyo"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="Y7A-lX-dkn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="MR0-5O-AkR"/>
+                    <constraint firstItem="Y7A-lX-dkn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="Oz3-Pl-AFG"/>
+                    <constraint firstAttribute="bottom" secondItem="Y7A-lX-dkn" secondAttribute="bottom" constant="8" id="i6e-Yr-57w"/>
+                    <constraint firstAttribute="trailing" secondItem="Y7A-lX-dkn" secondAttribute="trailing" constant="16" id="xvF-Sp-ag0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="subTitleLabel" destination="NYd-Nx-Tbq" id="kPd-il-nUT"/>
+                <outlet property="titleLabel" destination="ser-dv-8e0" id="G9B-Cv-sjK"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="forward-arrow-icon" width="24" height="24"/>
+    </resources>
+</document>

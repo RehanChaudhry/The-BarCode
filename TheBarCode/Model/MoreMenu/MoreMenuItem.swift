@@ -15,6 +15,7 @@ enum MenuItemType: String {
     splitPayment = "splitPayment",
     notification = "notification",
     accountSettings = "accountSettings",
+    myAddresses = "myAddresses",
     notificationSettings = "notificationSettings",
     preferences = "preferences",
     reload = "reload",
@@ -37,6 +38,8 @@ enum MenuItemType: String {
             return ("Account Settings", "icon_account_settings", "AccountSettingsNavigation", true, 16.0)
         case .notificationSettings:
             return ("Notification Settings", "icon_notif_settings", "NotificationSettingsNavigation", true, 16.0)
+        case .myAddresses:
+            return ("My Addresses", "icon_my_addresses", "MyAddressesNavigation", true, 16.0)
         case .preferences:
             return ("Preferences", "icon_preferences", "CategoryFilterNavigation", true, 16.0)
         case .reload:
@@ -59,6 +62,7 @@ enum MenuItemType: String {
         MenuItem(type: .splitPayment),
         MenuItem(type: .notification),
         MenuItem(type: .accountSettings),
+        MenuItem(type: .myAddresses),
         MenuItem(type: .notificationSettings),
         MenuItem(type: .preferences),
         MenuItem(type: .reload),

@@ -50,6 +50,18 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
             self.mainView.layer.maskedCorners = mask
         }
     }
+    
+    func setupMainViewAppearanceAsBlack() {
+        self.mainView.backgroundColor = UIColor.black
+        self.leftLabel.textColor = UIColor.appBlueColor()
+        self.rightLabel.textColor = UIColor.appBlueColor()
+    }
+    
+    func setupMainViewAppearanceAsStandard() {
+        self.mainView.backgroundColor = UIColor.appBgSecondaryGrayColor()
+        self.leftLabel.textColor = UIColor.white
+        self.rightLabel.textColor = UIColor.white
+    }
 
     func setupCell(barInfo: BarInfo, showSeparator: Bool) {
         self.leftLabel.text = barInfo.barName
@@ -60,6 +72,8 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 8.0, mask: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        
+        self.setupMainViewAppearanceAsStandard()
     }
     
     func setupCell(orderItem: OrderItem, showSeparator: Bool) {
@@ -72,18 +86,27 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 0.0, mask: [])
+        
+        self.setupMainViewAppearanceAsStandard()
     }
     
     func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool) {
         self.leftLabel.text =  orderDiscountInfo.title
         
-        let totalPriceString = String(format: "%.2f", orderDiscountInfo.price)
-        self.rightLabel.text = "£ " + totalPriceString
+        if orderDiscountInfo.price > 0.0 {
+            let totalPriceString = String(format: "%.2f", orderDiscountInfo.price)
+            self.rightLabel.text = "- £ " + totalPriceString
+        } else {
+            self.rightLabel.text = ""
+        }
+        
         self.rightLabel.isHidden = false
         
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 0.0, mask: [])
+        
+        self.setupMainViewAppearanceAsStandard()
     }
     
     func setupCell(orderDeliveryInfo: OrderDeliveryInfo, showSeparator: Bool) {
@@ -96,25 +119,30 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 0.0, mask: [])
+        
+        self.setupMainViewAppearanceAsStandard()
     }
     
     func setupCell(orderTotalBillInfo: OrderTotalBillInfo, showSeparator: Bool) {
         self.leftLabel.text =  orderTotalBillInfo.title
-        self.leftLabel.textColor  = UIColor.appBlueColor()
-
+        
         let totalPriceString = String(format: "%.2f", orderTotalBillInfo.price)
         self.rightLabel.text = "£ " + totalPriceString
         self.rightLabel.isHidden = false
-        self.rightLabel.textColor  = UIColor.appBlueColor()
+        
         self.rightLabel.font = UIFont.appBoldFontOf(size: 14)
         self.mainView.backgroundColor = UIColor.black
         
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 8.0, mask: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        
+        self.setupMainViewAppearanceAsBlack()
       }
 
     func setupCell(reservationInfo: ReservationInfo, showSeparator: Bool) {
+        
+        self.setupMainViewAppearanceAsStandard()
         
         if reservationInfo.type == .card {
             
@@ -147,19 +175,17 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(reservationInfo: ReservationInfo, status: ReservationStatus, showSeparator: Bool) {
         self.leftLabel.text =  reservationInfo.title
-        self.leftLabel.textColor  = UIColor.appBlueColor()
-
-
+        
         self.rightLabel.text =  reservationInfo.value.capitalized
         
         self.rightLabel.isHidden = false
-        self.rightLabel.textColor  = UIColor.appBlueColor()
         self.rightLabel.font = UIFont.appBoldFontOf(size: 14)
-        self.mainView.backgroundColor = UIColor.black
         
         self.showSeparator(show: showSeparator)
         
         self.maskCorners(radius: 0.0, mask: [])
+        
+        self.setupMainViewAppearanceAsBlack()
     }
 
 }

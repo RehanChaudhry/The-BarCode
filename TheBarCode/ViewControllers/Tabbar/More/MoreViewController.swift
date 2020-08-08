@@ -72,6 +72,8 @@ class MoreViewController: UIViewController {
             return notificationMenuClick
         case .accountSettings:
             return accountSettingsClick
+        case .myAddresses:
+            return myAddressesClick
         case .notificationSettings:
             return notificationSettingsClick
         case .preferences:

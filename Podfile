@@ -33,6 +33,8 @@ target 'TheBarCode' do
   pod 'BugfenderSDK', '~> 1.7'
   pod 'DTCoreText', '~> 1.6.23'
   
+  pod 'KMPlaceholderTextView', '~> 1.4.0'
+
   target 'TheBarCodeTests' do
     inherit! :search_paths
     

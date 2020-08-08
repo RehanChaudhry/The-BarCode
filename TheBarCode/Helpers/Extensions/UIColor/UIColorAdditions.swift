@@ -22,6 +22,10 @@ extension UIColor {
         return UIColor("#494949")
     }
     
+    static func appBgSecondaryGrayColor() -> UIColor {
+        return UIColor("#2B2B2B")
+    }
+    
     static func appBgGrayColor() -> UIColor {
         return UIColor("#2C2C2C")
     }
@@ -163,5 +167,9 @@ extension UIColor {
     
     static func appCartUnSelectedColor() -> UIColor {
         return UIColor("#393A3B")
+    }
+    
+    static func appRadioBgColor() -> UIColor {
+        return UIColor("#2A2A2A")
     }
 }

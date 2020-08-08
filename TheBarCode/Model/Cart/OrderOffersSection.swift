@@ -24,17 +24,19 @@ class OrderOfferInfo: NSObject {
 
 extension OrderOfferInfo {
     static func dummyVouchers() -> [OrderOfferInfo] {
-        let none = OrderOfferInfo(discount: 0.0, text: "None", isSelected: false)
+        let none = OrderOfferInfo(discount: 0.0, text: "None", isSelected: true)
         let buyOneGetOne = OrderOfferInfo(discount: 0.0, text: "Buy 1 Get 1 Free", isSelected: false)
         
         return [none, buyOneGetOne]
     }
     
     static func dummyOffers() -> [OrderOfferInfo] {
-        let none = OrderOfferInfo(discount: 0.0, text: "None", isSelected: false)
+        let none = OrderOfferInfo(discount: 0.0, text: "None", isSelected: true)
         let buyOneGetOne = OrderOfferInfo(discount: 10.0, text: "10% standard offer discount", isSelected: false)
         
-        return [none, buyOneGetOne]
+        let happyFriday = OrderOfferInfo(discount: 10.0, text: "Happy Friday", isSelected: false)
+        
+        return [none, buyOneGetOne, happyFriday]
     }
 }
 

@@ -20,7 +20,15 @@ enum OrderSectionType: String {
     reservationDetails = "reservationDetails",
     reservationStatus = "reservationStatus",
     vouchers = "vouchers",
-    offers = "offers"
+    offers = "offers",
+    offerRedeem = "offerRedeem",
+    discountInfo = "discountInfo",
+    dineIn = "dineIn",
+    tableNo = "tableNo",
+    counterCollection = "counterCollection",
+    takeAway = "takeAway",
+    delivery = "delivery",
+    deliveryAddress = "deliveryAddress"
 }
 
 protocol OrderViewModel: class {

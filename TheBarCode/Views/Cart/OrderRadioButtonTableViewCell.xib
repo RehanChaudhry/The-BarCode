@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
         </array>
@@ -15,48 +18,60 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="OrderOfferTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="OrderRadioButtonTableViewCell" customModule="TheBarCode" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFT-V9-GKv">
+                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <action selector="radioButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2ZD-WE-QaX"/>
+                        </connections>
+                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6G-7e-rDT">
-                        <rect key="frame" x="16" y="14" width="16" height="16"/>
-                        <color key="backgroundColor" red="0.22352941179999999" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="16" y="12" width="20" height="20"/>
+                        <color key="backgroundColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="0je-XS-URI"/>
-                            <constraint firstAttribute="width" constant="16" id="vyQ-Mc-TO8"/>
+                            <constraint firstAttribute="height" constant="20" id="0je-XS-URI"/>
+                            <constraint firstAttribute="width" constant="20" id="vyQ-Mc-TO8"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="8"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                <integer key="value" value="2"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                <color key="value" red="0.22352941179999999" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3x-hg-Jnq">
-                        <rect key="frame" x="40" y="8" width="264" height="28"/>
+                        <rect key="frame" x="44" y="8" width="214" height="28"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <state key="normal" title="Button">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
+                        <connections>
+                            <action selector="radioButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CnH-AI-NGh"/>
+                        </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OFFER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKW-zd-sP9">
+                        <rect key="frame" x="266" y="8" width="38" height="28"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="w6G-7e-rDT" firstAttribute="centerY" secondItem="G3x-hg-Jnq" secondAttribute="centerY" id="7Ae-Ut-BMX"/>
-                    <constraint firstAttribute="trailing" secondItem="G3x-hg-Jnq" secondAttribute="trailing" constant="16" id="E73-68-1UI"/>
+                    <constraint firstItem="wKW-zd-sP9" firstAttribute="bottom" secondItem="G3x-hg-Jnq" secondAttribute="bottom" id="Abu-eR-f7J"/>
                     <constraint firstItem="G3x-hg-Jnq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="LlC-Ef-5tc"/>
+                    <constraint firstItem="wKW-zd-sP9" firstAttribute="leading" secondItem="G3x-hg-Jnq" secondAttribute="trailing" constant="8" id="Tyc-7o-p0n"/>
+                    <constraint firstAttribute="trailing" secondItem="wKW-zd-sP9" secondAttribute="trailing" constant="16" id="Z89-cI-HfH"/>
+                    <constraint firstAttribute="bottom" secondItem="fFT-V9-GKv" secondAttribute="bottom" id="e46-5V-is4"/>
                     <constraint firstItem="w6G-7e-rDT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="eM9-1B-Yub"/>
                     <constraint firstItem="G3x-hg-Jnq" firstAttribute="leading" secondItem="w6G-7e-rDT" secondAttribute="trailing" constant="8" id="j4l-L9-xE8"/>
+                    <constraint firstItem="fFT-V9-GKv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="kRn-JJ-9gY"/>
+                    <constraint firstItem="G3x-hg-Jnq" firstAttribute="leading" secondItem="fFT-V9-GKv" secondAttribute="trailing" id="t2b-ik-I2R"/>
                     <constraint firstAttribute="bottom" secondItem="G3x-hg-Jnq" secondAttribute="bottom" constant="8" id="wp6-84-Xos"/>
+                    <constraint firstItem="fFT-V9-GKv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xKa-ON-C2f"/>
+                    <constraint firstItem="wKW-zd-sP9" firstAttribute="top" secondItem="G3x-hg-Jnq" secondAttribute="top" id="ycV-hY-i4X"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -64,6 +79,7 @@
             <connections>
                 <outlet property="bottomMargin" destination="wp6-84-Xos" id="XuX-Ie-52q"/>
                 <outlet property="selectionView" destination="w6G-7e-rDT" id="YPz-3Y-fnR"/>
+                <outlet property="subTitleLabel" destination="wKW-zd-sP9" id="731-5W-n0B"/>
                 <outlet property="titleButton" destination="G3x-hg-Jnq" id="2i4-0c-Aas"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
