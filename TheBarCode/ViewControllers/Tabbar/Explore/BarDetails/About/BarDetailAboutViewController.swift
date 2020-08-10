@@ -11,22 +11,47 @@ import Reusable
 import SJSegmentedScrollView
 import MessageUI
 import CoreLocation
+import PureLayout
 
 class BarDetailAboutViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var headerView: UIView!
+    
     var bar : Bar!
+    
+    lazy var headerViewController: BarDetailHeaderViewController = {
+        let headerViewController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailHeaderViewController") as! BarDetailHeaderViewController)
+        headerViewController.bar = self.bar
+        self.addChildViewController(headerViewController)
+        headerViewController.willMove(toParentViewController: self)
+        self.headerView.addSubview(headerViewController.view)
+        headerViewController.view.autoPinEdgesToSuperviewEdges()
+        
+        let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
+        let headerViewHeight = ceil(collectionViewHeight + 83.0)
+        
+        let headerFrame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: headerViewHeight)
+        self.headerView.frame = headerFrame
+        self.tableView.tableHeaderView = self.headerView
+        
+        return headerViewController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         self.tableView.register(cellType: ExploreAboutTableViewCell.self)
         self.tableView.register(cellType: SocialLinksCell.self)
         self.tableView.estimatedRowHeight = 400.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        let _ = self.headerViewController
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +61,7 @@ class BarDetailAboutViewController: UIViewController {
     
     func reloadData(bar: Bar) {
         self.bar = bar
+        self.headerViewController.reloadData(bar: self.bar)
         self.tableView.reloadData()
     }
 

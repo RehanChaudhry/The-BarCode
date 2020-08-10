@@ -25,6 +25,7 @@ class WhatsOnViewController: UIViewController {
     @IBOutlet var drinklistContainerView: UIView!
     @IBOutlet var foodMenuContainerView: UIView!
     
+    @IBOutlet var segmentContainer: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
     var bar: Bar!
@@ -43,6 +44,10 @@ class WhatsOnViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        self.segmentContainer.backgroundColor = UIColor.appNavBarGrayColor()
         
         self.eventsController = (self.storyboard!.instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController)
         self.eventsController.bar = self.bar

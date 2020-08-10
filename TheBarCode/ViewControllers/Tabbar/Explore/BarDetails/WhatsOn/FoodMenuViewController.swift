@@ -69,7 +69,10 @@ class FoodMenuViewController: UIViewController {
         self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
         self.statefulTableView.innerTable.estimatedRowHeight = 250.0
         self.statefulTableView.innerTable.tableFooterView = UIView()
-        self.statefulTableView.innerTable.separatorStyle = .none
+        self.statefulTableView.innerTable.separatorInset = UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
+        
+        let tableHeader = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 8.0))
+        self.statefulTableView.innerTable.tableHeaderView = tableHeader
         
         self.statefulTableView.innerTable.register(headerFooterViewType: FoodMenuHeaderView.self)
         self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
@@ -94,7 +97,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44.0
+        return 48.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -115,7 +118,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
         let segment = self.segments[indexPath.section]
-        cell.setupCellForFood(food: segment.foods[indexPath.row], topPadding: indexPath.row != 0)
+        cell.setupCellForFood(food: segment.foods[indexPath.row])
         return cell
     }
     

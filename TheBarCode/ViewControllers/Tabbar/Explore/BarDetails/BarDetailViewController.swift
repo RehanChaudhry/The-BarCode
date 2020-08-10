@@ -24,13 +24,15 @@ class BarDetailViewController: UIViewController {
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var standardRedeemButton: GradientButton!
     
+    @IBOutlet var navBarBgView: UIView!
+    
     @IBOutlet var bottomView: UIView!
     @IBOutlet var bottomViewBottom: NSLayoutConstraint!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     weak var delegate: BarDetailViewControllerDelegate?
 
-    var headerController: BarDetailHeaderViewController!
-    
     var aboutController: BarDetailAboutViewController!
     var whatsOnController: WhatsOnViewController!
     var offersController: OffersViewController!
@@ -57,6 +59,8 @@ class BarDetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.navBarBgView.backgroundColor = UIColor.appNavBarGrayColor()
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.statefulView.isHidden = true
@@ -88,6 +92,8 @@ class BarDetailViewController: UIViewController {
         } else {
             Analytics.logEvent(viewBarDetailsScreen, parameters: ["bar_id" : self.barId ?? ""])
         }
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         
@@ -121,14 +127,6 @@ class BarDetailViewController: UIViewController {
         
         self.isSegmentsSetuped = true
         
-        let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
-        let headerViewHeight = ceil(collectionViewHeight + 83.0)
-        
-        self.headerController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailHeaderViewController") as! BarDetailHeaderViewController)
-        headerController.bar = self.selectedBar
-        let _ = self.headerController.view
-        self.headerController.collectionViewHeight.constant = collectionViewHeight
-        
         self.aboutController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailAboutViewController") as! BarDetailAboutViewController)
         self.aboutController.bar = self.selectedBar
         self.aboutController.title = "About"
@@ -148,19 +146,18 @@ class BarDetailViewController: UIViewController {
         self.offersController.preSelectedTabIndex = self.preSelectedSubTabIndexOffers
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
         
-        self.aboutController.automaticallyAdjustsScrollViewInsets = false
-        self.whatsOnController.automaticallyAdjustsScrollViewInsets = false
-        self.offersController.automaticallyAdjustsScrollViewInsets = false
-        
-        self.segmentedController = SJSegmentedViewController(headerViewController: self.headerController, segmentControllers: [self.aboutController, self.whatsOnController, self.offersController])
+        self.segmentedController = SJSegmentedViewController(headerViewController: nil, segmentControllers: [self.aboutController, self.whatsOnController, self.offersController])
         self.segmentedController.delegate = self
-        self.segmentedController.headerViewHeight = headerViewHeight
+        self.segmentedController.headerViewHeight = 150.0
         self.segmentedController.segmentViewHeight = 44.0
         self.segmentedController.selectedSegmentViewHeight = 1.0
         self.segmentedController.selectedSegmentViewColor = UIColor.appBlueColor()
         self.segmentedController.segmentTitleColor = UIColor.white
-        self.segmentedController.segmentBackgroundColor = self.headerController.view.backgroundColor!
+        self.segmentedController.segmentBackgroundColor = UIColor.appNavBarGrayColor()
         self.segmentedController.segmentTitleFont = UIFont.appRegularFontOf(size: 16.0)
+        
+        let shadow = SJShadow(offset: CGSize.zero, color: UIColor.black, radius: 0.0, opacity: 0.0)
+        self.segmentedController.segmentShadow = shadow
         
         self.addChildViewController(self.segmentedController)
         self.segmentedController.willMove(toParentViewController: self)
@@ -368,17 +365,6 @@ extension BarDetailViewController: RedeemStartViewControllerDelegate {
             self.setUpBottomView()
         }
     }
-    /*
-    func redeemStartViewController(controller: RedeemStartViewController, redeemButtonTapped sender: UIButton, selectedIndex: Int, redeemType: RedeemType) {
-        let redeemDealViewController = (self.storyboard?.instantiateViewController(withIdentifier: "RedeemDealViewController") as! RedeemDealViewController)
-        redeemDealViewController.redeemingType = redeemType
-        redeemDealViewController.barId = self.selectedBar!.id.value
-        redeemDealViewController.standardOfferId = self.selectedBar!.activeStandardOffer.value!.id.value
-        redeemDealViewController.offerType = OfferType.standard
-        redeemDealViewController.delegate = self
-        redeemDealViewController.modalPresentationStyle = .overCurrentContext
-        self.present(redeemDealViewController, animated: true, completion: nil)
-    }*/
     
     func redeemStartViewController(controller: RedeemStartViewController, backButtonTapped sender: UIButton, selectedIndex: Int) {
         
@@ -439,7 +425,6 @@ extension BarDetailViewController {
                     self.setUpSegmentedController()
                 } else {
                     self.aboutController.reloadData(bar: self.selectedBar!)
-                    self.headerController.reloadData(bar: self.selectedBar!)
                 }
                 
                 self.setUpTitle()

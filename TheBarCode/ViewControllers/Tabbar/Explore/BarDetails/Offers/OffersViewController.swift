@@ -24,6 +24,7 @@ class OffersViewController: UIViewController {
     @IBOutlet var exclusiveContainerView: UIView!
     @IBOutlet var liveContainerView: UIView!
     
+    @IBOutlet var segmentContainer: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
     var bar: Bar!
@@ -42,6 +43,10 @@ class OffersViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        self.segmentContainer.backgroundColor = UIColor.appNavBarGrayColor()
         
         self.chalkboardController = (self.storyboard!.instantiateViewController(withIdentifier: "ChalkBoardViewController") as! ChalkBoardViewController)
         self.chalkboardController.bar = self.bar

@@ -42,6 +42,9 @@ class BarDetailHeaderViewController: UIViewController {
     @IBOutlet weak var barTypeView: ShadowView!
     @IBOutlet weak var barTypeImageView: UIImageView!
     
+    @IBOutlet var cartIconContainer: ShadowView!
+    @IBOutlet var cartIconImageView: UIImageView!
+    
     var bar: Bar!
     
     var avplayer: AVPlayer?
@@ -56,7 +59,6 @@ class BarDetailHeaderViewController: UIViewController {
         let nib = UINib(nibName: "ExploreDetailHeaderCollectionViewCell", bundle: nil)
         self.pagerView.register(nib, forCellWithReuseIdentifier: "ExploreDetailHeaderCollectionViewCell")
         
-        
         self.pagerView.backgroundColor = UIColor.clear
         self.pagerView.backgroundView = nil
         self.pagerView.isInfinite = true
@@ -65,9 +67,12 @@ class BarDetailHeaderViewController: UIViewController {
         self.mapIconImageView.image = self.mapIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.mapIconImageView.tintColor = UIColor.appBlueColor()
         
-        self.setUpHeader()
+        self.cartIconImageView.image = self.cartIconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.cartIconImageView.tintColor = UIColor.white
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: .UIApplicationDidBecomeActive, object: nil)
+        
+        self.setUpHeader()
     }
 
     override func didReceiveMemoryWarning() {

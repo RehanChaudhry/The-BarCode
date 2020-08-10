@@ -16,42 +16,46 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FoodMenuHeaderView" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57z-J7-hYX">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <rect key="frame" x="16" y="8" width="382" height="32"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STARTER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXD-tH-nCV">
-                            <rect key="frame" x="16" y="8" width="382" height="28"/>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="22"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STARTER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXD-tH-nCV">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="PXD-tH-nCV" firstAttribute="leading" secondItem="vBA-OH-B6i" secondAttribute="leading" constant="16" id="3SQ-Kj-CUq"/>
-                        <constraint firstItem="vBA-OH-B6i" firstAttribute="bottom" secondItem="PXD-tH-nCV" secondAttribute="bottom" constant="8" id="GWg-gW-Z5N"/>
-                        <constraint firstItem="PXD-tH-nCV" firstAttribute="top" secondItem="vBA-OH-B6i" secondAttribute="top" constant="8" id="SVu-i9-2ED"/>
-                        <constraint firstItem="vBA-OH-B6i" firstAttribute="trailing" secondItem="PXD-tH-nCV" secondAttribute="trailing" constant="16" id="iJm-Ju-WLb"/>
+                        <constraint firstAttribute="trailing" secondItem="PXD-tH-nCV" secondAttribute="trailing" id="KoU-oJ-wuf"/>
+                        <constraint firstAttribute="bottom" secondItem="PXD-tH-nCV" secondAttribute="bottom" id="WGc-WT-B3j"/>
+                        <constraint firstItem="PXD-tH-nCV" firstAttribute="leading" secondItem="vBA-OH-B6i" secondAttribute="leading" id="Ymd-EW-6Iz"/>
+                        <constraint firstItem="PXD-tH-nCV" firstAttribute="top" secondItem="vBA-OH-B6i" secondAttribute="top" id="vDn-D7-wr7"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="vBA-OH-B6i"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="57z-J7-hYX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Knc-gK-g2V"/>
-                <constraint firstItem="57z-J7-hYX" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="UZB-Xe-nCW"/>
-                <constraint firstItem="57z-J7-hYX" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="i2J-vv-Jvf"/>
-                <constraint firstItem="57z-J7-hYX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="kav-Pw-R3f"/>
+                <constraint firstItem="57z-J7-hYX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="0dT-hi-QZh"/>
+                <constraint firstItem="57z-J7-hYX" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-16" id="LUC-mT-wGf"/>
+                <constraint firstItem="57z-J7-hYX" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-8" id="aOz-dS-E2L"/>
+                <constraint firstItem="57z-J7-hYX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="jm3-Da-9Ba"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="titleLabel" destination="PXD-tH-nCV" id="Iee-3a-etZ"/>
             </connections>
-            <point key="canvasLocation" x="137.59999999999999" y="108.84557721139431"/>
+            <point key="canvasLocation" x="137.59999999999999" y="116.49175412293854"/>
         </view>
     </objects>
 </document>
