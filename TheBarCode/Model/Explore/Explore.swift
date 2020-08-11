@@ -107,6 +107,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var currentImageIndex: Int = 0
     
     var timingExpanded: Bool = false
+    var deliveryExpanded: Bool = false
 
 //extension Explore: ImportableUniqueObject {
     

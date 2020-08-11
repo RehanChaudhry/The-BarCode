@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="133" id="ZwZ-U6-fNi" customClass="BarDeliveryTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="132"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZwZ-U6-fNi" id="cnC-PD-bFT">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="132"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_cart" translatesAutoresizingMaskIntoConstraints="NO" id="DhR-5D-2vG">
+                        <rect key="frame" x="16" y="12" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="Yhs-HE-86a"/>
+                            <constraint firstAttribute="height" constant="16" id="sdh-2H-Wu6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DELIVERY OPTION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ub-Dz-gdv">
+                        <rect key="frame" x="40" y="11.5" width="123" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="8iS-Ug-iss"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlA-qH-KgY">
+                        <rect key="frame" x="40" y="37" width="130" height="25"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="CwR-Gn-P4b"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="tintColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="imageEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="DELIVERY TIMING" image="icon_accordion">
+                            <color key="titleColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="showTimingButtonTappedWithSender:" destination="ZwZ-U6-fNi" eventType="touchUpInside" id="qbP-vJ-P6y"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Available" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cw-d7-ZQe">
+                        <rect key="frame" x="171.5" y="11.5" width="132.5" height="17"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIW-QL-xJE">
+                        <rect key="frame" x="40" y="70" width="223" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZi-WO-8fI">
+                        <rect key="frame" x="271" y="70" width="33" height="17"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7j-9d-qsT">
+                        <rect key="frame" x="40" y="99" width="264" height="21"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vlA-qH-KgY" firstAttribute="top" secondItem="2ub-Dz-gdv" secondAttribute="bottom" constant="8.5" id="1Xa-33-TKA"/>
+                    <constraint firstAttribute="trailing" secondItem="2cw-d7-ZQe" secondAttribute="trailing" constant="16" id="31n-Ct-JgU"/>
+                    <constraint firstItem="lZi-WO-8fI" firstAttribute="bottom" secondItem="nIW-QL-xJE" secondAttribute="bottom" id="6BY-bh-MnY"/>
+                    <constraint firstItem="vlA-qH-KgY" firstAttribute="leading" secondItem="2ub-Dz-gdv" secondAttribute="leading" id="Aqu-5W-wcB"/>
+                    <constraint firstItem="DhR-5D-2vG" firstAttribute="top" secondItem="cnC-PD-bFT" secondAttribute="top" constant="12" id="HQt-Sy-oOW"/>
+                    <constraint firstAttribute="bottom" secondItem="o7j-9d-qsT" secondAttribute="bottom" constant="12" id="Hcv-J9-D14"/>
+                    <constraint firstItem="lZi-WO-8fI" firstAttribute="leading" secondItem="nIW-QL-xJE" secondAttribute="trailing" constant="8" id="Jay-9b-TFU"/>
+                    <constraint firstItem="2cw-d7-ZQe" firstAttribute="centerY" secondItem="2ub-Dz-gdv" secondAttribute="centerY" id="KnO-fr-iQ5"/>
+                    <constraint firstItem="2ub-Dz-gdv" firstAttribute="leading" secondItem="DhR-5D-2vG" secondAttribute="trailing" constant="8" id="LLB-uz-U2S"/>
+                    <constraint firstItem="2ub-Dz-gdv" firstAttribute="centerY" secondItem="DhR-5D-2vG" secondAttribute="centerY" id="RaK-ve-lKZ"/>
+                    <constraint firstItem="nIW-QL-xJE" firstAttribute="leading" secondItem="vlA-qH-KgY" secondAttribute="leading" id="VAN-nK-OyK"/>
+                    <constraint firstItem="2cw-d7-ZQe" firstAttribute="leading" secondItem="2ub-Dz-gdv" secondAttribute="trailing" constant="8.5" id="ZeX-n9-Wup"/>
+                    <constraint firstItem="lZi-WO-8fI" firstAttribute="top" secondItem="nIW-QL-xJE" secondAttribute="top" id="bmQ-bM-rvv"/>
+                    <constraint firstAttribute="trailing" secondItem="lZi-WO-8fI" secondAttribute="trailing" constant="16" id="o6h-q1-sNC"/>
+                    <constraint firstItem="DhR-5D-2vG" firstAttribute="leading" secondItem="cnC-PD-bFT" secondAttribute="leading" constant="16" id="pWh-LI-5y4"/>
+                    <constraint firstAttribute="trailing" secondItem="o7j-9d-qsT" secondAttribute="trailing" constant="16" id="rPC-yz-5ia"/>
+                    <constraint firstItem="nIW-QL-xJE" firstAttribute="top" secondItem="vlA-qH-KgY" secondAttribute="bottom" constant="8" id="roW-yK-OWP"/>
+                    <constraint firstItem="o7j-9d-qsT" firstAttribute="leading" secondItem="2ub-Dz-gdv" secondAttribute="leading" id="u8z-aE-XMo"/>
+                    <constraint firstItem="o7j-9d-qsT" firstAttribute="top" secondItem="nIW-QL-xJE" secondAttribute="bottom" constant="12" id="ySx-0p-mtv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="mhU-9z-UMs"/>
+            <connections>
+                <outlet property="additionalInfoLabel" destination="o7j-9d-qsT" id="w3b-lI-T3Z"/>
+                <outlet property="moreTimingsButton" destination="vlA-qH-KgY" id="BtI-1h-sPm"/>
+                <outlet property="placeholderLabel" destination="nIW-QL-xJE" id="KKg-YK-Ydc"/>
+                <outlet property="placeholderLabelTop" destination="roW-yK-OWP" id="Ynj-B4-6nn"/>
+                <outlet property="statusLabel" destination="2cw-d7-ZQe" id="394-J6-HNy"/>
+                <outlet property="titleLabel" destination="2ub-Dz-gdv" id="TZz-RZ-5C6"/>
+                <outlet property="valueLabel" destination="lZi-WO-8fI" id="CSh-KK-gMU"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_accordion" width="12" height="8"/>
+        <image name="icon_cart" width="24" height="24"/>
+    </resources>
+</document>

@@ -24,6 +24,8 @@ class ScopeSearchResultHeaderView: UITableViewHeaderFooterView, NibReusable {
     
     @IBOutlet var detailButton: UIButton!
     
+    @IBOutlet var pagerViewTop: NSLayoutConstraint!
+    
     var bar: Explore?
     
     weak var delegate: ScopeSearchResultHeaderViewDelegate!

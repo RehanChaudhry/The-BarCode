@@ -21,6 +21,14 @@ class BarDetailAboutViewController: UIViewController {
     
     var bar : Bar!
     
+    enum BarDetailAboutSections: Int {
+        case details = 0, timings = 1, delivery = 2, contact = 3, social = 4
+        
+        static func allSections() -> [BarDetailAboutSections] {
+            return [.details, .timings, .delivery, .contact, .social]
+        }
+    }
+    
     lazy var headerViewController: BarDetailHeaderViewController = {
         let headerViewController = (self.storyboard!.instantiateViewController(withIdentifier: "BarDetailHeaderViewController") as! BarDetailHeaderViewController)
         headerViewController.bar = self.bar
@@ -46,8 +54,12 @@ class BarDetailAboutViewController: UIViewController {
         
         self.automaticallyAdjustsScrollViewInsets = false
         
-        self.tableView.register(cellType: ExploreAboutTableViewCell.self)
+        self.tableView.register(cellType: BarAboutTableViewCell.self)
+        self.tableView.register(cellType: BarTimingTableViewCell.self)
+        self.tableView.register(cellType: BarDeliveryTableViewCell.self)
+        self.tableView.register(cellType: BarContactTableViewCell.self)
         self.tableView.register(cellType: SocialLinksCell.self)
+        
         self.tableView.estimatedRowHeight = 400.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -69,43 +81,64 @@ class BarDetailAboutViewController: UIViewController {
 
 //MARK: UITableViewDelegate, UITableViewDataSource
 extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return BarDetailAboutSections.allSections().count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var hasFBLink = false
-        if let fbLink = self.bar.facebookPageUrl.value, fbLink.count > 0 {
-            hasFBLink = true
-        }
         
-        var hasTwitterLink = false
-        if let twitterLink = self.bar.twitterProfileUrl.value, twitterLink.count > 0 {
-            hasTwitterLink = true
-        }
-        
-        var hasInstagramLink = false
-        if let instagramLink = self.bar.instagramProfileUrl.value, instagramLink.count > 0 {
-            hasInstagramLink = true
-        }
-        
-        if hasFBLink || hasTwitterLink || hasInstagramLink {
-            return 2
-        } else {
+        let section = BarDetailAboutSections(rawValue: section)!
+        if section == .details || section == .timings || section == .contact {
             return 1
+        } else if section == .delivery {
+            return 1
+        } else if section == .social {
+            let hasFBLink = (self.bar.facebookPageUrl.value?.count ?? 0) > 0
+            let hasTwitterLink = (self.bar.twitterProfileUrl.value?.count ?? 0) > 0
+            let hasInstagramLink = (self.bar.instagramProfileUrl.value?.count ?? 0) > 0
+            
+            if hasFBLink || hasTwitterLink || hasInstagramLink {
+                return 1
+            } else {
+                return 0
+            }
+            
+        } else {
+            return 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ExploreAboutTableViewCell.self)
-            cell.setUpCell(explore: self.bar)
+        let section = BarDetailAboutSections(rawValue: indexPath.section)!
+        if section == .details {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: BarAboutTableViewCell.self)
+            cell.setupCell(bar: self.bar)
             cell.delegate = self
             return cell
-        } else {
+        } else if section == .timings {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: BarTimingTableViewCell.self)
+            cell.setupCell(bar: self.bar)
+            cell.delegate = self
+            return cell
+        } else if section == .delivery {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: BarDeliveryTableViewCell.self)
+            cell.setupCell(bar: self.bar)
+            cell.delegate = self
+            return cell
+        } else if section == .contact {
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: BarContactTableViewCell.self)
+            cell.setupCell(bar: self.bar)
+            cell.delegate = self
+            return cell
+        } else if section == .social {
             let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: SocialLinksCell.self)
             cell.delegate = self
             cell.setupCell(bar: self.bar)
             return cell
         }
         
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -147,6 +180,19 @@ extension BarDetailAboutViewController: SocialLinksCellDelegate {
     }
 }
 
+//MARK: BarAboutTableViewCellDelegate
+extension BarDetailAboutViewController: BarAboutTableViewCellDelegate {
+    func barAboutTableViewCell(cell: BarAboutTableViewCell, reserveTableButtonTapped sender: UIButton) {
+        let tableReservationNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "TableReservationNavigation") as! UINavigationController)
+        tableReservationNavigation.modalPresentationStyle = .fullScreen
+                   
+        let tableReservationViewController = tableReservationNavigation.viewControllers.first as! TableReservationViewController
+        tableReservationViewController.bar = self.bar
+            
+        self.present(tableReservationNavigation, animated: true, completion: nil)
+    }
+}
+
 //MARK: SJSegmentedViewControllerViewSource
 extension BarDetailAboutViewController: SJSegmentedViewControllerViewSource {
     func viewForSegmentControllerToObserveContentOffsetChange() -> UIView {
@@ -154,26 +200,39 @@ extension BarDetailAboutViewController: SJSegmentedViewControllerViewSource {
     }
 }
 
-//MARK: ExploreAboutTableViewCellDelegate
-extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
-    
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, showButtonTapped sender: UIButton) {
+//MARK: BarTimingTableViewCellDelegate
+extension BarDetailAboutViewController: BarTimingTableViewCellDelegate {
+    func barTimingTableViewCell(cell: BarTimingTableViewCell, showTimingButtonTapped sender: UIButton) {
         guard let indexPath = self.tableView.indexPath(for: cell) else {
             return
         }
         
         self.bar.timingExpanded = !self.bar.timingExpanded
-        self.tableView.reloadData()
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
-    
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, websiteButtonTapped sender: UIButton) {
+}
+
+//MARK: BarDeliveryTableViewCellDelegate
+extension BarDetailAboutViewController: BarDeliveryTableViewCellDelegate {
+    func barDeliveryTableViewCell(cell: BarDeliveryTableViewCell, showTimingButtonTapped sender: UIButton) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        self.bar.deliveryExpanded = !self.bar.deliveryExpanded
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+}
+
+//MARK: BarContactTableViewCellDelegate
+extension BarDetailAboutViewController: BarContactTableViewCellDelegate {
+    func barContactTableViewCell(cell: BarContactTableViewCell, websiteButtonTapped sender: UIButton) {
         let urlString = self.bar.website.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let url = URL(string: urlString)!
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, callButtonTapped sender: UIButton) {
-        
+    func barContactTableViewCell(cell: BarContactTableViewCell, callButtonTapped sender: UIButton) {
         let phoneNumber: String = "tel://\(self.bar.contactNumber.value)"
         let urlString = phoneNumber.replacingOccurrences(of: " ", with: "")
         
@@ -184,15 +243,7 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
         }
     }
     
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, directionsButtonTapped sender: UIButton) {
-        
-        let mapUrl = "https://www.google.com/maps/dir/?api=1&destination=\(bar.latitude.value)+\(bar.longitude.value)"
-        UIApplication.shared.open(URL(string: mapUrl)!, options: [:]) { (success) in
-            
-        }
-    }
-    
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, emailButtonTapped sender: UIButton) {
+    func barContactTableViewCell(cell: BarContactTableViewCell, emailButtonTapped sender: UIButton) {
         let mailComposerController = MFMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             mailComposerController.delegate = self
@@ -202,15 +253,11 @@ extension BarDetailAboutViewController: ExploreAboutTableViewCellDelegate {
         }
     }
     
-    func exploreAboutTableViewCell(cell: ExploreAboutTableViewCell, reserveTableButtonTapped sender: UIButton) {
+    func barContactTableViewCell(cell: BarContactTableViewCell, directionButtonTapped sender: UIButton) {
+        let mapUrl = "https://www.google.com/maps/dir/?api=1&destination=\(bar.latitude.value)+\(bar.longitude.value)"
+        UIApplication.shared.open(URL(string: mapUrl)!, options: [:]) { (success) in
             
-        let tableReservationNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "TableReservationNavigation") as! UINavigationController)
-        tableReservationNavigation.modalPresentationStyle = .fullScreen
-                   
-        let tableReservationViewController = tableReservationNavigation.viewControllers.first as! TableReservationViewController
-        tableReservationViewController.bar = self.bar
-            
-        self.present(tableReservationNavigation, animated: true, completion: nil)
+        }
     }
 }
 

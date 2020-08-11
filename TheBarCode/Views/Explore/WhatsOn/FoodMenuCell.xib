@@ -26,13 +26,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5w-VV-CxB">
-                        <rect key="frame" x="16" y="16" width="288" height="19.5"/>
+                        <rect key="frame" x="16" y="16" width="288" height="19"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="2 deals available" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mX7-Be-M1C">
-                        <rect key="frame" x="16" y="45.5" width="288" height="9.5"/>
+                        <rect key="frame" x="16" y="45" width="288" height="10"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -90,9 +90,18 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-ZW-8Cu">
+                        <rect key="frame" x="16" y="108.5" width="288" height="0.5"/>
+                        <color key="backgroundColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="BKb-4e-OFz"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="kMK-ZW-8Cu" secondAttribute="bottom" id="5bA-mp-Vcx"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="9gw-F9-FJP"/>
+                    <constraint firstAttribute="trailing" secondItem="kMK-ZW-8Cu" secondAttribute="trailing" constant="16" id="KZf-Uq-PgM"/>
                     <constraint firstItem="f5w-VV-CxB" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="O8y-Qj-0RB"/>
                     <constraint firstAttribute="trailing" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="16" id="RJo-fx-S8L"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="top" secondItem="f5w-VV-CxB" secondAttribute="bottom" constant="10" id="Xgb-3C-Sx7"/>
@@ -101,6 +110,7 @@
                     <constraint firstAttribute="trailing" secondItem="mX7-Be-M1C" secondAttribute="trailing" constant="16" id="q8U-m5-Ghc"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="top" secondItem="mX7-Be-M1C" secondAttribute="bottom" constant="10" id="sb5-St-gbl"/>
                     <constraint firstItem="f5w-VV-CxB" firstAttribute="top" secondItem="aAo-BC-Qdw" secondAttribute="top" constant="16" id="uro-pX-tYP"/>
+                    <constraint firstItem="kMK-ZW-8Cu" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="vPu-av-Pup"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="b6u-E7-WRs"/>
@@ -112,6 +122,7 @@
                 <outlet property="priceContainerHeight" destination="78g-hG-GmT" id="Rbd-4u-MfF"/>
                 <outlet property="priceContainerTop" destination="sb5-St-gbl" id="JcZ-sL-oSZ"/>
                 <outlet property="priceLabel" destination="fBL-S5-DOc" id="n8J-gM-XyW"/>
+                <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>
                 <outlet property="titleLabel" destination="f5w-VV-CxB" id="hju-Y7-m1D"/>
                 <outlet property="topPadding" destination="uro-pX-tYP" id="Ahe-II-dq8"/>
             </connections>

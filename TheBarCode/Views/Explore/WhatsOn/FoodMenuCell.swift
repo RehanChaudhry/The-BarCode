@@ -15,14 +15,14 @@ class FoodMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
     
-    @IBOutlet var detailLabelTop: NSLayoutConstraint!
-    
     @IBOutlet var priceContainer: UIView!
-    @IBOutlet var priceContainerHeight: NSLayoutConstraint!
-    @IBOutlet var priceContainerTop: NSLayoutConstraint!
+    @IBOutlet var separatorView: UIView!
     
     @IBOutlet var cartIconImageView: UIImageView!
     
+    @IBOutlet var detailLabelTop: NSLayoutConstraint!
+    @IBOutlet var priceContainerHeight: NSLayoutConstraint!
+    @IBOutlet var priceContainerTop: NSLayoutConstraint!
     @IBOutlet var topPadding: NSLayoutConstraint!
     
     override func awakeFromNib() {

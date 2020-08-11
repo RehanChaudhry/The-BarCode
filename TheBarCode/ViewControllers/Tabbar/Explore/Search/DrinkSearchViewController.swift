@@ -135,6 +135,15 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
         headerView?.setUpCell(explore: self.searchResults[section].bar)
         headerView?.delegate = self
         headerView?.section = section
+        
+        let previousSection = section - 1
+        if previousSection > 0 {
+            let result = self.searchResults[previousSection]
+            headerView?.pagerViewTop.constant = result.drinks.count > 3 ? 0.0 : 16.0
+        } else {
+            headerView?.pagerViewTop.constant = 16.0
+        }
+        
         return headerView
     }
     
@@ -142,6 +151,7 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
         let drink = self.searchResults[indexPath.section].drinks[indexPath.row]
         cell.setupCellForDrink(drink: drink)
+        cell.separatorView.isHidden = false
         return cell
     }
     
@@ -162,7 +172,7 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let results = self.searchResults[section]
         if results.drinks.count > 3 {
-            return 30.0
+            return 62.0
         } else {
             return 0.0
         }
