@@ -21,7 +21,7 @@ protocol BarsViewControllerDelegate: class {
     func barsController(controller: BarsViewController, didSelectBar barId: String)
     func barsController(controller: BarsViewController, didSelectBar bar: Bar)
     func barsController(controller: BarsViewController, searchButtonTapped sender: UIButton)
-    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView)
+    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackBarInfoView)
     func barsController(controller: BarsViewController, preferncesButtonTapped sender: UIButton)
     func barsController(controller: BarsViewController, standardOfferButtonTapped sender: UIButton)
 }

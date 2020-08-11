@@ -49,7 +49,7 @@ class ExploreBaseViewController: UIViewController {
     
     var displayType: DisplayType = .list
     
-    var snackBar: SnackbarView = SnackbarView.loadFromNib()
+    var snackBar = SnackBarInfoView.loadFromNib()
     
     var dataRequest: DataRequest?
     var loadMore = Pagination()

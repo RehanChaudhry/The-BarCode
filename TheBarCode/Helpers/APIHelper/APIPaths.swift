@@ -128,6 +128,8 @@ let shareDealFromShareScreenClick = "Clicked on share button from share screen"
 //Explore
 let barClickFromExplore = "Clicked on a bar on Explore screen".getFormattedEventName()
 let bannerClick = "Clicked on banner".getFormattedEventName()
+let savingsClick = "Clicked on savings".getFormattedEventName()
+let creditsClick = "Clicked on credits".getFormattedEventName()
 let barTabClickFromExplore = "Clicked on bars tab from explore".getFormattedEventName()
 let dealTabClickFromExplore = "Clicked on deals tab from explore".getFormattedEventName()
 let liveOffersTabClickFromExplore = "Clicked on live offers tab from explore".getFormattedEventName()

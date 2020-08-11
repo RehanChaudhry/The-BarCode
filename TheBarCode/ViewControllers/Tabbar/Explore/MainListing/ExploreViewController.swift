@@ -184,15 +184,14 @@ class ExploreViewController: UIViewController {
         self.present(barDetailNav, animated: true, completion: nil)
     }
     
-    func updateSnackBarForType(type: SnackbarType) {
-        if type == .discount {
-            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
-        } else if type == .reload {
-            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .green)
+    func updateSnackBarForType(type: SnackBarInfoViewType) {
+        self.barsController.snackBar.updateSnackbarType(type: type)
+        switch type {
+        case .reload:
             self.startReloadTimer()
             self.updateReloadTimer(sender: self.reloadTimer!)
-        } else if type == .congrates {
-            self.barsController.snackBar.updateAppearanceForType(type: type, gradientType: .orange)
+        default:
+            print("snack bar type: \(type)")
         }
     }
     
@@ -299,7 +298,6 @@ class ExploreViewController: UIViewController {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
         inviteNavigation.modalPresentationStyle = .fullScreen
         
-        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
         self.present(inviteNavigation, animated: true, completion: nil)
     }
     
@@ -430,7 +428,7 @@ extension ExploreViewController: BarsViewControllerDelegate {
         self.moveToBarDetail(bar: bar)
     }
     
-    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackbarView) {
+    func barsController(controller: BarsViewController, refreshSnackBar snack: SnackBarInfoView) {
         self.refreshSnackBar()
     }
     
@@ -482,8 +480,13 @@ extension ExploreViewController: BarDetailViewControllerDelegate {
 }
 
 //MARK: SnackbarViewDelegate
-extension ExploreViewController: SnackbarViewDelegate {
-    func snackbarView(view: SnackbarView, creditButtonTapped sender: UIButton) {
+extension ExploreViewController: SnackBarInfoViewDelegate {
+    
+    func snackBarInfoView(snackBar: SnackBarInfoView, savingsButtonTapped sender: UIButton) {
+        
+    }
+    
+    func snackBarInfoView(snackBar: SnackBarInfoView, creditsButtonTapped sender: UIButton) {
         
         guard let user = Utility.shared.getCurrentUser() else {
             debugPrint("User not saved")
@@ -493,16 +496,14 @@ extension ExploreViewController: SnackbarViewDelegate {
         self.showCustomAlert(title: "You have \(user.credit) Credits", message: "Use credits to redeem unique Barcode offers. Share offers and invite friends and we will reward you with more credits", typeCredit: true)
     }
     
-    func snackbarView(view: SnackbarView, bannerButtonTapped sender: UIButton) {
-       
-        if view.type == SnackbarType.congrates {
+    func snackBarInfoView(snackBar: SnackBarInfoView, actionButtonTapped sender: UIButton) {
+        if snackBar.type == .congrates {
             self.moveToReloadVC()
         } else {
             let text = self.getBannerAlertText()
             self.showCustomAlert(title: text.title, message: text.message, typeCredit: false)
         }
     }
-
 }
 
 //MARK: CannotRedeemViewControllerDelegate
