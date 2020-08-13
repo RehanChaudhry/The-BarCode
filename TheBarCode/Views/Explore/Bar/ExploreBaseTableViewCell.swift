@@ -34,6 +34,7 @@ class ExploreBaseTableViewCell: UITableViewCell {
     @IBOutlet var unlimitedRedemptionView: ShadowView!
 
     @IBOutlet var barTypeView: ShadowView!
+    @IBOutlet var cartIconContainer: ShadowView!
 
     var bar: Explore?
     

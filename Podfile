@@ -34,6 +34,8 @@ target 'TheBarCode' do
   pod 'DTCoreText', '~> 1.6.23'
   
   pod 'KMPlaceholderTextView', '~> 1.4.0'
+  
+  pod 'Stripe', '~> 19.3.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

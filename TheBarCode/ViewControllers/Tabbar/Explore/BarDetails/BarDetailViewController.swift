@@ -55,6 +55,8 @@ class BarDetailViewController: UIViewController {
     var isSegmentsSetuped = false
     var shouldSendAnalytics = false
     
+    var cartBarButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -94,6 +96,8 @@ class BarDetailViewController: UIViewController {
         }
         
         self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
+        self.cartBarButton = UIBarButtonItem(image: UIImage(named: "icon_cart")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cartBarButtonTapped(sender:)))
+        self.navigationItem.rightBarButtonItem = self.cartBarButton
         
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         
@@ -303,6 +307,10 @@ class BarDetailViewController: UIViewController {
         }
     }
 
+    @objc func cartBarButtonTapped(sender: UIBarButtonItem) {
+        
+    }
+    
     //MARK: My IBActions
     
     @IBAction func cancelBarButtonTapped(sender: UIBarButtonItem) {

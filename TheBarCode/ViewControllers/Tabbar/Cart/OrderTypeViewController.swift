@@ -186,19 +186,52 @@ class OrderTypeViewController: UIViewController {
         }
     }
     
-    func moveToPaymentMethods() {
+    func moveToPaymentMethods(viewModels: [OrderViewModel]) {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
         controller.totalBillPayable = self.totalBillPayable
+        controller.viewModels = viewModels
+        controller.order = self.order
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func moveToSplitPayment() {
+        var viewModels: [OrderViewModel] = []
+        if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
+            viewModels = self.viewModels[0...index].map({$0})
+        }
+        
+        let splitpaymentController = self.storyboard!.instantiateViewController(withIdentifier: "SplitPaymentInfoViewController") as! SplitPaymentInfoViewController
+        splitpaymentController.order = self.order
+        splitpaymentController.viewModels = viewModels
+        splitpaymentController.totalBillPayable = self.totalBillPayable
+        self.navigationController?.pushViewController(splitpaymentController, animated: true)
     }
     
     //MARK: My IBActions
     @IBAction func continueButtonTapped(sender: UIButton) {
         if let section = self.viewModels.first(where: {$0.type == .dineIn}) as? OrderDineInSection,
             section.items.first?.isSelected == true {
-            
+            self.moveToSplitPayment()
+        } else if let section = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
+            section.items.first?.isSelected == true {
+            var viewModels: [OrderViewModel] = []
+            if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
+                viewModels = self.viewModels[0...index].map({$0})
+                
+                let deliveryCharges = section.items.first?.value ?? 0.0
+                
+                let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
+                let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
+                viewModels.insert(orderDeliveryInfoSection, at: index)
+            }
+
+            self.moveToPaymentMethods(viewModels: viewModels)
         } else {
-            self.moveToPaymentMethods()
+            var viewModels: [OrderViewModel] = []
+            if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
+                viewModels = self.viewModels[0...index].map({$0})
+            }
+            self.moveToPaymentMethods(viewModels: viewModels)
         }
     }
 }

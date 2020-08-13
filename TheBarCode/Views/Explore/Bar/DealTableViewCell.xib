@@ -43,6 +43,29 @@
                             <outlet property="delegate" destination="CsO-OR-xRH" id="jFV-hi-2tY"/>
                         </connections>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3h-gs-dA7" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="32" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_add_cart" translatesAutoresizingMaskIntoConstraints="NO" id="QBD-F7-MxP">
+                                <rect key="frame" x="6" y="5.5" width="28" height="29"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QBD-F7-MxP" secondAttribute="trailing" constant="6" id="3gu-j7-aut"/>
+                            <constraint firstAttribute="width" constant="40" id="SO1-kO-Lw0"/>
+                            <constraint firstAttribute="height" constant="40" id="ZOo-ph-7sW"/>
+                            <constraint firstItem="QBD-F7-MxP" firstAttribute="top" secondItem="P3h-gs-dA7" secondAttribute="top" constant="5.5" id="ahr-Bq-ZE1"/>
+                            <constraint firstAttribute="bottom" secondItem="QBD-F7-MxP" secondAttribute="bottom" constant="5.5" id="rb4-fk-7Sk"/>
+                            <constraint firstItem="QBD-F7-MxP" firstAttribute="leading" secondItem="P3h-gs-dA7" secondAttribute="leading" constant="6" id="wn8-8D-sVY"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="hW6-Fn-oCJ">
                         <rect key="frame" x="156.5" y="146" width="7" height="37"/>
                     </pageControl>
@@ -181,6 +204,7 @@
                     <constraint firstItem="fgE-wp-hQF" firstAttribute="top" secondItem="8pS-Va-tqg" secondAttribute="bottom" constant="7" id="572-hu-3Pu"/>
                     <constraint firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" constant="16" id="5J9-jp-DKU"/>
                     <constraint firstItem="hyz-OS-uPR" firstAttribute="centerY" secondItem="xfi-6e-e5W" secondAttribute="centerY" id="5Va-5P-cJ6"/>
+                    <constraint firstItem="P3h-gs-dA7" firstAttribute="top" secondItem="Ddr-47-qEj" secondAttribute="top" constant="8" id="6Ov-5w-nwR"/>
                     <constraint firstItem="8pS-Va-tqg" firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" id="6Sa-Qy-jIv"/>
                     <constraint firstItem="plr-He-wrm" firstAttribute="centerY" secondItem="fgE-wp-hQF" secondAttribute="centerY" id="95L-Ug-BsT"/>
                     <constraint firstItem="LX4-Dp-xwc" firstAttribute="bottom" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="-8" id="AVo-pv-ITR"/>
@@ -204,6 +228,7 @@
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="top" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="20" id="kER-IF-p8H"/>
                     <constraint firstItem="lm4-Vj-yFJ" firstAttribute="leading" secondItem="6Bg-MI-Mip" secondAttribute="leading" constant="16" id="kaN-v7-6t4"/>
                     <constraint firstItem="8pS-Va-tqg" firstAttribute="top" secondItem="Ddr-47-qEj" secondAttribute="top" id="lRz-EL-6uP"/>
+                    <constraint firstItem="P3h-gs-dA7" firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" constant="-8" id="llw-Kp-GRw"/>
                     <constraint firstItem="LX4-Dp-xwc" firstAttribute="trailing" secondItem="Ddr-47-qEj" secondAttribute="trailing" constant="-8" id="mdm-7r-BkR"/>
                     <constraint firstItem="8pS-Va-tqg" firstAttribute="leading" secondItem="Ddr-47-qEj" secondAttribute="leading" id="oXk-t9-lEa"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="leading" secondItem="xfi-6e-e5W" secondAttribute="trailing" constant="8" id="oyv-9v-JfK"/>
@@ -220,6 +245,7 @@
             <connections>
                 <outlet property="bookmarkActivityIndicator" destination="oox-j9-KtP" id="zSZ-IE-3fp"/>
                 <outlet property="bookmarkButton" destination="4oO-An-LV1" id="yKN-Kd-nVv"/>
+                <outlet property="cartIconContainer" destination="P3h-gs-dA7" id="bUO-0h-ARx"/>
                 <outlet property="coverImageView" destination="8pS-Va-tqg" id="iIj-qm-izf"/>
                 <outlet property="detailLabel" destination="6Tc-Mw-7nw" id="gN4-Yg-LDa"/>
                 <outlet property="distanceButton" destination="xfi-6e-e5W" id="0eL-JO-uyh"/>
@@ -239,9 +265,10 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon_add_cart" width="30" height="30"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_share" width="20" height="20"/>
-        <image name="icon_tab_wallet" width="26" height="26"/>
+        <image name="icon_tab_wallet" width="24" height="24"/>
         <image name="icon_unlimited" width="30" height="30"/>
     </resources>
 </document>

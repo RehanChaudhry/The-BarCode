@@ -17,6 +17,8 @@ class SavedCardsViewController: UIViewController {
     
     var cards: [String] = [""]
     
+    var order: Order!
+    var viewModels: [OrderViewModel] = []
     var totalBillPayable: Double = 0.0
     
     enum CardSectionType: Int {
@@ -43,9 +45,16 @@ class SavedCardsViewController: UIViewController {
         self.payButton.setTitle(String(format: "Pay - £ %.2f", self.totalBillPayable), for: .normal)
     }
     
+    func moveToThankYou() {
+        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ThankYouViewController") as! ThankYouViewController)
+        controller.order = self.order
+        controller.viewModels = self.viewModels
+        self.navigationController?.setViewControllers([controller], animated: true)
+    }
+    
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
-        
+        self.moveToThankYou()
     }
     
 
@@ -78,6 +87,7 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
         } else if indexPath.section == CardSectionType.addCard.rawValue {
             let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: AddNewCardCell.self)
             cell.maskCorners(radius: 8.0, mask: self.cards.count == 0 ? [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner] : [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            cell.delegate = self
             return cell
         }
         
@@ -86,5 +96,14 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+}
+
+//MARK: AddNewCardCellDelegate
+extension SavedCardsViewController: AddNewCardCellDelegate {
+    func addNewCardCell(cell: AddNewCardCell, addNewCardButtonTapped sender: UIButton) {
+        let addCardNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "AddCardNavigation") as! UINavigationController)
+        addCardNavigation.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(addCardNavigation, animated: true, completion: nil)
     }
 }

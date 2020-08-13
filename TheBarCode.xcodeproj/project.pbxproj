@@ -307,8 +307,14 @@
 		83AF91912174800A00CE552F /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AF91902174800A00CE552F /* ImageItem.swift */; };
 		83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
+		B300A6BC24E55D1400037C7C /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300A6BB24E55D1400037C7C /* Country.swift */; };
+		B324C76F24E3FF0A00D111A0 /* ReviewPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */; };
+		B324C77124E4079500D111A0 /* ThankYouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324C77024E4079500D111A0 /* ThankYouViewController.swift */; };
+		B32B7E2824E5145500982689 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32B7E2724E5145500982689 /* AddCardViewController.swift */; };
+		B32B7E2A24E540D300982689 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32B7E2924E540D300982689 /* Month.swift */; };
 		B332486E24DD1FC6007D3F39 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332486D24DD1FC6007D3F39 /* Address.swift */; };
 		B332487024DD392F007D3F39 /* AddAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332486F24DD392F007D3F39 /* AddAddressViewController.swift */; };
+		B333852624E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */; };
 		B3373E6624DB0EA9007E53E6 /* OrderDineInSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6524DB0EA8007E53E6 /* OrderDineInSection.swift */; };
 		B3373E6824DB0ED1007E53E6 /* OrderCounterCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6724DB0ED1007E53E6 /* OrderCounterCollectionSection.swift */; };
 		B3373E6A24DB0EE0007E53E6 /* OrderTakeAwaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6924DB0EE0007E53E6 /* OrderTakeAwaySection.swift */; };
@@ -793,8 +799,14 @@
 		978374FDD2BC17E29FDA033D /* Pods-TheBarCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeTests/Pods-TheBarCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AE695298E02075EB71FB010D /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
+		B300A6BB24E55D1400037C7C /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPaymentViewController.swift; sourceTree = "<group>"; };
+		B324C77024E4079500D111A0 /* ThankYouViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThankYouViewController.swift; sourceTree = "<group>"; };
+		B32B7E2724E5145500982689 /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
+		B32B7E2924E540D300982689 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		B332486D24DD1FC6007D3F39 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		B332486F24DD392F007D3F39 /* AddAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressViewController.swift; sourceTree = "<group>"; };
+		B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitPaymentInfoViewController.swift; sourceTree = "<group>"; };
 		B3373E6524DB0EA8007E53E6 /* OrderDineInSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDineInSection.swift; sourceTree = "<group>"; };
 		B3373E6724DB0ED1007E53E6 /* OrderCounterCollectionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCounterCollectionSection.swift; sourceTree = "<group>"; };
 		B3373E6924DB0EE0007E53E6 /* OrderTakeAwaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTakeAwaySection.swift; sourceTree = "<group>"; };
@@ -1790,6 +1802,8 @@
 				837B48B22175FB2C00841419 /* Pagination.swift */,
 				83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */,
 				0C82137A2317B965006F898E /* Preference.swift */,
+				B32B7E2924E540D300982689 /* Month.swift */,
+				B300A6BB24E55D1400037C7C /* Country.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2251,6 +2265,10 @@
 				B339E03624DC5380005990AB /* AddressesViewController.swift */,
 				B332486F24DD392F007D3F39 /* AddAddressViewController.swift */,
 				B33CF7AA24DE8AA4001566F0 /* SavedCardsViewController.swift */,
+				B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */,
+				B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */,
+				B324C77024E4079500D111A0 /* ThankYouViewController.swift */,
+				B32B7E2724E5145500982689 /* AddCardViewController.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2793,6 +2811,7 @@
 				FAFEC5A324C18748001E63EA /* Order.swift in Sources */,
 				832FD1D2216B2BC1008516F4 /* DealDetailTableViewCell.swift in Sources */,
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
+				B32B7E2824E5145500982689 /* AddCardViewController.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,
 				B3C1292924D9A16500789FF2 /* OrderOfferDiscountTableViewCell.swift in Sources */,
 				0C117EFE22DDA13C0061FFC3 /* FoodMenuViewController.swift in Sources */,
@@ -2812,6 +2831,7 @@
 				0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */,
 				B3373E7024DB19A5007E53E6 /* OrderDineInFieldSection.swift in Sources */,
 				0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */,
+				B300A6BC24E55D1400037C7C /* Country.swift in Sources */,
 				0C23A87B214656AD00DFB281 /* LoginOptionsViewController.swift in Sources */,
 				0C955E0B2149362900F9385B /* LoadMore.swift in Sources */,
 				B3C4108724E2CAB7008AF43C /* SnackBarInfoView.swift in Sources */,
@@ -2822,6 +2842,7 @@
 				83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */,
 				0C955DC92147CB5200F9385B /* UIImageAdditions.swift in Sources */,
 				FA5F8B0324CAB91800356DCD /* TableReservationViewController.swift in Sources */,
+				B324C76F24E3FF0A00D111A0 /* ReviewPaymentViewController.swift in Sources */,
 				FA42BF8124C97059003C3970 /* OrderTotalBillInfoSection.swift in Sources */,
 				0C8BDCE12150D79B00D5117B /* LiveOffer.swift in Sources */,
 				0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */,
@@ -2876,6 +2897,7 @@
 				0C05DDD223212D8B0073A2BA /* AllSearchEventModel.swift in Sources */,
 				0C39F2F4231E72D500596A2B /* GMUGeometryCollection.m in Sources */,
 				B34BD94C24D2E13E00714308 /* AddNewCardCell.swift in Sources */,
+				B333852624E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift in Sources */,
 				B339E03024DC259D005990AB /* OrderDeliveryAddressTableViewCell.swift in Sources */,
 				0C23A88F2146732000DFB281 /* UIColorAdditions.swift in Sources */,
 				0C117F0222DDA1640061FFC3 /* ExclusiveViewController.swift in Sources */,
@@ -2924,6 +2946,7 @@
 				0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */,
 				0C39F2EB231E72D500596A2B /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				0C478A95215C9DFD002C51FA /* LiveOffersViewController.swift in Sources */,
+				B324C77124E4079500D111A0 /* ThankYouViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				0CF3B1CA2372B47600B93786 /* FoodMenuSegment.swift in Sources */,
 				0C0CA21922E0852F00C90409 /* SearchScope.swift in Sources */,
@@ -2974,6 +2997,7 @@
 				0CEBCEC523699470004E6985 /* EventDetailInfoCell.swift in Sources */,
 				0C23A8862146580A00DFB281 /* FiveADayViewController.swift in Sources */,
 				0C39F2FA231E72D500596A2B /* GMUStyle.m in Sources */,
+				B32B7E2A24E540D300982689 /* Month.swift in Sources */,
 				B33F116024DADE3B00CE0068 /* OrderTypeViewController.swift in Sources */,
 				B34BD94824D2E12700714308 /* CardInfoCell.swift in Sources */,
 				0C0CA22522E1D05900C90409 /* FoodSearchViewController.swift in Sources */,

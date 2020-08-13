@@ -9,9 +9,15 @@
 import UIKit
 import Reusable
 
+protocol AddNewCardCellDelegate: class {
+    func addNewCardCell(cell: AddNewCardCell, addNewCardButtonTapped sender: UIButton)
+}
+
 class AddNewCardCell: UITableViewCell, NibReusable {
 
     @IBOutlet var containerView: UIView!
+    
+    weak var delegate: AddNewCardCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,7 +42,7 @@ class AddNewCardCell: UITableViewCell, NibReusable {
     
     //MARK: My IBActions
     @IBAction func addCardButtonTapped(sender: UIButton) {
-        
+        self.delegate?.addNewCardCell(cell: self, addNewCardButtonTapped: sender)
     }
     
 }
