@@ -308,6 +308,7 @@
 		83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDD9902179A3B800BFA4B9 /* RedeemInfo.swift */; };
 		83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FD60422167726D0069A90A /* UIApplicationAdditions.swift */; };
 		B300A6BC24E55D1400037C7C /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300A6BB24E55D1400037C7C /* Country.swift */; };
+		B300A6BE24E57F1800037C7C /* SplitBillScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B300A6BD24E57F1800037C7C /* SplitBillScannerViewController.swift */; };
 		B324C76F24E3FF0A00D111A0 /* ReviewPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */; };
 		B324C77124E4079500D111A0 /* ThankYouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B324C77024E4079500D111A0 /* ThankYouViewController.swift */; };
 		B32B7E2824E5145500982689 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32B7E2724E5145500982689 /* AddCardViewController.swift */; };
@@ -800,6 +801,7 @@
 		AE695298E02075EB71FB010D /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AF57713BAB6C1D32C9E0FA3B /* Pods-TheBarCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.release.xcconfig"; sourceTree = "<group>"; };
 		B300A6BB24E55D1400037C7C /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		B300A6BD24E57F1800037C7C /* SplitBillScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBillScannerViewController.swift; sourceTree = "<group>"; };
 		B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPaymentViewController.swift; sourceTree = "<group>"; };
 		B324C77024E4079500D111A0 /* ThankYouViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThankYouViewController.swift; sourceTree = "<group>"; };
 		B32B7E2724E5145500982689 /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
@@ -1507,6 +1509,7 @@
 				0C8E9A9A214A909E00224720 /* RulesViewController.swift */,
 				FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */,
 				FA42B4B624C87E250000ED15 /* MyReservationsViewController.swift */,
+				B300A6BD24E57F1800037C7C /* SplitBillScannerViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -2827,6 +2830,7 @@
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
 				0C117EF422DD9E630061FFC3 /* OffersViewController.swift in Sources */,
 				0C955DF22149317100F9385B /* StatefulCollectionView+PullToRefresh.swift in Sources */,
+				B300A6BE24E57F1800037C7C /* SplitBillScannerViewController.swift in Sources */,
 				0C80E0A1239135B200491DEB /* IAPHandler.swift in Sources */,
 				0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */,
 				B3373E7024DB19A5007E53E6 /* OrderDineInFieldSection.swift in Sources */,
