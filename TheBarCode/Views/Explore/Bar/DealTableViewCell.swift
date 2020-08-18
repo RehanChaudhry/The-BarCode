@@ -77,7 +77,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
         
-        self.cartIconContainer.isHidden = false
+        self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
     }
     
     func setUpDealCell(deal: Deal, topPadding: Bool = true) {

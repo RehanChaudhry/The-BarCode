@@ -120,8 +120,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         if menuItem.type == .signOut {
             let alertController = UIAlertController(title: "Confirm", message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)
             alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (action) in
-                OneSignal.deleteTag("user_id")
-                Utility.shared.removeUser()
+                Utility.shared.logout()
                 self.tabBarController?.dismiss(animated: true, completion: nil)
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in

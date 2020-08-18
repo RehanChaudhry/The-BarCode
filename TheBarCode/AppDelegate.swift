@@ -476,6 +476,12 @@ extension AppDelegate {
         UIRefreshControl.appearance().tintColor = UIColor.white
         UIActivityIndicatorView.appearance().tintColor = UIColor.white
         
+        let alertView = UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self])
+        if #available(iOS 13.0, *) {
+            alertView.tintColor = UIColor.appBlueColor()
+            alertView.overrideUserInterfaceStyle = .dark
+        }
+        
         let tableView = UITableView.appearance()
         tableView.separatorColor = UIColor.lightGray
     }

@@ -13,9 +13,13 @@ class AllSearchDrinkModel: AllSearchSectionViewModelItem {
     var type: AllSearchSectionViewModelItemType
     var drink: Drink
     
-    init(type: AllSearchSectionViewModelItemType, drink: Drink) {
+    var isInAppPaymentOn: Bool
+    
+    init(type: AllSearchSectionViewModelItemType, drink: Drink, isInAppPaymentOn: Bool) {
         self.type = type
         self.drink = drink
+        
+        self.isInAppPaymentOn = isInAppPaymentOn
     }
 }
 

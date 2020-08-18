@@ -200,11 +200,11 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForFood(food: item.food)
+            cell.setupCellForFood(food: item.food, isInAppPaymentOn: item.isInAppPaymentOn)
             return cell
         } else if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForDrink(drink: item.drink)
+            cell.setupCellForDrink(drink: item.drink, isInAppPaymentOn: item.isInAppPaymentOn)
             return cell
         } else if let item = viewModelItem as? AllSearchExpandModel, item.type == .footerCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: AllSearchFooterCell.self)
@@ -658,7 +658,7 @@ extension AllSearchViewController {
                                 fetchedFoods.append(fetchedFood!)
                             }
                             
-                            let foodItems = fetchedFoods.map({ AllSearchFoodModel(type: .foodCell, food: $0) })
+                            let foodItems = fetchedFoods.map({ AllSearchFoodModel(type: .foodCell, food: $0, isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value) })
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, foodItem) in foodItems.enumerated() {
@@ -718,7 +718,7 @@ extension AllSearchViewController {
                                 fetchedDrinks.append(fetchedDrink!)
                             }
                             
-                            let drinkItems = fetchedDrinks.map({ AllSearchDrinkModel(type: .drinkCell, drink: $0)})
+                            let drinkItems = fetchedDrinks.map({ AllSearchDrinkModel(type: .drinkCell, drink: $0, isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value)})
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, drinkItem) in drinkItems.enumerated() {

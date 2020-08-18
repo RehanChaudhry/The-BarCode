@@ -26,6 +26,9 @@ class ScopeSearchResultHeaderView: UITableViewHeaderFooterView, NibReusable {
     
     @IBOutlet var pagerViewTop: NSLayoutConstraint!
     
+    @IBOutlet var unlimitedRedemptionView: ShadowView!
+    @IBOutlet var cartIconContainer: ShadowView!
+    
     var bar: Explore?
     
     weak var delegate: ScopeSearchResultHeaderViewDelegate!
@@ -77,6 +80,9 @@ class ScopeSearchResultHeaderView: UITableViewHeaderFooterView, NibReusable {
         self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
         
         self.titleLabel.text = explore.title.value
+        
+        self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
+        self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
     }
     
     //MARK: My IBActions

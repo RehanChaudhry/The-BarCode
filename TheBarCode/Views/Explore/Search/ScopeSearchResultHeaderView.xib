@@ -30,6 +30,51 @@
                         <outlet property="delegate" destination="iN0-l3-epB" id="QBx-t4-LRI"/>
                     </connections>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdp-S1-vY1" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                    <rect key="frame" x="256" y="122" width="40" height="40"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_unlimited" translatesAutoresizingMaskIntoConstraints="NO" id="DkE-If-WZn">
+                            <rect key="frame" x="9" y="8" width="22" height="24"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="DkE-If-WZn" secondAttribute="bottom" constant="8" id="28a-mp-Xx0"/>
+                        <constraint firstAttribute="trailing" secondItem="DkE-If-WZn" secondAttribute="trailing" constant="9" id="Pdg-dV-C91"/>
+                        <constraint firstItem="DkE-If-WZn" firstAttribute="top" secondItem="kdp-S1-vY1" secondAttribute="top" constant="8" id="Yvp-2p-4hx"/>
+                        <constraint firstAttribute="width" constant="40" id="nAN-Ik-ZvV"/>
+                        <constraint firstItem="DkE-If-WZn" firstAttribute="leading" secondItem="kdp-S1-vY1" secondAttribute="leading" constant="9" id="nFI-dG-C2l"/>
+                        <constraint firstAttribute="height" constant="40" id="y9j-jl-cWe"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fie-Fv-eGt" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                    <rect key="frame" x="256" y="16" width="40" height="40"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_add_cart" translatesAutoresizingMaskIntoConstraints="NO" id="Iqp-rb-hkt">
+                            <rect key="frame" x="6" y="5.5" width="28" height="29"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Iqp-rb-hkt" firstAttribute="top" secondItem="Fie-Fv-eGt" secondAttribute="top" constant="5.5" id="7Pf-Qw-JNH"/>
+                        <constraint firstItem="Iqp-rb-hkt" firstAttribute="leading" secondItem="Fie-Fv-eGt" secondAttribute="leading" constant="6" id="Fdl-rc-S7G"/>
+                        <constraint firstAttribute="height" constant="40" id="MYc-tc-k6F"/>
+                        <constraint firstAttribute="bottom" secondItem="Iqp-rb-hkt" secondAttribute="bottom" constant="5.5" id="Rc3-wp-moK"/>
+                        <constraint firstAttribute="trailing" secondItem="Iqp-rb-hkt" secondAttribute="trailing" constant="6" id="tto-r5-rMU"/>
+                        <constraint firstAttribute="width" constant="40" id="wrB-Q3-9Mr"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="3jN-GM-fjv">
                     <rect key="frame" x="156.5" y="130" width="7" height="37"/>
                 </pageControl>
@@ -52,25 +97,35 @@
                 <constraint firstItem="3jN-GM-fjv" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="-40" id="4ye-4r-P8y"/>
                 <constraint firstItem="MYE-6W-SMS" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="8" id="9dB-32-BQm"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hvq-LE-OgM" secondAttribute="trailing" priority="999" constant="16" id="FSd-Af-kiy"/>
+                <constraint firstItem="Fie-Fv-eGt" firstAttribute="trailing" secondItem="hvq-LE-OgM" secondAttribute="trailing" constant="-8" id="Il6-GL-J6k"/>
                 <constraint firstAttribute="trailing" secondItem="Vhp-bA-HqF" secondAttribute="trailing" priority="999" id="OqQ-TT-4OQ"/>
                 <constraint firstItem="hvq-LE-OgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" priority="999" constant="8" id="ZAY-C7-ljM"/>
                 <constraint firstItem="MYE-6W-SMS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" constant="16" id="gqy-MR-Gcx"/>
+                <constraint firstItem="Fie-Fv-eGt" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="top" constant="8" id="jRY-9u-rj4"/>
                 <constraint firstItem="3jN-GM-fjv" firstAttribute="centerX" secondItem="hvq-LE-OgM" secondAttribute="centerX" priority="999" id="mnq-1l-sWL"/>
                 <constraint firstAttribute="bottom" secondItem="Vhp-bA-HqF" secondAttribute="bottom" priority="999" constant="3" id="n5B-8n-aIS"/>
                 <constraint firstItem="Vhp-bA-HqF" firstAttribute="top" secondItem="hvq-LE-OgM" secondAttribute="bottom" priority="999" constant="3" id="oYX-IV-gF7"/>
                 <constraint firstItem="Vhp-bA-HqF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" id="ohS-Hs-Wr7"/>
+                <constraint firstItem="kdp-S1-vY1" firstAttribute="trailing" secondItem="hvq-LE-OgM" secondAttribute="trailing" constant="-8" id="tc5-cR-e7B"/>
                 <constraint firstAttribute="bottom" secondItem="MYE-6W-SMS" secondAttribute="bottom" priority="999" constant="8" id="vBk-hH-SmJ"/>
+                <constraint firstItem="kdp-S1-vY1" firstAttribute="bottom" secondItem="hvq-LE-OgM" secondAttribute="bottom" constant="-8" id="yJx-2f-lFA"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="cartIconContainer" destination="Fie-Fv-eGt" id="cKb-Pc-uYh"/>
                 <outlet property="detailButton" destination="Vhp-bA-HqF" id="Fba-Y0-x5h"/>
                 <outlet property="pageControl" destination="3jN-GM-fjv" id="Rtu-Tk-2uZ"/>
                 <outlet property="pagerView" destination="hvq-LE-OgM" id="7jy-Ht-lrf"/>
                 <outlet property="pagerViewTop" destination="ZAY-C7-ljM" id="PHH-NE-rwN"/>
                 <outlet property="titleLabel" destination="MYE-6W-SMS" id="O0u-Nc-ojz"/>
+                <outlet property="unlimitedRedemptionView" destination="kdp-S1-vY1" id="v77-BG-iuZ"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="21.428571428571427"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon_add_cart" width="30" height="30"/>
+        <image name="icon_unlimited" width="30" height="30"/>
+    </resources>
 </document>

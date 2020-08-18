@@ -47,6 +47,7 @@
 		0C117F0022DDA1530061FFC3 /* ChalkBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C117EFF22DDA1520061FFC3 /* ChalkBoardViewController.swift */; };
 		0C117F0222DDA1640061FFC3 /* ExclusiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C117F0122DDA1640061FFC3 /* ExclusiveViewController.swift */; };
 		0C1947EA23154E5900498934 /* AllSearchViewMoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1947E923154E5900498934 /* AllSearchViewMoreModel.swift */; };
+		0C23608324EBA15E0065823A /* DeliveryTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23608224EBA15E0065823A /* DeliveryTiming.swift */; };
 		0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84B214654FD00DFB281 /* AppDelegate.swift */; };
 		0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84D214654FD00DFB281 /* SplashViewController.swift */; };
 		0C23A851214654FD00DFB281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C23A84F214654FD00DFB281 /* Main.storyboard */; };
@@ -484,6 +485,7 @@
 		0C117EFF22DDA1520061FFC3 /* ChalkBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChalkBoardViewController.swift; sourceTree = "<group>"; };
 		0C117F0122DDA1640061FFC3 /* ExclusiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusiveViewController.swift; sourceTree = "<group>"; };
 		0C1947E923154E5900498934 /* AllSearchViewMoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchViewMoreModel.swift; sourceTree = "<group>"; };
+		0C23608224EBA15E0065823A /* DeliveryTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryTiming.swift; sourceTree = "<group>"; };
 		0C23A848214654FD00DFB281 /* TheBarCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBarCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C23A84B214654FD00DFB281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C23A84D214654FD00DFB281 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -1666,6 +1668,7 @@
 				CE980C18221A71E90056D86E /* StandardOffer.swift */,
 				CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */,
 				0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */,
+				0C23608224EBA15E0065823A /* DeliveryTiming.swift */,
 				0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */,
 				0C0CA21822E0852F00C90409 /* SearchScope.swift */,
 				0CCA528622E83265006833C5 /* FoodSearch.swift */,
@@ -2813,6 +2816,7 @@
 				0C39F2FF231E72D500596A2B /* GQTPointQuadTree.m in Sources */,
 				FAFEC5A324C18748001E63EA /* Order.swift in Sources */,
 				832FD1D2216B2BC1008516F4 /* DealDetailTableViewCell.swift in Sources */,
+				0C23608324EBA15E0065823A /* DeliveryTiming.swift in Sources */,
 				0C8BDCCF2150D0AF00D5117B /* BarTableViewCell.swift in Sources */,
 				B32B7E2824E5145500982689 /* AddCardViewController.swift in Sources */,
 				0C955DED2149317100F9385B /* StatefulCollectionView+Views.swift in Sources */,

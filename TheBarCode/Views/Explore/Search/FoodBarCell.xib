@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="221.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FCo-wg-P3S" customClass="FSPagerView" customModule="FSPagerView">
@@ -35,21 +33,70 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="HYO-BY-MOC"/>
                         </connections>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IlN-Jm-GiQ" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="138" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_unlimited" translatesAutoresizingMaskIntoConstraints="NO" id="cqk-yg-luU">
+                                <rect key="frame" x="9" y="8" width="22" height="24"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="cqk-yg-luU" firstAttribute="leading" secondItem="IlN-Jm-GiQ" secondAttribute="leading" constant="9" id="3Um-hz-jCX"/>
+                            <constraint firstAttribute="height" constant="40" id="Qh1-Oz-gmZ"/>
+                            <constraint firstAttribute="bottom" secondItem="cqk-yg-luU" secondAttribute="bottom" constant="8" id="bzD-La-qB4"/>
+                            <constraint firstAttribute="width" constant="40" id="fAK-Se-TxX"/>
+                            <constraint firstItem="cqk-yg-luU" firstAttribute="top" secondItem="IlN-Jm-GiQ" secondAttribute="top" constant="8" id="h2p-eV-2g1"/>
+                            <constraint firstAttribute="trailing" secondItem="cqk-yg-luU" secondAttribute="trailing" constant="9" id="un5-RX-dDp"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFZ-fk-j8D" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="256" y="32" width="40" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_add_cart" translatesAutoresizingMaskIntoConstraints="NO" id="CBc-yG-TSh">
+                                <rect key="frame" x="6" y="5.5" width="28" height="29"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="CBc-yG-TSh" secondAttribute="bottom" constant="5.5" id="Cg4-PR-Q1O"/>
+                            <constraint firstItem="CBc-yG-TSh" firstAttribute="leading" secondItem="jFZ-fk-j8D" secondAttribute="leading" constant="6" id="Ovk-gu-aTz"/>
+                            <constraint firstItem="CBc-yG-TSh" firstAttribute="top" secondItem="jFZ-fk-j8D" secondAttribute="top" constant="5.5" id="dVK-2O-nx9"/>
+                            <constraint firstAttribute="trailing" secondItem="CBc-yG-TSh" secondAttribute="trailing" constant="6" id="eKv-7I-iGj"/>
+                            <constraint firstAttribute="width" constant="40" id="gqh-3P-Acv"/>
+                            <constraint firstAttribute="height" constant="40" id="hyC-JQ-jUo"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="fTW-RE-qZi">
                         <rect key="frame" x="156.5" y="146" width="7" height="37"/>
                     </pageControl>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssN-jO-RQt">
-                        <rect key="frame" x="16" y="194" width="288" height="20"/>
+                        <rect key="frame" x="16" y="194" width="288" height="20.5"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="IlN-Jm-GiQ" firstAttribute="bottom" secondItem="FCo-wg-P3S" secondAttribute="bottom" constant="-8" id="7IQ-xG-AjY"/>
                     <constraint firstAttribute="bottom" secondItem="ssN-jO-RQt" secondAttribute="bottom" constant="7.5" id="GIU-Hi-bF5"/>
                     <constraint firstItem="FCo-wg-P3S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="Hei-aO-glG"/>
                     <constraint firstItem="ssN-jO-RQt" firstAttribute="top" secondItem="FCo-wg-P3S" secondAttribute="bottom" constant="8" id="LTz-XN-qJo"/>
+                    <constraint firstItem="jFZ-fk-j8D" firstAttribute="trailing" secondItem="FCo-wg-P3S" secondAttribute="trailing" constant="-8" id="M39-m3-Di1"/>
                     <constraint firstAttribute="trailing" secondItem="FCo-wg-P3S" secondAttribute="trailing" constant="16" id="X5F-pJ-KTV"/>
+                    <constraint firstItem="IlN-Jm-GiQ" firstAttribute="trailing" secondItem="FCo-wg-P3S" secondAttribute="trailing" constant="-8" id="kDw-Qc-n0P"/>
+                    <constraint firstItem="jFZ-fk-j8D" firstAttribute="top" secondItem="FCo-wg-P3S" secondAttribute="top" constant="8" id="mfL-mS-WZI"/>
                     <constraint firstAttribute="trailing" secondItem="ssN-jO-RQt" secondAttribute="trailing" constant="16" id="pMv-Cm-yso"/>
                     <constraint firstItem="fTW-RE-qZi" firstAttribute="centerX" secondItem="FCo-wg-P3S" secondAttribute="centerX" id="qND-Yz-FKu"/>
                     <constraint firstItem="fTW-RE-qZi" firstAttribute="bottom" secondItem="FCo-wg-P3S" secondAttribute="bottom" constant="-3" id="rvZ-cA-F31"/>
@@ -59,11 +106,17 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cartIconContainer" destination="jFZ-fk-j8D" id="j5N-Kk-TGj"/>
                 <outlet property="pageControl" destination="fTW-RE-qZi" id="3SN-PN-UX8"/>
                 <outlet property="pagerView" destination="FCo-wg-P3S" id="27a-qD-ske"/>
                 <outlet property="titleLabel" destination="ssN-jO-RQt" id="Qg6-Lw-9QV"/>
+                <outlet property="unlimitedRedemptionView" destination="IlN-Jm-GiQ" id="DdY-IQ-FzG"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="104.46428571428571"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_add_cart" width="30" height="30"/>
+        <image name="icon_unlimited" width="30" height="30"/>
+    </resources>
 </document>

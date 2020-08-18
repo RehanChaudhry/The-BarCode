@@ -118,6 +118,8 @@ class BarDetailHeaderViewController: UIViewController {
         let color =  self.bar.isUserFavourite.value == true ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
         self.favouriteButton.tintColor = color
         
+        self.cartIconContainer.isHidden = !self.bar.isInAppPaymentOn.value
+        
         UIView.performWithoutAnimation {
             if self.bar.currentlyBarIsOpened {
                 self.statusButton.setTitleColor(UIColor.appBlueColor(), for: .normal)

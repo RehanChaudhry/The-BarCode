@@ -91,7 +91,8 @@ class ExploreBaseTableViewCell: UITableViewCell {
         self.setupStatus(explore: explore)
         
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
-
+        
+        self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
     }
     
     func scrollToCurrentImage() {

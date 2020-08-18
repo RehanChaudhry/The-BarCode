@@ -18,12 +18,17 @@ class FoodMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var priceContainer: UIView!
     @IBOutlet var separatorView: UIView!
     
+    @IBOutlet var cartIconContainer: UIView!
+    
     @IBOutlet var cartIconImageView: UIImageView!
     
     @IBOutlet var detailLabelTop: NSLayoutConstraint!
     @IBOutlet var priceContainerHeight: NSLayoutConstraint!
     @IBOutlet var priceContainerTop: NSLayoutConstraint!
     @IBOutlet var topPadding: NSLayoutConstraint!
+    
+    @IBOutlet var cartIconContainerWidth: NSLayoutConstraint!
+    @IBOutlet var priceLabelLeft: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,7 +49,7 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setupCellForDrink(drink: Drink) {
+    func setupCellForDrink(drink: Drink, isInAppPaymentOn: Bool) {
         
         self.titleLabel.attributedText = drink.name.value.html2Attributed(isTitle: true)
         self.detailLabel.attributedText = drink.detail.value.html2Attributed(isTitle: false)
@@ -59,6 +64,13 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "£ " + priceString
         
+        self.handlePrice(price: price)
+        
+        self.shouldShowCartIcon(show: isInAppPaymentOn)
+        
+    }
+    
+    func handlePrice(price: Double) {
         if price <= 0.0 {
             self.priceContainerTop.constant = 0.0
             self.priceContainerHeight.constant = 0.0
@@ -70,10 +82,21 @@ class FoodMenuCell: UITableViewCell, NibReusable {
             
             self.priceContainer.isHidden = false
         }
-        
     }
     
-    func setupCellForFood(food: Food) {
+    func shouldShowCartIcon(show: Bool) {
+        if show {
+            self.cartIconContainer.isHidden = false
+            self.cartIconContainerWidth.constant = 38.0
+            self.priceLabelLeft.constant = 8.0
+        } else {
+            self.cartIconContainerWidth.constant = 0.0
+            self.cartIconContainer.isHidden = true
+            self.priceLabelLeft.constant = 12.0
+        }
+    }
+    
+    func setupCellForFood(food: Food, isInAppPaymentOn: Bool) {
         
         self.titleLabel.attributedText = food.name.value.html2Attributed(isTitle: true)
         self.detailLabel.attributedText = food.detail.value.html2Attributed(isTitle: false)
@@ -88,16 +111,9 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "£ " + priceString
         
-        if price <= 0.0 {
-            self.priceContainerTop.constant = 0.0
-            self.priceContainerHeight.constant = 0.0
-            
-            self.priceContainer.isHidden = true
-        } else {
-            self.priceContainerTop.constant = 8.0
-            self.priceContainerHeight.constant = 28.0
-            
-            self.priceContainer.isHidden = false
-        }
+        
+        self.handlePrice(price: price)
+        
+        self.shouldShowCartIcon(show: isInAppPaymentOn)
     }
 }

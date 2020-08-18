@@ -173,7 +173,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
         let food = self.searchResults[indexPath.section].foods[indexPath.row]
-        cell.setupCellForFood(food: food)
+        cell.setupCellForFood(food: food, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
         cell.separatorView.isHidden = false
         return cell
     }

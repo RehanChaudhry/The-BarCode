@@ -253,7 +253,7 @@ extension SplashViewController {
             }
                
             guard serverError == nil else {
-                debugPrint("Error while getting UnreadNotificationCount: \(error!.localizedDescription)")
+                debugPrint("Error while getting UnreadNotificationCount: \(serverError!.nsError())")
                 return
             }
             

@@ -166,7 +166,7 @@ class LoginOptionsViewController: UIViewController {
                 })
             }
         default:
-            Utility.shared.removeUser()
+            Utility.shared.logout()
             self.showAlertController(title: "", msg: "Please sign in again")
         }
     }

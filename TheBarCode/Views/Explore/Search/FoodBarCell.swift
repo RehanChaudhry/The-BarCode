@@ -22,6 +22,9 @@ class FoodBarCell: UITableViewCell, NibReusable {
     
     @IBOutlet var titleLabel: UILabel!
     
+    @IBOutlet var unlimitedRedemptionView: ShadowView!
+    @IBOutlet var cartIconContainer: ShadowView!
+    
     var bar: Explore?
     
     weak var delegate: FoodBarCellDelegate!
@@ -72,6 +75,9 @@ class FoodBarCell: UITableViewCell, NibReusable {
         self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
         
         self.titleLabel.text = explore.title.value
+        
+        self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
+        self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
     }
 }
 

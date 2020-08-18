@@ -118,7 +118,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
         let segment = self.segments[indexPath.section]
-        cell.setupCellForFood(food: segment.foods[indexPath.row])
+        cell.setupCellForFood(food: segment.foods[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
         return cell
     }
     

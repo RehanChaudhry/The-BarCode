@@ -150,7 +150,7 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
         let drink = self.searchResults[indexPath.section].drinks[indexPath.row]
-        cell.setupCellForDrink(drink: drink)
+        cell.setupCellForDrink(drink: drink, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
         cell.separatorView.isHidden = false
         return cell
     }

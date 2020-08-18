@@ -22,7 +22,6 @@ enum BarType: String {
 class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
-//    var userId = Value.Required<String>("user_id", initial: "")
     var title = Value.Required<String>("title", initial: "")
     var detail = Value.Required<String>("detail", initial: "")
     var managerName = Value.Required<String>("refresh_token", initial: "")
@@ -33,7 +32,6 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var latitude = Value.Required<CLLocationDegrees>("latitude", initial: 0.0)
     var longitude = Value.Required<CLLocationDegrees>("longitude", initial: 0.0)
     var status = Value.Required<String>("status", initial: "")
-//    var code = Value.Required<Int>("code", initial: 0)
     var businessTiming = Value.Required<String>("business_timing", initial: "")
     var closeTime = Value.Optional<String>("close_time")
     var openingTime = Value.Optional<String>("opening_time")
@@ -66,8 +64,18 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var timings = Relationship.ToOne<EstablishmentTiming>("establishment_timings", inverse: { $0.explore })
     
     var weeklySchedule = Relationship.ToManyOrdered<ExploreSchedule>("weekly_schedule", inverse: {$0.explore})
+    var deliverySchedule = Relationship.ToManyOrdered<DeliveryTiming>("delivery_schedule", inverse: { $0.explore })
     
     var isVoucherOn = Value.Required<Bool>("is_voucher_on", initial: false)
+    var isInAppPaymentOn = Value.Required<Bool>("is_payment_app", initial: false)
+    
+    var isDeliveryAvailable = Value.Required<Bool>("is_deliver", initial: false)
+    var isCurrentlyDelivering = Value.Required<Bool>("is_delivery_disable", initial: false)
+    var hasFixedDeliveryCharges = Value.Required<Bool>("is_global_delivery", initial: false)
+    var hasFullDayDelivery = Value.Required<Bool>("is_full_day_delivery", initial: false)
+    
+    var deliveryCondition = Value.Required<String>("delivery_condition", initial: "")
+    var deliveryRadius = Value.Required<Double>("delivery_distance", initial: 0.0)
     
     var barTypeRaw = Value.Required<String>("bar_type_raw", initial: "")
     
@@ -77,7 +85,6 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         }
     }
     
-
     var currentlyBarIsOpened: Bool {
         get {
             if let timings = self.timings.value {
@@ -137,7 +144,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
         self.id.value = "\(source["id"]!)"
-//        self.userId.value = "\(source["user_id"]!)"
+
         self.title.value = source["title"] as! String
         self.detail.value = source["description"] as! String
         self.managerName.value = source["manager_name"] as! String
@@ -155,7 +162,7 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         self.longitude.value = CLLocationDegrees("\(source["longitude"] ?? 0.0)")!
         
         self.status.value = source["status"] as! String
-//        self.code.value = source["code"] as! Int
+
         self.businessTiming.value = source["business_timing"] as? String ?? ""
         self.closeTime.value = source["close_time"] as? String
         self.openingTime.value = source["opening_time"] as? String
@@ -237,6 +244,26 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             }
         }
         
+        if let scheduleSource = source["delivery_timings"] as? [[String : Any]] {
+            let importSchedule = try! transaction.importObjects(Into<DeliveryTiming>(), sourceArray: scheduleSource)
+            self.deliverySchedule.value = importSchedule
+            
+            let bars = try! transaction.fetchAll(From<Explore>().where(\.id == self.id.value))
+            for bar in bars {
+                let edit = transaction.edit(bar)
+                let timings = edit?.deliverySchedule.value ?? []
+                
+                for time in timings {
+                    let day = self.deliverySchedule.value.first(where: {$0.day.value == time.day.value})
+                    
+                    time.toTime.value = day?.toTime.value
+                    time.fromTime.value = day?.fromTime.value
+                    time.day.value = day?.day.value ?? ""
+                    time.statusRaw.value = day?.statusRaw.value ?? ""
+                }
+            }
+        }
+        
         if let videoDict = source["video"] as? [String : Any], let videoUrlString = videoDict["url"] as? String, videoUrlString.count > 0 {
             self.videoUrlString.value = videoUrlString
         } else {
@@ -255,15 +282,37 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             self.isVoucherOn.value = voucherOn
         }
         
+        if let isInAppPaymentOn = source["is_payment_app"] as? Bool {
+            self.isInAppPaymentOn.value = isInAppPaymentOn
+        }
+        
+        if let isDeliveryAvailable = source["is_deliver"] as? Bool {
+            self.isDeliveryAvailable.value = isDeliveryAvailable
+        }
+        
+        if let isCurrentlyDelivering = source["is_delivery_disable"] as? Bool {
+            self.isCurrentlyDelivering.value = isCurrentlyDelivering
+        }
+        
+        if let hasFullDayDelivery = source["is_full_day_delivery"] as? Bool {
+            self.hasFullDayDelivery.value = hasFullDayDelivery
+        }
+        
+        if let hasFixedDeliveryCharges = source["is_global_delivery"] as? Bool {
+            self.hasFixedDeliveryCharges.value = hasFixedDeliveryCharges
+        }
+        
+        if let _ = source["delivery_distance"] {
+            self.deliveryRadius.value = Double("\(source["delivery_distance"]!)") ?? 0.0
+        }
+        
+        if let deliveryCondition = source["delivery_condition"] as? String {
+            self.deliveryCondition.value = deliveryCondition
+        }
+        
         if let type = source["type"] as? String {
             self.barTypeRaw.value = type
         }
-        
-        
-        
-        //TODO: handle array and object
-//        self.images.value = source["images"] as! String
-//        self.lastReloadTime.value = source["last_reload_time"] as! String
     }
 }
 

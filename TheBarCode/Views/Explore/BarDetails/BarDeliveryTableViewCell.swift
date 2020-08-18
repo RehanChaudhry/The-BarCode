@@ -42,6 +42,8 @@ class BarDeliveryTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(bar: Bar) {
         
+        self.statusLabel.text = bar.isDeliveryAvailable.value ? "Available" : "Temporarily Closed"
+        
         if bar.deliveryExpanded {
             
             let dateformatter = DateFormatter()
@@ -60,7 +62,7 @@ class BarDeliveryTableViewCell: UITableViewCell, NibReusable {
             let attributedPlaceholder = NSMutableAttributedString()
             let attributedTiming = NSMutableAttributedString()
             
-            for time in bar.weeklySchedule.value {
+            for time in bar.deliverySchedule.value {
                 
                 var attributes = time.day.value.lowercased() == bar.timings.value?.day.value.lowercased() ? boldAttributes : normalAttributes
                 
@@ -77,16 +79,21 @@ class BarDeliveryTableViewCell: UITableViewCell, NibReusable {
                 rightAlignedParaStyle.alignment = .right
                 attributes[NSAttributedStringKey.paragraphStyle] = rightAlignedParaStyle
                 
-                if time.dayStatus == .closed {
+                if time.dayStatus == .unavailable {
 
-                    let attributedStatus = NSAttributedString(string: "Unavailable", attributes: attributes)
+                    let attributedStatus = NSAttributedString(string: "Closed", attributes: attributes)
                     attributedTiming.append(attributedStatus)
                     
                 } else {
-                    let timingString = dateformatter.string(from: time.openingTime.value!) + " - " + dateformatter.string(from: time.closingTime.value!)
-                    
-                    let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
-                    attributedTiming.append(attributedTime)
+                    if bar.hasFullDayDelivery.value {
+                        let attributedTime = NSAttributedString(string: "00:00 - 23:59", attributes: attributes)
+                        attributedTiming.append(attributedTime)
+                    } else {
+                        let timingString = dateformatter.string(from: time.fromTime.value!) + " - " + dateformatter.string(from: time.toTime.value!)
+                        
+                        let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
+                        attributedTiming.append(attributedTime)
+                    }
                 }
                 
                 if time != bar.weeklySchedule.value.last {
@@ -123,14 +130,18 @@ class BarDeliveryTableViewCell: UITableViewCell, NibReusable {
         valueAttributes[NSAttributedString.Key.paragraphStyle] = paraStyle
         
         let conditionPlaceholder = NSAttributedString(string: "DELIVERY CONDITION", attributes: headingAttributes)
-        let conditionValue = NSAttributedString(string: "\n\r$3.99 delivery fee time approx. 15-25 MINS Based on traffic conditions", attributes: valueAttributes)
+        let conditionValue = NSAttributedString(string: "\n\r" + bar.deliveryCondition.value, attributes: valueAttributes)
         
-        let vicinityPlaceholder = NSAttributedString(string: "\n\rDELIVERY VICINITY", attributes: headingAttributes)
-        let vicinityValue = NSAttributedString(string: "\n\rWithin 10 miles radius", attributes: valueAttributes)
+        if bar.deliveryCondition.value.count > 0 {
+            attributedAdditionalInfo.append(conditionPlaceholder)
+            attributedAdditionalInfo.append(conditionValue)
+        }
         
-        attributedAdditionalInfo.append(conditionPlaceholder)
-        attributedAdditionalInfo.append(conditionValue)
-        
+        let spacing = bar.deliveryCondition.value.count > 0 ? "\n\r" : ""
+        let vicinityPlaceholder = NSAttributedString(string: "\(spacing)DELIVERY VICINITY", attributes: headingAttributes)
+        let vicinity = String(format: "%.1f %@", bar.deliveryRadius.value, bar.deliveryRadius.value > 1.0 ? "miles" : "mile")
+        let vicinityValue = NSAttributedString(string: "\n\rWithin \(vicinity) radius", attributes: valueAttributes)
+
         attributedAdditionalInfo.append(vicinityPlaceholder)
         attributedAdditionalInfo.append(vicinityValue)
         

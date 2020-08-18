@@ -147,6 +147,7 @@ class Utility: NSObject {
                 Entity<StandardOffer>("StandardOffer"),
                 Entity<ActiveStandardOffer>("ActiveStandardOffer"),
                 Entity<EstablishmentTiming>("EstablishmentTiming"),
+                Entity<DeliveryTiming>("DeliveryTiming"),
                 Entity<ExploreSchedule>("ExploreSchedule"),
                 Entity<Event>("Event"),
                 Entity<Food>("Food"),
@@ -602,13 +603,16 @@ class Utility: NSObject {
         return pinImage
     }
     
-    static func popToSignIn(){
-   
-        
+    func logout() {
+        OneSignal.deleteTag("user_id")
+        Utility.shared.removeUser()
+    }
+    
+    static func popToSignIn() {
+
         DispatchQueue.main.async {
             
-            OneSignal.deleteTag("user_id")
-            Utility.shared.removeUser()
+            Utility.shared.logout()
             APIHelper.shared.setUpOAuthHandler(accessToken: nil, refreshToken: nil)
             
             if let topController = UIApplication.topViewController() {
@@ -616,7 +620,13 @@ class Utility: NSObject {
                 if let tabBarVC = topController.tabBarController {
                     tabBarVC.dismiss(animated: true, completion: nil)
                 } else {
-                    self.dismissTopController()
+                    if topController.isMember(of: SplashViewController.self) {
+                        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                        let splashController = (storyboard.instantiateViewController(withIdentifier: "SplashViewController") as! SplashViewController)
+                        topController.navigationController?.setViewControllers([splashController], animated: false)
+                    } else {
+                        Utility.dismissTopController()
+                    }
                 }
             } else {
                 debugPrint("no topController ")

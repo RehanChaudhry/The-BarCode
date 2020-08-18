@@ -92,7 +92,7 @@ extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSour
         if section == .details || section == .timings || section == .contact {
             return 1
         } else if section == .delivery {
-            return 1
+            return self.bar.isDeliveryAvailable.value ? 1 : 0
         } else if section == .social {
             let hasFBLink = (self.bar.facebookPageUrl.value?.count ?? 0) > 0
             let hasTwitterLink = (self.bar.twitterProfileUrl.value?.count ?? 0) > 0
