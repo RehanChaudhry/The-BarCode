@@ -23,8 +23,12 @@ class FoodSearchViewController: BaseSearchScopeViewController {
 
         // Do any additional setup after loading the view.
 
+        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+    }
 
     //MARK: My Methods
     override func setUpStatefulTableView() {
@@ -172,9 +176,13 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        
         let food = self.searchResults[indexPath.section].foods[indexPath.row]
         cell.setupCellForFood(food: food, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
         cell.separatorView.isHidden = false
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -183,6 +191,29 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         let bar = self.searchResults[indexPath.section].bar
         self.moveToBarDetails(barId: bar.id.value, scopeType: .food)
+    }
+}
+
+//MARK: FoodMenuCellDelegate
+extension FoodSearchViewController: FoodMenuCellDelegate {
+    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.searchResults[indexPath.section].bar
+        let model = self.searchResults[indexPath.section].foods[indexPath.row]
+        self.updateCart(food: model, barId: bar.id.value, shouldAdd: false)
+    }
+    
+    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let bar = self.searchResults[indexPath.section].bar
+        let model = self.searchResults[indexPath.section].foods[indexPath.row]
+        self.updateCart(food: model, barId: bar.id.value, shouldAdd: true)
     }
 }
 
@@ -406,6 +437,46 @@ extension FoodSearchViewController {
             }
         }
     }
+    
+    func updateCart(food: Food, barId: String, shouldAdd: Bool) {
+        
+        var params: [String : Any] = ["id" : food.id.value]
+        if shouldAdd {
+            food.isAddingToCart = true
+            params["quantity"] = food.quantity.value + 1
+        } else {
+            food.isRemovingFromCart = true
+            params["quantity"] = 0
+        }
+        
+        self.statefulTableView.innerTable.reloadData()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateCart, method: .post) { (response, serverError, error) in
+            
+            let previousQuantity = food.quantity.value
+            
+            defer {
+                food.isAddingToCart = false
+                food.isRemovingFromCart = false
+
+                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: barId)
+                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedFood = transaction.edit(food)
+                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
+            })
+        }
+    }
 }
 
 //MARK: StatefulTableDelegate
@@ -485,5 +556,12 @@ extension FoodSearchViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+//MARK: Notification Methods
+extension FoodSearchViewController {
+    @objc func foodCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
     }
 }

@@ -71,17 +71,27 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bm-8f-Qey">
+                                <rect key="frame" x="0.0" y="0.0" width="95.5" height="28"/>
+                                <connections>
+                                    <action selector="addItemButtonTappedWithSender:" destination="gkc-Xc-FNt" eventType="touchUpInside" id="v3O-rt-MxF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="5bm-8f-Qey" firstAttribute="leading" secondItem="TMq-dN-c4f" secondAttribute="leading" id="2Rq-If-T0V"/>
+                            <constraint firstAttribute="trailing" secondItem="5bm-8f-Qey" secondAttribute="trailing" id="3fz-YZ-qc8"/>
                             <constraint firstAttribute="trailing" secondItem="fBL-S5-DOc" secondAttribute="trailing" constant="12" id="48l-oF-Xhp"/>
                             <constraint firstAttribute="height" constant="28" id="78g-hG-GmT"/>
                             <constraint firstAttribute="bottom" secondItem="DwO-yC-v2a" secondAttribute="bottom" id="8z3-CV-fl6"/>
                             <constraint firstItem="DwO-yC-v2a" firstAttribute="leading" secondItem="TMq-dN-c4f" secondAttribute="leading" id="A1h-aA-cb2"/>
                             <constraint firstAttribute="bottom" secondItem="fBL-S5-DOc" secondAttribute="bottom" id="Pxf-Hz-bVz"/>
+                            <constraint firstItem="5bm-8f-Qey" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="RjP-Vp-QFd"/>
                             <constraint firstItem="DwO-yC-v2a" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="eC4-GZ-cwv"/>
                             <constraint firstItem="fBL-S5-DOc" firstAttribute="leading" secondItem="DwO-yC-v2a" secondAttribute="trailing" constant="12" id="ewB-Zc-Q1g"/>
                             <constraint firstItem="fBL-S5-DOc" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="sB9-np-soR"/>
+                            <constraint firstAttribute="bottom" secondItem="5bm-8f-Qey" secondAttribute="bottom" id="tCx-7I-TLu"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -89,6 +99,16 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yIc-JX-wm2">
+                        <rect key="frame" x="204" y="65" width="100" height="28"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                        <state key="normal" title="2 Items added " image="icon_trash_bin">
+                            <color key="titleColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="removeItemButtonTappedWithSender:" destination="gkc-Xc-FNt" eventType="touchUpInside" id="lI1-De-u20"/>
+                        </connections>
+                    </button>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-ZW-8Cu">
                         <rect key="frame" x="16" y="108.5" width="288" height="0.5"/>
                         <color key="backgroundColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
@@ -96,15 +116,33 @@
                             <constraint firstAttribute="height" constant="0.5" id="BKb-4e-OFz"/>
                         </constraints>
                     </view>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Sw9-bv-cKI">
+                        <rect key="frame" x="119" y="69" width="20" height="20"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="YRW-ik-7Li">
+                        <rect key="frame" x="176" y="69" width="20" height="20"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="YRW-ik-7Li" firstAttribute="centerY" secondItem="yIc-JX-wm2" secondAttribute="centerY" id="1K2-aP-mcY"/>
+                    <constraint firstItem="yIc-JX-wm2" firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" id="3ed-3J-niA"/>
                     <constraint firstAttribute="bottom" secondItem="kMK-ZW-8Cu" secondAttribute="bottom" id="5bA-mp-Vcx"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="9gw-F9-FJP"/>
+                    <constraint firstItem="Sw9-bv-cKI" firstAttribute="centerY" secondItem="TMq-dN-c4f" secondAttribute="centerY" id="FLD-AD-o0o"/>
+                    <constraint firstItem="yIc-JX-wm2" firstAttribute="leading" secondItem="YRW-ik-7Li" secondAttribute="trailing" constant="8" id="FTU-Zp-eYW"/>
                     <constraint firstAttribute="trailing" secondItem="kMK-ZW-8Cu" secondAttribute="trailing" constant="16" id="KZf-Uq-PgM"/>
                     <constraint firstItem="f5w-VV-CxB" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="O8y-Qj-0RB"/>
+                    <constraint firstItem="Sw9-bv-cKI" firstAttribute="leading" secondItem="TMq-dN-c4f" secondAttribute="trailing" constant="7.5" id="Ppi-85-HCQ"/>
+                    <constraint firstItem="YRW-ik-7Li" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sw9-bv-cKI" secondAttribute="trailing" constant="8" id="R7V-Pa-v9Q"/>
                     <constraint firstAttribute="trailing" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="16" id="RJo-fx-S8L"/>
+                    <constraint firstAttribute="trailing" secondItem="yIc-JX-wm2" secondAttribute="trailing" constant="16" id="SNF-o2-JcO"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="top" secondItem="f5w-VV-CxB" secondAttribute="bottom" constant="10" id="Xgb-3C-Sx7"/>
                     <constraint firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" constant="16" id="Y75-oZ-vAC"/>
+                    <constraint firstItem="yIc-JX-wm2" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="iKn-AU-0kP"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="lie-y5-Xgz"/>
                     <constraint firstAttribute="trailing" secondItem="mX7-Be-M1C" secondAttribute="trailing" constant="16" id="q8U-m5-Ghc"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="top" secondItem="mX7-Be-M1C" secondAttribute="bottom" constant="10" id="sb5-St-gbl"/>
@@ -114,6 +152,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="b6u-E7-WRs"/>
             <connections>
+                <outlet property="addItemActivityIndicator" destination="Sw9-bv-cKI" id="aJn-di-uTK"/>
+                <outlet property="addItemButton" destination="5bm-8f-Qey" id="ccs-h6-r3D"/>
                 <outlet property="cartIconContainer" destination="DwO-yC-v2a" id="8j0-cF-GCQ"/>
                 <outlet property="cartIconContainerWidth" destination="DGK-IJ-M4L" id="M2D-9U-naB"/>
                 <outlet property="cartIconImageView" destination="CQA-7a-WMo" id="QJq-m4-fL3"/>
@@ -124,6 +164,8 @@
                 <outlet property="priceContainerTop" destination="sb5-St-gbl" id="JcZ-sL-oSZ"/>
                 <outlet property="priceLabel" destination="fBL-S5-DOc" id="n8J-gM-XyW"/>
                 <outlet property="priceLabelLeft" destination="ewB-Zc-Q1g" id="RUb-IK-sUz"/>
+                <outlet property="removeItemActivityIndicator" destination="YRW-ik-7Li" id="cGp-SR-95n"/>
+                <outlet property="removeItemButton" destination="yIc-JX-wm2" id="xBG-Nd-Kci"/>
                 <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>
                 <outlet property="titleLabel" destination="f5w-VV-CxB" id="hju-Y7-m1D"/>
                 <outlet property="topPadding" destination="uro-pX-tYP" id="Ahe-II-dq8"/>
@@ -133,5 +175,6 @@
     </objects>
     <resources>
         <image name="icon_add_cart" width="30" height="30"/>
+        <image name="icon_trash_bin" width="16" height="16"/>
     </resources>
 </document>

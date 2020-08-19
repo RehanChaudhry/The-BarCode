@@ -89,6 +89,12 @@ let notificationNameSearchVoucher = Notification.Name(rawValue: "notificationNam
 let notificationNameRefreshNotifications = Notification.Name(rawValue: "notificationNameRefreshNotifications")
 let notificationNameUpdateNotificationCount = Notification.Name(rawValue: "notificationNameUpdateNotificationCount")
 
+let notificationNameFoodCartUpdated = Notification.Name(rawValue: "notificationNameFoodCartUpdated")
+let notificationNameDrinkCartUpdated = Notification.Name(rawValue: "notificationNameDrinkCartUpdated")
+
+typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
+typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)
+
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
 let serverDateFormat = "yyyy-MM-dd"

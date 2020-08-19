@@ -39,11 +39,17 @@ class FoodMenuViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.reset()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -117,8 +123,12 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        
         let segment = self.segments[indexPath.section]
         cell.setupCellForFood(food: segment.foods[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -131,6 +141,28 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+//MARK: FoodMenuCellDelegate
+extension FoodMenuViewController: FoodMenuCellDelegate {
+    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.segments[indexPath.section].foods[indexPath.row]
+        self.updateCart(food: model, shouldAdd: false)
+    }
+    
+    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.segments[indexPath.section].foods[indexPath.row]
+        self.updateCart(food: model, shouldAdd: true)
+    }
+}
+
+//MARK: Webservices Methods
 extension FoodMenuViewController {
     func getDeals(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
@@ -192,8 +224,49 @@ extension FoodMenuViewController {
             }
         }
     }
+    
+    func updateCart(food: Food, shouldAdd: Bool) {
+        
+        var params: [String : Any] = ["id" : food.id.value]
+        if shouldAdd {
+            food.isAddingToCart = true
+            params["quantity"] = food.quantity.value + 1
+        } else {
+            food.isRemovingFromCart = true
+            params["quantity"] = 0
+        }
+        
+        self.statefulTableView.innerTable.reloadData()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateCart, method: .post) { (response, serverError, error) in
+            
+            let previousQuantity = food.quantity.value
+            
+            defer {
+                food.isAddingToCart = false
+                food.isRemovingFromCart = false
+
+                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedFood = transaction.edit(food)
+                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
+            })
+        }
+    }
 }
 
+//MARK: StatefulTableDelegate
 extension FoodMenuViewController: StatefulTableDelegate {
     func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
         self.getDeals(isRefreshing: false) { [unowned self] (error) in
@@ -287,6 +360,13 @@ extension FoodMenuViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+//MARK: Notification Methods
+extension FoodMenuViewController {
+    @objc func foodCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
     }
 }
 

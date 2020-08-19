@@ -78,6 +78,8 @@ let apiPathUserNotification = "user-notification"
 
 let apiPathNotificationCount = "user-not-read-notification"
 
+let apiPathUpdateCart = "cart"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

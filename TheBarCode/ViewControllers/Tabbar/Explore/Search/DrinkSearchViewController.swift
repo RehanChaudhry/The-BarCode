@@ -149,9 +149,13 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        
         let drink = self.searchResults[indexPath.section].drinks[indexPath.row]
         cell.setupCellForDrink(drink: drink, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
         cell.separatorView.isHidden = false
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -183,6 +187,29 @@ extension DrinkSearchViewController: UITableViewDelegate, UITableViewDataSource 
         
         let bar = self.searchResults[indexPath.section].bar
         self.moveToBarDetails(barId: bar.id.value, scopeType: .drink)
+    }
+}
+
+//MARK: FoodMenuCellDelegate
+extension DrinkSearchViewController: FoodMenuCellDelegate {
+    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.searchResults[indexPath.section].foods[indexPath.row]
+        model.isRemovingFromCart = true
+        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.searchResults[indexPath.section].foods[indexPath.row]
+        model.isAddingToCart = true
+        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
     }
 }
 

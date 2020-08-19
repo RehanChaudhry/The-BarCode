@@ -116,8 +116,12 @@ extension DrinkListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        
         let segment = self.segments[indexPath.section]
         cell.setupCellForDrink(drink: segment.drinks[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -128,6 +132,29 @@ extension DrinkListViewController: UITableViewDataSource, UITableViewDelegate {
         
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         self.delegate.drinkListViewController(controller: self, didSelect: drink)
+    }
+}
+
+//MARK: FoodMenuCellDelegate
+extension DrinkListViewController: FoodMenuCellDelegate {
+    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.segments[indexPath.section].drinks[indexPath.row]
+        model.isRemovingFromCart = true
+        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+        guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
+            return
+        }
+        
+        let model = self.segments[indexPath.section].drinks[indexPath.row]
+        model.isAddingToCart = true
+        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
     }
 }
 

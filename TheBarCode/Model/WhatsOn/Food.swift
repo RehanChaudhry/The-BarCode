@@ -25,6 +25,10 @@ class Food: CoreStoreObject {
     var price = Value.Required<String>("price", initial: "")
     var unit = Value.Required<String>("unit", initial: "")
     
+    var quantity = Value.Required<Int>("quantity", initial: 0)
+    
+    var isAddingToCart: Bool = false
+    var isRemovingFromCart: Bool = false
 }
 
 extension Food: ImportableUniqueObject {
@@ -79,6 +83,11 @@ extension Food: ImportableUniqueObject {
         } else {
             self.categoryName.value = ""
         }
+        
+        if let _ = source["quantity"] {
+            self.quantity.value = Int("\(source["quantity"]!)") ?? 0
+        }
+        
         
     }
 }
