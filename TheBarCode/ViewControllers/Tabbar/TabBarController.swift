@@ -91,9 +91,6 @@ class TabBarController: UITabBarController {
             self.acceptSharedEvent()
         }
         
-        self.tabBar.items?[3].badgeValue = "3"
-
-        
         if  Utility.shared.notificationCount > 0 {
             let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
             self.tabBar.items?[4].badgeValue = unreadCount
@@ -368,9 +365,9 @@ extension TabBarController {
         debugPrint("updateMoreBadgeCount")
         if  Utility.shared.notificationCount > 0 {
             let unreadCount = Utility.shared.notificationCount > 9 ? "9+" : "\(Utility.shared.notificationCount)"
-            self.tabBar.items?[3].badgeValue = unreadCount
+            self.tabBar.items?[4].badgeValue = unreadCount
         } else {
-            self.tabBar.items?[3].badgeValue = nil
+            self.tabBar.items?[4].badgeValue = nil
         }
     }
 }

@@ -31,11 +31,13 @@ class AllSearchViewController: BaseSearchScopeViewController {
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
         
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -329,9 +331,9 @@ extension AllSearchViewController: FoodMenuCellDelegate {
         let viewModelItem = viewModel.items[indexPath.item]
         
         if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
-            item.drink.isRemovingFromCart = true
+            self.updateDrinkCart(drink: item.drink, barId: item.barId, shouldAdd: false)
         } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
-            self.updateCart(food: item.food, barId: item.barId, shouldAdd: false)
+            self.updateFoodCart(food: item.food, barId: item.barId, shouldAdd: false)
         }
     }
     
@@ -344,9 +346,9 @@ extension AllSearchViewController: FoodMenuCellDelegate {
         let viewModelItem = viewModel.items[indexPath.item]
         
         if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
-            item.drink.isAddingToCart = true
+            self.updateDrinkCart(drink: item.drink, barId: item.barId, shouldAdd: true)
         } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
-            self.updateCart(food: item.food, barId: item.barId, shouldAdd: true)
+            self.updateFoodCart(food: item.food, barId: item.barId, shouldAdd: true)
         }
     }
 }
@@ -1018,7 +1020,7 @@ extension AllSearchViewController {
         }
     }
     
-    func updateCart(food: Food, barId: String, shouldAdd: Bool) {
+    func updateFoodCart(food: Food, barId: String, shouldAdd: Bool) {
         
         var params: [String : Any] = ["id" : food.id.value]
         if shouldAdd {
@@ -1031,7 +1033,7 @@ extension AllSearchViewController {
         
         self.statefulTableView.innerTable.reloadData()
         
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateCart, method: .post) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
             
             let previousQuantity = food.quantity.value
             
@@ -1054,6 +1056,46 @@ extension AllSearchViewController {
             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 let editedFood = transaction.edit(food)
                 editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
+            })
+        }
+    }
+    
+    func updateDrinkCart(drink: Drink, barId: String, shouldAdd: Bool) {
+        
+        var params: [String : Any] = ["id" : drink.id.value]
+        if shouldAdd {
+            drink.isAddingToCart = true
+            params["quantity"] = drink.quantity.value + 1
+        } else {
+            drink.isRemovingFromCart = true
+            params["quantity"] = 0
+        }
+        
+        self.statefulTableView.innerTable.reloadData()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
+            
+            let previousQuantity = drink.quantity.value
+            
+            defer {
+                drink.isAddingToCart = false
+                drink.isRemovingFromCart = false
+
+                let drinkCartInfo: DrinkCartUpdatedObject = (drink: drink, previousQuantity: previousQuantity, barId: barId)
+                NotificationCenter.default.post(name: notificationNameDrinkCartUpdated, object: drinkCartInfo)
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedDrink = transaction.edit(drink)
+                editedDrink?.quantity.value = shouldAdd ? drink.quantity.value + 1 : 0
             })
         }
     }
@@ -1142,6 +1184,10 @@ extension AllSearchViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension AllSearchViewController {
     @objc func foodCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    @objc func drinkCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
 }

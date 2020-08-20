@@ -32,7 +32,7 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
         
     }
 
-    @IBAction func selectionButtonTapped(_ sender: Any) {
+    @IBAction func selectionButtonTapped(_ sender: UIButton) {
         
         self.selectionView.backgroundColor = UIColor.appBlueColor()
         self.delegate.cartSectionHeaderView(view: self, selectedBarId: self.barId)

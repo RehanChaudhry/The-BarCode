@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EasyNotificationBadge
 
 class CartBaseViewController: UIViewController {
     
@@ -42,13 +43,11 @@ class CartBaseViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.myCartCountLabel.layer.cornerRadius = 8
-        self.myCartCountLabel.clipsToBounds = true
-
-
+        
         self.defaultButtonTitleColor = self.myCartButton.titleColor(for: .normal)
               
         self.myCartViewController = (self.storyboard!.instantiateViewController(withIdentifier: "MyCartViewController") as! MyCartViewController)
+        self.myCartViewController.delegate = self
         self.controllers.append(self.myCartViewController)
               
         self.myOrdersViewController = (self.storyboard!.instantiateViewController(withIdentifier: "MyOrdersViewController") as! MyOrdersViewController)
@@ -64,40 +63,35 @@ class CartBaseViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-          super.viewWillAppear(animated)
-          
-          self.navigationController?.setNavigationBarHidden(true, animated: animated)
-      }
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
       
-      override var preferredStatusBarStyle: UIStatusBarStyle {
-          return .lightContent
-      }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
       
-      //MARK: My Methods
-      func setupPageController() {
-          self.pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
-          self.pageController.dataSource = self
-          self.pageController.delegate = self
-          
-          self.addChildViewController(self.pageController)
-          self.pageController.willMove(toParentViewController: self)
-          self.contentView.addSubview(self.pageController.view)
-          
-          self.pageController.view.autoPinEdgesToSuperviewEdges()
-          
-          for aView in self.pageController.view.subviews {
-              if let scrollView = aView as? UIScrollView {
-                  scrollView.isScrollEnabled = false
-              }
-          }
-      }
+    //MARK: My Methods
+    func setupPageController() {
+        self.pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
+        self.pageController.dataSource = self
+        self.pageController.delegate = self
+        
+        self.addChildViewController(self.pageController)
+        self.pageController.willMove(toParentViewController: self)
+        self.contentView.addSubview(self.pageController.view)
+        
+        self.pageController.view.autoPinEdgesToSuperviewEdges()
+        
+        for aView in self.pageController.view.subviews {
+            if let scrollView = aView as? UIScrollView {
+                scrollView.isScrollEnabled = false
+            }
+        }
+    }
     
     func resetSegmentedButton() {
-//        self.myCartButton.backgroundColor = self.tempView.backgroundColor
-//        self.myOrdersButton.backgroundColor = self.tempView.backgroundColor
-        
-//
-        
         self.myCartLineView.isHidden = true
         self.myOrdersLineView.isHidden = true
 
@@ -126,7 +120,6 @@ class CartBaseViewController: UIViewController {
         
         self.resetSegmentedButton()
         
-        //sender.backgroundColor = UIColor.black
         sender.setTitleColor(UIColor.appBlueColor(), for: .normal)
       
         self.myOrdersLineView.isHidden = true
@@ -195,5 +188,13 @@ extension CartBaseViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         debugPrint("pending controllers: \(pendingViewControllers)")
+    }
+}
+
+//MARK: MyCartViewControllerDelegate
+extension CartBaseViewController: MyCartViewControllerDelegate {
+    func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int) {
+        self.myCartCountLabel.isHidden = count == 0
+        self.myCartCountLabel.text = "\(count)"
     }
 }

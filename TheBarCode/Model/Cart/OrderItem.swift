@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import ObjectMapper
 
-class OrderItem {
+class OrderItem: Mappable {
     
+    var id: String = ""
     var name: String = ""
     var quantity: Int = 0
 
@@ -21,11 +23,23 @@ class OrderItem {
         }
     }
     
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        self.id = "\(map.JSON["id"]!)"
+        self.name <- map["name"]
+        
+        self.quantity = Int("\(map.JSON["quantity"]!)") ?? 0
+        self.unitPrice = Double("\(map.JSON["price"]!)") ?? 0.0
+    }
+    
     init(name: String, quantity: Int, unitPrice: Double) {
            self.name = name
            self.quantity = quantity
            self.unitPrice = unitPrice
-       }
+    }
     
     
     

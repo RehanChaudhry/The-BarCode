@@ -8,6 +8,12 @@
 
 import UIKit
 import StatefulTableView
+import Alamofire
+import ObjectMapper
+
+protocol MyCartViewControllerDelegate: class {
+    func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int)
+}
 
 class MyCartViewController: UIViewController {
 
@@ -19,8 +25,18 @@ class MyCartViewController: UIViewController {
     @IBOutlet weak var checkOutButton: GradientButton!
     @IBOutlet weak var bottomViewHeightConstraint: NSLayoutConstraint!
         
-    var orders: [Order] = Order.getMyCartDummyOrders()
-    var selectedOrder: Order?
+    var dataRequest: DataRequest?
+    var loadMore = Pagination()
+    
+    var orders: [Order] = []
+    var selectedOrder: Order? {
+        didSet {
+            self.setUpBadgeValue()
+            self.calculateBill()
+        }
+    }
+    
+    weak var delegate: MyCartViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +44,15 @@ class MyCartViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.setUpStatefulTableView()
-        self.selectFirstOrderByDefaultIfPossible()
+        self.reset()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -51,37 +75,59 @@ class MyCartViewController: UIViewController {
         self.statefulTableView.innerTable.estimatedRowHeight = 200.0
         self.statefulTableView.innerTable.tableFooterView = UIView()
         self.statefulTableView.innerTable.separatorStyle = .none
+        self.statefulTableView.statefulDelegate = self
        
         let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 8))
         tableHeaderView.backgroundColor = UIColor.clear
         self.statefulTableView.innerTable.tableHeaderView = tableHeaderView
     }
     
-    func selectFirstOrderByDefaultIfPossible() {
-        if self.orders.count > 1 {
-            self.selectedOrder = self.orders.first
-            self.calculateBill(order:  self.orders.first!)
+    func reset() {
+        self.dataRequest?.cancel()
+        self.loadMore = Pagination()
+        self.orders.removeAll()
+        self.statefulTableView.innerTable.reloadData()
+        
+        self.selectedOrder = nil
+        
+        self.statefulTableView.state = .idle
+        self.statefulTableView.triggerInitialLoad()
+    }
+    
+    func calculateBill() {
+      
+        if let order = self.selectedOrder {
+            self.barNameLabel.text = order.barName
+            
+            var total: Double = 0.0
+              
+            for orderItem in order.orderItems {
+                total += (orderItem.unitPrice * Double(orderItem.quantity))
+            }
+                                        
+            let priceString = String(format: "%.2f", total)
+            let buttonTitle = "Checkout - £ " + priceString
+            
+            self.checkOutButton.setTitle(buttonTitle, for: .normal)
         } else {
-            self.bottomView.isHidden = true
-            self.bottomViewHeightConstraint.constant = 0
+            self.barNameLabel.text = ""
+            let buttonTitle = "Checkout - £ " + "N/A"
+            self.checkOutButton.setTitle(buttonTitle, for: .normal)
         }
     }
     
-    func calculateBill(order: Order) {
-      
-      self.barNameLabel.text = order.barName
-      
-      var total: Double = 0.0
-        
-      for orderItem in order.orderItems {
-          total += ( orderItem.unitPrice * Double(orderItem.quantity))
-      }
-                                  
-      let priceString = String(format: "%.2f", total)
-      let buttonTitle = "Checkout - £ " + priceString
-      
-      self.checkOutButton.setTitle(buttonTitle, for: .normal)
-      self.statefulTableView.innerTable.reloadData()
+    func setUpBadgeValue() {
+        if let order = self.selectedOrder {
+            var count: Int = 0
+            for item in order.orderItems {
+                count += item.quantity
+            }
+            self.tabBarController?.tabBar.items?[3].badgeValue = "\(count)"
+            self.delegate.myCartViewController(controller: self, badgeCountDidUpdate: count)
+        } else {
+            self.tabBarController?.tabBar.items?[3].badgeValue = nil
+            self.delegate.myCartViewController(controller: self, badgeCountDidUpdate: 0)
+        }
     }
     
     //MARK: My IBActions
@@ -100,10 +146,7 @@ class MyCartViewController: UIViewController {
     }
 }
 
-
-
 //MARK: UITableViewDataSource, UITableViewDelegate
-
 extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -162,10 +205,11 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
         if order.orderItems.count == 0 {
             self.orders.remove(at: indexPath.section)
             self.statefulTableView.innerTable.reloadData()
-            self.selectFirstOrderByDefaultIfPossible()
+            
+            self.selectedOrder = self.orders.first
+        } else {
+            self.calculateBill()
         }
-        self.calculateBill(order: order)
-
     }
     
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
@@ -175,7 +219,66 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
         }
                
         let order = self.orders[indexPath.section]
-        self.calculateBill(order: order)
+        self.calculateBill()
+    }
+}
+
+//MARK: Webservices Methods
+extension MyCartViewController {
+    func getCart(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
+        
+        self.dataRequest?.cancel()
+        
+        if isRefreshing {
+            self.loadMore.next = 1
+        }
+        
+        var params:[String : Any] =  ["pagination" : true,
+                                      "limit" : 1,
+                                      "page" : self.loadMore.next]
+        
+        self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .get) { (response, serverError, error) in
+            
+            defer {
+                self.statefulTableView.innerTable.reloadData()
+            }
+            
+            if isRefreshing {
+                self.orders.removeAll()
+            }
+            
+            guard error == nil else {
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                completion(serverError!.nsError())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                
+                let orders = Mapper<Order>().mapArray(JSONArray: responseArray)
+                if self.orders.count == 0 && orders.count > 0 {
+                    self.selectedOrder = orders.first
+                }
+                
+                self.orders.append(contentsOf: orders)
+                
+                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
+                self.statefulTableView.canPullToRefresh = true
+                self.statefulTableView.innerTable.reloadData()
+                
+                completion(nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                completion(genericError)
+            }
+        }
     }
 }
 
@@ -187,12 +290,95 @@ extension MyCartViewController: CartSectionHeaderViewDelegate {
             return order.barId == selectedBarId
         }
        
-        if filteredOrders.count > 0 {
-            self.selectedOrder = filteredOrders.first!
-            self.calculateBill(order: self.selectedOrder!)
-        } else {
-                debugPrint("some error finding the selected bar order")
-        }
+        self.selectedOrder = filteredOrders.first
+        self.statefulTableView.innerTable.reloadData()
+    }
+}
 
+//MARK: StatefulTableDelegate
+extension MyCartViewController: StatefulTableDelegate {
+    
+    func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.getCart(isRefreshing: false) {  [unowned self] (error) in
+            handler(self.orders.count == 0, error)
+        }
+        
+    }
+    
+    func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
+        self.getCart(isRefreshing: false) { (error) in
+            handler(false, error, error != nil)
+        }
+    }
+    
+    func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.getCart(isRefreshing: true) { [unowned self] (error) in
+            handler(self.orders.count == 0, error)
+        }
+    }
+    
+    func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
+        let initialErrorView = LoadingAndErrorView.loadFromNib()
+        initialErrorView.backgroundColor = self.view.backgroundColor
+        initialErrorView.showLoading()
+        return initialErrorView
+    }
+    
+    func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
+        if forInitialLoadError == nil {
+            let title = "No Cart"
+            let subTitle = "Please add items to create a cart\nTap to refresh"
+            
+            let emptyDataView = EmptyDataView.loadFromNib()
+            emptyDataView.backgroundColor = self.view.backgroundColor
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
+            
+            emptyDataView.actionHandler = { (sender: UIButton) in
+                tvc.triggerInitialLoad()
+            }
+            
+            return emptyDataView
+            
+        } else {
+            let initialErrorView = LoadingAndErrorView.loadFromNib()
+            initialErrorView.showErrorView(canRetry: true)
+            initialErrorView.backgroundColor = self.view.backgroundColor
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
+            
+            initialErrorView.retryHandler = {(sender: UIButton) in
+                tvc.triggerInitialLoad()
+            }
+            
+            return initialErrorView
+        }
+    }
+    
+    func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
+        let loadingView = LoadingAndErrorView.loadFromNib()
+        loadingView.showErrorView(canRetry: true)
+        loadingView.backgroundColor = self.view.backgroundColor
+        
+        if forLoadMoreError == nil {
+            loadingView.showLoading()
+        } else {
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
+        }
+        
+        loadingView.retryHandler = {(sender: UIButton) in
+            tvc.triggerLoadMore()
+        }
+        
+        return loadingView
+    }
+}
+
+//MARK: Notification Methods
+extension MyCartViewController {
+    @objc func foodCartUpdatedNotification(notification: Notification) {
+        self.reset()
+    }
+    
+    @objc func drinkCartUpdatedNotification(notification: Notification) {
+        self.reset()
     }
 }

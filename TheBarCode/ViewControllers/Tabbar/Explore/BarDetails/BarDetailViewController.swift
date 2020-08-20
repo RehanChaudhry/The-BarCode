@@ -14,6 +14,7 @@ import HTTPStatusCodes
 import ObjectMapper
 import Alamofire
 import FirebaseAnalytics
+import EasyNotificationBadge
 
 protocol BarDetailViewControllerDelegate: class {
     func barDetailViewController(controller: BarDetailViewController, cancelButtonTapped sender: UIBarButtonItem)
@@ -56,6 +57,13 @@ class BarDetailViewController: UIViewController {
     var shouldSendAnalytics = false
     
     var cartBarButton: UIBarButtonItem!
+    var cartButton: UIButton!
+    
+    var cartCount: Int = 0 {
+        didSet {
+            self.updateCartBadgeCount()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,15 +87,26 @@ class BarDetailViewController: UIViewController {
         
         self.addBackButton()
         
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
+        
+        self.cartButton = UIButton(type: .custom)
+        self.cartButton.frame = CGRect(x: 0.0, y: 0.0, width: 34.0, height: 34.0)
+        self.cartButton.addTarget(self, action: #selector(cartBarButtonTapped(sender:)), for: .touchUpInside)
+        self.cartButton.setImage(UIImage(named: "icon_cart")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        self.cartBarButton = UIBarButtonItem(customView: self.cartButton)
+
         if let _ = self.selectedBar {
             self.setUpTitle()
             self.setUpSegmentedController()
             self.setUpBottomView()
+            self.setUpCartBarButton()
         } else {
             self.getBarDetails(isRefreshing: false)
         }
         
         self.viewProfile()
+        self.getCartQuantityCount()
         
         if let bar = self.selectedBar {
             Analytics.logEvent(viewBarDetailsScreen, parameters: ["bar_id" : bar.id.value])
@@ -95,11 +114,10 @@ class BarDetailViewController: UIViewController {
             Analytics.logEvent(viewBarDetailsScreen, parameters: ["bar_id" : self.barId ?? ""])
         }
         
-        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
-        self.cartBarButton = UIBarButtonItem(image: UIImage(named: "icon_cart")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cartBarButtonTapped(sender:)))
-        self.navigationItem.rightBarButtonItem = self.cartBarButton
-        
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
         
     }
 
@@ -123,6 +141,9 @@ class BarDetailViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameUnlimitedRedemptionPurchased, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -215,6 +236,20 @@ class BarDetailViewController: UIViewController {
         }
     }
 
+    func setUpCartBarButton() {
+        
+        guard let selectedBar = self.selectedBar else {
+            debugPrint("Bar not available for setting up cartbar button")
+            return
+        }
+        
+        if selectedBar.isInAppPaymentOn.value {
+            self.navigationItem.rightBarButtonItem = self.cartBarButton
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     func redeemWithUserCredit(credit: Int?, canReload: Bool) {
         var userCredit: Int!
         
@@ -307,8 +342,21 @@ class BarDetailViewController: UIViewController {
         }
     }
 
-    @objc func cartBarButtonTapped(sender: UIBarButtonItem) {
+    @objc func cartBarButtonTapped(sender: UIButton) {
         
+    }
+    
+    func updateCartBadgeCount() {
+        if self.cartCount > 0 {
+            var badgeAppearance = BadgeAppearance()
+            badgeAppearance.backgroundColor = UIColor.red
+            badgeAppearance.textColor = UIColor.white
+            badgeAppearance.textAlignment = .center
+            badgeAppearance.textSize = 12
+            self.cartBarButton.badge(text: "\(self.cartCount)", appearance: badgeAppearance)
+        } else {
+            self.cartBarButton.badge(text: nil)
+        }
     }
     
     //MARK: My IBActions
@@ -437,6 +485,7 @@ extension BarDetailViewController {
                 
                 self.setUpTitle()
                 self.setUpBottomView()
+                self.setUpCartBarButton()
                 
                 NotificationCenter.default.post(name: notificationNameBarDetailsRefreshed, object: self.selectedBar!)
                 
@@ -538,6 +587,37 @@ extension BarDetailViewController {
         }
     }
     
+    func getCartQuantityCount() {
+        
+        var barId: String = ""
+        if let id = self.barId {
+            barId = id
+        } else if let id = self.selectedBar?.id.value {
+            barId = id
+        }
+        
+        let params: [String : Any] = ["establishment_id" : barId]
+           
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathGetCartQuantity, method: .get) { (response, serverError, error) in
+            
+            guard error == nil else {
+                debugPrint("Error while getting cart count: \(error!.localizedDescription)")
+                return
+            }
+               
+            guard serverError == nil else {
+                debugPrint("Error while getting cart count: \(serverError!.nsError())")
+                return
+            }
+            
+            debugPrint("cart count get successfully")
+
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let _ = responseDict?["count"]  {
+                self.cartCount = Int("\(responseDict!["count"]!)") ?? 0
+            }
+        }
+    }
 }
 
 //MARK: CreditCosumptionViewControllerDelegate
@@ -670,6 +750,30 @@ extension BarDetailViewController {
     @objc func unlimitedRedemptionDidPurchasedNotification(notif: Notification) {
         if let barId = notif.object as? String, let bar = self.selectedBar, barId == bar.id.value {
             self.getBarDetails(isRefreshing: false)
+        }
+    }
+    
+    @objc func foodCartUpdatedNotification(notification: Notification) {
+        guard let foodInfo = notification.object as? FoodCartUpdatedObject, let id = self.selectedBar?.id.value, id == foodInfo.barId else {
+            return
+        }
+        
+        if foodInfo.food.quantity.value == 0 {
+            self.cartCount -= foodInfo.previousQuantity
+        } else {
+            self.cartCount += 1
+        }
+    }
+    
+    @objc func drinkCartUpdatedNotification(notification: Notification) {
+        guard let drinkInfo = notification.object as? DrinkCartUpdatedObject, let id = self.selectedBar?.id.value, id == drinkInfo.barId else {
+            return
+        }
+        
+        if drinkInfo.drink.quantity.value == 0 {
+            self.cartCount -= drinkInfo.previousQuantity
+        } else {
+            self.cartCount += 1
         }
     }
 }

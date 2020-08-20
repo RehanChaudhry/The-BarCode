@@ -38,11 +38,17 @@ class DrinkListViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.reset()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -143,8 +149,7 @@ extension DrinkListViewController: FoodMenuCellDelegate {
         }
         
         let model = self.segments[indexPath.section].drinks[indexPath.row]
-        model.isRemovingFromCart = true
-        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+        self.updateCart(drink: model, shouldAdd: false)
     }
     
     func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
@@ -153,11 +158,11 @@ extension DrinkListViewController: FoodMenuCellDelegate {
         }
         
         let model = self.segments[indexPath.section].drinks[indexPath.row]
-        model.isAddingToCart = true
-        self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+        self.updateCart(drink: model, shouldAdd: true)
     }
 }
 
+//MARK: Webservices Methods
 extension DrinkListViewController {
     func getDeals(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
         
@@ -217,6 +222,46 @@ extension DrinkListViewController {
                 let genericError = APIHelper.shared.getGenericError()
                 completion(genericError)
             }
+        }
+    }
+    
+    func updateCart(drink: Drink, shouldAdd: Bool) {
+        
+        var params: [String : Any] = ["id" : drink.id.value]
+        if shouldAdd {
+            drink.isAddingToCart = true
+            params["quantity"] = drink.quantity.value + 1
+        } else {
+            drink.isRemovingFromCart = true
+            params["quantity"] = 0
+        }
+        
+        self.statefulTableView.innerTable.reloadData()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
+            
+            let previousQuantity = drink.quantity.value
+            
+            defer {
+                drink.isAddingToCart = false
+                drink.isRemovingFromCart = false
+
+                let drinkCartInfo: DrinkCartUpdatedObject = (drink: drink, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                NotificationCenter.default.post(name: notificationNameDrinkCartUpdated, object: drinkCartInfo)
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedDrink = transaction.edit(drink)
+                editedDrink?.quantity.value = shouldAdd ? drink.quantity.value + 1 : 0
+            })
         }
     }
 }
@@ -315,5 +360,12 @@ extension DrinkListViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+//MARK: Notification Methods
+extension DrinkListViewController {
+    @objc func drinkCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
     }
 }

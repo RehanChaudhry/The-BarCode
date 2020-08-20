@@ -27,6 +27,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.14):
     - DTFoundation/Core
+  - EasyNotificationBadge (1.2.0)
   - FBSDKCoreKit (4.37.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.37.0):
@@ -154,6 +155,7 @@ DEPENDENCIES:
   - BugfenderSDK (~> 1.7)
   - CoreStore (~> 6.3.2)
   - DTCoreText (~> 1.6.23)
+  - EasyNotificationBadge (~> 1.2.0)
   - FBSDKLoginKit (~> 4.37.0)
   - Firebase/Analytics (~> 6.16.0)
   - Firebase/Core (~> 6.16.0)
@@ -187,6 +189,7 @@ SPEC REPOS:
     - CoreStore
     - DTCoreText
     - DTFoundation
+    - EasyNotificationBadge
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -232,6 +235,7 @@ SPEC CHECKSUMS:
   CoreStore: 690a587902a81c412cf353466d2d2a029934267e
   DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
   DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
+  EasyNotificationBadge: afeb15ed6f9a4262d626a2b745297e96afa26c2e
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
   FBSDKLoginKit: 2f7249686d1e30ce8a5ef5400eedf50b3e3df332
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
@@ -270,6 +274,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 9cf0d8f01041b636f5eaa30c54e063bff7b6d039
+PODFILE CHECKSUM: d4fb4ad0b7826864bc78908a32a138b7136459ec
 
 COCOAPODS: 1.9.1

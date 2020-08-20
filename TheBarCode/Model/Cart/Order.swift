@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 
 enum OrderStatus: String {
     case received = "received",
@@ -15,8 +16,8 @@ enum OrderStatus: String {
     other = "other"
 }
 
-class Order {
-
+class Order: Mappable {
+    
     var orderNo: String = ""
     var barName: String = ""
     var barId: String = ""
@@ -24,6 +25,25 @@ class Order {
     var status: OrderStatus =  .other
     
     var orderItems: [OrderItem] = []
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        
+        self.barId = "\(map.JSON["establishment_id"]!)"
+        self.barName <- map["establishment.title"]
+        
+        self.orderItems <- map["menuItems"]
+        
+        if let _ = map.JSON["order_id"] as? String {
+            self.orderNo = "\(map.JSON["order_id"]!)"
+        } else if let _ = map.JSON["order_id"] as? Int {
+            self.orderNo = "\(map.JSON["order_id"]!)"
+        }
+    }
+    
     
     init(orderNo: String, barName: String, barId: String, price: String, status: OrderStatus, orderItems: [OrderItem]) {
         self.orderNo = orderNo

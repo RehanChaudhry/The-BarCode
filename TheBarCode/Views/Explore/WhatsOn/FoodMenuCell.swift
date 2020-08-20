@@ -85,6 +85,11 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         self.removeItemButton.isHidden = drink.quantity.value == 0
         self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
         
+        UIView.performWithoutAnimation {
+            self.removeItemButton.setTitle("\(drink.quantity.value) Items Added ", for: .normal)
+            self.removeItemButton.layoutIfNeeded()
+        }
+        
         if isInAppPaymentOn {
             self.shouldEnableCartButtons(enable: !(drink.isAddingToCart || drink.isRemovingFromCart))
         } else {

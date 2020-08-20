@@ -238,7 +238,7 @@ extension FoodMenuViewController {
         
         self.statefulTableView.innerTable.reloadData()
         
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdateCart, method: .post) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
             
             let previousQuantity = food.quantity.value
             
