@@ -49,6 +49,10 @@
                                     <action selector="deleteButtonTapped:" destination="pOb-XI-e3w" eventType="touchUpInside" id="D8K-2U-Bty"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="11M-8w-VbU">
+                                <rect key="frame" x="367.5" y="12" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ebE-Er-tyl">
                                 <rect key="frame" x="0.0" y="43.5" width="398" height="0.5"/>
                                 <color key="backgroundColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
@@ -84,24 +88,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6IX-Nq-HYx">
+                                <rect key="frame" x="183" y="58" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="6IX-Nq-HYx" firstAttribute="leading" secondItem="mYv-Eb-3Xv" secondAttribute="trailing" constant="8" id="9eA-4N-iMI"/>
                             <constraint firstItem="ZbK-l7-Fk8" firstAttribute="top" secondItem="wtR-hE-ygD" secondAttribute="top" constant="12" id="B2b-eu-uKN"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="top" secondItem="ebE-Er-tyl" secondAttribute="bottom" constant="12" id="EfE-3t-EZ9"/>
                             <constraint firstItem="ebE-Er-tyl" firstAttribute="top" secondItem="ZbK-l7-Fk8" secondAttribute="bottom" constant="12" id="JgS-1d-2Ck"/>
                             <constraint firstItem="mYv-Eb-3Xv" firstAttribute="centerY" secondItem="6Yh-JS-7fE" secondAttribute="centerY" id="Lrg-bx-W6B"/>
+                            <constraint firstItem="1Tw-eQ-jHr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6IX-Nq-HYx" secondAttribute="trailing" constant="8" id="NAL-bF-EYZ"/>
+                            <constraint firstItem="6IX-Nq-HYx" firstAttribute="centerY" secondItem="mYv-Eb-3Xv" secondAttribute="centerY" id="Pe0-eN-d7E"/>
                             <constraint firstAttribute="trailing" secondItem="1Tw-eQ-jHr" secondAttribute="trailing" constant="12" id="SZj-J3-lov"/>
                             <constraint firstItem="mYv-Eb-3Xv" firstAttribute="leading" secondItem="6Yh-JS-7fE" secondAttribute="trailing" constant="8" id="T0K-ej-hxq"/>
+                            <constraint firstItem="11M-8w-VbU" firstAttribute="centerX" secondItem="EOE-v6-ezH" secondAttribute="centerX" id="XFh-mo-gnP"/>
                             <constraint firstAttribute="bottom" secondItem="6Yh-JS-7fE" secondAttribute="bottom" constant="12" id="ZUf-FQ-2sa"/>
                             <constraint firstAttribute="trailing" secondItem="EOE-v6-ezH" secondAttribute="trailing" constant="8" id="aQm-KF-C18"/>
                             <constraint firstItem="ebE-Er-tyl" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" id="iYw-sw-cBY"/>
                             <constraint firstItem="EOE-v6-ezH" firstAttribute="centerY" secondItem="ZbK-l7-Fk8" secondAttribute="centerY" id="ivD-So-jdO"/>
-                            <constraint firstItem="1Tw-eQ-jHr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mYv-Eb-3Xv" secondAttribute="trailing" constant="8" id="k1R-ov-hub"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" constant="12" id="olm-s6-RBR"/>
                             <constraint firstItem="ZbK-l7-Fk8" firstAttribute="leading" secondItem="wtR-hE-ygD" secondAttribute="leading" constant="12" id="ppj-JA-a0a"/>
                             <constraint firstItem="6Yh-JS-7fE" firstAttribute="top" secondItem="ebE-Er-tyl" secondAttribute="bottom" constant="12" id="q8I-av-02j"/>
                             <constraint firstItem="EOE-v6-ezH" firstAttribute="leading" secondItem="ZbK-l7-Fk8" secondAttribute="trailing" constant="5" id="sgL-SD-pSq"/>
+                            <constraint firstItem="11M-8w-VbU" firstAttribute="centerY" secondItem="EOE-v6-ezH" secondAttribute="centerY" id="v21-2R-3Sc"/>
                             <constraint firstItem="1Tw-eQ-jHr" firstAttribute="centerY" secondItem="mYv-Eb-3Xv" secondAttribute="centerY" id="xeH-G9-S4k"/>
                             <constraint firstAttribute="trailing" secondItem="ebE-Er-tyl" secondAttribute="trailing" id="zAW-aa-iJO"/>
                         </constraints>
@@ -123,7 +135,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="deleteButton" destination="EOE-v6-ezH" id="cJ8-Lc-SUc"/>
+                <outlet property="deleteIndicator" destination="11M-8w-VbU" id="DHS-j0-29L"/>
                 <outlet property="nameLabel" destination="ZbK-l7-Fk8" id="J2U-TK-hHR"/>
+                <outlet property="quantityUpdateIndicator" destination="6IX-Nq-HYx" id="JuS-1u-Us6"/>
                 <outlet property="stepperView" destination="6Yh-JS-7fE" id="4mO-Ap-Pm0"/>
                 <outlet property="totalPriceLabel" destination="1Tw-eQ-jHr" id="h8j-ZA-tMx"/>
                 <outlet property="unitPriceLabel" destination="mYv-Eb-3Xv" id="QVx-Id-OjB"/>

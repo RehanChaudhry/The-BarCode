@@ -38,6 +38,8 @@ class MyCartViewController: UIViewController {
     
     weak var delegate: MyCartViewControllerDelegate!
     
+    var inProgressRequestCount: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -90,6 +92,7 @@ class MyCartViewController: UIViewController {
         
         self.selectedOrder = nil
         
+        self.statefulTableView.canLoadMore = false
         self.statefulTableView.state = .idle
         self.statefulTableView.triggerInitialLoad()
     }
@@ -111,7 +114,7 @@ class MyCartViewController: UIViewController {
             self.checkOutButton.setTitle(buttonTitle, for: .normal)
         } else {
             self.barNameLabel.text = ""
-            let buttonTitle = "Checkout - £ " + "N/A"
+            let buttonTitle = "Checkout - " + " N/A"
             self.checkOutButton.setTitle(buttonTitle, for: .normal)
         }
     }
@@ -133,7 +136,7 @@ class MyCartViewController: UIViewController {
     //MARK: My IBActions
     @IBAction func checkOutButtonTapped(sender: UIButton) {
         
-        if let order = self.selectedOrder {
+        if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
             let checkNavigation = self.storyboard!.instantiateViewController(withIdentifier: "CheckOutNavigation") as! UINavigationController
             checkNavigation.modalPresentationStyle = .fullScreen
             
@@ -176,9 +179,10 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: OrderItemTableViewCell.self)
-        cell.orderItem = self.orders[indexPath.section].orderItems[indexPath.item]
+        
         cell.setUpCell(orderItem: self.orders[indexPath.section].orderItems[indexPath.item])
         cell.delegate = self
+        
         return cell
     }
          
@@ -198,18 +202,7 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
              return
          }
                 
-        let order = self.orders[indexPath.section]
-        order.orderItems.remove(at: indexPath.item)
-        self.orders[indexPath.section] = order
-
-        if order.orderItems.count == 0 {
-            self.orders.remove(at: indexPath.section)
-            self.statefulTableView.innerTable.reloadData()
-            
-            self.selectedOrder = self.orders.first
-        } else {
-            self.calculateBill()
-        }
+        self.updateCart(indexPath: indexPath, shouldDelete: true, shouldStepUp: false)
     }
     
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
@@ -217,9 +210,9 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
             debugPrint("IndexPath not found")
             return
         }
-               
-        let order = self.orders[indexPath.section]
-        self.calculateBill()
+        
+        let orderItem = self.orders[indexPath.section].orderItems[indexPath.row]
+        self.updateCart(indexPath: indexPath, shouldDelete: false, shouldStepUp: stepper.value > orderItem.quantity)
     }
 }
 
@@ -237,7 +230,10 @@ extension MyCartViewController {
                                       "limit" : 1,
                                       "page" : self.loadMore.next]
         
+        self.loadMore.isLoading = true
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .get) { (response, serverError, error) in
+        
+            self.loadMore.isLoading = false
             
             defer {
                 self.statefulTableView.innerTable.reloadData()
@@ -280,6 +276,104 @@ extension MyCartViewController {
             }
         }
     }
+    
+    func updateCart(indexPath: IndexPath, shouldDelete: Bool, shouldStepUp: Bool) {
+        
+        let order: Order = self.orders[indexPath.section]
+        let item: OrderItem = order.orderItems[indexPath.row]
+        
+        var params: [String : Any] = ["id" : item.id]
+        if !shouldDelete {
+            item.isUpdating = true
+            
+            if shouldStepUp {
+                item.quantity += 1
+            } else {
+                item.quantity -= 1
+            }
+            
+            params["quantity"] = item.quantity
+            
+        } else {
+            item.isDeleting = true
+            params["quantity"] = 0
+        }
+        
+        self.statefulTableView.innerTable.reloadData()
+        self.calculateBill()
+        
+        self.inProgressRequestCount += 1
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
+            
+            defer {
+                self.calculateBill()
+            }
+            
+            self.inProgressRequestCount -= 1
+            
+            item.isUpdating = false
+            item.isDeleting = false
+            
+            func resetStepperValue() {
+                if !shouldDelete {
+                    if shouldStepUp {
+                        item.quantity -= 1
+                    } else {
+                        item.quantity += 1
+                    }
+                }
+            }
+            
+            guard error == nil else {
+                resetStepperValue()
+                self.statefulTableView.innerTable.reloadData()
+                return
+            }
+            
+            guard serverError == nil else {
+                resetStepperValue()
+                self.statefulTableView.innerTable.reloadData()
+                return
+            }
+            
+            if !shouldDelete {
+                self.statefulTableView.innerTable.reloadData()
+            } else {
+                if let section = self.orders.firstIndex(where: {$0 === order}),
+                    let row = order.orderItems.firstIndex(where: {$0 === item}) {
+                    
+                    order.orderItems.remove(at: row)
+                    
+                    if order.orderItems.count == 0 {
+                        self.orders.remove(at: section)
+                        let indexSet = IndexSet(integer: section)
+                        self.statefulTableView.innerTable.deleteSections(indexSet, with: .top)
+                        
+                        self.selectedOrder = self.orders.first
+                        
+                    } else {
+                        let currentIndexPath = IndexPath(row: row, section: section)
+                        self.statefulTableView.innerTable.deleteRows(at: [currentIndexPath], with: .top)
+                    }
+                    
+                    //When deleting rows / section scrollview did scroll does not get called which prevents loading next page automatically
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [unowned self] in
+                        if !self.loadMore.canLoadMore() && self.orders.count == 0 {
+                            self.reset()
+                        } else {
+                            self.scrollViewDidScroll(self.statefulTableView.innerTable)
+                            self.statefulTableView.innerTable.reloadData()
+                        }
+                    }
+                    
+                } else {
+                    self.statefulTableView.innerTable.reloadData()
+                }
+            }
+            
+            self.setUpBadgeValue()
+        }
+    }
 }
 
 //MARK: CartSectionHeaderViewDelegate
@@ -307,7 +401,7 @@ extension MyCartViewController: StatefulTableDelegate {
     
     func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
         self.getCart(isRefreshing: false) { (error) in
-            handler(false, error, error != nil)
+            handler(self.loadMore.canLoadMore(), error, error != nil)
         }
     }
     

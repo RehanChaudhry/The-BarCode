@@ -22,10 +22,10 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var totalPriceLabel: UILabel!
     @IBOutlet var deleteButton: UIButton!
     
-    var delegate: OrderItemTableViewCellDelegate!
+    @IBOutlet var quantityUpdateIndicator: UIActivityIndicatorView!
+    @IBOutlet var deleteIndicator: UIActivityIndicatorView!
     
-    var orderItem: OrderItem!
-
+    var delegate: OrderItemTableViewCellDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,6 +56,23 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
         self.deleteButton.setImage(image, for: .normal)
         self.deleteButton.tintColor = UIColor.white
         
+        self.stepperView.isUserInteractionEnabled = !(orderItem.isDeleting || orderItem.isUpdating)
+        self.deleteButton.isUserInteractionEnabled = !(orderItem.isDeleting || orderItem.isUpdating)
+        
+        self.deleteButton.isHidden = orderItem.isDeleting
+        
+        if orderItem.isDeleting {
+            self.deleteIndicator.startAnimating()
+        } else {
+            self.deleteIndicator.stopAnimating()
+        }
+        
+        if orderItem.isUpdating {
+            self.quantityUpdateIndicator.startAnimating()
+        } else {
+            self.quantityUpdateIndicator.stopAnimating()
+        }
+        
     }
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
@@ -66,7 +83,6 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
 //MARK: StepperViewDelegate
 extension OrderItemTableViewCell: StepperViewDelegate {
     func stepperView(stepperView: StepperView, valueChanged value: Int) {
-        self.orderItem.quantity = value
         self.delegate.orderItemTableViewCell(cell: self, stepperValueChanged: stepperView)
     }
 }

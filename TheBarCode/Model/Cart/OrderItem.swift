@@ -23,6 +23,9 @@ class OrderItem: Mappable {
         }
     }
     
+    var isDeleting: Bool = false
+    var isUpdating: Bool = false
+    
     required init?(map: Map) {
         
     }

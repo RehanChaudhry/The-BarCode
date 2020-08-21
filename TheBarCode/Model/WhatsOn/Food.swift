@@ -86,9 +86,9 @@ extension Food: ImportableUniqueObject {
         
         if let _ = source["quantity"] {
             self.quantity.value = Int("\(source["quantity"]!)") ?? 0
+        } else {
+            self.quantity.value = 0
         }
-        
-        
     }
 }
 

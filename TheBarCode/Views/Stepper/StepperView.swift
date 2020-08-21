@@ -23,6 +23,7 @@ class StepperView: UIView {
     @IBInspectable var value: Int = 1 {
         didSet  {
             self.updateTextLabel()
+            self.enableIncrementDecrementIfNeeded()
         }
     }
     
@@ -103,18 +104,19 @@ class StepperView: UIView {
     }
     
     //MARK: My Methods
-    @objc func incrementButtonTapped(sender: UIButton) {
-        self.value += self.stepCount
+    func enableIncrementDecrementIfNeeded() {
         self.incrementButton.isEnabled = self.value < self.maxValue
         self.decrementButton.isEnabled = self.value > self.minValue
+    }
+    
+    @objc func incrementButtonTapped(sender: UIButton) {
+        self.value += self.stepCount
         self.updateTextLabel()
         self.delegate.stepperView(stepperView: self, valueChanged: self.value)
     }
     
     @objc func decrementButtonTapped(sender: UIButton) {
         self.value -= self.stepCount
-        self.incrementButton.isEnabled = self.value < self.maxValue
-        self.decrementButton.isEnabled = self.value > self.minValue
         self.updateTextLabel()
         self.delegate.stepperView(stepperView: self, valueChanged: self.value)
     }
