@@ -75,6 +75,8 @@ class TabBarController: UITabBarController {
         
         self.saveLastAppOpen()
         
+        let _ = (self.viewControllers?[3] as? UINavigationController)?.viewControllers.first?.view
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {

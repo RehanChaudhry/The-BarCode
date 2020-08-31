@@ -41,7 +41,7 @@ class SplitBillScannerViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.order = Order.getMyCartDummyOrders().first
+//        self.order = Order.getMyCartDummyOrders().first
         
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         

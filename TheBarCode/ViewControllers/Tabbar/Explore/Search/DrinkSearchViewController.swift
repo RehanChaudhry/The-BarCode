@@ -24,11 +24,13 @@ class DrinkSearchViewController: BaseSearchScopeViewController {
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
 
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -517,6 +519,10 @@ extension DrinkSearchViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension DrinkSearchViewController {
     @objc func drinkCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    @objc func myCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
 }

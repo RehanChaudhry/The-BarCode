@@ -40,6 +40,8 @@ class DrinkListViewController: UIViewController {
         self.reset()
         
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,6 +51,7 @@ class DrinkListViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -366,6 +369,10 @@ extension DrinkListViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension DrinkListViewController {
     @objc func drinkCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    @objc func myCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
 }

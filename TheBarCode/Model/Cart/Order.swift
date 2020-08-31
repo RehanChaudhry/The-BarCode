@@ -11,9 +11,21 @@ import ObjectMapper
 
 enum OrderStatus: String {
     case received = "received",
-    inProgress = "inProgress",
+    processing = "processing",
+    delivered = "delivered",
+    onTheWay = "on the way",
+    readyForPickup = "ready for pickup",
+    ongoing = "ongoing",
     completed = "completed",
     other = "other"
+}
+
+struct OrderMappingContext: MapContext {
+    var type: OrderMappingType
+}
+
+enum OrderMappingType: String {
+    case cart = "cart", order = "order"
 }
 
 class Order: Mappable {
@@ -21,8 +33,15 @@ class Order: Mappable {
     var orderNo: String = ""
     var barName: String = ""
     var barId: String = ""
-    var price: String = ""
-    var status: OrderStatus =  .other
+//    var price: String = ""
+    
+    var total: Double = 0.0
+    
+    var status: OrderStatus {
+        return OrderStatus(rawValue: self.statusRaw) ?? .other
+    }
+    
+    var statusRaw: String = OrderStatus.other.rawValue
     
     var orderItems: [OrderItem] = []
     
@@ -35,48 +54,25 @@ class Order: Mappable {
         self.barId = "\(map.JSON["establishment_id"]!)"
         self.barName <- map["establishment.title"]
         
+        self.statusRaw <- map["status"]
         self.orderItems <- map["menuItems"]
         
-        if let _ = map.JSON["order_id"] as? String {
-            self.orderNo = "\(map.JSON["order_id"]!)"
-        } else if let _ = map.JSON["order_id"] as? Int {
-            self.orderNo = "\(map.JSON["order_id"]!)"
-        }
-    }
-    
-    
-    init(orderNo: String, barName: String, barId: String, price: String, status: OrderStatus, orderItems: [OrderItem]) {
-        self.orderNo = orderNo
-        self.barName = barName
-        self.barId = barId
-        self.price = price
-        self.status = status
-        self.orderItems = orderItems
-    }
-    
-}
-
-
-extension Order {
-    
-    static func getOngoingDummyOrders() -> [Order] {
-        let order1 = Order(orderNo: "823488234", barName: "Albert's Schloss", barId: "1", price: "£ 23.00", status: .received, orderItems: OrderItem.getOrderItemList2())
-        let order2 = Order(orderNo: "74737473", barName: "The Blue Bar at The Berkeley", barId: "2", price: "£ 14.00", status: .inProgress, orderItems: OrderItem.getOrderItemList1())
-        return [order1, order2]
-
-    }
-    
-    static func getCompletedDummyOrders() -> [Order] {
-        let order1 = Order(orderNo: "434267378", barName: "Neighbourhood",barId: "3", price: "£ 32.00", status: .completed, orderItems: OrderItem.getOrderItemList2())
-        return [order1]
-
-      }
-    
-    static func getMyCartDummyOrders() ->  [Order] {
+        self.total <- map["total"]
         
-        let order1 = Order(orderNo: "823488234", barName: "Albert's Schloss", barId: "1", price: "£ 22.00", status: .received, orderItems: OrderItem.getOrderItemList2())
-        let order2 = Order(orderNo: "74737473", barName: "The Blue Bar at The Berkeley", barId: "4", price: "£ 12.00", status: .inProgress,  orderItems: OrderItem.getOrderItemList1())
-        return [order1, order2]
+        let context = map.context as? OrderMappingContext
+        
+        if context?.type == .cart {
+            if let _ = map.JSON["order_id"] as? String {
+                self.orderNo = "\(map.JSON["order_id"]!)"
+            } else if let _ = map.JSON["order_id"] as? Int {
+                self.orderNo = "\(map.JSON["order_id"]!)"
+            }
+        } else if context?.type == .order {
+            self.orderNo = "\(map.JSON["id"]!)"
+        }
+        
+        
     }
+   
 }
 

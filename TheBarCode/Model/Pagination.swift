@@ -32,7 +32,7 @@ class Pagination: Mappable {
     }
     
     func canLoadMore() -> Bool {
-        return self.current != self.last
+        return self.current < self.last
     }
     
 }

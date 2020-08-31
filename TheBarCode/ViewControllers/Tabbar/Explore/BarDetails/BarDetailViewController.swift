@@ -118,6 +118,7 @@ class BarDetailViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
         
     }
 
@@ -144,6 +145,7 @@ class BarDetailViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -343,7 +345,9 @@ class BarDetailViewController: UIViewController {
     }
 
     @objc func cartBarButtonTapped(sender: UIButton) {
-        
+        let cartNavigation = self.storyboard!.instantiateViewController(withIdentifier: "MyCartNavigation") as! UINavigationController
+        cartNavigation.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(cartNavigation, animated: true, completion: nil)
     }
     
     func updateCartBadgeCount() {
@@ -774,6 +778,22 @@ extension BarDetailViewController {
             self.cartCount -= drinkInfo.previousQuantity
         } else {
             self.cartCount += 1
+        }
+    }
+    
+    @objc func myCartUpdatedNotification(notification: Notification) {
+        guard let object = notification.object as? OrderItemCartUpdatedObject, let id = self.selectedBar?.id.value, id == object.barId else {
+            return
+        }
+        
+        if object.delete {
+            self.cartCount -= object.previousQuantity
+        } else {
+            if object.stepUp {
+                self.cartCount += 1
+            } else {
+                self.cartCount -= 1
+            }
         }
     }
 }

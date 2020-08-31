@@ -21,10 +21,13 @@ class CartBaseViewController: UIViewController {
     
     @IBOutlet var segmentContainerView: UIView!
 
-    @IBOutlet weak var myCartCountLabel: UILabel!
+    @IBOutlet var counterContainerView: UIView!
+    @IBOutlet var myCartCountLabel: UILabel!
+    
+    @IBOutlet var closeButtonContainerHeight: NSLayoutConstraint!
     
     var myCartViewController: MyCartViewController!
-    var myOrdersViewController: MyOrdersViewController!
+    var myOrdersViewController: MyOrdersPreviewViewController!
     
     var controllers: [UIViewController] = []
     
@@ -38,6 +41,11 @@ class CartBaseViewController: UIViewController {
         case cart = 0, orders = 1
     }
 
+    var showCloseButton: Bool = false {
+        didSet {
+            self.setupCloseButtonContainer()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +58,7 @@ class CartBaseViewController: UIViewController {
         self.myCartViewController.delegate = self
         self.controllers.append(self.myCartViewController)
               
-        self.myOrdersViewController = (self.storyboard!.instantiateViewController(withIdentifier: "MyOrdersViewController") as! MyOrdersViewController)
+        self.myOrdersViewController = (self.storyboard!.instantiateViewController(withIdentifier: "MyOrdersPreviewViewController") as! MyOrdersPreviewViewController)
         self.controllers.append(self.myOrdersViewController)
           
         self.setupPageController()
@@ -60,6 +68,8 @@ class CartBaseViewController: UIViewController {
         self.myCartButton.setTitleColor(UIColor.appBlueColor(), for: .normal)
         self.myCartLineView.isHidden = false
         self.myCartLineView.backgroundColor = UIColor.appBlueColor()
+        
+        self.setupCloseButtonContainer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +83,16 @@ class CartBaseViewController: UIViewController {
     }
       
     //MARK: My Methods
+    func setupCloseButtonContainer() {
+        if self.showCloseButton {
+            self.closeButtonContainerHeight.constant = 30.0
+        } else {
+            self.closeButtonContainerHeight.constant = 0.0
+        }
+
+        self.view.layoutIfNeeded()
+    }
+    
     func setupPageController() {
         self.pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
         self.pageController.dataSource = self
@@ -158,6 +178,9 @@ class CartBaseViewController: UIViewController {
         self.moveToController(controller: self.myOrdersViewController, direction: direction, animated: true)
     }
     
+    @IBAction func closeButtonTapped(sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 
@@ -194,7 +217,12 @@ extension CartBaseViewController: UIPageViewControllerDelegate {
 //MARK: MyCartViewControllerDelegate
 extension CartBaseViewController: MyCartViewControllerDelegate {
     func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int) {
-        self.myCartCountLabel.isHidden = count == 0
-        self.myCartCountLabel.text = "\(count)"
+        self.counterContainerView.isHidden = count == 0
+
+        let attributes = [NSAttributedStringKey.baselineOffset : 0.5,
+                          NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 12.0),
+                          NSAttributedStringKey.foregroundColor : UIColor.white] as [NSAttributedStringKey : Any]
+        let attributedCount = NSAttributedString(string: "\(count)", attributes: attributes)
+        self.myCartCountLabel.attributedText = attributedCount
     }
 }

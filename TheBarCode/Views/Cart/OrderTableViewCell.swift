@@ -33,14 +33,16 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
         
         self.orderNoLabel.text = "ORDER NO. " + order.orderNo
         self.barNameLabel.text = order.barName
-        self.priceLabel.text = order.price
+        self.priceLabel.text = String(format: "£ %.2f", order.total)
         
-        self.statusButton.setTitle(order.status.rawValue.uppercased(), for: .normal)
-        
+        self.statusButton.titleLabel?.lineBreakMode = .byWordWrapping
+        self.statusButton.titleLabel?.numberOfLines = 0
+        self.statusButton.titleLabel?.textAlignment = .center
+        self.statusButton.setTitle(order.statusRaw.uppercased(), for: .normal)
         
         if order.status ==  .completed {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
-        } else if order.status == .received || order.status == .inProgress {
+        } else {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
 
         }

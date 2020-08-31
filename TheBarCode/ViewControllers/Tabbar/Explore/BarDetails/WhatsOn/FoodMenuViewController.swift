@@ -41,6 +41,7 @@ class FoodMenuViewController: UIViewController {
         self.reset()
         
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +51,7 @@ class FoodMenuViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -366,6 +368,10 @@ extension FoodMenuViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension FoodMenuViewController {
     @objc func foodCartUpdatedNotification(notification: Notification) {
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    @objc func myCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
 }

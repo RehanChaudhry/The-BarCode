@@ -10,6 +10,7 @@ import UIKit
 import StatefulTableView
 import Alamofire
 import ObjectMapper
+import CoreStore
 
 protocol MyCartViewControllerDelegate: class {
     func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int)
@@ -36,7 +37,7 @@ class MyCartViewController: UIViewController {
         }
     }
     
-    weak var delegate: MyCartViewControllerDelegate!
+    weak var delegate: MyCartViewControllerDelegate?
     
     var inProgressRequestCount: Int = 0
     
@@ -45,16 +46,21 @@ class MyCartViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        let leftbarButton = self.navigationItem.leftBarButtonItem
+        leftbarButton?.image = leftbarButton?.image?.withRenderingMode(.alwaysOriginal)
+        
         self.setUpStatefulTableView()
         self.reset()
         
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -126,10 +132,10 @@ class MyCartViewController: UIViewController {
                 count += item.quantity
             }
             self.tabBarController?.tabBar.items?[3].badgeValue = "\(count)"
-            self.delegate.myCartViewController(controller: self, badgeCountDidUpdate: count)
+            self.delegate?.myCartViewController(controller: self, badgeCountDidUpdate: count)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = nil
-            self.delegate.myCartViewController(controller: self, badgeCountDidUpdate: 0)
+            self.delegate?.myCartViewController(controller: self, badgeCountDidUpdate: 0)
         }
     }
     
@@ -146,6 +152,10 @@ class MyCartViewController: UIViewController {
             self.present(checkNavigation, animated: true, completion: nil)
         }
         
+    }
+    
+    @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -226,7 +236,7 @@ extension MyCartViewController {
             self.loadMore.next = 1
         }
         
-        var params:[String : Any] =  ["pagination" : true,
+        let params:[String : Any] =  ["pagination" : true,
                                       "limit" : 1,
                                       "page" : self.loadMore.next]
         
@@ -256,7 +266,8 @@ extension MyCartViewController {
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
-                let orders = Mapper<Order>().mapArray(JSONArray: responseArray)
+                let context = OrderMappingContext(type: .cart)
+                let orders = Mapper<Order>(context: context).mapArray(JSONArray: responseArray)
                 if self.orders.count == 0 && orders.count > 0 {
                     self.selectedOrder = orders.first
                 }
@@ -281,6 +292,8 @@ extension MyCartViewController {
         
         let order: Order = self.orders[indexPath.section]
         let item: OrderItem = order.orderItems[indexPath.row]
+        
+        let previousQuantity = item.quantity
         
         var params: [String : Any] = ["id" : item.id]
         if !shouldDelete {
@@ -372,6 +385,19 @@ extension MyCartViewController {
             }
             
             self.setUpBadgeValue()
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                if let food = try! transaction.fetchOne(From<Food>(), Where(\Food.id == item.id)) {
+                    let edittedFood = transaction.edit(food)
+                    edittedFood?.quantity.value = item.quantity
+                } else if let drink = try! transaction.fetchOne(From<Drink>(), Where(\Drink.id == item.id)) {
+                    let edittedDrink = transaction.edit(drink)
+                    edittedDrink?.quantity.value = item.quantity
+                }
+            })
+            
+            let object = (item: item, previousQuantity: previousQuantity, stepUp: shouldStepUp, delete: shouldDelete, barId: order.barId, controller: self)
+            NotificationCenter.default.post(name: notificationNameMyCartUpdated, object: object, userInfo: nil)
         }
     }
 }
@@ -474,5 +500,11 @@ extension MyCartViewController {
     
     @objc func drinkCartUpdatedNotification(notification: Notification) {
         self.reset()
+    }
+    
+    @objc func myCartUpdatedNotification(notification: Notification) {
+        if (notification.object as? OrderItemCartUpdatedObject)?.controller != self {
+            self.reset()
+        }
     }
 }

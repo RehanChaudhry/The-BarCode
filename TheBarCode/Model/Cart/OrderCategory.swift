@@ -35,12 +35,3 @@ class OrderCategory {
         self.orders = orders
     }
 }
-
-extension OrderCategory {
-   static func getAllDummyOrders() -> [OrderCategory] {
-        
-        let Category1 = OrderCategory(type: .onGoingOrders, orders: Order.getOngoingDummyOrders())
-        let Category2 = OrderCategory(type: .completedOrders, orders: Order.getCompletedDummyOrders())
-        return [Category1, Category2]
-    }
-}

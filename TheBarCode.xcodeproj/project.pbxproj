@@ -228,6 +228,10 @@
 		0C955E08214931D500F9385B /* LoadingAndErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C955E06214931D500F9385B /* LoadingAndErrorView.xib */; };
 		0C955E0B2149362900F9385B /* LoadMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0A2149362800F9385B /* LoadMore.swift */; };
 		0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */; };
+		0C95F3EE24F6902800095D6E /* MyOrderLoadingStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C95F3EC24F6902800095D6E /* MyOrderLoadingStateCell.swift */; };
+		0C95F3EF24F6902800095D6E /* MyOrderLoadingStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C95F3ED24F6902800095D6E /* MyOrderLoadingStateCell.xib */; };
+		0C95F3F124F690D300095D6E /* MyOrderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C95F3F024F690D300095D6E /* MyOrderFooterView.swift */; };
+		0C95F3F324F690EE00095D6E /* MyOrderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C95F3F224F690EE00095D6E /* MyOrderFooterView.xib */; };
 		0C9BB9DB238E3E0300B84346 /* FiltersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9BB9DA238E3E0300B84346 /* FiltersHeaderView.swift */; };
 		0C9BB9DD238E3E1000B84346 /* FiltersHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9BB9DC238E3E1000B84346 /* FiltersHeaderView.xib */; };
 		0C9BB9E0238E407E00B84346 /* RedeemingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9BB9DF238E407E00B84346 /* RedeemingType.swift */; };
@@ -247,6 +251,7 @@
 		0CAAAB3023169D54008A7159 /* CategoryFilterLevel2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAAB2E23169D54008A7159 /* CategoryFilterLevel2Cell.xib */; };
 		0CAAAB332316A1B5008A7159 /* CategoryFilterLevel4Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAAAB312316A1B5008A7159 /* CategoryFilterLevel4Cell.swift */; };
 		0CAAAB342316A1B5008A7159 /* CategoryFilterLevel4Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CAAAB322316A1B5008A7159 /* CategoryFilterLevel4Cell.xib */; };
+		0CAEC3A824FCF5630043D7E5 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAEC3A724FCF5630043D7E5 /* MyOrdersViewController.swift */; };
 		0CB668E322DDEEB7003422DB /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB668E122DDEEB7003422DB /* EventCell.swift */; };
 		0CB668E422DDEEB7003422DB /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB668E222DDEEB7003422DB /* EventCell.xib */; };
 		0CB668EB22DDF2FA003422DB /* FoodMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB668E922DDF2FA003422DB /* FoodMenuCell.swift */; };
@@ -381,7 +386,7 @@
 		FA42BF8A24C972A6003C3970 /* ReservationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA42BF8924C972A6003C3970 /* ReservationDetailsViewController.swift */; };
 		FA445FC024C9B86B0068648E /* ReservationInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA445FBF24C9B86B0068648E /* ReservationInfoViewModel.swift */; };
 		FA5F238E24C0607700B4FA5E /* CartBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */; };
-		FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */; };
+		FA5F239024C0689B00B4FA5E /* MyOrdersPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F238F24C0689B00B4FA5E /* MyOrdersPreviewViewController.swift */; };
 		FA5F239224C068CB00B4FA5E /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */; };
 		FA5F38F324C6D7F000886144 /* OrderInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F38F224C6D7F000886144 /* OrderInfoTableViewCell.swift */; };
 		FA5F8B0324CAB91800356DCD /* TableReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F8B0224CAB91800356DCD /* TableReservationViewController.swift */; };
@@ -714,6 +719,10 @@
 		0C955E06214931D500F9385B /* LoadingAndErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingAndErrorView.xib; sourceTree = "<group>"; };
 		0C955E0A2149362800F9385B /* LoadMore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMore.swift; sourceTree = "<group>"; };
 		0C955E0C214948ED00F9385B /* PermissionsInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsInfoViewController.swift; sourceTree = "<group>"; };
+		0C95F3EC24F6902800095D6E /* MyOrderLoadingStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderLoadingStateCell.swift; sourceTree = "<group>"; };
+		0C95F3ED24F6902800095D6E /* MyOrderLoadingStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOrderLoadingStateCell.xib; sourceTree = "<group>"; };
+		0C95F3F024F690D300095D6E /* MyOrderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderFooterView.swift; sourceTree = "<group>"; };
+		0C95F3F224F690EE00095D6E /* MyOrderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOrderFooterView.xib; sourceTree = "<group>"; };
 		0C9BB9DA238E3E0300B84346 /* FiltersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersHeaderView.swift; sourceTree = "<group>"; };
 		0C9BB9DC238E3E1000B84346 /* FiltersHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiltersHeaderView.xib; sourceTree = "<group>"; };
 		0C9BB9DF238E407E00B84346 /* RedeemingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemingType.swift; sourceTree = "<group>"; };
@@ -733,6 +742,7 @@
 		0CAAAB2E23169D54008A7159 /* CategoryFilterLevel2Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryFilterLevel2Cell.xib; sourceTree = "<group>"; };
 		0CAAAB312316A1B5008A7159 /* CategoryFilterLevel4Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterLevel4Cell.swift; sourceTree = "<group>"; };
 		0CAAAB322316A1B5008A7159 /* CategoryFilterLevel4Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryFilterLevel4Cell.xib; sourceTree = "<group>"; };
+		0CAEC3A724FCF5630043D7E5 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		0CB668E122DDEEB7003422DB /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		0CB668E222DDEEB7003422DB /* EventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
 		0CB668E922DDF2FA003422DB /* FoodMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuCell.swift; sourceTree = "<group>"; };
@@ -879,7 +889,7 @@
 		FA42BF8924C972A6003C3970 /* ReservationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailsViewController.swift; sourceTree = "<group>"; };
 		FA445FBF24C9B86B0068648E /* ReservationInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationInfoViewModel.swift; sourceTree = "<group>"; };
 		FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartBaseViewController.swift; sourceTree = "<group>"; };
-		FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
+		FA5F238F24C0689B00B4FA5E /* MyOrdersPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersPreviewViewController.swift; sourceTree = "<group>"; };
 		FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
 		FA5F38F224C6D7F000886144 /* OrderInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderInfoTableViewCell.swift; sourceTree = "<group>"; };
 		FA5F8B0224CAB91800356DCD /* TableReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableReservationViewController.swift; sourceTree = "<group>"; };
@@ -2227,6 +2237,10 @@
 				B3373E7224DB1C15007E53E6 /* OrderDineInFieldTableViewCell.xib */,
 				B339E02E24DC259D005990AB /* OrderDeliveryAddressTableViewCell.swift */,
 				B339E02F24DC259D005990AB /* OrderDeliveryAddressTableViewCell.xib */,
+				0C95F3EC24F6902800095D6E /* MyOrderLoadingStateCell.swift */,
+				0C95F3ED24F6902800095D6E /* MyOrderLoadingStateCell.xib */,
+				0C95F3F024F690D300095D6E /* MyOrderFooterView.swift */,
+				0C95F3F224F690EE00095D6E /* MyOrderFooterView.xib */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2263,7 +2277,7 @@
 			isa = PBXGroup;
 			children = (
 				FA5F238D24C0607700B4FA5E /* CartBaseViewController.swift */,
-				FA5F238F24C0689B00B4FA5E /* MyOrdersViewController.swift */,
+				FA5F238F24C0689B00B4FA5E /* MyOrdersPreviewViewController.swift */,
 				FA5F239124C068CB00B4FA5E /* MyCartViewController.swift */,
 				FA6009DE24C5860E00F51895 /* OrderDetailsViewController.swift */,
 				B33A30A424D8324D0043EE4D /* CheckOutViewController.swift */,
@@ -2275,6 +2289,7 @@
 				B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */,
 				B324C77024E4079500D111A0 /* ThankYouViewController.swift */,
 				B32B7E2724E5145500982689 /* AddCardViewController.swift */,
+				0CAEC3A724FCF5630043D7E5 /* MyOrdersViewController.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2477,6 +2492,7 @@
 				0C955DD02147D18400F9385B /* FieldView.xib in Resources */,
 				B3C4108924E2CAE6008AF43C /* SnackBarInfoView.xib in Resources */,
 				0CA20F70237032390051F0DC /* FoodMenuHeaderView.xib in Resources */,
+				0C95F3F324F690EE00095D6E /* MyOrderFooterView.xib in Resources */,
 				FA90A87124C70DAF008B056C /* OrderStatusTableViewCell.xib in Resources */,
 				0CEFD5E12361C0B9000E2FBC /* MapPinCell.xib in Resources */,
 				0C955DF92149319200F9385B /* TableViewLoadMoreCell.xib in Resources */,
@@ -2527,6 +2543,7 @@
 				838B4E4221B1688100C32214 /* ReloadPriceTVC.xib in Resources */,
 				0C23A8A82146873400DFB281 /* Lato-Regular.ttf in Resources */,
 				B34BD94924D2E12700714308 /* CardInfoCell.xib in Resources */,
+				0C95F3EF24F6902800095D6E /* MyOrderLoadingStateCell.xib in Resources */,
 				0C23A8B02146873400DFB281 /* Lato-Medium.ttf in Resources */,
 				0C44DD38214A7F9F000F5D64 /* MenuCell.xib in Resources */,
 				0C05DDEA232234BD0073A2BA /* AllSearchViewMoreCell.xib in Resources */,
@@ -2774,7 +2791,7 @@
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,
-				FA5F239024C0689B00B4FA5E /* MyOrdersViewController.swift in Sources */,
+				FA5F239024C0689B00B4FA5E /* MyOrdersPreviewViewController.swift in Sources */,
 				0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */,
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
 				B3373E6824DB0ED1007E53E6 /* OrderCounterCollectionSection.swift in Sources */,
@@ -2951,9 +2968,11 @@
 				0C8BDCD72150D0CD00D5117B /* LiveOfferTableViewCell.swift in Sources */,
 				0C8E9AA0214B9CD300224720 /* FAQHeaderView.swift in Sources */,
 				0C478A9B215CC3DD002C51FA /* BarDetailHeaderViewController.swift in Sources */,
+				0C95F3F124F690D300095D6E /* MyOrderFooterView.swift in Sources */,
 				0CC81FB42174A9DD00FDB92D /* MyLocationManager.swift in Sources */,
 				0C39F2EB231E72D500596A2B /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				0C478A95215C9DFD002C51FA /* LiveOffersViewController.swift in Sources */,
+				0CAEC3A824FCF5630043D7E5 /* MyOrdersViewController.swift in Sources */,
 				B324C77124E4079500D111A0 /* ThankYouViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				0CF3B1CA2372B47600B93786 /* FoodMenuSegment.swift in Sources */,
@@ -3021,6 +3040,7 @@
 				FA42B4BA24C884020000ED15 /* Reservation.swift in Sources */,
 				0C39F2F3231E72D500596A2B /* GMUGeometryRenderer.m in Sources */,
 				B3373E6A24DB0EE0007E53E6 /* OrderTakeAwaySection.swift in Sources */,
+				0C95F3EE24F6902800095D6E /* MyOrderLoadingStateCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

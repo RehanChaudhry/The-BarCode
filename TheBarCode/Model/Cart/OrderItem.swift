@@ -23,6 +23,8 @@ class OrderItem: Mappable {
         }
     }
     
+    var barId: String = ""
+    
     var isDeleting: Bool = false
     var isUpdating: Bool = false
     

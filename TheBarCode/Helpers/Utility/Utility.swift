@@ -91,9 +91,11 @@ let notificationNameUpdateNotificationCount = Notification.Name(rawValue: "notif
 
 let notificationNameFoodCartUpdated = Notification.Name(rawValue: "notificationNameFoodCartUpdated")
 let notificationNameDrinkCartUpdated = Notification.Name(rawValue: "notificationNameDrinkCartUpdated")
+let notificationNameMyCartUpdated = Notification.Name(rawValue: "notificationNameMyCartUpdated")
 
 typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
 typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)
+typealias OrderItemCartUpdatedObject = (item: OrderItem, previousQuantity: Int, stepUp: Bool, delete: Bool, barId: String, controller: MyCartViewController)
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"

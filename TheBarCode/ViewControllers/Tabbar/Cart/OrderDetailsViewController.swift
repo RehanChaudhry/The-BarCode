@@ -24,7 +24,7 @@ class OrderDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = self.order.orderNo
+        self.title = "Order # " + self.order.orderNo
         self.setUpStatefulTableView()
         self.setupViewModel()
 

@@ -44,7 +44,7 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         self.statusButton.setTitle(orderStatusInfo.status.rawValue.uppercased(), for: .normal)
         if orderStatusInfo.status ==  .completed {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
-        } else if orderStatusInfo.status == .received || orderStatusInfo.status == .inProgress {
+        } else if orderStatusInfo.status == .received || orderStatusInfo.status == .ongoing {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
         }
         
