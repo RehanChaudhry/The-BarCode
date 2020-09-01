@@ -8,17 +8,19 @@
 
 import UIKit
 import StatefulTableView
-
+import ObjectMapper
 
 class OrderDetailsViewController: UIViewController {
 
-    @IBOutlet var statefulTableView: StatefulTableView!
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var cancelBarButtonItem: UIBarButtonItem!
     
     @IBOutlet var tableFooterView: UIView!
     
     var order: Order!
     var viewModels: [OrderViewModel] = []
+    
+    var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,35 +31,31 @@ class OrderDetailsViewController: UIViewController {
         self.setupViewModel()
 
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(didTriggerPullToRefresh(sender:)), for: .valueChanged)
+        self.tableView.refreshControl = self.refreshControl
     }
     
-
-     //MARK: My Methods
+    //MARK: My Methods
     func setUpStatefulTableView() {
-         
-        self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
-        self.statefulTableView.innerTable.register(cellType: OrderStatusTableViewCell.self)
-        self.statefulTableView.innerTable.register(cellType: OrderPaymentTableViewCell.self)
-
-        self.statefulTableView.innerTable.delegate = self
-        self.statefulTableView.innerTable.dataSource = self
         
-        self.statefulTableView.backgroundColor = .clear
-        for aView in self.statefulTableView.subviews {
-            aView.backgroundColor = .clear
-        }
-        
-        self.statefulTableView.canLoadMore = false
-        self.statefulTableView.canPullToRefresh = false
-        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-        self.statefulTableView.innerTable.estimatedRowHeight = 200.0
-        self.statefulTableView.innerTable.tableFooterView = UIView()
-
-     }
+       self.tableView.register(cellType: OrderInfoTableViewCell.self)
+       self.tableView.register(cellType: OrderStatusTableViewCell.self)
+       self.tableView.register(cellType: OrderPaymentTableViewCell.self)
+       
+       self.tableView.tableFooterView = UIView()
+    }
+    
+    @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
+        self.getOrderDetails()
+    }
     
     func setupViewModel() {
+        
+        self.viewModels.removeAll()
        
-        let orderStatusInfo = OrderStatusInfo(orderNo: self.order.orderNo, status: self.order.status )
+        let orderStatusInfo = OrderStatusInfo(orderNo: self.order.orderNo, status: self.order.status)
         let orderStatusSection = OrderStatusSection(items: [orderStatusInfo])
         self.viewModels.append(orderStatusSection)
         
@@ -67,29 +65,83 @@ class OrderDetailsViewController: UIViewController {
 
         let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
         self.viewModels.append(orderProductsSection)
-
-        let orderDiscountInfo1 = OrderDiscountInfo(title: "Standard offer redeem", price: -2.2)
-        let orderDiscountInfo2 = OrderDiscountInfo(title: "Voucher - Buy one get one free", price: 0.0 )
-        let orderDiscountSection = OrderDiscountSection(items: [orderDiscountInfo1, orderDiscountInfo2])
+        
+        var total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
+        }
+        
+        var discountItems: [OrderDiscountInfo] = []
+        
+        if let voucher = self.order.voucher {
+            var value: Double = 0.0
+            if voucher.valueType == .amount {
+                value = voucher.value
+                total -= value
+            } else if voucher.valueType == .percent {
+                let discountableValue = min(20.0, total)
+                value = discountableValue / 100.0 * voucher.value
+                total -= value
+            }
+            
+            let info = OrderDiscountInfo(title: voucher.text, price: value)
+            discountItems.insert(info, at: 0)
+        }
+        
+        if let offer = self.order.offer {
+            var value: Double = 0.0
+            if offer.valueType == .amount {
+                value = offer.value
+                total -= value
+            } else if offer.valueType == .percent {
+                let discountableValue = min(20.0, total)
+                value = discountableValue / 100.0 * offer.value
+                total -= value
+            }
+            
+            let info = OrderDiscountInfo(title: offer.text, price: value)
+            discountItems.insert(info, at: 0)
+        }
+        
+        total = max(0.0, total)
+        
+        let orderDiscountSection = OrderDiscountSection(items: discountItems)
         self.viewModels.append(orderDiscountSection)
         
-        let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: 3.2 )
-        let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
-        self.viewModels.append(orderDeliveryInfoSection)
+        if self.order.deliveryCharges > 0.0 {
+            let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: self.order.deliveryCharges)
+            let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
+            self.viewModels.append(orderDeliveryInfoSection)
+        }
         
-        let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: 23.0 )
+        let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: total)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
-        let paymentHeading = Heading(title: "PAYMENT SPLIT")
-        let paymentHeadingSection = HeadingSection(items: [paymentHeading])
-        self.viewModels.append(paymentHeadingSection)
+        if order.paymentSplit.count > 1 {
+            let paymentHeading = Heading(title: "PAYMENT SPLIT")
+            let paymentHeadingSection = HeadingSection(items: [paymentHeading])
+            self.viewModels.append(paymentHeadingSection)
+            
+            let currentUser = Utility.shared.getCurrentUser()!
+            
+            var paymentInfo: [OrderPaymentInfo] = []
+            for paymentSplit in order.paymentSplit {
+                
+                let percent = total > 0.0 ? paymentSplit.amount / total * 100.0 : 0.0
+                
+                let info = OrderPaymentInfo(title: currentUser.userId.value == paymentSplit.id ? "YOU" : paymentSplit.name.uppercased(),
+                                            percentage: percent,
+                                            status: "PAID",
+                                            price: paymentSplit.amount)
+                paymentInfo.append(info)
+            }
+            
+            let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
+            self.viewModels.append(orderPaymentInfoSection)
+            
+        }
         
-        let orderPaymentInfo1 = OrderPaymentInfo(title: "BEN MILNES", percentage: 50, status: "Paid", price: 11.5)
-        let orderPaymentInfo2 = OrderPaymentInfo(title: "YOU", percentage: 50, status: "Paid", price: 11.5)
-        let orderPaymentInfoSection = OrderPaymentInfoSection(items: [orderPaymentInfo1, orderPaymentInfo2])
-        self.viewModels.append(orderPaymentInfoSection)
-        
+        self.tableView.reloadData()
     }
     
     //MARK: IBActions
@@ -99,16 +151,36 @@ class OrderDetailsViewController: UIViewController {
     
 }
 
+//MARK: Webserivces Methods
+extension OrderDetailsViewController {
+    func getOrderDetails() {
+        self.refreshControl.beginRefreshing()
+        
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathOrders + "/" + self.order.orderNo, method: .get) { (response, serverError, error) in
+            self.refreshControl.endRefreshing()
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let details = (responseDict?["data"] as? [String : Any]) {
+                let context = OrderMappingContext(type: .order)
+                self.order = Mapper<Order>(context: context).map(JSON: details)
+                self.setupViewModel()
+                
+                NotificationCenter.default.post(name: notificationNameOrderDidRefresh, object: self.order)
+            }
+        }
+    }
+}
+
 //MARK: UITableViewDataSource, UITableViewDelegate
 extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.statefulTableView.scrollViewDidScroll(scrollView)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44.0
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.viewModels.count
@@ -188,7 +260,7 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
          
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
+        self.tableView.deselectRow(at: indexPath, animated: false)
         
     }
 }

@@ -20,6 +20,10 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.statusButton.titleLabel?.textAlignment = .center
+        self.statusButton.titleLabel?.numberOfLines = 0
+        self.statusButton.titleLabel?.lineBreakMode = .byWordWrapping
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

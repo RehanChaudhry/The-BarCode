@@ -34,11 +34,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="£ 23.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRw-3L-Jau">
-                                <rect key="frame" x="12" y="56" width="47" height="17"/>
+                                <rect key="frame" x="12" y="56" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="Szh-le-FqG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -84,6 +84,7 @@
                             <constraint firstItem="3GU-zT-Juc" firstAttribute="top" secondItem="Tk3-KU-l2Q" secondAttribute="top" constant="12" id="A8M-H2-okF"/>
                             <constraint firstItem="8aN-II-GSJ" firstAttribute="top" secondItem="3GU-zT-Juc" secondAttribute="bottom" constant="5" id="DPp-d5-S1v"/>
                             <constraint firstItem="8aN-II-GSJ" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="12" id="HFN-fh-AmS"/>
+                            <constraint firstItem="Uf8-di-wO6" firstAttribute="leading" secondItem="mRw-3L-Jau" secondAttribute="trailing" constant="8" id="K53-dg-0vW"/>
                             <constraint firstAttribute="trailing" secondItem="Vdx-4a-ytg" secondAttribute="trailing" constant="4" id="uIt-pK-TdS"/>
                             <constraint firstAttribute="trailing" secondItem="Uf8-di-wO6" secondAttribute="trailing" constant="12" id="v6r-lp-ewL"/>
                             <constraint firstItem="Uf8-di-wO6" firstAttribute="top" secondItem="8aN-II-GSJ" secondAttribute="bottom" constant="-10" id="wxA-to-iFN"/>

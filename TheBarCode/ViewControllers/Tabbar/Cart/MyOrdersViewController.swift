@@ -36,6 +36,12 @@ class MyOrdersViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.statefulTableView.triggerLoadMore()
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDetailsDidRefreshed(notif:)), name: notificationNameOrderDidRefresh, object: nil)
+    }
+        
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderDidRefresh, object: nil)
     }
     
     //MARK: My Methods
@@ -236,5 +242,24 @@ extension MyOrdersViewController: StatefulTableDelegate {
         }
         
         return loadingView
+    }
+}
+
+//MARK: Notification Methods
+extension MyOrdersViewController {
+    @objc func orderDetailsDidRefreshed(notif: Notification) {
+        if let order = notif.object as? Order {
+            if let index = self.orders.firstIndex(where: {$0.orderNo == order.orderNo}) {
+                if self.status == OrderStatus.ongoing.rawValue && order.status == .completed {
+                    self.orders.remove(at: index)
+                } else if self.status == OrderStatus.completed.rawValue && order.status != .completed {
+                    self.orders.remove(at: index)
+                } else {
+                    self.orders[index] = order
+                }
+            }
+            
+            self.statefulTableView.innerTable.reloadData()
+        }
     }
 }

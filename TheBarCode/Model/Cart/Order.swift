@@ -33,7 +33,6 @@ class Order: Mappable {
     var orderNo: String = ""
     var barName: String = ""
     var barId: String = ""
-//    var price: String = ""
     
     var total: Double = 0.0
     
@@ -45,6 +44,13 @@ class Order: Mappable {
     
     var orderItems: [OrderItem] = []
     
+    var paymentSplit: [PaymentSplit] = []
+    
+    var voucher: OrderDiscount?
+    var offer: OrderDiscount?
+    
+    var deliveryCharges: Double = 0.0
+    
     required init?(map: Map) {
         
     }
@@ -55,13 +61,15 @@ class Order: Mappable {
         self.barName <- map["establishment.title"]
         
         self.statusRaw <- map["status"]
-        self.orderItems <- map["menuItems"]
         
         self.total <- map["total"]
         
         let context = map.context as? OrderMappingContext
         
         if context?.type == .cart {
+            
+            self.orderItems <- map["menuItems"]
+            
             if let _ = map.JSON["order_id"] as? String {
                 self.orderNo = "\(map.JSON["order_id"]!)"
             } else if let _ = map.JSON["order_id"] as? Int {
@@ -69,6 +77,14 @@ class Order: Mappable {
             }
         } else if context?.type == .order {
             self.orderNo = "\(map.JSON["id"]!)"
+            self.orderItems <- map["menu"]
+            
+            self.paymentSplit <- map["payment_split"]
+            
+            self.voucher <- map["voucher"]
+            self.offer <- map["offer"]
+            
+            self.deliveryCharges <- map["delivery_charges"]
         }
         
         

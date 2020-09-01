@@ -58,7 +58,7 @@ enum MenuItemType: String {
     static func allMenuItems() -> [MenuItem] {
         return [
         MenuItem(type: .invite),
-        MenuItem(type: .myReservations),
+//        MenuItem(type: .myReservations),
         MenuItem(type: .splitPayment),
         MenuItem(type: .notification),
         MenuItem(type: .accountSettings),

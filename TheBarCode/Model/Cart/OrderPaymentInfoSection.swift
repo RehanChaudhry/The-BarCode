@@ -13,11 +13,11 @@ class OrderPaymentInfo: NSObject {
     
     var title: String = ""
 
-    var percentage: Int = 0
+    var percentage: Double = 0.0
     var status: String = ""
     var price: Double = 0.0
 
-    init(title: String, percentage: Int, status: String, price: Double) {
+    init(title: String, percentage: Double, status: String, price: Double) {
         self.title = title
         self.percentage = percentage
         self.status = status

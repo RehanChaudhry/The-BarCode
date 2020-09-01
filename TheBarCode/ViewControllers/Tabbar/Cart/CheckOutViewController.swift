@@ -86,7 +86,7 @@ class CheckOutViewController: UIViewController {
         let vouchersSection = OrderOffersSection(type: .vouchers, items: OrderOfferInfo.dummyVouchers())
         self.viewModels.append(vouchersSection)
         
-        let standardOfferHeading = Heading(title: "Redeem Standard Offer")
+        let standardOfferHeading = Heading(title: "Redeem Available Offers")
         let standardOfferHeadingSection = HeadingSection(items: [standardOfferHeading])
         self.viewModels.append(standardOfferHeadingSection)
         

@@ -43,7 +43,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         self.mainView.layer.cornerRadius = 8
 
         self.nameLabel.text = orderPaymentInfo.title
-        self.paymentLabel.text = orderPaymentInfo.status + "(\(orderPaymentInfo.percentage)%)"
+        self.paymentLabel.text = String(format: "%@ (%.2f%%)", orderPaymentInfo.status, orderPaymentInfo.percentage)
         
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
         self.priceLabel.text =  "£ " + priceString

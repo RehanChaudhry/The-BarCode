@@ -93,6 +93,8 @@ let notificationNameFoodCartUpdated = Notification.Name(rawValue: "notificationN
 let notificationNameDrinkCartUpdated = Notification.Name(rawValue: "notificationNameDrinkCartUpdated")
 let notificationNameMyCartUpdated = Notification.Name(rawValue: "notificationNameMyCartUpdated")
 
+let notificationNameOrderDidRefresh = Notification.Name(rawValue: "notificationNameOrderDidRefresh")
+
 typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
 typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)
 typealias OrderItemCartUpdatedObject = (item: OrderItem, previousQuantity: Int, stepUp: Bool, delete: Bool, barId: String, controller: MyCartViewController)

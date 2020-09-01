@@ -28,6 +28,8 @@ class OrderTypeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.title = "Order Type"
+        
         self.setUpStatefulTableView()
         
         self.setupViewModel()
@@ -89,7 +91,7 @@ class OrderTypeViewController: UIViewController {
         let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
         self.viewModels.append(counterCollectionSection)
         
-        let takeAwayRadio = OrderRadioButton(title: "Take Away", subTitle: "")
+        let takeAwayRadio = OrderRadioButton(title: "Takeaway", subTitle: "")
         let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
         self.viewModels.append(takeAwaySection)
         

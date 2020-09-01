@@ -256,6 +256,8 @@
 		0CB668E422DDEEB7003422DB /* EventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB668E222DDEEB7003422DB /* EventCell.xib */; };
 		0CB668EB22DDF2FA003422DB /* FoodMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB668E922DDF2FA003422DB /* FoodMenuCell.swift */; };
 		0CB668EC22DDF2FA003422DB /* FoodMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CB668EA22DDF2FA003422DB /* FoodMenuCell.xib */; };
+		0CB683D624FE129C0019C6EE /* OrderDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683D524FE129C0019C6EE /* OrderDiscount.swift */; };
+		0CB683D824FE22E10019C6EE /* PaymentSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683D724FE22E10019C6EE /* PaymentSplit.swift */; };
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
 		0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFD214F931700B017CC /* BarsViewController.swift */; };
 		0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */; };
@@ -747,6 +749,8 @@
 		0CB668E222DDEEB7003422DB /* EventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventCell.xib; sourceTree = "<group>"; };
 		0CB668E922DDF2FA003422DB /* FoodMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuCell.swift; sourceTree = "<group>"; };
 		0CB668EA22DDF2FA003422DB /* FoodMenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodMenuCell.xib; sourceTree = "<group>"; };
+		0CB683D524FE129C0019C6EE /* OrderDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDiscount.swift; sourceTree = "<group>"; };
+		0CB683D724FE22E10019C6EE /* PaymentSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSplit.swift; sourceTree = "<group>"; };
 		0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseViewController.swift; sourceTree = "<group>"; };
 		0CBFFFFD214F931700B017CC /* BarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsViewController.swift; sourceTree = "<group>"; };
 		0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
@@ -2307,6 +2311,8 @@
 			children = (
 				FAFEC5A224C18748001E63EA /* Order.swift */,
 				FA90769C24C1E0340035AAA3 /* OrderItem.swift */,
+				0CB683D524FE129C0019C6EE /* OrderDiscount.swift */,
+				0CB683D724FE22E10019C6EE /* PaymentSplit.swift */,
 				FAFEC5A424C189C2001E63EA /* OrderCategory.swift */,
 				FA6009E024C593D400F51895 /* OrderViewModel.swift */,
 				FA42BF7A24C96F4A003C3970 /* OrderStatusSection.swift */,
@@ -2793,6 +2799,7 @@
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,
 				FA5F239024C0689B00B4FA5E /* MyOrdersPreviewViewController.swift in Sources */,
 				0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */,
+				0CB683D624FE129C0019C6EE /* OrderDiscount.swift in Sources */,
 				0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */,
 				B3373E6824DB0ED1007E53E6 /* OrderCounterCollectionSection.swift in Sources */,
 				FA42BF7924C952BE003C3970 /* ReservationCategory.swift in Sources */,
@@ -3002,6 +3009,7 @@
 				0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */,
 				0C05DDCC232112460073A2BA /* AllSearchSectionViewModel.swift in Sources */,
 				0CC81FA4216DD04700FDB92D /* ServerError.swift in Sources */,
+				0CB683D824FE22E10019C6EE /* PaymentSplit.swift in Sources */,
 				0C8F4C06230E7CE300BF4E43 /* FoodSearchFooterView.swift in Sources */,
 				0CAAAB2823168906008A7159 /* CategoryFilterLevel3HeaderView.swift in Sources */,
 				0C23A88A2146582A00DFB281 /* FavouritesViewController.swift in Sources */,

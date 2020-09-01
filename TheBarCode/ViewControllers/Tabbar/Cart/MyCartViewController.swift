@@ -237,7 +237,7 @@ extension MyCartViewController {
         }
         
         let params:[String : Any] =  ["pagination" : true,
-                                      "limit" : 1,
+                                      "limit" : 5,
                                       "page" : self.loadMore.next]
         
         self.loadMore.isLoading = true

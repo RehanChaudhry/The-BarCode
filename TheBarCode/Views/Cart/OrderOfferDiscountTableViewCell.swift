@@ -38,7 +38,7 @@ class OrderOfferDiscountTableViewCell: UITableViewCell, NibReusable {
         self.titleLabel.text = discountInfo.title
         
         if discountInfo.value > 0 {
-            self.subTitleLabel.text = String(format: "Save £ %.2f", discountInfo.value)
+            self.subTitleLabel.text = String(format: "Saving £ %.2f", discountInfo.value)
         } else {
             self.subTitleLabel.text = ""
         }

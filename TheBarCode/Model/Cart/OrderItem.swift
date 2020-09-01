@@ -39,26 +39,4 @@ class OrderItem: Mappable {
         self.quantity = Int("\(map.JSON["quantity"]!)") ?? 0
         self.unitPrice = Double("\(map.JSON["price"]!)") ?? 0.0
     }
-    
-    init(name: String, quantity: Int, unitPrice: Double) {
-           self.name = name
-           self.quantity = quantity
-           self.unitPrice = unitPrice
-    }
-    
-    
-    
-}
-
-extension OrderItem {
-    static func getOrderItemList1() -> [OrderItem] {
-        let orderItem = OrderItem(name: "Fish & Chips", quantity: 1, unitPrice: 12.0)
-        return [orderItem]
-    }
-    
-    static func getOrderItemList2() -> [OrderItem] {
-        let orderItem1 = OrderItem(name: "Lobster Bisque with Bread & Butter", quantity: 2, unitPrice: 6.0)
-        let orderItem2 = OrderItem(name: "Jerk Chicken", quantity: 1, unitPrice: 10.0)
-        return  [orderItem1, orderItem2]
-    }
 }

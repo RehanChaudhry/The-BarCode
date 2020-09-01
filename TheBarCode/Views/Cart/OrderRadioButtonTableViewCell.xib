@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3x-hg-Jnq">
-                        <rect key="frame" x="44" y="8" width="214" height="28"/>
+                        <rect key="frame" x="44" y="0.0" width="214" height="44"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                         <state key="normal" title="Button">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -51,7 +51,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OFFER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKW-zd-sP9">
-                        <rect key="frame" x="266" y="8" width="38" height="28"/>
+                        <rect key="frame" x="266" y="0.0" width="38" height="44"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -61,7 +61,7 @@
                 <constraints>
                     <constraint firstItem="w6G-7e-rDT" firstAttribute="centerY" secondItem="G3x-hg-Jnq" secondAttribute="centerY" id="7Ae-Ut-BMX"/>
                     <constraint firstItem="wKW-zd-sP9" firstAttribute="bottom" secondItem="G3x-hg-Jnq" secondAttribute="bottom" id="Abu-eR-f7J"/>
-                    <constraint firstItem="G3x-hg-Jnq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="LlC-Ef-5tc"/>
+                    <constraint firstItem="G3x-hg-Jnq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="LlC-Ef-5tc"/>
                     <constraint firstItem="wKW-zd-sP9" firstAttribute="leading" secondItem="G3x-hg-Jnq" secondAttribute="trailing" constant="8" id="Tyc-7o-p0n"/>
                     <constraint firstAttribute="trailing" secondItem="wKW-zd-sP9" secondAttribute="trailing" constant="16" id="Z89-cI-HfH"/>
                     <constraint firstAttribute="bottom" secondItem="fFT-V9-GKv" secondAttribute="bottom" id="e46-5V-is4"/>
@@ -69,7 +69,7 @@
                     <constraint firstItem="G3x-hg-Jnq" firstAttribute="leading" secondItem="w6G-7e-rDT" secondAttribute="trailing" constant="8" id="j4l-L9-xE8"/>
                     <constraint firstItem="fFT-V9-GKv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="kRn-JJ-9gY"/>
                     <constraint firstItem="G3x-hg-Jnq" firstAttribute="leading" secondItem="fFT-V9-GKv" secondAttribute="trailing" id="t2b-ik-I2R"/>
-                    <constraint firstAttribute="bottom" secondItem="G3x-hg-Jnq" secondAttribute="bottom" constant="8" id="wp6-84-Xos"/>
+                    <constraint firstAttribute="bottom" secondItem="G3x-hg-Jnq" secondAttribute="bottom" id="wp6-84-Xos"/>
                     <constraint firstItem="fFT-V9-GKv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xKa-ON-C2f"/>
                     <constraint firstItem="wKW-zd-sP9" firstAttribute="top" secondItem="G3x-hg-Jnq" secondAttribute="top" id="ycV-hY-i4X"/>
                 </constraints>

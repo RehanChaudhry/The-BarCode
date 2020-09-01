@@ -50,6 +50,12 @@ class MyOrdersPreviewViewController: UIViewController {
         
         self.getCompletedOrders()
         self.getOnGoingOrders()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDetailsDidRefreshed(notif:)), name: notificationNameOrderDidRefresh, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderDidRefresh, object: nil)
     }
     
     //MARK: My Methods
@@ -386,6 +392,37 @@ extension MyOrdersPreviewViewController: MyOrderFooterViewDelegate {
             self.moveToMyOrdersFor(status: .ongoing, orders: self.ongoingOrders)
         } else if footerView.section == 1 {
             self.moveToMyOrdersFor(status: .completed, orders: self.completedOrders)
+        }
+    }
+}
+
+//MARK: Notification Methods
+extension MyOrdersPreviewViewController {
+    @objc func orderDetailsDidRefreshed(notif: Notification) {
+        if let order = notif.object as? Order {
+            
+            var needsRefresh: Bool = false
+            if let index = self.ongoingOrders.firstIndex(where: {$0.orderNo == order.orderNo}) {
+                if order.status == .completed {
+                    needsRefresh = true
+                } else {
+                    self.ongoingOrders[index] = order
+                }
+
+            } else if let index = self.completedOrders.firstIndex(where: {$0.orderNo == order.orderNo}) {
+                if self.completedOrders[index].statusRaw == order.statusRaw {
+                    self.completedOrders[index] = order
+                } else {
+                    needsRefresh = true
+                }
+            }
+            
+            if needsRefresh {
+                self.getOnGoingOrders()
+                self.getCompletedOrders()
+            } else {
+                self.tableView.reloadData()
+            }
         }
     }
 }
