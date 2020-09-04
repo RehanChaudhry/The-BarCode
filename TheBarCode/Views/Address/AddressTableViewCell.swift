@@ -19,6 +19,11 @@ class AddressTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
     
+    @IBOutlet var editButton: UIButton!
+    @IBOutlet var deleteButton: UIButton!
+    
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     weak var delegate: AddressTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -58,6 +63,20 @@ class AddressTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.subTitleLabel.attributedText = attributedSubtitle
+        
+        if address.isDeleting {
+            self.editButton.isEnabled = false
+            self.deleteButton.isHidden = true
+            
+            self.activityIndicator.startAnimating()
+        } else {
+            self.editButton.isEnabled = true
+            self.deleteButton.isHidden = false
+            
+            self.activityIndicator.stopAnimating()
+        }
+        
+        
     }
     
     //MARK: My IBActions

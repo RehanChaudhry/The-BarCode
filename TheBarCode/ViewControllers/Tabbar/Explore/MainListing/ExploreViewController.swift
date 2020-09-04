@@ -396,6 +396,8 @@ extension ExploreViewController {
                 let credit = redeemInfoDict["credit"] as! Int
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
+                self.barsController.snackBar.setUpSavings(totalSavings: self.redeemInfo!.totalSavings)
+                
                 if self.redeemInfo!.isFirstRedeem {
                     self.updateSnackBarForType(type: .discount)
                 } else if (!self.redeemInfo!.isFirstRedeem && self.redeemInfo!.remainingSeconds == 0) {

@@ -28,8 +28,13 @@ class ReloadViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     
     @IBOutlet var footerView: UIView!
-    @IBOutlet weak var creditsLabel: UILabel!
+    @IBOutlet var creditsLabel: UILabel!
+    @IBOutlet var totalSavingLabel: UILabel!
+    @IBOutlet var reloadSavingLabel: UILabel!
+    
     @IBOutlet var reloadButton: GradientButton!
+    
+    @IBOutlet var closeBarButtonItem: UIBarButtonItem!
     
     var isRedeemingDeal: Bool = false
     
@@ -67,6 +72,8 @@ class ReloadViewController: UIViewController {
             headerView.frame = headerFrame
         }
 
+        self.closeBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
+        self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
         
         self.view.backgroundColor = UIColor.appBgGrayColor()
         self.headerView.backgroundColor = UIColor.clear
@@ -142,6 +149,8 @@ class ReloadViewController: UIViewController {
         let user = Utility.shared.getCurrentUser()
         let credit = user!.credit > 100 ? "99+" : "\(user!.credit)"
         self.creditsLabel.text = credit
+        
+        self.setupSavingsLabel()
         
         self.type = type
         
@@ -220,6 +229,20 @@ class ReloadViewController: UIViewController {
         } else {
             debugPrint("Unknown reload state")
         }
+    }
+    
+    func setupSavingsLabel() {
+        
+        var totalSavings: String = "0.00"
+        var lastReloadSavings: String = "0.00"
+        
+        if let redeemInfo = self.redeemInfo {
+            totalSavings = redeemInfo.totalSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.totalSavings)
+            lastReloadSavings = redeemInfo.lastReloadSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.lastReloadSavings)
+        }
+        
+        self.totalSavingLabel.text = "£ " + totalSavings
+        self.reloadSavingLabel.text = "£ " + lastReloadSavings
     }
     
     func startReloadTimer() {

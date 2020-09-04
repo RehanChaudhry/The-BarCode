@@ -25,13 +25,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFT-V9-GKv">
-                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <connections>
-                            <action selector="radioButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2ZD-WE-QaX"/>
-                        </connections>
-                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6G-7e-rDT">
                         <rect key="frame" x="16" y="12" width="20" height="20"/>
                         <color key="backgroundColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,6 +33,13 @@
                             <constraint firstAttribute="width" constant="20" id="vyQ-Mc-TO8"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFT-V9-GKv">
+                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <action selector="radioButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2ZD-WE-QaX"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3x-hg-Jnq">
                         <rect key="frame" x="44" y="0.0" width="214" height="44"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
@@ -78,6 +78,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="bottomMargin" destination="wp6-84-Xos" id="XuX-Ie-52q"/>
+                <outlet property="checkBoxButton" destination="fFT-V9-GKv" id="ujx-Rj-L5t"/>
                 <outlet property="selectionView" destination="w6G-7e-rDT" id="YPz-3Y-fnR"/>
                 <outlet property="subTitleLabel" destination="wKW-zd-sP9" id="731-5W-n0B"/>
                 <outlet property="titleButton" destination="G3x-hg-Jnq" id="2i4-0c-Aas"/>

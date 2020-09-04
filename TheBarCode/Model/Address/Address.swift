@@ -7,30 +7,41 @@
 //
 
 import UIKit
+import ObjectMapper
+import CoreLocation
 
-class Address: NSObject {
+class Address: Mappable {
     
-    var label: String
-    var address: String
-    var additionalInfo: String
+    var id: String = ""
+    var label: String = ""
+    var address: String = ""
+    var additionalInfo: String = ""
     
-    var city: String
+    var latitude: CLLocationDegrees = 0.0
+    var longitude: CLLocationDegrees = 0.0
+    
+    var city: String = ""
+    
+    var isDeleting: Bool = false
     
     var isSelected: Bool = false
     
-    init(label: String, address: String, additionalInfo: String, city: String) {
-        self.label = label
-        self.address = address
-        self.additionalInfo = additionalInfo
-        self.city = city
+    required init?(map: Map) {
+        
     }
-}
-
-extension Address {
-    static func dummy() -> [Address] {
-        let home = Address(label: "Home", address: "L - 591 Sector 11-A North Karachi", additionalInfo: "First floor", city: "Karachi")
-        let work = Address(label: "Work", address: "Central commercial area, Shahrah-E-Faisal", additionalInfo: "Mezzanine floor", city: "Karachi")
-        let other = Address(label: "Other", address: "11-B Creekvista Defence phase 8", additionalInfo: "8th floor", city: "Karachi")
-        return [home, work, other]
+    
+    func mapping(map: Map) {
+        self.id = "\(map.JSON["id"]!)"
+        
+        self.label <- map["title"]
+        
+        self.address <- map["address"]
+        
+        self.city <- map["city"]
+        
+        self.additionalInfo <- map["optional_note"]
+        
+        self.latitude <- map["latitude"]
+        self.longitude <- map["longitude"]
     }
 }

@@ -16,6 +16,8 @@ class OrderRadioButton: NSObject {
     
     var isSelected: Bool = false
     
+    var isEnabled: Bool = true
+    
     init(title: String, subTitle: String) {
         self.title = title
         self.subTitle = subTitle

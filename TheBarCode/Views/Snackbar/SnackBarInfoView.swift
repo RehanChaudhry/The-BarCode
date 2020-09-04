@@ -59,6 +59,14 @@ class SnackBarInfoView: UIView, NibLoadable {
     }
     
     //MARK: My Methods
+    func setUpSavings(totalSavings: Double) {
+        let savings = totalSavings >= 100 ? "99+" : String(format: "%.2f", totalSavings)
+        
+        UIView.performWithoutAnimation {
+            self.savingsButton.setTitle("£ \(savings)", for: .normal)
+            self.savingsButton.layoutIfNeeded()
+        }
+    }
     
     func updateSnackbarType(type: SnackBarInfoViewType) {
         
@@ -68,11 +76,7 @@ class SnackBarInfoView: UIView, NibLoadable {
         let credit = user!.credit >= 100 ? "99+" : "\(user!.credit)"
         
         UIView.performWithoutAnimation {
-            
-            self.savingsButton.setTitle("£ 10", for: .normal)
             self.creditsButton.setTitle(credit, for: .normal)
-            
-            self.savingsButton.layoutIfNeeded()
             self.creditsButton.layoutIfNeeded()
         }
         

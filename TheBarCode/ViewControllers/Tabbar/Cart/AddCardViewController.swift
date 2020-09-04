@@ -8,6 +8,11 @@
 
 import UIKit
 import Stripe
+import ObjectMapper
+
+protocol AddCardViewControllerDelegate: class {
+    func addCardViewController(controller: AddCardViewController, cardDidAdded card: CreditCard)
+}
 
 class AddCardViewController: UIViewController {
 
@@ -40,6 +45,8 @@ class AddCardViewController: UIViewController {
     @IBOutlet var fieldInputView: UIView!
     @IBOutlet var pickerView: UIPickerView!
     
+    @IBOutlet var addCardButton: GradientButton!
+    
     lazy var countries: [Country] = {
         return Country.allCountries()
     }()
@@ -59,6 +66,8 @@ class AddCardViewController: UIViewController {
     
     var selectedExpiry: (month: Month, year: String)?
     
+    weak var delegate: AddCardViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,7 +85,7 @@ class AddCardViewController: UIViewController {
     
     func handleExpirySelection(month: Month, year: String) {
         self.selectedExpiry = (month, year)
-        self.expiryField.text = month.displayableValue().full + " " + year
+        self.expiryField.text = month.displayableValue().numeric + "/" + year.suffix(2)
         self.expiryValidationLabel.isHidden = true
     }
     
@@ -116,7 +125,7 @@ class AddCardViewController: UIViewController {
             self.addressValidationLabel.isHidden = false
         }
         
-        if self.postalCodeField.text?.trimWhiteSpaces().count == 0 {
+        if self.postalCodeField.text?.uppercased().isValidPostCode() == false {
             isValid = false
             self.postalCodeValidationLabel.isHidden = false
         }
@@ -146,7 +155,9 @@ class AddCardViewController: UIViewController {
     
     @IBAction func addCardButtonTapped(sender: UIButton) {
         if self.validate() {
-            self.dismiss(animated: true, completion: nil)
+            self.view.endEditing(true)
+            
+            self.addCard()
         }
     }
 
@@ -192,9 +203,52 @@ class AddCardViewController: UIViewController {
     }
 }
 
+//MARK: Webservices Methods
+extension AddCardViewController {
+    func addCard() {
+        self.addCardButton.showLoader()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        let params: [String : Any] = ["card_number" : self.cardField.text!.replacingOccurrences(of: " ", with: ""),
+                                      "expiry" : self.selectedExpiry!.year + "-" + self.selectedExpiry!.month.displayableValue().numeric,
+                                      "cvc" : self.cvcField.text!,
+                                      "name" : self.nameField.text!,
+                                      "address" : self.addressField.text!,
+                                      "postcode" : self.postalCodeField.text!.uppercased(),
+                                      "city" : self.cityField.text!,
+                                      "state" : self.stateField.text!,
+                                      "country" : self.selectedCountry!.name]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddCard, method: .post) { (response, serverError, error) in
+            
+            self.addCardButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any] {
+                let card = Mapper<CreditCard>().map(JSON: data)!
+                self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+        }
+    }
+}
+
 //MARK: UITextFieldDelegate
 extension AddCardViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        var maxLength: Int?
         
         if textField == self.cardField {
             var result = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
@@ -239,9 +293,21 @@ extension AddCardViewController: UITextFieldDelegate {
             self.cardValidationLabel.isHidden = true
             
             return false
+        } else if textField == self.postalCodeField {
+            maxLength = 8
+        } else if textField == self.cvcField {
+            maxLength = 4
         } else {
-            return true
+            maxLength = 255
         }
+        
+        if let maxLength = maxLength {
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        
+        return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

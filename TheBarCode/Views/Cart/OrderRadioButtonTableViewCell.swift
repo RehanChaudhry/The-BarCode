@@ -16,6 +16,7 @@ protocol OrderRadioButtonTableViewCellDelegate: class {
 class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var titleButton: UIButton!
+    @IBOutlet var checkBoxButton: UIButton!
     
     @IBOutlet var subTitleLabel: UILabel!
     
@@ -32,6 +33,9 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         self.selectionView.layer.cornerRadius = 10
         self.selectionView.layer.borderWidth = 4
         self.selectionView.layer.borderColor = UIColor.appRadioBgColor().cgColor
+        
+        self.titleButton.setTitleColor(UIColor.white, for: .normal)
+        self.titleButton.setTitleColor(UIColor.white.withAlphaComponent(0.6), for: .disabled)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -68,6 +72,9 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         } else {
             self.bottomMargin.constant = 8.0
         }
+        
+        self.checkBoxButton.isEnabled = true
+        self.titleButton.isEnabled = true
     }
     
     func setUpCell(radioButton: OrderRadioButton) {
@@ -86,6 +93,9 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.selectionView.backgroundColor = radioButton.isSelected ? UIColor.appBlueColor() : UIColor.appRadioBgColor()
+        
+        self.checkBoxButton.isEnabled = radioButton.isEnabled
+        self.titleButton.isEnabled = radioButton.isEnabled
         
         self.showSeparator(show: false)
     }

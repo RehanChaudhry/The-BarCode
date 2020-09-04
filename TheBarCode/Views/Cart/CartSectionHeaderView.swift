@@ -18,10 +18,13 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var selectionView: UIView!
     
+    @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var infoLabelBottom: NSLayoutConstraint!
+    
     var delegate: CartSectionHeaderViewDelegate!
     var barId: String!
     
-    func setupHeader(title: String, isSelected: Bool) {
+    func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool) {
         self.titleLabel.text = title
         
         self.selectionView.backgroundColor = isSelected ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()
@@ -29,6 +32,14 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
         self.selectionView.layer.cornerRadius = 8
         self.selectionView.layer.borderWidth = 2
         self.selectionView.layer.borderColor = UIColor.appCartUnSelectedColor().cgColor
+        
+        if isVenueClosed {
+            self.infoLabelBottom.constant = 8.0
+            self.infoLabel.text = "Venue is closed"
+        } else {
+            self.infoLabelBottom.constant = 0.0
+            self.infoLabel.text = ""
+        }
         
     }
 

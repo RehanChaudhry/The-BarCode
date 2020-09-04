@@ -50,6 +50,35 @@ class Order: Mappable {
     var offer: OrderDiscount?
     
     var deliveryCharges: Double = 0.0
+
+    var isDeliveryAvailable: Bool = false
+    var isCurrentlyDeliveryDisabled: Bool = false
+    var isGlobalDeliveryAllowed: Bool = false
+    
+    var globalDeliveryCharges: Double?
+    var minDeliveryCharges: Double?
+    var maxDeliveryCharges: Double?
+    var customDeliveryCharges: Double?
+        
+    var establishmentDayStatus: EstablishmentOpenStatus {
+        get {
+            return EstablishmentOpenStatus(rawValue: self.establishmentDayStatusRaw) ?? .closed
+        }
+    }
+    
+    var establishmentDayStatusRaw: String = ""
+    
+    var isEstablishmentOpen: Bool = false
+    
+    var isClosed: Bool {
+        get {
+            if establishmentDayStatus == .closed {
+                return true
+            } else {
+                return !self.isEstablishmentOpen
+            }
+        }
+    }
     
     required init?(map: Map) {
         
@@ -69,12 +98,24 @@ class Order: Mappable {
         if context?.type == .cart {
             
             self.orderItems <- map["menuItems"]
+            self.isDeliveryAvailable <- map["establishment.is_deliver"]
+            self.isCurrentlyDeliveryDisabled <- map["establishment.is_delivery_disable"]
+            self.isGlobalDeliveryAllowed <- map["establishment.is_global_delivery"]
+            
+            self.globalDeliveryCharges <- map["establishment.global_delivery_charges"]
+            self.minDeliveryCharges <- map["establishment.min_delivery_charges"]
+            self.maxDeliveryCharges <- map["establishment.max_delivery_charges"]
+            self.customDeliveryCharges <- map["establishment.custom_delivery_amount"]
             
             if let _ = map.JSON["order_id"] as? String {
                 self.orderNo = "\(map.JSON["order_id"]!)"
             } else if let _ = map.JSON["order_id"] as? Int {
                 self.orderNo = "\(map.JSON["order_id"]!)"
             }
+            
+            self.establishmentDayStatusRaw <- map["establishment.establishment_timings.status"]
+            self.isEstablishmentOpen <- map["establishment.establishment_timings.is_bar_open"]
+            
         } else if context?.type == .order {
             self.orderNo = "\(map.JSON["id"]!)"
             self.orderItems <- map["menu"]

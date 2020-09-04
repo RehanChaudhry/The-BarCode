@@ -10,17 +10,9 @@ import UIKit
 
 class OrderDeliveryAddress: NSObject {
     
-    var label: String = ""
-    var address: String = ""
-    var city: String = ""
-    var note: String = ""
+    var address: Address?
     
-    init(label: String, address: String, city: String, note: String) {
-        self.label = label
-        self.address = address
-        self.city = city
-        self.note = note
-    }
+    var isLoading: Bool = false
     
 }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -66,6 +66,10 @@ Note to rider: First Floor</string>
                                     <action selector="editButtonTappedWithSender:" destination="ina-9C-hGS" eventType="touchUpInside" id="9Gv-PV-h6F"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ExK-c2-vC3">
+                                <rect key="frame" x="258" y="5" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -73,11 +77,13 @@ Note to rider: First Floor</string>
                             <constraint firstAttribute="bottom" secondItem="1ku-gT-JXe" secondAttribute="bottom" constant="8" id="7iB-sf-ZXA"/>
                             <constraint firstItem="1ku-gT-JXe" firstAttribute="leading" secondItem="f2D-Yi-jhE" secondAttribute="leading" constant="12" id="CNS-nK-Eab"/>
                             <constraint firstItem="wRo-pm-54T" firstAttribute="leading" secondItem="NQ0-cw-NVi" secondAttribute="trailing" constant="8" id="CWh-yM-cde"/>
+                            <constraint firstItem="ExK-c2-vC3" firstAttribute="centerY" secondItem="AFp-ig-cuw" secondAttribute="centerY" id="DgY-G3-51y"/>
                             <constraint firstItem="AFp-ig-cuw" firstAttribute="top" secondItem="f2D-Yi-jhE" secondAttribute="top" id="HXT-u8-R3J"/>
                             <constraint firstItem="NQ0-cw-NVi" firstAttribute="top" secondItem="f2D-Yi-jhE" secondAttribute="top" constant="8" id="LdW-65-BSV"/>
                             <constraint firstItem="NQ0-cw-NVi" firstAttribute="leading" secondItem="f2D-Yi-jhE" secondAttribute="leading" constant="12" id="LxF-Zg-BQ1"/>
                             <constraint firstItem="wRo-pm-54T" firstAttribute="top" secondItem="f2D-Yi-jhE" secondAttribute="top" id="MXn-HZ-uxR"/>
                             <constraint firstAttribute="trailing" secondItem="1ku-gT-JXe" secondAttribute="trailing" constant="12" id="Z90-FP-CyU"/>
+                            <constraint firstItem="ExK-c2-vC3" firstAttribute="centerX" secondItem="AFp-ig-cuw" secondAttribute="centerX" id="qVu-y7-AlB"/>
                             <constraint firstItem="1ku-gT-JXe" firstAttribute="top" secondItem="NQ0-cw-NVi" secondAttribute="bottom" constant="8" id="wwq-D1-Lep"/>
                             <constraint firstAttribute="trailing" secondItem="AFp-ig-cuw" secondAttribute="trailing" constant="5" id="yHR-cO-3eJ"/>
                         </constraints>
@@ -99,6 +105,9 @@ Note to rider: First Floor</string>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="sfp-bE-Fxl"/>
             <connections>
+                <outlet property="activityIndicator" destination="ExK-c2-vC3" id="9w2-Xn-3Zj"/>
+                <outlet property="deleteButton" destination="AFp-ig-cuw" id="RVa-HU-NtX"/>
+                <outlet property="editButton" destination="wRo-pm-54T" id="Ghu-13-5MT"/>
                 <outlet property="subTitleLabel" destination="1ku-gT-JXe" id="p82-uO-4HA"/>
                 <outlet property="titleLabel" destination="NQ0-cw-NVi" id="cZ0-Yl-S5i"/>
             </connections>

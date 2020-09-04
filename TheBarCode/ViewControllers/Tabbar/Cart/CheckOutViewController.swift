@@ -151,10 +151,9 @@ class CheckOutViewController: UIViewController {
         }
         
         
-        let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
-        orderTypeController.order = self.order
-        orderTypeController.appliedDiscounts = items
-        self.navigationController?.pushViewController(orderTypeController, animated: true)
+//        let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
+//        orderTypeController.order = self.order
+//        self.navigationController?.pushViewController(orderTypeController, animated: true)
     }
 }
 

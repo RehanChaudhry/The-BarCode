@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -25,7 +25,7 @@
                         <rect key="frame" x="16" y="0.0" width="382" height="56"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vi2-6x-ukm">
-                                <rect key="frame" x="54" y="8" width="286" height="40"/>
+                                <rect key="frame" x="54" y="8" width="258" height="40"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <state key="normal" title="+ Add Payment Method">
                                     <color key="titleColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -35,7 +35,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_selected_check_mark" translatesAutoresizingMaskIntoConstraints="NO" id="6qs-uu-F8l">
-                                <rect key="frame" x="348" y="19" width="18" height="18"/>
+                                <rect key="frame" x="320" y="19" width="18" height="18"/>
                                 <color key="tintColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="fUq-Tp-vMg"/>
@@ -49,17 +49,37 @@
                                     <constraint firstAttribute="height" constant="30" id="S9R-EM-h4Y"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8K-pU-rHC">
+                                <rect key="frame" x="338" y="0.0" width="44" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="rpr-jR-Bju"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="icon_trash_bin"/>
+                                <connections>
+                                    <action selector="deleteButtonTappedWithSender:" destination="91Q-iL-c9s" eventType="touchUpInside" id="MxF-Ww-UF3"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="o5a-ZA-Rvl">
+                                <rect key="frame" x="350" y="18" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="iBJ-Gp-6MZ" firstAttribute="centerY" secondItem="mmn-Oj-7jn" secondAttribute="centerY" id="5Mb-Sh-SsP"/>
                             <constraint firstAttribute="bottom" secondItem="Vi2-6x-ukm" secondAttribute="bottom" constant="8" id="6GO-oW-fIl"/>
+                            <constraint firstItem="o8K-pU-rHC" firstAttribute="leading" secondItem="6qs-uu-F8l" secondAttribute="trailing" id="6tA-mL-Byb"/>
+                            <constraint firstAttribute="trailing" secondItem="o8K-pU-rHC" secondAttribute="trailing" id="7kJ-aF-hc7"/>
+                            <constraint firstItem="o5a-ZA-Rvl" firstAttribute="centerX" secondItem="o8K-pU-rHC" secondAttribute="centerX" id="FcS-hc-TFX"/>
                             <constraint firstItem="6qs-uu-F8l" firstAttribute="leading" secondItem="Vi2-6x-ukm" secondAttribute="trailing" constant="8" id="Hyr-K7-33q"/>
                             <constraint firstItem="Vi2-6x-ukm" firstAttribute="leading" secondItem="iBJ-Gp-6MZ" secondAttribute="trailing" constant="8" id="M60-PP-IQq"/>
+                            <constraint firstItem="o5a-ZA-Rvl" firstAttribute="centerY" secondItem="o8K-pU-rHC" secondAttribute="centerY" id="OCm-GB-MvG"/>
                             <constraint firstItem="iBJ-Gp-6MZ" firstAttribute="leading" secondItem="mmn-Oj-7jn" secondAttribute="leading" constant="16" id="bcw-fm-AiI"/>
                             <constraint firstItem="6qs-uu-F8l" firstAttribute="centerY" secondItem="mmn-Oj-7jn" secondAttribute="centerY" id="eXo-o6-I0I"/>
                             <constraint firstItem="Vi2-6x-ukm" firstAttribute="top" secondItem="mmn-Oj-7jn" secondAttribute="top" constant="8" id="kYw-iZ-yw7"/>
-                            <constraint firstAttribute="trailing" secondItem="6qs-uu-F8l" secondAttribute="trailing" constant="16" id="qVs-CL-40v"/>
+                            <constraint firstItem="o8K-pU-rHC" firstAttribute="top" secondItem="mmn-Oj-7jn" secondAttribute="top" id="p9H-7K-Ghj"/>
+                            <constraint firstAttribute="bottom" secondItem="o8K-pU-rHC" secondAttribute="bottom" id="uaF-83-MMR"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -73,8 +93,11 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="activityIndicator" destination="o5a-ZA-Rvl" id="PjS-3v-nli"/>
                 <outlet property="cardButton" destination="Vi2-6x-ukm" id="6Xo-wl-Zvc"/>
                 <outlet property="containerView" destination="mmn-Oj-7jn" id="9mf-nE-dew"/>
+                <outlet property="deleteButton" destination="o8K-pU-rHC" id="fPU-QF-VLd"/>
+                <outlet property="iconImageView" destination="iBJ-Gp-6MZ" id="HAA-CM-ft7"/>
                 <outlet property="selectionImageView" destination="6qs-uu-F8l" id="DDn-bG-lJL"/>
             </connections>
             <point key="canvasLocation" x="-181.15942028985509" y="-70.3125"/>
@@ -82,6 +105,7 @@
     </objects>
     <resources>
         <image name="icon_selected_check_mark" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="icon_trash_bin" width="16" height="16"/>
         <image name="visa-icon" width="75" height="48"/>
     </resources>
 </document>

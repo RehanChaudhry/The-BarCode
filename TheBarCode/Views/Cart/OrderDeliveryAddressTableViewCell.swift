@@ -14,6 +14,10 @@ class OrderDeliveryAddressTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subTitleLabel: UILabel!
     
+    @IBOutlet var infoLabel: UILabel!
+    
+    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -37,30 +41,49 @@ class OrderDeliveryAddressTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(address: OrderDeliveryAddress) {
         
-        self.titleLabel.text = "Delivery Details: " + address.label
-        
-        let attributedSubtitle = NSMutableAttributedString()
-        
-        let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
-                                NSAttributedString.Key.foregroundColor : UIColor.white]
-        let attributedAddress = NSAttributedString(string: address.address, attributes: normalAttributes)
-        
-        attributedSubtitle.append(attributedAddress)
-        
-        let italicAttributes = [NSAttributedString.Key.font : UIFont.appItalicFontOf(size: 14.0),
-                                NSAttributedString.Key.foregroundColor : UIColor.white]
-        let attributedCity = NSAttributedString(string: "\n" + address.city, attributes: italicAttributes)
-        
-        attributedSubtitle.append(attributedCity)
-        
-        if address.note.count > 0 {
-            let infottributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
-                                    NSAttributedString.Key.foregroundColor : UIColor.appGrayColor()]
-            let attribtuedInfo = NSAttributedString(string: "\n" + address.note, attributes: infottributes)
-            attributedSubtitle.append(attribtuedInfo)
+        if address.isLoading {
+            self.activityIndicatorView.startAnimating()
+            
+            self.titleLabel.text = ""
+            self.subTitleLabel.text = ""
+            self.infoLabel.text = ""
+            
+        } else if let deliveryAddress = address.address {
+            self.activityIndicatorView.stopAnimating()
+            
+            self.titleLabel.text = "Delivery Details: " + deliveryAddress.label
+            
+            let attributedSubtitle = NSMutableAttributedString()
+            
+            let normalAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
+                                    NSAttributedString.Key.foregroundColor : UIColor.white]
+            let attributedAddress = NSAttributedString(string: deliveryAddress.address, attributes: normalAttributes)
+            
+            attributedSubtitle.append(attributedAddress)
+            
+            let italicAttributes = [NSAttributedString.Key.font : UIFont.appItalicFontOf(size: 14.0),
+                                    NSAttributedString.Key.foregroundColor : UIColor.white]
+            let attributedCity = NSAttributedString(string: "\n" + deliveryAddress.city, attributes: italicAttributes)
+            
+            attributedSubtitle.append(attributedCity)
+            
+            if deliveryAddress.additionalInfo.count > 0 {
+                let infottributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
+                                        NSAttributedString.Key.foregroundColor : UIColor.appGrayColor()]
+                let attribtuedInfo = NSAttributedString(string: "\n" + deliveryAddress.additionalInfo, attributes: infottributes)
+                attributedSubtitle.append(attribtuedInfo)
+            }
+            
+            self.subTitleLabel.attributedText = attributedSubtitle
+            self.infoLabel.text = ""
+            
+        } else {
+            self.activityIndicatorView.stopAnimating()
+            
+            self.titleLabel.text = ""
+            self.subTitleLabel.text = ""
+            self.infoLabel.text = "Please select delivery address"
         }
-        
-        self.subTitleLabel.attributedText = attributedSubtitle
     }
     
 }

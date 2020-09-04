@@ -15,6 +15,9 @@ class RedeemInfo: Mappable {
     var remainingSeconds : Int!
     var canReload: Bool = false
     
+    var totalSavings: Double = 0.0
+    var lastReloadSavings: Double = 0.0
+    
     required convenience init?( map: Map) {
         self.init()
     }
@@ -23,7 +26,18 @@ class RedeemInfo: Mappable {
         isFirstRedeem <- map["is_first_redeem"]
         remainingSeconds <- map["remaining_seconds"]
         
-        debugPrint("remaining seconds for reload: \(String(describing: remainingSeconds))")
+        if let _ = map.JSON["saving"] {
+            totalSavings = Double("\(map.JSON["saving"]!)") ?? 0.0
+        } else {
+            totalSavings = 0.0
+        }
+        
+        if let _ = map.JSON["saving_last_reload"] {
+            lastReloadSavings = Double("\(map.JSON["saving_last_reload"]!)") ?? 0.0
+        } else {
+            lastReloadSavings = 0.0
+        }
+        
     }
     
     func canShowTimer() -> Bool {

@@ -33,7 +33,9 @@ class TableReservationViewController: UIViewController {
     
     var bar: Bar!
     
-    var cards: [String] = [""]
+    var cards: [CreditCard] = []
+    
+    var selectedCard: CreditCard?
     
     var selectedDate: Date?
     var selectedTime: Date?
@@ -249,7 +251,11 @@ extension TableReservationViewController: UITableViewDataSource, UITableViewDele
             let isFirstCell = indexPath.row == 0
             
             let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: CardInfoCell.self)
-            cell.setUpCell()
+            
+            let card = self.cards[indexPath.row]
+            
+            cell.setUpCell(card: card, isSelected: card.cardId == self.selectedCard?.cardId)
+            
             cell.maskCorners(radius: 8.0, mask: isFirstCell ? [.layerMinXMinYCorner, .layerMaxXMinYCorner] : [])
             return cell
         } else if indexPath.section == ReservationSection.addCard.rawValue {

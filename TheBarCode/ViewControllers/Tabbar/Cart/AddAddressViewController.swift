@@ -8,9 +8,11 @@
 
 import UIKit
 import GoogleMaps
+import ObjectMapper
 
 protocol AddAddressViewControllerDelegate: class {
     func addAddressViewController(controller: AddAddressViewController, didUpdateAddress address: Address)
+    func addAddressViewController(controller: AddAddressViewController, didAddedAddress address: Address)
 }
 
 class AddAddressViewController: UIViewController {
@@ -31,6 +33,10 @@ class AddAddressViewController: UIViewController {
     
     @IBOutlet var spotlightImageView: UIImageView!
     
+    @IBOutlet var textView: UITextView!
+    
+    @IBOutlet var addAddressButton: GradientButton!
+    
     var myLocationManager: MyLocationManager!
     
     var recentResponseNumber: UInt = 0
@@ -42,12 +48,27 @@ class AddAddressViewController: UIViewController {
     var address: Address?
     var isEditingAddress: Bool = false
     
+    enum AddressLabel: Int {
+        case home = 0, work = 1, other = 2
+        
+        func title() -> String {
+            switch self {
+            case .home:
+                return "Home"
+            case .work:
+                return "Work"
+            case .other:
+                return "Other"
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.title = "Add Address"
+        
         
         self.textViewContainer.layer.borderWidth = 1.0
         self.textViewContainer.layer.borderColor = UIColor.appBgSecondaryGrayColor().cgColor
@@ -56,7 +77,25 @@ class AddAddressViewController: UIViewController {
         
         self.segmentedControl.backgroundColor = UIColor.appBgSecondaryGrayColor()
         
-        self.getCurrentLocation()
+        if let address = self.address {
+            self.title = "Update Address"
+            let cameraPosition = GMSCameraPosition(latitude: address.latitude, longitude: address.longitude, zoom: 15.0)
+            self.mapView.animate(to: cameraPosition)
+            
+            self.textView.text = address.additionalInfo
+            
+            if address.label.lowercased() == AddressLabel.home.title().lowercased() {
+                self.segmentedControl.selectedSegmentIndex = AddressLabel.home.rawValue
+            } else if address.label.lowercased() == AddressLabel.work.title().lowercased() {
+                self.segmentedControl.selectedSegmentIndex = AddressLabel.work.rawValue
+            } else if address.label.lowercased() == AddressLabel.other.title().lowercased() {
+                self.segmentedControl.selectedSegmentIndex = AddressLabel.other.rawValue
+            }
+        } else {
+            self.title = "Add Address"
+            self.getCurrentLocation()
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +117,7 @@ class AddAddressViewController: UIViewController {
             self.mapView.isUserInteractionEnabled = true
             
             if let location = location {
-                let cameraPosition = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 13.0)
+                let cameraPosition = GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 14.0)
                 self.mapView.animate(to: cameraPosition)
             } else {
                 self.activityIndicator.stopAnimating()
@@ -87,14 +126,16 @@ class AddAddressViewController: UIViewController {
     }
     
     func getReadableAddress(gmsAddress: GMSAddress) -> String {
-        var address = gmsAddress.thoroughfare ?? ""
-        if address.count > 0 {
-            address = address + " "
-        }
+        return gmsAddress.lines?.first ?? ""
         
-        address += (gmsAddress.locality ?? "")
-        
-        return address
+//        var address = gmsAddress.thoroughfare ?? ""
+//        if address.count > 0 {
+//            address = address + " "
+//        }
+//
+//        address += (gmsAddress.locality ?? "")
+//
+//        return address
     }
     
     func reverseGeoCodeCoorniate(coordinate: CLLocationCoordinate2D) {
@@ -130,9 +171,12 @@ class AddAddressViewController: UIViewController {
     
     //MARK: My IBActions
     @IBAction func saveAddressButtonTapped(sender: UIButton) {
+        self.view.endEditing(true)
+        
         if self.isEditingAddress, self.delegate != nil, self.address != nil {
-            self.delegate?.addAddressViewController(controller: self, didUpdateAddress: self.address!)
-            self.navigationController?.popViewController(animated: true)
+            self.updateAddress()
+        } else {
+            self.addAddress()
         }
     }
 
@@ -160,5 +204,100 @@ extension AddAddressViewController: GMSMapViewDelegate {
         selectionFeedback.selectionChanged()
         
         self.reverseGeoCodeCoorniate(coordinate: position.target)
+    }
+}
+
+//MARK: Webservices Methods
+extension AddAddressViewController {
+    func addAddress() {
+        
+        guard let selectedAddress = self.selectedAddress else {
+            self.showAlertController(title: "", msg: "Please select an address")
+            return
+        }
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.addAddressButton.showLoader()
+        
+        let label = AddressLabel(rawValue: self.segmentedControl.selectedSegmentIndex) ?? .other
+        let params: [String : Any] = ["title" : label.title(),
+                                      "address" : selectedAddress.lines?.first ?? "",
+                                      "latitude" : "\(selectedAddress.coordinate.latitude)",
+                                      "longitude" : "\(selectedAddress.coordinate.longitude)",
+                                      "city" : selectedAddress.locality ?? "",
+                                      "optional_note" : self.textView.text ?? ""]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddresses, method: .post) { (response, serverError, error) in
+            
+            UIApplication.shared.endIgnoringInteractionEvents()
+            self.addAddressButton.hideLoader()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any] {
+                let address = Mapper<Address>().map(JSON: data)!
+                self.delegate?.addAddressViewController(controller: self, didAddedAddress: address)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    func updateAddress() {
+        guard let address = self.address else {
+            self.showAlertController(title: "", msg: "Please select an address to update")
+            return
+        }
+        
+        guard let gmsAddress = self.selectedAddress else {
+            self.showAlertController(title: "", msg: "Please select an address")
+            return
+        }
+        
+        let addressString = gmsAddress.lines?.first ?? ""
+        let latitude = gmsAddress.coordinate.latitude
+        let longitude = gmsAddress.coordinate.longitude
+        let city = gmsAddress.locality ?? ""
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.addAddressButton.showLoader()
+        
+        let label = AddressLabel(rawValue: self.segmentedControl.selectedSegmentIndex) ?? .other
+        let params: [String : Any] = ["title" : label.title(),
+                                      "address" : addressString,
+                                      "latitude" : "\(latitude)",
+                                      "longitude" : "\(longitude)",
+                                      "city" : city,
+                                      "optional_note" : self.textView.text ?? ""]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddresses + "/" + address.id, method: .put) { (response, serverError, error) in
+            
+            UIApplication.shared.endIgnoringInteractionEvents()
+            self.addAddressButton.hideLoader()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any] {
+                let address = Mapper<Address>().map(JSON: data)!
+                self.delegate?.addAddressViewController(controller: self, didUpdateAddress: address)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
     }
 }

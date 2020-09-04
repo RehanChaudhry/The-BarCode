@@ -143,6 +143,7 @@
 		0C694B01236C01FC002A08CC /* SharedEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C694AFF236C01FC002A08CC /* SharedEventCell.swift */; };
 		0C694B02236C01FC002A08CC /* SharedEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C694B00236C01FC002A08CC /* SharedEventCell.xib */; };
 		0C6DABE42368500E003C3999 /* SharedEventParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6DABE32368500E003C3999 /* SharedEventParams.swift */; };
+		0C70A63D24FF6A8D006FB611 /* CreditCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C70A63C24FF6A8D006FB611 /* CreditCard.swift */; };
 		0C71EEF9241227FD00505F97 /* OfferStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C71EEF8241227FD00505F97 /* OfferStatus.swift */; };
 		0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */; };
 		0C72AB58219591EE00D6CD6B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C72AB57219591EE00D6CD6B /* SearchViewController.swift */; };
@@ -636,6 +637,7 @@
 		0C694AFF236C01FC002A08CC /* SharedEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventCell.swift; sourceTree = "<group>"; };
 		0C694B00236C01FC002A08CC /* SharedEventCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedEventCell.xib; sourceTree = "<group>"; };
 		0C6DABE32368500E003C3999 /* SharedEventParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedEventParams.swift; sourceTree = "<group>"; };
+		0C70A63C24FF6A8D006FB611 /* CreditCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCard.swift; sourceTree = "<group>"; };
 		0C71EEF8241227FD00505F97 /* OfferStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferStatus.swift; sourceTree = "<group>"; };
 		0C72AB55219403DC00D6CD6B /* SharedOfferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedOfferParams.swift; sourceTree = "<group>"; };
 		0C72AB57219591EE00D6CD6B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = TheBarCode/ViewControllers/Tabbar/Explore/SearchViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -2288,10 +2290,10 @@
 				B33F115E24DADE3B00CE0068 /* OrderTypeViewController.swift */,
 				B339E03624DC5380005990AB /* AddressesViewController.swift */,
 				B332486F24DD392F007D3F39 /* AddAddressViewController.swift */,
-				B33CF7AA24DE8AA4001566F0 /* SavedCardsViewController.swift */,
 				B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */,
 				B324C76E24E3FF0A00D111A0 /* ReviewPaymentViewController.swift */,
 				B324C77024E4079500D111A0 /* ThankYouViewController.swift */,
+				B33CF7AA24DE8AA4001566F0 /* SavedCardsViewController.swift */,
 				B32B7E2724E5145500982689 /* AddCardViewController.swift */,
 				0CAEC3A724FCF5630043D7E5 /* MyOrdersViewController.swift */,
 			);
@@ -2332,6 +2334,7 @@
 				B3373E6B24DB0EFA007E53E6 /* OrderDeliverySection.swift */,
 				B3373E6D24DB10E2007E53E6 /* OrderRadioButton.swift */,
 				B339E03224DC31A0005990AB /* OrderDeliveryAddressSection.swift */,
+				0C70A63C24FF6A8D006FB611 /* CreditCard.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2816,6 +2819,7 @@
 				0CA20F6E237032290051F0DC /* FoodMenuHeaderView.swift in Sources */,
 				832FD1D0216B29AD008516F4 /* FiveADayDetailViewController.swift in Sources */,
 				0C39F2F8231E72D500596A2B /* GMUFeature.m in Sources */,
+				0C70A63D24FF6A8D006FB611 /* CreditCard.swift in Sources */,
 				0C674F7B22201C65002394F5 /* RibbonBaseView.swift in Sources */,
 				B3C1292324D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift in Sources */,
 				83EDD9912179A3B800BFA4B9 /* RedeemInfo.swift in Sources */,

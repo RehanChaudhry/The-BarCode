@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,7 +29,7 @@
                         <rect key="frame" x="44" y="8" width="260" height="67"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Delivery Details: Work" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ser-dv-8e0">
-                                <rect key="frame" x="12" y="8" width="208" height="15"/>
+                                <rect key="frame" x="12" y="8" width="208" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -42,21 +42,38 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYd-Nx-Tbq">
-                                <rect key="frame" x="12" y="31" width="236" height="28"/>
+                                <rect key="frame" x="12" y="30" width="236" height="29"/>
                                 <string key="text">L - 591 Sector 11-A North Karachi, Karachi
 Note to rider: First Floor</string>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BO3-Tu-qsV">
+                                <rect key="frame" x="12" y="8" width="208" height="51"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Yvk-X8-0P5">
+                                <rect key="frame" x="120" y="23.5" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="NYd-Nx-Tbq" secondAttribute="trailing" constant="12" id="2Hd-dH-TZX"/>
+                            <constraint firstItem="BO3-Tu-qsV" firstAttribute="leading" secondItem="Y7A-lX-dkn" secondAttribute="leading" constant="12" id="3y4-Go-iQY"/>
                             <constraint firstItem="4B6-6o-DPT" firstAttribute="top" secondItem="ser-dv-8e0" secondAttribute="top" id="DP6-Mh-LUC"/>
+                            <constraint firstAttribute="bottom" secondItem="BO3-Tu-qsV" secondAttribute="bottom" constant="8" id="GD3-qd-Ppz"/>
+                            <constraint firstItem="BO3-Tu-qsV" firstAttribute="top" secondItem="Y7A-lX-dkn" secondAttribute="top" constant="8" id="KhQ-1X-e3J"/>
+                            <constraint firstItem="Yvk-X8-0P5" firstAttribute="centerX" secondItem="Y7A-lX-dkn" secondAttribute="centerX" id="Oo7-AW-I2Q"/>
                             <constraint firstAttribute="bottom" secondItem="NYd-Nx-Tbq" secondAttribute="bottom" constant="8" id="USB-Dd-LP8"/>
+                            <constraint firstItem="Yvk-X8-0P5" firstAttribute="centerY" secondItem="Y7A-lX-dkn" secondAttribute="centerY" id="V9C-Lc-DkR"/>
+                            <constraint firstItem="4B6-6o-DPT" firstAttribute="leading" secondItem="BO3-Tu-qsV" secondAttribute="trailing" constant="8" id="bAT-Nc-F3Q"/>
                             <constraint firstItem="ser-dv-8e0" firstAttribute="top" secondItem="Y7A-lX-dkn" secondAttribute="top" constant="8" id="e89-6T-8Ps"/>
                             <constraint firstItem="NYd-Nx-Tbq" firstAttribute="top" secondItem="ser-dv-8e0" secondAttribute="bottom" constant="8" id="lYP-xb-Dkd"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="lp7-uO-5vw"/>
                             <constraint firstItem="NYd-Nx-Tbq" firstAttribute="leading" secondItem="Y7A-lX-dkn" secondAttribute="leading" constant="12" id="ohe-bc-wMD"/>
                             <constraint firstItem="4B6-6o-DPT" firstAttribute="leading" secondItem="ser-dv-8e0" secondAttribute="trailing" constant="8" id="u9V-Dn-rGj"/>
                             <constraint firstAttribute="trailing" secondItem="4B6-6o-DPT" secondAttribute="trailing" constant="8" id="zQa-nT-hZ2"/>
@@ -80,10 +97,12 @@ Note to rider: First Floor</string>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityIndicatorView" destination="Yvk-X8-0P5" id="i36-Ph-Tev"/>
+                <outlet property="infoLabel" destination="BO3-Tu-qsV" id="sH3-5u-GkQ"/>
                 <outlet property="subTitleLabel" destination="NYd-Nx-Tbq" id="kPd-il-nUT"/>
                 <outlet property="titleLabel" destination="ser-dv-8e0" id="G9B-Cv-sjK"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
+            <point key="canvasLocation" x="137.68115942028987" y="112.16517857142857"/>
         </tableViewCell>
     </objects>
     <resources>

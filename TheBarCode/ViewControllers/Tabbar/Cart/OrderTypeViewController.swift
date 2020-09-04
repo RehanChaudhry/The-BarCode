@@ -8,6 +8,8 @@
 
 import UIKit
 import StatefulTableView
+import Alamofire
+import ObjectMapper
 
 class OrderTypeViewController: UIViewController {
 
@@ -15,13 +17,19 @@ class OrderTypeViewController: UIViewController {
     
     @IBOutlet var checkoutButton: GradientButton!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     var viewModels: [OrderViewModel] = []
     
     var order: Order!
-    
-    var appliedDiscounts: [OrderOfferDiscountInfo] = []
-    
+        
     var totalBillPayable: Double = 0.0
+    
+    var selectedAddress: Address?
+    
+    var addressRequest: DataRequest?
+    
+    var isLoadingAddress: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +38,16 @@ class OrderTypeViewController: UIViewController {
         
         self.title = "Order Type"
         
+        self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
+        
         self.setUpStatefulTableView()
         
         self.setupViewModel()
         self.calculateTotal()
+        
+        if self.order.isDeliveryAvailable {
+            self.getAddress()
+        }
     }
 
 
@@ -60,15 +74,6 @@ class OrderTypeViewController: UIViewController {
 
         let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
         self.viewModels.append(orderProductsSection)
-
-        var discounts: [OrderDiscountInfo] = []
-        for discount in self.appliedDiscounts {
-            let dicountInfo = OrderDiscountInfo(title: discount.title, price: discount.value)
-            discounts.append(dicountInfo)
-        }
-        
-        let orderDiscountSection = OrderDiscountSection(items: discounts)
-        self.viewModels.append(orderDiscountSection)
         
         let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
@@ -95,29 +100,25 @@ class OrderTypeViewController: UIViewController {
         let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
         self.viewModels.append(takeAwaySection)
         
-        let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
-        deliveryRadioButton.value = 2.30
-        let deliverySection = OrderDeliverySection(items: [deliveryRadioButton])
-        self.viewModels.append(deliverySection)
-        
-        let deliveryAddressSection = OrderDeliveryAddressSection(items: [])
-        self.viewModels.append(deliveryAddressSection)
-        
+        if self.order.isDeliveryAvailable {
+            let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
+            deliveryRadioButton.value = self.getDeliveryCharges()
+            deliveryRadioButton.isEnabled = !self.order.isCurrentlyDeliveryDisabled
+            
+            let deliverySection = OrderDeliverySection(items: [deliveryRadioButton])
+            self.viewModels.append(deliverySection)
+            
+            let deliveryAddressSection = OrderDeliveryAddressSection(items: [])
+            self.viewModels.append(deliveryAddressSection)
+        }
     }
     
-    func calculateTotal() {
-        
+    func getProductsTotalPrice() -> Double {
         let products = (self.viewModels.first(where: {$0.type == .productDetails}) as? OrderProductsInfoSection)?.items ?? []
         
-        var totalProductPrice = products.reduce(0.0) { (total, item) -> Double in
+        let totalProductPrice = products.reduce(0.0) { (total, item) -> Double in
             total + item.unitPrice * Double(item.quantity)
         }
-        
-        let totalDiscount = self.appliedDiscounts.reduce(0.0) { (total, discountInfo) -> Double in
-            total + discountInfo.value
-        }
-        
-        totalProductPrice -= totalDiscount
         
         if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
             (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = totalProductPrice
@@ -128,6 +129,13 @@ class OrderTypeViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
+        
+        return totalProductPrice
+    }
+    
+    func calculateTotal() {
+        
+        var totalProductPrice = self.getProductsTotalPrice()
 
         if let deliverySection = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
             let deliveryItem = deliverySection.items.first,
@@ -173,11 +181,37 @@ class OrderTypeViewController: UIViewController {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .deliveryAddress}),
             let section = self.viewModels[sectionIndex] as? OrderDeliveryAddressSection,
             section.items.count == 0 {
-            let field = OrderDeliveryAddress(label: "Home",
-                                             address: "L-591 Sector 11-A North Karachi",
-                                             city: "Karachi",
-                                             note: "First floor")
+            let field = OrderDeliveryAddress()
+            field.address = self.selectedAddress
+            field.isLoading = self.isLoadingAddress
+
             section.items.append(field)
+            
+            self.setUpDeliveryCharges()
+        }
+    }
+    
+    func getDeliveryCharges() -> Double {
+        if self.order.isGlobalDeliveryAllowed == true {
+            return self.order.globalDeliveryCharges ?? 0.0
+        } else {
+            let total: Double = self.getProductsTotalPrice()
+            if let customDeliveryCharges = self.order.customDeliveryCharges, total > customDeliveryCharges {
+                return self.order.minDeliveryCharges ?? 0.0
+            } else {
+                return self.order.maxDeliveryCharges ?? 0.0
+            }
+        }
+    }
+    
+    func setUpDeliveryCharges() {
+        if let deliverySection = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
+            let deliveryItem = deliverySection.items.first {
+            if deliveryItem.isSelected {
+                deliveryItem.value = self.getDeliveryCharges()
+            } else {
+                deliveryItem.value = 0.0
+            }
         }
     }
     
@@ -185,6 +219,20 @@ class OrderTypeViewController: UIViewController {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .deliveryAddress}),
             let fieldSection = self.viewModels[sectionIndex] as? OrderDeliveryAddressSection {
             fieldSection.items.removeAll()
+        }
+    }
+    
+    func setUpDeliveryAddress(address: Address?) {
+        
+        self.selectedAddress = address
+        
+        if let addressSection = self.viewModels.first(where: {$0.type == .deliveryAddress}) as? OrderDeliveryAddressSection,
+            let addressInfo = addressSection.items.first {
+    
+            addressInfo.address = address
+            addressInfo.isLoading = false
+
+            self.tableView.reloadData()
         }
     }
     
@@ -210,7 +258,14 @@ class OrderTypeViewController: UIViewController {
     }
     
     //MARK: My IBActions
+    @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func continueButtonTapped(sender: UIButton) {
+        
+        self.createOrder()
+        
         if let section = self.viewModels.first(where: {$0.type == .dineIn}) as? OrderDineInSection,
             section.items.first?.isSelected == true {
             self.moveToSplitPayment()
@@ -329,7 +384,7 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
-        if let addressSection = self.viewModels[indexPath.section] as? OrderDeliveryAddressSection {
+        if let _ = self.viewModels[indexPath.section] as? OrderDeliveryAddressSection {
             let addressController = (self.storyboard!.instantiateViewController(withIdentifier: "AddressesViewController") as! AddressesViewController)
             addressController.isSelectingAddress = true
             addressController.shouldShowCrossIcon = false
@@ -342,17 +397,11 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: AddressesViewControllerDelegate
 extension OrderTypeViewController: AddressesViewControllerDelegate {
     func addressesViewController(controller: AddressesViewController, didSelectAddress address: Address) {
-        if let addressSection = self.viewModels.first(where: {$0.type == .deliveryAddress}) as? OrderDeliveryAddressSection,
-            let addressInfo = addressSection.items.first {
-            
-            addressInfo.label = address.label
-            addressInfo.city = address.city
-            addressInfo.note = address.additionalInfo
-            addressInfo.address = address.address
-            
-            self.tableView.reloadData()
-            
-        }
+        
+        self.addressRequest?.cancel()
+        self.isLoadingAddress = false
+        
+        self.setUpDeliveryAddress(address: address)
     }
 }
 
@@ -391,5 +440,65 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
         
         self.reloadOrderTypeSections()
         self.calculateTotal()
+    }
+}
+
+//MARK: Webservices Methods
+extension OrderTypeViewController {
+    func getAddress() {
+        let params: [String : Any] = ["pagination" : true,
+                                      "limit" : 1,
+                                      "page": 1]
+        
+        self.isLoadingAddress = true
+        self.addressRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddresses, method: .get, completion: { (response, serverError, error) in
+            
+            self.isLoadingAddress = false
+            
+            defer {
+                self.setUpDeliveryAddress(address: self.selectedAddress)
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                let addresses = Mapper<Address>().mapArray(JSONArray: responseArray)
+                self.selectedAddress = addresses.first
+            }
+            
+        })
+    }
+    
+    func createOrder() {
+        self.checkoutButton.isUserInteractionEnabled = false
+        self.checkoutButton.showLoader()
+        
+        let params: [String : Any] = [:]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrders, method: .post) { (response, serverError, error) in
+            
+            self.checkoutButton.isUserInteractionEnabled = true
+            self.checkoutButton.hideLoader()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            
+            
+        }
     }
 }

@@ -19,7 +19,10 @@ class Country: NSObject {
     }
     
     static func allCountries() -> [Country] {
-        return [Country(id: "1", name: "United Kingdom")]
+        return [Country(id: "1", name: "England"),
+                Country(id: "2", name: "Scotland"),
+                Country(id: "3", name: "Wales"),
+                Country(id: "4", name: "Northern Ireland")]
     }
     
 }

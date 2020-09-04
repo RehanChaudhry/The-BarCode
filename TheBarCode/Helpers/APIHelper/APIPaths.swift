@@ -83,6 +83,12 @@ let apiPathGetCartQuantity = "cart-count"
 let apiPathCart = "cart"
 let apiPathOrders = "order"
 
+let apiPathAddCard = "add-card"
+let apiPathGetCards = "get-card"
+let apiPathDeleteCard = "delete-card"
+
+let apiPathAddresses = "address"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

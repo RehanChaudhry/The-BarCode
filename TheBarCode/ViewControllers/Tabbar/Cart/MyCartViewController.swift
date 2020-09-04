@@ -34,6 +34,14 @@ class MyCartViewController: UIViewController {
         didSet {
             self.setUpBadgeValue()
             self.calculateBill()
+            
+            if self.selectedOrder?.isClosed == true {
+                self.checkOutButton.isUserInteractionEnabled = false
+                self.checkOutButton.updateColor(withGrey: true)
+            } else {
+                self.checkOutButton.isUserInteractionEnabled = true
+                self.checkOutButton.updateColor(withGrey: false)
+            }
         }
     }
     
@@ -143,13 +151,13 @@ class MyCartViewController: UIViewController {
     @IBAction func checkOutButtonTapped(sender: UIButton) {
         
         if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
-            let checkNavigation = self.storyboard!.instantiateViewController(withIdentifier: "CheckOutNavigation") as! UINavigationController
-            checkNavigation.modalPresentationStyle = .fullScreen
+            let navigation = self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeNavigation") as! UINavigationController
+            navigation.modalPresentationStyle = .fullScreen
             
-            let checkoutController = checkNavigation.viewControllers.first! as! CheckOutViewController
-            checkoutController.order = order
+            let controller = navigation.viewControllers.first! as! OrderTypeViewController
+            controller.order = order
             
-            self.present(checkNavigation, animated: true, completion: nil)
+            self.present(navigation, animated: true, completion: nil)
         }
         
     }
@@ -167,7 +175,12 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 54.0
+        let order = self.orders[section]
+        if order.isClosed {
+            return 77.0
+        } else {
+            return 54.0
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -180,10 +193,15 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(CartSectionHeaderView.self)
-        let isSelected =  self.orders[section].barName == self.selectedOrder?.barName
-        headerView?.setupHeader(title: self.orders[section].barName, isSelected: isSelected)
+        
+        let order = self.orders[section]
+
+        let isSelected =  order.barName == self.selectedOrder?.barName
+        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed)
+        
         headerView?.delegate = self
-        headerView?.barId =  self.orders[section].barId
+        headerView?.barId =  order.barId
+        
         return headerView
     }
     
