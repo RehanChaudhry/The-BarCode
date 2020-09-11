@@ -70,6 +70,12 @@ class CartBaseViewController: UIViewController {
         self.myCartLineView.backgroundColor = UIColor.appBlueColor()
         
         self.setupCloseButtonContainer()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlacedNotification(notification:)), name: notificationNameOrderPlaced, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,5 +230,12 @@ extension CartBaseViewController: MyCartViewControllerDelegate {
                           NSAttributedStringKey.foregroundColor : UIColor.white] as [NSAttributedStringKey : Any]
         let attributedCount = NSAttributedString(string: "\(count)", attributes: attributes)
         self.myCartCountLabel.attributedText = attributedCount
+    }
+}
+
+//MARK: Notification Methods
+extension CartBaseViewController {
+    @objc func orderDidPlacedNotification(notification: Notification) {
+        self.myOrdersButtonTapped(sender: self.myOrdersButton)
     }
 }

@@ -13,7 +13,7 @@ class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var textField: UITextField!
     
-    var orderField: OrderDineInField!
+    var orderField: OrderFieldInput!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,10 +29,14 @@ class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
     }
     
     //MARK: My Methods
-    func setUpCell(orderField: OrderDineInField) {
+    func setUpCell(orderField: OrderFieldInput) {
         self.textField.text = orderField.text
+        self.textField.placeholder = orderField.placeholder
+        self.textField.keyboardType = orderField.keyboardType
         
         self.showSeparator(show: false)
+        
+        self.orderField = orderField
     }
     
     func showSeparator(show: Bool) {
@@ -49,4 +53,22 @@ class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
     }
     
     
+}
+
+//MARK: UITextFieldDelegate
+extension OrderDineInFieldTableViewCell: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacterSet = self.orderField.allowedCharacterSet
+        let replacementStringIsLegal = allowedCharacterSet == nil ? false : string.rangeOfCharacter(from: allowedCharacterSet!) == nil
+        
+        if replacementStringIsLegal && string.count > 0 {
+            return false
+        } else {
+            let maxLength = self.orderField.maxCharacters
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =
+                currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+    }
 }

@@ -89,6 +89,11 @@ let apiPathDeleteCard = "delete-card"
 
 let apiPathAddresses = "address"
 
+let apiPathOrderOffers = "offers/detail"
+let apiPathOrderVouchers = "voucher/detail"
+
+let apiPathPayment = "payment"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

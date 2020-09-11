@@ -56,9 +56,9 @@ class OrderOffersSection: OrderViewModel {
         return UITableViewAutomaticDimension
     }
     
-    var items: [OrderOfferInfo]
+    var items: [OrderDiscount]
 
-    init(type: OrderSectionType, items: [OrderOfferInfo]) {
+    init(type: OrderSectionType, items: [OrderDiscount]) {
         self.type = type
         self.items = items
     }

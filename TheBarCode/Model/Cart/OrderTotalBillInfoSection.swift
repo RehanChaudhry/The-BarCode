@@ -9,11 +9,14 @@
 import Foundation
 
 //MARK: totalbill Section
-class OrderTotalBillInfo: NSObject {
+class OrderBillInfo: NSObject {
     
     var title: String = ""
 
     var price: Double = 0.0
+    
+    var shouldRoundCorners: Bool = false
+    var showWithBlackAppearance: Bool = false
     
     init(title: String, price: Double) {
         self.title = title
@@ -38,9 +41,9 @@ class OrderTotalBillInfoSection: OrderViewModel {
         return UITableViewAutomaticDimension
     }
     
-    var items: [OrderTotalBillInfo]
+    var items: [OrderBillInfo]
     
-    init(items: [OrderTotalBillInfo]) {
+    init(items: [OrderBillInfo]) {
         self.items = items
     }
 }

@@ -30,7 +30,7 @@ class StepperView: UIView {
     @IBInspectable var stepCount: Int = 1
     
     @IBInspectable var minValue: Int = 1
-    @IBInspectable var maxValue: Int = 10
+    @IBInspectable var maxValue: Int = 30
     
     @IBInspectable var buttonBackgroundColor: UIColor = UIColor.appGrayColor().withAlphaComponent(0.5) {
         didSet {

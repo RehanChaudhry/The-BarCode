@@ -11,6 +11,7 @@ import StatefulTableView
 import Alamofire
 import ObjectMapper
 import CoreStore
+import KVNProgress
 
 protocol MyCartViewControllerDelegate: class {
     func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int)
@@ -48,6 +49,7 @@ class MyCartViewController: UIViewController {
     weak var delegate: MyCartViewControllerDelegate?
     
     var inProgressRequestCount: Int = 0
+    var isComingFromBarDetails: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,12 +65,14 @@ class MyCartViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlacedNotification(notification:)), name: notificationNameOrderPlaced, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
     
     //MARK: My Methods
@@ -151,13 +155,23 @@ class MyCartViewController: UIViewController {
     @IBAction func checkOutButtonTapped(sender: UIButton) {
         
         if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
-            let navigation = self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeNavigation") as! UINavigationController
-            navigation.modalPresentationStyle = .fullScreen
             
-            let controller = navigation.viewControllers.first! as! OrderTypeViewController
-            controller.order = order
-            
-            self.present(navigation, animated: true, completion: nil)
+            if self.isComingFromBarDetails {
+                
+                let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
+                orderTypeController.showCloseBarButton = false
+                orderTypeController.order = order
+                self.navigationController?.pushViewController(orderTypeController, animated: true)
+                
+            } else {
+                let navigation = self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeNavigation") as! UINavigationController
+                navigation.modalPresentationStyle = .fullScreen
+                
+                let controller = navigation.viewControllers.first! as! OrderTypeViewController
+                controller.order = order
+                
+                self.navigationController?.present(navigation, animated: true, completion: nil)
+            }
         }
         
     }
@@ -358,12 +372,16 @@ extension MyCartViewController {
             guard error == nil else {
                 resetStepperValue()
                 self.statefulTableView.innerTable.reloadData()
+                
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
                 resetStepperValue()
                 self.statefulTableView.innerTable.reloadData()
+                
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             
@@ -524,5 +542,9 @@ extension MyCartViewController {
         if (notification.object as? OrderItemCartUpdatedObject)?.controller != self {
             self.reset()
         }
+    }
+    
+    @objc func orderDidPlacedNotification(notification: Notification) {
+        self.reset()
     }
 }

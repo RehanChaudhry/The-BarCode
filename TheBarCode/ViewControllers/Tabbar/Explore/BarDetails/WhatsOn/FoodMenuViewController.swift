@@ -14,6 +14,7 @@ import Alamofire
 import ObjectMapper
 import PureLayout
 import FirebaseAnalytics
+import KVNProgress
 
 protocol FoodMenuViewControllerDelegate: class {
     func foodMenuViewController(controller: FoodMenuViewController, didSelect food: Food)
@@ -253,10 +254,12 @@ extension FoodMenuViewController {
             }
             
             guard error == nil else {
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             

@@ -8,19 +8,29 @@
 
 import Foundation
 
-//MARK: Payment
+enum PaymentStatus: String {
+    case paid = "paid", pay = "pay"
+}
+
 class OrderPaymentInfo: NSObject {
     
     var title: String = ""
 
     var percentage: Double = 0.0
-    var status: String = ""
+    var statusRaw: String = ""
     var price: Double = 0.0
 
-    init(title: String, percentage: Double, status: String, price: Double) {
+    var status: PaymentStatus {
+        get {
+            return PaymentStatus(rawValue: self.statusRaw) ?? .pay
+        }
+    }
+    
+    init(title: String, percentage: Double, statusRaw: String, price: Double) {
         self.title = title
         self.percentage = percentage
-        self.status = status
+        self.statusRaw = statusRaw
+        
         self.price = price
     }
 }

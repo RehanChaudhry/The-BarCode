@@ -22,7 +22,7 @@ class HeadingSection: OrderViewModel {
     
     var shouldShowSeparator: Bool {
            return false
-       }
+    }
     
     var type: OrderSectionType {
         return .heading

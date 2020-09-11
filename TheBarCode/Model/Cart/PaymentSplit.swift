@@ -16,6 +16,8 @@ class PaymentSplit: Mappable {
     
     var amount: Double = 0.0
     
+    var discount: Double = 0.0
+    
     required init?(map: Map) {
         
     }
@@ -25,6 +27,8 @@ class PaymentSplit: Mappable {
         self.name <- map["name"]
         
         self.amount <- map["amount"]
+        
+        self.discount <- map["discount"]
     }
     
 }

@@ -89,6 +89,9 @@
 		0C302E312177215F00FA993F /* CodeVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C302E302177215F00FA993F /* CodeVerificationViewController.swift */; };
 		0C35F4D92236256100EC111C /* LoginViaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35F4D82236256100EC111C /* LoginViaViewController.swift */; };
 		0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */; };
+		0C368A6925089AEF00A2E0D3 /* OrderFieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C368A6725089AEE00A2E0D3 /* OrderFieldSection.swift */; };
+		0C368A6A25089AEF00A2E0D3 /* OrderDineInSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C368A6825089AEE00A2E0D3 /* OrderDineInSection.swift */; };
+		0C368A6C25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C368A6B25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift */; };
 		0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F29A231D351800596A2B /* MapBasicBar.swift */; };
 		0C39F2E7231E72D500596A2B /* GMUClusterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F29E231E72D400596A2B /* GMUClusterManager.m */; };
 		0C39F2E8231E72D500596A2B /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C39F2A2231E72D400596A2B /* GMUGridBasedClusterAlgorithm.m */; };
@@ -155,6 +158,8 @@
 		0C8082E622B773C700793F4E /* InstagramLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */; };
 		0C80E0A1239135B200491DEB /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C80E0A0239135B200491DEB /* IAPHandler.swift */; };
 		0C82137B2317B965006F898E /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C82137A2317B965006F898E /* Preference.swift */; };
+		0C84E88125075DBF00F35ECA /* UIImageViewAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C84E88025075DBF00F35ECA /* UIImageViewAdditions.swift */; };
+		0C84E8832507A7AC00F35ECA /* SplitBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C84E8822507A7AC00F35ECA /* SplitBillViewController.swift */; };
 		0C854B9522804B7F00E2CECD /* EstablishmentTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */; };
 		0C86D02322DEF4DD0034DA5C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C86D02222DEF4DD0034DA5C /* Event.swift */; };
 		0C86D02522DEF4E90034DA5C /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C86D02422DEF4E90034DA5C /* Drink.swift */; };
@@ -289,6 +294,7 @@
 		0CF3B1CA2372B47600B93786 /* FoodMenuSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF3B1C92372B47600B93786 /* FoodMenuSegment.swift */; };
 		0CF3B1CC2372B48900B93786 /* DrinkMenuSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF3B1CB2372B48900B93786 /* DrinkMenuSegment.swift */; };
 		0CF41626229E7D51000EAA59 /* ExploreSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */; };
+		0CF426FA2509E9CB0054A604 /* OrderSplitAmountInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF426F92509E9CB0054A604 /* OrderSplitAmountInfoSection.swift */; };
 		0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */; };
 		0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */; };
 		0CFECFD322EAC3C60033BE20 /* FoodBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFECFD122EAC3C60033BE20 /* FoodBarCell.swift */; };
@@ -325,12 +331,10 @@
 		B332486E24DD1FC6007D3F39 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332486D24DD1FC6007D3F39 /* Address.swift */; };
 		B332487024DD392F007D3F39 /* AddAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332486F24DD392F007D3F39 /* AddAddressViewController.swift */; };
 		B333852624E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */; };
-		B3373E6624DB0EA9007E53E6 /* OrderDineInSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6524DB0EA8007E53E6 /* OrderDineInSection.swift */; };
 		B3373E6824DB0ED1007E53E6 /* OrderCounterCollectionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6724DB0ED1007E53E6 /* OrderCounterCollectionSection.swift */; };
 		B3373E6A24DB0EE0007E53E6 /* OrderTakeAwaySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6924DB0EE0007E53E6 /* OrderTakeAwaySection.swift */; };
 		B3373E6C24DB0EFA007E53E6 /* OrderDeliverySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6B24DB0EFA007E53E6 /* OrderDeliverySection.swift */; };
 		B3373E6E24DB10E2007E53E6 /* OrderRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6D24DB10E2007E53E6 /* OrderRadioButton.swift */; };
-		B3373E7024DB19A5007E53E6 /* OrderDineInFieldSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E6F24DB19A5007E53E6 /* OrderDineInFieldSection.swift */; };
 		B3373E7324DB1C15007E53E6 /* OrderDineInFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3373E7124DB1C15007E53E6 /* OrderDineInFieldTableViewCell.swift */; };
 		B3373E7424DB1C15007E53E6 /* OrderDineInFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3373E7224DB1C15007E53E6 /* OrderDineInFieldTableViewCell.xib */; };
 		B339E03024DC259D005990AB /* OrderDeliveryAddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339E02E24DC259D005990AB /* OrderDeliveryAddressTableViewCell.swift */; };
@@ -410,7 +414,6 @@
 		FAFEC59E24C1834F001E63EA /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */; };
 		FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */; };
 		FAFEC5A324C18748001E63EA /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC5A224C18748001E63EA /* Order.swift */; };
-		FAFEC5A524C189C2001E63EA /* OrderCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFEC5A424C189C2001E63EA /* OrderCategory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -541,6 +544,9 @@
 		0C302E302177215F00FA993F /* CodeVerificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeVerificationViewController.swift; sourceTree = "<group>"; };
 		0C35F4D82236256100EC111C /* LoginViaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViaViewController.swift; sourceTree = "<group>"; };
 		0C35F4DA2236465A00EC111C /* MobileLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLoginViewController.swift; sourceTree = "<group>"; };
+		0C368A6725089AEE00A2E0D3 /* OrderFieldSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderFieldSection.swift; sourceTree = "<group>"; };
+		0C368A6825089AEE00A2E0D3 /* OrderDineInSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDineInSection.swift; sourceTree = "<group>"; };
+		0C368A6B25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSplitBillTypeSection.swift; sourceTree = "<group>"; };
 		0C39F29A231D351800596A2B /* MapBasicBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBasicBar.swift; sourceTree = "<group>"; };
 		0C39F29E231E72D400596A2B /* GMUClusterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMUClusterManager.m; sourceTree = "<group>"; };
 		0C39F29F231E72D400596A2B /* GMUStaticCluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUStaticCluster.h; sourceTree = "<group>"; };
@@ -649,6 +655,8 @@
 		0C8082E522B773C700793F4E /* InstagramLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginViewController.swift; sourceTree = "<group>"; };
 		0C80E0A0239135B200491DEB /* IAPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 		0C82137A2317B965006F898E /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		0C84E88025075DBF00F35ECA /* UIImageViewAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewAdditions.swift; sourceTree = "<group>"; };
+		0C84E8822507A7AC00F35ECA /* SplitBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitBillViewController.swift; sourceTree = "<group>"; };
 		0C854B9422804B7F00E2CECD /* EstablishmentTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstablishmentTiming.swift; sourceTree = "<group>"; };
 		0C86D02222DEF4DD0034DA5C /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		0C86D02422DEF4E90034DA5C /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
@@ -784,6 +792,7 @@
 		0CF3B1C92372B47600B93786 /* FoodMenuSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuSegment.swift; sourceTree = "<group>"; };
 		0CF3B1CB2372B48900B93786 /* DrinkMenuSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkMenuSegment.swift; sourceTree = "<group>"; };
 		0CF41625229E7D51000EAA59 /* ExploreSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreSchedule.swift; sourceTree = "<group>"; };
+		0CF426F92509E9CB0054A604 /* OrderSplitAmountInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSplitAmountInfoSection.swift; sourceTree = "<group>"; };
 		0CFC12C52161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CFC12C62161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreDetailHeaderCollectionViewCell.xib; sourceTree = "<group>"; };
 		0CFECFD122EAC3C60033BE20 /* FoodBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBarCell.swift; sourceTree = "<group>"; };
@@ -827,12 +836,10 @@
 		B332486D24DD1FC6007D3F39 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		B332486F24DD392F007D3F39 /* AddAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressViewController.swift; sourceTree = "<group>"; };
 		B333852524E3D1BC00DFEC87 /* SplitPaymentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitPaymentInfoViewController.swift; sourceTree = "<group>"; };
-		B3373E6524DB0EA8007E53E6 /* OrderDineInSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDineInSection.swift; sourceTree = "<group>"; };
 		B3373E6724DB0ED1007E53E6 /* OrderCounterCollectionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCounterCollectionSection.swift; sourceTree = "<group>"; };
 		B3373E6924DB0EE0007E53E6 /* OrderTakeAwaySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTakeAwaySection.swift; sourceTree = "<group>"; };
 		B3373E6B24DB0EFA007E53E6 /* OrderDeliverySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliverySection.swift; sourceTree = "<group>"; };
 		B3373E6D24DB10E2007E53E6 /* OrderRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRadioButton.swift; sourceTree = "<group>"; };
-		B3373E6F24DB19A5007E53E6 /* OrderDineInFieldSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDineInFieldSection.swift; sourceTree = "<group>"; };
 		B3373E7124DB1C15007E53E6 /* OrderDineInFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDineInFieldTableViewCell.swift; sourceTree = "<group>"; };
 		B3373E7224DB1C15007E53E6 /* OrderDineInFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDineInFieldTableViewCell.xib; sourceTree = "<group>"; };
 		B339E02E24DC259D005990AB /* OrderDeliveryAddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryAddressTableViewCell.swift; sourceTree = "<group>"; };
@@ -916,7 +923,6 @@
 		FAFEC59D24C1834F001E63EA /* SectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		FAFEC59F24C183A2001E63EA /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FAFEC5A224C18748001E63EA /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
-		FAFEC5A424C189C2001E63EA /* OrderCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1235,6 +1241,7 @@
 		0C23A88D2146730800DFB281 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0C84E87F25075DAC00F35ECA /* UIImageView */,
 				0C884863216736ED00DB222F /* UILabel */,
 				0C8BDCE32150E4AB00D5117B /* String */,
 				0C8BDCC52150C32F00D5117B /* UIScrollView */,
@@ -1527,6 +1534,7 @@
 				0C8E9A9A214A909E00224720 /* RulesViewController.swift */,
 				FAA6A9A52462B4D600AA8CEE /* NotificationsController.swift */,
 				FA42B4B624C87E250000ED15 /* MyReservationsViewController.swift */,
+				0C84E8822507A7AC00F35ECA /* SplitBillViewController.swift */,
 				B300A6BD24E57F1800037C7C /* SplitBillScannerViewController.swift */,
 			);
 			path = More;
@@ -1631,6 +1639,14 @@
 				0C80E0A0239135B200491DEB /* IAPHandler.swift */,
 			);
 			path = IAPHelper;
+			sourceTree = "<group>";
+		};
+		0C84E87F25075DAC00F35ECA /* UIImageView */ = {
+			isa = PBXGroup;
+			children = (
+				0C84E88025075DBF00F35ECA /* UIImageViewAdditions.swift */,
+			);
+			path = UIImageView;
 			sourceTree = "<group>";
 		};
 		0C86D02122DEF4CF0034DA5C /* WhatsOn */ = {
@@ -2315,26 +2331,27 @@
 				FA90769C24C1E0340035AAA3 /* OrderItem.swift */,
 				0CB683D524FE129C0019C6EE /* OrderDiscount.swift */,
 				0CB683D724FE22E10019C6EE /* PaymentSplit.swift */,
-				FAFEC5A424C189C2001E63EA /* OrderCategory.swift */,
 				FA6009E024C593D400F51895 /* OrderViewModel.swift */,
 				FA42BF7A24C96F4A003C3970 /* OrderStatusSection.swift */,
 				FA42BF7C24C96FD3003C3970 /* OrderPaymentInfoSection.swift */,
+				0CF426F92509E9CB0054A604 /* OrderSplitAmountInfoSection.swift */,
 				FA42BF7E24C97027003C3970 /* HeadingSection.swift */,
 				FA42BF8024C97058003C3970 /* OrderTotalBillInfoSection.swift */,
 				FA42BF8224C97178003C3970 /* OrderDeliveryInfoSection.swift */,
 				FA42BF8424C971E6003C3970 /* OrderProductsInfoSection.swift */,
 				FA42BF8624C97216003C3970 /* OrderDiscountSection.swift */,
 				B33A30A624D84AB40043EE4D /* OrderOffersSection.swift */,
+				0C368A6825089AEE00A2E0D3 /* OrderDineInSection.swift */,
+				0C368A6725089AEE00A2E0D3 /* OrderFieldSection.swift */,
 				B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */,
 				B3C1292B24D9A33100789FF2 /* OrderOfferDiscountSection.swift */,
-				B3373E6524DB0EA8007E53E6 /* OrderDineInSection.swift */,
-				B3373E6F24DB19A5007E53E6 /* OrderDineInFieldSection.swift */,
 				B3373E6724DB0ED1007E53E6 /* OrderCounterCollectionSection.swift */,
 				B3373E6924DB0EE0007E53E6 /* OrderTakeAwaySection.swift */,
 				B3373E6B24DB0EFA007E53E6 /* OrderDeliverySection.swift */,
 				B3373E6D24DB10E2007E53E6 /* OrderRadioButton.swift */,
 				B339E03224DC31A0005990AB /* OrderDeliveryAddressSection.swift */,
 				0C70A63C24FF6A8D006FB611 /* CreditCard.swift */,
+				0C368A6B25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2865,7 +2882,6 @@
 				B300A6BE24E57F1800037C7C /* SplitBillScannerViewController.swift in Sources */,
 				0C80E0A1239135B200491DEB /* IAPHandler.swift in Sources */,
 				0C35F4DB2236465A00EC111C /* MobileLoginViewController.swift in Sources */,
-				B3373E7024DB19A5007E53E6 /* OrderDineInFieldSection.swift in Sources */,
 				0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */,
 				B300A6BC24E55D1400037C7C /* Country.swift in Sources */,
 				0C23A87B214656AD00DFB281 /* LoginOptionsViewController.swift in Sources */,
@@ -2924,9 +2940,12 @@
 				FAA6A9A62462B4D600AA8CEE /* NotificationsController.swift in Sources */,
 				0C39F2EA231E72D500596A2B /* GMUSimpleClusterAlgorithm.m in Sources */,
 				B35F6F6724DD1BB80045029B /* AddressTableViewCell.swift in Sources */,
+				0C368A6C25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift in Sources */,
 				FA90769D24C1E0350035AAA3 /* OrderItem.swift in Sources */,
+				0C368A6925089AEF00A2E0D3 /* OrderFieldSection.swift in Sources */,
 				FA6009DF24C5860E00F51895 /* OrderDetailsViewController.swift in Sources */,
 				0CC81FB121708BB500FDB92D /* RedeemDealViewController.swift in Sources */,
+				0C368A6A25089AEF00A2E0D3 /* OrderDineInSection.swift in Sources */,
 				8344E29C216760DA00CB8BD2 /* FiveADayDeal.swift in Sources */,
 				0C9ECA8E2295284800DEC34F /* SocialLinksCell.swift in Sources */,
 				0C39F2F1231E72D500596A2B /* GMUHeatmapTileLayer.m in Sources */,
@@ -2951,6 +2970,7 @@
 				0C94FCD22366F6E100B7B18D /* SharedEventsViewController.swift in Sources */,
 				B33CF7AB24DE8AA4001566F0 /* SavedCardsViewController.swift in Sources */,
 				0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */,
+				0CF426FA2509E9CB0054A604 /* OrderSplitAmountInfoSection.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
 				0C478A8F215C9A75002C51FA /* BarDetailViewController.swift in Sources */,
 				B332487024DD392F007D3F39 /* AddAddressViewController.swift in Sources */,
@@ -2963,9 +2983,9 @@
 				0C05DDC923210EC10073A2BA /* AllSearchHeaderCell.swift in Sources */,
 				0C0CA22922E1D07600C90409 /* EventSearchViewController.swift in Sources */,
 				0C8BDCDD2150D77600D5117B /* Bar.swift in Sources */,
-				FAFEC5A524C189C2001E63EA /* OrderCategory.swift in Sources */,
 				0C0CA21B22E1905200C90409 /* AllSearchViewController.swift in Sources */,
 				0C05DDD62321335F0073A2BA /* AllSearchDrinkModel.swift in Sources */,
+				0C84E88125075DBF00F35ECA /* UIImageViewAdditions.swift in Sources */,
 				0C94FCCA2366D2A900B7B18D /* SharedViewController.swift in Sources */,
 				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
 				FA0440EA24C1698300F09F61 /* OrderTableViewCell.swift in Sources */,
@@ -2993,7 +3013,6 @@
 				0C8E9AA9214BBAD800224720 /* FAQSection.swift in Sources */,
 				0C8082E622B773C700793F4E /* InstagramLoginViewController.swift in Sources */,
 				0C39F2E9231E72D500596A2B /* GMUWrappingDictionaryKey.m in Sources */,
-				B3373E6624DB0EA9007E53E6 /* OrderDineInSection.swift in Sources */,
 				0CEFD5E02361C0B9000E2FBC /* MapPinCell.swift in Sources */,
 				0C955DF02149317100F9385B /* StatefulCollectionView+State.swift in Sources */,
 				0C674F7722201C43002394F5 /* RibbonView.swift in Sources */,
@@ -3011,6 +3030,7 @@
 				0C8BDCCB2150C4E500D5117B /* ExploreBaseTableViewCell.swift in Sources */,
 				0C8BDCDF2150D78F00D5117B /* Deal.swift in Sources */,
 				0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */,
+				0C84E8832507A7AC00F35ECA /* SplitBillViewController.swift in Sources */,
 				0C05DDCC232112460073A2BA /* AllSearchSectionViewModel.swift in Sources */,
 				0CC81FA4216DD04700FDB92D /* ServerError.swift in Sources */,
 				0CB683D824FE22E10019C6EE /* PaymentSplit.swift in Sources */,

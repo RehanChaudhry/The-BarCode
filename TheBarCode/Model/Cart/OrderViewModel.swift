@@ -15,6 +15,7 @@ enum OrderSectionType: String {
     discountDetails = "discountDetails",
     deliveryChargesDetails = "deliveryChargesDetails",
     totalBill = "totalBill",
+    splitAmount = "splitAmount",
     heading = "heading",
     payment = "payment",
     reservationDetails = "reservationDetails",
@@ -28,7 +29,12 @@ enum OrderSectionType: String {
     counterCollection = "counterCollection",
     takeAway = "takeAway",
     delivery = "delivery",
-    deliveryAddress = "deliveryAddress"
+    deliveryAddress = "deliveryAddress",
+    equalSplit = "equalSplit",
+    fixedAmountSplit = "fixedAmountSplit",
+    percentSplit = "percentSplit",
+    fixedAmountSplitField = "fixedAmountSplitField",
+    percentSplitField = "percentSplitField"
 }
 
 protocol OrderViewModel: class {

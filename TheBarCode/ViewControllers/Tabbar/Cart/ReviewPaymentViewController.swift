@@ -8,6 +8,8 @@
 
 import UIKit
 import StatefulTableView
+import ObjectMapper
+import Alamofire
 
 class ReviewPaymentViewController: UIViewController {
 
@@ -15,7 +17,10 @@ class ReviewPaymentViewController: UIViewController {
    
     @IBOutlet var payButton: UIButton!
     
-    var order: Order!
+    var orderId: String!
+    
+    var order: Order?
+    
     var viewModels: [OrderViewModel] = []
     
     var totalBillPayable: Double = 0.0
@@ -24,24 +29,15 @@ class ReviewPaymentViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "Split The Bill"
-        
-        let paymentHeading = Heading(title: "BILL SPLIT")
-        let paymentHeadingSection = HeadingSection(items: [paymentHeading])
-        self.viewModels.append(paymentHeadingSection)
-        
-        let orderPaymentInfo1 = OrderPaymentInfo(title: "BEN MILNES", percentage: 50, status: "Paid", price: 11.5)
-        let orderPaymentInfo2 = OrderPaymentInfo(title: "YOU", percentage: 50, status: "Paid", price: 11.5)
-        let orderPaymentInfoSection = OrderPaymentInfoSection(items: [orderPaymentInfo1, orderPaymentInfo2])
-        self.viewModels.append(orderPaymentInfoSection)
-        
-        self.payButton.setTitle(String(format: "Confirm Pay - £ %.2f", self.totalBillPayable), for: .normal)
+        self.title = "Review"
+
+        self.payButton.setTitle("Confirm Pay", for: .normal)
         
         self.setUpStatefulTableView()
+        self.statefulTableView.triggerInitialLoad()
     }
     
-
-     //MARK: My Methods
+    //MARK: My Methods
     func setUpStatefulTableView() {
          
         self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
@@ -50,6 +46,7 @@ class ReviewPaymentViewController: UIViewController {
 
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
+        self.statefulTableView.statefulDelegate = self
         
         self.statefulTableView.backgroundColor = .clear
         for aView in self.statefulTableView.subviews {
@@ -66,19 +63,95 @@ class ReviewPaymentViewController: UIViewController {
         tableHeaderView.backgroundColor = UIColor.clear
         self.statefulTableView.innerTable.tableHeaderView = tableHeaderView
 
-     }
+    }
     
-    func moveToPaymentMethods() {
-        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
-        controller.totalBillPayable = self.totalBillPayable
-        controller.order = self.order
-        controller.viewModels = self.viewModels
-        self.navigationController?.pushViewController(controller, animated: true)
+    func setupViewModels() {
+        
+        defer {
+            self.statefulTableView.innerTable.reloadData()
+        }
+        
+        self.viewModels.removeAll()
+        guard let order = self.order else {
+            return
+        }
+        
+        let barInfo = BarInfo(barName: order.barName)
+        let barInfoSection = BarInfoSection(items: [barInfo])
+        self.viewModels.append(barInfoSection)
+
+        let orderProductsSection = OrderProductsInfoSection(items: order.orderItems)
+        self.viewModels.append(orderProductsSection)
+        
+        var total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
+        }
+        
+        let orderTotalBillInfo = OrderBillInfo(title: order.paymentSplit.count == 0 ? "Total" : "Grand Total", price: total)
+        let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
+        self.viewModels.append(orderTotalBillInfoSection)
+        
+        var paidAmount: Double = 0.0
+        if order.paymentSplit.count > 0 {
+            
+            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: 0.0)
+            let splitTotalInfo = OrderBillInfo(title: "Total", price: 0.0)
+            let orderSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo, splitTotalInfo])
+            self.viewModels.append(orderSplitBillInfoSection)
+            
+            let paymentHeading = Heading(title: "PAYMENT SPLIT")
+            let paymentHeadingSection = HeadingSection(items: [paymentHeading])
+            self.viewModels.append(paymentHeadingSection)
+            
+            let currentUser = Utility.shared.getCurrentUser()!
+            
+            var paymentInfo: [OrderPaymentInfo] = []
+            for paymentSplit in order.paymentSplit {
+                
+                let amount = paymentSplit.amount + paymentSplit.discount
+                let percent = total > 0.0 ? amount / total * 100.0 : 0.0
+                
+                let info = OrderPaymentInfo(title: currentUser.userId.value == paymentSplit.id ? "YOU" : paymentSplit.name.uppercased(),
+                                            percentage: percent,
+                                            statusRaw: PaymentStatus.paid.rawValue,
+                                            price: amount)
+                paymentInfo.append(info)
+                
+                paidAmount += amount
+            }
+            
+            let leftAmount = total - paidAmount
+            let percent = total > 0.0 ? leftAmount / total * 100.0 : 0.0
+            let leftPaymentInfo = OrderPaymentInfo(title: "YOU",
+                                                   percentage: percent,
+                                                   statusRaw: PaymentStatus.pay.rawValue,
+                                                   price: leftAmount)
+            paymentInfo.insert(leftPaymentInfo, at: 0)
+            
+            let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
+            self.viewModels.append(orderPaymentInfoSection)
+            
+            splitAmountInfo.price = leftAmount
+            splitTotalInfo.price = leftAmount
+            
+            self.order?.splitPaymentInfo = (value: leftAmount, type: .none)
+        }
+        
+        total -= paidAmount
+        self.totalBillPayable = max(0.0, total)
+        self.payButton.setTitle(String(format: "Confirm Pay - £ %.2f", self.totalBillPayable), for: .normal)
     }
     
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
-        self.moveToPaymentMethods()
+        
+        guard let order = self.order else {
+            return
+        }
+        
+        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "CheckOutViewController") as! CheckOutViewController)
+        controller.order = order
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -142,8 +215,27 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            
+            let cornerRadius: CGFloat = self.order!.paymentSplit.count == 0 ? 8.0 : 0.0
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: self.order!.paymentSplit.count > 0, radius: cornerRadius)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            
+            return cell
+            
+        } else if let section = viewModel as? OrderSplitAmountInfoSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+            
+            let cornerRadius: CGFloat = isLastCell ? 8.0 : 0.0
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: !isLastCell, radius: cornerRadius)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
+            
+            if isLastCell {
+                cell.setupMainViewAppearanceAsBlack()
+            } else {
+                cell.setupMainViewAppearanceAsStandard()
+            }
+            
             return cell
             
         } else if let section = viewModel as? HeadingSection {
@@ -163,9 +255,127 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
         }
     }
          
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
     }
 }
+
+//MARK: Webservices Methods
+extension ReviewPaymentViewController {
+    func getOrderDetails(isRefreshing: Bool, completion: @escaping (_ error: NSError?) -> Void) {
+        
+        let params:[String : Any] =  [:]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrders + "/" + self.orderId, method: .get) { (response, serverError, error) in
+    
+            defer {
+                self.setupViewModels()
+            }
+            
+            guard error == nil else {
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                completion(serverError!.nsError())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseObject = (responseDict?["data"] as? [String : Any]) {
+                
+                let context = OrderMappingContext(type: .order)
+                let order = Mapper<Order>(context: context).map(JSON: responseObject)
+                
+                self.order = order
+                
+                self.statefulTableView.canPullToRefresh = true
+                
+                completion(nil)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                completion(genericError)
+            }
+        }
+    }
+}
+
+//MARK: StatefulTableDelegate
+extension ReviewPaymentViewController: StatefulTableDelegate {
+    
+    func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.getOrderDetails(isRefreshing: false) {  [unowned self] (error) in
+            handler(self.order == nil, error)
+        }
+        
+    }
+    
+    func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
+        self.getOrderDetails(isRefreshing: false) { (error) in
+            handler(false, error, error != nil)
+        }
+    }
+    
+    func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler) {
+        self.getOrderDetails(isRefreshing: true) { [unowned self] (error) in
+            handler(self.order == nil, error)
+        }
+    }
+    
+    func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
+        let initialErrorView = LoadingAndErrorView.loadFromNib()
+        initialErrorView.backgroundColor = self.view.backgroundColor
+        initialErrorView.showLoading()
+        return initialErrorView
+    }
+    
+    func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
+        if forInitialLoadError == nil {
+            let title = "Order Not Found"
+            let subTitle = "Tap to refresh"
+            
+            let emptyDataView = EmptyDataView.loadFromNib()
+            emptyDataView.backgroundColor = self.view.backgroundColor
+            emptyDataView.setTitle(title: title, desc: subTitle, iconImageName: "icon_loading", buttonTitle: "")
+            
+            emptyDataView.actionHandler = { (sender: UIButton) in
+                tvc.triggerInitialLoad()
+            }
+            
+            return emptyDataView
+            
+        } else {
+            let initialErrorView = LoadingAndErrorView.loadFromNib()
+            initialErrorView.showErrorView(canRetry: true)
+            initialErrorView.backgroundColor = self.view.backgroundColor
+            initialErrorView.showErrorViewWithRetry(errorMessage: forInitialLoadError!.localizedDescription, reloadMessage: "Tap to refresh")
+            
+            initialErrorView.retryHandler = {(sender: UIButton) in
+                tvc.triggerInitialLoad()
+            }
+            
+            return initialErrorView
+        }
+    }
+    
+    func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
+        let loadingView = LoadingAndErrorView.loadFromNib()
+        loadingView.showErrorView(canRetry: true)
+        loadingView.backgroundColor = self.view.backgroundColor
+        
+        if forLoadMoreError == nil {
+            loadingView.showLoading()
+        } else {
+            loadingView.showErrorViewWithRetry(errorMessage: forLoadMoreError!.localizedDescription, reloadMessage: "Tap to refresh")
+        }
+        
+        loadingView.retryHandler = {(sender: UIButton) in
+            tvc.triggerLoadMore()
+        }
+        
+        return loadingView
+    }
+}
+

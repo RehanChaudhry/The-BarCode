@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import ObjectMapper
+import Alamofire
 
 class SplitBillScannerViewController: UIViewController {
 
@@ -17,6 +19,9 @@ class SplitBillScannerViewController: UIViewController {
     
     @IBOutlet var tableHeaderView: UIView!
     @IBOutlet var tableFooterView: UIView!
+    
+    @IBOutlet var bottomButtonContainer: UIView!
+    @IBOutlet var bottomSafeAreaView: UIView!
     
     @IBOutlet var cameraContainer: UIView!
     
@@ -34,14 +39,12 @@ class SplitBillScannerViewController: UIViewController {
     
     var viewModels: [OrderViewModel] = []
     
-    var order: Order!
+    var order: Order?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-//        self.order = Order.getMyCartDummyOrders().first
         
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         
@@ -70,14 +73,26 @@ class SplitBillScannerViewController: UIViewController {
         self.setUpQRMask()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.bottomButtonContainer.isHidden = true
+        self.bottomSafeAreaView.isHidden = true
+        
+        self.viewModels.removeAll()
+        self.tableView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         self.session?.startRunning()
         self.startAnimatingScanner()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
         self.session?.stopRunning()
         self.stopAnimatingScanner()
     }
@@ -110,28 +125,40 @@ class SplitBillScannerViewController: UIViewController {
         self.scanningImageView.layer.removeAllAnimations()
     }
     
+    func restartScanner() {
+        self.session?.startRunning()
+        self.resetScannerFrame()
+        self.startAnimatingScanner()
+    }
+    
     func setupViewModel() {
         
-        self.activityIndicatorView.stopAnimating()
-        self.viewModels.removeAll()
+        defer {
+            self.tableView.reloadData()
+        }
         
-        let barInfo = BarInfo(barName: self.order.barName)
+        self.viewModels.removeAll()
+        guard let order = self.order else {
+            return
+        }
+
+        let barInfo = BarInfo(barName: order.barName)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
-        let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
+        let orderProductsSection = OrderProductsInfoSection(items: order.orderItems)
         self.viewModels.append(orderProductsSection)
-
-        let orderDiscountInfo1 = OrderDiscountInfo(title: "Standard offer redeem", price: -2.2)
-        let orderDiscountInfo2 = OrderDiscountInfo(title: "Voucher - Buy one get one free", price: 0.0 )
-        let orderDiscountSection = OrderDiscountSection(items: [orderDiscountInfo1, orderDiscountInfo2])
-        self.viewModels.append(orderDiscountSection)
         
-        let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: 23.0 )
+        let total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
+        }
+        
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
-        self.tableView.reloadData()
+        self.bottomButtonContainer.isHidden = false
+        self.bottomSafeAreaView.isHidden = false
     }
     
     //MARK: My IBActions
@@ -139,6 +166,15 @@ class SplitBillScannerViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func splitButtonTapped(sender: UIButton) {
+        guard let order = self.order else {
+            return
+        }
+        
+        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "SplitBillViewController") as! SplitBillViewController)
+        controller.order = order
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 // MARK: AVCaptureMetadataOutputObjectsDelegate
@@ -159,7 +195,12 @@ extension SplitBillScannerViewController: AVCaptureMetadataOutputObjectsDelegate
             
             DispatchQueue.main.async {
                 self.stopAnimatingScanner()
-                self.setupViewModel()
+                
+                if let orderId = Int(stringValue) {
+                    self.getOrderDetails(orderId: "\(orderId)")
+                } else {
+                    self.showAlertController(title: "", msg: "Invalid order number")
+                }
             }
         }
     }
@@ -253,6 +294,14 @@ extension SplitBillScannerViewController {
         return true
     }
     
+    func showErrorAlert(msg: String) {
+        let alertController = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel) { (action) in
+            self.restartScanner()
+        }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -325,5 +374,46 @@ extension SplitBillScannerViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
+    }
+}
+
+//MARK: Webservices Methods
+extension SplitBillScannerViewController {
+    func getOrderDetails(orderId: String) {
+
+        self.activityIndicatorView.startAnimating()
+        
+        let params:[String : Any] =  [:]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrders + "/" + orderId, method: .get) { (response, serverError, error) in
+
+            self.activityIndicatorView.stopAnimating()
+            
+            defer {
+                self.setupViewModel()
+            }
+
+            guard error == nil else {
+                self.showErrorAlert(msg: error!.localizedDescription)
+                return
+            }
+
+            guard serverError == nil else {
+                self.showErrorAlert(msg: serverError!.detail)
+                return
+            }
+
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseObject = (responseDict?["data"] as? [String : Any]) {
+
+                let context = OrderMappingContext(type: .order)
+                let order = Mapper<Order>(context: context).map(JSON: responseObject)
+
+                self.order = order
+
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showErrorAlert(msg: genericError.localizedDescription)
+            }
+        }
     }
 }

@@ -30,6 +30,7 @@ class ThankYouViewController: UIViewController {
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         
         self.setUpStatefulTableView()
+        self.setupViewModel()
     }
     
 
@@ -61,6 +62,117 @@ class ThankYouViewController: UIViewController {
         let orderDetail = (self.storyboard!.instantiateViewController(withIdentifier: "OrderDetailsViewController") as! OrderDetailsViewController)
         orderDetail.order = self.order
         self.navigationController?.pushViewController(orderDetail, animated: true)
+    }
+    
+    func setupViewModel() {
+        
+        self.viewModels.removeAll()
+        
+        var totalProductPrice = self.getProductsTotalPrice()
+        
+        let barInfo = BarInfo(barName: self.order.barName)
+        let barInfoSection = BarInfoSection(items: [barInfo])
+        self.viewModels.append(barInfoSection)
+
+        let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
+        self.viewModels.append(orderProductsSection)
+
+        if self.order.orderType == .delivery && self.order.deliveryCharges > 0.0 {
+            let deliveryCharges = self.order.deliveryCharges
+            
+            let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
+            let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
+            self.viewModels.append(orderDeliveryInfoSection)
+            
+            totalProductPrice += deliveryCharges
+        }
+        
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: totalProductPrice)
+        orderTotalBillInfo.shouldRoundCorners = true
+        orderTotalBillInfo.showWithBlackAppearance = true
+        
+        let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
+        self.viewModels.append(orderTotalBillInfoSection)
+        
+        let currentUser = Utility.shared.getCurrentUser()!
+        
+        let amount = self.order.paymentSplit.first?.amount ?? 0.0
+        let discount = self.order.paymentSplit.first?.discount ?? 0.0
+        
+        var shouldAppendTotal: Bool = false
+        
+        if order.userId != currentUser.userId.value || order.paymentSplit.count > 1 {
+            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: amount + discount)
+            let orderAmountSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo])
+            self.viewModels.append(orderAmountSplitBillInfoSection)
+            
+            shouldAppendTotal = true
+        }
+        
+        var discountItems: [OrderDiscountInfo] = []
+        if let voucher = self.order.voucher {
+            let info = OrderDiscountInfo(title: voucher.text, price: voucher.discount)
+            discountItems.append(info)
+            
+            shouldAppendTotal = true
+        }
+        
+        if let offer = self.order.offer {
+            let info = OrderDiscountInfo(title: offer.text, price: offer.discount)
+            discountItems.append(info)
+            
+            shouldAppendTotal = true
+        }
+
+        let orderDiscountSection = OrderDiscountSection(items: discountItems)
+        self.viewModels.append(orderDiscountSection)
+        
+        if shouldAppendTotal {
+            let splitTotalInfo = OrderBillInfo(title: "Total", price: amount)
+            splitTotalInfo.shouldRoundCorners = true
+            splitTotalInfo.showWithBlackAppearance = true
+            
+            orderTotalBillInfo.shouldRoundCorners = false
+            
+            let orderTotalSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitTotalInfo])
+            self.viewModels.append(orderTotalSplitBillInfoSection)
+        }
+
+        if order.userId != currentUser.userId.value || order.paymentSplit.count > 1 {
+            
+            let paymentHeading = Heading(title: "PAYMENT SPLIT")
+            let paymentHeadingSection = HeadingSection(items: [paymentHeading])
+            self.viewModels.append(paymentHeadingSection)
+
+            var paymentInfo: [OrderPaymentInfo] = []
+            for paymentSplit in order.paymentSplit {
+                
+                let amount = paymentSplit.amount + paymentSplit.discount
+                let percent = totalProductPrice > 0.0 ? amount / totalProductPrice * 100.0 : 0.0
+                
+                let info = OrderPaymentInfo(title: currentUser.userId.value == paymentSplit.id ? "YOU" : paymentSplit.name.uppercased(),
+                                            percentage: percent,
+                                            statusRaw: PaymentStatus.paid.rawValue,
+                                            price: amount)
+                paymentInfo.append(info)
+            }
+            
+            let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
+            self.viewModels.append(orderPaymentInfoSection)
+            
+        }
+        
+        
+        self.statefulTableView.innerTable.reloadData()
+    }
+    
+    func getProductsTotalPrice() -> Double {
+        
+        let total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
+        }
+
+        return total
     }
     
     //MARK: My IBActions
@@ -123,6 +235,23 @@ extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
+        }  else if let section = viewModel as? OrderSplitAmountInfoSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+            
+            let info = section.items[indexPath.row]
+            let cornerRadius: CGFloat = info.shouldRoundCorners ? 8.0 : 0.0
+            cell.setupCell(orderTotalBillInfo: info, showSeparator: !info.shouldRoundCorners, radius: cornerRadius)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
+            
+            if info.showWithBlackAppearance {
+                cell.setupMainViewAppearanceAsBlack()
+            } else {
+                cell.setupMainViewAppearanceAsStandard()
+            }
+            
+            return cell
+            
         } else if let section = viewModel as? OrderDeliveryInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
@@ -133,8 +262,19 @@ extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            
+            let info = section.items[indexPath.row]
+            let cornerRadius: CGFloat = info.shouldRoundCorners ? 8.0 : 0.0
+            
+            cell.setupCell(orderTotalBillInfo: info, showSeparator: !info.shouldRoundCorners, radius: cornerRadius)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            
+            if info.showWithBlackAppearance {
+                cell.setupMainViewAppearanceAsBlack()
+            } else {
+                cell.setupMainViewAppearanceAsStandard()
+            }
+            
             return cell
             
         } else if let section = viewModel as? HeadingSection {

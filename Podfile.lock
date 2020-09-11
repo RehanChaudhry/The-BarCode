@@ -125,6 +125,7 @@ PODS:
   - HTTPStatusCodes (3.3.1)
   - KeychainAccess (3.1.2)
   - KMPlaceholderTextView (1.4.0)
+  - KVNProgress (2.3.5)
   - MGSwipeTableCell (1.6.7)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -168,6 +169,7 @@ DEPENDENCIES:
   - HTTPStatusCodes (~> 3.3.1)
   - KeychainAccess (~> 3.1.2)
   - KMPlaceholderTextView (~> 1.4.0)
+  - KVNProgress (~> 2.3.5)
   - MGSwipeTableCell (~> 1.6.7)
   - ObjectMapper (~> 3.5.1)
   - OneSignal (~> 2.13.0)
@@ -213,6 +215,7 @@ SPEC REPOS:
     - HTTPStatusCodes
     - KeychainAccess
     - KMPlaceholderTextView
+    - KVNProgress
     - MGSwipeTableCell
     - nanopb
     - ObjectMapper
@@ -259,6 +262,7 @@ SPEC CHECKSUMS:
   HTTPStatusCodes: a07dff597042a9f692cf4f979cb0fd91fc938835
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
+  KVNProgress: d7046cce142f1aeb740db39dc3cacfe910fac354
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
@@ -274,6 +278,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: d4fb4ad0b7826864bc78908a32a138b7136459ec
+PODFILE CHECKSUM: e3a6123c7afc7375e26310e57ec212fbceaafe5f
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

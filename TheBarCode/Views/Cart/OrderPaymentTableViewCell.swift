@@ -43,7 +43,16 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         self.mainView.layer.cornerRadius = 8
 
         self.nameLabel.text = orderPaymentInfo.title
-        self.paymentLabel.text = String(format: "%@ (%.2f%%)", orderPaymentInfo.status, orderPaymentInfo.percentage)
+        
+        if orderPaymentInfo.status == .paid {
+            self.paymentLabel.textColor = UIColor.white
+            self.priceLabel.textColor = UIColor.white
+        } else {
+            self.paymentLabel.textColor = UIColor.appBlueColor()
+            self.priceLabel.textColor = UIColor.appBlueColor()
+        }
+        
+        self.paymentLabel.text = String(format: "%@ (%.2f%%)", orderPaymentInfo.status.rawValue.uppercased(), orderPaymentInfo.percentage)
         
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
         self.priceLabel.text =  "£ " + priceString

@@ -45,10 +45,11 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         self.titleLabel.text = "ORDER # \(orderStatusInfo.orderNo) STATUS:"
         self.statusButton.isHidden = false
         
-        self.statusButton.setTitle(orderStatusInfo.status.rawValue.uppercased(), for: .normal)
-        if orderStatusInfo.status ==  .completed {
+        self.statusButton.setTitle(orderStatusInfo.status.uppercased(), for: .normal)
+        if orderStatusInfo.status.lowercased() ==  OrderStatus.completed.rawValue.lowercased() {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
-        } else if orderStatusInfo.status == .received || orderStatusInfo.status == .ongoing {
+        } else if orderStatusInfo.status.lowercased() == OrderStatus.received.rawValue.lowercased() ||
+        orderStatusInfo.status.lowercased() == OrderStatus.ongoing.rawValue.lowercased() {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
         }
         

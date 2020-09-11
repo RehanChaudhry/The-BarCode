@@ -54,7 +54,7 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setupCell(orderOfferInfo: OrderOfferInfo, showSeparator: Bool) {
+    func setupCell(orderOfferInfo: OrderDiscount, showSeparator: Bool) {
         
         self.subTitleLabel.text = ""
         

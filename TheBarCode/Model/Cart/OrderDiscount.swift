@@ -29,6 +29,10 @@ class OrderDiscount: Mappable {
         return OrderDiscountValueType(rawValue: self.valueTypeRaw) ?? .none
     }
     
+    var isSelected: Bool = false
+    
+    var discount: Double = 0.0
+    
     required init?(map: Map) {
         
     }
@@ -42,5 +46,7 @@ class OrderDiscount: Mappable {
         
         self.valueTypeRaw <- map["value_type"]
         self.typeRaw <- map["type"]
+        
+        self.discount <- map["discount"]
     }
 }

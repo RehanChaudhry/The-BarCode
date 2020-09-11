@@ -32,6 +32,8 @@ class SplitPaymentInfoViewController: UIViewController {
         
         self.payButton.setTitle(String(format: "Pay - £ %.2f", self.totalBillPayable), for: .normal)
         
+        self.qrImageView.generateQRCode(orderId: self.order.orderNo)
+        
         self.setUpStatefulTableView()
     }
     
@@ -64,9 +66,7 @@ class SplitPaymentInfoViewController: UIViewController {
     
     func moveToReviewPayment() {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ReviewPaymentViewController") as! ReviewPaymentViewController)
-        controller.totalBillPayable = self.totalBillPayable
-        controller.viewModels = self.viewModels
-        controller.order = self.order
+        controller.orderId = self.order.orderNo
         self.navigationController?.pushViewController(controller, animated: true)
     }
     

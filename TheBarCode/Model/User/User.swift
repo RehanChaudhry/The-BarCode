@@ -134,9 +134,9 @@ enum V1 {
             self.statusRaw.value = source["status"] as! String
             self.creditsRaw.value = "\(source["credit"]!)"
             
-            self.liveOfferNotificationEnabled.value = source["is_live_offer_notify"] as! Bool
-            self.fiveADayNotificationEnabled.value = source["is_5_day_notify"] as! Bool
-            self.isCategorySelected.value = source["is_interest_selected"] as! Bool
+            self.liveOfferNotificationEnabled.value = source["is_live_offer_notify"] as? Bool ?? false
+            self.fiveADayNotificationEnabled.value = source["is_5_day_notify"] as? Bool ?? false
+            self.isCategorySelected.value = source["is_interest_selected"] as? Bool ?? false
             
             self.profileImage.value = source["profile_image"] as? String
             

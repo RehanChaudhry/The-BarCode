@@ -11,6 +11,7 @@ import ObjectMapper
 
 enum OrderStatus: String {
     case received = "received",
+    pending = "pending",
     processing = "processing",
     delivered = "delivered",
     onTheWay = "on the way",
@@ -30,7 +31,10 @@ enum OrderMappingType: String {
 
 class Order: Mappable {
     
+    var cartId: String = ""
     var orderNo: String = ""
+    var userId: String = ""
+    
     var barName: String = ""
     var barId: String = ""
     
@@ -80,6 +84,16 @@ class Order: Mappable {
         }
     }
     
+    var orderType: OrderType {
+        get {
+            return OrderType(rawValue: self.orderTypeRaw) ?? .none
+        }
+    }
+    
+    var orderTypeRaw: String = OrderType.none.rawValue
+    
+    var splitPaymentInfo: SplitPaymentInfo?
+    
     required init?(map: Map) {
         
     }
@@ -107,6 +121,8 @@ class Order: Mappable {
             self.maxDeliveryCharges <- map["establishment.max_delivery_charges"]
             self.customDeliveryCharges <- map["establishment.custom_delivery_amount"]
             
+            self.cartId = "\(map.JSON["id"]!)"
+            
             if let _ = map.JSON["order_id"] as? String {
                 self.orderNo = "\(map.JSON["order_id"]!)"
             } else if let _ = map.JSON["order_id"] as? Int {
@@ -118,6 +134,7 @@ class Order: Mappable {
             
         } else if context?.type == .order {
             self.orderNo = "\(map.JSON["id"]!)"
+            self.userId = "\(map.JSON["user_id"]!)"
             self.orderItems <- map["menu"]
             
             self.paymentSplit <- map["payment_split"]
@@ -126,6 +143,8 @@ class Order: Mappable {
             self.offer <- map["offer"]
             
             self.deliveryCharges <- map["delivery_charges"]
+            
+            self.orderTypeRaw <- map["type"]
         }
         
         

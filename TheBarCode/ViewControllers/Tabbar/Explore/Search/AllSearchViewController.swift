@@ -12,6 +12,7 @@ import GoogleMaps
 import ObjectMapper
 import CoreStore
 import Alamofire
+import KVNProgress
 
 protocol AllSearchViewControllerDelegate: class {
     func allSearchViewController(controller: AllSearchViewController, viewMoreButtonTapped type: AllSearchItemType)
@@ -1048,10 +1049,12 @@ extension AllSearchViewController {
             }
             
             guard error == nil else {
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             
@@ -1088,10 +1091,12 @@ extension AllSearchViewController {
             }
             
             guard error == nil else {
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             

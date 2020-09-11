@@ -8,14 +8,13 @@
 
 import Foundation
 
-//MARK: OrderStatusInfo e.g ORDER #
 class OrderStatusInfo: NSObject {
     
-    var orderNo: String = ""
+    var orderNo: String
 
-    var status: OrderStatus =  .other
+    var status: String
 
-    init(orderNo: String, status: OrderStatus) {
+    init(orderNo: String, status: String) {
         self.orderNo = orderNo
         self.status = status
     }

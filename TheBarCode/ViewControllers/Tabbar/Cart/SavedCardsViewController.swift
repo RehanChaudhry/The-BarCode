@@ -19,10 +19,21 @@ class SavedCardsViewController: UIViewController {
     
     var cards: [CreditCard] = []
     
-    var selectedCard: CreditCard?
+    var selectedCard: CreditCard? {
+        didSet {
+            if self.selectedCard == nil {
+                payButton.updateColor(withGrey: true)
+            } else {
+                payButton.updateColor(withGrey: false)
+            }
+        }
+    }
     
     var order: Order!
-    var viewModels: [OrderViewModel] = []
+    
+    var selectedVoucher: OrderDiscount?
+    var selectedOffer: OrderDiscount?
+    
     var totalBillPayable: Double = 0.0
     
     var statefulView: LoadingAndErrorView!
@@ -63,13 +74,14 @@ class SavedCardsViewController: UIViewController {
         self.statefulView.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.view)
         self.statefulView.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.view)
         
+        self.selectedCard = nil
+        
         self.getCards()
     }
     
-    func moveToThankYou() {
+    func moveToThankYou(order: Order) {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ThankYouViewController") as! ThankYouViewController)
-        controller.order = self.order
-        controller.viewModels = self.viewModels
+        controller.order = order
         self.navigationController?.setViewControllers([controller], animated: true)
     }
     
@@ -78,9 +90,19 @@ class SavedCardsViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func reloadAllSections() {
+        let sections = self.tableView.numberOfSections
+        let indexSet = IndexSet(integersIn: 0..<sections)
+        self.tableView.reloadSections(indexSet, with: .fade)
+    }
+    
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
-        self.moveToThankYou()
+        if let card = self.selectedCard {
+            self.chargeCard(card: card)
+        } else {
+            self.showAlertController(title: "", msg: "Please select a card to proceed")
+        }
     }
     
 
@@ -204,10 +226,57 @@ extension SavedCardsViewController {
         }
     }
     
-    func reloadAllSections() {
-        let sections = self.tableView.numberOfSections
-        let indexSet = IndexSet(integersIn: 0..<sections)
-        self.tableView.reloadSections(indexSet, with: .fade)
+    func chargeCard(card: CreditCard) {
+        var params: [String : Any] = ["order_id" : self.order.orderNo,
+                                      "token" : card.cardId]
+        
+        if let split = self.order.splitPaymentInfo, split.type != .none {
+            params["split_type"] = split.type.rawValue
+            params["value"] = split.value
+        }
+        
+        if let voucher = self.selectedVoucher {
+            params["voucher_id"] = voucher.id
+        }
+        
+        if let offer = self.selectedOffer {
+            params["offer_id"] = offer.id
+            params["offer_type"] = offer.typeRaw
+        }
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.payButton.showLoader()
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathPayment, method: .post) { (response, serverError, error) in
+            self.payButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            self.payButton.hideLoader()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseObject = (responseDict?["data"] as? [String : Any]) {
+                
+                let context = OrderMappingContext(type: .order)
+                let order = Mapper<Order>(context: context).map(JSON: responseObject)!
+                
+                self.moveToThankYou(order: order)
+                
+                NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+        }
     }
 }
 

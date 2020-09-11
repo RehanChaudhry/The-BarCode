@@ -39,6 +39,8 @@ target 'TheBarCode' do
   
   pod 'EasyNotificationBadge', '~> 1.2.0'
 
+  pod 'KVNProgress', '~> 2.3.5'
+
   target 'TheBarCodeTests' do
     inherit! :search_paths
     

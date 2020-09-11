@@ -9,18 +9,37 @@
 import UIKit
 import StatefulTableView
 import Reusable
+import ObjectMapper
 
 class CheckOutViewController: UIViewController {
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
-    @IBOutlet var checkoutButton: UIButton!
+    @IBOutlet var footerView: UIView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet var closeBarButton: UIBarButtonItem!
+    @IBOutlet var checkoutButton: UIButton!
     
     var viewModels: [OrderViewModel] = []
     
+    var vouchers: [OrderDiscount] = []
+    var offers: [OrderDiscount] = []
+    
     var order: Order!
+    
+    var totalBillPayable: Double = 0.0
+    
+    var isGettingVouchers: Bool = false {
+        didSet {
+            self.updateLoader()
+        }
+    }
+    
+    var isGettingOffers: Bool = false {
+        didSet {
+            self.updateLoader()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +48,12 @@ class CheckOutViewController: UIViewController {
         
         self.setUpStatefulTableView()
 
-        self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
+        self.getVouchers()
+        self.getOffers()
         
         self.setupViewModel()
-        
-        self.calculateTotal()
     }
     
-
     //MARK: My Methods
     func setUpStatefulTableView() {
            
@@ -58,7 +75,7 @@ class CheckOutViewController: UIViewController {
         self.statefulTableView.canPullToRefresh = false
         self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
         self.statefulTableView.innerTable.estimatedRowHeight = 200.0
-        self.statefulTableView.innerTable.tableFooterView = UIView()
+        self.statefulTableView.innerTable.tableFooterView = self.footerView
         
         let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 16))
         tableHeaderView.backgroundColor = UIColor.clear
@@ -67,7 +84,8 @@ class CheckOutViewController: UIViewController {
     }
     
     func setupViewModel() {
-       
+        
+        self.viewModels.removeAll()
         let barInfo = BarInfo(barName: self.order.barName)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
@@ -75,85 +93,189 @@ class CheckOutViewController: UIViewController {
         let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
         self.viewModels.append(orderProductsSection)
         
-        let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: 0.0 )
+        if self.order.orderType == .delivery {
+            let deliveryCharges = Utility.shared.getDeliveryCharges(order: self.order, totalPrice: self.getProductsTotalPrice())
+            
+            let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
+            let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
+            self.viewModels.append(orderDeliveryInfoSection)
+        }
+        
+        let orderTotalBillInfo = OrderBillInfo(title: self.order.splitPaymentInfo == nil ? "Total" : "Grand Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
-        let redeemOfferHeading = Heading(title: "Redeem Available Vouchers")
-        let redeemOfferHeadingSection = HeadingSection(items: [redeemOfferHeading])
-        self.viewModels.append(redeemOfferHeadingSection)
+        if let splitInfo = self.order.splitPaymentInfo {
+            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: splitInfo.value)
+            let splitTotalInfo = OrderBillInfo(title: "Total", price: splitInfo.value)
+            let orderSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo, splitTotalInfo])
+            self.viewModels.append(orderSplitBillInfoSection)
+        }
         
-        let vouchersSection = OrderOffersSection(type: .vouchers, items: OrderOfferInfo.dummyVouchers())
-        self.viewModels.append(vouchersSection)
-        
-        let standardOfferHeading = Heading(title: "Redeem Available Offers")
-        let standardOfferHeadingSection = HeadingSection(items: [standardOfferHeading])
-        self.viewModels.append(standardOfferHeadingSection)
-        
-        let offersSection = OrderOffersSection(type: .offers, items: OrderOfferInfo.dummyOffers())
-        self.viewModels.append(offersSection)
-        
-        let discountInfoSection = OrderOfferDiscountSection(type: .discountInfo, items: [])
-        self.viewModels.append(discountInfoSection)
-        
-        let redeemButton = OrderOfferRedeem(title: "Redeem")
-        let offerRedeemSection = OrderOfferRedeemSection(type: .offerRedeem, items: [redeemButton])
-        self.viewModels.append(offerRedeemSection)
+        if !self.isGettingOffers && !self.isGettingVouchers {
+            let redeemOfferHeading = Heading(title: "Redeem Available Vouchers")
+            let redeemOfferHeadingSection = HeadingSection(items: [redeemOfferHeading])
+            self.viewModels.append(redeemOfferHeadingSection)
+            
+            let voucherNone = OrderDiscount(JSON: ["id" : 0])!
+            voucherNone.text = "None"
+            voucherNone.isSelected = true
+            
+            self.vouchers = self.vouchers.map({ (discount) -> OrderDiscount in
+                discount.isSelected = false
+                return discount
+            })
+            
+            let vouchersSection = OrderOffersSection(type: .vouchers, items: [voucherNone] + self.vouchers)
+            self.viewModels.append(vouchersSection)
+            
+            let standardOfferHeading = Heading(title: "Redeem Available Offers")
+            let standardOfferHeadingSection = HeadingSection(items: [standardOfferHeading])
+            self.viewModels.append(standardOfferHeadingSection)
+            
+            let offerNone = OrderDiscount(JSON: ["id" : 0])!
+            offerNone.text = "None"
+            offerNone.isSelected = true
+            
+            self.offers = self.offers.map({ (discount) -> OrderDiscount in
+                discount.isSelected = false
+                return discount
+            })
+            
+            let offersSection = OrderOffersSection(type: .offers, items: [offerNone] + self.offers)
+            self.viewModels.append(offersSection)
+            
+            let discountInfoSection = OrderOfferDiscountSection(type: .discountInfo, items: [])
+            self.viewModels.append(discountInfoSection)
+            
+            let redeemButton = OrderOfferRedeem(title: "Redeem")
+            let offerRedeemSection = OrderOfferRedeemSection(type: .offerRedeem, items: [redeemButton])
+            self.viewModels.append(offerRedeemSection)
+        }
+    
+        self.statefulTableView.innerTable.reloadData()
+        self.calculateTotal()
     }
 
+    func getProductsTotalPrice() -> Double {
+        
+        let total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
+        }
+
+        return total
+    }
+    
     func calculateTotal() {
         
-        let products = (self.viewModels.first(where: {$0.type == .productDetails}) as? OrderProductsInfoSection)?.items ?? []
+        var totalProductPrice = self.getProductsTotalPrice()
         
-        var totalProductPrice = products.reduce(0.0) { (total, item) -> Double in
-            total + item.unitPrice * Double(item.quantity)
+        let selectedVoucher = (self.viewModels.first(where: {$0.type == .vouchers}) as? OrderOffersSection)?.items.first(where: {$0.isSelected})
+        let selectedOffer = (self.viewModels.first(where: {$0.type == .offers}) as? OrderOffersSection)?.items.first(where: {$0.isSelected})
+        
+        var voucherDiscount: Double = 0.0
+        if let selectedVoucher = selectedVoucher, selectedVoucher.value > 0.0 {
+            
+            let discountableAmount = self.order.splitPaymentInfo?.value ?? totalProductPrice
+            if selectedVoucher.valueType == .percent {
+                voucherDiscount = ((min(20.0, discountableAmount) / 100.0) * selectedVoucher.value)
+            } else if selectedVoucher.valueType == .amount {
+                voucherDiscount = selectedVoucher.value
+            }
         }
+        
+        var offerDiscount: Double = 0.0
+        if let selectedOffer = selectedOffer, selectedOffer.value > 0 {
+            
+            let discountableAmount = self.order.splitPaymentInfo?.value ?? totalProductPrice
+            if selectedOffer.valueType == .percent {
+                offerDiscount = ((min(20.0, discountableAmount) / 100.0) * selectedOffer.value)
+            } else if selectedOffer.valueType == .amount {
+                offerDiscount = selectedOffer.value
+            }
+        }
+        
+        if self.order.splitPaymentInfo == nil {
+            totalProductPrice -= voucherDiscount
+            totalProductPrice -= offerDiscount
+        }
+        
+        if let deliverySection = self.viewModels.first(where: {$0.type == .deliveryChargesDetails}) as? OrderDeliveryInfoSection,
+            let deliveryItem = deliverySection.items.first {
+            totalProductPrice += deliveryItem.price
+        }
+        
+        totalProductPrice = max(0, totalProductPrice)
         
         if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
             (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = totalProductPrice
             let indexPath = IndexPath(row: 0, section: totalSectionIndex)
+            
             if self.statefulTableView.innerTable.numberOfSections > 0 {
-                self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+                UIView.performWithoutAnimation {
+                    self.statefulTableView.innerTable.reloadRows(at: [indexPath], with: .none)
+                }
             } else {
                 self.statefulTableView.innerTable.reloadData()
             }
         }
-
-        let selectedVoucher = (self.viewModels.first(where: {$0.type == .vouchers}) as? OrderOffersSection)?.items.first(where: {$0.isSelected})
-        let selectedOffer = (self.viewModels.first(where: {$0.type == .offers}) as? OrderOffersSection)?.items.first(where: {$0.isSelected})
         
-        if let selectedVoucher = selectedVoucher, selectedVoucher.discount > 0 {
-            let discountValue = ((totalProductPrice / 100.0) * Double(selectedVoucher.discount))
-            totalProductPrice -= discountValue
+        if let splitPayment = self.order.splitPaymentInfo {
+            let splitPaymentValue = splitPayment.value
+            self.totalBillPayable = max(0.0, splitPaymentValue - (voucherDiscount + offerDiscount))
+        } else {
+            
+            var paidAmount: Double = 0.0
+            if self.order.paymentSplit.count > 0 {
+                for paymentSplit in order.paymentSplit {
+                    let amount = paymentSplit.amount + paymentSplit.discount
+                    paidAmount += amount
+                }
+            }
+            
+            totalProductPrice -= paidAmount
+            self.totalBillPayable = max(0.0, totalProductPrice)
         }
         
-        if let selectedOffer = selectedOffer, selectedOffer.discount > 0 {
-            let discountValue = ((totalProductPrice / 100.0) * Double(selectedOffer.discount))
-            totalProductPrice -= discountValue
+        self.checkoutButton.setTitle(String(format: "Continue - £ %.2f", self.totalBillPayable), for: .normal)
+        
+    }
+    
+    func updateLoader() {
+        if self.isGettingVouchers || self.isGettingOffers {
+            self.activityIndicator.startAnimating()
+        } else {
+            self.activityIndicator.stopAnimating()
         }
-                
-        let totalAmount = max(0.0, totalProductPrice)
-        self.checkoutButton.setTitle(String(format: "Continue - £ %.2f", totalAmount), for: .normal)
+    }
+    
+    func setUpOffersAndVouchers() {
+        if !self.isGettingOffers && !self.isGettingVouchers {
+            self.setupViewModel()
+        }
     }
     
     //MARK: My IBActions
-    @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func continueButtonTapped(sender: UIButton) {
         
-        let discountSection = self.viewModels.first(where: {$0.type == .discountInfo}) as? OrderOfferDiscountSection
+        var voucherItems: [OrderDiscount] = []
+        voucherItems.append(contentsOf: (self.viewModels.first(where: {$0.type == .vouchers}) as? OrderOffersSection)?.items ?? [])
+        voucherItems.removeFirst()
         
-        var items = discountSection?.items ?? []
-        if items.count > 0 {
-            items.removeFirst()
-        }
+        var offerItems: [OrderDiscount] = []
+        offerItems.append(contentsOf: (self.viewModels.first(where: {$0.type == .offers}) as? OrderOffersSection)?.items ?? [])
+        offerItems.removeFirst()
         
-        
-//        let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
-//        orderTypeController.order = self.order
-//        self.navigationController?.pushViewController(orderTypeController, animated: true)
+        let selectedVoucher = voucherItems.first(where: {$0.isSelected})
+        let selectedOffer = offerItems.first(where: {$0.isSelected})
+            
+        let paymentController = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
+        paymentController.order = self.order
+        paymentController.totalBillPayable = self.totalBillPayable
+        paymentController.selectedVoucher = selectedVoucher
+        paymentController.selectedOffer = selectedOffer
+        self.navigationController?.pushViewController(paymentController, animated: true)
     }
 }
 
@@ -197,8 +319,27 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            
+            let cornerRadius: CGFloat = self.order.splitPaymentInfo == nil ? 8.0 : 0.0
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: self.order.splitPaymentInfo == nil ? false : true, radius: cornerRadius)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            
+            return cell
+            
+        } else if let section = viewModel as? OrderSplitAmountInfoSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+            
+            let cornerRadius: CGFloat = isLastCell ? 8.0 : 0.0
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: !isLastCell, radius: cornerRadius)
+            cell.adjustMargins(adjustTop: true, adjustBottom: true)
+            
+            if isLastCell {
+                cell.setupMainViewAppearanceAsBlack()
+            } else {
+                cell.setupMainViewAppearanceAsStandard()
+            }
+            
             return cell
             
         } else if let section = viewModel as? HeadingSection {
@@ -227,9 +368,14 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
             cell.setUpCell(discountInfo: section.items[indexPath.row], isFirst: isFirstCell, isLast: isLastCell)
             return cell
             
-        }
-        
-        else {
+        } else if let section = viewModel as? OrderDeliveryInfoSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            return cell
+            
+        } else {
             return UITableViewCell()
         }
     }
@@ -253,7 +399,7 @@ extension CheckOutViewController: OrderRadioButtonTableViewCellDelegate {
             return
         }
         
-        viewModel.items = viewModel.items.map({ (model) -> OrderOfferInfo in
+        viewModel.items = viewModel.items.map({ (model) -> OrderDiscount in
             model.isSelected = false
             return model
         })
@@ -270,11 +416,8 @@ extension CheckOutViewController: OrderOfferRedeemTableViewCellDelegate {
         
         let vouchers = self.viewModels.first(where: {$0.type == .vouchers}) as? OrderOffersSection
         let offers = self.viewModels.first(where: {$0.type == .offers}) as? OrderOffersSection
-        
-        let isVoucherNoneSelected = vouchers?.items.first?.isSelected == true
-        let isOfferNoneSelected = offers?.items.first?.isSelected == true
-        
-        let total = (self.viewModels.first(where: {$0.type == .totalBill}) as? OrderTotalBillInfoSection)?.items.first?.price ?? 0.0
+    
+        let total = self.order.splitPaymentInfo?.value ?? self.getProductsTotalPrice()
         
         if let index = self.viewModels.firstIndex(where: {$0.type == .discountInfo}) {
             
@@ -298,8 +441,11 @@ extension CheckOutViewController: OrderOfferRedeemTableViewCellDelegate {
                 addHeadingIfNeeded()
                 
                 let voucher = OrderOfferDiscountInfo(title: selectedVoucher.text, value: 0.0, isHeading: false)
-                if selectedVoucher.discount > 0.0 {
-                    let saving = ((total / 100.0) * Double(selectedVoucher.discount))
+                if selectedVoucher.valueType == .percent {
+                    let saving = ((min(20, total) / 100.0) * selectedVoucher.value)
+                    voucher.value = saving
+                } else if selectedVoucher.valueType == .amount {
+                    let saving = selectedVoucher.value
                     voucher.value = saving
                 }
                 
@@ -310,8 +456,11 @@ extension CheckOutViewController: OrderOfferRedeemTableViewCellDelegate {
                 addHeadingIfNeeded()
                 
                 let offer = OrderOfferDiscountInfo(title: selectedOffer.text, value: 0.0, isHeading: false)
-                if selectedOffer.discount > 0.0 {
-                    let saving = ((total / 100.0) * Double(selectedOffer.discount))
+                if selectedOffer.valueType == .percent {
+                    let saving = ((min(20, total) / 100.0) * selectedOffer.value)
+                    offer.value = saving
+                } else if selectedOffer.valueType == .amount {
+                    let saving = selectedOffer.value
                     offer.value = saving
                 }
                 
@@ -325,6 +474,84 @@ extension CheckOutViewController: OrderOfferRedeemTableViewCellDelegate {
 
         }
         
-        self.calculateTotal()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [unowned self] in
+            self.calculateTotal()
+        }
+        
+    }
+}
+
+//MARK: Webservices Methods
+extension CheckOutViewController {
+    func getOffers() {
+        
+        self.isGettingOffers = true
+        
+        let params: [String : Any] = ["establishment_id" : self.order.barId]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrderOffers, method: .get) { (response, serverError, error) in
+            
+            self.isGettingOffers = false
+            
+            defer {
+                self.setUpOffersAndVouchers()
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                let discounts = Mapper<OrderDiscount>().mapArray(JSONArray: responseArray)
+                
+                self.offers.removeAll()
+                self.offers.append(contentsOf: discounts)
+
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+            
+        }
+    }
+    
+    func getVouchers() {
+        
+        self.isGettingVouchers = true
+        
+        let params: [String : Any] = ["establishment_id" : self.order.barId]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrderVouchers, method: .get) { (response, serverError, error) in
+            
+            self.isGettingVouchers = false
+            
+            defer {
+                self.setUpOffersAndVouchers()
+            }
+            
+            guard error == nil else {
+                return
+            }
+            
+            guard serverError == nil else {
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
+                let discounts = Mapper<OrderDiscount>().mapArray(JSONArray: responseArray)
+                
+                self.vouchers.removeAll()
+                self.vouchers.append(contentsOf: discounts)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+            
+        }
     }
 }

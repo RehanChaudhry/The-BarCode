@@ -78,10 +78,12 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(orderItem: OrderItem, showSeparator: Bool) {
         self.leftLabel.text = "\(orderItem.quantity) x " + orderItem.name
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
         self.rightLabel.text = "£ " + totalPriceString
         self.rightLabel.isHidden = false
+        self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         self.showSeparator(show: showSeparator)
         
@@ -92,6 +94,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool) {
         self.leftLabel.text =  orderDiscountInfo.title
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         if orderDiscountInfo.price > 0.0 {
             let totalPriceString = String(format: "%.2f", orderDiscountInfo.price)
@@ -101,6 +104,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.rightLabel.isHidden = false
+        self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         self.showSeparator(show: showSeparator)
         
@@ -111,10 +115,12 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(orderDeliveryInfo: OrderDeliveryInfo, showSeparator: Bool) {
         self.leftLabel.text =  orderDeliveryInfo.title
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
                 
         let totalPriceString = String(format: "%.2f", orderDeliveryInfo.price)
         self.rightLabel.text = "£ " + totalPriceString
         self.rightLabel.isHidden = false
+        self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
               
         self.showSeparator(show: showSeparator)
         
@@ -123,8 +129,9 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
-    func setupCell(orderTotalBillInfo: OrderTotalBillInfo, showSeparator: Bool) {
+    func setupCell(orderTotalBillInfo: OrderBillInfo, showSeparator: Bool, radius: CGFloat = 8.0) {
         self.leftLabel.text =  orderTotalBillInfo.title
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", orderTotalBillInfo.price)
         self.rightLabel.text = "£ " + totalPriceString
@@ -135,10 +142,10 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         
         self.showSeparator(show: showSeparator)
         
-        self.maskCorners(radius: 8.0, mask: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        self.maskCorners(radius: radius, mask: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
         
         self.setupMainViewAppearanceAsBlack()
-      }
+    }
 
     func setupCell(reservationInfo: ReservationInfo, showSeparator: Bool) {
         

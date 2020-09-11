@@ -65,6 +65,8 @@ class BarDetailViewController: UIViewController {
         }
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -119,8 +121,11 @@ class BarDetailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlaced(notification:)), name: notificationNameOrderPlaced, object: nil)
         
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -146,6 +151,7 @@ class BarDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
     
     //MARK: My Methods
@@ -347,6 +353,10 @@ class BarDetailViewController: UIViewController {
     @objc func cartBarButtonTapped(sender: UIButton) {
         let cartNavigation = self.storyboard!.instantiateViewController(withIdentifier: "MyCartNavigation") as! UINavigationController
         cartNavigation.modalPresentationStyle = .fullScreen
+        
+        let myCartController = cartNavigation.viewControllers.first as! MyCartViewController
+        myCartController.isComingFromBarDetails = true
+        
         self.navigationController?.present(cartNavigation, animated: true, completion: nil)
     }
     
@@ -794,6 +804,13 @@ extension BarDetailViewController {
             } else {
                 self.cartCount -= 1
             }
+        }
+    }
+    
+    @objc func orderDidPlaced(notification: Notification) {
+        if let order = notification.object as? Order, order.barId == self.getSelectedBarId() {
+            self.didTriggerPullToRefresh(sender: self.refreshControl)
+            self.cartCount = 0
         }
     }
 }

@@ -14,6 +14,7 @@ import Alamofire
 import ObjectMapper
 import PureLayout
 import FirebaseAnalytics
+import KVNProgress
 
 protocol DrinkListViewControllerDelegate: class {
     func drinkListViewController(controller: DrinkListViewController, didSelect drink: Drink)
@@ -254,10 +255,12 @@ extension DrinkListViewController {
             }
             
             guard error == nil else {
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             

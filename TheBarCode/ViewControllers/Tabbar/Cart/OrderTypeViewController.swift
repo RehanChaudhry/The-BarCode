@@ -11,6 +11,14 @@ import StatefulTableView
 import Alamofire
 import ObjectMapper
 
+enum OrderType: String {
+    case dineIn = "dine_in",
+    takeAway = "take_away",
+    counterCollection = "collection",
+    delivery = "delivery",
+    none = "none"
+}
+
 class OrderTypeViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
@@ -18,6 +26,8 @@ class OrderTypeViewController: UIViewController {
     @IBOutlet var checkoutButton: GradientButton!
     
     @IBOutlet var closeBarButton: UIBarButtonItem!
+    
+    var showCloseBarButton: Bool = true
     
     var viewModels: [OrderViewModel] = []
     
@@ -39,6 +49,8 @@ class OrderTypeViewController: UIViewController {
         self.title = "Order Type"
         
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
+        
+        self.navigationItem.leftBarButtonItem = self.showCloseBarButton ? self.closeBarButton : nil
         
         self.setUpStatefulTableView()
         
@@ -66,8 +78,19 @@ class OrderTypeViewController: UIViewController {
         self.tableView.tableFooterView = UIView()
     }
     
+    func getDineInField() -> OrderFieldInput {
+        let field = OrderFieldInput()
+        field.placeholder = "Enter table number"
+        field.allowedCharacterSet = CharacterSet.decimalDigits
+        field.keyboardType = .numberPad
+        
+        return field
+    }
+    
     func setupViewModel() {
        
+        self.viewModels.removeAll()
+        
         let barInfo = BarInfo(barName: self.order.barName)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
@@ -75,7 +98,7 @@ class OrderTypeViewController: UIViewController {
         let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
         self.viewModels.append(orderProductsSection)
         
-        let orderTotalBillInfo = OrderTotalBillInfo(title: "Total", price: 0.0)
+        let orderTotalBillInfo = OrderBillInfo(title: "Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
@@ -88,8 +111,8 @@ class OrderTypeViewController: UIViewController {
         let dineInSection = OrderDineInSection(items: [dineRadioButton])
         self.viewModels.append(dineInSection)
         
-        let dineInField = OrderDineInField()
-        let dineInFieldSection = OrderDineInFieldSection(items: [dineInField])
+        let dineInField = self.getDineInField()
+        let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
         self.viewModels.append(dineInFieldSection)
         
         let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
@@ -102,7 +125,7 @@ class OrderTypeViewController: UIViewController {
         
         if self.order.isDeliveryAvailable {
             let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
-            deliveryRadioButton.value = self.getDeliveryCharges()
+            deliveryRadioButton.value = Utility.shared.getDeliveryCharges(order: self.order, totalPrice: self.getProductsTotalPrice())
             deliveryRadioButton.isEnabled = !self.order.isCurrentlyDeliveryDisabled
             
             let deliverySection = OrderDeliverySection(items: [deliveryRadioButton])
@@ -111,14 +134,22 @@ class OrderTypeViewController: UIViewController {
             let deliveryAddressSection = OrderDeliveryAddressSection(items: [])
             self.viewModels.append(deliveryAddressSection)
         }
+            
+        self.tableView.reloadData()
     }
     
     func getProductsTotalPrice() -> Double {
-        let products = (self.viewModels.first(where: {$0.type == .productDetails}) as? OrderProductsInfoSection)?.items ?? []
         
-        let totalProductPrice = products.reduce(0.0) { (total, item) -> Double in
-            total + item.unitPrice * Double(item.quantity)
+        let total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
+            return result + (Double(item.quantity) * item.unitPrice)
         }
+
+        return total
+    }
+    
+    func calculateTotal() {
+        
+        var totalProductPrice = self.getProductsTotalPrice()
         
         if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
             (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = totalProductPrice
@@ -129,13 +160,6 @@ class OrderTypeViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }
-        
-        return totalProductPrice
-    }
-    
-    func calculateTotal() {
-        
-        var totalProductPrice = self.getProductsTotalPrice()
 
         if let deliverySection = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
             let deliveryItem = deliverySection.items.first,
@@ -163,16 +187,16 @@ class OrderTypeViewController: UIViewController {
     
     func addDineInField() {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .tableNo}),
-            let section = self.viewModels[sectionIndex] as? OrderDineInFieldSection,
+            let section = self.viewModels[sectionIndex] as? OrderFieldSection,
             section.items.count == 0 {
-            let field = OrderDineInField()
+            let field = self.getDineInField()
             section.items.append(field)
         }
     }
     
     func removeDineInField() {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .tableNo}),
-            let fieldSection = self.viewModels[sectionIndex] as? OrderDineInFieldSection {
+            let fieldSection = self.viewModels[sectionIndex] as? OrderFieldSection {
             fieldSection.items.removeAll()
         }
     }
@@ -191,24 +215,11 @@ class OrderTypeViewController: UIViewController {
         }
     }
     
-    func getDeliveryCharges() -> Double {
-        if self.order.isGlobalDeliveryAllowed == true {
-            return self.order.globalDeliveryCharges ?? 0.0
-        } else {
-            let total: Double = self.getProductsTotalPrice()
-            if let customDeliveryCharges = self.order.customDeliveryCharges, total > customDeliveryCharges {
-                return self.order.minDeliveryCharges ?? 0.0
-            } else {
-                return self.order.maxDeliveryCharges ?? 0.0
-            }
-        }
-    }
-    
     func setUpDeliveryCharges() {
         if let deliverySection = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
             let deliveryItem = deliverySection.items.first {
             if deliveryItem.isSelected {
-                deliveryItem.value = self.getDeliveryCharges()
+                deliveryItem.value = Utility.shared.getDeliveryCharges(order: self.order, totalPrice: self.getProductsTotalPrice())
             } else {
                 deliveryItem.value = 0.0
             }
@@ -236,20 +247,38 @@ class OrderTypeViewController: UIViewController {
         }
     }
     
-    func moveToPaymentMethods(viewModels: [OrderViewModel]) {
-        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
-        controller.totalBillPayable = self.totalBillPayable
-        controller.viewModels = viewModels
-        controller.order = self.order
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    func moveToSplitPayment() {
+    func moveToNextStep(orderType: OrderType) {
+        
         var viewModels: [OrderViewModel] = []
         if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
             viewModels = self.viewModels[0...index].map({$0})
         }
         
+        if orderType == .dineIn {
+            self.moveToSplitPayment(viewModels: viewModels)
+        } else if orderType == .delivery {
+            if let section = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection {
+                
+                let deliveryCharges = section.items.first?.value ?? 0.0
+                
+                let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
+                let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
+                viewModels.insert(orderDeliveryInfoSection, at: viewModels.count - 1)
+            }
+            
+            self.moveToCheckout(orderType: orderType)
+        } else {
+            self.moveToCheckout(orderType: orderType)
+        }
+    }
+    
+    func moveToCheckout(orderType: OrderType) {
+        let controller = (self.storyboard!.instantiateViewController(withIdentifier: "CheckOutViewController") as! CheckOutViewController)
+        controller.order = self.order
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func moveToSplitPayment(viewModels: [OrderViewModel]) {
         let splitpaymentController = self.storyboard!.instantiateViewController(withIdentifier: "SplitPaymentInfoViewController") as! SplitPaymentInfoViewController
         splitpaymentController.order = self.order
         splitpaymentController.viewModels = viewModels
@@ -264,31 +293,41 @@ class OrderTypeViewController: UIViewController {
     
     @IBAction func continueButtonTapped(sender: UIButton) {
         
-        self.createOrder()
-        
         if let section = self.viewModels.first(where: {$0.type == .dineIn}) as? OrderDineInSection,
-            section.items.first?.isSelected == true {
-            self.moveToSplitPayment()
+            let item = section.items.first,
+            item.isSelected {
+            
+            let fieldSection = self.viewModels.first(where: {$0.type == .tableNo}) as? OrderFieldSection
+            let tableNo = fieldSection?.items.first?.text ?? ""
+            
+            if tableNo.trimWhiteSpaces().count == 0 {
+                self.showAlertController(title: "", msg: "Please enter table number to proceed")
+            } else {
+                self.createOrder(orderType: .dineIn, info: ["table_no" : tableNo])
+            }
+            
         } else if let section = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
-            section.items.first?.isSelected == true {
-            var viewModels: [OrderViewModel] = []
-            if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
-                viewModels = self.viewModels[0...index].map({$0})
-                
-                let deliveryCharges = section.items.first?.value ?? 0.0
-                
-                let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
-                let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
-                viewModels.insert(orderDeliveryInfoSection, at: index)
+            let item = section.items.first,
+            item.isSelected {
+            
+            if let address = self.selectedAddress {
+                let params: [String : Any] = ["delivery_charges" : "\(item.value)", "address_id" : address.id]
+                self.createOrder(orderType: .delivery, info: params)
+            } else {
+                self.showAlertController(title: "", msg: "Please select delivery address to proceed")
             }
-
-            self.moveToPaymentMethods(viewModels: viewModels)
-        } else {
-            var viewModels: [OrderViewModel] = []
-            if let index = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
-                viewModels = self.viewModels[0...index].map({$0})
-            }
-            self.moveToPaymentMethods(viewModels: viewModels)
+            
+        } else if let section = self.viewModels.first(where: {$0.type == .counterCollection}) as? OrderCounterCollectionSection,
+            let item = section.items.first,
+            item.isSelected {
+            
+            self.createOrder(orderType: .counterCollection, info: [:])
+            
+        }  else if let section = self.viewModels.first(where: {$0.type == .takeAway}) as? OrderTakeAwaySection,
+            let item = section.items.first,
+            item.isSelected {
+                   
+            self.createOrder(orderType: .takeAway, info: [:])
         }
     }
 }
@@ -366,7 +405,7 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             cell.setUpCell(radioButton: section.items[indexPath.row])
             return cell
-        } else if let section = viewModel as? OrderDineInFieldSection {
+        } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)
             cell.setUpCell(orderField: section.items[indexPath.row])
             return cell
@@ -477,11 +516,13 @@ extension OrderTypeViewController {
         })
     }
     
-    func createOrder() {
+    func createOrder(orderType: OrderType, info: [String : Any]) {
         self.checkoutButton.isUserInteractionEnabled = false
         self.checkoutButton.showLoader()
         
-        let params: [String : Any] = [:]
+        var params: [String : Any] = info
+        params["cart_id"] = self.order.cartId
+        params["type"] = orderType.rawValue
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathOrders, method: .post) { (response, serverError, error) in
             
             self.checkoutButton.isUserInteractionEnabled = true
@@ -493,11 +534,26 @@ extension OrderTypeViewController {
             }
             
             guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError!.detail)
+                if serverError!.detail.count > 0 {
+                    self.showAlertController(title: "", msg: serverError!.detail)
+                } else {
+                    self.showAlertController(title: "", msg: serverError?.errors.first?.messages.first ?? "")
+                }
+                
                 return
             }
             
-            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseObject = (responseDict?["data"] as? [String : Any]),
+                let _ = responseObject["id"],
+                let typeRaw = responseObject["type"] as? String {
+                self.order.orderNo = "\(responseObject["id"]!)"
+                self.order.orderTypeRaw = typeRaw
+                self.moveToNextStep(orderType: orderType)
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
             
         }
     }

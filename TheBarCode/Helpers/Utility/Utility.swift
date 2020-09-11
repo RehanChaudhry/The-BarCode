@@ -94,6 +94,7 @@ let notificationNameDrinkCartUpdated = Notification.Name(rawValue: "notification
 let notificationNameMyCartUpdated = Notification.Name(rawValue: "notificationNameMyCartUpdated")
 
 let notificationNameOrderDidRefresh = Notification.Name(rawValue: "notificationNameOrderDidRefresh")
+let notificationNameOrderPlaced = Notification.Name(rawValue: "notificationNameOrderPlaced")
 
 typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
 typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)
@@ -655,5 +656,17 @@ class Utility: NSObject {
                 self.dismissTopController()
             }
         })
+    }
+    
+    func getDeliveryCharges(order: Order, totalPrice: Double) -> Double {
+        if order.isGlobalDeliveryAllowed == true {
+            return order.globalDeliveryCharges ?? 0.0
+        } else {
+            if let customDeliveryCharges = order.customDeliveryCharges, totalPrice > customDeliveryCharges {
+                return order.minDeliveryCharges ?? 0.0
+            } else {
+                return order.maxDeliveryCharges ?? 0.0
+            }
+        }
     }
 }

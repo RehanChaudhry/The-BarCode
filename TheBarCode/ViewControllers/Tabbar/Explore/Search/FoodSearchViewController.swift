@@ -13,6 +13,7 @@ import CoreStore
 import ObjectMapper
 import GoogleMaps
 import Alamofire
+import KVNProgress
 
 class FoodSearchViewController: BaseSearchScopeViewController {
     
@@ -466,10 +467,12 @@ extension FoodSearchViewController {
             }
             
             guard error == nil else {
+                KVNProgress.showError(withStatus: error!.localizedDescription)
                 return
             }
             
             guard serverError == nil else {
+                KVNProgress.showError(withStatus: serverError!.detail)
                 return
             }
             

@@ -1,25 +1,19 @@
 //
-//  OrderDineInFieldSection.swift
+//  OrderSplitBillTypeSection.swift
 //  TheBarCode
 //
-//  Created by Muhammad Zeeshan on 05/08/2020.
+//  Created by Mac OS X on 09/09/2020.
 //  Copyright © 2020 Cygnis Media. All rights reserved.
 //
 
 import UIKit
 
-class OrderDineInField: NSObject {
-    var text: String = ""
-}
-
-class OrderDineInFieldSection: OrderViewModel {
+class OrderSplitBillTypeSection: OrderViewModel {
     var shouldShowSeparator: Bool {
         return false
     }
 
-    var type: OrderSectionType {
-        return .tableNo
-    }
+    var type: OrderSectionType
 
     var rowCount: Int {
         return self.items.count
@@ -29,9 +23,11 @@ class OrderDineInFieldSection: OrderViewModel {
         return UITableViewAutomaticDimension
     }
 
-    var items: [OrderDineInField]
+    var items: [OrderRadioButton]
 
-    init(items: [OrderDineInField]) {
+    init(items: [OrderRadioButton], type: OrderSectionType) {
         self.items = items
+        self.type = type
     }
 }
+
