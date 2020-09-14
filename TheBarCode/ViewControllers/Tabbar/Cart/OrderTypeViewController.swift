@@ -48,6 +48,7 @@ class OrderTypeViewController: UIViewController {
         
         self.title = "Order Type"
         
+        self.addBackButton()
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
         
         self.navigationItem.leftBarButtonItem = self.showCloseBarButton ? self.closeBarButton : nil

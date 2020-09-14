@@ -29,6 +29,8 @@ class SplitBillViewController: UIViewController {
         
         self.title = "Split The Bill"
         
+        self.addBackButton()
+        
         self.tableView.register(cellType: OrderInfoTableViewCell.self)
         self.tableView.register(cellType: OrderStatusTableViewCell.self)
         self.tableView.register(cellType: OrderPaymentTableViewCell.self)

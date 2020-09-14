@@ -46,6 +46,7 @@ enum NotificationType: String {
     exclusive = "exclusive",
     event = "event",
     voucher = "voucher",
+    order = "order",
     defaultNotification = "defaultNotification"
 }
 
@@ -95,6 +96,9 @@ let notificationNameMyCartUpdated = Notification.Name(rawValue: "notificationNam
 
 let notificationNameOrderDidRefresh = Notification.Name(rawValue: "notificationNameOrderDidRefresh")
 let notificationNameOrderPlaced = Notification.Name(rawValue: "notificationNameOrderPlaced")
+
+let notificationNameOrderStatusUpdated = Notification.Name(rawValue: "notificationNameOrderStatusUpdated")
+let notificationNameShowOrderDetails = Notification.Name(rawValue: "notificationNameShowOrderDetails")
 
 typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
 typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)

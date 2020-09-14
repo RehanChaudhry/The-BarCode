@@ -34,7 +34,8 @@ enum OrderSectionType: String {
     fixedAmountSplit = "fixedAmountSplit",
     percentSplit = "percentSplit",
     fixedAmountSplitField = "fixedAmountSplitField",
-    percentSplitField = "percentSplitField"
+    percentSplitField = "percentSplitField",
+    messageBoard = "messageBoard"
 }
 
 protocol OrderViewModel: class {

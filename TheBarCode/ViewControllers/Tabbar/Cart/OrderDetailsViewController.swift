@@ -9,6 +9,7 @@
 import UIKit
 import StatefulTableView
 import ObjectMapper
+import Alamofire
 
 class OrderDetailsViewController: UIViewController {
 
@@ -17,24 +18,51 @@ class OrderDetailsViewController: UIViewController {
     
     @IBOutlet var tableFooterView: UIView!
     
-    var order: Order!
+    var orderId: String?
+    var order: Order?
+    
     var viewModels: [OrderViewModel] = []
     
     var refreshControl: UIRefreshControl!
 
+    var statefulView: LoadingAndErrorView!
+    
+    var dataRequest: DataRequest?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "Order # " + self.order.orderNo
+        self.title = "Order # " + self.getOrderId()
         self.setUpStatefulTableView()
-        self.setupViewModel()
-
+        
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: #selector(didTriggerPullToRefresh(sender:)), for: .valueChanged)
         self.tableView.refreshControl = self.refreshControl
+        
+        self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.statefulView.isHidden = true
+        self.view.addSubview(statefulView)
+        
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
+            self.getOrderDetails(isRefreshing: false)
+        }
+        
+        self.statefulView.autoPinEdgesToSuperviewSafeArea()
+        
+        if self.orderId != nil {
+            self.getOrderDetails(isRefreshing: false)
+        } else {
+            self.setupViewModel()
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orderStatusUpdatedNotification(notification:)), name: notificationNameOrderStatusUpdated, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderStatusUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -47,29 +75,47 @@ class OrderDetailsViewController: UIViewController {
        self.tableView.tableFooterView = UIView()
     }
     
+    func getOrderId() -> String {
+        if let order = self.order {
+            return order.orderNo
+        } else if let orderId = self.orderId {
+            return orderId
+        } else {
+            return ""
+        }
+    }
+    
     @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
-        self.getOrderDetails()
+        self.getOrderDetails(isRefreshing: true)
     }
     
     func setupViewModel() {
         
         self.viewModels.removeAll()
        
+        defer {
+            self.tableView.reloadData()
+        }
+        
+        guard let order = self.order else {
+            return
+        }
+        
         var totalProductPrice = self.getProductsTotalPrice()
         
-        let orderStatusInfo = OrderStatusInfo(orderNo: self.order.orderNo, status: self.order.statusRaw)
+        let orderStatusInfo = OrderStatusInfo(orderNo: order.orderNo, status: order.statusRaw)
         let orderStatusSection = OrderStatusSection(items: [orderStatusInfo])
         self.viewModels.append(orderStatusSection)
         
-        let barInfo = BarInfo(barName: self.order.barName)
+        let barInfo = BarInfo(barName: order.barName)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
-        let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
+        let orderProductsSection = OrderProductsInfoSection(items: order.orderItems)
         self.viewModels.append(orderProductsSection)
 
-        if self.order.orderType == .delivery && self.order.deliveryCharges > 0.0 {
-            let deliveryCharges = self.order.deliveryCharges
+        if order.orderType == .delivery && order.deliveryCharges > 0.0 {
+            let deliveryCharges = order.deliveryCharges
             
             let orderDeliveryInfo = OrderDeliveryInfo(title: "Delivery Charges", price: deliveryCharges)
             let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
@@ -87,8 +133,8 @@ class OrderDetailsViewController: UIViewController {
         
         let currentUser = Utility.shared.getCurrentUser()!
         
-        let amount = self.order.paymentSplit.first?.amount ?? 0.0
-        let discount = self.order.paymentSplit.first?.discount ?? 0.0
+        let amount = order.paymentSplit.first?.amount ?? 0.0
+        let discount = order.paymentSplit.first?.discount ?? 0.0
         
         var shouldAppendTotal: Bool = false
         
@@ -101,14 +147,14 @@ class OrderDetailsViewController: UIViewController {
         }
         
         var discountItems: [OrderDiscountInfo] = []
-        if let voucher = self.order.voucher {
+        if let voucher = order.voucher {
             let info = OrderDiscountInfo(title: voucher.text, price: voucher.discount)
             discountItems.append(info)
             
             shouldAppendTotal = true
         }
         
-        if let offer = self.order.offer {
+        if let offer = order.offer {
             let info = OrderDiscountInfo(title: offer.text, price: offer.discount)
             discountItems.append(info)
             
@@ -152,13 +198,15 @@ class OrderDetailsViewController: UIViewController {
             self.viewModels.append(orderPaymentInfoSection)
             
         }
-        
-        self.tableView.reloadData()
     }
     
     func getProductsTotalPrice() -> Double {
         
-        let total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
+        guard let order = self.order else {
+            return 0.0
+        }
+        
+        let total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
             return result + (Double(item.quantity) * item.unitPrice)
         }
 
@@ -174,19 +222,31 @@ class OrderDetailsViewController: UIViewController {
 
 //MARK: Webserivces Methods
 extension OrderDetailsViewController {
-    func getOrderDetails() {
-        self.refreshControl.beginRefreshing()
+    func getOrderDetails(isRefreshing: Bool) {
         
-        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathOrders + "/" + self.order.orderNo, method: .get) { (response, serverError, error) in
+        if isRefreshing {
+            self.refreshControl.beginRefreshing()
+        } else {
+            self.statefulView.isHidden = false
+            self.statefulView.showLoading()
+        }
+        
+        self.dataRequest?.cancel()
+        self.dataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathOrders + "/" + self.getOrderId(), method: .get) { (response, serverError, error) in
             self.refreshControl.endRefreshing()
             
             guard error == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap to reload")
                 return
             }
             
             guard serverError == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.detail, reloadMessage: "Tap to reload")
                 return
             }
+            
+            self.statefulView.isHidden = true
+            self.statefulView.showNothing()
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let details = (responseDict?["data"] as? [String : Any]) {
@@ -309,5 +369,14 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
+    }
+}
+
+//MARK: Notification Methods
+extension OrderDetailsViewController {
+    @objc func orderStatusUpdatedNotification(notification: Notification) {
+        if let id = notification.object as? String, self.getOrderId() == id {
+            self.getOrderDetails(isRefreshing: self.order != nil)
+        }
     }
 }

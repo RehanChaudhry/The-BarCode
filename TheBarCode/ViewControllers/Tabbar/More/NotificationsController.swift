@@ -17,6 +17,8 @@ import FirebaseAnalytics
 class NotificationsController: UIViewController {
   
     @IBOutlet var statefulTableView: StatefulTableView!
+    
+    @IBOutlet var closeBarButton: UIBarButtonItem!
   
     var notifications: [NotificationItem] = []
 
@@ -27,6 +29,9 @@ class NotificationsController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
+        
         self.setUpStatefulTableView()
         self.statefulTableView.triggerInitialLoad()
         

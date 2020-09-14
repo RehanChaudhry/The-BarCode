@@ -52,10 +52,12 @@ class MyOrdersPreviewViewController: UIViewController {
         self.getOnGoingOrders()
         
         NotificationCenter.default.addObserver(self, selector: #selector(orderDetailsDidRefreshed(notif:)), name: notificationNameOrderDidRefresh, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orderStatusUpdatedNotification(notification:)), name: notificationNameOrderStatusUpdated, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameOrderDidRefresh, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderStatusUpdated, object: nil)
     }
     
     //MARK: My Methods
@@ -424,5 +426,10 @@ extension MyOrdersPreviewViewController {
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    @objc func orderStatusUpdatedNotification(notification: Notification) {
+        self.getOnGoingOrders()
+        self.getCompletedOrders()
     }
 }

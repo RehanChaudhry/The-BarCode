@@ -33,8 +33,7 @@ class LoginOptionsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        
-
+        self.addBackButton()
         self.navigationItem.hidesBackButton = true
         
         self.pagerView.register(LoginIntroCollectionViewCell.nib, forCellWithReuseIdentifier: LoginIntroCollectionViewCell.reuseIdentifier)

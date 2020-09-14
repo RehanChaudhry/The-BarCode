@@ -36,6 +36,8 @@ class AccountSettingsViewController: UIViewController {
     @IBOutlet var loginInfoLabel: UILabel!
     @IBOutlet var socialLogoutButton: UIButton!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     var fullNameFieldView: FieldView!
     var emailFieldView: FieldView!
     var dobFieldView: FieldView!
@@ -60,6 +62,8 @@ class AccountSettingsViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         self.socialLogoutButton.isHidden = true
         

@@ -62,6 +62,8 @@ class SearchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.addBackButton()
+        
         if self.selectedScopeItem == nil {
             self.selectedScopeItem = self.scopeItems.first
             self.selectedScopeItem?.isSelected = true

@@ -11,7 +11,12 @@ import UIKit
 extension UIViewController {
     
     func addBackButton() {
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.backIndicatorImage = UIImage()
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+
+        let backImage = UIImage(named: "icon_back")?.withRenderingMode(.alwaysOriginal)
+        let backBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     func updateNavigationBarAppearance() {

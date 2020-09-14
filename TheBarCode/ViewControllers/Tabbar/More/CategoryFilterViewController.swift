@@ -43,6 +43,8 @@ class CategoryFilterViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
+        self.addBackButton()
+        
         if self.comingForUpdatingPreference {
             self.title = "Update Preferences"
             self.continueButton.setTitle("Update", for: .normal)
@@ -52,7 +54,8 @@ class CategoryFilterViewController: UIViewController {
         }
         
         if !self.comingFromSplash {
-            let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
+            let backImage = UIImage(named: "icon_back")?.withRenderingMode(.alwaysOriginal)
+            let cancelBarButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
             self.navigationItem.leftBarButtonItem = cancelBarButton
             self.addBackButton()
         } else {

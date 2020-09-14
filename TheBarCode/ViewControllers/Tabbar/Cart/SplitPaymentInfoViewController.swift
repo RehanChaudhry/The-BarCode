@@ -30,6 +30,8 @@ class SplitPaymentInfoViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "Split The Bill"
         
+        self.addBackButton()
+        
         self.payButton.setTitle(String(format: "Pay - £ %.2f", self.totalBillPayable), for: .normal)
         
         self.qrImageView.generateQRCode(orderId: self.order.orderNo)

@@ -41,10 +41,14 @@ class CheckOutViewController: UIViewController {
         }
     }
     
+    var message: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.addBackButton()
         
         self.setUpStatefulTableView()
 
@@ -62,6 +66,7 @@ class CheckOutViewController: UIViewController {
         self.statefulTableView.innerTable.register(cellType: OrderRadioButtonTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: OrderOfferRedeemTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: OrderOfferDiscountTableViewCell.self)
+        self.statefulTableView.innerTable.register(cellType: OrderMessageTableViewCell.self)
         
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
@@ -148,7 +153,13 @@ class CheckOutViewController: UIViewController {
             let discountInfoSection = OrderOfferDiscountSection(type: .discountInfo, items: [])
             self.viewModels.append(discountInfoSection)
             
-            let redeemButton = OrderOfferRedeem(title: "Redeem")
+            if let message = self.message {
+                let messageInfo = OrderMessage(message: message)
+                let messageSection = OrderMessageSection(items: [messageInfo])
+                self.viewModels.append(messageSection)
+            }
+            
+            let redeemButton = OrderOfferRedeem(title: "Redeem", enable: (self.offers.count > 0 && self.vouchers.count > 0))
             let offerRedeemSection = OrderOfferRedeemSection(type: .offerRedeem, items: [redeemButton])
             self.viewModels.append(offerRedeemSection)
         }
@@ -375,6 +386,12 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
+        } else if let section = viewModel as? OrderMessageSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderMessageTableViewCell.self)
+            cell.setUpCell(messageInfo: section.items[indexPath.row])
+            return cell
+            
         } else {
             return UITableViewCell()
         }
@@ -501,6 +518,7 @@ extension CheckOutViewController {
             }
             
             guard serverError == nil else {
+                self.message = serverError!.errorMessages()
                 return
             }
             

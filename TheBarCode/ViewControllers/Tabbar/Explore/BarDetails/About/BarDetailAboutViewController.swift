@@ -183,13 +183,20 @@ extension BarDetailAboutViewController: SocialLinksCellDelegate {
 //MARK: BarAboutTableViewCellDelegate
 extension BarDetailAboutViewController: BarAboutTableViewCellDelegate {
     func barAboutTableViewCell(cell: BarAboutTableViewCell, reserveTableButtonTapped sender: UIButton) {
-        let tableReservationNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "TableReservationNavigation") as! UINavigationController)
-        tableReservationNavigation.modalPresentationStyle = .fullScreen
-                   
-        let tableReservationViewController = tableReservationNavigation.viewControllers.first as! TableReservationViewController
-        tableReservationViewController.bar = self.bar
+        
+        var url = URL(string: self.bar.reservationUrl.value)
+        if url == nil {
+            url = URL(string: self.bar.reservationUrl.value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? "")
+        }
+        
+        guard let reservation = url else {
+            self.showAlertController(title: "", msg: "Invalid URL")
+            return
+        }
+        
+        UIApplication.shared.open(reservation, options: [:]) { (finished) in
             
-        self.present(tableReservationNavigation, animated: true, completion: nil)
+        }
     }
 }
 

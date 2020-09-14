@@ -74,6 +74,9 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var hasFixedDeliveryCharges = Value.Required<Bool>("is_global_delivery", initial: false)
     var hasFullDayDelivery = Value.Required<Bool>("is_full_day_delivery", initial: false)
     
+    var isReservationAllowed = Value.Required<Bool>("is_reservation", initial: false)
+    var reservationUrl = Value.Required<String>("reservation_url", initial: "")
+    
     var deliveryCondition = Value.Required<String>("delivery_condition", initial: "")
     var deliveryRadius = Value.Required<Double>("delivery_distance", initial: 0.0)
     
@@ -313,6 +316,9 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         if let type = source["type"] as? String {
             self.barTypeRaw.value = type
         }
+        
+        self.isReservationAllowed.value = source["is_reservation"] as? Bool ?? false
+        self.reservationUrl.value = source["reservation_url"] as? String ?? ""
     }
 }
 

@@ -10,9 +10,11 @@ import UIKit
 
 class OrderOfferRedeem: NSObject {
     var title: String = ""
+    var shouldEnableButton: Bool
     
-    init(title: String) {
+    init(title: String, enable: Bool) {
         self.title = title
+        self.shouldEnableButton = enable
     }
 }
 

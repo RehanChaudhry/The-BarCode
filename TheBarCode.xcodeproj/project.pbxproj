@@ -265,6 +265,9 @@
 		0CB683D624FE129C0019C6EE /* OrderDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683D524FE129C0019C6EE /* OrderDiscount.swift */; };
 		0CB683D824FE22E10019C6EE /* PaymentSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB683D724FE22E10019C6EE /* PaymentSplit.swift */; };
 		0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */; };
+		0CBF181A250F38EB007220D0 /* OrderMessageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF1819250F38EB007220D0 /* OrderMessageSection.swift */; };
+		0CBF181D250F39F8007220D0 /* OrderMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBF181B250F39F8007220D0 /* OrderMessageTableViewCell.swift */; };
+		0CBF181E250F39F8007220D0 /* OrderMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CBF181C250F39F8007220D0 /* OrderMessageTableViewCell.xib */; };
 		0CBFFFFE214F931700B017CC /* BarsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBFFFFD214F931700B017CC /* BarsViewController.swift */; };
 		0CC81F9E216DCC8F00FDB92D /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */; };
 		0CC81F9F216DCC8F00FDB92D /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */; };
@@ -762,6 +765,9 @@
 		0CB683D524FE129C0019C6EE /* OrderDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDiscount.swift; sourceTree = "<group>"; };
 		0CB683D724FE22E10019C6EE /* PaymentSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSplit.swift; sourceTree = "<group>"; };
 		0CBF0003214FCB1600B017CC /* ExploreBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreBaseViewController.swift; sourceTree = "<group>"; };
+		0CBF1819250F38EB007220D0 /* OrderMessageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderMessageSection.swift; sourceTree = "<group>"; };
+		0CBF181B250F39F8007220D0 /* OrderMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderMessageTableViewCell.swift; sourceTree = "<group>"; };
+		0CBF181C250F39F8007220D0 /* OrderMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderMessageTableViewCell.xib; sourceTree = "<group>"; };
 		0CBFFFFD214F931700B017CC /* BarsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsViewController.swift; sourceTree = "<group>"; };
 		0CC81F9C216DCC8F00FDB92D /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
 		0CC81F9D216DCC8F00FDB92D /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
@@ -2263,6 +2269,8 @@
 				0C95F3ED24F6902800095D6E /* MyOrderLoadingStateCell.xib */,
 				0C95F3F024F690D300095D6E /* MyOrderFooterView.swift */,
 				0C95F3F224F690EE00095D6E /* MyOrderFooterView.xib */,
+				0CBF181B250F39F8007220D0 /* OrderMessageTableViewCell.swift */,
+				0CBF181C250F39F8007220D0 /* OrderMessageTableViewCell.xib */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2352,6 +2360,7 @@
 				B339E03224DC31A0005990AB /* OrderDeliveryAddressSection.swift */,
 				0C70A63C24FF6A8D006FB611 /* CreditCard.swift */,
 				0C368A6B25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift */,
+				0CBF1819250F38EB007220D0 /* OrderMessageSection.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2603,6 +2612,7 @@
 				0C694B02236C01FC002A08CC /* SharedEventCell.xib in Resources */,
 				B3E0912D24E283A800871256 /* BarAboutTableViewCell.xib in Resources */,
 				832FD1D4216B2BE5008516F4 /* DealDetailTableViewCell.xib in Resources */,
+				0CBF181E250F39F8007220D0 /* OrderMessageTableViewCell.xib in Resources */,
 				0C8BDCD02150D0AF00D5117B /* BarTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2798,6 +2808,7 @@
 				0C478A91215C9D7F002C51FA /* BarDetailAboutViewController.swift in Sources */,
 				0C05DDD42321334D0073A2BA /* AllSearchFoodModel.swift in Sources */,
 				FA65D1DA246A81150084B6F7 /* NotificationItem.swift in Sources */,
+				0CBF181A250F38EB007220D0 /* OrderMessageSection.swift in Sources */,
 				0C5A88F52164C40500F16851 /* OfferDetailViewController.swift in Sources */,
 				0C94FCC82366D29C00B7B18D /* BookmarkedViewController.swift in Sources */,
 				0C86D02522DEF4E90034DA5C /* Drink.swift in Sources */,
@@ -2885,6 +2896,7 @@
 				0CBF0004214FCB1600B017CC /* ExploreBaseViewController.swift in Sources */,
 				B300A6BC24E55D1400037C7C /* Country.swift in Sources */,
 				0C23A87B214656AD00DFB281 /* LoginOptionsViewController.swift in Sources */,
+				0CBF181D250F39F8007220D0 /* OrderMessageTableViewCell.swift in Sources */,
 				0C955E0B2149362900F9385B /* LoadMore.swift in Sources */,
 				B3C4108724E2CAB7008AF43C /* SnackBarInfoView.swift in Sources */,
 				0C39F2F5231E72D500596A2B /* GMUPlacemark.m in Sources */,

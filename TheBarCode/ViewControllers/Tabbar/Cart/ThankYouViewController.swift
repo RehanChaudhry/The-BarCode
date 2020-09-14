@@ -27,6 +27,8 @@ class ThankYouViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "Order # \(self.order.orderNo)"
         
+        self.addBackButton()
+        
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         
         self.setUpStatefulTableView()

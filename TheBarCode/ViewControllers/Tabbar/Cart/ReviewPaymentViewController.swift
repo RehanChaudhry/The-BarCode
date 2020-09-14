@@ -31,6 +31,8 @@ class ReviewPaymentViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "Review"
 
+        self.addBackButton()
+        
         self.payButton.setTitle("Confirm Pay", for: .normal)
         
         self.setUpStatefulTableView()

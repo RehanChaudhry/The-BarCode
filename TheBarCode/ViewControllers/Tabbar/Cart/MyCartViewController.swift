@@ -50,11 +50,14 @@ class MyCartViewController: UIViewController {
     
     var inProgressRequestCount: Int = 0
     var isComingFromBarDetails: Bool = false
+    var barId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.addBackButton()
         
         let leftbarButton = self.navigationItem.leftBarButtonItem
         leftbarButton?.image = leftbarButton?.image?.withRenderingMode(.alwaysOriginal)
@@ -268,9 +271,13 @@ extension MyCartViewController {
             self.loadMore.next = 1
         }
         
-        let params:[String : Any] =  ["pagination" : true,
-                                      "limit" : 5,
-                                      "page" : self.loadMore.next]
+        var params: [String : Any] =  ["pagination" : true,
+                                       "limit" : 5,
+                                       "page" : self.loadMore.next]
+        
+        if let barId = self.barId, self.isComingFromBarDetails {
+            params["establishment_id"] = barId
+        }
         
         self.loadMore.isLoading = true
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .get) { (response, serverError, error) in

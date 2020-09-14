@@ -30,6 +30,8 @@ class BookmarkedEventsViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
+        self.addBackButton()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(eventBookmarkedNotification(notification:)), name: notificationNameEventBookmarked, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(bookmarkedEventRemoved(notification:)), name: notificationNameBookmarkedEventRemoved, object: nil)
         

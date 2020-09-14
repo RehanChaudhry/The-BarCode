@@ -47,6 +47,8 @@ class OrderOfferRedeemTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.showSeparator(show: false)
+        
+        self.titleButton.isUserInteractionEnabled = orderOfferRedeem.shouldEnableButton
     }
     
     //MARK: My IBActions

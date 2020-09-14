@@ -43,6 +43,8 @@ class CategoryFilterLevel2ViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.addBackButton()
+        
         if self.comingForUpdatingPreference {
             self.bottomView.isHidden = true
             self.bottomViewHeight.constant = 0.0

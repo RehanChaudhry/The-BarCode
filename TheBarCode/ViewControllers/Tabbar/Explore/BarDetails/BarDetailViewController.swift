@@ -356,6 +356,7 @@ class BarDetailViewController: UIViewController {
         
         let myCartController = cartNavigation.viewControllers.first as! MyCartViewController
         myCartController.isComingFromBarDetails = true
+        myCartController.barId = self.getSelectedBarId()!
         
         self.navigationController?.present(cartNavigation, animated: true, completion: nil)
     }

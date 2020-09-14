@@ -25,6 +25,8 @@ class InviteViewController: UITableViewController {
     
     @IBOutlet var inviteFriendCodeButton: GradientButton!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     var isRedeemingDeal: Bool = false
     
     weak var delegate: InviteViewControllerDelegate?
@@ -37,6 +39,8 @@ class InviteViewController: UITableViewController {
         // Do any additional setup after loading the view.
         
         self.addBackButton()
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         let coverHeight = ((307.0 / 375.0) * self.view.frame.width)
         var headerFrame = headerView.frame

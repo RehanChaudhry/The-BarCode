@@ -22,6 +22,8 @@ class TabBarController: UITabBarController {
     var showingSharedEventAlert: Bool = false
     var showingSharedOfferAlert: Bool = false
     
+    var shouldPresentOrderDetails: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,6 +52,9 @@ class TabBarController: UITabBarController {
         } else if appDelegate.sharedEventParams != nil {
             self.selectedIndex = 2
             self.shouldHandleSharedEvent = true
+        } else if appDelegate.orderId != nil {
+            self.selectedIndex = 2
+            self.shouldPresentOrderDetails = true
         } else {
             self.selectedIndex = 2
         }
@@ -68,6 +73,8 @@ class TabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(voucherNotification(notification:)), name: notificationNameVoucher, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateMoreBadgeCount(notification:)), name: notificationNameUpdateNotificationCount, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showOrderDetailNotification(notification:)), name: notificationNameShowOrderDetails, object: nil)
 
         if appDelegate.visitLocationManager == nil {
             appDelegate.startVisitLocationManager()
@@ -91,6 +98,9 @@ class TabBarController: UITabBarController {
         } else if self.shouldHandleSharedEvent {
             self.shouldHandleSharedEvent = false
             self.acceptSharedEvent()
+        } else if self.shouldPresentOrderDetails {
+            self.shouldPresentOrderDetails = false
+            self.showOrderDetail()
         }
         
         if  Utility.shared.notificationCount > 0 {
@@ -119,6 +129,8 @@ class TabBarController: UITabBarController {
         
         NotificationCenter.default.removeObserver(self, name: notificationNameVoucher, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameUpdateNotificationCount, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: notificationNameShowOrderDetails, object: nil)
 
         debugPrint("Tabbarcontroller deinit called")
         
@@ -180,6 +192,21 @@ class TabBarController: UITabBarController {
             }
         } else {
             debugPrint("Live offer notification AppDelegate object is nil")
+        }
+        
+    }
+    
+    @objc func showOrderDetail() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let orderDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "OrderDetailsNavigation") as! UINavigationController)
+        orderDetailNav.modalPresentationStyle = .fullScreen
+        
+        if let orderId = appDelegate.orderId {
+            let controller = orderDetailNav.viewControllers.first as! OrderDetailsViewController
+            controller.orderId = orderId
+            self.topMostViewController().present(orderDetailNav, animated: true) {
+                appDelegate.orderId = nil
+            }
         }
         
     }
@@ -371,6 +398,10 @@ extension TabBarController {
         } else {
             self.tabBar.items?[4].badgeValue = nil
         }
+    }
+    
+    @objc func showOrderDetailNotification(notification: Notification) {
+        self.showOrderDetail()
     }
 }
 

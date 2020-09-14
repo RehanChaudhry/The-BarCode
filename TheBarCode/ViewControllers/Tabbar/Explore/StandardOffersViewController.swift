@@ -43,7 +43,9 @@ class StandardOffersViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "Filters"
-        let cancelBarButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
+        
+        let backImage = UIImage(named: "icon_back")?.withRenderingMode(.alwaysOriginal)
+        let cancelBarButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(cancelBarButtonTapped(sender:)))
         self.navigationItem.leftBarButtonItem = cancelBarButton
         
         self.continueButton.setTitle("Update", for: .normal)

@@ -17,6 +17,8 @@ class BarAboutTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet var detailLabel: UILabel!
     
+    @IBOutlet var reservationButton: UIButton!
+    
     weak var delegate: BarAboutTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -33,6 +35,7 @@ class BarAboutTableViewCell: UITableViewCell, NibReusable {
     //MARK: My Methods
     func setupCell(bar: Bar) {
         self.detailLabel.text = bar.detail.value
+        self.reservationButton.isHidden = !bar.isReservationAllowed.value
     }
     
     //MARK: My IBActions

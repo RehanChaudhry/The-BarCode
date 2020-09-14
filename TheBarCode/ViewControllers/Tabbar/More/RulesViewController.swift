@@ -13,10 +13,14 @@ class RulesViewController: UIViewController {
 
     @IBOutlet var textView: UITextView!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 20)
         Analytics.logEvent(viewRedemptionRulesScreen, parameters: nil)

@@ -46,6 +46,7 @@ class SplitBillScannerViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.addBackButton()
         self.cancelBarButtonItem.image = self.cancelBarButtonItem.image?.withRenderingMode(.alwaysOriginal)
         
         self.tableView.tableHeaderView = self.tableHeaderView

@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var chalkboardBarId: String?
     var exclusiveBarId: String?
     var eventBarId: String?
-    var voucherTitle: String? 
+    var voucherTitle: String?
+    var orderId: String?
 
     var refreshFiveADay: Bool?
     
@@ -129,6 +130,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.voucherTitle = title
                     NotificationCenter.default.post(name: notificationNameVoucher, object: nil)
                 
+                } else if notificationType == NotificationType.order, let orderId = (additionalData["order"] as? [String : Any])?["id"] {
+                    
+                    self.orderId = "\(orderId)"
+                    NotificationCenter.default.post(name: notificationNameShowOrderDetails, object: self.orderId!)
+                    
                 } else {
                     
                 }
@@ -142,6 +148,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NotificationCenter.default.post(name: notificationNameUpdateNotificationCount, object: nil)
             //Auto fresh notification List
             NotificationCenter.default.post(name: notificationNameRefreshNotifications, object: nil)
+            
+            if let additionalData = notification?.payload.additionalData,
+                let typeRaw = additionalData["type"] as? String,
+                let type = NotificationType(rawValue: typeRaw),
+                let orderInfo = additionalData["order"] as? [String : Any],
+                let orderId = orderInfo["id"],
+                type == .order {
+                NotificationCenter.default.post(name: notificationNameOrderStatusUpdated, object: "\(orderId)")
+            }
+            
         }
         
         let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]

@@ -12,6 +12,8 @@ import FirebaseAnalytics
 
 class PrivacyPolicyViewController: UIViewController {
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     var webView: WKWebView!
     
     var statefulView: LoadingAndErrorView!
@@ -22,6 +24,8 @@ class PrivacyPolicyViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.title = "Privacy Policy"
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         self.webView = WKWebView()
         self.webView.navigationDelegate = self

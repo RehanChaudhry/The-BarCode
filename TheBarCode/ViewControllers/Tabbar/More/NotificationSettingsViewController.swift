@@ -17,6 +17,8 @@ class NotificationSettingsViewController: UIViewController {
     
     @IBOutlet var updateButton: GradientButton!
     
+    @IBOutlet var closeBarButton: UIBarButtonItem!
+    
     enum SelectedSwitchType: String {
         case fiveADay = "fiveADay",
         liveOfferSwitch = "liveOfferSwitch"
@@ -30,6 +32,8 @@ class NotificationSettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.title = "Notification Settings"
+        
+        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         self.definesPresentationContext = true
         self.setUpNotificationSettings()
