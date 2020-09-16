@@ -18,7 +18,7 @@ target 'TheBarCode' do
   pod 'SwiftyJSON', '~> 4.2.0'
   pod 'KeychainAccess', '~> 3.1.2'
   pod 'CoreStore', '~> 6.3.2'
-  pod 'FBSDKLoginKit', '~> 4.37.0'
+  pod 'FBSDKLoginKit', '~> 7.1.1'
   pod 'SDWebImage', '~> 4.4.2'
   pod 'HTTPStatusCodes', '~> 3.3.1'
   

@@ -53,20 +53,19 @@ static NSMapTable *g_mdnsAdvertisementServices;
 {
   struct utsname systemInfo;
   uname(&systemInfo);
-  NSDictionary *deviceInfo = @{
-                               FBSDK_DEVICE_INFO_DEVICE: [NSString stringWithCString:systemInfo.machine
-                                                                            encoding:NSUTF8StringEncoding],
-                               FBSDK_DEVICE_INFO_MODEL: [[UIDevice currentDevice] model],
+  NSDictionary<NSString *, NSString *> *deviceInfo = @{
+                               FBSDK_DEVICE_INFO_DEVICE: @(systemInfo.machine),
+                               FBSDK_DEVICE_INFO_MODEL: [UIDevice currentDevice].model,
                                };
   NSError *err;
-  NSData *jsonDeviceInfo = [NSJSONSerialization dataWithJSONObject:deviceInfo
+  NSData *jsonDeviceInfo = [FBSDKTypeUtility dataWithJSONObject:deviceInfo
                                                            options:0
                                                              error:&err];
 
   return [[NSString alloc] initWithData:jsonDeviceInfo encoding:NSUTF8StringEncoding];
 }
 
-+ (BOOL)startAdvertisementService:(NSString *)loginCode withDelegate:(id<NSNetServiceDelegate>)delegate;
++ (BOOL)startAdvertisementService:(NSString *)loginCode withDelegate:(id<NSNetServiceDelegate>)delegate
 {
    static NSString *sdkVersion = nil;
   static dispatch_once_t onceToken;
@@ -96,10 +95,8 @@ static NSMapTable *g_mdnsAdvertisementServices;
                                             port:0];
   mdnsAdvertisementService.delegate = delegate;
   [mdnsAdvertisementService publishWithOptions:NSNetServiceNoAutoRename | NSNetServiceListenForConnections];
-  [FBSDKAppEvents logImplicitEvent:FBSDKAppEventNameFBSDKSmartLoginService
-                        valueToSum:nil
-                        parameters:nil
-                       accessToken:nil];
+  [FBSDKAppEvents logInternalEvent:FBSDKAppEventNameFBSDKSmartLoginService
+                isImplicitlyLogged:YES];
   [g_mdnsAdvertisementServices setObject:mdnsAdvertisementService forKey:delegate];
 
   return YES;

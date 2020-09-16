@@ -469,7 +469,7 @@ class AccountSettingsViewController: UIViewController {
     }
 
     @IBAction func socialLogoutButtonTapped(sender: UIButton) {
-        let loginManager = FBSDKLoginManager()
+        let loginManager = LoginManager()
         loginManager.logOut()
         
         self.setUpUserProfile()

@@ -12,7 +12,7 @@ import Reusable
 class FoodMenuHeaderView: UITableViewHeaderFooterView, NibReusable {
 
     @IBOutlet var titleLabel: UILabel!
-    
+    @IBOutlet var containerView: UIView!
     
     func setupHeader(title: String) {
         self.titleLabel.text = title.uppercased()

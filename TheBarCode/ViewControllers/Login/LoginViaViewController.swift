@@ -85,14 +85,14 @@ class LoginViaViewController: UIViewController {
     //MARK: My Methods
     func socialLogin() {
         
-        let loginManager = FBSDKLoginManager()
+        let loginManager = LoginManager()
         let permissions = ["public_profile"]
         
         self.fbButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         loginManager.logOut()
-        loginManager.logIn(withReadPermissions: permissions, from: self) { (result, error) in
+        loginManager.logIn(permissions: permissions, from: self) { (result, error) in
             
             guard result?.isCancelled == false else {
                 debugPrint("Facebook login cancelled")
@@ -109,8 +109,8 @@ class LoginViaViewController: UIViewController {
             }
             
             let params = ["fields": "id, name, picture.width(180).height(180)"]
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: params)
-            graphRequest?.start(completionHandler: { (connection, graphRequestResult, error) in
+            let graphRequest = GraphRequest(graphPath: "me", parameters: params)
+            graphRequest.start(completionHandler: { (connection, graphRequestResult, error) in
                 
                 guard error == nil else {
                     self.fbButton.hideLoader()
@@ -124,12 +124,12 @@ class LoginViaViewController: UIViewController {
                     let socialAccountId = "\(result["id"]!)"
                     let fullName = result["name"] as! String
                     let profileImage = "https://graph.facebook.com/\(socialAccountId)/picture?width=200&height=200"
-                    let accessToken = FBSDKAccessToken.current()!.tokenString
+                    let accessToken = AccessToken.current!.tokenString
                     
                     let socialLoginParams = ["social_account_id" : socialAccountId,
                                              "full_name" : fullName,
                                              "profile_image" : profileImage,
-                                             "access_token" : accessToken!,
+                                             "access_token" : accessToken,
                                              "provider" : SignUpProvider.facebook.rawValue]
                     
                     let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
@@ -148,7 +148,7 @@ class LoginViaViewController: UIViewController {
                             
                             if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
                                 let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
-                                signUpViewController.facebookParams = (socialAccountId, FBSDKAccessToken.current()!.tokenString)
+                                signUpViewController.facebookParams = (socialAccountId, AccessToken.current!.tokenString)
                                 signUpViewController.signupProvider = .facebook
                                 let _ = signUpViewController.view
                                 self.navigationController?.pushViewController(signUpViewController, animated: true)

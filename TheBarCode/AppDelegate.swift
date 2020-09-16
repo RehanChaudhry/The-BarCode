@@ -178,7 +178,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         Analytics.logEvent(appLaunched, parameters: nil)
         
@@ -221,7 +221,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
         if url.scheme == "fb182951649264383" {
-            let handled = FBSDKApplicationDelegate.sharedInstance()?.application(app, open: url, options: options)
+            let handled = ApplicationDelegate.shared.application(app, open: url, options: options)
             return handled ?? false
         } else if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url), let link = dynamicLink.url {
             

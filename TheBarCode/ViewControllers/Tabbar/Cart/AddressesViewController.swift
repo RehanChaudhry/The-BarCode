@@ -302,7 +302,7 @@ extension AddressesViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Addresses Found"
+            let title = "No Address To Show"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
