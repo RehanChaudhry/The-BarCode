@@ -72,7 +72,7 @@ class ThankYouViewController: UIViewController {
         
         var totalProductPrice = self.getProductsTotalPrice()
         
-        let barInfo = BarInfo(barName: self.order.barName)
+        let barInfo = BarInfo(barName: self.order.barName, orderType: self.order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
@@ -104,7 +104,7 @@ class ThankYouViewController: UIViewController {
         var shouldAppendTotal: Bool = false
         
         if order.userId != currentUser.userId.value || order.paymentSplit.count > 1 {
-            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: amount + discount)
+            let splitAmountInfo = OrderBillInfo(title: "Your Splitted Amount", price: amount + discount)
             let orderAmountSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo])
             self.viewModels.append(orderAmountSplitBillInfoSection)
             
@@ -130,7 +130,7 @@ class ThankYouViewController: UIViewController {
         self.viewModels.append(orderDiscountSection)
         
         if shouldAppendTotal {
-            let splitTotalInfo = OrderBillInfo(title: "Total", price: amount)
+            let splitTotalInfo = OrderBillInfo(title: "Total Paid", price: amount)
             splitTotalInfo.shouldRoundCorners = true
             splitTotalInfo.showWithBlackAppearance = true
             

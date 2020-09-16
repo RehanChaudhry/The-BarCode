@@ -86,7 +86,8 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
         
         UIView.performWithoutAnimation {
-            self.removeItemButton.setTitle("\(drink.quantity.value) Items Added ", for: .normal)
+            let suffix = drink.quantity.value > 1 ? "Items Added" : "Item Added"
+            self.removeItemButton.setTitle("\(drink.quantity.value) \(suffix) ", for: .normal)
             self.removeItemButton.layoutIfNeeded()
         }
         
@@ -123,7 +124,8 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
         
         UIView.performWithoutAnimation {
-            self.removeItemButton.setTitle("\(food.quantity.value) Items Added ", for: .normal)
+            let suffix = food.quantity.value > 1 ? "Items Added" : "Item Added"
+            self.removeItemButton.setTitle("\(food.quantity.value) \(suffix) ", for: .normal)
             self.removeItemButton.layoutIfNeeded()
         }
         

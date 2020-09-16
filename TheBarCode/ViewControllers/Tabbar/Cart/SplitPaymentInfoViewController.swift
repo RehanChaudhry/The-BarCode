@@ -32,7 +32,7 @@ class SplitPaymentInfoViewController: UIViewController {
         
         self.addBackButton()
         
-        self.payButton.setTitle(String(format: "Pay - £ %.2f", self.totalBillPayable), for: .normal)
+        self.payButton.setTitle(String(format: "Continue - £ %.2f", self.totalBillPayable), for: .normal)
         
         self.qrImageView.generateQRCode(orderId: self.order.orderNo)
         

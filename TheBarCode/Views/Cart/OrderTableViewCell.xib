@@ -13,19 +13,22 @@
         <array key="Lato-BoldItalic.ttf">
             <string>Lato-BoldItalic</string>
         </array>
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderTableViewCell" id="Epx-CJ-3Zg" customClass="OrderTableViewCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="101"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="116"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epx-CJ-3Zg" id="Z7P-MQ-WEh">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="101"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="116"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tk3-KU-l2Q">
-                        <rect key="frame" x="16" y="8" width="382" height="85"/>
+                        <rect key="frame" x="16" y="8" width="382" height="100"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ORDER NO. 823488234" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GU-zT-Juc">
                                 <rect key="frame" x="12" y="12" width="153.5" height="17"/>
@@ -34,16 +37,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="£ 23.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRw-3L-Jau">
-                                <rect key="frame" x="12" y="56" width="250" height="17"/>
+                                <rect key="frame" x="12" y="53" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="Szh-le-FqG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Albert's Schloss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aN-II-GSJ">
-                                <rect key="frame" x="12" y="34" width="91.5" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Albert's Schloss" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aN-II-GSJ">
+                                <rect key="frame" x="12" y="34" width="334" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-BoldItalic" family="Lato" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -56,7 +59,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf8-di-wO6">
-                                <rect key="frame" x="270" y="41" width="100" height="32"/>
+                                <rect key="frame" x="270" y="56" width="100" height="32"/>
                                 <color key="backgroundColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="OGL-yK-OFS"/>
@@ -73,6 +76,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£ 23.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Azn-NE-0Qq">
+                                <rect key="frame" x="174" y="12" width="172" height="17"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -83,11 +92,16 @@
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mRw-3L-Jau" secondAttribute="bottom" constant="12" id="4sc-Pf-Mng"/>
                             <constraint firstItem="3GU-zT-Juc" firstAttribute="top" secondItem="Tk3-KU-l2Q" secondAttribute="top" constant="12" id="A8M-H2-okF"/>
                             <constraint firstItem="8aN-II-GSJ" firstAttribute="top" secondItem="3GU-zT-Juc" secondAttribute="bottom" constant="5" id="DPp-d5-S1v"/>
+                            <constraint firstItem="Vdx-4a-ytg" firstAttribute="leading" secondItem="8aN-II-GSJ" secondAttribute="trailing" constant="8" id="EbR-vA-tWe"/>
                             <constraint firstItem="8aN-II-GSJ" firstAttribute="leading" secondItem="Tk3-KU-l2Q" secondAttribute="leading" constant="12" id="HFN-fh-AmS"/>
                             <constraint firstItem="Uf8-di-wO6" firstAttribute="leading" secondItem="mRw-3L-Jau" secondAttribute="trailing" constant="8" id="K53-dg-0vW"/>
+                            <constraint firstItem="Vdx-4a-ytg" firstAttribute="leading" secondItem="Azn-NE-0Qq" secondAttribute="trailing" constant="8" id="NEw-Ca-zSg"/>
+                            <constraint firstItem="Azn-NE-0Qq" firstAttribute="bottom" secondItem="3GU-zT-Juc" secondAttribute="bottom" id="S5R-ui-oDZ"/>
+                            <constraint firstItem="Azn-NE-0Qq" firstAttribute="leading" secondItem="3GU-zT-Juc" secondAttribute="trailing" constant="8.5" id="WAm-Ra-2LZ"/>
+                            <constraint firstItem="Azn-NE-0Qq" firstAttribute="top" secondItem="3GU-zT-Juc" secondAttribute="top" id="l0g-5O-PPh"/>
                             <constraint firstAttribute="trailing" secondItem="Vdx-4a-ytg" secondAttribute="trailing" constant="4" id="uIt-pK-TdS"/>
                             <constraint firstAttribute="trailing" secondItem="Uf8-di-wO6" secondAttribute="trailing" constant="12" id="v6r-lp-ewL"/>
-                            <constraint firstItem="Uf8-di-wO6" firstAttribute="top" secondItem="8aN-II-GSJ" secondAttribute="bottom" constant="-10" id="wxA-to-iFN"/>
+                            <constraint firstItem="Uf8-di-wO6" firstAttribute="top" secondItem="8aN-II-GSJ" secondAttribute="bottom" constant="8" id="wxA-to-iFN"/>
                             <constraint firstItem="Vdx-4a-ytg" firstAttribute="centerY" secondItem="3GU-zT-Juc" secondAttribute="centerY" id="zel-Bj-742"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -107,8 +121,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="barNameLabel" destination="8aN-II-GSJ" id="cdp-3v-BSx"/>
+                <outlet property="dateLabel" destination="mRw-3L-Jau" id="rc3-eS-xvK"/>
                 <outlet property="orderNoLabel" destination="3GU-zT-Juc" id="clQ-Ay-YOY"/>
-                <outlet property="priceLabel" destination="mRw-3L-Jau" id="O7G-9l-xOn"/>
+                <outlet property="priceLabel" destination="Azn-NE-0Qq" id="TxI-ZA-3lk"/>
                 <outlet property="statusButton" destination="Uf8-di-wO6" id="wgS-wo-uhH"/>
             </connections>
             <point key="canvasLocation" x="60.869565217391312" y="113.50446428571428"/>

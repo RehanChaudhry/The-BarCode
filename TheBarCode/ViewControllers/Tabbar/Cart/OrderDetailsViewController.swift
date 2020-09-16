@@ -107,7 +107,7 @@ class OrderDetailsViewController: UIViewController {
         let orderStatusSection = OrderStatusSection(items: [orderStatusInfo])
         self.viewModels.append(orderStatusSection)
         
-        let barInfo = BarInfo(barName: order.barName)
+        let barInfo = BarInfo(barName: order.barName, orderType: order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
@@ -139,7 +139,7 @@ class OrderDetailsViewController: UIViewController {
         var shouldAppendTotal: Bool = false
         
         if order.userId != currentUser.userId.value || order.paymentSplit.count > 1 {
-            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: amount + discount)
+            let splitAmountInfo = OrderBillInfo(title: "Your Splitted Amount", price: amount + discount)
             let orderAmountSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo])
             self.viewModels.append(orderAmountSplitBillInfoSection)
             
@@ -165,7 +165,7 @@ class OrderDetailsViewController: UIViewController {
         self.viewModels.append(orderDiscountSection)
         
         if shouldAppendTotal {
-            let splitTotalInfo = OrderBillInfo(title: "Total", price: amount)
+            let splitTotalInfo = OrderBillInfo(title: "Total Paid", price: amount)
             splitTotalInfo.shouldRoundCorners = true
             splitTotalInfo.showWithBlackAppearance = true
             

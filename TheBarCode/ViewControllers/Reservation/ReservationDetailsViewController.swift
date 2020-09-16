@@ -62,7 +62,7 @@ class ReservationDetailsViewController: UIViewController {
     
     func setupViewModel() {
         
-        let barInfo = BarInfo(barName: self.reservation.barName)
+        let barInfo = BarInfo(barName: self.reservation.barName, orderType: OrderType.none)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
         

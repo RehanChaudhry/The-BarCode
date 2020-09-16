@@ -53,11 +53,13 @@ class MyOrdersPreviewViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(orderDetailsDidRefreshed(notif:)), name: notificationNameOrderDidRefresh, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(orderStatusUpdatedNotification(notification:)), name: notificationNameOrderStatusUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlacedNotification(notification:)), name: notificationNameOrderPlaced, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameOrderDidRefresh, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameOrderStatusUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
     
     //MARK: My Methods
@@ -314,7 +316,7 @@ extension MyOrdersPreviewViewController: UITableViewDataSource, UITableViewDeleg
             switch self.ongoingOrderState {
             case .empty:
                 let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: MyOrderLoadingStateCell.self)
-                cell.show(title: "No Orders", subtitle: "Tap to refresh")
+                cell.show(title: "No Orders to show", subtitle: "Tap to refresh")
                 cell.delegate = self
                 return cell
             case .error:
@@ -337,7 +339,7 @@ extension MyOrdersPreviewViewController: UITableViewDataSource, UITableViewDeleg
             switch self.completedOrderState {
             case .empty:
                 let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: MyOrderLoadingStateCell.self)
-                cell.show(title: "No Orders", subtitle: "Tap to refresh")
+                cell.show(title: "No Orders to show", subtitle: "Tap to refresh")
                 cell.delegate = self
                 return cell
             case .error:
@@ -429,6 +431,11 @@ extension MyOrdersPreviewViewController {
     }
     
     @objc func orderStatusUpdatedNotification(notification: Notification) {
+        self.getOnGoingOrders()
+        self.getCompletedOrders()
+    }
+    
+    @objc func orderDidPlacedNotification(notification: Notification) {
         self.getOnGoingOrders()
         self.getCompletedOrders()
     }

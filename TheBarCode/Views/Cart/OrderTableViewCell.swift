@@ -11,10 +11,11 @@ import Reusable
 
 class OrderTableViewCell: UITableViewCell, NibReusable {
 
-    @IBOutlet weak var orderNoLabel: UILabel!
-    @IBOutlet weak var barNameLabel: UILabel!
+    @IBOutlet var orderNoLabel: UILabel!
+    @IBOutlet var barNameLabel: UILabel!
     
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet var priceLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
     
     @IBOutlet weak var statusButton: UIButton!
     
@@ -32,7 +33,7 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
     func setUpCell(order: Order) {
         
         self.orderNoLabel.text = "ORDER NO. " + order.orderNo
-        self.barNameLabel.text = order.barName
+        self.barNameLabel.text = order.barName + " - " + order.orderType.displayableValue()
         self.priceLabel.text = String(format: "£ %.2f", order.total)
         
         self.statusButton.titleLabel?.lineBreakMode = .byWordWrapping
@@ -44,8 +45,13 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
         } else {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
-
         }
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        self.dateLabel.text = dateformatter.string(from: order.updatedAt)
+        
     }
     
     func setUpCell(reservation: Reservation) {

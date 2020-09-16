@@ -47,6 +47,12 @@ class AddCardViewController: UIViewController {
     
     @IBOutlet var addCardButton: GradientButton!
     
+    @IBOutlet var toolBar: UIToolbar!
+    @IBOutlet var nextBarButton: UIBarButtonItem!
+    @IBOutlet var previousBarButton: UIBarButtonItem!
+    @IBOutlet var spaceBarButton: UIBarButtonItem!
+    @IBOutlet var doneBarButton: UIBarButtonItem!
+    
     lazy var countries: [Country] = {
         return Country.allCountries()
     }()
@@ -312,6 +318,9 @@ extension AddCardViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == self.expiryField {
+            
+            self.toolBar.setItems([previousBarButton, nextBarButton, spaceBarButton, doneBarButton], animated: false)
+            
             self.pickerView.reloadAllComponents()
             if let month = self.selectedExpiry?.month,
                 let year = self.selectedExpiry?.year,
@@ -324,6 +333,9 @@ extension AddCardViewController: UITextFieldDelegate {
                 self.pickerView.selectRow(0, inComponent: 1, animated: true)
             }
         } else if textField == self.countryField {
+            
+            self.toolBar.setItems([previousBarButton, spaceBarButton, doneBarButton], animated: false)
+            
             self.pickerView.reloadAllComponents()
             if let country = self.selectedCountry,
                 let index = self.countries.firstIndex(where: {$0.id == country.id}) {

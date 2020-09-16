@@ -61,6 +61,7 @@ class BarDetailViewController: UIViewController {
     
     var cartCount: Int = 0 {
         didSet {
+            self.setUpCartBarButton()
             self.updateCartBadgeCount()
         }
     }
@@ -251,7 +252,7 @@ class BarDetailViewController: UIViewController {
             return
         }
         
-        if selectedBar.isInAppPaymentOn.value {
+        if selectedBar.isInAppPaymentOn.value && self.cartCount > 0  {
             self.navigationItem.rightBarButtonItem = self.cartBarButton
         } else {
             self.navigationItem.rightBarButtonItem = nil
@@ -367,8 +368,10 @@ class BarDetailViewController: UIViewController {
             badgeAppearance.backgroundColor = UIColor.red
             badgeAppearance.textColor = UIColor.white
             badgeAppearance.textAlignment = .center
-            badgeAppearance.textSize = 12
-            self.cartBarButton.badge(text: "\(self.cartCount)", appearance: badgeAppearance)
+            badgeAppearance.textSize = 10
+            badgeAppearance.distanceFromCenterX = 10.0
+            badgeAppearance.distanceFromCenterY = -10.0
+            self.cartBarButton.badge(text: "\(self.cartCount > 9 ? "9+" : "\(self.cartCount)")", appearance: badgeAppearance)
         } else {
             self.cartBarButton.badge(text: nil)
         }

@@ -78,7 +78,7 @@ class ReviewPaymentViewController: UIViewController {
             return
         }
         
-        let barInfo = BarInfo(barName: order.barName)
+        let barInfo = BarInfo(barName: order.barName, orderType: order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
@@ -89,14 +89,14 @@ class ReviewPaymentViewController: UIViewController {
             return result + (Double(item.quantity) * item.unitPrice)
         }
         
-        let orderTotalBillInfo = OrderBillInfo(title: order.paymentSplit.count == 0 ? "Total" : "Grand Total", price: total)
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
         var paidAmount: Double = 0.0
         if order.paymentSplit.count > 0 {
             
-            let splitAmountInfo = OrderBillInfo(title: "Split Amount", price: 0.0)
+            let splitAmountInfo = OrderBillInfo(title: "Your Splitted Amount", price: 0.0)
             let splitTotalInfo = OrderBillInfo(title: "Total", price: 0.0)
             let orderSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo, splitTotalInfo])
             self.viewModels.append(orderSplitBillInfoSection)

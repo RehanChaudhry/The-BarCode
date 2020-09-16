@@ -224,12 +224,9 @@ extension CartBaseViewController: UIPageViewControllerDelegate {
 extension CartBaseViewController: MyCartViewControllerDelegate {
     func myCartViewController(controller: MyCartViewController, badgeCountDidUpdate count: Int) {
         self.counterContainerView.isHidden = count == 0
-
-        let attributes = [NSAttributedStringKey.baselineOffset : 0.5,
-                          NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 12.0),
-                          NSAttributedStringKey.foregroundColor : UIColor.white] as [NSAttributedStringKey : Any]
-        let attributedCount = NSAttributedString(string: "\(count)", attributes: attributes)
-        self.myCartCountLabel.attributedText = attributedCount
+        self.myCartCountLabel.textColor = UIColor.white
+        self.myCartCountLabel.font = UIFont.appBoldFontOf(size: 12.0)
+        self.myCartCountLabel.text = count > 9 ? "9+" : "\(count)"
     }
 }
 

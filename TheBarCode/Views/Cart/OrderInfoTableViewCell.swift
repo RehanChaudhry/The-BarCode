@@ -64,7 +64,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     }
 
     func setupCell(barInfo: BarInfo, showSeparator: Bool) {
-        self.leftLabel.text = barInfo.barName
+        self.leftLabel.text = barInfo.barName + " - " + barInfo.orderType.displayableValue()
         self.leftLabel.font = UIFont.appBoldFontOf(size: 14)
 
         self.rightLabel.isHidden = true

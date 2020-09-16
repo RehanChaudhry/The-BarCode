@@ -53,10 +53,12 @@ protocol OrderViewModel: class {
 //MARK: BarDetails
 class BarInfo: NSObject {
     
-    var barName: String = ""
+    var barName: String
+    var orderType: OrderType
 
-    init(barName: String) {
+    init(barName: String, orderType: OrderType) {
         self.barName = barName
+        self.orderType = orderType
     }
 }
 

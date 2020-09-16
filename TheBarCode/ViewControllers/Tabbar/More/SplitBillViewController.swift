@@ -56,7 +56,7 @@ class SplitBillViewController: UIViewController {
         
         self.viewModels.removeAll()
         
-        let barInfo = BarInfo(barName: order.barName)
+        let barInfo = BarInfo(barName: order.barName, orderType: order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
@@ -152,7 +152,8 @@ class SplitBillViewController: UIViewController {
             
             let value = (self.viewModels.first(where: {$0.type == .percentSplitField}) as? OrderFieldSection)?.items.first?.text ?? ""
             if let percent = Double(value), percent <= 100.0, percent > 0 {
-                splitPaymentInfo = (type: .percent, value: percent / self.getProductsTotal() * 100.0)
+                let amount = self.getProductsTotal() / 100.0 * percent
+                splitPaymentInfo = (type: .percent, value: amount)
             } else {
                 isValid = false
                 self.showAlertController(title: "", msg: "Please enter a valid percentage")

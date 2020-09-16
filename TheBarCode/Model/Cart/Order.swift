@@ -64,6 +64,10 @@ class Order: Mappable {
     var maxDeliveryCharges: Double?
     var customDeliveryCharges: Double?
         
+    var updatedAtRaw: String = ""
+    var updatedAt: Date = Date()
+    
+    
     var establishmentDayStatus: EstablishmentOpenStatus {
         get {
             return EstablishmentOpenStatus(rawValue: self.establishmentDayStatusRaw) ?? .closed
@@ -147,6 +151,12 @@ class Order: Mappable {
             self.orderTypeRaw <- map["type"]
         }
         
+        self.updatedAtRaw <- map["updated_at.date"]
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        dateformatter.timeZone = serverTimeZone
+        self.updatedAt = dateformatter.date(from: self.updatedAtRaw) ?? Date()
         
     }
    

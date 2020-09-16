@@ -146,7 +146,7 @@ class MyCartViewController: UIViewController {
             for item in order.orderItems {
                 count += item.quantity
             }
-            self.tabBarController?.tabBar.items?[3].badgeValue = "\(count)"
+            self.tabBarController?.tabBar.items?[3].badgeValue = count > 9 ? "9+" : "\(count)"
             self.delegate?.myCartViewController(controller: self, badgeCountDidUpdate: count)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = nil
@@ -432,10 +432,10 @@ extension MyCartViewController {
             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                 if let food = try! transaction.fetchOne(From<Food>(), Where(\Food.id == item.id)) {
                     let edittedFood = transaction.edit(food)
-                    edittedFood?.quantity.value = item.quantity
+                    edittedFood?.quantity.value = !shouldDelete ? item.quantity : 0
                 } else if let drink = try! transaction.fetchOne(From<Drink>(), Where(\Drink.id == item.id)) {
                     let edittedDrink = transaction.edit(drink)
-                    edittedDrink?.quantity.value = item.quantity
+                    edittedDrink?.quantity.value = !shouldDelete ? item.quantity : 0
                 }
             })
             

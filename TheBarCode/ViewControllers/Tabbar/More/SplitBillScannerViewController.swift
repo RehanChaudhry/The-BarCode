@@ -143,7 +143,7 @@ class SplitBillScannerViewController: UIViewController {
             return
         }
 
-        let barInfo = BarInfo(barName: order.barName)
+        let barInfo = BarInfo(barName: order.barName, orderType: order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
@@ -158,8 +158,15 @@ class SplitBillScannerViewController: UIViewController {
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
-        self.bottomButtonContainer.isHidden = false
-        self.bottomSafeAreaView.isHidden = false
+        if Utility.shared.getCurrentUser()?.userId.value == order.userId {
+            self.bottomButtonContainer.isHidden = true
+            self.bottomSafeAreaView.isHidden = true
+            
+            self.showAlertController(title: "", msg: "You are not able to split the bill")
+        } else {
+            self.bottomButtonContainer.isHidden = false
+            self.bottomSafeAreaView.isHidden = false
+        }
     }
     
     //MARK: My IBActions

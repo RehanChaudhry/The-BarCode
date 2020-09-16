@@ -201,7 +201,7 @@ extension MyOrdersViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Orders"
+            let title = "No Orders to show"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

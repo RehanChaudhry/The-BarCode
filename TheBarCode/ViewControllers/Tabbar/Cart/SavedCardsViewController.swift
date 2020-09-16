@@ -9,6 +9,7 @@
 import UIKit
 import ObjectMapper
 import PureLayout
+import CoreStore
 
 class SavedCardsViewController: UIViewController {
 
@@ -94,6 +95,19 @@ class SavedCardsViewController: UIViewController {
         let sections = self.tableView.numberOfSections
         let indexSet = IndexSet(integersIn: 0..<sections)
         self.tableView.reloadSections(indexSet, with: .fade)
+    }
+    
+    func postDealRedeemNotificationIfNeeded() {
+        if self.selectedOffer != nil {
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.order.barId))
+                for bar in bars {
+                    bar.canRedeemOffer.value = false
+                }
+            })
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameDealRedeemed), object: nil, userInfo: nil)
+        }
     }
     
     //MARK: My IBActions
@@ -269,6 +283,7 @@ extension SavedCardsViewController {
                 let order = Mapper<Order>(context: context).map(JSON: responseObject)!
                 
                 self.moveToThankYou(order: order)
+                self.postDealRedeemNotificationIfNeeded()
                 
                 NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
                 
@@ -317,10 +332,8 @@ extension SavedCardsViewController: AddCardViewControllerDelegate {
     func addCardViewController(controller: AddCardViewController, cardDidAdded card: CreditCard) {
         
         self.cards.insert(card, at: 0)
-        if self.selectedCard == nil {
-            self.selectedCard = card
-        }
-        
+        self.selectedCard = card
+
         self.tableView.reloadData()
     }
 }

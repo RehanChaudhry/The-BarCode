@@ -15,7 +15,7 @@ protocol OrderOfferRedeemTableViewCellDelegate: class {
 
 class OrderOfferRedeemTableViewCell: UITableViewCell, NibReusable {
 
-    @IBOutlet var titleButton: UIButton!
+    @IBOutlet var titleButton: GradientButton!
     
     weak var delegate: OrderOfferRedeemTableViewCellDelegate?
     
@@ -47,6 +47,12 @@ class OrderOfferRedeemTableViewCell: UITableViewCell, NibReusable {
         }
         
         self.showSeparator(show: false)
+        
+        if orderOfferRedeem.shouldEnableButton {
+            self.titleButton.updateColor(withGrey: false)
+        } else {
+            self.titleButton.updateColor(withGrey: true)
+        }
         
         self.titleButton.isUserInteractionEnabled = orderOfferRedeem.shouldEnableButton
     }

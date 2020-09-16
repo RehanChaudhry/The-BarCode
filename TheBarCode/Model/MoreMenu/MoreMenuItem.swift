@@ -31,7 +31,7 @@ enum MenuItemType: String {
         case .myReservations:
             return ("My Reservations", "icon_reservation", "MyReservationsNavigation", true, 16.0)
         case .splitPayment:
-            return ("Split Payment Scanner", "icon_split_payment", "SplitTheBillNavigation", true, 16.0)
+            return ("Split The Bill Scanner", "icon_split_payment", "SplitTheBillNavigation", true, 16.0)
         case .notification:
             return ("Notifications", "icon_notification", "NotificationNavigation", true, 16.0)
         case .accountSettings:

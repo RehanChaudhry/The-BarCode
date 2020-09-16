@@ -17,6 +17,21 @@ enum OrderType: String {
     counterCollection = "collection",
     delivery = "delivery",
     none = "none"
+    
+    func displayableValue() -> String {
+        switch self {
+        case .dineIn:
+            return "Dine In"
+        case .takeAway:
+            return "Takeaway"
+        case .counterCollection:
+            return "Counter Collection"
+        case .delivery:
+            return "Delivery"
+        default:
+            return ""
+        }
+    }
 }
 
 class OrderTypeViewController: UIViewController {
@@ -47,6 +62,8 @@ class OrderTypeViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.title = "Order Type"
+        
+        self.order.orderTypeRaw = OrderType.dineIn.rawValue
         
         self.addBackButton()
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
@@ -92,14 +109,14 @@ class OrderTypeViewController: UIViewController {
        
         self.viewModels.removeAll()
         
-        let barInfo = BarInfo(barName: self.order.barName)
+        let barInfo = BarInfo(barName: self.order.barName, orderType: self.order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
         let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
         self.viewModels.append(orderProductsSection)
         
-        let orderTotalBillInfo = OrderBillInfo(title: "Total", price: 0.0)
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
@@ -182,7 +199,17 @@ class OrderTypeViewController: UIViewController {
     
     func reloadOrderTypeSections() {
         let dineInSectionIndex = self.viewModels.firstIndex(where: {$0.type == .dineIn}) ?? 0
-        let indexSet = IndexSet(integersIn: dineInSectionIndex..<self.viewModels.count)
+        
+        var sections: [Int] = []
+        if let barInfoSection = self.viewModels.firstIndex(where: {$0.type == .barDetails}) {
+            sections.append(barInfoSection)
+        }
+        
+        for i in dineInSectionIndex..<self.viewModels.count {
+            sections.append(i)
+        }
+    
+        let indexSet = IndexSet(sections)
         self.tableView.reloadSections(indexSet, with: .fade)
     }
     
@@ -285,6 +312,13 @@ class OrderTypeViewController: UIViewController {
         splitpaymentController.viewModels = viewModels
         splitpaymentController.totalBillPayable = self.totalBillPayable
         self.navigationController?.pushViewController(splitpaymentController, animated: true)
+    }
+    
+    func updateOrderType(orderType: OrderType) {
+        self.order.orderTypeRaw = orderType.rawValue
+        if let barDetailSection = self.viewModels.first(where: {$0.type == .barDetails}) as? BarInfoSection {
+            barDetailSection.items.first?.orderType = orderType
+        }
     }
     
     //MARK: My IBActions
@@ -459,23 +493,28 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             
             self.addDineInField()
             self.removeAddress()
+            self.updateOrderType(orderType: .dineIn)
             
         } else if let takeAway = self.viewModels[indexPath.section] as? OrderTakeAwaySection {
             takeAway.items.first?.isSelected = true
             
             self.removeDineInField()
             self.removeAddress()
+            self.updateOrderType(orderType: .takeAway)
             
         } else if let counterCollection  = self.viewModels[indexPath.section] as? OrderCounterCollectionSection {
             counterCollection.items.first?.isSelected = true
             
             self.removeDineInField()
             self.removeAddress()
+            self.updateOrderType(orderType: .counterCollection)
+            
         } else if let deliverySetion = self.viewModels[indexPath.section] as? OrderDeliverySection {
             deliverySetion.items.first?.isSelected = true
             
             self.removeDineInField()
             self.addAddress()
+            self.updateOrderType(orderType: .delivery)
         }
         
         self.reloadOrderTypeSections()

@@ -52,7 +52,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
             self.priceLabel.textColor = UIColor.appBlueColor()
         }
         
-        self.paymentLabel.text = String(format: "%@ (%.2f%%)", orderPaymentInfo.status.rawValue.uppercased(), orderPaymentInfo.percentage)
+        self.paymentLabel.text = "\(orderPaymentInfo.status.rawValue.uppercased())" + " " + "\(Int(orderPaymentInfo.percentage))%"
         
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
         self.priceLabel.text =  "£ " + priceString
