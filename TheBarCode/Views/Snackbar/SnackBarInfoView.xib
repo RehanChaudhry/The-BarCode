@@ -29,7 +29,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucX-t4-Cch">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                     <subviews>
-                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OqI-8v-kSm">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ARN-du-JW5">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <connections>
+                                <action selector="actionButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="fmi-kv-9bK"/>
+                            </connections>
+                        </button>
+                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OqI-8v-kSm">
                             <rect key="frame" x="234" y="4" width="60" height="42"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b79-71-lSY">
@@ -186,6 +192,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="ARN-du-JW5" firstAttribute="leading" secondItem="ucX-t4-Cch" secondAttribute="leading" id="0kM-QA-tG3"/>
                         <constraint firstItem="3w2-yx-o08" firstAttribute="leading" secondItem="OqI-8v-kSm" secondAttribute="trailing" constant="5" id="3Rq-54-AEW"/>
                         <constraint firstItem="OqI-8v-kSm" firstAttribute="leading" secondItem="dVi-EN-I31" secondAttribute="trailing" constant="8" id="AOm-qk-bo9"/>
                         <constraint firstAttribute="bottom" secondItem="3w2-yx-o08" secondAttribute="bottom" constant="4" id="Bpx-cY-Mjc"/>
@@ -194,8 +201,11 @@
                         <constraint firstItem="3w2-yx-o08" firstAttribute="leading" secondItem="OqI-8v-kSm" secondAttribute="trailing" constant="5" id="Hib-as-5IN"/>
                         <constraint firstItem="dVi-EN-I31" firstAttribute="top" secondItem="ucX-t4-Cch" secondAttribute="top" constant="4" id="R7A-5a-avI"/>
                         <constraint firstItem="dVi-EN-I31" firstAttribute="leading" secondItem="ucX-t4-Cch" secondAttribute="leading" constant="16" id="Wh9-8P-daQ"/>
+                        <constraint firstAttribute="trailing" secondItem="ARN-du-JW5" secondAttribute="trailing" id="Xjc-3z-b5a"/>
                         <constraint firstAttribute="trailing" secondItem="3w2-yx-o08" secondAttribute="trailing" constant="16" id="d4i-63-HcI"/>
                         <constraint firstItem="3w2-yx-o08" firstAttribute="top" secondItem="ucX-t4-Cch" secondAttribute="top" constant="4" id="eEW-gB-kTt"/>
+                        <constraint firstItem="ARN-du-JW5" firstAttribute="top" secondItem="ucX-t4-Cch" secondAttribute="top" id="mGh-Jj-f0o"/>
+                        <constraint firstAttribute="bottom" secondItem="ARN-du-JW5" secondAttribute="bottom" id="qra-ET-XGg"/>
                         <constraint firstItem="OqI-8v-kSm" firstAttribute="top" secondItem="ucX-t4-Cch" secondAttribute="top" constant="4" id="vWa-fT-Rle"/>
                     </constraints>
                 </view>

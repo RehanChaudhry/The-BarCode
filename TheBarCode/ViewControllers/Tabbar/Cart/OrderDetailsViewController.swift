@@ -177,7 +177,7 @@ class OrderDetailsViewController: UIViewController {
 
         if order.userId != currentUser.userId.value || order.paymentSplit.count > 1 {
             
-            let paymentHeading = Heading(title: "PAYMENT SPLIT")
+            let paymentHeading = Heading(title: "BILL SPLIT")
             let paymentHeadingSection = HeadingSection(items: [paymentHeading])
             self.viewModels.append(paymentHeadingSection)
 

@@ -135,11 +135,25 @@ extension NotificationsController: UITableViewDataSource, UITableViewDelegate {
                 NotificationCenter.default.post(name: notificationNameVoucher, object: nil)
             }
                         
+        } else if notification.notificationType == .order {
+            let orderId = "\(notification.orderId)"
+            self.showOrderDetail(orderId: orderId)
         } else {
                             
         }
         
         
+    }
+    
+    @objc func showOrderDetail(orderId: String) {
+        
+        let orderDetailNav = (self.storyboard!.instantiateViewController(withIdentifier: "OrderDetailsNavigation") as! UINavigationController)
+        orderDetailNav.modalPresentationStyle = .fullScreen
+        
+        let controller = orderDetailNav.viewControllers.first as! OrderDetailsViewController
+        controller.orderId = orderId
+        
+        self.navigationController?.present(orderDetailNav, animated: true, completion: nil)
     }
 }
 

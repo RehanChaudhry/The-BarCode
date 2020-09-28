@@ -101,7 +101,7 @@ class ReviewPaymentViewController: UIViewController {
             let orderSplitBillInfoSection = OrderSplitAmountInfoSection(items: [splitAmountInfo, splitTotalInfo])
             self.viewModels.append(orderSplitBillInfoSection)
             
-            let paymentHeading = Heading(title: "PAYMENT SPLIT")
+            let paymentHeading = Heading(title: "BILL SPLIT")
             let paymentHeadingSection = HeadingSection(items: [paymentHeading])
             self.viewModels.append(paymentHeadingSection)
             

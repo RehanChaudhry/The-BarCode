@@ -202,6 +202,8 @@ class ExploreViewController: UIViewController {
             redeemInfoCopy = RedeemInfo()
             redeemInfoCopy!.isFirstRedeem = redeemInfo.isFirstRedeem
             redeemInfoCopy!.remainingSeconds = redeemInfo.remainingSeconds
+            redeemInfoCopy!.totalSavings = redeemInfo.totalSavings
+            redeemInfoCopy!.lastReloadSavings = redeemInfo.lastReloadSavings
         }
         
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
@@ -211,6 +213,7 @@ class ExploreViewController: UIViewController {
         cannotRedeemViewController.alertType = typeCredit ? .credit : .discount
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.redeemInfo = redeemInfoCopy
+        cannotRedeemViewController.shouldShowSavings = barsController.snackBar.type == .discount
         cannotRedeemViewController.headerImageName = typeCredit ? "login_intro_credits_5" : "login_intro_reload_5"
         self.present(cannotRedeemViewController, animated: true, completion: nil)
     }

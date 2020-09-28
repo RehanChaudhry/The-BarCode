@@ -18,6 +18,8 @@ class NotificationItem: Mappable {
     var message: String = ""
     var createdAtDateRaw: String = ""
     
+    var orderId: Int = 0
+    
     var notificationType: NotificationType {
         get{
             return NotificationType(rawValue: notificationTypeRaw) ?? .defaultNotification
@@ -49,6 +51,7 @@ class NotificationItem: Mappable {
         self.establishmentId <- map["establishment_id"]
         self.createdAtDateRaw <- map["created_at.date"]
   
+        self.orderId <- map["order_id"]
     }
     
 }

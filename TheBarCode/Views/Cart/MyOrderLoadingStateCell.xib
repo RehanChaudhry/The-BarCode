@@ -19,17 +19,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="59" id="KGk-i7-Jjw" customClass="MyOrderLoadingStateCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOU-YC-nRL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <subviews>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="uzb-av-s75">
-                                <rect key="frame" x="141.5" y="10.5" width="37" height="37"/>
+                                <rect key="frame" x="141.5" y="56.5" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
@@ -40,23 +40,38 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TXX-D0-FOh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="The internet connection appears to be offline" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTY-H9-sC5">
-                                <rect key="frame" x="8" y="8" width="304" height="17"/>
-                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to refresh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAv-yk-8Kg">
-                                <rect key="frame" x="8" y="33" width="304" height="17"/>
-                                <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncS-3m-cba">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4Y-UQ-Ph7">
+                                <rect key="frame" x="8" y="47" width="304" height="56"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="The internet connection appears to be offline" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTY-H9-sC5">
+                                        <rect key="frame" x="8" y="8" width="288" height="17"/>
+                                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to refresh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAv-yk-8Kg">
+                                        <rect key="frame" x="8" y="33" width="288" height="14.5"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="56" id="3FR-1F-Wb3"/>
+                                    <constraint firstItem="IAv-yk-8Kg" firstAttribute="top" secondItem="kTY-H9-sC5" secondAttribute="bottom" constant="8" id="3Kq-4o-G7G"/>
+                                    <constraint firstItem="kTY-H9-sC5" firstAttribute="top" secondItem="V4Y-UQ-Ph7" secondAttribute="top" constant="8" id="F0M-48-PfC"/>
+                                    <constraint firstAttribute="bottom" secondItem="IAv-yk-8Kg" secondAttribute="bottom" constant="8.5" id="GAP-hR-ssa"/>
+                                    <constraint firstItem="kTY-H9-sC5" firstAttribute="leading" secondItem="V4Y-UQ-Ph7" secondAttribute="leading" constant="8" id="bEh-I7-Yle"/>
+                                    <constraint firstAttribute="trailing" secondItem="kTY-H9-sC5" secondAttribute="trailing" constant="8" id="fWM-aH-Soz"/>
+                                    <constraint firstAttribute="trailing" secondItem="IAv-yk-8Kg" secondAttribute="trailing" constant="8" id="fhJ-x3-KrB"/>
+                                    <constraint firstItem="IAv-yk-8Kg" firstAttribute="leading" secondItem="V4Y-UQ-Ph7" secondAttribute="leading" constant="8" id="zkR-5w-IGg"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncS-3m-cba">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                 <connections>
                                     <action selector="bgButtonTappedWithSender:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DD6-er-nkI"/>
                                 </connections>
@@ -64,14 +79,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="IAv-yk-8Kg" firstAttribute="top" secondItem="kTY-H9-sC5" secondAttribute="bottom" constant="8" id="0u4-Th-Hmg"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="58" id="Cac-hU-8U3"/>
-                            <constraint firstAttribute="trailing" secondItem="kTY-H9-sC5" secondAttribute="trailing" constant="8" id="Jwi-zV-U3N"/>
-                            <constraint firstItem="kTY-H9-sC5" firstAttribute="top" secondItem="TXX-D0-FOh" secondAttribute="top" constant="8" id="MBo-3a-YhJ"/>
-                            <constraint firstItem="IAv-yk-8Kg" firstAttribute="leading" secondItem="TXX-D0-FOh" secondAttribute="leading" constant="8" id="RTl-Ek-r1J"/>
-                            <constraint firstAttribute="trailing" secondItem="IAv-yk-8Kg" secondAttribute="trailing" constant="8" id="Sbt-vc-gXM"/>
-                            <constraint firstItem="kTY-H9-sC5" firstAttribute="leading" secondItem="TXX-D0-FOh" secondAttribute="leading" constant="8" id="e7q-fQ-ZLk"/>
-                            <constraint firstAttribute="bottom" secondItem="IAv-yk-8Kg" secondAttribute="bottom" constant="8" id="eDE-c2-Uod"/>
+                            <constraint firstItem="ncS-3m-cba" firstAttribute="top" secondItem="TXX-D0-FOh" secondAttribute="top" id="5eS-Du-nWA"/>
+                            <constraint firstItem="V4Y-UQ-Ph7" firstAttribute="leading" secondItem="TXX-D0-FOh" secondAttribute="leading" constant="8" id="BKD-Ku-C0I"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Cac-hU-8U3"/>
+                            <constraint firstItem="V4Y-UQ-Ph7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="TXX-D0-FOh" secondAttribute="top" constant="8" id="FmP-ah-Vdg"/>
+                            <constraint firstAttribute="bottom" secondItem="ncS-3m-cba" secondAttribute="bottom" id="Gow-OP-3qX"/>
+                            <constraint firstItem="V4Y-UQ-Ph7" firstAttribute="centerX" secondItem="TXX-D0-FOh" secondAttribute="centerX" id="Izh-yA-4WL"/>
+                            <constraint firstItem="ncS-3m-cba" firstAttribute="leading" secondItem="TXX-D0-FOh" secondAttribute="leading" id="Nlj-LW-3Gg"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="V4Y-UQ-Ph7" secondAttribute="bottom" constant="8" id="RJa-q0-gKT"/>
+                            <constraint firstItem="V4Y-UQ-Ph7" firstAttribute="centerY" secondItem="TXX-D0-FOh" secondAttribute="centerY" id="WNW-pI-37w"/>
+                            <constraint firstAttribute="trailing" secondItem="V4Y-UQ-Ph7" secondAttribute="trailing" constant="8" id="WXP-Zl-Y3v"/>
+                            <constraint firstAttribute="trailing" secondItem="ncS-3m-cba" secondAttribute="trailing" id="cLY-us-l0k"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -97,7 +115,7 @@
                 <outlet property="loadingContainer" destination="qOU-YC-nRL" id="MJH-1j-dLH"/>
                 <outlet property="titleLabel" destination="kTY-H9-sC5" id="WIf-BU-g9o"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="110.82589285714285"/>
+            <point key="canvasLocation" x="137.68115942028987" y="110.49107142857143"/>
         </tableViewCell>
     </objects>
 </document>

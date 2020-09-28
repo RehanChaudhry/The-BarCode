@@ -79,21 +79,17 @@ class BarDeliveryTableViewCell: UITableViewCell, NibReusable {
                 rightAlignedParaStyle.alignment = .right
                 attributes[NSAttributedStringKey.paragraphStyle] = rightAlignedParaStyle
                 
-                if time.dayStatus == .unavailable {
-
+                if bar.hasFullDayDelivery.value {
+                    let attributedTime = NSAttributedString(string: "00:00 - 23:59", attributes: attributes)
+                    attributedTiming.append(attributedTime)
+                } else if time.dayStatus == .unavailable {
                     let attributedStatus = NSAttributedString(string: "Closed", attributes: attributes)
                     attributedTiming.append(attributedStatus)
-                    
                 } else {
-                    if bar.hasFullDayDelivery.value {
-                        let attributedTime = NSAttributedString(string: "00:00 - 23:59", attributes: attributes)
-                        attributedTiming.append(attributedTime)
-                    } else {
-                        let timingString = dateformatter.string(from: time.fromTime.value!) + " - " + dateformatter.string(from: time.toTime.value!)
-                        
-                        let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
-                        attributedTiming.append(attributedTime)
-                    }
+                    let timingString = dateformatter.string(from: time.fromTime.value!) + " - " + dateformatter.string(from: time.toTime.value!)
+                    
+                    let attributedTime = NSAttributedString(string: timingString, attributes: attributes)
+                    attributedTiming.append(attributedTime)
                 }
                 
                 if time != bar.weeklySchedule.value.last {

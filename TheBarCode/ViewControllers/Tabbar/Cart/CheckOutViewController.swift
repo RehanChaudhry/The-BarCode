@@ -279,12 +279,17 @@ class CheckOutViewController: UIViewController {
         
         var voucherItems: [OrderDiscount] = []
         voucherItems.append(contentsOf: (self.viewModels.first(where: {$0.type == .vouchers}) as? OrderOffersSection)?.items ?? [])
-        voucherItems.removeFirst()
+        if voucherItems.count > 0 {
+            voucherItems.removeFirst()
+        }
+        
         
         var offerItems: [OrderDiscount] = []
         offerItems.append(contentsOf: (self.viewModels.first(where: {$0.type == .offers}) as? OrderOffersSection)?.items ?? [])
-        offerItems.removeFirst()
-        
+        if offerItems.count > 0 {
+            offerItems.removeFirst()
+        }
+
         let selectedVoucher = voucherItems.first(where: {$0.isSelected})
         let selectedOffer = offerItems.first(where: {$0.isSelected})
             
@@ -530,6 +535,8 @@ extension CheckOutViewController {
                 self.message = serverError!.errorMessages()
                 return
             }
+            
+            self.message = nil
             
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {

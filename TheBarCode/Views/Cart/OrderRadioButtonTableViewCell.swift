@@ -56,8 +56,6 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
     
     func setupCell(orderOfferInfo: OrderDiscount, showSeparator: Bool) {
         
-        self.subTitleLabel.text = ""
-        
         UIView.performWithoutAnimation {
             self.titleButton.setTitle(orderOfferInfo.text, for: .normal)
             self.titleButton.layoutIfNeeded()
@@ -75,6 +73,9 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         
         self.checkBoxButton.isEnabled = true
         self.titleButton.isEnabled = true
+        
+        self.subTitleLabel.text = ""
+        self.subTitleLabel.textColor = UIColor.white
     }
     
     func setUpCell(radioButton: OrderRadioButton) {
@@ -96,6 +97,8 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         
         self.checkBoxButton.isEnabled = radioButton.isEnabled
         self.titleButton.isEnabled = radioButton.isEnabled
+        
+        self.subTitleLabel.textColor = radioButton.isEnabled ? UIColor.white : UIColor.white.withAlphaComponent(0.6)
         
         self.showSeparator(show: false)
     }

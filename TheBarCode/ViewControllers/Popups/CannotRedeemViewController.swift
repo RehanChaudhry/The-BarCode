@@ -23,6 +23,12 @@ class CannotRedeemViewController: UIViewController {
 
     @IBOutlet weak var gradientTitleView: GradientView!
 
+    @IBOutlet var savingsView: UIView!
+    @IBOutlet var savingsViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet var totalSavingLabel: UILabel!
+    @IBOutlet var reloadSavingLabel: UILabel!
+    
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var reloadTimerLabel: UILabel!
@@ -47,6 +53,8 @@ class CannotRedeemViewController: UIViewController {
     var alertType = CustomAlertType.normal
     
     var headerImageName: String = ""
+    
+    var shouldShowSavings: Bool = false
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +67,13 @@ class CannotRedeemViewController: UIViewController {
         
         let heightOfMessage = messageText.heightWithConstrainedWidth(width: (self.view.frame.width - 80), font: UIFont.appRegularFontOf(size: 14.0))
         
+        savingsViewHeight.constant = shouldShowSavings ? 152.0 : 0.0
+        
         if alertType == .credit {
             actionButton.setTitle("Invite Friends & Get Credits", for: .normal)
         } else if alertType == .discount {
             actionButton.setTitle("Invite Friends", for: .normal)
+            self.setupSavingsLabel()
         } else {
             if let redeemInfo = self.redeemInfo, redeemInfo.remainingSeconds > 0 {
                 self.startReloadTimer()
@@ -71,7 +82,7 @@ class CannotRedeemViewController: UIViewController {
         }
         
         //as timer not to show
-        self.mainViewHeightConstraint.constant = heightOfMessage + 307
+        self.mainViewHeightConstraint.constant = heightOfMessage + savingsViewHeight.constant + 307.0
         self.reloadTimerLabel.text = ""
         
        /* if let redemInfo = self.redeemInfo, redemInfo.remainingSeconds > 0 {
@@ -97,6 +108,26 @@ class CannotRedeemViewController: UIViewController {
     }
 
     //MARK: My Methods
+    
+    func setupSavingsLabel() {
+        
+        guard self.shouldShowSavings else {
+            self.totalSavingLabel.text = ""
+            self.reloadSavingLabel.text = ""
+            return
+        }
+        
+        var totalSavings: String = "0.00"
+        var lastReloadSavings: String = "0.00"
+        
+        if let redeemInfo = self.redeemInfo {
+            totalSavings = redeemInfo.totalSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.totalSavings)
+            lastReloadSavings = redeemInfo.lastReloadSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.lastReloadSavings)
+        }
+        
+        self.totalSavingLabel.text = "£ " + totalSavings
+        self.reloadSavingLabel.text = "£ " + lastReloadSavings
+    }
     
     func startReloadTimer() {
         
