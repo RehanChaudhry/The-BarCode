@@ -182,6 +182,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Analytics.logEvent(appLaunched, parameters: nil)
         
+        let wp = Worldpay.sharedInstance()
+        wp?.clientKey = "T_C_bb4b4fc9-15c3-4f9a-9690-660bb4885afb"
+        wp?.reusable = true
+        wp?.validationType = WorldpayValidationTypeAdvanced
+        
         return true
     }
 
@@ -222,7 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if url.scheme == "fb182951649264383" {
             let handled = ApplicationDelegate.shared.application(app, open: url, options: options)
-            return handled ?? false
+            return handled
         } else if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url), let link = dynamicLink.url {
             
             if let sharedOfferParams = Utility.shared.getSharedOfferParams(urlString: link.absoluteString) {

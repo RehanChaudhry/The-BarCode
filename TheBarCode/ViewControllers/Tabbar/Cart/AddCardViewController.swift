@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Stripe
 import ObjectMapper
 
 protocol AddCardViewControllerDelegate: class {
@@ -104,24 +103,40 @@ class AddCardViewController: UIViewController {
     func validate() -> Bool {
         var isValid = true
         
-        let cardNumber = STPCardValidator.sanitizedNumericString(for: self.cardField.text!)
-        if STPCardValidator.validationState(forNumber: cardNumber, validatingCardBrand: true) != .valid {
+        let worldpay = Worldpay.sharedInstance()!
+        
+        let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)
+        if !worldpay.validateCardNumberAdvanced(withCardNumber: cardNumber) {
             isValid = false
             self.cardValidationLabel.isHidden = false
         }
-        let year = self.selectedExpiry?.year.suffix(2) ?? ""
-        if STPCardValidator.validationState(forExpirationYear: "\(year)", inMonth: self.selectedExpiry?.month.displayableValue().numeric ?? "") != .valid {
+        
+        let year = Int32(self.selectedExpiry?.year.suffix(2) ?? "0")!
+        let month = Int32(self.selectedExpiry?.month.displayableValue().numeric ?? "0")!
+        if !worldpay.validateCardExpiry(withMonth: month, year: year) {
             isValid = false
             self.expiryValidationLabel.isHidden = false
         }
         
-        let brand = STPCardValidator.brand(forNumber: cardNumber)
-        if STPCardValidator.validationState(forCVC: self.cvcField.text!, cardBrand: brand) != .valid {
+        if worldpay.validateCardCVC(withNumber: self.cvcField.text!) {
+    
+            if cardNumber!.matchesRegex(regex: CreditCardType.amex.regex) {
+                if self.cvcField.text!.trimWhiteSpaces().count < 4 || self.cvcField.text!.trimWhiteSpaces().count > 4 {
+                    isValid = false
+                    self.cvcValidationLabel.isHidden = false
+                }
+            } else {
+                if self.cvcField.text!.trimWhiteSpaces().count < 3 || self.cvcField.text!.trimWhiteSpaces().count > 3 {
+                    isValid = false
+                    self.cvcValidationLabel.isHidden = false
+                }
+            }
+        } else {
             isValid = false
             self.cvcValidationLabel.isHidden = false
         }
-        
-        if self.nameField.text?.trimWhiteSpaces().count == 0 {
+
+        if self.nameField.text?.trimWhiteSpaces().count == 0 || !worldpay.validateCardHolderName(withName: self.nameField.text!) {
             isValid = false
             self.nameValidationLabel.isHidden = false
         }
@@ -213,39 +228,56 @@ class AddCardViewController: UIViewController {
 extension AddCardViewController {
     func addCard() {
         self.addCardButton.showLoader()
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        let params: [String : Any] = ["card_number" : self.cardField.text!.replacingOccurrences(of: " ", with: ""),
-                                      "expiry" : self.selectedExpiry!.year + "-" + self.selectedExpiry!.month.displayableValue().numeric,
-                                      "cvc" : self.cvcField.text!,
-                                      "name" : self.nameField.text!,
-                                      "address" : self.addressField.text!,
-                                      "postcode" : self.postalCodeField.text!.uppercased(),
-                                      "city" : self.cityField.text!,
-                                      "state" : self.stateField.text!,
-                                      "country" : self.selectedCountry!.name]
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddCard, method: .post) { (response, serverError, error) in
+        self.view.isUserInteractionEnabled = false
+        
+        let worldpay = Worldpay.sharedInstance()!
+        let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)
+        
+        worldpay.createTokenWithName(onCard: self.nameField.text!, cardNumber: cardNumber, expirationMonth: self.selectedExpiry!.month.displayableValue().numeric, expirationYear: self.selectedExpiry!.year, cvc: self.cvcField.text!, success: { (code, response) in
             
-            self.addCardButton.hideLoader()
-            UIApplication.shared.endIgnoringInteractionEvents()
+            let token = response?["token"] as? String ?? ""
+            let type = (response?["paymentMethod"] as? [String : Any])?["cardType"] as? String ?? ""
+            var endingIn = (response?["paymentMethod"] as? [String : Any])?["maskedCardNumber"] as? String ?? ""
+            endingIn = endingIn.count > 4 ? String(endingIn.suffix(4)) : endingIn
             
-            guard error == nil else {
-                self.showAlertController(title: "", msg: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                self.showAlertController(title: "", msg: serverError!.detail)
-                return
-            }
-            
-            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-            if let data = responseDict?["data"] as? [String : Any] {
-                let card = Mapper<CreditCard>().map(JSON: data)!
-                self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
+            let params: [String : Any] = ["card_id" : token,
+                                          "type" : type.lowercased(),
+                                          "ending_in" : endingIn,
+                                          "name" : self.nameField.text!,
+                                          "address" : self.addressField.text!,
+                                          "postcode" : self.postalCodeField.text!.uppercased(),
+                                          "city" : self.cityField.text!,
+                                          "state" : self.stateField.text!,
+                                          "country" : self.selectedCountry!.name]
+            let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .post) { (response, serverError, error) in
                 
-                self.dismiss(animated: true, completion: nil)
+                self.addCardButton.hideLoader()
+                self.view.isUserInteractionEnabled = true
+                
+                guard error == nil else {
+                    self.showAlertController(title: "", msg: error!.localizedDescription)
+                    return
+                }
+
+                guard serverError == nil else {
+                    self.showAlertController(title: "", msg: serverError!.detail)
+                    return
+                }
+
+                let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+                if let data = responseDict?["data"] as? [String : Any] {
+                    let card = Mapper<CreditCard>().map(JSON: data)!
+                    self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
+
+                    self.dismiss(animated: true, completion: nil)
+                }
+
             }
             
+        }) { (response, errors) in
+            self.addCardButton.hideLoader()
+            self.view.isUserInteractionEnabled = true
+            self.showAlertController(title: "", msg: (errors as? [NSError])?.first?.localizedDescription ?? "Unable to create token")
         }
     }
 }
@@ -258,17 +290,18 @@ extension AddCardViewController: UITextFieldDelegate {
         
         if textField == self.cardField {
             var result = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? ""
-            result = STPCardValidator.sanitizedNumericString(for: result)
             
-            if STPCardValidator.validationState(forNumber: result, validatingCardBrand: true) == .invalid {
+            let worldpay = Worldpay.sharedInstance()!
+            result = worldpay.stripCardNumber(withCardNumber: result)
+            
+            if result.count >= 30 {
                 return false
             }
             
             let attributedString = NSMutableAttributedString(string: result, attributes: [:])
             var cardSpacing: [Int] = []
             
-            let currentBrand = STPCardValidator.brand(forNumber: result)
-            if currentBrand == .amex {
+            if result.matchesRegex(regex: CreditCardType.amex.regex) {
                 cardSpacing = [3, 9]
             } else {
                 cardSpacing = [3, 7, 11]
@@ -289,12 +322,6 @@ extension AddCardViewController: UITextFieldDelegate {
             }
             
             textField.attributedText = attributedString
-            
-            if attributedString.length == 0 {
-                self.cardIconImageView.image = UIImage(named: "icon_card")?.withRenderingMode(.alwaysTemplate)
-            } else {
-                self.cardIconImageView.image = STPImageLibrary.templatedBrandImage(for: currentBrand).withRenderingMode(.alwaysTemplate)
-            }
             
             self.cardValidationLabel.isHidden = true
             

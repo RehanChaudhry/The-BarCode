@@ -35,7 +35,7 @@ target 'TheBarCode' do
   
   pod 'KMPlaceholderTextView', '~> 1.4.0'
   
-  pod 'Stripe', '~> 19.3.0'
+  pod 'AFNetworking', '~> 2.5.4'
   
   pod 'EasyNotificationBadge', '~> 1.2.0'
 

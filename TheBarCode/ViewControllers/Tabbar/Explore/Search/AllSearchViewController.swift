@@ -1025,7 +1025,8 @@ extension AllSearchViewController {
     
     func updateFoodCart(food: Food, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value]
+        var params: [String : Any] = ["id" : food.id.value,
+                                      "establishment_id" : barId]
         if shouldAdd {
             food.isAddingToCart = true
             params["quantity"] = food.quantity.value + 1
@@ -1067,7 +1068,8 @@ extension AllSearchViewController {
     
     func updateDrinkCart(drink: Drink, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : drink.id.value]
+        var params: [String : Any] = ["id" : drink.id.value,
+                                      "establishment_id" : barId]
         if shouldAdd {
             drink.isAddingToCart = true
             params["quantity"] = drink.quantity.value + 1

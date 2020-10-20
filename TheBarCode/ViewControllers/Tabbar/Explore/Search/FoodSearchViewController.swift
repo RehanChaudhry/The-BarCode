@@ -443,7 +443,8 @@ extension FoodSearchViewController {
     
     func updateCart(food: Food, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value]
+        var params: [String : Any] = ["id" : food.id.value,
+                                      "establishment_id" : barId]
         if shouldAdd {
             food.isAddingToCart = true
             params["quantity"] = food.quantity.value + 1

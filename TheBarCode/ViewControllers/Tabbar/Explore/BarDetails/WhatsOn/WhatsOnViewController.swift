@@ -21,9 +21,16 @@ class WhatsOnViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var contentView: UIView!
     
-    @IBOutlet var eventsContainerView: UIView!
-    @IBOutlet var drinklistContainerView: UIView!
-    @IBOutlet var foodMenuContainerView: UIView!
+//    @IBOutlet var eventsContainerView: UIView!
+//    @IBOutlet var drinklistContainerView: UIView!
+//    @IBOutlet var foodMenuContainerView: UIView!
+    
+    @IBOutlet var placeholderView: UIView!
+    
+    var eventsContainer: UIView!
+    var drinksContainer: UIView?
+    var foodContainer: UIView!
+    
     
     @IBOutlet var segmentContainer: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
@@ -31,7 +38,7 @@ class WhatsOnViewController: UIViewController {
     var bar: Bar!
     
     var eventsController: EventsViewController!
-    var drinksController: DrinkListViewController!
+    var drinksController: DrinkListViewController?
     var foodMenuController: FoodMenuViewController!
     
     weak var delegate: WhatsOnViewControllerDelegate!
@@ -47,30 +54,35 @@ class WhatsOnViewController: UIViewController {
         
         self.automaticallyAdjustsScrollViewInsets = false
         
+        self.setupContainerView()
+        
         self.segmentContainer.backgroundColor = UIColor.appNavBarGrayColor()
         
         self.eventsController = (self.storyboard!.instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController)
         self.eventsController.bar = self.bar
         self.eventsController.delegate = self
         self.addChildController(controller: self.eventsController)
-        self.eventsContainerView.addSubview(self.eventsController.view)
+        self.eventsContainer.addSubview(self.eventsController.view)
         self.eventsController.view.autoPinEdgesToSuperviewEdges()
         
-        self.drinksController = (self.storyboard!.instantiateViewController(withIdentifier: "DrinkListViewController") as! DrinkListViewController)
-        self.drinksController.bar = self.bar
-        self.drinksController.delegate = self
-        self.addChildController(controller: self.drinksController)
-        self.drinklistContainerView.addSubview(self.drinksController.view)
-        self.drinksController.view.autoPinEdgesToSuperviewEdges()
+        if self.bar.menuType == .barCode {
+            self.drinksController = (self.storyboard!.instantiateViewController(withIdentifier: "DrinkListViewController") as! DrinkListViewController)
+            self.drinksController!.bar = self.bar
+            self.drinksController!.delegate = self
+            self.addChildController(controller: self.drinksController!)
+            self.drinksContainer?.addSubview(self.drinksController!.view)
+            self.drinksController!.view.autoPinEdgesToSuperviewEdges()
+        } else {
+            self.segmentedControl.removeSegment(at: 2, animated: false)
+            self.segmentedControl.setTitle("Food & Drinks", forSegmentAt: 1)
+        }
         
         self.foodMenuController = (self.storyboard!.instantiateViewController(withIdentifier: "FoodMenuViewController") as! FoodMenuViewController)
         self.foodMenuController.bar = self.bar
         self.foodMenuController.delegate = self
         self.addChildController(controller: self.foodMenuController)
-        self.foodMenuContainerView.addSubview(self.foodMenuController.view)
+        self.foodContainer.addSubview(self.foodMenuController.view)
         self.foodMenuController.view.autoPinEdgesToSuperviewEdges()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,16 +91,58 @@ class WhatsOnViewController: UIViewController {
         if !self.viewDidLayout {
             self.viewDidLayout = true
             
-            self.segmentedControl.selectedSegmentIndex = self.preSelectedTabIndex
-            self.segmentedControl.sendActions(for: .valueChanged)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                let selectedSegmentIndex = self.preSelectedTabIndex > self.segmentedControl.numberOfSegments - 1 ? self.segmentedControl.numberOfSegments - 1 : self.preSelectedTabIndex
+                self.segmentedControl.selectedSegmentIndex = selectedSegmentIndex
+                self.segmentedControl.sendActions(for: .valueChanged)
+            }
         }
         
     }
     
     //MARK: My Methods
+    func setupContainerView() {
+        self.eventsContainer = UIView()
+        self.eventsContainer.backgroundColor = UIColor.clear
+        self.contentView.addSubview(self.eventsContainer)
+        
+        self.eventsContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+        self.eventsContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
+        self.eventsContainer.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
+        
+        self.eventsContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+        self.eventsContainer.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+        
+        if self.bar.menuType == .barCode {
+            self.drinksContainer = UIView()
+            self.drinksContainer?.backgroundColor = UIColor.clear
+            self.contentView.addSubview(self.drinksContainer!)
+            
+            self.drinksContainer!.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+            self.drinksContainer!.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
+            self.drinksContainer!.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.eventsContainer)
+            
+            self.drinksContainer!.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+            self.drinksContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+        }
+        
+        self.foodContainer = UIView()
+        self.foodContainer.backgroundColor = UIColor.clear
+        self.contentView.addSubview(self.foodContainer)
+        
+        self.foodContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+        self.foodContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
+        self.foodContainer.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.drinksContainer ?? self.eventsContainer)
+        self.foodContainer.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
+        
+        self.foodContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+        self.foodContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+    }
+    
+    
     func reset() {
         self.eventsController.reset()
-        self.drinksController.reset()
+        self.drinksController?.reset()
         self.foodMenuController.reset()
     }
     
@@ -108,9 +162,12 @@ class WhatsOnViewController: UIViewController {
 //MARK: SJSegmentedViewControllerViewSource
 extension WhatsOnViewController: SJSegmentedViewControllerViewSource {
     func viewsForSegmentControllerToObserveContentOffsetChange() -> [UIView] {
-        return [self.eventsController.statefulTableView.innerTable,
-                self.drinksController.statefulTableView.innerTable,
-                self.foodMenuController.statefulTableView.innerTable]
+        if let drinksController = self.drinksController {
+            return [self.eventsController.statefulTableView.innerTable, drinksController.statefulTableView.innerTable, self.foodMenuController.statefulTableView.innerTable]
+        } else {
+            return [self.eventsController.statefulTableView.innerTable, self.foodMenuController.statefulTableView.innerTable]
+        }
+        
     }
 }
 

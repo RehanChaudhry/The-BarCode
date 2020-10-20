@@ -32,6 +32,17 @@ extension String {
         let underscoreString = self.replacingOccurrences(of: " ", with: "_")
         return underscoreString.lowercased()
     }
+    
+    func matchesRegex(regex: String!) -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: regex, options: [.caseInsensitive])
+            let nsString = self as NSString
+            let match = regex.firstMatch(in: self, options: [], range: NSMakeRange(0, nsString.length))
+            return (match != nil)
+        } catch {
+            return false
+        }
+    }
 }
 
 extension String {

@@ -36,7 +36,7 @@ class MyCartViewController: UIViewController {
             self.setUpBadgeValue()
             self.calculateBill()
             
-            if self.selectedOrder?.isClosed == true {
+            if self.selectedOrder?.isClosed == true || self.selectedOrder?.orderItems.count == 0 {
                 self.checkOutButton.isUserInteractionEnabled = false
                 self.checkOutButton.updateColor(withGrey: true)
             } else {
@@ -334,7 +334,8 @@ extension MyCartViewController {
         
         let previousQuantity = item.quantity
         
-        var params: [String : Any] = ["id" : item.id]
+        var params: [String : Any] = ["id" : item.id,
+                                      "establishment_id" : order.barId]
         if !shouldDelete {
             item.isUpdating = true
             

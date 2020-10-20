@@ -20,6 +20,8 @@ class ServerError: Mappable {
     
     var statusCode: Int = 0
     
+    var rawResponse: [String : Any] = [:]
+    
     required init?(map: Map) {
         
     }

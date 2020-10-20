@@ -216,7 +216,10 @@ extension FoodMenuViewController {
                 let segments = Mapper<FoodMenuSegment>().mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
-                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                if let pagination = responseDict?["pagination"] as? [String : Any] {
+                    self.loadMore = Mapper<Pagination>().map(JSON: pagination)!
+                }
+                
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
@@ -230,7 +233,8 @@ extension FoodMenuViewController {
     
     func updateCart(food: Food, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value]
+        var params: [String : Any] = ["id" : food.id.value,
+                                      "establishment_id" : self.bar.id.value]
         if shouldAdd {
             food.isAddingToCart = true
             params["quantity"] = food.quantity.value + 1

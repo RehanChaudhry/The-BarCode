@@ -19,6 +19,10 @@ enum BarType: String {
     exclusiveBar = "exclusive"
 }
 
+enum MenuType: String {
+    case barCode = "barcode", other = "other"
+}
+
 class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
@@ -85,6 +89,14 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var barType: BarType {
         get {
             return BarType(rawValue: self.barTypeRaw.value) ?? .standardBar
+        }
+    }
+    
+    var menuTypeRaw = Value.Required<String>("menu_type_raw", initial: MenuType.barCode.rawValue)
+    
+    var menuType: MenuType {
+        get {
+            return MenuType(rawValue: self.menuTypeRaw.value) ?? .other
         }
     }
     
@@ -315,6 +327,10 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         
         if let type = source["type"] as? String {
             self.barTypeRaw.value = type
+        }
+        
+        if let type = source["epos_name"] as? String {
+            self.menuTypeRaw.value = type
         }
         
         self.isReservationAllowed.value = source["is_reservation"] as? Bool ?? false

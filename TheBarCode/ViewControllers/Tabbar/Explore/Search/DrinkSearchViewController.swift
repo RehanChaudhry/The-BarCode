@@ -398,7 +398,8 @@ extension DrinkSearchViewController {
     
     func updateCart(drink: Drink, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : drink.id.value]
+        var params: [String : Any] = ["id" : drink.id.value,
+                                      "establishment_id" : barId]
         if shouldAdd {
             drink.isAddingToCart = true
             params["quantity"] = drink.quantity.value + 1

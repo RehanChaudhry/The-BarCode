@@ -10,6 +10,7 @@ import UIKit
 import ObjectMapper
 import PureLayout
 import CoreStore
+import HTTPStatusCodes
 
 class SavedCardsViewController: UIViewController {
 
@@ -55,7 +56,9 @@ class SavedCardsViewController: UIViewController {
         self.title = "Payment Method"
         
         self.tableView.tableHeaderView = self.headerView
-        self.tableView.tableFooterView = UIView()
+        let footerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 16.0))
+        footerView.backgroundColor = UIColor.clear
+        self.tableView.tableFooterView = footerView
         
         self.tableView.register(cellType: CardInfoCell.self)
         self.tableView.register(cellType: AddNewCardCell.self)
@@ -177,7 +180,7 @@ extension SavedCardsViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathGetCards, method: .get) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathCard, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
@@ -212,8 +215,8 @@ extension SavedCardsViewController {
         card.isDeleting = true
         self.tableView.reloadData()
         
-        let params: [String : Any] = ["card_id" : card.cardId]
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathDeleteCard, method: .post) { (response, serverError, error) in
+        let params: [String : Any] = [:]
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard + "/\(card.cardId)", method: .delete) { (response, serverError, error) in
             card.isDeleting = false
             
             guard error == nil else {
@@ -241,8 +244,12 @@ extension SavedCardsViewController {
     }
     
     func chargeCard(card: CreditCard) {
+        
+        let sessionId = UUID().uuidString
+        
         var params: [String : Any] = ["order_id" : self.order.orderNo,
-                                      "token" : card.cardId]
+                                      "token" : card.cardToken,
+                                      "session_id" : sessionId]
         
         if let split = self.order.splitPaymentInfo, split.type != .none {
             params["split_type"] = split.type.rawValue
@@ -261,6 +268,68 @@ extension SavedCardsViewController {
         UIApplication.shared.beginIgnoringInteractionEvents()
         self.payButton.showLoader()
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathPayment, method: .post) { (response, serverError, error) in
+            self.payButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            self.payButton.hideLoader()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                if serverError?.statusCode == HTTPStatusCode.preconditionRequired.rawValue {
+                    
+                    guard let responseDict = (serverError!.rawResponse["response"] as? [String : Any]) else {
+                        self.showAlertController(title: "", msg: APIHelper.shared.getGenericError().localizedDescription)
+                        return
+                    }
+                    
+                    let context = ThreeDSModelMapContext(sessionId: sessionId)
+                    let threeDSModel = Mapper<ThreeDSModel>(context: context).map(JSON: responseDict)!
+                    
+                    let threeDSNavigation = self.storyboard!.instantiateViewController(withIdentifier: "ThreeDSNavigation") as! UINavigationController
+                    threeDSNavigation.modalPresentationStyle = .fullScreen
+                    
+                    let threeDsWebController = threeDSNavigation.viewControllers.first as! ThreeDSWebViewController
+                    threeDsWebController.threedsModel = threeDSModel
+                    threeDsWebController.delegate = self
+                    self.present(threeDSNavigation, animated: true, completion: nil)
+                } else {
+                    self.showAlertController(title: "", msg: serverError!.detail)
+                }
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseObject = (responseDict?["data"] as? [String : Any]) {
+                
+                let context = OrderMappingContext(type: .order)
+                let order = Mapper<Order>(context: context).map(JSON: responseObject)!
+                
+                self.moveToThankYou(order: order)
+                self.postDealRedeemNotificationIfNeeded()
+                
+                NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+        }
+    }
+    
+    func updatePaymentStatus(secureCode: String, model: ThreeDSModel) {
+        let params: [String : Any] = ["session_id" : model.sessionId,
+                                      "order_id" : self.order.orderNo,
+                                      "payment_code" : model.paymentCode,
+                                      "secure_code" : secureCode]
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.payButton.showLoader()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathUpdatePayment, method: .post) { (response, serverError, error) in
             self.payButton.hideLoader()
             UIApplication.shared.endIgnoringInteractionEvents()
             
@@ -292,6 +361,7 @@ extension SavedCardsViewController {
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
             }
         }
+        
     }
 }
 
@@ -335,5 +405,12 @@ extension SavedCardsViewController: AddCardViewControllerDelegate {
         self.selectedCard = card
 
         self.tableView.reloadData()
+    }
+}
+
+//MARK: ThreeDSWebViewControllerDelegate
+extension SavedCardsViewController: ThreeDSWebViewControllerDelegate {
+    func threeDSWebViewController(controller: ThreeDSWebViewController, didCompleted3DSAuthentication secureCode: String, model: ThreeDSModel) {
+        self.updatePaymentStatus(secureCode: secureCode, model: model)
     }
 }

@@ -94,6 +94,7 @@ class OrderTypeViewController: UIViewController {
         tableHeaderView.backgroundColor = UIColor.clear
         self.tableView.tableHeaderView = tableHeaderView
         self.tableView.tableFooterView = UIView()
+        self.tableView.keyboardDismissMode = .interactive
     }
     
     func getDineInField() -> OrderFieldInput {

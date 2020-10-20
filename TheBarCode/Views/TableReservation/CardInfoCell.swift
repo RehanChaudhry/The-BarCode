@@ -57,10 +57,10 @@ class CardInfoCell: UITableViewCell, NibReusable {
                               NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 13.0)]
         let regularAttributes = [NSAttributedString.Key.foregroundColor : UIColor.appGrayColor(),
                                  NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 13.0)]
-        
-        let cardType = NSMutableAttributedString(string: "\(card.typeRaw) ", attributes: boldAttributes)
+                
+        let cardType = NSMutableAttributedString(string: "\(CreditCardType.displayableType(raw: card.typeRaw).capitalized) ", attributes: boldAttributes)
         let placeholder = NSMutableAttributedString(string: "Ending In ", attributes: regularAttributes)
-        let cardNo = NSMutableAttributedString(string: card.endingIn, attributes: boldAttributes)
+        let cardNo = NSMutableAttributedString(string: card.endingIn.count > 4 ? String(card.endingIn.suffix(4)) : card.endingIn, attributes: boldAttributes)
         
         let attributesInfo = NSMutableAttributedString()
         attributesInfo.append(cardType)
@@ -73,7 +73,7 @@ class CardInfoCell: UITableViewCell, NibReusable {
         }
         
         self.selectionImageView.isHidden = !isSelected
-        self.iconImageView.image = card.type.image()
+        self.iconImageView.image = CreditCardType.iconImage(raw: card.typeRaw)
         
         if card.isDeleting {
             self.activityIndicator.startAnimating()

@@ -83,9 +83,7 @@ let apiPathGetCartQuantity = "cart-count"
 let apiPathCart = "cart"
 let apiPathOrders = "order"
 
-let apiPathAddCard = "add-card"
-let apiPathGetCards = "get-card"
-let apiPathDeleteCard = "delete-card"
+let apiPathCard = "card"
 
 let apiPathAddresses = "address"
 
@@ -93,6 +91,10 @@ let apiPathOrderOffers = "offers/detail"
 let apiPathOrderVouchers = "voucher/detail"
 
 let apiPathPayment = "payment"
+let apiPathUpdatePayment = "update-payment"
+
+let worldPayTermBaseUrl = "https://online.worldpay.com/3dsr/"
+let worldPayScheme = "worldpay-scheme"
 
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()

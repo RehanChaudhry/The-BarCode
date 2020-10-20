@@ -217,7 +217,10 @@ extension DrinkListViewController {
                 let segments = Mapper<DrinkMenuSegment>().mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
-                self.loadMore = Mapper<Pagination>().map(JSON: (responseDict!["pagination"] as! [String : Any]))!
+                if let pagination = responseDict?["pagination"] as? [String : Any] {
+                    self.loadMore = Mapper<Pagination>().map(JSON: pagination)!
+                }
+                
                 self.statefulTableView.canLoadMore = self.loadMore.canLoadMore()
                 self.statefulTableView.innerTable.reloadData()
                 completion(nil)
@@ -231,7 +234,8 @@ extension DrinkListViewController {
     
     func updateCart(drink: Drink, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : drink.id.value]
+        var params: [String : Any] = ["id" : drink.id.value,
+                                      "establishment_id" : self.bar.id.value]
         if shouldAdd {
             drink.isAddingToCart = true
             params["quantity"] = drink.quantity.value + 1

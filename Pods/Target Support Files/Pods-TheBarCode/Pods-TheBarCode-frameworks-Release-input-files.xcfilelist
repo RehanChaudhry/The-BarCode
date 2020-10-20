@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-TheBarCode/Pods-TheBarCode-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/BugfenderSDK/BugfenderSDK.framework
 ${BUILT_PRODUCTS_DIR}/CoreStore/CoreStore.framework
@@ -23,7 +24,6 @@ ${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework
 ${BUILT_PRODUCTS_DIR}/StatefulTableView/StatefulTableView.framework
-${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
 ${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework
 ${BUILT_PRODUCTS_DIR}/UIColor_Hex_Swift/UIColor_Hex_Swift.framework
