@@ -251,6 +251,7 @@ extension DrinkSearchViewController {
         
         var params:[String : Any] =  ["type": SearchScope.drink.rawValue,
                                       "pagination" : true,
+                                      "is_for_map" : false,
                                       "page" : self.loadMore.next,
                                       "keyword" : self.keyword]
         
@@ -262,6 +263,10 @@ extension DrinkSearchViewController {
         if self.selectedStandardOffers.count > 0 {
             let ids = self.selectedStandardOffers.map({$0.id.value})
             params["tier_ids"] = ids
+        }
+        
+        if let _ = self.selectedDeliveryFilter {
+            params["is_delivering"] = true
         }
         
         if let selectedRedeemingType = self.selectedRedeemingType {
@@ -350,6 +355,10 @@ extension DrinkSearchViewController {
         if self.selectedStandardOffers.count > 0 {
             let ids = self.selectedStandardOffers.map({$0.id.value})
             params["tier_ids"] = ids
+        }
+        
+        if let _ = self.selectedDeliveryFilter {
+            params["is_delivering"] = true
         }
         
         if let selectedRedeemingType = self.selectedRedeemingType {

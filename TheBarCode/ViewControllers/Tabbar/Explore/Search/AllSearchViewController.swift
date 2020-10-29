@@ -563,6 +563,7 @@ extension AllSearchViewController {
         self.dataRequest?.cancel()
         
         var params:[String : Any] =  ["pagination" : false,
+                                      "is_for_map" : false,
                                       "keyword" : self.keyword]
         
         if self.selectedPreferences.count > 0 {
@@ -573,6 +574,10 @@ extension AllSearchViewController {
         if self.selectedStandardOffers.count > 0 {
             let ids = self.selectedStandardOffers.map({$0.id.value})
             params["tier_ids"] = ids
+        }
+        
+        if let _ = self.selectedDeliveryFilter {
+            params["is_delivering"] = true
         }
         
         if let selectedRedeemingType = self.selectedRedeemingType {
@@ -862,6 +867,10 @@ extension AllSearchViewController {
         if self.selectedStandardOffers.count > 0 {
             let ids = self.selectedStandardOffers.map({$0.id.value})
             params["tier_ids"] = ids
+        }
+        
+        if let _ = self.selectedDeliveryFilter {
+            params["is_delivering"] = true
         }
         
         if let selectedRedeemingType = self.selectedRedeemingType {

@@ -41,6 +41,8 @@ target 'TheBarCode' do
 
   pod 'KVNProgress', '~> 2.3.5'
 
+  pod 'MLLabel', '~> 1.10.5'
+
   target 'TheBarCodeTests' do
     inherit! :search_paths
     

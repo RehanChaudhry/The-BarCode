@@ -146,7 +146,8 @@ class MyCartViewController: UIViewController {
             for item in order.orderItems {
                 count += item.quantity
             }
-            self.tabBarController?.tabBar.items?[3].badgeValue = count > 9 ? "9+" : "\(count)"
+            
+            self.tabBarController?.tabBar.items?[3].badgeValue = count > 0 ? (count > 9 ? "9+" : "\(count)") : nil
             self.delegate?.myCartViewController(controller: self, badgeCountDidUpdate: count)
         } else {
             self.tabBarController?.tabBar.items?[3].badgeValue = nil

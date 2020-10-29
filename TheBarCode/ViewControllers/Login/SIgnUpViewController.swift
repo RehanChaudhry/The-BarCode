@@ -189,7 +189,7 @@ class SIgnUpViewController: UIViewController {
         self.passwordFieldView.makeSecure(secure: true)
         
         self.postcodeFieldView = FieldView.loadFromNib()
-        self.postcodeFieldView.setUpFieldView(placeholder: "POSTCODE", fieldPlaceholder: "Enter your postcode", iconImage: nil)
+        self.postcodeFieldView.setUpFieldView(placeholder: "POSTCODE (OPTIONAL)", fieldPlaceholder: "Enter your postcode", iconImage: nil)
         self.postcodeFieldView.setKeyboardType()
         self.postcodeFieldView.setReturnKey(returnKey: .next)
         self.postcodeFieldView.delegate = self

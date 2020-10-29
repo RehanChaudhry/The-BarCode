@@ -151,10 +151,10 @@ class AddCardViewController: UIViewController {
             self.postalCodeValidationLabel.isHidden = false
         }
         
-        if self.stateField.text?.trimWhiteSpaces().count == 0 {
-            isValid = false
-            self.stateValidationLabel.isHidden = false
-        }
+//        if self.stateField.text?.trimWhiteSpaces().count == 0 {
+//            isValid = false
+//            self.stateValidationLabel.isHidden = false
+//        }
         
         if self.cityField.text?.trimWhiteSpaces().count == 0 {
             isValid = false
@@ -192,9 +192,10 @@ class AddCardViewController: UIViewController {
     @IBAction func previousBarButtonTapped(sender: UIBarButtonItem) {
         if self.expiryField.isFirstResponder {
             self.cardField.becomeFirstResponder()
-        } else if self.countryField.isFirstResponder {
-            self.stateField.becomeFirstResponder()
         }
+//        else if self.countryField.isFirstResponder {
+//            self.stateField.becomeFirstResponder()
+//        }
     }
     
     @IBAction func doneBarButtonTapped(sender: UIBarButtonItem) {
@@ -214,9 +215,11 @@ class AddCardViewController: UIViewController {
             self.addressValidationLabel.isHidden = true
         } else if sender == self.postalCodeField {
             self.postalCodeValidationLabel.isHidden = true
-        } else if sender == self.stateField {
-            self.stateValidationLabel.isHidden = true
-        } else if sender == self.cityField {
+        }
+//        else if sender == self.stateField {
+//            self.stateValidationLabel.isHidden = true
+//        }
+        else if sender == self.cityField {
             self.cityValidationLabel.isHidden = true
         } else if sender == self.countryField {
             self.countryValidationLabel.isHidden = true
@@ -247,7 +250,7 @@ extension AddCardViewController {
                                           "address" : self.addressField.text!,
                                           "postcode" : self.postalCodeField.text!.uppercased(),
                                           "city" : self.cityField.text!,
-                                          "state" : self.stateField.text!,
+//                                          "state" : self.stateField.text!,
                                           "country" : self.selectedCountry!.name]
             let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .post) { (response, serverError, error) in
                 
@@ -330,6 +333,8 @@ extension AddCardViewController: UITextFieldDelegate {
             maxLength = 8
         } else if textField == self.cvcField {
             maxLength = 4
+        } else if textField == self.postalCodeField {
+            maxLength = 8
         } else {
             maxLength = 255
         }

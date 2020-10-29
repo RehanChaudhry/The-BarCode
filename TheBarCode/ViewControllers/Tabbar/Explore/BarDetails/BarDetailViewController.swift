@@ -118,6 +118,7 @@ class BarDetailViewController: UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
@@ -148,6 +149,7 @@ class BarDetailViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: notificationNameUnlimitedRedemptionPurchased, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         
         NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
@@ -661,6 +663,7 @@ extension BarDetailViewController: OutOfCreditViewControllerDelegate {
         
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
+        reloadController.shouldAutoDismissOnReload = true
         reloadController.delegate = self
         reloadController.selectedIndex = selectedIndex
         self.present(reloadNavigation, animated: true, completion: nil)
@@ -816,5 +819,9 @@ extension BarDetailViewController {
             self.didTriggerPullToRefresh(sender: self.refreshControl)
             self.cartCount = 0
         }
+    }
+    
+    @objc func reloadSuccessfullNotification(notification: Notification) {
+        self.getBarDetails(isRefreshing: false)
     }
 }

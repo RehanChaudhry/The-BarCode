@@ -16,6 +16,10 @@ class OrderDeliveryAddressTableViewCell: UITableViewCell, NibReusable {
     
     @IBOutlet var infoLabel: UILabel!
     
+    @IBOutlet var conditionLabel: UILabel!
+    
+    @IBOutlet var conditionLabelTop: NSLayoutConstraint!
+    
     @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
     
     override func awakeFromNib() {
@@ -84,6 +88,16 @@ class OrderDeliveryAddressTableViewCell: UITableViewCell, NibReusable {
             self.subTitleLabel.text = ""
             self.infoLabel.text = "Please select delivery address"
         }
+        
+        if let deliveryCondition = address.deliveryCondition, deliveryCondition.count > 0 {
+            self.conditionLabel.text = deliveryCondition
+            self.conditionLabelTop.constant = 8.0
+        } else {
+            self.conditionLabel.text = ""
+            self.conditionLabelTop.constant = 0.0
+        }
+        
+        self.conditionLabel.textColor = UIColor.appBlueColor()
     }
     
 }

@@ -31,6 +31,8 @@ class OrderDiscount: Mappable {
     
     var isSelected: Bool = false
     
+    var shouldShowValue: Bool = false
+    
     var discount: Double = 0.0
     
     required init?(map: Map) {

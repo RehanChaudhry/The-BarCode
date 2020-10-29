@@ -46,6 +46,7 @@ enum V1 {
         
         var email = Value.Optional<String>("email_id")
         var mobileNumber = Value.Optional<String>("mobile_number")
+        var deliveryMobileNumber = Value.Optional<String>("delivery_mobile_number")
         
         var providerRaw = Value.Required<String>("signup_provider", initial: "")
         var postcode = Value.Optional<String>("postcode")
@@ -157,6 +158,10 @@ enum V1 {
             
             if let referralCode = source["referral_code"] as? String, referralCode.count > 0 {
                 self.referralCode.value = referralCode
+            }
+            
+            if let deliveryNumber = source["delivery_contact"] as? String {
+                self.deliveryMobileNumber.value = deliveryNumber
             }
             
             self.postcode.value = source["postcode"] as? String

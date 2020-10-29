@@ -345,7 +345,7 @@ extension TabBarController {
         if let refreshFiveDay = appDelegate.refreshFiveADay, refreshFiveDay {
             appDelegate.refreshFiveADay = false
             
-            let fiveADayController = ((self.viewControllers![1] as! UINavigationController).viewControllers[0] as! FiveADayViewController)
+            let fiveADayController = ((self.viewControllers![0] as! UINavigationController).viewControllers[0] as! FiveADayViewController)
             if fiveADayController.isViewLoaded {
                 fiveADayController.reloadData()
             } else {

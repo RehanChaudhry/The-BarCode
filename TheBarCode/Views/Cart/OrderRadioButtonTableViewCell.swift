@@ -74,8 +74,13 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         self.checkBoxButton.isEnabled = true
         self.titleButton.isEnabled = true
         
-        self.subTitleLabel.text = ""
-        self.subTitleLabel.textColor = UIColor.white
+        if orderOfferInfo.shouldShowValue {
+            self.subTitleLabel.text = String(format: "£ %.2f", orderOfferInfo.value)
+            self.subTitleLabel.textColor = UIColor.appBlueColor()
+        } else {
+            self.subTitleLabel.text = ""
+            self.subTitleLabel.textColor = UIColor.white
+        }
     }
     
     func setUpCell(radioButton: OrderRadioButton) {

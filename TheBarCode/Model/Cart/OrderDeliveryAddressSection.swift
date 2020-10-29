@@ -14,6 +14,8 @@ class OrderDeliveryAddress: NSObject {
     
     var isLoading: Bool = false
     
+    var deliveryCondition: String?
+    
 }
 
 class OrderDeliveryAddressSection: OrderViewModel {

@@ -492,6 +492,7 @@ extension OfferDetailViewController: OutOfCreditViewControllerDelegate {
         
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
         reloadController.isRedeemingDeal = true
+        reloadController.shouldAutoDismissOnReload = true
         reloadController.delegate = self
         reloadController.selectedIndex = selectedIndex
         self.present(reloadNavigation, animated: true, completion: nil)

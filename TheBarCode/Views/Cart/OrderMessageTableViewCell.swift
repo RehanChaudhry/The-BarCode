@@ -8,14 +8,19 @@
 
 import UIKit
 import Reusable
+import MLLabel
 
 class OrderMessageTableViewCell: UITableViewCell, NibReusable {
 
-    @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var infoLabel: MLLinkLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.infoLabel.dataDetectorTypes = .attributedLink
+        
+        self.infoLabel.linkTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.appBlueColor()]
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,7 +31,7 @@ class OrderMessageTableViewCell: UITableViewCell, NibReusable {
     
     //MARK: My Methods
     func setUpCell(messageInfo: OrderMessage) {
-        self.infoLabel.text = messageInfo.message
+        self.infoLabel.attributedText = messageInfo.message
         
         self.showSeparator(show: false)
     }

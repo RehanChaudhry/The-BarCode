@@ -170,7 +170,7 @@ extension RedeemStartViewController {
           
         func showSettingsAlert() {
              
-            let alertController = UIAlertController(title: "Settings Alert", message: "Please turn on the location services of the app by going into the Settings.", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Settings", message: "The venue needs to know your location to verify your discount.", preferredStyle: .alert)
                           
             let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                        

@@ -52,6 +52,7 @@ class BaseSearchScopeViewController: UIViewController {
     
     var selectedStandardOffers: [StandardOffer] = []
     var selectedRedeemingType: RedeemingTypeModel?
+    var selectedDeliveryFilter: DeliveryFilter?
     
     var keyword: String = ""
     

@@ -45,7 +45,8 @@ class SearchViewController: UIViewController {
     
     var selectedStandardOffers: [StandardOffer] = []
     var selectedRedeemingType: RedeemingTypeModel?
-
+    var selectedDeliveryFilter: DeliveryFilter?
+    
     var shouldHidePreferenceButton: Bool = false
     
     var scopeItems: [SearchScopeItem] = SearchScope.allItems()
@@ -188,7 +189,7 @@ class SearchViewController: UIViewController {
     }
     
     func setUpStandardOfferButton() {
-        if self.selectedStandardOffers.count > 0 || self.selectedRedeemingType != nil {
+        if self.selectedStandardOffers.count > 0 || self.selectedRedeemingType != nil || self.selectedDeliveryFilter != nil {
             self.standardOfferButton.backgroundColor = UIColor.black
             self.standardOfferButton.tintColor = UIColor.appBlueColor()
         } else {
@@ -222,6 +223,7 @@ class SearchViewController: UIViewController {
             scope.controller.selectedPreferences = self.filteredPreferences
             scope.controller.selectedStandardOffers = self.selectedStandardOffers
             scope.controller.selectedRedeemingType = self.selectedRedeemingType
+            scope.controller.selectedDeliveryFilter = self.selectedDeliveryFilter
             scope.controller.shouldReset = true
             scope.controller.prepareToReset()
             scope.controller.keyword = self.searchBar.text ?? ""
@@ -268,6 +270,7 @@ class SearchViewController: UIViewController {
         let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
         standardOfferController.preSelectedTiers = self.selectedStandardOffers
         standardOfferController.preSelectedRedeemingType = self.selectedRedeemingType
+        standardOfferController.preSelectedDelivery = self.selectedDeliveryFilter
         standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
@@ -357,9 +360,10 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 
 //MARK: StandardOffersViewControllerDelegate
 extension SearchViewController: StandardOffersViewControllerDelegate {
-    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?) {
-        self.selectedRedeemingType = redeemingType
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?, deliveryFilter: DeliveryFilter?) {
         
+        self.selectedDeliveryFilter = deliveryFilter
+        self.selectedRedeemingType = redeemingType
         self.selectedStandardOffers = selectedOffers
         
         if !self.isViewAlreadyLoaded {

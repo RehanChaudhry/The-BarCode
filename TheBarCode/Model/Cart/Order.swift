@@ -63,7 +63,9 @@ class Order: Mappable {
     var minDeliveryCharges: Double?
     var maxDeliveryCharges: Double?
     var customDeliveryCharges: Double?
-        
+    
+    var deliveryCondition: String?
+    
     var updatedAtRaw: String = ""
     var updatedAt: Date = Date()
     
@@ -124,6 +126,7 @@ class Order: Mappable {
             self.minDeliveryCharges <- map["establishment.min_delivery_charges"]
             self.maxDeliveryCharges <- map["establishment.max_delivery_charges"]
             self.customDeliveryCharges <- map["establishment.custom_delivery_amount"]
+            self.deliveryCondition <- map["establishment.delivery_condition"]
             
             self.cartId = "\(map.JSON["id"]!)"
             

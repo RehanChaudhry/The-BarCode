@@ -33,7 +33,7 @@ class StandardOffer: CoreStoreObject {
     
     var displayValue: String {
         get {
-            return "Get \(self.discountValue)% OFF your first round".uppercased()
+            return "Get \(self.discountValue)% OFF your first order".uppercased()
         }
     }
     

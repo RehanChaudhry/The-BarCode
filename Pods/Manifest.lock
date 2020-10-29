@@ -148,6 +148,7 @@ PODS:
   - KMPlaceholderTextView (1.4.0)
   - KVNProgress (2.3.5)
   - MGSwipeTableCell (1.6.7)
+  - MLLabel (1.10.5)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -172,7 +173,7 @@ PODS:
   - UIColor_Hex_Swift (4.0.2)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.5.1)
+  - AFNetworking (~> 2.5.4)
   - Alamofire (~> 4.7.3)
   - BugfenderSDK (~> 1.7)
   - CoreStore (~> 6.3.2)
@@ -192,6 +193,7 @@ DEPENDENCIES:
   - KMPlaceholderTextView (~> 1.4.0)
   - KVNProgress (~> 2.3.5)
   - MGSwipeTableCell (~> 1.6.7)
+  - MLLabel (~> 1.10.5)
   - ObjectMapper (~> 3.5.1)
   - OneSignal (~> 2.13.0)
   - PureLayout (~> 3.1.5)
@@ -237,6 +239,7 @@ SPEC REPOS:
     - KMPlaceholderTextView
     - KVNProgress
     - MGSwipeTableCell
+    - MLLabel
     - nanopb
     - ObjectMapper
     - OneSignal
@@ -283,6 +286,7 @@ SPEC CHECKSUMS:
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   KVNProgress: d7046cce142f1aeb740db39dc3cacfe910fac354
   MGSwipeTableCell: fb20e983988bde2b8d0df29c2d9e1d8ffd10b74a
+  MLLabel: d76124055a2205e7f76878e62cd06ba925ba0c97
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   OneSignal: 09c9fe1e7a097af5fda94e00c1598c3c945552b9
@@ -296,6 +300,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: b8304401e2e1391ccd72a178f9c0e6d72b7cd3e9
+PODFILE CHECKSUM: 904a67da62838fe6db9fa6764c20280c2818ee7b
 
 COCOAPODS: 1.9.3

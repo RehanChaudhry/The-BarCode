@@ -222,7 +222,8 @@ extension BarsViewController {
             self.loadMore = Pagination()
         }
         
-        var params:[String : Any] =  ["type": ExploreType.bars.rawValue]
+        var params:[String : Any] =  ["type": ExploreType.bars.rawValue,
+                                      "is_for_map" : false]
 
         if self.isSearching {
             params["pagination"] = false

@@ -11,6 +11,7 @@ import StatefulTableView
 import Reusable
 import ObjectMapper
 import Alamofire
+import MLLabel
 
 class CheckOutViewController: UIViewController {
 
@@ -44,10 +45,12 @@ class CheckOutViewController: UIViewController {
         }
     }
     
-    var message: String?
+    var message: NSAttributedString?
     
     var offerRequest: DataRequest?
     var voucherRequest: DataRequest?
+    
+    var reloadScheme: String = "reload"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +65,12 @@ class CheckOutViewController: UIViewController {
         self.getOffers()
         
         self.setupViewModel()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
     }
     
     //MARK: My Methods
@@ -133,6 +142,7 @@ class CheckOutViewController: UIViewController {
             
             self.vouchers = self.vouchers.map({ (discount) -> OrderDiscount in
                 discount.isSelected = false
+                discount.shouldShowValue = true
                 return discount
             })
             
@@ -273,6 +283,16 @@ class CheckOutViewController: UIViewController {
         }
     }
     
+    func moveToReloadVC() {
+        let reloadNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "ReloadNavigation") as! UINavigationController)
+        reloadNavigation.modalPresentationStyle = .fullScreen
+        
+        let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.isRedeemingDeal = true
+        reloadController.shouldAutoDismissOnReload = true
+        self.present(reloadNavigation, animated: true, completion: nil)
+    }
+    
     //MARK: My IBActions
     
     @IBAction func continueButtonTapped(sender: UIButton) {
@@ -398,6 +418,7 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderMessageTableViewCell.self)
             cell.setUpCell(messageInfo: section.items[indexPath.row])
+            cell.infoLabel.delegate = self
             return cell
             
         } else {
@@ -409,6 +430,15 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
+    }
+}
+
+//MARK: MLLinkLabelDelegate
+extension CheckOutViewController: MLLinkLabelDelegate {
+    func didClick(_ link: MLLink!, linkText: String!, linkLabel: MLLinkLabel!) {
+        if let url = URL(string: link.linkValue), url.scheme == self.reloadScheme {
+            self.moveToReloadVC()
+        }
     }
 }
 
@@ -532,7 +562,34 @@ extension CheckOutViewController {
             }
             
             guard serverError == nil else {
-                self.message = serverError!.errorMessages()
+                
+                let msg = serverError!.errorMessages()
+                let errorAttributes = [NSAttributedString.Key.foregroundColor : UIColor.red,
+                                       NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0)]
+                let attributedError = NSMutableAttributedString(string: "\(msg)", attributes: errorAttributes)
+                
+                
+                if let rawError = serverError?.rawResponse,
+                    let errs = rawError["errors"] as? [String : Any],
+                    let _ = errs["reload"] {
+                    
+                    let linkAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
+                                          NSAttributedString.Key.link : URL(string: "\(self.reloadScheme)://")!] as [NSAttributedStringKey : Any]
+                    let normalAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white,
+                                            NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0)]
+                    
+                    let linkPrefix = NSAttributedString(string: "\nPlease ", attributes: normalAttributes)
+                    let link = NSAttributedString(string: "click here", attributes: linkAttributes)
+                    let linkSuffix = NSAttributedString(string: " to reload", attributes: normalAttributes)
+                    
+                    
+                    attributedError.append(linkPrefix)
+                    attributedError.append(link)
+                    attributedError.append(linkSuffix)
+                }
+                
+                self.message = attributedError
+                
                 return
             }
             
@@ -589,5 +646,21 @@ extension CheckOutViewController {
             }
             
         }
+    }
+}
+
+//MARK: Notification Methods
+extension CheckOutViewController {
+    @objc func reloadSuccessfullNotification(notification: Notification) {
+        self.viewModels.removeAll()
+        self.tableView.reloadData()
+        
+        self.offers.removeAll()
+        self.vouchers.removeAll()
+        
+        self.getVouchers()
+        self.getOffers()
+        
+        self.setupViewModel()
     }
 }

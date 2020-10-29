@@ -42,6 +42,8 @@ class OrderTypeViewController: UIViewController {
     
     @IBOutlet var closeBarButton: UIBarButtonItem!
     
+    @IBOutlet var accessoryInputView: UIView!
+    
     var showCloseBarButton: Bool = true
     
     var viewModels: [OrderViewModel] = []
@@ -89,6 +91,7 @@ class OrderTypeViewController: UIViewController {
         self.tableView.register(cellType: OrderRadioButtonTableViewCell.self)
         self.tableView.register(cellType: OrderDineInFieldTableViewCell.self)
         self.tableView.register(cellType: OrderDeliveryAddressTableViewCell.self)
+        self.tableView.register(cellType: OrderMobileNumberTableViewCell.self)
         
         let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 16))
         tableHeaderView.backgroundColor = UIColor.clear
@@ -153,6 +156,11 @@ class OrderTypeViewController: UIViewController {
             let deliveryAddressSection = OrderDeliveryAddressSection(items: [])
             self.viewModels.append(deliveryAddressSection)
         }
+        
+        let mobileNo = OrderMobileNumber()
+        mobileNo.text = Utility.shared.getCurrentUser()?.deliveryMobileNumber.value ?? ""
+        let mobileNumberSection = OrderMobileNumberSection(items: [mobileNo])
+        self.viewModels.append(mobileNumberSection)
             
         self.tableView.reloadData()
     }
@@ -237,6 +245,7 @@ class OrderTypeViewController: UIViewController {
             let field = OrderDeliveryAddress()
             field.address = self.selectedAddress
             field.isLoading = self.isLoadingAddress
+            field.deliveryCondition = self.order.deliveryCondition
 
             section.items.append(field)
             
@@ -322,12 +331,30 @@ class OrderTypeViewController: UIViewController {
         }
     }
     
+    func getPhoneNumberAndDefaultStatus() -> (phoneNumber: String, isDefault: Bool) {
+        let viewModel = self.viewModels.first(where: {$0.type == .mobileNumber}) as! OrderMobileNumberSection
+        let mobileModel = viewModel.items.first!
+        
+        return (mobileModel.text, mobileModel.isDefault)
+    }
+    
     //MARK: My IBActions
     @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func continueButtonTapped(sender: UIButton) {
+        
+        let mobileNumberInfo = self.getPhoneNumberAndDefaultStatus()
+        
+        var params: [String : Any] = [:]
+        params["contact_number"] = mobileNumberInfo.phoneNumber
+        
+        if mobileNumberInfo.isDefault {
+            params["save_delivery_contact"] = mobileNumberInfo.isDefault
+            
+            Utility.shared.updateDefaultDeliveryNumber(mobileNumber: mobileNumberInfo.phoneNumber)
+        }
         
         if let section = self.viewModels.first(where: {$0.type == .dineIn}) as? OrderDineInSection,
             let item = section.items.first,
@@ -339,32 +366,53 @@ class OrderTypeViewController: UIViewController {
             if tableNo.trimWhiteSpaces().count == 0 {
                 self.showAlertController(title: "", msg: "Please enter table number to proceed")
             } else {
-                self.createOrder(orderType: .dineIn, info: ["table_no" : tableNo])
+                params["table_no"] = tableNo
+                self.createOrder(orderType: .dineIn, info: params)
             }
             
         } else if let section = self.viewModels.first(where: {$0.type == .delivery}) as? OrderDeliverySection,
             let item = section.items.first,
             item.isSelected {
-            
-            if let address = self.selectedAddress {
-                let params: [String : Any] = ["delivery_charges" : "\(item.value)", "address_id" : address.id]
+
+            if let address = self.selectedAddress, mobileNumberInfo.phoneNumber.trimWhiteSpaces().count > 0 {
+                params["delivery_charges"] = "\(item.value)"
+                params["address_id"] = address.id
+                
                 self.createOrder(orderType: .delivery, info: params)
             } else {
-                self.showAlertController(title: "", msg: "Please select delivery address to proceed")
+                
+                var msg: String = "Missing required fields"
+                if self.selectedAddress ==  nil && mobileNumberInfo.phoneNumber.trimWhiteSpaces().count == 0 {
+                    msg = "Please select delivery address and enter mobile number to proceed"
+                } else if self.selectedAddress ==  nil {
+                    msg = "Please select delivery address to proceed"
+                } else if mobileNumberInfo.phoneNumber.trimWhiteSpaces().count == 0 {
+                    msg = "Please enter mobile number to proceed"
+                }
+                
+                self.showAlertController(title: "", msg: msg)
             }
             
         } else if let section = self.viewModels.first(where: {$0.type == .counterCollection}) as? OrderCounterCollectionSection,
             let item = section.items.first,
             item.isSelected {
             
-            self.createOrder(orderType: .counterCollection, info: [:])
+            self.createOrder(orderType: .counterCollection, info: params)
             
         }  else if let section = self.viewModels.first(where: {$0.type == .takeAway}) as? OrderTakeAwaySection,
             let item = section.items.first,
             item.isSelected {
-                   
-            self.createOrder(orderType: .takeAway, info: [:])
+            
+            if mobileNumberInfo.phoneNumber.trimWhiteSpaces().count == 0 {
+                self.showAlertController(title: "", msg: "Please enter mobile number to proceed")
+            } else {
+                self.createOrder(orderType: .takeAway, info: params)
+            }
         }
+    }
+    
+    @IBAction func doneBarButtonTapped(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
     }
 }
 
@@ -444,10 +492,16 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)
             cell.setUpCell(orderField: section.items[indexPath.row])
+            cell.textField.inputAccessoryView = self.accessoryInputView
             return cell
         } else if let section = viewModel as? OrderDeliveryAddressSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDeliveryAddressTableViewCell.self)
             cell.setupCell(address: section.items[indexPath.row])
+            return cell
+        } else if let section = viewModel as? OrderMobileNumberSection {
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderMobileNumberTableViewCell.self)
+            cell.setupCell(mobileModel: section.items[indexPath.row])
+            cell.textField.inputAccessoryView = self.accessoryInputView
             return cell
         } else {
             

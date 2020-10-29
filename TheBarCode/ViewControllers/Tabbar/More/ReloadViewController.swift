@@ -57,6 +57,8 @@ class ReloadViewController: UIViewController {
     
     let productIdReload = bundleId + ".reload"
     
+    var shouldAutoDismissOnReload: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -402,6 +404,10 @@ extension ReloadViewController {
                 self.setUpRedeemInfoView(type: .noOfferRedeemed)
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil, userInfo: nil)
+                
+                if self.shouldAutoDismissOnReload {
+                    self.dismiss(animated: true, completion: nil)
+                }
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()

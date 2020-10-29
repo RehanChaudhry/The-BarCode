@@ -156,17 +156,12 @@ class ExploreViewController: UIViewController {
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = bar.id.value
         
-//        barDetailController.selectedBar = bar
         barDetailController.delegate = self
         
-        switch self.exploreType {
-        case .liveOffers:
-            barDetailController.preSelectedTabIndex = 2
-            barDetailController.preSelectedSubTabIndexOffers = 2
-        case .deals:
-            barDetailController.preSelectedTabIndex = 2
-            barDetailController.preSelectedSubTabIndexOffers = 1
-        default:
+        if bar.isInAppPaymentOn.value {
+            barDetailController.preSelectedTabIndex = 1
+            barDetailController.preSelectedSubTabIndexWhatsOn = 1
+        } else {
             barDetailController.preSelectedTabIndex = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
         }
@@ -293,6 +288,7 @@ class ExploreViewController: UIViewController {
         reloadNavigation.modalPresentationStyle = .fullScreen
         
         let reloadController = reloadNavigation.viewControllers.first as! ReloadViewController
+        reloadController.shouldAutoDismissOnReload = true
         reloadController.isRedeemingDeal = true
         self.present(reloadNavigation, animated: true, completion: nil)
     }

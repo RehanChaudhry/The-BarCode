@@ -9,9 +9,9 @@
 import UIKit
 
 class OrderMessage {
-    var message: String
+    var message: NSAttributedString
     
-    init(message: String) {
+    init(message: NSAttributedString) {
         self.message = message
     }
 }

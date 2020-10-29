@@ -313,6 +313,17 @@ class Utility: NSObject {
 
     }
     
+    func updateDefaultDeliveryNumber(mobileNumber: String) {
+        let user = try! CoreStore.fetchOne(From<User>())
+        
+        try! CoreStore.perform(synchronous: { (transaction) -> Void in
+            let editedObject = transaction.edit(user)
+            editedObject?.deliveryMobileNumber.value = mobileNumber
+        })
+        
+        debugPrint("User delivery mobile number updated in local db")
+    }
+    
     func getFormattedRemainingTime(time: TimeInterval) -> String {
         
         let timeInt = Int(time)
@@ -666,7 +677,7 @@ class Utility: NSObject {
         if order.isGlobalDeliveryAllowed == true {
             return order.globalDeliveryCharges ?? 0.0
         } else {
-            if let customDeliveryCharges = order.customDeliveryCharges, totalPrice > customDeliveryCharges {
+            if let customDeliveryCharges = order.customDeliveryCharges, totalPrice >= customDeliveryCharges {
                 return order.minDeliveryCharges ?? 0.0
             } else {
                 return order.maxDeliveryCharges ?? 0.0

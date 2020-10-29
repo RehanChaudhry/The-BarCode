@@ -92,7 +92,7 @@ class AddressesViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addAddressButtonTapped(sender: UIButton) {
+    @IBAction func addAddressButtonTapped(sender: UIBarButtonItem) {
         let addAddressController = (self.storyboard!.instantiateViewController(withIdentifier: "AddAddressViewController") as! AddAddressViewController)
         addAddressController.delegate = self
         self.navigationController?.pushViewController(addAddressController, animated: true)

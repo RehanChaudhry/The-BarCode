@@ -29,13 +29,25 @@ class AddAddressViewController: UIViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet var addressLabel: UILabel!
+    @IBOutlet var addressTextView: UITextView!
+    
+    @IBOutlet var postCodeFieldView: UIView!
+    
+    @IBOutlet var postCodeField: UITextField!
+    
+    @IBOutlet var cityFieldView: UIView!
+    @IBOutlet var cityField: UITextField!
+    @IBOutlet var cityValidationLabel: UILabel!
+    
+    @IBOutlet var postCodeValidationLabel: UILabel!
     
     @IBOutlet var spotlightImageView: UIImageView!
     
-    @IBOutlet var textView: UITextView!
+    @IBOutlet var notesTextView: UITextView!
     
     @IBOutlet var addAddressButton: GradientButton!
+    
+    @IBOutlet var accessoryView: UIView!
     
     var myLocationManager: MyLocationManager!
     
@@ -68,8 +80,31 @@ class AddAddressViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.postCodeField.inputAccessoryView = self.accessoryView
+        self.cityField.inputAccessoryView = self.accessoryView
+        self.addressTextView.inputAccessoryView = self.accessoryView
+        self.notesTextView.inputAccessoryView = self.accessoryView
         
+        self.postCodeValidationLabel.text = ""
+        self.cityValidationLabel.text = ""
         
+        let placeholderAttributes = [NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 14.0),
+                                     NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.5)]
+        
+        let postCodePlaceholder = self.postCodeField.placeholder ?? ""
+        let attributedPostCodePlaceholder = NSAttributedString(string: postCodePlaceholder, attributes: placeholderAttributes)
+        self.postCodeField.attributedPlaceholder = attributedPostCodePlaceholder
+        
+        let cityPlaceholder = self.cityField.placeholder ?? ""
+        let attributedCityPlaceholder = NSAttributedString(string: cityPlaceholder, attributes: placeholderAttributes)
+        self.cityField.attributedPlaceholder = attributedCityPlaceholder
+        
+        self.postCodeFieldView.layer.borderWidth = 1.0
+        self.postCodeFieldView.layer.borderColor = UIColor.appBgSecondaryGrayColor().cgColor
+        
+        self.cityFieldView.layer.borderWidth = 1.0
+        self.cityFieldView.layer.borderColor = UIColor.appBgSecondaryGrayColor().cgColor
+
         self.textViewContainer.layer.borderWidth = 1.0
         self.textViewContainer.layer.borderColor = UIColor.appBgSecondaryGrayColor().cgColor
         
@@ -82,7 +117,7 @@ class AddAddressViewController: UIViewController {
             let cameraPosition = GMSCameraPosition(latitude: address.latitude, longitude: address.longitude, zoom: 15.0)
             self.mapView.animate(to: cameraPosition)
             
-            self.textView.text = address.additionalInfo
+            self.notesTextView.text = address.additionalInfo
             
             if address.label.lowercased() == AddressLabel.home.title().lowercased() {
                 self.segmentedControl.selectedSegmentIndex = AddressLabel.home.rawValue
@@ -107,7 +142,10 @@ class AddAddressViewController: UIViewController {
     //MARK: My Methods
     func getCurrentLocation() {
         
-        self.addressLabel.text = ""
+        self.cityField.text = ""
+        self.postCodeField.text = ""
+        self.addressTextView.text = ""
+        self.addressTextView.isHidden = true
         self.activityIndicator.startAnimating()
         
         self.mapView.isUserInteractionEnabled = false
@@ -121,28 +159,23 @@ class AddAddressViewController: UIViewController {
                 self.mapView.animate(to: cameraPosition)
             } else {
                 self.activityIndicator.stopAnimating()
+                self.addressTextView.isHidden = false
             }
         }
     }
     
     func getReadableAddress(gmsAddress: GMSAddress) -> String {
         return gmsAddress.lines?.first ?? ""
-        
-//        var address = gmsAddress.thoroughfare ?? ""
-//        if address.count > 0 {
-//            address = address + " "
-//        }
-//
-//        address += (gmsAddress.locality ?? "")
-//
-//        return address
     }
     
     func reverseGeoCodeCoorniate(coordinate: CLLocationCoordinate2D) {
         self.recentResponseNumber += 1
         let sequenceNumber = self.recentResponseNumber
         
-        self.addressLabel.text = ""
+        self.cityField.text = ""
+        self.postCodeField.text = ""
+        self.addressTextView.text = ""
+        self.addressTextView.isHidden = true
         self.selectedAddress = nil
         self.activityIndicator.startAnimating()
         
@@ -154,19 +187,50 @@ class AddAddressViewController: UIViewController {
             }
             
             self.activityIndicator.stopAnimating()
+            self.addressTextView.isHidden = false
             
             guard error == nil else {
                 return
             }
                         
             if let address = response?.firstResult() {
-                self.addressLabel.text = self.getReadableAddress(gmsAddress: address)
+                self.addressTextView.text = self.getReadableAddress(gmsAddress: address)
+                
+                self.postCodeField.text = address.postalCode ?? ""
+                self.postCodeValidationLabel.text = ""
+                
+                self.cityField.text = address.locality ?? ""
+                self.cityValidationLabel.text = ""
             } else {
-                self.addressLabel.text = ""
+                self.addressTextView.text = ""
+                self.postCodeField.text = ""
+                self.cityField.text = ""
             }
             
             self.selectedAddress = response?.firstResult()
         }
+    }
+    
+    func validate() -> Bool {
+        var isValid = true
+        
+        if self.postCodeField.text?.isValidPostCode() == false {
+            isValid = false
+            
+            self.postCodeValidationLabel.text = "Please enter a valid postcode e.g. L1 8JQ"
+        } else {
+            self.postCodeValidationLabel.text = ""
+        }
+        
+        if self.cityField.text?.trimWhiteSpaces().count == 0 {
+            isValid = false
+            
+            self.cityValidationLabel.text = "Please enter city"
+        } else {
+            self.cityValidationLabel.text = ""
+        }
+        
+        return isValid
     }
     
     //MARK: My IBActions
@@ -179,7 +243,40 @@ class AddAddressViewController: UIViewController {
             self.addAddress()
         }
     }
+    
+    @IBAction func textFieldChangeEditing(sender: UITextField) {
+        if self.postCodeField == sender {
+            self.postCodeValidationLabel.text = ""
+        } else if self.cityField == sender {
+            self.cityValidationLabel.text = ""
+        }
+    }
 
+    @IBAction func doneBarButtonTapped(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
+    }
+}
+
+//MARK: UITextFieldDelegate
+extension AddAddressViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        var maxLength: Int?
+        
+        if textField == self.postCodeField {
+            maxLength = 8
+        } else {
+            maxLength = 300
+        }
+        
+        if let maxLength = maxLength {
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        
+        return true
+    }
 }
 
 //MARK: GMSMapViewDelegate
@@ -216,16 +313,21 @@ extension AddAddressViewController {
             return
         }
         
+        guard self.validate() else {
+            return
+        }
+        
         UIApplication.shared.beginIgnoringInteractionEvents()
         self.addAddressButton.showLoader()
         
         let label = AddressLabel(rawValue: self.segmentedControl.selectedSegmentIndex) ?? .other
         let params: [String : Any] = ["title" : label.title(),
+                                      "post_code" : self.postCodeField.text ?? "",
                                       "address" : selectedAddress.lines?.first ?? "",
                                       "latitude" : "\(selectedAddress.coordinate.latitude)",
                                       "longitude" : "\(selectedAddress.coordinate.longitude)",
-                                      "city" : selectedAddress.locality ?? "",
-                                      "optional_note" : self.textView.text ?? ""]
+                                      "city" : self.cityField.text ?? "",
+                                      "optional_note" : self.notesTextView.text ?? ""]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddresses, method: .post) { (response, serverError, error) in
             
             UIApplication.shared.endIgnoringInteractionEvents()
@@ -261,6 +363,10 @@ extension AddAddressViewController {
             return
         }
         
+        guard self.validate() else {
+            return
+        }
+        
         let addressString = gmsAddress.lines?.first ?? ""
         let latitude = gmsAddress.coordinate.latitude
         let longitude = gmsAddress.coordinate.longitude
@@ -275,7 +381,7 @@ extension AddAddressViewController {
                                       "latitude" : "\(latitude)",
                                       "longitude" : "\(longitude)",
                                       "city" : city,
-                                      "optional_note" : self.textView.text ?? ""]
+                                      "optional_note" : self.notesTextView.text ?? ""]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathAddresses + "/" + address.id, method: .put) { (response, serverError, error) in
             
             UIApplication.shared.endIgnoringInteractionEvents()
