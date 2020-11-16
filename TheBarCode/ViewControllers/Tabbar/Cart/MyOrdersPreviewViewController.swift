@@ -302,7 +302,7 @@ extension MyOrdersPreviewViewController: UITableViewDataSource, UITableViewDeleg
         if section == 0 {
             headerView?.setupHeader(title: "Ongoing Orders")
         } else if section == 1 {
-            headerView?.setupHeader(title: "Completed Orders")
+            headerView?.setupHeader(title: "Completed / Rejected Orders")
         } else {
             headerView?.setupHeader(title: "")
         }

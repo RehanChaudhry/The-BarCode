@@ -22,6 +22,8 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     @IBOutlet var bottomPadding: NSLayoutConstraint!
     
+    @IBOutlet var deliverRadiusLabel: UILabel!
+    
     weak var delegate : BarTableViewCellDelegare!
 
     override func awakeFromNib() {
@@ -39,9 +41,22 @@ class BarTableViewCell: ExploreBaseTableViewCell, NibReusable {
     
     //MARK: My Methods
     
-    func setUpCell(bar: Bar, topPadding: Bool = true, bottomPadding: Bool = false) {
+    func setUpCell(bar: Bar, topPadding: Bool = true, bottomPadding: Bool = false, showDeliveryRadius: Bool = false) {
         super.setUpCell(explore: bar)
         self.favouriteButton.tintColor = bar.isUserFavourite.value ? UIColor.appBlueColor() : UIColor.appLightGrayColor()
+        
+        if showDeliveryRadius {
+            let vicinity = String(format: "%.1f %@", bar.deliveryRadius.value, bar.deliveryRadius.value > 1.0 ? "miles" : "mile")
+            let vicinityValue = String("Within \(vicinity) radius")
+            
+            self.deliverRadiusLabel.text = vicinityValue
+        } else {
+            self.deliverRadiusLabel.text = ""
+        }
+        
+        self.deliverRadiusLabel.textColor = UIColor.white
+        self.deliverRadiusLabel.isHidden = !showDeliveryRadius
+        self.favouriteButton.isHidden = showDeliveryRadius
         
         self.topPadding.constant = topPadding ? 24.0 : 0.0
         self.bottomPadding.constant = bottomPadding ? 10.0 : 1.0

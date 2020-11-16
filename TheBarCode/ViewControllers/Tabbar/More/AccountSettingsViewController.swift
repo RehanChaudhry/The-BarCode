@@ -48,6 +48,8 @@ class AccountSettingsViewController: UIViewController {
     var passwordFieldView: FieldView!
     var confirmPasswordFieldView: FieldView!
     
+    var deliveryNumberFieldView: FieldView!
+    
     var selectedGender: Gender = Gender.male
     var selectedDob: Date = Date()
     
@@ -200,6 +202,17 @@ class AccountSettingsViewController: UIViewController {
         self.postcodeFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
         self.postcodeFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
         
+        self.deliveryNumberFieldView = FieldView.loadFromNib()
+        self.deliveryNumberFieldView.setUpFieldView(placeholder: "DELIVERY CONTACT (OPTIONAL)", fieldPlaceholder: "Enter your phone number", iconImage: nil)
+        self.deliveryNumberFieldView.setKeyboardType(keyboardType: .phonePad, inputView: nil)
+        self.deliveryNumberFieldView.delegate = self
+        self.contentView.addSubview(self.deliveryNumberFieldView)
+        
+        self.deliveryNumberFieldView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 5.0)
+        self.deliveryNumberFieldView.autoPinEdge(toSuperviewEdge: ALEdge.left)
+        self.deliveryNumberFieldView.autoPinEdge(toSuperviewEdge: ALEdge.right)
+        self.deliveryNumberFieldView.autoSetDimension(ALDimension.height, toSize: 71.0)
+        
         self.currentPasswordFieldView = FieldView.loadFromNib()
         self.currentPasswordFieldView.setUpFieldView(placeholder: "CURRENT PASSWORD", fieldPlaceholder: "Enter your current password", iconImage: nil)
         self.currentPasswordFieldView.setKeyboardType()
@@ -223,7 +236,7 @@ class AccountSettingsViewController: UIViewController {
         if self.signupProvider == .email {
             self.contentView.addSubview(self.passwordSectionHeaderView)
             
-            self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 0.0)
+            self.passwordSectionHeaderView.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.deliveryNumberFieldView, withOffset: 0.0)
             self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.left)
             self.passwordSectionHeaderView.autoPinEdge(toSuperviewEdge: ALEdge.right)
             self.passwordSectionHeaderView.autoSetDimension(ALDimension.height, toSize: 46.0)
@@ -253,7 +266,7 @@ class AccountSettingsViewController: UIViewController {
             self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.confirmPasswordFieldView, withOffset: 16.0)
         } else {
             self.contentView.addSubview(self.updateButton)
-            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.postcodeFieldView, withOffset: 16.0)
+            self.updateButton.autoPinEdge(ALEdge.top, to: ALEdge.bottom, of: self.deliveryNumberFieldView, withOffset: 16.0)
         }
 
         self.updateButton.autoPinEdge(toSuperviewEdge: ALEdge.left, withInset: 16.0)
@@ -293,6 +306,7 @@ class AccountSettingsViewController: UIViewController {
         self.selectedGender = user.gender ?? Gender.male
     
         self.postcodeFieldView.textField.text = (user.postcode.value == "<null>") ? "" : user.postcode.value
+        self.deliveryNumberFieldView.textField.text = (user.deliveryMobileNumber.value == "<null>") ? "" : user.deliveryMobileNumber.value
         
         self.updateDobField()
         self.updateGenderField()
@@ -535,15 +549,27 @@ extension AccountSettingsViewController: FieldViewDelegate {
     }
     
     func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
-          
-          if fieldView == self.postcodeFieldView {
-              let maxLength = 8
-              let currentString: NSString = textField.text! as NSString
-              let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
-              return newString.length <= maxLength
-          }
+        
+        var maxLength: Int = 255
+        
+        if fieldView == self.deliveryNumberFieldView {
+            
+            maxLength = 13
+            
+            let allowedCharacterSet: CharacterSet? = CharacterSet(charactersIn: "0123456789+-")
+            let replacementStringIsLegal = allowedCharacterSet == nil ? false : string.rangeOfCharacter(from: allowedCharacterSet!) == nil
+            
+            if replacementStringIsLegal && string.count > 0 {
+                return false
+            }
+            
+        } else if fieldView == self.postcodeFieldView {
+            maxLength = 8
+        }
 
-          return true
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
       }
     
 }
@@ -560,6 +586,10 @@ extension AccountSettingsViewController {
         params["gender"] = self.selectedGender.rawValue
         params["postcode"] = self.postcodeFieldView.textField.text!.uppercased()
 
+        if let deliveryContact = self.deliveryNumberFieldView.textField.text, deliveryContact.trimWhiteSpaces().count > 0 {
+            params["delivery_contact"] = deliveryContact
+        }
+        
         if isUpdatingPassword() {
             params["old_password"] = self.currentPasswordFieldView.textField.text!
             params["new_password"] = self.passwordFieldView.textField.text!
@@ -590,6 +620,11 @@ extension AccountSettingsViewController {
                     editedUser?.fullName.value = "\(responseData["full_name"]!)"
                     editedUser?.dobString.value = "\(responseData["date_of_birth"]!)"
                     editedUser?.genderString.value = "\(responseData["gender"]!)"
+                    
+                    if let deliveryNumber = responseData["delivery_contact"] as? String {
+                        editedUser?.deliveryMobileNumber.value = deliveryNumber
+                    }
+                    
                     if let postcode = responseData["postcode"] {
                         editedUser?.postcode.value = "\(postcode)"
                     }

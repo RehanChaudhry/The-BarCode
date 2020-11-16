@@ -125,6 +125,14 @@ extension UIColor {
         return UIColor("#95a9a2")
     }
     
+    static func appSearchScopeDeliveryColor() -> UIColor {
+        return UIColor("#F6DEB6")
+    }
+    
+    static func appSearchScopeDeliverySelectedColor() -> UIColor {
+        return UIColor("#F0C57F")
+    }
+    
     static func appSearchScopeDealsColor() -> UIColor {
         return UIColor("#a3ffcf")
     }

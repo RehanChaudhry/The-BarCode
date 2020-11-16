@@ -10,7 +10,7 @@ import UIKit
 import CoreStore
 
 protocol StandardOffersViewControllerDelegate: class {
-    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?, deliveryFilter: DeliveryFilter?)
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?)
 
 }
 
@@ -22,8 +22,6 @@ class StandardOffersViewController: UIViewController {
     
     var offers: [StandardOffer] = []
     var redeemingTypes: [RedeemingTypeModel] = []
-    
-    var deliveryFilter: DeliveryFilter!
     
     var statefulView: LoadingAndErrorView!
     
@@ -38,7 +36,6 @@ class StandardOffersViewController: UIViewController {
     var dataFetched: Bool = false
     
     var preSelectedRedeemingType: RedeemingTypeModel? = nil
-    var preSelectedDelivery: DeliveryFilter? = nil
     
     var hasChanges: Bool = false
     
@@ -89,12 +86,6 @@ class StandardOffersViewController: UIViewController {
         } else {
             let redeemingTypeAll = self.redeemingTypes.first!
             redeemingTypeAll.selected = true
-        }
-        
-        if let deliveryFilter = self.preSelectedDelivery {
-            self.deliveryFilter = deliveryFilter
-        } else {
-            self.deliveryFilter = DeliveryFilter()
         }
     }
     
@@ -157,8 +148,7 @@ class StandardOffersViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         } else {
             let redeemType = selectedRedeemingType.type == .all ? nil : selectedRedeemingType
-            let deliveryFilter = self.deliveryFilter.isSelected ? self.deliveryFilter : nil
-            self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers, redeemingType: redeemType, deliveryFilter: deliveryFilter)
+            self.delegate?.standardOffersViewController(controller: self, didSelectStandardOffers: fetchedOffers, redeemingType: redeemType)
             
             self.navigationController?.popViewController(animated: true)
         }
@@ -175,11 +165,11 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
             return 0
         }
         
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 2 {
+        if indexPath.section == 0 {
             return 61.0
         } else {
             return 47.0
@@ -188,11 +178,9 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
-        } else if section == 1 {
-            return self.redeemingTypes.count
-        } else {
             return self.offers.count
+        } else {
+            return self.redeemingTypes.count
         }
         
     }
@@ -204,11 +192,9 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(FiltersHeaderView.self)
         if section == 0 {
-            headerView?.setupHeader(title: "FULFILMENT")
+            headerView?.setupHeader(title: "STANDARD OFFERS")
         } else if section == 1 {
             headerView?.setupHeader(title: "REDEEMING TYPES")
-        } else if section == 2 {
-            headerView?.setupHeader(title: "STANDARD OFFERS")
         }
         
         return headerView
@@ -216,19 +202,15 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: DeliveryFilterCell.self)
-            cell.setUpCell(delivery: self.deliveryFilter)
-            cell.separatorInset = UIEdgeInsets(top: 0.0, left: 10000.0, bottom: 0.0, right: 0.0)
+            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: FilterCell.self)
+            cell.setUpCell(offer: self.offers[indexPath.row])
+            cell.separatorInset = UIEdgeInsets(top: 0.0, left: 68.0, bottom: 0.0, right: 0.0)
             return cell
+            
         } else if indexPath.section == 1 {
             let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: RedeemingTypeCell.self)
             cell.setupCell(redeemingType: self.redeemingTypes[indexPath.row])
             cell.separatorInset = UIEdgeInsets(top: 0.0, left: 10000.0, bottom: 0.0, right: 0.0)
-            return cell
-        } else if indexPath.section == 2 {
-            let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: FilterCell.self)
-            cell.setUpCell(offer: self.offers[indexPath.row])
-            cell.separatorInset = UIEdgeInsets(top: 0.0, left: 68.0, bottom: 0.0, right: 0.0)
             return cell
         } else {
             return UITableViewCell()
@@ -241,8 +223,10 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
         self.hasChanges = true
         
         if indexPath.section == 0 {
-            self.deliveryFilter.isSelected = !self.deliveryFilter.isSelected
-            self.tableView.reloadData()
+            let offer = self.offers[indexPath.item]
+            offer.isSelected.value = !offer.isSelected.value
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+            
         } else if indexPath.section == 1 {
             for type in self.redeemingTypes {
                 type.selected = false
@@ -251,10 +235,6 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
             let type = self.redeemingTypes[indexPath.row]
             type.selected = true
             self.tableView.reloadData()
-        } else if indexPath.section == 2 {
-            let offer = self.offers[indexPath.item]
-            offer.isSelected.value = !offer.isSelected.value
-            self.tableView.reloadRows(at: [indexPath], with: .none)
         }
         
     }

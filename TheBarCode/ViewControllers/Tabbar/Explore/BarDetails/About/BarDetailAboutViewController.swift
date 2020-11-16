@@ -37,8 +37,10 @@ class BarDetailAboutViewController: UIViewController {
         self.headerView.addSubview(headerViewController.view)
         headerViewController.view.autoPinEdgesToSuperviewEdges()
         
-        let collectionViewHeight = ((178.0 / 375.0) * self.view.frame.width)
+        let collectionViewHeight = ((162.0 / 288.0) * self.view.frame.width)
         let headerViewHeight = ceil(collectionViewHeight + 83.0)
+        
+        headerViewController.collectionViewHeight.constant = collectionViewHeight
         
         let headerFrame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: headerViewHeight)
         self.headerView.frame = headerFrame

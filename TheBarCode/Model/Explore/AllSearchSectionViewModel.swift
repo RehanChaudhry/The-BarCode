@@ -11,6 +11,7 @@ import Reusable
 
 enum AllSearchItemType: String {
     case bar = "bar",
+    deliveryBars = "deliveryBars",
     deal = "deal",
     liveOffer = "liveOffer",
     food = "food",
@@ -23,6 +24,7 @@ enum AllSearchSectionViewModelItemType: String {
     case headerCell = "headerCell",
     footerCell = "footerCell",
     barCell = "barCell",
+    deliveryBarCell = "deliveryBarCell",
     dealCell = "dealCell",
     liveOfferCell = "liveOfferCell",
     foodBarCell = "foodBarCell",

@@ -26,19 +26,38 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="57z-J7-hYX">
                     <rect key="frame" x="16" y="8" width="382" height="32"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accordion" translatesAutoresizingMaskIntoConstraints="NO" id="mpy-p7-a2T">
+                            <rect key="frame" x="358" y="10" width="12" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="12" id="TpW-ft-Nxh"/>
+                                <constraint firstAttribute="height" constant="12" id="q9J-rY-bZB"/>
+                            </constraints>
+                        </imageView>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STARTER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXD-tH-nCV">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-cI-Qhi">
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
+                            <connections>
+                                <action selector="titleButtonTappedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="QYj-LU-h5P"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="hpX-cI-Qhi" firstAttribute="leading" secondItem="vBA-OH-B6i" secondAttribute="leading" id="6Dc-7N-5re"/>
+                        <constraint firstItem="mpy-p7-a2T" firstAttribute="centerY" secondItem="57z-J7-hYX" secondAttribute="centerY" id="7q9-9P-SPD"/>
                         <constraint firstAttribute="trailing" secondItem="PXD-tH-nCV" secondAttribute="trailing" id="KoU-oJ-wuf"/>
+                        <constraint firstItem="hpX-cI-Qhi" firstAttribute="trailing" secondItem="vBA-OH-B6i" secondAttribute="trailing" id="Mas-y0-2lC"/>
                         <constraint firstAttribute="bottom" secondItem="PXD-tH-nCV" secondAttribute="bottom" id="WGc-WT-B3j"/>
                         <constraint firstItem="PXD-tH-nCV" firstAttribute="leading" secondItem="vBA-OH-B6i" secondAttribute="leading" id="Ymd-EW-6Iz"/>
+                        <constraint firstItem="hpX-cI-Qhi" firstAttribute="bottom" secondItem="vBA-OH-B6i" secondAttribute="bottom" id="eSc-Ea-y33"/>
+                        <constraint firstItem="hpX-cI-Qhi" firstAttribute="top" secondItem="vBA-OH-B6i" secondAttribute="top" id="m4p-p1-ItI"/>
                         <constraint firstItem="PXD-tH-nCV" firstAttribute="top" secondItem="vBA-OH-B6i" secondAttribute="top" id="vDn-D7-wr7"/>
+                        <constraint firstItem="vBA-OH-B6i" firstAttribute="trailing" secondItem="mpy-p7-a2T" secondAttribute="trailing" constant="12" id="zCo-Ou-2ac"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="vBA-OH-B6i"/>
                     <userDefinedRuntimeAttributes>
@@ -61,10 +80,14 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="accordionImageView" destination="mpy-p7-a2T" id="0eG-26-rLW"/>
                 <outlet property="containerView" destination="sac-It-gsB" id="91W-dc-1Rv"/>
                 <outlet property="titleLabel" destination="PXD-tH-nCV" id="Iee-3a-etZ"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="116.49175412293854"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon_accordion" width="12" height="8"/>
+    </resources>
 </document>

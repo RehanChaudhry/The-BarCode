@@ -16,6 +16,8 @@ class DrinkMenuSegment: Mappable {
     var name: String!
     var drinks: [Drink] = []
     
+    var isExpanded: Bool = false
+    
     required init?(map: Map) {
         
     }

@@ -100,7 +100,7 @@ extension BarSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
-        cell.setUpCell(bar: self.bars[indexPath.row])
+        cell.setUpCell(bar: self.bars[indexPath.row], showDeliveryRadius: self.selectedDeliveryFilter?.isSelected == true)
         cell.delegate = self
         cell.exploreBaseDelegate = self
         

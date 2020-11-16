@@ -18,6 +18,9 @@ enum OrderStatus: String {
     readyForPickup = "ready for pickup",
     ongoing = "ongoing",
     completed = "completed",
+    rejected = "rejected",
+    lookingForDriver = "looking for driver",
+    readyToDeliver = "ready to deliver",
     other = "other"
 }
 

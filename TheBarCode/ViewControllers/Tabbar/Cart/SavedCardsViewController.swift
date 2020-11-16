@@ -17,7 +17,13 @@ class SavedCardsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerView: UIView!
     
+    @IBOutlet var bottomViewBottom: NSLayoutConstraint!
+    @IBOutlet var bottomView: UIView!
+    @IBOutlet var bottomSafeAreaView: UIView!
+    
     @IBOutlet var payButton: GradientButton!
+    
+    var closeBarButtonItem: UIBarButtonItem!
     
     var cards: [CreditCard] = []
     
@@ -31,7 +37,7 @@ class SavedCardsViewController: UIViewController {
         }
     }
     
-    var order: Order!
+    var order: Order?
     
     var selectedVoucher: OrderDiscount?
     var selectedOffer: OrderDiscount?
@@ -39,6 +45,8 @@ class SavedCardsViewController: UIViewController {
     var totalBillPayable: Double = 0.0
     
     var statefulView: LoadingAndErrorView!
+    
+    var useCredit: Bool = false
     
     enum CardSectionType: Int {
         case info = 0, addCard = 1
@@ -54,6 +62,19 @@ class SavedCardsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.title = "Payment Method"
+        
+        self.closeBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(closeBarButtonTapped(sender:)))
+        
+        if self.order == nil {
+            self.bottomViewBottom.constant = self.bottomView.frame.height
+            self.navigationItem.leftBarButtonItem = self.closeBarButtonItem
+            self.bottomView.isHidden = true
+            self.bottomSafeAreaView.isHidden = true
+        } else {
+            self.bottomViewBottom.constant = 0.0
+            self.bottomView.isHidden = false
+            self.bottomSafeAreaView.isHidden = false
+        }
         
         self.tableView.tableHeaderView = self.headerView
         let footerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 16.0))
@@ -83,6 +104,11 @@ class SavedCardsViewController: UIViewController {
         self.getCards()
     }
     
+    //MARK: My Methods
+    @objc func closeBarButtonTapped(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func moveToThankYou(order: Order) {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ThankYouViewController") as! ThankYouViewController)
         controller.order = order
@@ -101,9 +127,14 @@ class SavedCardsViewController: UIViewController {
     }
     
     func postDealRedeemNotificationIfNeeded() {
+        
+        guard let order = self.order else {
+            return
+        }
+        
         if self.selectedOffer != nil {
             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), self.order.barId))
+                let bars = try! transaction.fetchAll(From<Bar>(), Where<Bar>("%K == %@", String(keyPath: \Bar.id), order.barId))
                 for bar in bars {
                     bar.canRedeemOffer.value = false
                 }
@@ -149,7 +180,7 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
             
             let card = self.cards[indexPath.row]
             
-            cell.setUpCell(card: card, isSelected: card.cardId == self.selectedCard?.cardId)
+            cell.setUpCell(card: card, isSelected: card.cardId == self.selectedCard?.cardId, canShowSelection: self.order != nil)
             cell.delegate = self
             
             cell.maskCorners(radius: 8.0, mask: isFirstCell ? [.layerMinXMinYCorner, .layerMaxXMinYCorner] : [])
@@ -245,13 +276,18 @@ extension SavedCardsViewController {
     
     func chargeCard(card: CreditCard) {
         
+        guard let order = self.order else {
+            self.showAlertController(title: "", msg: "Order information is unavailable")
+            return
+        }
+        
         let sessionId = UUID().uuidString
         
-        var params: [String : Any] = ["order_id" : self.order.orderNo,
+        var params: [String : Any] = ["order_id" : order.orderNo,
                                       "token" : card.cardToken,
                                       "session_id" : sessionId]
         
-        if let split = self.order.splitPaymentInfo, split.type != .none {
+        if let split = order.splitPaymentInfo, split.type != .none {
             params["split_type"] = split.type.rawValue
             params["value"] = split.value
         }
@@ -263,6 +299,10 @@ extension SavedCardsViewController {
         if let offer = self.selectedOffer {
             params["offer_id"] = offer.id
             params["offer_type"] = offer.typeRaw
+            
+            if self.useCredit {
+                params["use_credit"] = self.useCredit
+            }
         }
         
         UIApplication.shared.beginIgnoringInteractionEvents()
@@ -321,10 +361,20 @@ extension SavedCardsViewController {
     }
     
     func updatePaymentStatus(secureCode: String, model: ThreeDSModel) {
-        let params: [String : Any] = ["session_id" : model.sessionId,
-                                      "order_id" : self.order.orderNo,
+        
+        guard let order = self.order else {
+            self.showAlertController(title: "", msg: "Order information is unavailable")
+            return
+        }
+        
+        var params: [String : Any] = ["session_id" : model.sessionId,
+                                      "order_id" : order.orderNo,
                                       "payment_code" : model.paymentCode,
                                       "secure_code" : secureCode]
+        
+        if self.selectedOffer != nil, self.useCredit {
+            params["use_credit"] = self.useCredit
+        }
         
         UIApplication.shared.beginIgnoringInteractionEvents()
         self.payButton.showLoader()

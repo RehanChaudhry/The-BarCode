@@ -254,7 +254,7 @@ extension TableReservationViewController: UITableViewDataSource, UITableViewDele
             
             let card = self.cards[indexPath.row]
             
-            cell.setUpCell(card: card, isSelected: card.cardToken == self.selectedCard?.cardToken)
+            cell.setUpCell(card: card, isSelected: card.cardToken == self.selectedCard?.cardToken, canShowSelection: true)
             
             cell.maskCorners(radius: 8.0, mask: isFirstCell ? [.layerMinXMinYCorner, .layerMaxXMinYCorner] : [])
             return cell

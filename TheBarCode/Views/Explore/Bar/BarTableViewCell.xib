@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -64,7 +64,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-uj-0UX">
-                        <rect key="frame" x="16" y="206" width="246" height="20"/>
+                        <rect key="frame" x="16" y="206" width="250" height="20"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -89,11 +89,17 @@
                             <action selector="distanceButtonTapped:" destination="suM-Yq-PQ4" eventType="touchUpInside" id="3bT-3S-VN5"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Within 3.0 miles radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPl-cS-XOh">
+                        <rect key="frame" x="183" y="234.5" width="121" height="14.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Skp-3x-YSf">
-                        <rect key="frame" x="270" y="194" width="44" height="44"/>
+                        <rect key="frame" x="274" y="194" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="44" id="84H-84-hQe"/>
-                            <constraint firstAttribute="height" constant="44" id="OKI-ex-5nq"/>
+                            <constraint firstAttribute="width" constant="40" id="84H-84-hQe"/>
+                            <constraint firstAttribute="height" constant="40" id="OKI-ex-5nq"/>
                         </constraints>
                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                         <state key="normal" image="icon_tab_fav"/>
@@ -174,9 +180,12 @@
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="8" id="2cV-1Y-GKW"/>
                     <constraint firstItem="AM3-aF-Ulf" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="3Ol-7c-Xhp"/>
                     <constraint firstItem="Zlj-J8-B4g" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="7Hw-ml-FX5"/>
+                    <constraint firstAttribute="trailing" secondItem="pPl-cS-XOh" secondAttribute="trailing" constant="16" id="7p7-oV-iNq"/>
                     <constraint firstItem="uPd-tc-4ns" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="9Ek-fh-Mof"/>
                     <constraint firstItem="AM3-aF-Ulf" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="Ap2-Ac-Fmg"/>
+                    <constraint firstItem="pPl-cS-XOh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lui-2O-2M4" secondAttribute="trailing" constant="8" id="B9f-Vc-cHE"/>
                     <constraint firstItem="TNh-vE-HpY" firstAttribute="top" secondItem="Uz3-UE-iJo" secondAttribute="top" constant="24" id="E41-gZ-a9E"/>
+                    <constraint firstItem="pPl-cS-XOh" firstAttribute="top" secondItem="lui-2O-2M4" secondAttribute="top" id="F1H-0L-vFh"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" id="HO1-jG-Deg"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="leading" secondItem="CR5-uj-0UX" secondAttribute="trailing" constant="8" id="HiM-lS-ypt"/>
                     <constraint firstItem="lui-2O-2M4" firstAttribute="top" secondItem="CR5-uj-0UX" secondAttribute="bottom" constant="8.5" id="I1B-9v-LQj"/>
@@ -185,6 +194,7 @@
                     <constraint firstItem="88w-H1-hsa" firstAttribute="centerY" secondItem="lui-2O-2M4" secondAttribute="centerY" id="JtO-58-33B"/>
                     <constraint firstItem="Zlj-J8-B4g" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" constant="8" id="Mg2-yJ-jOw"/>
                     <constraint firstItem="gvl-13-9ha" firstAttribute="centerX" secondItem="TNh-vE-HpY" secondAttribute="centerX" id="OZ5-2k-dVW"/>
+                    <constraint firstAttribute="bottom" secondItem="pPl-cS-XOh" secondAttribute="bottom" constant="1" id="RxW-3O-lZ3"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="XKL-Ju-87r"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" id="Yvb-ph-cuc"/>
                     <constraint firstItem="ind-3c-R0V" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" id="aJb-OI-XAH"/>
@@ -205,6 +215,7 @@
                 <outlet property="bottomPadding" destination="t3a-Gn-4Zs" id="nkx-Ti-agc"/>
                 <outlet property="cartIconContainer" destination="AM3-aF-Ulf" id="Bpj-1o-LjO"/>
                 <outlet property="coverImageView" destination="ind-3c-R0V" id="Utf-tb-2IR"/>
+                <outlet property="deliverRadiusLabel" destination="pPl-cS-XOh" id="GRB-Ck-5OU"/>
                 <outlet property="distanceButton" destination="lui-2O-2M4" id="tuN-sk-SVI"/>
                 <outlet property="favouriteButton" destination="Skp-3x-YSf" id="JhB-hY-PRO"/>
                 <outlet property="locationIconImageView" destination="88w-H1-hsa" id="IhG-Nb-n55"/>
@@ -215,7 +226,7 @@
                 <outlet property="topPadding" destination="E41-gZ-a9E" id="Yt4-md-DEM"/>
                 <outlet property="unlimitedRedemptionView" destination="uPd-tc-4ns" id="9eQ-tV-dob"/>
             </connections>
-            <point key="canvasLocation" x="137.59999999999999" y="136.73163418290855"/>
+            <point key="canvasLocation" x="-25.600000000000001" y="147.52623688155924"/>
         </tableViewCell>
     </objects>
     <resources>

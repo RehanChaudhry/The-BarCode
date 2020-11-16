@@ -323,7 +323,7 @@ extension AddAddressViewController {
         let label = AddressLabel(rawValue: self.segmentedControl.selectedSegmentIndex) ?? .other
         let params: [String : Any] = ["title" : label.title(),
                                       "post_code" : self.postCodeField.text ?? "",
-                                      "address" : selectedAddress.lines?.first ?? "",
+                                      "address" : self.addressTextView.text ?? "",
                                       "latitude" : "\(selectedAddress.coordinate.latitude)",
                                       "longitude" : "\(selectedAddress.coordinate.longitude)",
                                       "city" : self.cityField.text ?? "",

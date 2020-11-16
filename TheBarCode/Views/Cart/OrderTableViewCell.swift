@@ -34,17 +34,24 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
         
         self.orderNoLabel.text = "ORDER NO. " + order.orderNo
         self.barNameLabel.text = order.barName + " - " + order.orderType.displayableValue()
-        self.priceLabel.text = String(format: "£ %.2f", order.total)
+        
+        let amount = order.paymentSplit.first?.amount ?? 0.0
+        self.priceLabel.text = String(format: "£ %.2f", amount)
         
         self.statusButton.titleLabel?.lineBreakMode = .byWordWrapping
         self.statusButton.titleLabel?.numberOfLines = 0
         self.statusButton.titleLabel?.textAlignment = .center
         self.statusButton.setTitle(order.statusRaw.uppercased(), for: .normal)
         
-        if order.status ==  .completed {
+        if order.status == .rejected {
+            self.statusButton.backgroundColor = UIColor.red
+            self.statusButton.setTitleColor(UIColor.white, for: .normal)
+        } else if order.status ==  .completed {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
+            self.statusButton.setTitleColor(UIColor.appBgGrayColor(), for: .normal)
         } else {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
+            self.statusButton.setTitleColor(UIColor.appBgGrayColor(), for: .normal)
         }
         
         let dateformatter = DateFormatter()

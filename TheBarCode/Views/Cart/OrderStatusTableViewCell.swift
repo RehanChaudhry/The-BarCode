@@ -46,11 +46,16 @@ class OrderStatusTableViewCell: UITableViewCell, NibReusable {
         self.statusButton.isHidden = false
         
         self.statusButton.setTitle(orderStatusInfo.status.uppercased(), for: .normal)
-        if orderStatusInfo.status.lowercased() ==  OrderStatus.completed.rawValue.lowercased() {
+        
+        if orderStatusInfo.status.lowercased() == OrderStatus.rejected.rawValue.lowercased() {
+            self.statusButton.backgroundColor = UIColor.red
+            self.statusButton.setTitleColor(UIColor.white, for: .normal)
+        } else if orderStatusInfo.status.lowercased() ==  OrderStatus.completed.rawValue.lowercased() {
             self.statusButton.backgroundColor = UIColor.appGreenColor()
-        } else if orderStatusInfo.status.lowercased() == OrderStatus.received.rawValue.lowercased() ||
-        orderStatusInfo.status.lowercased() == OrderStatus.ongoing.rawValue.lowercased() {
+            self.statusButton.setTitleColor(UIColor.appBgGrayColor(), for: .normal)
+        } else {
             self.statusButton.backgroundColor = UIColor.appBlueColor()
+            self.statusButton.setTitleColor(UIColor.appBgGrayColor(), for: .normal)
         }
         
         self.showSeparator(show: showSeparator)

@@ -45,7 +45,6 @@ class SearchViewController: UIViewController {
     
     var selectedStandardOffers: [StandardOffer] = []
     var selectedRedeemingType: RedeemingTypeModel?
-    var selectedDeliveryFilter: DeliveryFilter?
     
     var shouldHidePreferenceButton: Bool = false
     
@@ -189,7 +188,7 @@ class SearchViewController: UIViewController {
     }
     
     func setUpStandardOfferButton() {
-        if self.selectedStandardOffers.count > 0 || self.selectedRedeemingType != nil || self.selectedDeliveryFilter != nil {
+        if self.selectedStandardOffers.count > 0 || self.selectedRedeemingType != nil {
             self.standardOfferButton.backgroundColor = UIColor.black
             self.standardOfferButton.tintColor = UIColor.appBlueColor()
         } else {
@@ -223,7 +222,6 @@ class SearchViewController: UIViewController {
             scope.controller.selectedPreferences = self.filteredPreferences
             scope.controller.selectedStandardOffers = self.selectedStandardOffers
             scope.controller.selectedRedeemingType = self.selectedRedeemingType
-            scope.controller.selectedDeliveryFilter = self.selectedDeliveryFilter
             scope.controller.shouldReset = true
             scope.controller.prepareToReset()
             scope.controller.keyword = self.searchBar.text ?? ""
@@ -270,7 +268,6 @@ class SearchViewController: UIViewController {
         let standardOfferController = self.storyboard!.instantiateViewController(withIdentifier: "StandardOffersViewController") as! StandardOffersViewController
         standardOfferController.preSelectedTiers = self.selectedStandardOffers
         standardOfferController.preSelectedRedeemingType = self.selectedRedeemingType
-        standardOfferController.preSelectedDelivery = self.selectedDeliveryFilter
         standardOfferController.delegate = self
         self.navigationController?.pushViewController(standardOfferController, animated: true)
     }
@@ -360,9 +357,8 @@ extension SearchViewController: CategoryFilterViewControllerDelegate {
 
 //MARK: StandardOffersViewControllerDelegate
 extension SearchViewController: StandardOffersViewControllerDelegate {
-    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?, deliveryFilter: DeliveryFilter?) {
+    func standardOffersViewController(controller: StandardOffersViewController, didSelectStandardOffers selectedOffers: [StandardOffer], redeemingType: RedeemingTypeModel?) {
         
-        self.selectedDeliveryFilter = deliveryFilter
         self.selectedRedeemingType = redeemingType
         self.selectedStandardOffers = selectedOffers
         
@@ -477,7 +473,7 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
             barDetailController.preSelectedTabIndex = 2
             barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 2
-        } else if scopeType == .food {
+        } else if scopeType == .food || scopeType == .delivery {
             barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexWhatsOn = 2
             barDetailController.preSelectedSubTabIndexOffers = 0
@@ -507,6 +503,9 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
 extension SearchViewController: AllSearchViewControllerDelegate {
     func allSearchViewController(controller: AllSearchViewController, viewMoreButtonTapped type: AllSearchItemType) {
         if type == .bar, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .bar }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectScope(indexPath: indexPath)
+        } else if type == .deliveryBars, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .delivery }) {
             let indexPath = IndexPath(row: index, section: 0)
             self.selectScope(indexPath: indexPath)
         } else if type == .deal, let index = self.scopeItems.firstIndex(where: { $0.scopeType == .deal }) {

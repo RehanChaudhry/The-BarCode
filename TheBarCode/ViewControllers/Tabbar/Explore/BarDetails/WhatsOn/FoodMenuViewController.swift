@@ -111,7 +111,9 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
-        headerView?.setupHeader(title: self.segments[section].name)
+        headerView?.setupHeader(title: self.segments[section].name, isExpanded: self.segments[section].isExpanded)
+        headerView?.delegate = self
+        headerView?.section = section
         return headerView
     }
     
@@ -121,7 +123,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let segment = self.segments[section]
-        return segment.foods.count
+        return segment.isExpanded ? segment.foods.count : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,6 +143,29 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
         let food = segment.foods[indexPath.row]
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         self.delegate.foodMenuViewController(controller: self, didSelect: food)
+    }
+}
+
+//MARK: FoodMenuHeaderViewDelegate
+extension FoodMenuViewController: FoodMenuHeaderViewDelegate {
+    func foodMenuHeaderView(header: FoodMenuHeaderView, titleButtonTapped sender: UIButton) {
+        let segment = self.segments[header.section]
+        
+        segment.isExpanded = !segment.isExpanded
+        
+        var indexPaths: [IndexPath] = []
+        for i in 0..<self.segments[header.section].foods.count {
+            let indexPath = IndexPath(row: i, section: header.section)
+            indexPaths.append(indexPath)
+        }
+        
+        if segment.isExpanded {
+            self.statefulTableView.innerTable.insertRows(at: indexPaths, with: .automatic)
+        } else {
+            self.statefulTableView.innerTable.deleteRows(at: indexPaths, with: .automatic)
+        }
+        
+        header.setupHeader(title: segment.name, isExpanded: segment.isExpanded)
     }
 }
 
@@ -215,6 +240,8 @@ extension FoodMenuViewController {
                 
                 let segments = Mapper<FoodMenuSegment>().mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
+                
+                segments.first?.isExpanded = true
                 
                 if let pagination = responseDict?["pagination"] as? [String : Any] {
                     self.loadMore = Mapper<Pagination>().map(JSON: pagination)!

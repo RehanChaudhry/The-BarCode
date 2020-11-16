@@ -62,8 +62,8 @@ class MoreViewController: UIViewController {
     //MARK: MyMethods
     func getAnalyticsEventNameForMenuItemType(itemType: MenuItemType) -> String {
         switch itemType {
-        case .invite:
-            return inviteMenuClick
+        case .offerWallet:
+            return offerWalletClick
         case .myReservations:
             return myReservationMenuClick
         case .splitPayment:
@@ -74,6 +74,8 @@ class MoreViewController: UIViewController {
             return accountSettingsClick
         case .myAddresses:
             return myAddressesClick
+        case .myCards:
+            return myCardsClick
         case .notificationSettings:
             return notificationSettingsClick
         case .preferences:

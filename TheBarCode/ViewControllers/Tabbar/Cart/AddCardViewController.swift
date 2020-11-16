@@ -244,7 +244,7 @@ extension AddCardViewController {
             endingIn = endingIn.count > 4 ? String(endingIn.suffix(4)) : endingIn
             
             let params: [String : Any] = ["card_id" : token,
-                                          "type" : type.lowercased(),
+                                          "type" : CreditCardType.typeForServer(raw: type),
                                           "ending_in" : endingIn,
                                           "name" : self.nameField.text!,
                                           "address" : self.addressField.text!,

@@ -178,6 +178,12 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.exploreBaseDelegate = self
             return cell
+        } else if let item = viewModelItem as? AllSearchBarModel, item.type == .deliveryBarCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: BarTableViewCell.self)
+            cell.setUpCell(bar: item.bar, bottomPadding: indexPath.row == viewModel.items.count - 1, showDeliveryRadius: true)
+            cell.delegate = self
+            cell.exploreBaseDelegate = self
+            return cell
         } else if let item = viewModelItem as? AllSearchBarModel, item.type == .dealCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
             cell.setUpCell(explore: item.bar)
@@ -247,6 +253,14 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             let imageCount = item.bar.images.value.count
             aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
             
+        } else if let aCell = cell as? BarTableViewCell,
+            let item = viewModelItem as? AllSearchBarModel,
+            item.type == .deliveryBarCell {
+            
+            aCell.scrollToCurrentImage()
+            let imageCount = item.bar.images.value.count
+            aCell.pagerView.automaticSlidingInterval = imageCount > 1 ? 2.0 : 0.0
+            
         } else if let aCell = cell as? DealTableViewCell,
             let item = viewModelItem as? AllSearchBarModel,
             item.type == .dealCell {
@@ -305,6 +319,8 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
         let viewModel = self.viewModels[indexPath.section]
         if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .barCell {
             self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .deliveryBarCell {
+            self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .delivery)
         } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .dealCell {
             self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .deal)
         } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .liveOfferCell {
@@ -637,6 +653,29 @@ extension AllSearchViewController {
                         self.viewModels.append(viewModel)
                         
                     } else if type == "2" {
+                        let bars = self.mapBars(results: results, mappingType: .bars)
+
+                        let scopeItem = SearchScope.delivery.item()
+                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
+                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+                        
+                        
+                        
+                        let searchBarModels = bars.map({ AllSearchBarModel(type: .deliveryBarCell, bar: $0) })
+                        items.append(contentsOf: searchBarModels)
+                        
+                        if hasMore {
+                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeDeliveryColor())
+                            items.append(viewMoreModel)
+                        }
+                        
+                        let viewModel = AllSearchViewModel(type: .deliveryBars,
+                                                           sectionTitle: scopeItem.title,
+                                                           items: items,
+                                                           headerStrokeColor: .appSearchScopeDeliveryColor())
+                        self.viewModels.append(viewModel)
+                        
+                    } else if type == "3" {
                         let bars = self.mapBars(results: results, mappingType: .deals)
                         
                         let scopeItem = SearchScope.deal.item()
@@ -657,29 +696,31 @@ extension AllSearchViewController {
                                                            headerStrokeColor: .appSearchScopeDealsColor())
                         self.viewModels.append(viewModel)
                         
-                    } else if type == "3" {
-                        let bars = self.mapBars(results: results, mappingType: .liveOffers)
-                        
-                        let scopeItem = SearchScope.liveOffer.item()
-                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
-                        var items: [AllSearchSectionViewModelItem] = [headerItem]
-                        
-                        let searchBarModels = bars.map({ AllSearchBarModel(type: .liveOfferCell, bar: $0) })
-                        items.append(contentsOf: searchBarModels)
-                        
-                        if hasMore {
-                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeLiveOffersColor())
-                            items.append(viewMoreModel)
-                        }
-                        
-                        let viewModel = AllSearchViewModel(type: .liveOffer,
-                                                           sectionTitle: scopeItem.title,
-                                                           items: items,
-                                                           headerStrokeColor: .appSearchScopeLiveOffersColor())
-                        self.viewModels.append(viewModel)
-                        
-                        
-                    } else if type == "4" {
+                    }
+//                    else if type == "4" {
+//                        let bars = self.mapBars(results: results, mappingType: .liveOffers)
+//
+//                        let scopeItem = SearchScope.liveOffer.item()
+//                        let headerItem = AllSearchHeaderModel(title: scopeItem.title)
+//                        var items: [AllSearchSectionViewModelItem] = [headerItem]
+//
+//                        let searchBarModels = bars.map({ AllSearchBarModel(type: .liveOfferCell, bar: $0) })
+//                        items.append(contentsOf: searchBarModels)
+//
+//                        if hasMore {
+//                            let viewMoreModel = AllSearchViewMoreModel(footerStrokeColor: .appSearchScopeLiveOffersColor())
+//                            items.append(viewMoreModel)
+//                        }
+//
+//                        let viewModel = AllSearchViewModel(type: .liveOffer,
+//                                                           sectionTitle: scopeItem.title,
+//                                                           items: items,
+//                                                           headerStrokeColor: .appSearchScopeLiveOffersColor())
+//                        self.viewModels.append(viewModel)
+//
+//
+//                    }
+                    else if type == "4" {
                         let scopeItem = SearchScope.food.item()
                         let headerItem = AllSearchHeaderModel(title: scopeItem.title)
                         var items: [AllSearchSectionViewModelItem] = [headerItem]

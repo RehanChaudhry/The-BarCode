@@ -51,7 +51,7 @@ class CardInfoCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setUpCell(card: CreditCard, isSelected: Bool) {
+    func setUpCell(card: CreditCard, isSelected: Bool, canShowSelection: Bool) {
         
         let boldAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white,
                               NSAttributedString.Key.font : UIFont.appRegularFontOf(size: 13.0)]
@@ -72,7 +72,7 @@ class CardInfoCell: UITableViewCell, NibReusable {
             self.cardButton.layoutIfNeeded()
         }
         
-        self.selectionImageView.isHidden = !isSelected
+        self.selectionImageView.isHidden = !(isSelected && canShowSelection)
         self.iconImageView.image = CreditCardType.iconImage(raw: card.typeRaw)
         
         if card.isDeleting {

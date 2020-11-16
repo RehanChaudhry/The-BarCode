@@ -23,6 +23,34 @@ enum CreditCardType: String {
     laser = "laser",
     unknown = "unknown"
     
+    static func typeForServer(raw: String) -> String {
+        if raw.lowercased().contains(CreditCardType.visa.rawValue.lowercased()) {
+            return "visa"
+        } else if raw.lowercased().contains(CreditCardType.master.rawValue.lowercased()) {
+            return "mastercard"
+        } else if raw.lowercased().contains(CreditCardType.amex.rawValue.lowercased()) {
+            return "amex"
+        } else if raw.lowercased().contains(CreditCardType.jcb.rawValue.lowercased()) {
+            return "jcb"
+        } else if raw.lowercased().contains(CreditCardType.discover.rawValue.lowercased()) {
+            return "discover"
+        } else if raw.lowercased().contains(CreditCardType.dinners.rawValue.lowercased()) {
+            return "diners"
+        } else if raw.lowercased().contains(CreditCardType.uniionPay.rawValue.lowercased()) {
+            return "union"
+        } else if raw.lowercased().contains(CreditCardType.maestro.rawValue.lowercased()) {
+            return "maestro"
+        } else if raw.lowercased().contains(CreditCardType.airplus.rawValue.lowercased()) {
+            return "airplus"
+        } else if raw.lowercased().contains(CreditCardType.dankort.rawValue.lowercased()) {
+            return "dankort"
+        } else if raw.lowercased().contains(CreditCardType.laser.rawValue.lowercased()) {
+            return "laser"
+        } else {
+            return raw
+        }
+    }
+    
     static func displayableType(raw: String) -> String {
         if raw.lowercased().contains(CreditCardType.visa.rawValue.lowercased()) {
             return "VISA"

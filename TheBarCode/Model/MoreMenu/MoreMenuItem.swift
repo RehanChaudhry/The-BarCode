@@ -10,12 +10,13 @@ import UIKit
 
 enum MenuItemType: String {
     
-    case invite = "invite",
+    case offerWallet = "offerWallet",
     myReservations = "myReservations",
     splitPayment = "splitPayment",
     notification = "notification",
     accountSettings = "accountSettings",
     myAddresses = "myAddresses",
+    myCards = "myCards",
     notificationSettings = "notificationSettings",
     preferences = "preferences",
     reload = "reload",
@@ -26,8 +27,8 @@ enum MenuItemType: String {
     
     func description() -> (title: String, icon: String?, storyboardId: String, showSeparator: Bool, fontSize: Float) {
         switch self {
-        case .invite:
-            return ("Invite", "icon_invite", "InviteNavigation", true, 16.0)
+        case .offerWallet:
+            return ("Wallet", "icon_tab_wallet", "OfferWalletNavigation", true, 16.0)
         case .myReservations:
             return ("My Reservations", "icon_reservation", "MyReservationsNavigation", true, 16.0)
         case .splitPayment:
@@ -40,6 +41,8 @@ enum MenuItemType: String {
             return ("Notification Settings", "icon_notif_settings", "NotificationSettingsNavigation", true, 16.0)
         case .myAddresses:
             return ("My Addresses", "icon_my_addresses", "MyAddressesNavigation", true, 16.0)
+        case .myCards:
+            return ("My Cards", "icon_more_my_cards", "MyCardsNavigation", true, 16.0)
         case .preferences:
             return ("Preferences", "icon_preferences", "CategoryFilterNavigation", true, 16.0)
         case .reload:
@@ -57,12 +60,12 @@ enum MenuItemType: String {
     
     static func allMenuItems() -> [MenuItem] {
         return [
-        MenuItem(type: .invite),
-//        MenuItem(type: .myReservations),
+        MenuItem(type: .offerWallet),
         MenuItem(type: .splitPayment),
         MenuItem(type: .notification),
         MenuItem(type: .accountSettings),
         MenuItem(type: .myAddresses),
+        MenuItem(type: .myCards),
         MenuItem(type: .notificationSettings),
         MenuItem(type: .preferences),
         MenuItem(type: .reload),

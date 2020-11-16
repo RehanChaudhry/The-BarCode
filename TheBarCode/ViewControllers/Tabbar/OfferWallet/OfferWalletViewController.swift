@@ -106,6 +106,11 @@ class OfferWalletViewController: UIViewController {
     }
     
     //MARK: My IBActions
+    
+    @IBAction func closeButtonTapped(sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func favouriteButtonTapped(sender: UIButton) {
         
         let currentController = self.pageController.viewControllers!.first!

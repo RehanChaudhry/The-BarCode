@@ -135,7 +135,7 @@ class MyCartViewController: UIViewController {
             self.checkOutButton.setTitle(buttonTitle, for: .normal)
         } else {
             self.barNameLabel.text = ""
-            let buttonTitle = "Checkout - " + " N/A"
+            let buttonTitle = "Checkout"
             self.checkOutButton.setTitle(buttonTitle, for: .normal)
         }
     }

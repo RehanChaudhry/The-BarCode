@@ -84,7 +84,12 @@ class BaseSearchScopeViewController: UIViewController {
         
         self.strokeView = UIView()
         if self is BarSearchViewController {
-            self.strokeView.backgroundColor = UIColor.appSearchScopeBarsColor()
+            if self.selectedDeliveryFilter?.isSelected == true {
+                self.strokeView.backgroundColor = UIColor.appSearchScopeDeliveryColor()
+            } else {
+                self.strokeView.backgroundColor = UIColor.appSearchScopeBarsColor()
+            }
+            
         } else if self is DealSearchViewController {
             self.strokeView.backgroundColor = UIColor.appSearchScopeDealsColor()
         } else if self is LiveOfferSearchViewController {

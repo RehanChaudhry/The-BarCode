@@ -23,7 +23,9 @@ protocol BarDetailViewControllerDelegate: class {
 class BarDetailViewController: UIViewController {
     
     @IBOutlet var containerView: UIView!
-    @IBOutlet weak var standardRedeemButton: GradientButton!
+    
+    @IBOutlet var standardRedeemButton: GradientButton!
+    @IBOutlet var continueCartButton: GradientButton!
     
     @IBOutlet var navBarBgView: UIView!
     
@@ -63,6 +65,7 @@ class BarDetailViewController: UIViewController {
         didSet {
             self.setUpCartBarButton()
             self.updateCartBadgeCount()
+            self.setUpBottomView()
         }
     }
     
@@ -229,15 +232,33 @@ class BarDetailViewController: UIViewController {
             return
         }
         
-        if self.selectedBar!.barType == .exclusiveBar {
+        if self.cartCount > 0 {
+            
             self.standardRedeemButton.isHidden = true
+            self.continueCartButton.isHidden = false
+            
+            self.bottomView.isHidden = false
+            self.bottomViewBottom.constant = 0.0
+            
+        } else if selectedBar.barType == .exclusiveBar {
+            
+            self.standardRedeemButton.isHidden = true
+            self.continueCartButton.isHidden = true
+            
             self.bottomView.isHidden = true
             self.bottomViewBottom.constant = self.bottomView.frame.height
 
         } else if let standardOffer = self.selectedBar!.activeStandardOffer.value {
-            standardRedeemButton.buttonStandardOfferType = standardOffer.type
-            standardRedeemButton.setTitle(standardOffer.displayValue, for: .normal)
-            standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
+            
+            self.standardRedeemButton.isHidden = false
+            self.continueCartButton.isHidden = true
+            
+            self.bottomView.isHidden = false
+            self.bottomViewBottom.constant = 0.0
+            
+            self.standardRedeemButton.buttonStandardOfferType = standardOffer.type
+            self.standardRedeemButton.setTitle(standardOffer.displayValue, for: .normal)
+            self.standardRedeemButton.setTitleColor(UIColor.appBlackColor(), for: .normal)
         }
         
         if selectedBar.canRedeemOffer.value || selectedBar.currentlyUnlimitedRedemptionAllowed {
@@ -352,8 +373,8 @@ class BarDetailViewController: UIViewController {
             return "bar detail default"
         }
     }
-
-    @objc func cartBarButtonTapped(sender: UIButton) {
+    
+    func moveToCartDetails() {
         let cartNavigation = self.storyboard!.instantiateViewController(withIdentifier: "MyCartNavigation") as! UINavigationController
         cartNavigation.modalPresentationStyle = .fullScreen
         
@@ -362,6 +383,10 @@ class BarDetailViewController: UIViewController {
         myCartController.barId = self.getSelectedBarId()!
         
         self.navigationController?.present(cartNavigation, animated: true, completion: nil)
+    }
+
+    @objc func cartBarButtonTapped(sender: UIButton) {
+        self.moveToCartDetails()
     }
     
     func updateCartBadgeCount() {
@@ -405,6 +430,10 @@ class BarDetailViewController: UIViewController {
             self.getReloadStatus()
         }
      
+    }
+    
+    @IBAction func viewCartButtonTapped(sender: UIButton) {
+        self.moveToCartDetails()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

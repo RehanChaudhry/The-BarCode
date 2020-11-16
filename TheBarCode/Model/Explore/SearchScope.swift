@@ -12,6 +12,7 @@ enum SearchScope: String {
     
     case all = "all",
     bar = "bars",
+    delivery = "delivery",
     deal = "deals",
     liveOffer = "live_offers",
     food = "food",
@@ -33,6 +34,13 @@ enum SearchScope: String {
                                        title: "BARS",
                                        backgroundColor: .appSearchScopeBarsColor(),
                                        selectedBackgroundColor: .appSearchScopeBarsSelectedColor())
+            return item
+        case .delivery:
+            let item = SearchScopeItem(storyboardId: "BarSearchViewController",
+                                       scopeType: .delivery,
+                                       title: "DELIVERY",
+                                       backgroundColor: .appSearchScopeDeliveryColor(),
+                                       selectedBackgroundColor: .appSearchScopeDeliverySelectedColor())
             return item
         case .deal:
             let item = SearchScopeItem(storyboardId: "DealSearchViewController",
@@ -75,8 +83,8 @@ enum SearchScope: String {
     static func allItems() -> [SearchScopeItem] {
         return [SearchScope.all.item(),
                 SearchScope.bar.item(),
+                SearchScope.delivery.item(),
                 SearchScope.deal.item(),
-//                SearchScope.liveOffer.item(),
                 SearchScope.food.item(),
                 SearchScope.drink.item(),
                 SearchScope.event.item()
@@ -98,6 +106,14 @@ class SearchScopeItem: NSObject {
     lazy var controller: BaseSearchScopeViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = (storyboard.instantiateViewController(withIdentifier: self.storyboardId) as! BaseSearchScopeViewController)
+        
+        if self.scopeType == .delivery {
+            let deliveryFilter = DeliveryFilter()
+            deliveryFilter.isSelected = true
+            
+            controller.selectedDeliveryFilter = deliveryFilter
+        }
+        
         return controller
     }()
     
