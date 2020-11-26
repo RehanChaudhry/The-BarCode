@@ -230,57 +230,61 @@ class AddCardViewController: UIViewController {
 //MARK: Webservices Methods
 extension AddCardViewController {
     func addCard() {
+        
+        let worldpay = Worldpay.sharedInstance()!
+        let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)!
+        
+        let cardType = worldpay.cardType(cardNumber) ?? CreditCardType.unknown.rawValue
+        
+        let endingIn = cardNumber.count > 4 ? String(cardNumber.suffix(4)) : cardNumber
+        
+        var params: [String : Any] = ["type" : CreditCardType.typeForServer(raw: cardType),
+                                      "ending_in" : endingIn,
+                                      "name" : self.nameField.text!,
+                                      "address" : self.addressField.text!,
+                                      "postcode" : self.postalCodeField.text!.uppercased(),
+                                      "city" : self.cityField.text!,
+                                      "country" : self.selectedCountry!.name]
+        
+        
+        let cardDetails: [String : Any] = ["card_number" : cardNumber,
+                                           "name" : self.nameField.text!,
+                                           "expiry_month" : self.selectedExpiry!.month.displayableValue().numeric,
+                                           "expiry_year" : self.selectedExpiry!.year,
+                                           "cvc" : self.cvcField.text!]
+        guard let encryptedString = Utility.shared.encrypt(data: cardDetails) else {
+            self.showAlertController(title: "", msg: "Unknown error occurred")
+            return
+        }
+        
+        params["card_details"] = encryptedString
+        
         self.addCardButton.showLoader()
         self.view.isUserInteractionEnabled = false
         
-        let worldpay = Worldpay.sharedInstance()!
-        let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)
-        
-        worldpay.createTokenWithName(onCard: self.nameField.text!, cardNumber: cardNumber, expirationMonth: self.selectedExpiry!.month.displayableValue().numeric, expirationYear: self.selectedExpiry!.year, cvc: self.cvcField.text!, success: { (code, response) in
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .post) { (response, serverError, error) in
             
-            let token = response?["token"] as? String ?? ""
-            let type = (response?["paymentMethod"] as? [String : Any])?["cardType"] as? String ?? ""
-            var endingIn = (response?["paymentMethod"] as? [String : Any])?["maskedCardNumber"] as? String ?? ""
-            endingIn = endingIn.count > 4 ? String(endingIn.suffix(4)) : endingIn
-            
-            let params: [String : Any] = ["card_id" : token,
-                                          "type" : CreditCardType.typeForServer(raw: type),
-                                          "ending_in" : endingIn,
-                                          "name" : self.nameField.text!,
-                                          "address" : self.addressField.text!,
-                                          "postcode" : self.postalCodeField.text!.uppercased(),
-                                          "city" : self.cityField.text!,
-//                                          "state" : self.stateField.text!,
-                                          "country" : self.selectedCountry!.name]
-            let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .post) { (response, serverError, error) in
-                
-                self.addCardButton.hideLoader()
-                self.view.isUserInteractionEnabled = true
-                
-                guard error == nil else {
-                    self.showAlertController(title: "", msg: error!.localizedDescription)
-                    return
-                }
-
-                guard serverError == nil else {
-                    self.showAlertController(title: "", msg: serverError!.detail)
-                    return
-                }
-
-                let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
-                if let data = responseDict?["data"] as? [String : Any] {
-                    let card = Mapper<CreditCard>().map(JSON: data)!
-                    self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
-
-                    self.dismiss(animated: true, completion: nil)
-                }
-
-            }
-            
-        }) { (response, errors) in
             self.addCardButton.hideLoader()
             self.view.isUserInteractionEnabled = true
-            self.showAlertController(title: "", msg: (errors as? [NSError])?.first?.localizedDescription ?? "Unable to create token")
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.detail)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any] {
+                let card = Mapper<CreditCard>().map(JSON: data)!
+                self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            
         }
     }
 }

@@ -69,7 +69,7 @@ class BarDetailViewController: UIViewController {
         }
     }
     
-    
+    var cartQuantityDataRequest: DataRequest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -334,6 +334,7 @@ class BarDetailViewController: UIViewController {
     
     @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
         self.getBarDetails(isRefreshing: true)
+        self.getCartQuantityCount()
         self.whatsOnController.reset()
         self.offersController.reset()
     }
@@ -645,9 +646,11 @@ extension BarDetailViewController {
             barId = id
         }
         
+        self.cartQuantityDataRequest?.cancel()
+        
         let params: [String : Any] = ["establishment_id" : barId]
            
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathGetCartQuantity, method: .get) { (response, serverError, error) in
+        self.cartQuantityDataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathGetCartQuantity, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 debugPrint("Error while getting cart count: \(error!.localizedDescription)")

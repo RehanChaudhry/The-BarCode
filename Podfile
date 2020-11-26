@@ -22,10 +22,10 @@ target 'TheBarCode' do
   pod 'SDWebImage', '~> 4.4.2'
   pod 'HTTPStatusCodes', '~> 3.3.1'
   
-  pod 'Firebase/Core', '~> 6.16.0'
-  pod 'Firebase/DynamicLinks', '~> 6.16.0'
-  pod 'Firebase/Crashlytics', '~> 6.16.0'
-  pod 'Firebase/Analytics', '~> 6.16.0'
+  pod 'Firebase/Core', '~> 6.34.0'
+  pod 'Firebase/DynamicLinks', '~> 6.34.0'
+  pod 'Firebase/Crashlytics', '~> 6.34.0'
+  pod 'Firebase/Analytics', '~> 6.34.0'
   
   pod 'OneSignal', '~> 2.13.0'
   pod 'MGSwipeTableCell', '~> 1.6.7'
@@ -42,6 +42,8 @@ target 'TheBarCode' do
   pod 'KVNProgress', '~> 2.3.5'
 
   pod 'MLLabel', '~> 1.10.5'
+  
+  pod 'RNCryptor', '~> 5.1.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

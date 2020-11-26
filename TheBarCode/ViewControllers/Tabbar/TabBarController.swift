@@ -83,6 +83,14 @@ class TabBarController: UITabBarController {
         self.saveLastAppOpen()
         
         let _ = (self.viewControllers?[3] as? UINavigationController)?.viewControllers.first?.view
+     
+        
+//        let stringToEncrypt = "The quick brown fox jumps over the lazy dog"
+//        let encrypted = Utility.shared.plainToCipher(string: stringToEncrypt)
+//        let decrypted = Utility.shared.cipherToPlain(string: encrypted)
+//
+//        debugPrint("Encrypted: \(encrypted)")
+//        debugPrint("Decrypted: \(decrypted)")
         
     }
 

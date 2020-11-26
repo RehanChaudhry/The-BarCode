@@ -77,7 +77,7 @@ class OrderTypeViewController: UIViewController {
         self.setupViewModel()
         self.calculateTotal()
         
-        if self.order.isDeliveryAvailable {
+        if self.order.isDeliveryAvailable && self.order.todayDeliveryStatus == .available {
             self.getAddress()
         }
     }
@@ -145,7 +145,7 @@ class OrderTypeViewController: UIViewController {
         let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
         self.viewModels.append(takeAwaySection)
         
-        if self.order.isDeliveryAvailable {
+        if self.order.isDeliveryAvailable && self.order.todayDeliveryStatus == .available {
             let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
             deliveryRadioButton.value = Utility.shared.getDeliveryCharges(order: self.order, totalPrice: self.getProductsTotalPrice())
             deliveryRadioButton.isEnabled = !self.order.isCurrentlyDeliveryDisabled

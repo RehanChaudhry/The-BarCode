@@ -14,6 +14,7 @@ import Firebase
 import FirebaseDynamicLinks
 import FirebaseCrashlytics
 import OneSignal
+import RNCryptor
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.milnesmayltd.thebarcode"
@@ -142,6 +143,8 @@ enum EnvironmentType: String {
 }
 
 class Utility: NSObject {
+    
+    private var encryptionPassword = "OvQzd7=m!7Hu^jeg"
     
     static let shared = Utility()
    
@@ -683,5 +686,59 @@ class Utility: NSObject {
                 return order.maxDeliveryCharges ?? 0.0
             }
         }
+    }
+}
+
+extension Utility {
+    func encrypt(data: [String : Any]) -> String? {
+        
+        do {
+//            let jsonData = "{\"card_number\":\"4444333322221111\",\"cvc\":\"123\",\"expiry_month\":\"12\",\"expiry_year\":\"2021\",\"name\":\"Abdul Rehman\"}".data(using: .utf8)!
+            let jsonData = try JSONSerialization.data(withJSONObject: data, options: .fragmentsAllowed)
+//            let base64Data = jsonData.base64EncodedData()
+            let encryptedData = RNCryptor.encrypt(data: jsonData, withPassword: encryptionPassword)
+            let encryptedString = encryptedData.base64EncodedString()
+            
+            return encryptedString
+            
+        } catch {
+            debugPrint("Error while encryption: \(error.localizedDescription)")
+        }
+        
+        return nil
+        
+    }
+    
+    func decrypt(encryptedString: String) -> [String : Any]? {
+        
+        do {
+            let encryptedData = Data(base64Encoded: encryptedString)!
+            let originalData = try RNCryptor.decrypt(data: encryptedData, withPassword: encryptionPassword)
+//            let jsonStringData = Data(base64Encoded: originalData)!
+            let jsonDict = try! JSONSerialization.jsonObject(with: originalData, options: .allowFragments) as! [String : Any]
+            
+            return jsonDict
+        } catch {
+            debugPrint("Error while decryption: \(error.localizedDescription)")
+        }
+        
+        return nil
+    }
+    
+    func plainToCipher(string: String) -> String {
+        let base64Data = string.data(using: .utf8)!.base64EncodedData()
+        let encryptedData = RNCryptor.encrypt(data: base64Data, withPassword: encryptionPassword)
+        
+        let encryptedString = encryptedData.base64EncodedString()
+        
+        return encryptedString
+    }
+    
+    func cipherToPlain(string: String) -> String {
+        let encryptedData = Data(base64Encoded: string)!
+        let originalData = try! RNCryptor.decrypt(data: encryptedData, withPassword: encryptionPassword)
+        let dataRaw = Data(base64Encoded: originalData)!
+        
+        return String(data: dataRaw, encoding: .utf8)!
     }
 }

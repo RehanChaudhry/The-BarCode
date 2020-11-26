@@ -198,10 +198,14 @@ extension FoodMenuViewController {
             self.loadMore = Pagination()
         }
         
-        let params: [String : Any] = ["establishment_id": self.bar.id.value,
-                                      "type" : "food",
+        var params: [String : Any] = ["establishment_id": self.bar.id.value,
                                       "pagination" : true,
                                       "page": self.loadMore.next]
+        
+        //Type will only go if menu is created using barcode admin panel
+        if self.bar.menuType == .barCode {
+            params["type"] = "food"
+        }
         
         self.loadMore.isLoading = true
         self.dataRequest = APIHelper.shared.hitApi(params: params, apiPath: apiPathMenuSegments, method: .get) { (response, serverError, error) in

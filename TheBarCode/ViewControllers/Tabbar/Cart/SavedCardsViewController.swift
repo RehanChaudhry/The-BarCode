@@ -147,7 +147,9 @@ class SavedCardsViewController: UIViewController {
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
         if let card = self.selectedCard {
-            self.chargeCard(card: card)
+            
+            self.generateTokenIfNeededAndCharge(card: card)
+            
         } else {
             self.showAlertController(title: "", msg: "Please select a card to proceed")
         }
@@ -211,7 +213,12 @@ extension SavedCardsViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let _ = APIHelper.shared.hitApi(params: [:], apiPath: apiPathCard, method: .get) { (response, serverError, error) in
+        var params: [String : Any] = [:]
+        if let order = self.order {
+            params["establishment_id"] = order.barId
+        }
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
                 self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap To refresh")
@@ -274,7 +281,64 @@ extension SavedCardsViewController {
         }
     }
     
-    func chargeCard(card: CreditCard) {
+    func generateTokenIfNeededAndCharge(card: CreditCard) {
+        
+        if card.cardToken.count > 0 {
+            self.chargeCard(card: card, token: card.cardToken)
+        } else {
+            
+            guard let order = self.order else {
+                self.showAlertController(title: "", msg: "Order details not available")
+                return
+            }
+            
+            guard let cardDetails = card.detailsRaw else {
+                self.showAlertController(title: "", msg: "Card details not available")
+                return
+            }
+            
+            guard let clientKey = order.establishmentWorldpayClientKey else {
+                self.showAlertController(title: "", msg: "Client key not available")
+                return
+            }
+
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            self.payButton.showLoader()
+            
+            let worldpay = Worldpay.sharedInstance()!
+            worldpay.clientKey = clientKey
+            
+            let name = cardDetails.name
+            let cardNumber = cardDetails.number
+            let expiryMonth = cardDetails.expiryMonth
+            let expiryYear = cardDetails.expiryYear
+            let cvc = cardDetails.cvc
+            
+            worldpay.createTokenWithName(onCard: name,
+                                         cardNumber: cardNumber,
+                                         expirationMonth: expiryMonth,
+                                         expirationYear: expiryYear,
+                                         cvc: cvc,
+                                         success: { (code, response) in
+                                            
+                                            UIApplication.shared.endIgnoringInteractionEvents()
+                                            self.payButton.hideLoader()
+                                            
+                                            let token = response?["token"] as? String ?? ""
+                                            self.chargeCard(card: card, token: token)
+                                            
+            }) { (response, errors) in
+                
+                UIApplication.shared.endIgnoringInteractionEvents()
+                
+                self.payButton.hideLoader()
+                
+                self.showAlertController(title: "", msg: (errors as? [NSError])?.first?.localizedDescription ?? "Unable to create token")
+            }
+        }
+    }
+    
+    func chargeCard(card: CreditCard, token: String) {
         
         guard let order = self.order else {
             self.showAlertController(title: "", msg: "Order information is unavailable")
@@ -284,8 +348,9 @@ extension SavedCardsViewController {
         let sessionId = UUID().uuidString
         
         var params: [String : Any] = ["order_id" : order.orderNo,
-                                      "token" : card.cardToken,
-                                      "session_id" : sessionId]
+                                      "token" : token,
+                                      "session_id" : sessionId,
+                                      "card_uid" : card.cardId]
         
         if let split = order.splitPaymentInfo, split.type != .none {
             params["split_type"] = split.type.rawValue

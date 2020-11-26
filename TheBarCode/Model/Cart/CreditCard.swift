@@ -177,6 +177,17 @@ class CreditCard: Mappable {
     
     var isDeleting: Bool = false
     
+    var encryptedCardDetails: String = ""
+    
+    lazy var detailsRaw: CreditCardRawDetail? = {
+        if let info = Utility.shared.decrypt(encryptedString: encryptedCardDetails),
+            let object = Mapper<CreditCardRawDetail>().map(JSON: info) {
+            return object
+        }
+        
+        return nil
+    }()
+    
     required init?(map: Map) {
         
     }
@@ -184,9 +195,37 @@ class CreditCard: Mappable {
     func mapping(map: Map) {
         self.typeRaw <- map["type"]
         
-        self.cardToken <- map["card_id"]
+        self.cardToken <- map["token"]
         self.endingIn <- map["ending_in"]
         
         self.cardId <- map["id"]
+        
+        self.encryptedCardDetails <- map["card_details"]
+    }
+}
+
+class CreditCardRawDetail: Mappable {
+    
+    
+    var name: String = ""
+    var number: String = ""
+    
+    var expiryMonth: String = ""
+    var expiryYear: String = ""
+    
+    var cvc: String = ""
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        self.number <- map["card_number"]
+        self.name <- map["name"]
+        
+        self.expiryMonth <- map["expiry_month"]
+        self.expiryYear <- map["expiry_year"]
+        
+        self.cvc <- map["cvc"]
     }
 }

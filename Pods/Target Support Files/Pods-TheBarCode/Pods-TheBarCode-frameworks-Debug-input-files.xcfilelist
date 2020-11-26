@@ -21,6 +21,7 @@ ${BUILT_PRODUCTS_DIR}/MLLabel/MLLabel.framework
 ${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework
 ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework
+${BUILT_PRODUCTS_DIR}/RNCryptor/RNCryptor.framework
 ${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SJSegmentedScrollView/SJSegmentedScrollView.framework

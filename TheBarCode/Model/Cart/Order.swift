@@ -62,6 +62,13 @@ class Order: Mappable {
     var isCurrentlyDeliveryDisabled: Bool = false
     var isGlobalDeliveryAllowed: Bool = false
     
+    var todayDeliveryStatusRaw: String = ""
+    var todayDeliveryStatus: DeliveryStatus {
+        get {
+            return DeliveryStatus(rawValue: self.todayDeliveryStatusRaw) ?? .unavailable
+        }
+    }
+    
     var globalDeliveryCharges: Double?
     var minDeliveryCharges: Double?
     var maxDeliveryCharges: Double?
@@ -103,6 +110,8 @@ class Order: Mappable {
     
     var splitPaymentInfo: SplitPaymentInfo?
     
+    var establishmentWorldpayClientKey: String? = nil
+    
     required init?(map: Map) {
         
     }
@@ -141,6 +150,9 @@ class Order: Mappable {
             
             self.establishmentDayStatusRaw <- map["establishment.establishment_timings.status"]
             self.isEstablishmentOpen <- map["establishment.establishment_timings.is_bar_open"]
+            self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
+            
+            self.todayDeliveryStatusRaw <- map["establishment.today_delivery_timings.status"]
             
         } else if context?.type == .order {
             self.orderNo = "\(map.JSON["id"]!)"

@@ -183,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Analytics.logEvent(appLaunched, parameters: nil)
         
         let wp = Worldpay.sharedInstance()
-        wp?.clientKey = "T_C_bb4b4fc9-15c3-4f9a-9690-660bb4885afb"
+//        wp?.clientKey = "T_C_bb4b4fc9-15c3-4f9a-9690-660bb4885afb"
         wp?.reusable = true
         wp?.validationType = WorldpayValidationTypeAdvanced
         
