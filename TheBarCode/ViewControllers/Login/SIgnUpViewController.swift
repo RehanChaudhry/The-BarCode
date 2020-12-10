@@ -40,7 +40,8 @@ enum SignUpProvider: String {
     case facebook = "facebook",
     instagram = "instagram",
     email = "email",
-    contactNumber = "contact_number"
+    contactNumber = "contact_number",
+    apple = "apple"
 }
 
 class SIgnUpViewController: UIViewController {
@@ -93,6 +94,7 @@ class SIgnUpViewController: UIViewController {
     
     var signupProvider: SignUpProvider!
     
+    var appleParams: (socialId: String, accessToken: String)?
     var facebookParams: (socialId: String, accessToken: String)?
     var instagramParams: (socialId: String, accessToken: String, profileImage: String)?
     
@@ -101,7 +103,7 @@ class SIgnUpViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        if self.signupProvider == .facebook || self.signupProvider == .instagram {
+        if self.signupProvider == .facebook || self.signupProvider == .instagram || self.signupProvider == .apple {
             self.dobToolBar.setItems([self.dobNextBarButton, self.dobFlexibleSpace, self.dobDoneBarButton], animated: false)
         }
         
@@ -671,6 +673,13 @@ extension SIgnUpViewController {
             params["social_account_id"] = self.instagramParams!.socialId
             params["profile_image"] = self.instagramParams!.profileImage
             
+        } else if self.signupProvider == .apple {
+            
+            params["access_token"] = self.appleParams!.accessToken
+            params["social_account_id"] = self.appleParams!.socialId
+            
+            let profileImage = ""
+            params["profile_image"] = profileImage
         }
 
         params["gender"] = gender
@@ -710,6 +719,8 @@ extension SIgnUpViewController {
                     eventName = createAccountViaFacebook
                 } else if self.signupProvider == .instagram {
                     eventName = createAccountViaInstagram
+                } else if self.signupProvider == .apple {
+                    eventName = createAccountViaApple
                 }
 
                 Analytics.logEvent(eventName, parameters: nil)

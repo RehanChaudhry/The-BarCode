@@ -16,6 +16,7 @@ import CoreStore
 import FirebaseAnalytics
 import UIColor_Hex_Swift
 import Alamofire
+import AuthenticationServices
 
 class LoginViaViewController: UIViewController {
 
@@ -24,9 +25,13 @@ class LoginViaViewController: UIViewController {
     @IBOutlet var mobileButton: GradientButton!
     @IBOutlet var instaSignInButton: GradientButton!
     
+    @IBOutlet var appleButton: LoadingButton!
+    
     var forSignUp: Bool = false
     
     var locationManager: MyLocationManager!
+    
+    var provider: SignUpProvider = .email
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +61,7 @@ class LoginViaViewController: UIViewController {
             self.title = "Sign up"
             
             self.fbButton.setTitle("Sign up with Facebook", for: .normal)
+            self.appleButton.setTitle("Sign up with Apple", for: .normal)
             self.emailButton.setTitle("Sign up with Email", for: .normal)
             self.mobileButton.setTitle("Sign up with Mobile", for: .normal)
             self.instaSignInButton.setTitle("Sign up with Instagram", for: .normal)
@@ -64,9 +70,16 @@ class LoginViaViewController: UIViewController {
             self.title = "Sign in"
             
             self.fbButton.setTitle("Sign in with Facebook", for: .normal)
+            self.appleButton.setTitle("Sign in with Apple", for: .normal)
             self.emailButton.setTitle("Sign in with Email", for: .normal)
             self.mobileButton.setTitle("Sign in with Mobile", for: .normal)
             self.instaSignInButton.setTitle("Sign in with Instagram", for: .normal)
+        }
+        
+        if #available(iOS 13.0, *) {
+            self.appleButton.isHidden = false
+        } else {
+            self.appleButton.isHidden = true
         }
     }
     
@@ -268,7 +281,7 @@ class LoginViaViewController: UIViewController {
                         self.showAlertController(title: "", msg: genericError.localizedDescription)
                     }
                     
-                    self.fbButton.hideLoader()
+                    self.instaSignInButton.hideLoader()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     
                 })
@@ -279,6 +292,128 @@ class LoginViaViewController: UIViewController {
                 self.showAlertController(title: "", msg: "Unknown response received")
             }
         }
+    }
+    
+    func appleSignIn(accessToken: String, fullName: String, socialId: String) {
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let socialLoginParams = ["social_account_id" : socialId,
+                                 "full_name" : fullName,
+                                 "access_token" : accessToken,
+                                 "provider" : SignUpProvider.apple.rawValue]
+        
+        let _ = APIHelper.shared.hitApi(params: socialLoginParams, apiPath: apiPathSocialLogin, method: .post, completion: { (response, serverError, error) in
+            
+            guard error == nil else {
+                self.appleButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.showAlertController(title: "Apple Login", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                
+                self.appleButton.hideLoader()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                
+                if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
+                    
+                    self.signUp(fullName: fullName,
+                                accessToken: accessToken,
+                                socialId: socialId,
+                                profileImage: "",
+                                provider: .apple)
+//                    let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
+//                    signUpViewController.appleParams = (socialId, accessToken)
+//                    signUpViewController.signupProvider = .apple
+//                    let _ = signUpViewController.view
+//                    self.navigationController?.pushViewController(signUpViewController, animated: true)
+//
+//                    signUpViewController.fullNameFieldView.textField.text = fullName
+                } else {
+                    self.showAlertController(title: "Apple Login", msg: serverError!.errorMessages())
+                }
+                
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseUser = (responseDict?["data"] as? [String : Any]) {
+                
+                let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+                
+                self.userVerifiedSuccessfully(canShowReferral: false)
+                
+                if self.forSignUp {
+                    Analytics.logEvent(createAccountViaFacebook, parameters:nil)
+                }
+                
+            } else {
+                let genericError = APIHelper.shared.getGenericError()
+                self.showAlertController(title: "", msg: genericError.localizedDescription)
+            }
+            
+            self.appleButton.hideLoader()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+        })
+    }
+    
+    func signUp(fullName: String, accessToken: String, socialId: String, profileImage: String, provider: SignUpProvider) {
+        
+        let gender = Gender.ratherNotSay.rawValue
+        let date = Calendar.current.date(byAdding: .year, value: -18, to: Date())!
+        let dob = Utility.shared.serverDateFormattedString(date: date)
+        
+        var params = ["full_name" : fullName,
+                      "date_of_birth" : dob,
+                      "provider" : provider.rawValue]
+        
+        params["access_token"] = accessToken
+        params["social_account_id"] = socialId
+        
+        params["profile_image"] = profileImage
+            
+        params["gender"] = gender
+        params["postcode"] = ""
+        
+        if provider == .apple {
+            self.appleButton.showLoader()
+        }
+        
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathRegister, method: .post) { (response, serverError, error) in
+            
+            if provider == .apple {
+                self.appleButton.hideLoader()
+            }
+            
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            guard error == nil else {
+                self.showAlertController(title: "", msg: error!.localizedDescription)
+                return
+            }
+            
+            guard serverError == nil else {
+                self.showAlertController(title: "", msg: serverError!.errorMessages())
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let responseUser = (responseDict?["data"] as? [String : Any]) {
+                let user = Utility.shared.saveCurrentUser(userDict: responseUser)
+                APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
+                self.userVerifiedSuccessfully(canShowReferral: true)
+                
+            } else {
+                self.showAlertController(title: "", msg: "Something went wrong!")
+            }
+        }
+        
     }
     
     func userVerifiedSuccessfully(canShowReferral: Bool) {
@@ -312,7 +447,14 @@ class LoginViaViewController: UIViewController {
         
         debugPrint("Getting location")
         
-        self.fbButton.showLoader()
+        if self.provider == .facebook {
+            self.fbButton.showLoader()
+        } else if self.provider == .instagram {
+            self.instaSignInButton.showLoader()
+        } else if self.provider == .apple {
+            self.appleButton.showLoader()
+        }
+        
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         self.locationManager = MyLocationManager()
@@ -339,7 +481,7 @@ class LoginViaViewController: UIViewController {
         //Unable to get location and it never called location update before
         if location == nil && user.isLocationUpdated.value {
             debugPrint("Preventing -1, -1 location update")
-            self.fbButton.hideLoader()
+            self.hideLoaders()
             UIApplication.shared.endIgnoringInteractionEvents()
             
             self.presentTabbarController()
@@ -364,7 +506,7 @@ class LoginViaViewController: UIViewController {
                 
                 debugPrint("Updating location finished")
                 
-                self.fbButton.hideLoader()
+                self.hideLoaders()
                 UIApplication.shared.endIgnoringInteractionEvents()
                 
                 guard error == nil else {
@@ -392,6 +534,12 @@ class LoginViaViewController: UIViewController {
         }
     }
     
+    func hideLoaders() {
+        self.fbButton.hideLoader()
+        self.appleButton.hideLoader()
+        self.instaSignInButton.hideLoader()
+    }
+    
     func presentTabbarController() {
         let tabbarController = self.storyboard?.instantiateViewController(withIdentifier: "TabbarController")
         tabbarController?.modalPresentationStyle = .fullScreen
@@ -412,12 +560,18 @@ class LoginViaViewController: UIViewController {
     
     //MARK: My IBActions
     @IBAction func fbButtonTapped(sender: UIButton) {
+        
+        self.provider = .facebook
+        
         let eventName = self.forSignUp ? signUpFacebookClick : signInFacebookClick
         Analytics.logEvent(eventName, parameters: nil)
         self.socialLogin()
     }
 
     @IBAction func emailButtonTapped(sender: UIButton) {
+        
+        self.provider = .email
+        
         let eventName = self.forSignUp ? signUpEmailClick : signInEmailClick
         Analytics.logEvent(eventName, parameters: nil)
         
@@ -429,6 +583,9 @@ class LoginViaViewController: UIViewController {
     }
     
     @IBAction func mobileButtonTapped(sender: UIButton) {
+        
+        self.provider = .contactNumber
+        
         let eventName = self.forSignUp ? signUpMobileClick : signInMobileClick
         Analytics.logEvent(eventName, parameters: nil)
         
@@ -436,6 +593,8 @@ class LoginViaViewController: UIViewController {
     }
     
     @IBAction func instagramButtonTapped(sender: UIButton) {
+        
+        self.provider = .instagram
         
         let cookieJar : HTTPCookieStorage = HTTPCookieStorage.shared
         for cookie in cookieJar.cookies! as [HTTPCookie] {
@@ -453,6 +612,23 @@ class LoginViaViewController: UIViewController {
         instaSignInController.isSigningUp = self.forSignUp
         self.present(instaNavController, animated: true, completion: nil)
     }
+    
+    @IBAction func appleSignInButtonTapped(sender: UIButton) {
+        if #available(iOS 13.0, *) {
+            
+            self.provider = .apple
+            
+            self.appleButton.showLoader()
+            
+            let request = ASAuthorizationAppleIDProvider().createRequest()
+            request.requestedScopes = [.fullName]
+                        
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
+        }
+    }
 }
 
 //MARK: InstagramLoginViewControllerDelegate
@@ -460,5 +636,78 @@ extension LoginViaViewController: InstagramLoginViewControllerDelegate {
     func instagramLoginViewController(controller: InstagramLoginViewController, loggedInSuccessfully accessToke: String) {
         debugPrint("insta accessToke: \(accessToke)")
         self.instaLogin(accessToken: accessToke)
+    }
+}
+
+//MARK: ASAuthorizationControllerPresentationContextProviding
+@available(iOS 13.0, *)
+extension LoginViaViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
+    }
+}
+
+//MARK: ASAuthorizationControllerDelegate
+@available(iOS 13.0, *)
+extension LoginViaViewController: ASAuthorizationControllerDelegate {
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        self.appleButton.hideLoader()
+        
+        if error._code != ASAuthorizationError.canceled.rawValue {
+            self.showAlertController(title: "", msg: error.localizedDescription)
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        if let credentials = authorization.credential as? ASAuthorizationAppleIDCredential,
+            let identityToken = credentials.identityToken,
+            let accessToken = String(data: identityToken, encoding: .utf8) {
+            
+            let userId = credentials.user
+            var fullName: String = ""
+            
+            let nameFormatter = PersonNameComponentsFormatter()
+            if let nameComponents = credentials.fullName {
+                 nameFormatter.style = .default
+                 fullName = nameFormatter.string(from: nameComponents)
+            } else {
+                fullName = credentials.fullName?.nickname ?? ""
+            }
+            
+            if fullName.count > 0 {
+                UserDefaults.standard.setValue(fullName, forKey: "appleIdFullName")
+                UserDefaults.standard.synchronize()
+            } else {
+                if let name = UserDefaults.standard.string(forKey: "appleIdFullName") {
+                    fullName = name
+                } else {
+                    fullName = "Not Available"
+                }
+            }
+            
+            if fullName.count < 2 {
+                fullName = fullName + " Not Available"
+            }
+            
+            self.appleSignIn(accessToken: accessToken, fullName: fullName, socialId: userId)
+            
+        } else {
+            self.appleButton.hideLoader()
+            self.showAlertController(title: "", msg: "Unable to login")
+        }
+    }
+    
+    @objc func appleIdStateChanged(sender: Notification) {
+        let provider = ASAuthorizationAppleIDProvider()
+        provider.getCredentialState(forUserID: "") { (state, error) in
+            switch state {
+            case .authorized:
+                debugPrint("authorized")
+            default:
+                debugPrint("default")
+            }
+        }
     }
 }

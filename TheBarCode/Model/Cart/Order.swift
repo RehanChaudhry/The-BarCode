@@ -150,7 +150,6 @@ class Order: Mappable {
             
             self.establishmentDayStatusRaw <- map["establishment.establishment_timings.status"]
             self.isEstablishmentOpen <- map["establishment.establishment_timings.is_bar_open"]
-            self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
             
             self.todayDeliveryStatusRaw <- map["establishment.today_delivery_timings.status"]
             
@@ -168,6 +167,8 @@ class Order: Mappable {
             
             self.orderTypeRaw <- map["type"]
         }
+        
+        self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
         
         self.updatedAtRaw <- map["updated_at.date"]
         

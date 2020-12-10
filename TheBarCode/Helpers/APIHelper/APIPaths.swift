@@ -109,6 +109,7 @@ let signInEmailClick = "Clicked on Sign in with Email".getFormattedEventName()
 
 let createAccountViaInstagram = "Create account via Instagram".getFormattedEventName()
 let createAccountViaFacebook = "Create account via Facebook".getFormattedEventName()
+let createAccountViaApple = "Create account via Apple".getFormattedEventName()
 let createAccountViaEmail = "Create account via Email".getFormattedEventName()
 let createAccountViaMobile = "Create account via Mobile".getFormattedEventName()
 

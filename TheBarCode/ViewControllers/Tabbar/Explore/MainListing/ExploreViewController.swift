@@ -78,6 +78,8 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(notification:)), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(searchVoucherNotification(notification:)), name: notificationNameSearchVoucher, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(orderStatusUpdatedNotification(notification:)), name: notificationNameOrderStatusUpdated, object: nil)
 
         Analytics.logEvent(viewExploreScreen, parameters: nil)
         
@@ -110,6 +112,7 @@ class ExploreViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameSharedOfferRedeemed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameSearchVoucher, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameOrderStatusUpdated, object: nil)
 
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
@@ -464,6 +467,12 @@ extension ExploreViewController {
     }
     
     @objc func applicationDidBecomeActive(notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.refreshSnackBar()
+        }
+    }
+    
+    @objc func orderStatusUpdatedNotification(notification: Notification) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.refreshSnackBar()
         }

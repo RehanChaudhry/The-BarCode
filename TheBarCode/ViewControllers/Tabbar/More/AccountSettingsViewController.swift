@@ -311,13 +311,21 @@ class AccountSettingsViewController: UIViewController {
         self.updateDobField()
         self.updateGenderField()
         
-        if self.signupProvider == .facebook || self.signupProvider == .instagram {
+        if self.signupProvider == .facebook || self.signupProvider == .instagram, self.signupProvider == .apple {
             let largeAttributes = [NSAttributedStringKey.font : UIFont.appBoldFontOf(size: 14.0),
                                    NSAttributedStringKey.foregroundColor : UIColor.white]
             let smallAttributes = [NSAttributedStringKey.font : UIFont.appRegularFontOf(size: 12.0),
                                    NSAttributedStringKey.foregroundColor : UIColor.white]
             
-            let provider = self.signupProvider == .instagram ? "Instagram" : "Facebook"
+            var provider: String = ""
+            if self.signupProvider == .facebook {
+                provider = "Facebook"
+            } else if self.signupProvider == .instagram {
+                provider = "Instagram"
+            } else if self.signupProvider == .apple {
+                provider = "Apple"
+            }
+            
             let attributedName = NSAttributedString(string: user.fullName.value, attributes: largeAttributes)
             let attributedInfo = NSAttributedString(string: " Connected with \(provider)", attributes: smallAttributes)
             
