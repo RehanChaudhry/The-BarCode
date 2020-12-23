@@ -21,7 +21,7 @@ let localAPIDomain = "http://192.168.86.247:8000"
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = productionAPIDomain
+let theBarCodeAPIDomain = localAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
@@ -74,7 +74,7 @@ class APIHelper {
         sessionManager = session
     }
     
-    func hitApi(params: [String : Any], apiPath: String, method: HTTPMethod, completion: @escaping responseCompletionHandler) -> DataRequest {
+    func hitApi(params: [String : Any], apiPath: String, method: HTTPMethod, encoding: ParameterEncoding = URLEncoding.methodDependent, completion: @escaping responseCompletionHandler) -> DataRequest {
         
         var aParams = params
         aParams["device_id"] = Utility.shared.deviceId
@@ -83,7 +83,7 @@ class APIHelper {
         
         if let sessionManager = sessionManager {
             let url = baseURLString + apiPath
-            let request = sessionManager.request(url, method: method, parameters: aParams, encoding: URLEncoding.methodDependent, headers: headers).validate().responseJSON { (response: DataResponse<Any>) in
+            let request = sessionManager.request(url, method: method, parameters: aParams, encoding: encoding, headers: headers).validate().responseJSON { (response: DataResponse<Any>) in
                 self.parseResponse(apiPath: apiPath, response: response, completion: completion)
             }
             

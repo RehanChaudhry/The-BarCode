@@ -93,6 +93,8 @@ let apiPathOrderVouchers = "voucher/detail"
 let apiPathPayment = "payment"
 let apiPathUpdatePayment = "update-payment"
 
+let apiPathModifierGroups = "modifier-group"
+
 let worldPayTermBaseUrl = "https://online.worldpay.com/3dsr/"
 let worldPayScheme = "worldpay-scheme"
 

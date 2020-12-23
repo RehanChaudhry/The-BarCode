@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="G2c-eN-10m" customClass="ProductModifierHeader" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNo-b2-OlU">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnO-Ng-9ZZ">
+                            <rect key="frame" x="16" y="8" width="288" height="41"/>
+                            <attributedString key="attributedText">
+                                <fragment>
+                                    <string key="content">STARTER
+</string>
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <font key="NSFont" size="20" name="Lato-Bold"/>
+                                    </attributes>
+                                </fragment>
+                                <fragment content="Choose">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <font key="NSFont" size="14" name="Lato-Bold"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="5cD-hd-d7r">
+                            <rect key="frame" x="311.5" y="8" width="86.5" height="24"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="REQUIRED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoW-dh-eqh">
+                                    <rect key="frame" x="8" y="3" width="70.5" height="18"/>
+                                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.48627450980392156" green="0.49019607843137253" blue="0.49019607843137253" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="A71-bo-tW8"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="HAH-7t-6uR"/>
+                                <constraint firstAttribute="trailing" secondItem="yoW-dh-eqh" secondAttribute="trailing" constant="8" id="a1r-qQ-5Zf"/>
+                                <constraint firstItem="yoW-dh-eqh" firstAttribute="leading" secondItem="5cD-hd-d7r" secondAttribute="leading" constant="8" id="vkv-ql-TQc"/>
+                                <constraint firstItem="yoW-dh-eqh" firstAttribute="top" secondItem="5cD-hd-d7r" secondAttribute="top" constant="3" id="zdu-rK-nIN"/>
+                                <constraint firstAttribute="bottom" secondItem="yoW-dh-eqh" secondAttribute="bottom" constant="3" id="zzA-bc-AuL"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="RnO-Ng-9ZZ" firstAttribute="leading" secondItem="fNo-b2-OlU" secondAttribute="leading" constant="16" id="5ib-Jx-MSg"/>
+                        <constraint firstItem="5cD-hd-d7r" firstAttribute="top" secondItem="fNo-b2-OlU" secondAttribute="top" constant="8" id="GyJ-7F-3Nx"/>
+                        <constraint firstItem="5cD-hd-d7r" firstAttribute="leading" secondItem="RnO-Ng-9ZZ" secondAttribute="trailing" constant="7.5" id="UXz-5Z-1gx"/>
+                        <constraint firstItem="x6A-8X-VKw" firstAttribute="bottom" secondItem="RnO-Ng-9ZZ" secondAttribute="bottom" constant="8" id="cfu-Lb-RBG"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="nnw-NH-gJI"/>
+                        <constraint firstAttribute="trailing" secondItem="5cD-hd-d7r" secondAttribute="trailing" constant="16" id="va1-8V-vBh"/>
+                        <constraint firstItem="RnO-Ng-9ZZ" firstAttribute="top" secondItem="fNo-b2-OlU" secondAttribute="top" constant="8" id="w85-Ji-f6r"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="x6A-8X-VKw"/>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="fNo-b2-OlU" firstAttribute="top" secondItem="G2c-eN-10m" secondAttribute="top" id="1CH-ha-IvD"/>
+                <constraint firstAttribute="trailing" secondItem="fNo-b2-OlU" secondAttribute="trailing" id="CGC-4W-Idi"/>
+                <constraint firstItem="fNo-b2-OlU" firstAttribute="bottom" secondItem="oB7-nw-F8e" secondAttribute="bottom" id="Ptb-YA-l6Q"/>
+                <constraint firstItem="fNo-b2-OlU" firstAttribute="leading" secondItem="G2c-eN-10m" secondAttribute="leading" id="RS0-fy-aEG"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="oB7-nw-F8e"/>
+            <connections>
+                <outlet property="subtitleContainer" destination="5cD-hd-d7r" id="zX1-8u-c0W"/>
+                <outlet property="subtitleLabel" destination="yoW-dh-eqh" id="sfQ-Hu-kkZ"/>
+                <outlet property="titleLabel" destination="RnO-Ng-9ZZ" id="LOj-Do-Z0N"/>
+            </connections>
+            <point key="canvasLocation" x="136.23188405797103" y="108.48214285714285"/>
+        </view>
+    </objects>
+</document>

@@ -187,8 +187,23 @@ extension DrinkListViewController: FoodMenuCellDelegate {
             return
         }
         
-        let model = self.segments[indexPath.section].drinks[indexPath.row]
-        self.updateCart(drink: model, shouldAdd: true)
+        let product = self.segments[indexPath.section].drinks[indexPath.row]
+        
+        if product.haveModifiers.value {
+            let productModifiersNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "ProductModifiersNavigation") as! UINavigationController)
+            productModifiersNavigation.modalPresentationStyle = .fullScreen
+            
+            let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
+            productModifiersController.productId = product.id.value
+            productModifiersController.price = Double(product.price.value) ?? 0.0
+            productModifiersController.productName = product.name.value
+            productModifiersController.establishmentId = self.bar.id.value
+            productModifiersController.type = self.bar.menuTypeRaw.value
+            
+            self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
+        } else {
+            self.updateCart(drink: product, shouldAdd: true)
+        }
     }
 }
 

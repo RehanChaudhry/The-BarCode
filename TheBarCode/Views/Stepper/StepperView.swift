@@ -54,7 +54,7 @@ class StepperView: UIView {
 
     func setupChildViews() {
 
-        self.layer.cornerRadius = 12
+        self.layer.cornerRadius = self.frame.size.height / 2.0
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.black.cgColor
         self.clipsToBounds = true

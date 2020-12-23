@@ -46,7 +46,14 @@
 		0C117EFE22DDA13C0061FFC3 /* FoodMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C117EFD22DDA13C0061FFC3 /* FoodMenuViewController.swift */; };
 		0C117F0022DDA1530061FFC3 /* ChalkBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C117EFF22DDA1520061FFC3 /* ChalkBoardViewController.swift */; };
 		0C117F0222DDA1640061FFC3 /* ExclusiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C117F0122DDA1640061FFC3 /* ExclusiveViewController.swift */; };
+		0C14CF7A2590836200C7EB03 /* ProductModifierGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14CF792590836200C7EB03 /* ProductModifierGroup.swift */; };
+		0C14CF7C2590837100C7EB03 /* ProductModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C14CF7B2590837100C7EB03 /* ProductModifier.swift */; };
 		0C1947EA23154E5900498934 /* AllSearchViewMoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1947E923154E5900498934 /* AllSearchViewMoreModel.swift */; };
+		0C1C43A3258C888E00E87E28 /* ProductModfiersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C43A2258C888E00E87E28 /* ProductModfiersViewController.swift */; };
+		0C1C43A7258CB21C00E87E28 /* ProductModifierCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C43A5258CB21C00E87E28 /* ProductModifierCell.swift */; };
+		0C1C43A8258CB21C00E87E28 /* ProductModifierCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1C43A6258CB21C00E87E28 /* ProductModifierCell.xib */; };
+		0C1C43AA258CB24200E87E28 /* ProductModifierHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1C43A9258CB24200E87E28 /* ProductModifierHeader.swift */; };
+		0C1C43AC258CB2AA00E87E28 /* ProductModifierHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C1C43AB258CB2AA00E87E28 /* ProductModifierHeader.xib */; };
 		0C23608324EBA15E0065823A /* DeliveryTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23608224EBA15E0065823A /* DeliveryTiming.swift */; };
 		0C23A84C214654FD00DFB281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84B214654FD00DFB281 /* AppDelegate.swift */; };
 		0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23A84D214654FD00DFB281 /* SplashViewController.swift */; };
@@ -508,7 +515,14 @@
 		0C117EFD22DDA13C0061FFC3 /* FoodMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMenuViewController.swift; sourceTree = "<group>"; };
 		0C117EFF22DDA1520061FFC3 /* ChalkBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChalkBoardViewController.swift; sourceTree = "<group>"; };
 		0C117F0122DDA1640061FFC3 /* ExclusiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusiveViewController.swift; sourceTree = "<group>"; };
+		0C14CF792590836200C7EB03 /* ProductModifierGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModifierGroup.swift; sourceTree = "<group>"; };
+		0C14CF7B2590837100C7EB03 /* ProductModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModifier.swift; sourceTree = "<group>"; };
 		0C1947E923154E5900498934 /* AllSearchViewMoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchViewMoreModel.swift; sourceTree = "<group>"; };
+		0C1C43A2258C888E00E87E28 /* ProductModfiersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModfiersViewController.swift; sourceTree = "<group>"; };
+		0C1C43A5258CB21C00E87E28 /* ProductModifierCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModifierCell.swift; sourceTree = "<group>"; };
+		0C1C43A6258CB21C00E87E28 /* ProductModifierCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductModifierCell.xib; sourceTree = "<group>"; };
+		0C1C43A9258CB24200E87E28 /* ProductModifierHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModifierHeader.swift; sourceTree = "<group>"; };
+		0C1C43AB258CB2AA00E87E28 /* ProductModifierHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductModifierHeader.xib; sourceTree = "<group>"; };
 		0C23608224EBA15E0065823A /* DeliveryTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryTiming.swift; sourceTree = "<group>"; };
 		0C23A848214654FD00DFB281 /* TheBarCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheBarCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C23A84B214654FD00DFB281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1181,6 +1195,26 @@
 			path = Offers;
 			sourceTree = "<group>";
 		};
+		0C14CF782590834000C7EB03 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				0C14CF792590836200C7EB03 /* ProductModifierGroup.swift */,
+				0C14CF7B2590837100C7EB03 /* ProductModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		0C1C43A4258CB20200E87E28 /* ProductModifier */ = {
+			isa = PBXGroup;
+			children = (
+				0C1C43A5258CB21C00E87E28 /* ProductModifierCell.swift */,
+				0C1C43A6258CB21C00E87E28 /* ProductModifierCell.xib */,
+				0C1C43A9258CB24200E87E28 /* ProductModifierHeader.swift */,
+				0C1C43AB258CB2AA00E87E28 /* ProductModifierHeader.xib */,
+			);
+			path = ProductModifier;
+			sourceTree = "<group>";
+		};
 		0C23A83F214654FD00DFB281 = {
 			isa = PBXGroup;
 			children = (
@@ -1791,6 +1825,7 @@
 		0C955DB32147823400F9385B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0C1C43A4258CB20200E87E28 /* ProductModifier */,
 				B35F6F6424DD1B9F0045029B /* Address */,
 				B34BD94524D2E0B800714308 /* TableReservation */,
 				B34BD94424D2C54400714308 /* Stepper */,
@@ -1850,6 +1885,7 @@
 		0C955DBE214792F500F9385B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0C14CF782590834000C7EB03 /* Modifier */,
 				B332486C24DD1FB3007D3F39 /* Address */,
 				FA42B4B824C883D40000ED15 /* Reservation */,
 				FAFEC5A124C18738001E63EA /* Cart */,
@@ -2378,6 +2414,7 @@
 				B33CF7AA24DE8AA4001566F0 /* SavedCardsViewController.swift */,
 				B32B7E2724E5145500982689 /* AddCardViewController.swift */,
 				0CAEC3A724FCF5630043D7E5 /* MyOrdersViewController.swift */,
+				0C1C43A2258C888E00E87E28 /* ProductModfiersViewController.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2627,6 +2664,7 @@
 				FA9076A224C1E1320035AAA3 /* OrderItemTableViewCell.xib in Resources */,
 				B3C1292A24D9A16500789FF2 /* OrderOfferDiscountTableViewCell.xib in Resources */,
 				B339E03124DC259D005990AB /* OrderDeliveryAddressTableViewCell.xib in Resources */,
+				0C1C43A8258CB21C00E87E28 /* ProductModifierCell.xib in Resources */,
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0CFECFD822EAC64B0033BE20 /* AllSearchHeaderView.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
@@ -2675,6 +2713,7 @@
 				832FD1D4216B2BE5008516F4 /* DealDetailTableViewCell.xib in Resources */,
 				0CBF181E250F39F8007220D0 /* OrderMessageTableViewCell.xib in Resources */,
 				0C8BDCD02150D0AF00D5117B /* BarTableViewCell.xib in Resources */,
+				0C1C43AC258CB2AA00E87E28 /* ProductModifierHeader.xib in Resources */,
 				0CE486762549758F00E22AD2 /* OrderMobileNumberTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2887,6 +2926,7 @@
 				0C8D166B229F8F2A00666F77 /* ExploreImageCell.swift in Sources */,
 				0CEBCECC2369A982004E6985 /* EventDetailExternalCTACell.swift in Sources */,
 				0C86D02722DEF4F50034DA5C /* Food.swift in Sources */,
+				0C1C43A3258C888E00E87E28 /* ProductModfiersViewController.swift in Sources */,
 				0C39F2EC231E72D500596A2B /* GMUDefaultClusterRenderer.m in Sources */,
 				0C71EEF9241227FD00505F97 /* OfferStatus.swift in Sources */,
 				0C955E07214931D500F9385B /* LoadingAndErrorView.swift in Sources */,
@@ -2922,6 +2962,7 @@
 				0C23A8822146575E00DFB281 /* ForgotPasswordViewController.swift in Sources */,
 				0CE486752549758F00E22AD2 /* OrderMobileNumberTableViewCell.swift in Sources */,
 				8344E2A12167678100CB8BD2 /* RedeemStartViewController.swift in Sources */,
+				0C1C43AA258CB24200E87E28 /* ProductModifierHeader.swift in Sources */,
 				0CC81FA7216DD3FE00FDB92D /* Utility.swift in Sources */,
 				0C39F2FB231E72D500596A2B /* GMUPoint.m in Sources */,
 				0C39F2F9231E72D500596A2B /* GMUGroundOverlay.m in Sources */,
@@ -2952,6 +2993,7 @@
 				0C4252ED2338952B0088068A /* GMUCustomClusterIconGenerator.swift in Sources */,
 				0C44DD39214A7F9F000F5D64 /* MenuCell.swift in Sources */,
 				B34BD95024D2E18A00714308 /* TableReserveNoteCell.swift in Sources */,
+				0C14CF7C2590837100C7EB03 /* ProductModifier.swift in Sources */,
 				0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */,
 				FA9076A524C1E1320035AAA3 /* CartSectionHeaderView.swift in Sources */,
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
@@ -2983,6 +3025,7 @@
 				B339E03724DC5380005990AB /* AddressesViewController.swift in Sources */,
 				0C955E02214931C400F9385B /* CollectionViewLoadMoreView.swift in Sources */,
 				0C955DD32147D3D000F9385B /* UIViewAdditions.swift in Sources */,
+				0C1C43A7258CB21C00E87E28 /* ProductModifierCell.swift in Sources */,
 				0C8E9A9B214A909E00224720 /* RulesViewController.swift in Sources */,
 				0C955DC02147935A00F9385B /* IntroOption.swift in Sources */,
 				0C72AB56219403DC00D6CD6B /* SharedOfferParams.swift in Sources */,
@@ -3103,6 +3146,7 @@
 				0C39F2E8231E72D500596A2B /* GMUGridBasedClusterAlgorithm.m in Sources */,
 				0C955DF82149319200F9385B /* TableViewLoadMoreCell.swift in Sources */,
 				0C7477F4221ABE3F0057502F /* FilterCell.swift in Sources */,
+				0C14CF7A2590836200C7EB03 /* ProductModifierGroup.swift in Sources */,
 				0C955E0D214948ED00F9385B /* PermissionsInfoViewController.swift in Sources */,
 				B339E03324DC31A0005990AB /* OrderDeliveryAddressSection.swift in Sources */,
 				B3E0912C24E283A700871256 /* BarAboutTableViewCell.swift in Sources */,
