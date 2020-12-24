@@ -112,6 +112,8 @@ class Order: Mappable {
     
     var establishmentWorldpayClientKey: String? = nil
     
+    var menuTypeRaw: String = MenuType.barCode.rawValue
+    
     required init?(map: Map) {
         
     }
@@ -167,6 +169,8 @@ class Order: Mappable {
             
             self.orderTypeRaw <- map["type"]
         }
+        
+        self.menuTypeRaw <- map["epos_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
         

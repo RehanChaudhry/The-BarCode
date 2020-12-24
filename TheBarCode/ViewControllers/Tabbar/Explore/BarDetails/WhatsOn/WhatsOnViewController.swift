@@ -12,8 +12,7 @@ import SJSegmentedScrollView
 
 protocol WhatsOnViewControllerDelegate: class {
     func whatsOnViewController(controller: WhatsOnViewController, didSelect event: Event)
-    func whatsOnViewController(controller: WhatsOnViewController, didSelect food: Food)
-    func whatsOnViewController(controller: WhatsOnViewController, didSelect drink: Drink)
+    func whatsOnViewController(controller: WhatsOnViewController, didSelect product: Product)
 }
 
 class WhatsOnViewController: UIViewController {
@@ -180,14 +179,14 @@ extension WhatsOnViewController: EventsViewControllerDelegate {
 
 //MARK: DrinkListViewControllerDelegate
 extension WhatsOnViewController: DrinkListViewControllerDelegate {
-    func drinkListViewController(controller: DrinkListViewController, didSelect drink: Drink) {
-        self.delegate.whatsOnViewController(controller: self, didSelect: drink)
+    func drinkListViewController(controller: DrinkListViewController, didSelect product: Product) {
+        self.delegate.whatsOnViewController(controller: self, didSelect: product)
     }
 }
 
 //MARK: FoodMenuViewControllerDelegate
 extension WhatsOnViewController: FoodMenuViewControllerDelegate {
-    func foodMenuViewController(controller: FoodMenuViewController, didSelect food: Food) {
-        self.delegate.whatsOnViewController(controller: self, didSelect: food)
+    func foodMenuViewController(controller: FoodMenuViewController, didSelect product: Product) {
+        self.delegate.whatsOnViewController(controller: self, didSelect: product)
     }
 }

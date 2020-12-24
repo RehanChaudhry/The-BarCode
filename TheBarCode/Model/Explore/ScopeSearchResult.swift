@@ -12,30 +12,22 @@ import CoreStore
 class ScopeSearchResult: NSObject {
 
     var bar: Bar
-    var drinks: [Drink]
-    var foods: [Food]
+    
+    var products: [Product]
+    
     var events: [Event]
     
     var isExpanded: Bool = false
     
-    init(bar: Bar, foods: [Food]) {
+    init(bar: Bar, foods: [Product]) {
         self.bar = bar
-        self.foods = foods
-        self.drinks = []
-        self.events = []
-    }
-    
-    init(bar: Bar, drinks: [Drink]) {
-        self.bar = bar
-        self.drinks = drinks
-        self.foods = []
+        self.products = foods
         self.events = []
     }
     
     init(bar: Bar, events: [Event]) {
         self.bar = bar
-        self.drinks = []
-        self.foods = []
+        self.products = []
         self.events = events
     }
 }

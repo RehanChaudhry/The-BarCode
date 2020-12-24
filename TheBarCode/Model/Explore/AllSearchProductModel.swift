@@ -1,5 +1,5 @@
 //
-//  AllSearchDrinkModel.swift
+//  AllSearchFoodModel.swift
 //  TheBarCode
 //
 //  Created by Mac OS X on 05/09/2019.
@@ -8,22 +8,22 @@
 
 import UIKit
 
-class AllSearchDrinkModel: AllSearchSectionViewModelItem {
+class AllSearchProductModel: AllSearchSectionViewModelItem {
     
     var type: AllSearchSectionViewModelItemType
-    var drink: Drink
+    var product: Product
     
     var isInAppPaymentOn: Bool
+    var menuTypeRaw: String
     
     var barId: String
     
-    init(type: AllSearchSectionViewModelItemType, drink: Drink, isInAppPaymentOn: Bool, barId: String) {
+    init(type: AllSearchSectionViewModelItemType, product: Product, isInAppPaymentOn: Bool, barId: String, menuTypeRaw: String) {
         self.type = type
-        self.drink = drink
-        
+        self.product = product
         self.isInAppPaymentOn = isInAppPaymentOn
         
         self.barId = barId
+        self.menuTypeRaw = menuTypeRaw
     }
 }
-

@@ -91,8 +91,7 @@ let notificationNameSearchVoucher = Notification.Name(rawValue: "notificationNam
 let notificationNameRefreshNotifications = Notification.Name(rawValue: "notificationNameRefreshNotifications")
 let notificationNameUpdateNotificationCount = Notification.Name(rawValue: "notificationNameUpdateNotificationCount")
 
-let notificationNameFoodCartUpdated = Notification.Name(rawValue: "notificationNameFoodCartUpdated")
-let notificationNameDrinkCartUpdated = Notification.Name(rawValue: "notificationNameDrinkCartUpdated")
+let notificationNameProductCartUpdated = Notification.Name(rawValue: "notificationNameProductCartUpdated")
 let notificationNameMyCartUpdated = Notification.Name(rawValue: "notificationNameMyCartUpdated")
 
 let notificationNameOrderDidRefresh = Notification.Name(rawValue: "notificationNameOrderDidRefresh")
@@ -101,9 +100,8 @@ let notificationNameOrderPlaced = Notification.Name(rawValue: "notificationNameO
 let notificationNameOrderStatusUpdated = Notification.Name(rawValue: "notificationNameOrderStatusUpdated")
 let notificationNameShowOrderDetails = Notification.Name(rawValue: "notificationNameShowOrderDetails")
 
-typealias FoodCartUpdatedObject = (food: Food, previousQuantity: Int, barId: String)
-typealias DrinkCartUpdatedObject = (drink: Drink, previousQuantity: Int, barId: String)
-typealias OrderItemCartUpdatedObject = (item: OrderItem, previousQuantity: Int, stepUp: Bool, delete: Bool, barId: String, controller: MyCartViewController)
+typealias ProductCartUpdatedObject = (product: Product, newQuantity: Int, previousQuantity: Int, barId: String)
+typealias OrderItemCartUpdatedObject = (itemId: String, newQuantity: Int, oldQuantity: Int, barId: String, controller: UIViewController)
 
 let serverDateTimeFormat = "yyyy-MM-dd HH:mm:ss"
 let serverTimeFormat = "HH:mm:ss"
@@ -168,8 +166,7 @@ class Utility: NSObject {
                 Entity<DeliveryTiming>("DeliveryTiming"),
                 Entity<ExploreSchedule>("ExploreSchedule"),
                 Entity<Event>("Event"),
-                Entity<Food>("Food"),
-                Entity<Drink>("Drink"),
+                Entity<Product>("Product"),
                 Entity<EventExternalCTA>("EventExternalCTA")
             ]
         )
@@ -740,5 +737,65 @@ extension Utility {
         let dataRaw = Data(base64Encoded: originalData)!
         
         return String(data: dataRaw, encoding: .utf8)!
+    }
+}
+
+//MARK: Update Cart
+extension Utility {
+    func updateCart(product: Product, shouldAdd: Bool, barId: String, completion: @escaping (_ error: NSError?) -> Void) {
+        
+        var params: [String : Any] = ["id" : product.id.value,
+                                      "establishment_id" : barId]
+        if let cartItemId = product.cartItemId.value {
+            params["cart_item_id"] = cartItemId
+        }
+        
+        if shouldAdd {
+            product.isAddingToCart = true
+            params["quantity"] = product.quantity.value + 1
+        } else {
+            product.isRemovingFromCart = true
+            params["quantity"] = 0
+        }
+
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
+            
+            let previousQuantity = product.quantity.value
+            
+            defer {
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
+
+                let cartInfo: ProductCartUpdatedObject = (product: product, newQuantity: product.quantity.value, previousQuantity: previousQuantity, barId: barId)
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo)
+            }
+            
+            guard error == nil else {
+                completion(error as NSError?)
+                return
+            }
+            
+            guard serverError == nil else {
+                completion(serverError!.nsError())
+                return
+            }
+            
+            var cartItemId: String? = nil
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any],
+                let items = data["menuItems"] as? [[String : Any]],
+                let item = items.first(where: { "\($0["id"]!)" == product.id.value }),
+                let _ = item["cart_item_id"]  {
+                
+                cartItemId = "\(item["cart_item_id"]!)"
+            }
+            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemId
+            })
+        }
     }
 }

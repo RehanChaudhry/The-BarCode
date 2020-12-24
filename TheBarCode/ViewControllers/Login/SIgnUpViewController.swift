@@ -314,7 +314,7 @@ class SIgnUpViewController: UIViewController {
     func isDataValid() -> Bool {
         var isValid = true
         
-        if self.fullNameFieldView.textField.text!.trimWhiteSpaces().count < 2 {
+        if self.fullNameFieldView.textField.text!.trimWhiteSpaces().count < 1 {
             isValid = false
            self.fullNameFieldView.showValidationMessage(message: "Please enter your name.")
         } else {

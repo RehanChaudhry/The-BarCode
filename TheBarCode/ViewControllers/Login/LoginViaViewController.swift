@@ -687,7 +687,7 @@ extension LoginViaViewController: ASAuthorizationControllerDelegate {
                 }
             }
             
-            if fullName.count < 2 {
+            if fullName.count < 1 {
                 fullName = fullName + " Not Available"
             }
             

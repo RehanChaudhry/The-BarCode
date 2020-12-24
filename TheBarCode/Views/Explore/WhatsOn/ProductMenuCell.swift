@@ -9,12 +9,12 @@
 import UIKit
 import Reusable
 
-protocol FoodMenuCellDelegate: class {
-    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton)
-    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton)
+protocol ProductMenuCellDelegate: class {
+    func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton)
+    func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton)
 }
 
-class FoodMenuCell: UITableViewCell, NibReusable {
+class ProductMenuCell: UITableViewCell, NibReusable {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
@@ -41,7 +41,7 @@ class FoodMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var removeItemActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var removeItemButton: UIButton!
     
-    weak var delegate: FoodMenuCellDelegate!
+    weak var delegate: ProductMenuCellDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,56 +63,18 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setupCellForDrink(drink: Drink, isInAppPaymentOn: Bool) {
+    func setupCell(product: Product, isInAppPaymentOn: Bool) {
         
-        self.titleLabel.attributedText = drink.name.value.html2Attributed(isTitle: true)
-        self.detailLabel.attributedText = drink.detail.value.html2Attributed(isTitle: false)
+        self.titleLabel.attributedText = product.name.value.html2Attributed(isTitle: true)
+        self.detailLabel.attributedText = product.detail.value.html2Attributed(isTitle: false)
         
-        if drink.detail.value.count > 0 {
+        if product.detail.value.count > 0 {
             self.detailLabelTop.constant = 10.0
         } else {
             self.detailLabelTop.constant = 0.0
         }
         
-        let price = Double(drink.price.value) ?? 0.0
-        let priceString = String(format: "%.2f", price)
-        self.priceLabel.text = "£ " + priceString
-        
-        self.handlePrice(price: price)
-        
-        self.shouldShowCartIcon(show: isInAppPaymentOn)
-        
-        self.removeItemButton.isHidden = drink.quantity.value == 0
-        self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
-        
-        UIView.performWithoutAnimation {
-            let suffix = drink.quantity.value > 1 ? "Items Added" : "Item Added"
-            self.removeItemButton.setTitle("\(drink.quantity.value) \(suffix) ", for: .normal)
-            self.removeItemButton.layoutIfNeeded()
-        }
-        
-        if isInAppPaymentOn {
-            self.shouldEnableCartButtons(enable: !(drink.isAddingToCart || drink.isRemovingFromCart))
-        } else {
-            self.addItemButton.isUserInteractionEnabled = false
-        }
-        
-        self.handleAddingToCart(isAdding: drink.isAddingToCart)
-        self.handleRemoveFromCart(isRemoving: drink.isRemovingFromCart)
-    }
-    
-    func setupCellForFood(food: Food, isInAppPaymentOn: Bool) {
-        
-        self.titleLabel.attributedText = food.name.value.html2Attributed(isTitle: true)
-        self.detailLabel.attributedText = food.detail.value.html2Attributed(isTitle: false)
-        
-        if food.detail.value.count > 0 {
-            self.detailLabelTop.constant = 10.0
-        } else {
-            self.detailLabelTop.constant = 0.0
-        }
-        
-        let price = Double(food.price.value) ?? 0.0
+        let price = Double(product.price.value) ?? 0.0
         let priceString = String(format: "%.2f", price)
         self.priceLabel.text = "£ " + priceString
 
@@ -120,23 +82,23 @@ class FoodMenuCell: UITableViewCell, NibReusable {
         
         self.shouldShowCartIcon(show: isInAppPaymentOn)
         
-        self.removeItemButton.isHidden = food.quantity.value == 0
+        self.removeItemButton.isHidden = product.quantity.value == 0
         self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
         
         UIView.performWithoutAnimation {
-            let suffix = food.quantity.value > 1 ? "Items Added" : "Item Added"
-            self.removeItemButton.setTitle("\(food.quantity.value) \(suffix) ", for: .normal)
+            let suffix = product.quantity.value > 1 ? "Items Added" : "Item Added"
+            self.removeItemButton.setTitle("\(product.quantity.value) \(suffix) ", for: .normal)
             self.removeItemButton.layoutIfNeeded()
         }
         
         if isInAppPaymentOn {
-            self.shouldEnableCartButtons(enable: !(food.isAddingToCart || food.isRemovingFromCart))
+            self.shouldEnableCartButtons(enable: !(product.isAddingToCart || product.isRemovingFromCart))
         } else {
             self.addItemButton.isUserInteractionEnabled = false
         }
         
-        self.handleAddingToCart(isAdding: food.isAddingToCart)
-        self.handleRemoveFromCart(isRemoving: food.isRemovingFromCart)
+        self.handleAddingToCart(isAdding: product.isAddingToCart)
+        self.handleRemoveFromCart(isRemoving: product.isRemovingFromCart)
     }
     
     func handlePrice(price: Double) {
@@ -188,11 +150,11 @@ class FoodMenuCell: UITableViewCell, NibReusable {
     
     //MARK: My IBActions
     @IBAction func removeItemButtonTapped(sender: UIButton) {
-        self.delegate.foodMenuCell(cell: self, removeFromCartButtonTapped: sender)
+        self.delegate.productMenuCell(cell: self, removeFromCartButtonTapped: sender)
     }
     
     @IBAction func addItemButtonTapped(sender: UIButton) {
-        self.delegate.foodMenuCell(cell: self, addToCartButtonTapped: sender)
+        self.delegate.productMenuCell(cell: self, addToCartButtonTapped: sender)
     }
 }
 

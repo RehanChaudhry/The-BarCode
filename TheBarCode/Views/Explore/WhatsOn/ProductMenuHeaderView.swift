@@ -1,5 +1,5 @@
 //
-//  FoodMenuHeaderView.swift
+//  ProductMenuHeaderView.swift
 //  TheBarCode
 //
 //  Created by Mac OS X on 04/11/2019.
@@ -9,11 +9,11 @@
 import UIKit
 import Reusable
 
-protocol FoodMenuHeaderViewDelegate: class {
-    func foodMenuHeaderView(header: FoodMenuHeaderView, titleButtonTapped sender: UIButton)
+protocol ProductMenuHeaderViewDelegate: class {
+    func foodMenuHeaderView(header: ProductMenuHeaderView, titleButtonTapped sender: UIButton)
 }
 
-class FoodMenuHeaderView: UITableViewHeaderFooterView, NibReusable {
+class ProductMenuHeaderView: UITableViewHeaderFooterView, NibReusable {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var containerView: UIView!
@@ -22,7 +22,7 @@ class FoodMenuHeaderView: UITableViewHeaderFooterView, NibReusable {
     
     var section: Int = 0
     
-    weak var delegate: FoodMenuHeaderViewDelegate?
+    weak var delegate: ProductMenuHeaderViewDelegate?
     
     func setupHeader(title: String, isExpanded: Bool) {
         self.titleLabel.text = title.uppercased()

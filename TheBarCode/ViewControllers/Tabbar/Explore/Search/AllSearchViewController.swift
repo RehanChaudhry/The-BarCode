@@ -31,15 +31,13 @@ class AllSearchViewController: BaseSearchScopeViewController {
 
         // Do any additional setup after loading the view.
         
-        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
         
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
-        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
@@ -55,7 +53,7 @@ class AllSearchViewController: BaseSearchScopeViewController {
         self.statefulTableView.innerTable.register(cellType: BarTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: DealTableViewCell.self)
         self.statefulTableView.innerTable.register(cellType: LiveOfferTableViewCell.self)
-        self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
+        self.statefulTableView.innerTable.register(cellType: ProductMenuCell.self)
         self.statefulTableView.innerTable.register(cellType: FoodBarCell.self)
         self.statefulTableView.innerTable.register(cellType: EventCell.self)
         self.statefulTableView.innerTable.register(headerFooterViewType: AllSearchHeaderView.self)
@@ -215,14 +213,14 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setUpCell(explore: item.bar)
             cell.delegate = self
             return cell
-        } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
-            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForFood(food: item.food, isInAppPaymentOn: item.isInAppPaymentOn)
+        } else if let item = viewModelItem as? AllSearchProductModel, item.type == .foodCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
+            cell.setupCell(product: item.product, isInAppPaymentOn: item.isInAppPaymentOn)
             cell.delegate = self
             return cell
-        } else if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
-            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
-            cell.setupCellForDrink(drink: item.drink, isInAppPaymentOn: item.isInAppPaymentOn)
+        } else if let item = viewModelItem as? AllSearchProductModel, item.type == .drinkCell {
+            let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
+            cell.setupCell(product: item.product, isInAppPaymentOn: item.isInAppPaymentOn)
             cell.delegate = self
             return cell
         } else if let item = viewModelItem as? AllSearchExpandModel, item.type == .footerCell {
@@ -329,19 +327,19 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
         } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchBarModel, viewModelItem.type == .drinkBarCell {
             self.moveToBarDetails(barId: viewModelItem.bar.id.value, scopeType: .bar)
-        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchFoodModel, viewModelItem.type == .foodCell {
-            self.moveToBarDetails(barId: viewModelItem.food.establishmentId.value, scopeType: .food)
-        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchDrinkModel, viewModelItem.type == .drinkCell {
-            self.moveToBarDetails(barId: viewModelItem.drink.establishmentId.value, scopeType: .drink)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchProductModel, viewModelItem.type == .foodCell {
+            self.moveToBarDetails(barId: viewModelItem.product.establishmentId.value, scopeType: .food)
+        } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchProductModel, viewModelItem.type == .drinkCell {
+            self.moveToBarDetails(barId: viewModelItem.product.establishmentId.value, scopeType: .drink)
         } else if let viewModelItem = viewModel.items[indexPath.row] as? AllSearchEventModel, viewModelItem.type == .eventCell {
             self.moveToBarDetails(barId: viewModelItem.event.bar.value!.id.value, scopeType: .event)
         }
     }
 }
 
-//MARK: FoodMenuCellDelegate
-extension AllSearchViewController: FoodMenuCellDelegate {
-    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+//MARK: ProductMenuCellDelegate
+extension AllSearchViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
@@ -349,14 +347,12 @@ extension AllSearchViewController: FoodMenuCellDelegate {
         let viewModel = self.viewModels[indexPath.section]
         let viewModelItem = viewModel.items[indexPath.item]
         
-        if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
-            self.updateDrinkCart(drink: item.drink, barId: item.barId, shouldAdd: false)
-        } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
-            self.updateFoodCart(food: item.food, barId: item.barId, shouldAdd: false)
+        if let item = viewModelItem as? AllSearchProductModel {
+            self.updateProductCart(product: item.product, barId: item.barId, shouldAdd: false)
         }
     }
     
-    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+    func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
@@ -364,10 +360,23 @@ extension AllSearchViewController: FoodMenuCellDelegate {
         let viewModel = self.viewModels[indexPath.section]
         let viewModelItem = viewModel.items[indexPath.item]
         
-        if let item = viewModelItem as? AllSearchDrinkModel, item.type == .drinkCell {
-            self.updateDrinkCart(drink: item.drink, barId: item.barId, shouldAdd: true)
-        } else if let item = viewModelItem as? AllSearchFoodModel, item.type == .foodCell {
-            self.updateFoodCart(food: item.food, barId: item.barId, shouldAdd: true)
+        if let item = viewModelItem as? AllSearchProductModel {
+            if item.product.haveModifiers.value {
+                let productModifiersNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "ProductModifiersNavigation") as! UINavigationController)
+                productModifiersNavigation.modalPresentationStyle = .fullScreen
+                
+                let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
+                productModifiersController.productInfo = (id: item.product.id.value,
+                                                          name: item.product.name.value,
+                                                          price: Double(item.product.price.value) ?? 0.0,
+                                                          quantity: item.product.quantity.value)
+                productModifiersController.establishmentId = item.barId
+                productModifiersController.type = item.menuTypeRaw
+                
+                self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
+            } else {
+                self.updateProductCart(product: item.product, barId: item.barId, shouldAdd: true)
+            }
         }
     }
 }
@@ -728,7 +737,7 @@ extension AllSearchViewController {
                         for result in results {
                             
                             var bar: Bar!
-                            var foods: [Food] = []
+                            var foods: [Product] = []
                             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                                 
                                 var mutableBarDict = result
@@ -736,7 +745,7 @@ extension AllSearchViewController {
                                 bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                                 
                                 let foodsArray = result["menus"] as? [[String : Any]] ?? []
-                                foods = try! transaction.importUniqueObjects(Into<Food>(), sourceArray: foodsArray)
+                                foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
                             })
                             
                             let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
@@ -744,16 +753,17 @@ extension AllSearchViewController {
                             let barModel = AllSearchBarModel(type: .foodBarCell, bar: fetchedBar)
                             items.append(barModel)
                             
-                            var fetchedFoods: [Food] = []
+                            var fetchedFoods: [Product] = []
                             for food in foods {
                                 let fetchedFood  = Utility.barCodeDataStack.fetchExisting(food)
                                 fetchedFoods.append(fetchedFood!)
                             }
                             
-                            let foodItems = fetchedFoods.map({ AllSearchFoodModel(type: .foodCell,
-                                                                                  food: $0,
+                            let foodItems = fetchedFoods.map({ AllSearchProductModel(type: .foodCell,
+                                                                                  product: $0,
                                                                                   isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value,
-                                                                                  barId: fetchedBar.id.value) })
+                                                                                  barId: fetchedBar.id.value,
+                                                                                  menuTypeRaw: fetchedBar.menuTypeRaw.value) })
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, foodItem) in foodItems.enumerated() {
@@ -792,7 +802,7 @@ extension AllSearchViewController {
                         for result in results {
                             
                             var bar: Bar!
-                            var drinks: [Drink] = []
+                            var drinks: [Product] = []
                             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                                 
                                 var mutableBarDict = result
@@ -800,23 +810,24 @@ extension AllSearchViewController {
                                 bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                                 
                                 let drinksArray = result["menus"] as? [[String : Any]] ?? []
-                                drinks = try! transaction.importUniqueObjects(Into<Drink>(), sourceArray: drinksArray)
+                                drinks = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: drinksArray)
                             })
                             
                             let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
                             let barModel = AllSearchBarModel(type: .drinkBarCell, bar: fetchedBar)
                             items.append(barModel)
                             
-                            var fetchedDrinks: [Drink] = []
+                            var fetchedDrinks: [Product] = []
                             for drink in drinks {
                                 let fetchedDrink  = Utility.barCodeDataStack.fetchExisting(drink)
                                 fetchedDrinks.append(fetchedDrink!)
                             }
                             
-                            let drinkItems = fetchedDrinks.map({ AllSearchDrinkModel(type: .drinkCell,
-                                                                                     drink: $0,
-                                                                                     isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value,
-                                                                                     barId: fetchedBar.id.value)})
+                            let drinkItems = fetchedDrinks.map({ AllSearchProductModel(type: .drinkCell,
+                                                                                       product: $0,
+                                                                                       isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value,
+                                                                                       barId: fetchedBar.id.value,
+                                                                                       menuTypeRaw: fetchedBar.menuTypeRaw.value)})
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, drinkItem) in drinkItems.enumerated() {
@@ -1073,90 +1084,15 @@ extension AllSearchViewController {
         }
     }
     
-    func updateFoodCart(food: Food, barId: String, shouldAdd: Bool) {
+    func updateProductCart(product: Product, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value,
-                                      "establishment_id" : barId]
-        if shouldAdd {
-            food.isAddingToCart = true
-            params["quantity"] = food.quantity.value + 1
-        } else {
-            food.isRemovingFromCart = true
-            params["quantity"] = 0
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId) { (error) in
+            if let error = error {
+                KVNProgress.showError(withStatus: error.localizedDescription)
+            }
         }
         
         self.statefulTableView.innerTable.reloadData()
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = food.quantity.value
-            
-            defer {
-                food.isAddingToCart = false
-                food.isRemovingFromCart = false
-
-                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: barId)
-                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
-            }
-            
-            guard error == nil else {
-                KVNProgress.showError(withStatus: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                KVNProgress.showError(withStatus: serverError!.detail)
-                return
-            }
-            
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedFood = transaction.edit(food)
-                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
-            })
-        }
-    }
-    
-    func updateDrinkCart(drink: Drink, barId: String, shouldAdd: Bool) {
-        
-        var params: [String : Any] = ["id" : drink.id.value,
-                                      "establishment_id" : barId]
-        if shouldAdd {
-            drink.isAddingToCart = true
-            params["quantity"] = drink.quantity.value + 1
-        } else {
-            drink.isRemovingFromCart = true
-            params["quantity"] = 0
-        }
-        
-        self.statefulTableView.innerTable.reloadData()
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = drink.quantity.value
-            
-            defer {
-                drink.isAddingToCart = false
-                drink.isRemovingFromCart = false
-
-                let drinkCartInfo: DrinkCartUpdatedObject = (drink: drink, previousQuantity: previousQuantity, barId: barId)
-                NotificationCenter.default.post(name: notificationNameDrinkCartUpdated, object: drinkCartInfo)
-            }
-            
-            guard error == nil else {
-                KVNProgress.showError(withStatus: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                KVNProgress.showError(withStatus: serverError!.detail)
-                return
-            }
-            
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedDrink = transaction.edit(drink)
-                editedDrink?.quantity.value = shouldAdd ? drink.quantity.value + 1 : 0
-            })
-        }
     }
 }
 
@@ -1242,11 +1178,7 @@ extension AllSearchViewController: StatefulTableDelegate {
 
 //MARK: Notification Methods
 extension AllSearchViewController {
-    @objc func foodCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
-    }
-    
-    @objc func drinkCartUpdatedNotification(notification: Notification) {
+    @objc func productCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
     

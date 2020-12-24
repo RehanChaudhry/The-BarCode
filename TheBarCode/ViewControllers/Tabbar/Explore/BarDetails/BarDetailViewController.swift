@@ -123,8 +123,7 @@ class BarDetailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(unlimitedRedemptionDidPurchasedNotification(notif:)), name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadSuccessfullNotification(notification:)), name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlaced(notification:)), name: notificationNameOrderPlaced, object: nil)
         
@@ -154,8 +153,7 @@ class BarDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: notificationNameUnlimitedRedemptionPurchased, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: notificationNameReloadSuccess), object: nil)
         
-        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
-        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
@@ -756,24 +754,9 @@ extension BarDetailViewController: CannotRedeemViewControllerDelegate {
 
 //MARK: WhatsOnViewControllerDelegate
 extension BarDetailViewController: WhatsOnViewControllerDelegate {
-    func whatsOnViewController(controller: WhatsOnViewController, didSelect food: Food) {
-        /*
-        let detailController = (self.storyboard!.instantiateViewController(withIdentifier: "WhatsOnDetailViewController") as! WhatsOnDetailViewController)
-        detailController.type = .food
-        detailController.food = food
-        detailController.bar = self.selectedBar!
-        self.navigationController?.pushViewController(detailController, animated: true)
-        */
-    }
     
-    func whatsOnViewController(controller: WhatsOnViewController, didSelect drink: Drink) {
-        /*
-        let detailController = (self.storyboard!.instantiateViewController(withIdentifier: "WhatsOnDetailViewController") as! WhatsOnDetailViewController)
-        detailController.type = .drink
-        detailController.drink = drink
-        detailController.bar = self.selectedBar!
-        self.navigationController?.pushViewController(detailController, animated: true)
-        */
+    func whatsOnViewController(controller: WhatsOnViewController, didSelect product: Product) {
+        
     }
     
     func whatsOnViewController(controller: WhatsOnViewController, didSelect event: Event) {
@@ -806,27 +789,15 @@ extension BarDetailViewController {
         }
     }
     
-    @objc func foodCartUpdatedNotification(notification: Notification) {
-        guard let foodInfo = notification.object as? FoodCartUpdatedObject, let id = self.selectedBar?.id.value, id == foodInfo.barId else {
+    @objc func productCartUpdatedNotification(notification: Notification) {
+        guard let productInfo = notification.object as? ProductCartUpdatedObject, let id = self.selectedBar?.id.value, id == productInfo.barId else {
             return
         }
         
-        if foodInfo.food.quantity.value == 0 {
-            self.cartCount -= foodInfo.previousQuantity
+        if productInfo.product.quantity.value <= 0 {
+            self.cartCount -= productInfo.previousQuantity
         } else {
-            self.cartCount += 1
-        }
-    }
-    
-    @objc func drinkCartUpdatedNotification(notification: Notification) {
-        guard let drinkInfo = notification.object as? DrinkCartUpdatedObject, let id = self.selectedBar?.id.value, id == drinkInfo.barId else {
-            return
-        }
-        
-        if drinkInfo.drink.quantity.value == 0 {
-            self.cartCount -= drinkInfo.previousQuantity
-        } else {
-            self.cartCount += 1
+            self.cartCount += productInfo.newQuantity - productInfo.previousQuantity
         }
     }
     
@@ -835,14 +806,10 @@ extension BarDetailViewController {
             return
         }
         
-        if object.delete {
-            self.cartCount -= object.previousQuantity
+        if object.newQuantity <= 0 {
+            self.cartCount -= object.oldQuantity
         } else {
-            if object.stepUp {
-                self.cartCount += 1
-            } else {
-                self.cartCount -= 1
-            }
+            self.cartCount += object.newQuantity - object.oldQuantity
         }
     }
     

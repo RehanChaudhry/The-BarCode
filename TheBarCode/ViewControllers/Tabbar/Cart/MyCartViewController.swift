@@ -65,15 +65,13 @@ class MyCartViewController: UIViewController {
         self.setUpStatefulTableView()
         self.reset()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(drinkCartUpdatedNotification(notification:)), name: notificationNameDrinkCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(orderDidPlacedNotification(notification:)), name: notificationNameOrderPlaced, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: notificationNameDrinkCartUpdated, object: nil)
-        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameOrderPlaced, object: nil)
     }
@@ -236,6 +234,30 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
         
+        let order = self.orders[indexPath.section]
+        let orderItem = order.orderItems[indexPath.row]
+        if orderItem.modifierGroups.count > 0 {
+            
+            let quantity = order.orderItems.filter({$0.id == orderItem.id}).reduce(0) { (result, item) -> Int in
+                return result + item.quantity
+            }
+            
+            let productModifiersNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "ProductModifiersNavigation") as! UINavigationController)
+            productModifiersNavigation.modalPresentationStyle = .fullScreen
+            
+            let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
+            productModifiersController.groups = orderItem.modifierGroups
+            productModifiersController.isUpdating = true
+            productModifiersController.cartItemId = orderItem.cartItemId
+            productModifiersController.establishmentId = order.barId
+            productModifiersController.type =  order.menuTypeRaw
+            productModifiersController.productInfo = (id: orderItem.id,
+                                                      name: orderItem.name,
+                                                      price: orderItem.unitPrice,
+                                                      quantity: quantity)
+            productModifiersController.defaultQuantity = orderItem.quantity
+            self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
+        }
     }
 }
 
@@ -333,9 +355,12 @@ extension MyCartViewController {
         let order: Order = self.orders[indexPath.section]
         let item: OrderItem = order.orderItems[indexPath.row]
         
-        let previousQuantity = item.quantity
+        let previousQuantity = order.orderItems.filter({$0.id == item.id}).reduce(0) { (result, item) -> Int in
+            return result + item.quantity
+        }
         
         var params: [String : Any] = ["id" : item.id,
+                                      "cart_item_id" : item.cartItemId,
                                       "establishment_id" : order.barId]
         if !shouldDelete {
             item.isUpdating = true
@@ -431,17 +456,22 @@ extension MyCartViewController {
             
             self.setUpBadgeValue()
             
+            let newQuantity = order.orderItems.filter({$0.id == item.id}).reduce(0) { (result, item) -> Int in
+                return result + item.quantity
+            }
+            
             try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                if let food = try! transaction.fetchOne(From<Food>(), Where(\Food.id == item.id)) {
-                    let edittedFood = transaction.edit(food)
-                    edittedFood?.quantity.value = !shouldDelete ? item.quantity : 0
-                } else if let drink = try! transaction.fetchOne(From<Drink>(), Where(\Drink.id == item.id)) {
-                    let edittedDrink = transaction.edit(drink)
-                    edittedDrink?.quantity.value = !shouldDelete ? item.quantity : 0
+                if let product = try! transaction.fetchOne(From<Product>(), Where(\Product.id == item.id)),
+                    let edittedProduct = transaction.edit(product) {
+                    edittedProduct.quantity.value = newQuantity
                 }
             })
             
-            let object = (item: item, previousQuantity: previousQuantity, stepUp: shouldStepUp, delete: shouldDelete, barId: order.barId, controller: self)
+            let object = (itemId: item.id,
+                          newQuantity: newQuantity,
+                          oldQuantity: previousQuantity,
+                          barId: order.barId,
+                          controller: self)
             NotificationCenter.default.post(name: notificationNameMyCartUpdated, object: object, userInfo: nil)
         }
     }
@@ -539,14 +569,10 @@ extension MyCartViewController: StatefulTableDelegate {
 
 //MARK: Notification Methods
 extension MyCartViewController {
-    @objc func foodCartUpdatedNotification(notification: Notification) {
+    @objc func productCartUpdatedNotification(notification: Notification) {
         self.reset()
     }
-    
-    @objc func drinkCartUpdatedNotification(notification: Notification) {
-        self.reset()
-    }
-    
+
     @objc func myCartUpdatedNotification(notification: Notification) {
         if (notification.object as? OrderItemCartUpdatedObject)?.controller != self {
             self.reset()

@@ -24,12 +24,12 @@ class FoodSearchViewController: BaseSearchScopeViewController {
 
         // Do any additional setup after loading the view.
 
-        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
 
@@ -40,7 +40,7 @@ class FoodSearchViewController: BaseSearchScopeViewController {
         self.statefulTableView.innerTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.statefulTableView.frame.size.width, height: 16.0))
         self.statefulTableView.innerTable.register(headerFooterViewType: ScopeSearchResultHeaderView.self)
         self.statefulTableView.innerTable.register(headerFooterViewType: FoodSearchFooterView.self)
-        self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
+        self.statefulTableView.innerTable.register(cellType: ProductMenuCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
@@ -108,14 +108,14 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let result = self.searchResults[section]
-        if result.foods.count > 3 {
+        if result.products.count > 3 {
             if result.isExpanded {
-                return self.searchResults[section].foods.count
+                return self.searchResults[section].products.count
             } else {
                 return 3
             }
         } else {
-            return self.searchResults[section].foods.count
+            return self.searchResults[section].products.count
         }
     }
     
@@ -128,7 +128,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         let previousSection = section - 1
         if previousSection > 0 {
             let result = self.searchResults[previousSection]
-            headerView?.pagerViewTop.constant = result.foods.count > 3 ? 0.0 : 16.0
+            headerView?.pagerViewTop.constant = result.products.count > 3 ? 0.0 : 16.0
         } else {
             headerView?.pagerViewTop.constant = 16.0
         }
@@ -139,7 +139,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let result = self.searchResults[section]
-        if result.foods.count > 3 {
+        if result.products.count > 3 {
             let footerView = self.statefulTableView.innerTable.dequeueReusableHeaderFooterView(FoodSearchFooterView.self)
             footerView?.section = section
             footerView?.delegate = self
@@ -152,7 +152,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let results = self.searchResults[section]
-        if results.foods.count > 3 {
+        if results.products.count > 3 {
             return 62.0
         } else {
             return 0.0
@@ -178,10 +178,10 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
         
-        let food = self.searchResults[indexPath.section].foods[indexPath.row]
-        cell.setupCellForFood(food: food, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
+        let product = self.searchResults[indexPath.section].products[indexPath.row]
+        cell.setupCell(product: product, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
         cell.separatorView.isHidden = false
         
         cell.delegate = self
@@ -197,26 +197,42 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: FoodMenuCellDelegate
-extension FoodSearchViewController: FoodMenuCellDelegate {
-    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+//MARK: ProductMenuCellDelegate
+extension FoodSearchViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
         
         let bar = self.searchResults[indexPath.section].bar
-        let model = self.searchResults[indexPath.section].foods[indexPath.row]
-        self.updateCart(food: model, barId: bar.id.value, shouldAdd: false)
+        let model = self.searchResults[indexPath.section].products[indexPath.row]
+        self.updateCart(product: model, barId: bar.id.value, shouldAdd: false)
     }
     
-    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+    func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
-        
+
         let bar = self.searchResults[indexPath.section].bar
-        let model = self.searchResults[indexPath.section].foods[indexPath.row]
-        self.updateCart(food: model, barId: bar.id.value, shouldAdd: true)
+        let product = self.searchResults[indexPath.section].products[indexPath.row]
+        
+        if product.haveModifiers.value {
+            let productModifiersNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "ProductModifiersNavigation") as! UINavigationController)
+            productModifiersNavigation.modalPresentationStyle = .fullScreen
+            
+            let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
+            productModifiersController.productInfo = (id: product.id.value,
+                                                      name: product.name.value,
+                                                      price: Double(product.price.value) ?? 0.0,
+                                                      quantity: product.quantity.value)
+            productModifiersController.establishmentId = bar.id.value
+            productModifiersController.type = bar.menuTypeRaw.value
+            
+            self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
+        } else {
+            self.updateCart(product: product, barId: bar.id.value, shouldAdd: true)
+        }
     }
 }
 
@@ -302,7 +318,7 @@ extension FoodSearchViewController {
                 for responseObject in responseArray {
                     
                     var bar: Bar!
-                    var foods: [Food] = []
+                    var foods: [Product] = []
                     try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
                         
                         var mutableBarDict = responseObject
@@ -310,11 +326,11 @@ extension FoodSearchViewController {
                         bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                         
                         let foodsArray = responseObject["menus"] as? [[String : Any]] ?? []
-                        foods = try! transaction.importUniqueObjects(Into<Food>(), sourceArray: foodsArray)
+                        foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
                     })
                     
                     let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)
-                    var fetchedFoods: [Food] = []
+                    var fetchedFoods: [Product] = []
                     for food in foods {
                         let fetchedFood  = Utility.barCodeDataStack.fetchExisting(food)
                         fetchedFoods.append(fetchedFood!)
@@ -450,47 +466,15 @@ extension FoodSearchViewController {
         }
     }
     
-    func updateCart(food: Food, barId: String, shouldAdd: Bool) {
+    func updateCart(product: Product, barId: String, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value,
-                                      "establishment_id" : barId]
-        if shouldAdd {
-            food.isAddingToCart = true
-            params["quantity"] = food.quantity.value + 1
-        } else {
-            food.isRemovingFromCart = true
-            params["quantity"] = 0
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId) { (error) in
+            if let error = error {
+                KVNProgress.showError(withStatus: error.localizedDescription)
+            }
         }
         
         self.statefulTableView.innerTable.reloadData()
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = food.quantity.value
-            
-            defer {
-                food.isAddingToCart = false
-                food.isRemovingFromCart = false
-
-                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: barId)
-                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
-            }
-            
-            guard error == nil else {
-                KVNProgress.showError(withStatus: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                KVNProgress.showError(withStatus: serverError!.detail)
-                return
-            }
-            
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedFood = transaction.edit(food)
-                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
-            })
-        }
     }
 }
 
@@ -576,7 +560,7 @@ extension FoodSearchViewController: StatefulTableDelegate {
 
 //MARK: Notification Methods
 extension FoodSearchViewController {
-    @objc func foodCartUpdatedNotification(notification: Notification) {
+    @objc func productCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
     

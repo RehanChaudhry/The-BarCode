@@ -32,7 +32,10 @@ class ProductModifierHeader: UITableViewHeaderFooterView, NibReusable {
         
         let attributedString = NSMutableAttributedString()
         attributedString.append(attributedTitle)
-        attributedString.append(attributedDetail)
+        
+        if group.max > 1 {
+            attributedString.append(attributedDetail)
+        }
         
         self.titleLabel.attributedText = attributedString
         

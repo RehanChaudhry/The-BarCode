@@ -14,7 +14,7 @@ class ProductMenuSegment: Mappable {
     
     var id: String!
     var name: String!
-    var foods: [Product] = []
+    var products: [Product] = []
     
     var isExpanded: Bool = false
     
@@ -28,15 +28,15 @@ class ProductMenuSegment: Mappable {
         self.name = map.JSON["name"] as? String ?? "Other"
         
         let items = map.JSON["items"] as? [[String : Any]] ?? []
-        let importedFoods = try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> [Product] in
+        let importedProducts = try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> [Product] in
             let importedFoods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: items)
             return importedFoods
         })
         
-        self.foods.removeAll()
-        for food in importedFoods {
-            let fetchedFood = Utility.barCodeDataStack.fetchExisting(food)!
-            self.foods.append(fetchedFood)
+        self.products.removeAll()
+        for product in importedProducts {
+            let fetchedFood = Utility.barCodeDataStack.fetchExisting(product)!
+            self.products.append(fetchedFood)
         }
     }
 }

@@ -29,6 +29,8 @@ class Product: CoreStoreObject {
     
     var haveModifiers = Value.Required<Bool>("have_modifiers", initial: false)
     
+    var cartItemId = Value.Optional<String>("cart_item_id")
+    
     var isAddingToCart: Bool = false
     var isRemovingFromCart: Bool = false
 }
@@ -90,6 +92,12 @@ extension Product: ImportableUniqueObject {
             self.quantity.value = Int("\(source["quantity"]!)") ?? 0
         } else {
             self.quantity.value = 0
+        }
+        
+        if let _ = source["cart_item_id"] {
+            self.cartItemId.value = "\(source["cart_item_id"]!)"
+        } else {
+            self.cartItemId.value = nil
         }
         
         self.haveModifiers.value = source["have_modifiers"] as? Bool ?? false

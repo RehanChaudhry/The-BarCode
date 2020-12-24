@@ -10,6 +10,7 @@ import UIKit
 import ObjectMapper
 import KVNProgress
 import Alamofire
+import CoreStore
 
 class ProductModfiersViewController: UIViewController {
     
@@ -28,13 +29,18 @@ class ProductModfiersViewController: UIViewController {
     
     var groups: [ProductModifierGroup] = []
     
-    var productId: String = ""
-    var price: Double = 0.0
-    var productName: String = ""
+    var productInfo: (id: String, name: String, price: Double, quantity: Int)!
+    
+    var cartItemId: String?
+    
+    var defaultQuantity: Int = 1 // product quantity can be different than order item quantity e.g. same product can be added having multiple modifiers
+    
     var establishmentId: String = ""
     var type: String = ""
     
     var headerHeights: [Int : CGFloat] = [:]
+    
+    var isUpdating: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,15 +48,18 @@ class ProductModfiersViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
+          
+        let price = self.productInfo.price
         
-        self.titleLabel.text = self.productName
-        self.subTitleLabel.text = self.price > 0.0 ? String(format: "£ %.2f", self.price) : ""
+        self.titleLabel.text = self.productInfo.name
+        self.subTitleLabel.text = price > 0.0 ? String(format: "£ %.2f", price) : ""
         
         self.tableView.tableFooterView = UIView()
         self.tableView.register(cellType: ProductModifierCell.self)
         self.tableView.register(headerFooterViewType: ProductModifierHeader.self)
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.statefulView.isHidden = true
         self.view.addSubview(statefulView)
         
         self.statefulView.retryHandler = {[unowned self] (sender: UIButton) in
@@ -59,25 +68,30 @@ class ProductModfiersViewController: UIViewController {
         
         self.statefulView.autoPinEdgesToSuperviewEdges()
         
-        self.getModifiers()
-        self.calculateTotal()
-        
         self.stepperView.minValue = 1
         self.stepperView.maxValue = 20
-        self.stepperView.value = 1
+        self.stepperView.value = self.defaultQuantity
         self.stepperView.delegate = self
         
+        //if user is coming from cart the modifiers will come from the cart
+        if !self.isUpdating {
+            self.getModifiers()
+        }
+        
+        self.calculateTotal()
     }
     
     //MARK: My Methods
     @discardableResult func calculateTotal() -> Double {
+        let price = self.productInfo.price
+        
         let total = self.groups.reduce(0.0) { (total, group) -> Double in
             return total + group.modifiers.reduce(0.0) { (groupTotal, modifier) -> Double in
                 return groupTotal + (modifier.isSelected ? modifier.price * Double(modifier.quantity) : 0.0)
             }
         }
         
-        self.addToCartButton.setTitle(String(format: "Add To Cart - £ %.2f", (self.price * Double(self.stepperView.value)) + (total * Double(self.stepperView.value))), for: .normal)
+        self.addToCartButton.setTitle(String(format: "Add To Cart - £ %.2f", (price * Double(self.stepperView.value)) + (total * Double(self.stepperView.value))), for: .normal)
         
         return total
     }
@@ -188,7 +202,7 @@ extension ProductModfiersViewController: ProductModifierCellDelegate {
         } else {
             group.unselectAllModifiersForSingleSelection()
             
-            if group.selectedModifiersQuantity < group.max {
+            if group.max <= 1 || group.selectedModifiersQuantity < group.max {
                 modifier.isSelected = true
                 modifier.quantity = 1
             }
@@ -231,7 +245,7 @@ extension ProductModfiersViewController {
         
         let params: [String : Any] = ["type" : self.type,
                                       "establishment_id" : self.establishmentId,
-                                      "product_id" : self.productId]
+                                      "product_id" : self.productInfo.id]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathModifierGroups, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
@@ -270,28 +284,41 @@ extension ProductModfiersViewController {
             return groupItems + selectedModifiers.map({ ["id" : $0.id , "quantity" : $0.quantity] })
         }
         
-//        var selectedModifiersDict: [String : Any] = [:]
-//        for (index, item) in selectedModifier.enumerated() {
-//            selectedModifiersDict["\(index)"] = item
-//        }
-        
-        debugPrint("selected modifiers: \(selectedModifier)")
-        
-        let params: [String : Any] = ["id" : self.productId,
+        var params: [String : Any] = ["id" : self.productInfo.id,
                                       "quantity" : self.stepperView.value,
                                       "establishment_id" : self.establishmentId,
                                       "modifier_details" : selectedModifier]
+        
+        if let cartItemId = self.cartItemId {
+            params["cart_item_id"] = cartItemId
+        }
         
         self.addToCartButton.showLoader()
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post, encoding: JSONEncoding.default) { (response, serverError, error) in
             
+            let product = try! Utility.barCodeDataStack.fetchOne(From<Product>().where(\.id == self.productInfo.id))
+            let previousQuantity = self.productInfo.quantity
+            
             self.addToCartButton.hideLoader()
             
-//            defer {
-//                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: self.bar.id.value)
-//                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
-//            }
+            defer {
+                if self.isUpdating {
+                    let object = (itemId: self.productInfo.id,
+                                  newQuantity: previousQuantity + (self.stepperView.value - self.defaultQuantity),
+                                  oldQuantity: previousQuantity,
+                                  barId: self.establishmentId,
+                                  controller: self)
+                    NotificationCenter.default.post(name: notificationNameMyCartUpdated, object: object, userInfo: nil)
+                } else if let product = product {
+                    let productCartInfo: ProductCartUpdatedObject = (product: product,
+                                                                     newQuantity: self.stepperView.value + previousQuantity,
+                                                                     previousQuantity: previousQuantity,
+                                                                     barId: self.establishmentId)
+                    NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: productCartInfo)
+                }
+                
+            }
             
             guard error == nil else {
                 KVNProgress.showError(withStatus: error!.localizedDescription)
@@ -303,10 +330,17 @@ extension ProductModfiersViewController {
                 return
             }
             
-//            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-//                let editedFood = transaction.edit(food)
-//                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
-//            })
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                if let product = product, let editedProduct = transaction.edit(product) {
+                    if self.isUpdating {
+                        editedProduct.quantity.value += self.stepperView.value - self.defaultQuantity
+                    } else {
+                        editedProduct.quantity.value += self.stepperView.value
+                    }
+                }
+            })
+            
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }

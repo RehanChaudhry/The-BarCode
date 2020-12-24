@@ -29,6 +29,11 @@ class ProductModifier: Mappable {
         
         self.name <- map["name"]
         self.price <- map["price"]
+        
+        if let quantity = map.JSON["quantity"] as? Int  {
+            self.quantity = quantity
+            self.isSelected = quantity > 0
+        }
     }
     
 }

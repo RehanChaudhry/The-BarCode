@@ -17,7 +17,7 @@ import FirebaseAnalytics
 import KVNProgress
 
 protocol FoodMenuViewControllerDelegate: class {
-    func foodMenuViewController(controller: FoodMenuViewController, didSelect food: Food)
+    func foodMenuViewController(controller: FoodMenuViewController, didSelect product: Product)
 }
 
 class FoodMenuViewController: UIViewController {
@@ -26,7 +26,7 @@ class FoodMenuViewController: UIViewController {
     
     weak var delegate: FoodMenuViewControllerDelegate!
     
-    var segments: [FoodMenuSegment] = []
+    var segments: [ProductMenuSegment] = []
 //    var foods: [Food] = []
     var bar : Bar!
     
@@ -41,7 +41,7 @@ class FoodMenuViewController: UIViewController {
         self.setUpStatefulTableView()
         self.reset()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(foodCartUpdatedNotification(notification:)), name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
     }
     
@@ -51,7 +51,7 @@ class FoodMenuViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: notificationNameFoodCartUpdated, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.removeObserver(self, name: notificationNameMyCartUpdated, object: nil)
     }
     
@@ -83,8 +83,8 @@ class FoodMenuViewController: UIViewController {
         let tableHeader = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 8.0))
         self.statefulTableView.innerTable.tableHeaderView = tableHeader
         
-        self.statefulTableView.innerTable.register(headerFooterViewType: FoodMenuHeaderView.self)
-        self.statefulTableView.innerTable.register(cellType: FoodMenuCell.self)
+        self.statefulTableView.innerTable.register(headerFooterViewType: ProductMenuHeaderView.self)
+        self.statefulTableView.innerTable.register(cellType: ProductMenuCell.self)
         self.statefulTableView.innerTable.delegate = self
         self.statefulTableView.innerTable.dataSource = self
         self.statefulTableView.statefulDelegate = self
@@ -110,7 +110,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(FoodMenuHeaderView.self)
+        let headerView = tableView.dequeueReusableHeaderFooterView(ProductMenuHeaderView.self)
         headerView?.setupHeader(title: self.segments[section].name, isExpanded: self.segments[section].isExpanded)
         headerView?.delegate = self
         headerView?.section = section
@@ -123,14 +123,14 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let segment = self.segments[section]
-        return segment.isExpanded ? segment.foods.count : 0
+        return segment.isExpanded ? segment.products.count : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: FoodMenuCell.self)
+        let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
         
         let segment = self.segments[indexPath.section]
-        cell.setupCellForFood(food: segment.foods[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
+        cell.setupCell(product: segment.products[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
         
         cell.delegate = self
         
@@ -140,21 +140,21 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let segment = self.segments[indexPath.section]
-        let food = segment.foods[indexPath.row]
+        let product = segment.products[indexPath.row]
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
-        self.delegate.foodMenuViewController(controller: self, didSelect: food)
+        self.delegate.foodMenuViewController(controller: self, didSelect: product)
     }
 }
 
-//MARK: FoodMenuHeaderViewDelegate
-extension FoodMenuViewController: FoodMenuHeaderViewDelegate {
-    func foodMenuHeaderView(header: FoodMenuHeaderView, titleButtonTapped sender: UIButton) {
+//MARK: ProductMenuHeaderViewDelegate
+extension FoodMenuViewController: ProductMenuHeaderViewDelegate {
+    func foodMenuHeaderView(header: ProductMenuHeaderView, titleButtonTapped sender: UIButton) {
         let segment = self.segments[header.section]
         
         segment.isExpanded = !segment.isExpanded
         
         var indexPaths: [IndexPath] = []
-        for i in 0..<self.segments[header.section].foods.count {
+        for i in 0..<self.segments[header.section].products.count {
             let indexPath = IndexPath(row: i, section: header.section)
             indexPaths.append(indexPath)
         }
@@ -169,38 +169,39 @@ extension FoodMenuViewController: FoodMenuHeaderViewDelegate {
     }
 }
 
-//MARK: FoodMenuCellDelegate
-extension FoodMenuViewController: FoodMenuCellDelegate {
-    func foodMenuCell(cell: FoodMenuCell, removeFromCartButtonTapped sender: UIButton) {
+//MARK: ProductMenuCellDelegate
+extension FoodMenuViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
         
-        let model = self.segments[indexPath.section].foods[indexPath.row]
-        self.updateCart(food: model, shouldAdd: false)
+        let model = self.segments[indexPath.section].products[indexPath.row]
+        self.updateCart(product: model, shouldAdd: false)
     }
     
-    func foodMenuCell(cell: FoodMenuCell, addToCartButtonTapped sender: UIButton) {
+    func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
         }
         
-        let product = self.segments[indexPath.section].foods[indexPath.row]
+        let product = self.segments[indexPath.section].products[indexPath.row]
         
         if product.haveModifiers.value {
             let productModifiersNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "ProductModifiersNavigation") as! UINavigationController)
             productModifiersNavigation.modalPresentationStyle = .fullScreen
             
             let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
-            productModifiersController.productId = product.id.value
-            productModifiersController.price = Double(product.price.value) ?? 0.0
-            productModifiersController.productName = product.name.value
+            productModifiersController.productInfo = (id: product.id.value,
+                                                      name: product.name.value,
+                                                      price: Double(product.price.value) ?? 0.0,
+                                                      quantity: product.quantity.value)
             productModifiersController.establishmentId = self.bar.id.value
             productModifiersController.type = self.bar.menuTypeRaw.value
             
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
-            self.updateCart(food: product, shouldAdd: true)
+            self.updateCart(product: product, shouldAdd: true)
         }
     }
 }
@@ -257,7 +258,7 @@ extension FoodMenuViewController {
                     }
                 })
                 
-                let segments = Mapper<FoodMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                let segments = Mapper<ProductMenuSegment>().mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
                 segments.first?.isExpanded = true
@@ -277,47 +278,15 @@ extension FoodMenuViewController {
         }
     }
     
-    func updateCart(food: Food, shouldAdd: Bool) {
+    func updateCart(product: Product, shouldAdd: Bool) {
         
-        var params: [String : Any] = ["id" : food.id.value,
-                                      "establishment_id" : self.bar.id.value]
-        if shouldAdd {
-            food.isAddingToCart = true
-            params["quantity"] = food.quantity.value + 1
-        } else {
-            food.isRemovingFromCart = true
-            params["quantity"] = 0
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
+            if let error = error {
+                KVNProgress.showError(withStatus: error.localizedDescription)
+            }
         }
         
         self.statefulTableView.innerTable.reloadData()
-        
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = food.quantity.value
-            
-            defer {
-                food.isAddingToCart = false
-                food.isRemovingFromCart = false
-
-                let foodCartInfo: FoodCartUpdatedObject = (food: food, previousQuantity: previousQuantity, barId: self.bar.id.value)
-                NotificationCenter.default.post(name: notificationNameFoodCartUpdated, object: foodCartInfo)
-            }
-            
-            guard error == nil else {
-                KVNProgress.showError(withStatus: error!.localizedDescription)
-                return
-            }
-            
-            guard serverError == nil else {
-                KVNProgress.showError(withStatus: serverError!.detail)
-                return
-            }
-            
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedFood = transaction.edit(food)
-                editedFood?.quantity.value = shouldAdd ? food.quantity.value + 1 : 0
-            })
-        }
     }
 }
 
@@ -420,7 +389,7 @@ extension FoodMenuViewController: StatefulTableDelegate {
 
 //MARK: Notification Methods
 extension FoodMenuViewController {
-    @objc func foodCartUpdatedNotification(notification: Notification) {
+    @objc func productCartUpdatedNotification(notification: Notification) {
         self.statefulTableView.innerTable.reloadData()
     }
     
