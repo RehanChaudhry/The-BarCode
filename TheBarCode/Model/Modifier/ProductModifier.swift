@@ -20,6 +20,12 @@ class ProductModifier: Mappable {
     
     var isSelected: Bool = false
     
+    var total: Double {
+        get {
+            return Double(quantity) * price
+        }
+    }
+    
     required init?(map: Map) {
         
     }

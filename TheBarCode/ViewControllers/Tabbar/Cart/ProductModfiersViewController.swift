@@ -74,9 +74,7 @@ class ProductModfiersViewController: UIViewController {
         self.stepperView.delegate = self
         
         //if user is coming from cart the modifiers will come from the cart
-        if !self.isUpdating {
-            self.getModifiers()
-        }
+        self.getModifiers()
         
         self.calculateTotal()
     }
@@ -243,9 +241,13 @@ extension ProductModfiersViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        let params: [String : Any] = ["type" : self.type,
+        var params: [String : Any] = ["type" : self.type,
                                       "establishment_id" : self.establishmentId,
                                       "product_id" : self.productInfo.id]
+        if let cartItemId = self.cartItemId {
+            params["cart_item_id"] = cartItemId
+        }
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathModifierGroups, method: .get) { (response, serverError, error) in
             
             guard error == nil else {
@@ -265,6 +267,7 @@ extension ProductModfiersViewController {
                 self.groups = Mapper<ProductModifierGroup>().mapArray(JSONArray: responseGroups)
                 
                 self.tableView.reloadData()
+                self.calculateTotal()
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
@@ -277,7 +280,6 @@ extension ProductModfiersViewController {
     }
     
     func updateCart() {
-        
         
         let selectedModifier = self.groups.reduce([]) { (groupItems, group) -> [[String : Any]] in
             let selectedModifiers = group.modifiers.filter({$0.isSelected})
@@ -295,7 +297,11 @@ extension ProductModfiersViewController {
         
         self.addToCartButton.showLoader()
         
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post, encoding: JSONEncoding.default) { (response, serverError, error) in
+            
+            UIApplication.shared.endIgnoringInteractionEvents()
             
             let product = try! Utility.barCodeDataStack.fetchOne(From<Product>().where(\.id == self.productInfo.id))
             let previousQuantity = self.productInfo.quantity

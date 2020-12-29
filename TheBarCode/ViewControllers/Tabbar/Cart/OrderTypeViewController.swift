@@ -81,7 +81,12 @@ class OrderTypeViewController: UIViewController {
             self.getAddress()
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+    }
 
     //MARK: My Methods
     func setUpStatefulTableView() {
@@ -116,9 +121,8 @@ class OrderTypeViewController: UIViewController {
         let barInfo = BarInfo(barName: self.order.barName, orderType: self.order.orderType)
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
-
-        let orderProductsSection = OrderProductsInfoSection(items: self.order.orderItems)
-        self.viewModels.append(orderProductsSection)
+        
+        self.viewModels.append(contentsOf: self.order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
@@ -168,7 +172,7 @@ class OrderTypeViewController: UIViewController {
     func getProductsTotalPrice() -> Double {
         
         let total: Double = self.order.orderItems.reduce(0.0) { (result, item) -> Double in
-            return result + (Double(item.quantity) * item.unitPrice)
+            return result + item.totalPrice
         }
 
         return total
@@ -445,8 +449,23 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderProductsInfoSection {
      
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderItem: section.items[indexPath.row], showSeparator: isLastCell)
-            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            
+            let isLastOrderItem = self.order.orderItems.last === section.item
+            
+            let item = section.rows[indexPath.row]
+            if let item = item as? OrderItem {
+                let isFirstOrderItem = self.order.orderItems.first === section.item
+                cell.setupCell(orderItem: item,
+                               showSeparator: (isLastOrderItem && !section.isExpanded),
+                               isExpanded: section.isExpanded,
+                               hasSelectedModifiers: section.isExpandable)
+                cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
+            } else if let item = item as? ProductModifier {
+                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell))
+                cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
+                return cell
+            }
+            
             return cell
 
         } else if let section = viewModel as? OrderDiscountSection {
@@ -513,7 +532,14 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
-        if let _ = self.viewModels[indexPath.section] as? OrderDeliveryAddressSection {
+        let viewModel = self.viewModels[indexPath.section]
+        
+        if let viewModel = viewModel as? OrderProductsInfoSection,
+            viewModel.isExpandable,
+            let _ = viewModel.rows[indexPath.row] as? OrderItem {
+            viewModel.isExpanded = !viewModel.isExpanded
+            self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        } else if let _ = viewModel as? OrderDeliveryAddressSection {
             let addressController = (self.storyboard!.instantiateViewController(withIdentifier: "AddressesViewController") as! AddressesViewController)
             addressController.isSelectingAddress = true
             addressController.shouldShowCrossIcon = false

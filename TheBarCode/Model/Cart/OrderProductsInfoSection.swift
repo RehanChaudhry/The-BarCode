@@ -21,16 +21,35 @@ class OrderProductsInfoSection: OrderViewModel {
     }
     
     var rowCount: Int {
-        return self.items.count
+        return self.isExpanded ? self.rows.count : 1
     }
     
     var rowHeight: CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    var items: [OrderItem]
+    var rows: [Any] = []
     
-    init(items: [OrderItem]) {
-        self.items = items
+    var selectedModifiers: [ProductModifier] = []
+    
+    var item: OrderItem!
+    
+    var isExpanded: Bool = false
+    
+    var isExpandable: Bool {
+        get {
+            return self.rows.count > 1
+        }
+    }
+    
+    init(item: OrderItem) {
+        self.item = item
+        
+        if item.selectedProductModifiers.count > 0 {
+            self.selectedModifiers = item.selectedProductModifiers
+        }
+
+        self.rows.append(item)
+        self.rows.append(contentsOf: self.selectedModifiers)
     }
 }

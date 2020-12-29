@@ -121,12 +121,10 @@ class MyCartViewController: UIViewController {
         if let order = self.selectedOrder {
             self.barNameLabel.text = order.barName
             
-            var total: Double = 0.0
-              
-            for orderItem in order.orderItems {
-                total += (orderItem.unitPrice * Double(orderItem.quantity))
+            let total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
+                return item.totalPrice + result
             }
-                                        
+                                          
             let priceString = String(format: "%.2f", total)
             let buttonTitle = "Checkout - £ " + priceString
             
@@ -236,7 +234,7 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         
         let order = self.orders[indexPath.section]
         let orderItem = order.orderItems[indexPath.row]
-        if orderItem.modifierGroups.count > 0 {
+        if orderItem.haveModifiers {
             
             let quantity = order.orderItems.filter({$0.id == orderItem.id}).reduce(0) { (result, item) -> Int in
                 return result + item.quantity
@@ -246,7 +244,7 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
             productModifiersNavigation.modalPresentationStyle = .fullScreen
             
             let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
-            productModifiersController.groups = orderItem.modifierGroups
+//            productModifiersController.groups = orderItem.modifierGroups
             productModifiersController.isUpdating = true
             productModifiersController.cartItemId = orderItem.cartItemId
             productModifiersController.establishmentId = order.barId
@@ -378,11 +376,16 @@ extension MyCartViewController {
             params["quantity"] = 0
         }
         
+        if item.selectedProductModifiers.count > 0 {
+            let selectedModifiers = item.selectedProductModifiers.map({["id" : $0.id , "quantity" : $0.quantity]})
+            params["modifier_details"] = selectedModifiers
+        }
+        
         self.statefulTableView.innerTable.reloadData()
         self.calculateBill()
         
         self.inProgressRequestCount += 1
-        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post, encoding: JSONEncoding.default) { (response, serverError, error) in
             
             defer {
                 self.calculateBill()
@@ -464,6 +467,10 @@ extension MyCartViewController {
                 if let product = try! transaction.fetchOne(From<Product>(), Where(\Product.id == item.id)),
                     let edittedProduct = transaction.edit(product) {
                     edittedProduct.quantity.value = newQuantity
+                    
+                    if newQuantity == 0 {
+                        edittedProduct.cartItemId.value = nil
+                    }
                 }
             })
             

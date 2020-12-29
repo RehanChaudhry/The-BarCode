@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,27 +24,36 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bn1-N7-We2">
                         <rect key="frame" x="16" y="0.0" width="382" height="30"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 x ProductName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-Vp-YTD">
-                                <rect key="frame" x="12" y="8" width="107" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 x ProductName" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa1-Vp-YTD">
+                                <rect key="frame" x="34" y="8" width="107" height="14"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCv-De-lLr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="2.22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCv-De-lLr">
                                 <rect key="frame" x="342" y="8" width="28" height="17"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accordion" translatesAutoresizingMaskIntoConstraints="NO" id="4g9-VP-1zg">
+                                <rect key="frame" x="12" y="10" width="14" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="BRz-iP-zab"/>
+                                    <constraint firstAttribute="width" constant="14" id="Ccs-aL-upK"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="DCv-De-lLr" firstAttribute="top" secondItem="xa1-Vp-YTD" secondAttribute="top" id="3FY-lQ-IqM"/>
+                            <constraint firstItem="4g9-VP-1zg" firstAttribute="leading" secondItem="bn1-N7-We2" secondAttribute="leading" constant="12" id="IrL-8F-oNL"/>
                             <constraint firstItem="DCv-De-lLr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xa1-Vp-YTD" secondAttribute="trailing" constant="8" id="Vsm-BP-Xqx"/>
                             <constraint firstAttribute="bottom" secondItem="xa1-Vp-YTD" secondAttribute="bottom" constant="8" id="hNi-Pq-Nwu"/>
                             <constraint firstAttribute="trailing" secondItem="DCv-De-lLr" secondAttribute="trailing" constant="12" id="naT-Ec-NRM"/>
-                            <constraint firstItem="xa1-Vp-YTD" firstAttribute="leading" secondItem="bn1-N7-We2" secondAttribute="leading" constant="12" id="oYg-N6-l03"/>
                             <constraint firstItem="xa1-Vp-YTD" firstAttribute="top" secondItem="bn1-N7-We2" secondAttribute="top" constant="8" id="tKI-ox-Byg"/>
+                            <constraint firstItem="xa1-Vp-YTD" firstAttribute="leading" secondItem="4g9-VP-1zg" secondAttribute="trailing" constant="8" id="zKX-tK-sPB"/>
+                            <constraint firstItem="4g9-VP-1zg" firstAttribute="top" secondItem="xa1-Vp-YTD" secondAttribute="top" constant="2" id="zMn-Pu-S0p"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -59,12 +68,19 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="bottomMargin" destination="hNi-Pq-Nwu" id="E4z-gu-bhZ"/>
+                <outlet property="iconImageView" destination="4g9-VP-1zg" id="Yxd-O8-mOD"/>
+                <outlet property="iconImageWidth" destination="Ccs-aL-upK" id="7kr-KV-44X"/>
+                <outlet property="labelLeading" destination="zKX-tK-sPB" id="opl-hP-im1"/>
+                <outlet property="leadingMargin" destination="IrL-8F-oNL" id="ADg-fQ-oIi"/>
                 <outlet property="leftLabel" destination="xa1-Vp-YTD" id="uAj-3p-8cp"/>
                 <outlet property="mainView" destination="bn1-N7-We2" id="a2c-zY-tTA"/>
                 <outlet property="rightLabel" destination="DCv-De-lLr" id="ZeV-wO-sfG"/>
                 <outlet property="topMargin" destination="tKI-ox-Byg" id="pVC-CY-76Q"/>
             </connections>
-            <point key="canvasLocation" x="-181" y="-70"/>
+            <point key="canvasLocation" x="-181.15942028985509" y="-70.3125"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_accordion" width="12" height="8"/>
+    </resources>
 </document>

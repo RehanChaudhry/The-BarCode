@@ -147,11 +147,10 @@ class SplitBillScannerViewController: UIViewController {
         let barInfoSection = BarInfoSection(items: [barInfo])
         self.viewModels.append(barInfoSection)
 
-        let orderProductsSection = OrderProductsInfoSection(items: order.orderItems)
-        self.viewModels.append(orderProductsSection)
+        self.viewModels.append(contentsOf: order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
         
         let total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
-            return result + (Double(item.quantity) * item.unitPrice)
+            return result + item.totalPrice
         }
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total)
@@ -347,8 +346,23 @@ extension SplitBillScannerViewController: UITableViewDataSource, UITableViewDele
         } else if let section = viewModel as? OrderProductsInfoSection {
      
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderItem: section.items[indexPath.row], showSeparator: isLastCell)
-            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            
+            let isLastOrderItem = self.order?.orderItems.last === section.item
+            
+            let item = section.rows[indexPath.row]
+            if let item = item as? OrderItem {
+                let isFirstOrderItem = item === self.order?.orderItems.first
+                cell.setupCell(orderItem: item,
+                               showSeparator: (isLastOrderItem && !section.isExpanded),
+                               isExpanded: section.isExpanded,
+                               hasSelectedModifiers: section.isExpandable)
+                cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
+            } else if let item = item as? ProductModifier {
+                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell))
+                cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
+                return cell
+            }
+            
             return cell
 
         } else if let section = viewModel as? OrderDiscountSection {
@@ -382,6 +396,14 @@ extension SplitBillScannerViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: false)
         
+        let viewModel = self.viewModels[indexPath.section]
+        
+        if let viewModel = viewModel as? OrderProductsInfoSection,
+            viewModel.isExpandable,
+            let _ = viewModel.rows[indexPath.row] as? OrderItem {
+            viewModel.isExpanded = !viewModel.isExpanded
+            self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        }
     }
 }
 

@@ -16,12 +16,20 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var leftLabel: UILabel!
     @IBOutlet var rightLabel: UILabel!
     
+    @IBOutlet var iconImageView: UIImageView!
+    
+    @IBOutlet var iconImageWidth: NSLayoutConstraint!
+    @IBOutlet var labelLeading: NSLayoutConstraint!
+    @IBOutlet var leadingMargin: NSLayoutConstraint!
     @IBOutlet var topMargin: NSLayoutConstraint!
     @IBOutlet var bottomMargin: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.iconImageView.image = self.iconImageView.image?.withRenderingMode(.alwaysTemplate)
+        self.iconImageView.tintColor = UIColor.white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -34,6 +42,11 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
     func adjustMargins(adjustTop: Bool, adjustBottom: Bool) {
         self.topMargin.constant = adjustTop ? 16.0 : 8.0
         self.bottomMargin.constant = adjustBottom ? 16.0 : 8.0
+    }
+    
+    func adjustMargins(top: CGFloat, bottom: CGFloat) {
+        self.topMargin.constant = top
+        self.bottomMargin.constant = bottom
     }
     
     func showSeparator(show: Bool) {
@@ -55,14 +68,48 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.mainView.backgroundColor = UIColor.black
         self.leftLabel.textColor = UIColor.appBlueColor()
         self.rightLabel.textColor = UIColor.appBlueColor()
+        
+        self.leadingMargin.constant = 12.0
+        self.iconImageWidth.constant = 0.0
+        self.labelLeading.constant = 0.0
     }
     
     func setupMainViewAppearanceAsStandard() {
         self.mainView.backgroundColor = UIColor.appBgSecondaryGrayColor()
         self.leftLabel.textColor = UIColor.white
         self.rightLabel.textColor = UIColor.white
+        
+        self.leadingMargin.constant = 12.0
+        self.iconImageWidth.constant = 0.0
+        self.labelLeading.constant = 0.0
     }
-
+    
+    func setUpAppearanceForItem(isExapandable: Bool) {
+        self.mainView.backgroundColor = UIColor.appBgSecondaryGrayColor()
+        self.leftLabel.textColor = UIColor.white
+        self.rightLabel.textColor = UIColor.white
+        
+        if isExapandable {
+            self.leadingMargin.constant = 12.0
+            self.iconImageWidth.constant = 14.0
+            self.labelLeading.constant = 8.0
+        } else {
+            self.leadingMargin.constant = 12.0
+            self.iconImageWidth.constant = 0.0
+            self.labelLeading.constant = 0.0
+        }
+    }
+    
+    func setUpAppearanceForSubItem() {
+        self.mainView.backgroundColor = UIColor.appBgSecondaryGrayColor()
+        self.leftLabel.textColor = UIColor.white.withAlphaComponent(0.8)
+        self.rightLabel.textColor = UIColor.white.withAlphaComponent(0.8)
+        
+        self.leadingMargin.constant = 40.0
+        self.iconImageWidth.constant = 0.0
+        self.labelLeading.constant = 0.0
+    }
+    
     func setupCell(barInfo: BarInfo, showSeparator: Bool) {
         self.leftLabel.text = barInfo.barName + " - " + barInfo.orderType.displayableValue()
         self.leftLabel.font = UIFont.appBoldFontOf(size: 14)
@@ -76,11 +123,34 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
-    func setupCell(orderItem: OrderItem, showSeparator: Bool) {
-        self.leftLabel.text = "\(orderItem.quantity) x " + orderItem.name
+    func setupCell(orderItem: OrderItem, showSeparator: Bool, isExpanded: Bool, hasSelectedModifiers: Bool) {
+        
+        if hasSelectedModifiers {
+            self.iconImageView.image = UIImage(named: isExpanded ? "icon_accordion" : "icon_accordion_right")
+            self.leftLabel.text = "\(orderItem.quantity) x " + orderItem.name
+        } else {
+            self.leftLabel.text = "\(orderItem.quantity) x " + orderItem.name
+        }
+        
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
+        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.isHidden = false
+        self.rightLabel.font = UIFont.appBoldFontOf(size: 14.0)
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 0.0, mask: [])
+        
+        self.setUpAppearanceForItem(isExapandable: hasSelectedModifiers)
+    }
+    
+    func setupCell(modifier: ProductModifier, showSeparator: Bool) {
+        self.leftLabel.text = "\(modifier.quantity) x " + modifier.name
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
+        
+        let totalPriceString = String(format: "%.2f", modifier.total)
         self.rightLabel.text = "£ " + totalPriceString
         self.rightLabel.isHidden = false
         self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
@@ -89,7 +159,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         
         self.maskCorners(radius: 0.0, mask: [])
         
-        self.setupMainViewAppearanceAsStandard()
+        self.setUpAppearanceForSubItem()
     }
     
     func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool) {

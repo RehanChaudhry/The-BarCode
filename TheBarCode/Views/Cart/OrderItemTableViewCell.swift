@@ -42,7 +42,7 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
         
         self.nameLabel.text = orderItem.name
         
-        let priceString = String(format: "%.2f", orderItem.unitPrice)
+        let priceString = String(format: "%.2f", orderItem.totalUnitPrice)
         self.unitPriceLabel.text = "x £ " + priceString
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
