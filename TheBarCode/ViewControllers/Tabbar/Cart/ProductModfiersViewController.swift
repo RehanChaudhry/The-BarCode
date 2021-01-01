@@ -11,6 +11,7 @@ import ObjectMapper
 import KVNProgress
 import Alamofire
 import CoreStore
+import KVNProgress
 
 class ProductModfiersViewController: UIViewController {
     
@@ -49,10 +50,8 @@ class ProductModfiersViewController: UIViewController {
         
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
           
-        let price = self.productInfo.price
-        
         self.titleLabel.text = self.productInfo.name
-        self.subTitleLabel.text = price > 0.0 ? String(format: "£ %.2f", price) : ""
+        self.subTitleLabel.text = self.productInfo.price > 0.0 ? String(format: "£ %.2f", self.productInfo.price) : ""
         
         self.tableView.tableFooterView = UIView()
         self.tableView.register(cellType: ProductModifierCell.self)
@@ -80,6 +79,31 @@ class ProductModfiersViewController: UIViewController {
     }
     
     //MARK: My Methods
+    /*
+    func setupProductPrice() {
+        if self.productInfo.price > 0.0 {
+            self.subTitleLabel.text = String(format: "£ %.2f", self.productInfo.price)
+        } else if self.productInfo.minPrice > 0.0 {
+            self.subTitleLabel.text = String(format: "Start Off £ %.2f", self.productInfo.minPrice)
+        } else {
+            self.subTitleLabel.text = ""
+        }
+    }
+    
+    func findMinimumPriceIfNeeded() {
+        if self.isUpdating {
+            let requiredGroups = self.groups.filter({ $0.isRequired })
+            let productModifiers = requiredGroups.reduce([]) { (result, group) -> [ProductModifier] in
+                return result + group.modifiers
+            }
+            
+            let minPriceModifier = productModifiers.min(by: { $0.price < $1.price })
+                        
+            let minPrice = minPriceModifier?.price ?? Double(0.0)
+            self.productInfo.minPrice = minPrice
+        }
+    }*/
+    
     @discardableResult func calculateTotal() -> Double {
         let price = self.productInfo.price
         
@@ -119,6 +143,12 @@ class ProductModfiersViewController: UIViewController {
     @IBAction func addToCartButtonTapped(sender: UIButton) {
         let validationInfo = self.isDataValid()
         if validationInfo.isValid {
+            
+            guard self.calculateTotal() > 0.0 else {
+                KVNProgress.showError(withStatus: "Total price must be greater than 0")
+                return
+            }
+            
             self.updateCart()
         } else if let section = validationInfo.section {
             let indexPath = IndexPath(row: NSNotFound, section: section)
@@ -268,6 +298,8 @@ extension ProductModfiersViewController {
                 
                 self.tableView.reloadData()
                 self.calculateTotal()
+//                self.findMinimumPriceIfNeeded()
+//                self.setupProductPrice()
                 
                 self.statefulView.isHidden = true
                 self.statefulView.showNothing()
@@ -332,7 +364,11 @@ extension ProductModfiersViewController {
             }
             
             guard serverError == nil else {
-                KVNProgress.showError(withStatus: serverError!.detail)
+                if serverError!.detail.count > 0 {
+                    KVNProgress.showError(withStatus: serverError!.detail)
+                } else {
+                    KVNProgress.showError(withStatus: serverError!.nsError().localizedDescription)
+                }
                 return
             }
             

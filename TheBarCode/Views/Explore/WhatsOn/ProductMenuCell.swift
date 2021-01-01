@@ -34,6 +34,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     @IBOutlet var cartIconContainerWidth: NSLayoutConstraint!
     @IBOutlet var priceLabelLeft: NSLayoutConstraint!
+    @IBOutlet var priceLabelRight: NSLayoutConstraint!
     
     @IBOutlet var addItemActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var addItemButton: UIButton!
@@ -42,6 +43,13 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var removeItemButton: UIButton!
     
     weak var delegate: ProductMenuCellDelegate!
+    
+    enum CartIconType: String {
+        case none = "none",
+        priceWithCartIcon = "priceWithCartIcon",
+        priceWithOutCartIcon = "withOutCartIcon",
+        cartIconOnly = "cartIconOnly"
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -74,14 +82,8 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.detailLabelTop.constant = 0.0
         }
         
-        let price = Double(product.price.value) ?? 0.0
-        let priceString = String(format: "%.2f", price)
-        self.priceLabel.text = "£ " + priceString
+        self.handlePrice(product: product, isInAppPaymentOn: isInAppPaymentOn)
 
-        self.handlePrice(price: price)
-        
-        self.shouldShowCartIcon(show: isInAppPaymentOn)
-        
         self.removeItemButton.isHidden = product.quantity.value == 0
         self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
         
@@ -101,18 +103,23 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.handleRemoveFromCart(isRemoving: product.isRemovingFromCart)
     }
     
-    func handlePrice(price: Double) {
-        if price <= 0.0 {
-            self.priceContainerTop.constant = 0.0
-            self.priceContainerHeight.constant = 0.0
-            
-            self.priceContainer.isHidden = true
+    func handlePrice(product: Product, isInAppPaymentOn: Bool) {
+        
+        let price = Double(product.price.value) ?? 0.0
+        
+        if isInAppPaymentOn {
+            if product.haveModifiers.value {
+                self.priceLabel.text = price > 0 ? "£ " + String(format: "%.2f", price) : ""
+                self.setupCartIcon(type: price > 0 ? .priceWithCartIcon : .cartIconOnly)
+            } else {
+                self.priceLabel.text = "£ " + String(format: "%.2f", price)
+                self.setupCartIcon(type: price > 0 ? .priceWithCartIcon : .none)
+            }
         } else {
-            self.priceContainerTop.constant = 8.0
-            self.priceContainerHeight.constant = 28.0
-            
-            self.priceContainer.isHidden = false
+            self.priceLabel.text = "£ " + String(format: "%.2f", price)
+            self.setupCartIcon(type: price > 0 ? .priceWithOutCartIcon : .none)
         }
+        
     }
     
     func handleAddingToCart(isAdding: Bool) {
@@ -135,16 +142,49 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.removeItemButton.isUserInteractionEnabled = enable
         self.addItemButton.isUserInteractionEnabled = enable
     }
-    
-    func shouldShowCartIcon(show: Bool) {
-        if show {
+        
+    func setupCartIcon(type: CartIconType) {
+        switch type {
+        case .none:
+            self.cartIconContainerWidth.constant = 0.0
+            self.priceLabelLeft.constant = 0.0
+            self.priceLabelRight.constant = 0.0
+            
+            self.priceContainerTop.constant = 0.0
+            self.priceContainerHeight.constant = 0.0
+            
+            self.cartIconContainer.isHidden = true
+            self.priceContainer.isHidden = true
+        case .cartIconOnly:
+            self.cartIconContainerWidth.constant = 38.0
+            self.priceLabelLeft.constant = 0.0
+            self.priceLabelRight.constant = 0.0
+            
+            self.priceContainerTop.constant = 8.0
+            self.priceContainerHeight.constant = 28.0
+            
             self.cartIconContainer.isHidden = false
+            self.priceContainer.isHidden = false
+        case .priceWithCartIcon:
             self.cartIconContainerWidth.constant = 38.0
             self.priceLabelLeft.constant = 8.0
-        } else {
+            self.priceLabelRight.constant = 12.0
+            
+            self.priceContainerTop.constant = 8.0
+            self.priceContainerHeight.constant = 28.0
+            
+            self.cartIconContainer.isHidden = false
+            self.priceContainer.isHidden = false
+        case .priceWithOutCartIcon:
             self.cartIconContainerWidth.constant = 0.0
-            self.cartIconContainer.isHidden = true
             self.priceLabelLeft.constant = 12.0
+            self.priceLabelRight.constant = 12.0
+            
+            self.priceContainerTop.constant = 8.0
+            self.priceContainerHeight.constant = 28.0
+            
+            self.cartIconContainer.isHidden = true
+            self.priceContainer.isHidden = false
         }
     }
     

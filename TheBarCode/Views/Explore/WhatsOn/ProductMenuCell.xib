@@ -164,6 +164,7 @@
                 <outlet property="priceContainerTop" destination="sb5-St-gbl" id="JcZ-sL-oSZ"/>
                 <outlet property="priceLabel" destination="fBL-S5-DOc" id="n8J-gM-XyW"/>
                 <outlet property="priceLabelLeft" destination="ewB-Zc-Q1g" id="RUb-IK-sUz"/>
+                <outlet property="priceLabelRight" destination="48l-oF-Xhp" id="jWU-17-zj2"/>
                 <outlet property="removeItemActivityIndicator" destination="YRW-ik-7Li" id="cGp-SR-95n"/>
                 <outlet property="removeItemButton" destination="yIc-JX-wm2" id="xBG-Nd-Kci"/>
                 <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>

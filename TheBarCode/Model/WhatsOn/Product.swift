@@ -23,6 +23,8 @@ class Product: CoreStoreObject {
     var categoryName = Value.Required<String>("category_name", initial: "")
     
     var price = Value.Required<String>("price", initial: "")
+//    var minPrice = Value.Required<String>("min_price", initial: "")
+    
     var unit = Value.Required<String>("unit", initial: "")
     
     var quantity = Value.Required<Int>("quantity", initial: 0)
@@ -75,6 +77,12 @@ extension Product: ImportableUniqueObject {
         } else {
             self.price.value = ""
         }
+        
+//        if let _ = source["min_price"] {
+//            self.minPrice.value = "\(source["min_price"]!)"
+//        } else {
+//            self.minPrice.value = ""
+//        }
         
         if let categoryId = (source["category"] as? [String : Any])?["id"] {
             self.categoryId.value = "\(categoryId)"

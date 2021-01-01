@@ -776,7 +776,12 @@ extension Utility {
             }
             
             guard serverError == nil else {
-                completion(serverError!.nsError())
+                if serverError!.detail.count > 0 {
+                    let nsError = NSError(domain: "ServerError", code: serverError!.statusCode, userInfo: [NSLocalizedDescriptionKey : serverError!.detail])
+                    completion(nsError)
+                } else {
+                    completion(serverError!.nsError())
+                }
                 return
             }
             

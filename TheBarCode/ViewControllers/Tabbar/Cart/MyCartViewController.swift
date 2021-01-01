@@ -319,7 +319,12 @@ extension MyCartViewController {
             }
             
             guard serverError == nil else {
-                completion(serverError!.nsError())
+                if serverError!.detail.count > 0 {
+                    let nsError = NSError(domain: "ServerError", code: serverError!.statusCode, userInfo: [NSLocalizedDescriptionKey : serverError!.detail])
+                    completion(nsError)
+                } else {
+                    completion(serverError!.nsError())
+                }
                 return
             }
             
@@ -418,7 +423,11 @@ extension MyCartViewController {
                 resetStepperValue()
                 self.statefulTableView.innerTable.reloadData()
                 
-                KVNProgress.showError(withStatus: serverError!.detail)
+                if serverError!.detail.count > 0 {
+                    KVNProgress.showError(withStatus: serverError!.detail)
+                } else {
+                    KVNProgress.showError(withStatus: serverError!.nsError().localizedDescription)
+                }
                 return
             }
             
