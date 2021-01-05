@@ -21,7 +21,7 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var infoLabelBottom: NSLayoutConstraint!
     
-    var delegate: CartSectionHeaderViewDelegate!
+    weak var delegate: CartSectionHeaderViewDelegate!
     var barId: String!
     
     func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool) {

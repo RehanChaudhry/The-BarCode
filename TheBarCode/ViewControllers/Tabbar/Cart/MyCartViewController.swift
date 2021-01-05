@@ -332,7 +332,10 @@ extension MyCartViewController {
             if let responseArray = (responseDict?["data"] as? [[String : Any]]) {
                 
                 let context = OrderMappingContext(type: .cart)
-                let orders = Mapper<Order>(context: context).mapArray(JSONArray: responseArray)
+                var orders = Mapper<Order>(context: context).mapArray(JSONArray: responseArray)
+                
+                orders.removeAll(where: {$0.orderItems.count == 0})
+                
                 if self.orders.count == 0 && orders.count > 0 {
                     self.selectedOrder = orders.first
                 }
@@ -517,7 +520,7 @@ extension MyCartViewController: StatefulTableDelegate {
     }
     
     func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler) {
-        self.getCart(isRefreshing: false) { (error) in
+        self.getCart(isRefreshing: false) { [unowned self] (error) in
             handler(self.loadMore.canLoadMore(), error, error != nil)
         }
     }

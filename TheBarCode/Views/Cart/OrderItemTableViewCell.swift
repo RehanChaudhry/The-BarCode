@@ -25,7 +25,7 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var quantityUpdateIndicator: UIActivityIndicatorView!
     @IBOutlet var deleteIndicator: UIActivityIndicatorView!
     
-    var delegate: OrderItemTableViewCellDelegate!
+    weak var delegate: OrderItemTableViewCellDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()

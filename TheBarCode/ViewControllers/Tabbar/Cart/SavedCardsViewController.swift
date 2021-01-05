@@ -333,7 +333,10 @@ extension SavedCardsViewController {
                 
                 self.payButton.hideLoader()
                 
-                self.showAlertController(title: "", msg: (errors as? [NSError])?.first?.localizedDescription ?? "Unable to create token")
+                let errorReason = (errors as? [NSError])?.first?.localizedDescription ?? "Unable to create token"
+                let msg = "We are unable to charge your card at this time.\n\(errorReason)"
+                
+                self.showAlertController(title: "Payment Failed", msg: msg)
             }
         }
     }

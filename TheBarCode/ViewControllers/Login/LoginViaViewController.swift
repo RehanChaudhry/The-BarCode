@@ -319,18 +319,18 @@ class LoginViaViewController: UIViewController {
                 
                 if serverError!.statusCode == HTTPStatusCode.notFound.rawValue {
                     
-                    self.signUp(fullName: fullName,
-                                accessToken: accessToken,
-                                socialId: socialId,
-                                profileImage: "",
-                                provider: .apple)
-//                    let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
-//                    signUpViewController.appleParams = (socialId, accessToken)
-//                    signUpViewController.signupProvider = .apple
-//                    let _ = signUpViewController.view
-//                    self.navigationController?.pushViewController(signUpViewController, animated: true)
-//
-//                    signUpViewController.fullNameFieldView.textField.text = fullName
+//                    self.signUp(fullName: fullName,
+//                                accessToken: accessToken,
+//                                socialId: socialId,
+//                                profileImage: "",
+//                                provider: .apple)
+                    let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SIgnUpViewController") as! SIgnUpViewController
+                    signUpViewController.appleParams = (socialId, accessToken)
+                    signUpViewController.signupProvider = .apple
+                    let _ = signUpViewController.view
+                    self.navigationController?.pushViewController(signUpViewController, animated: true)
+
+                    signUpViewController.fullNameFieldView.textField.text = fullName
                 } else {
                     self.showAlertController(title: "Apple Login", msg: serverError!.errorMessages())
                 }
@@ -349,6 +349,8 @@ class LoginViaViewController: UIViewController {
                 if self.forSignUp {
                     Analytics.logEvent(createAccountViaFacebook, parameters:nil)
                 }
+                
+                Utility.shared.removeFullnameForAppleId()
                 
             } else {
                 let genericError = APIHelper.shared.getGenericError()
@@ -409,11 +411,14 @@ class LoginViaViewController: UIViewController {
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
                 self.userVerifiedSuccessfully(canShowReferral: true)
                 
+                if provider == .apple {
+                    Utility.shared.removeFullnameForAppleId()
+                }
+                
             } else {
                 self.showAlertController(title: "", msg: "Something went wrong!")
             }
         }
-        
     }
     
     func userVerifiedSuccessfully(canShowReferral: Bool) {
@@ -677,10 +682,9 @@ extension LoginViaViewController: ASAuthorizationControllerDelegate {
             }
             
             if fullName.count > 0 {
-                UserDefaults.standard.setValue(fullName, forKey: "appleIdFullName")
-                UserDefaults.standard.synchronize()
+                Utility.shared.saveFullnameForAppleId(fullName: fullName)
             } else {
-                if let name = UserDefaults.standard.string(forKey: "appleIdFullName") {
+                if let name = Utility.shared.getFullnameForAppleId() {
                     fullName = name
                 } else {
                     fullName = "Not Available"

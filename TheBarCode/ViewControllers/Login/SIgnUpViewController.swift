@@ -709,6 +709,10 @@ extension SIgnUpViewController {
                 APIHelper.shared.setUpOAuthHandler(accessToken: user.accessToken.value, refreshToken: user.refreshToken.value)
                 self.userVerifiedSuccessfully(canShowReferral: true)
                 
+                if self.signupProvider == .apple {
+                    Utility.shared.removeFullnameForAppleId()
+                }
+                
             } else {
                 var eventName = ""
                 if self.signupProvider == .email {

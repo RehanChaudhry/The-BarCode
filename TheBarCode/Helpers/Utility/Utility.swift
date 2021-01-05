@@ -122,6 +122,8 @@ let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 
 let tbcLogoUrl = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
 
+let keyChainServiceName = bundleId + ".keychainservice"
+
 enum EnvironmentType: String {
     case dev = "dev", stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
@@ -174,7 +176,6 @@ class Utility: NSObject {
     
     lazy var deviceId: String = {
         
-        let keyChainServiceName = bundleId + ".keychainservice"
         let keychainService = Keychain(service: keyChainServiceName)
         func setDeviceIdInKeychain() -> String {
             let deviceId = UUID().uuidString
@@ -201,6 +202,32 @@ class Utility: NSObject {
         }
         
     }()
+    
+    func saveFullnameForAppleId(fullName: String) {
+        let keychainService = Keychain(service: keyChainServiceName)
+        try? keychainService.set(fullName, key: "appleIdFullName")
+    }
+    
+    func getFullnameForAppleId() -> String? {
+        let keychainService = Keychain(service: keyChainServiceName)
+        
+        do {
+            guard let fullName = try keychainService.getString("appleIdFullName") else {
+                return UserDefaults.standard.string(forKey: "appleIdFullName")
+            }
+            
+            return fullName
+        } catch {
+            debugPrint("Unable to get the fullname from keychain")
+            return nil
+        }
+    }
+    
+    func removeFullnameForAppleId() {
+        let keychainService = Keychain(service: keyChainServiceName)
+        UserDefaults.standard.removeObject(forKey: "appleIdFullName")
+        try? keychainService.remove("appleIdFullName")
+    }
     
     func saveCurrentUser(userDict: [String : Any]) -> User {
         try! CoreStore.perform(synchronous: { (transaction) -> Void in
