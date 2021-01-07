@@ -113,9 +113,10 @@ class ProductModfiersViewController: UIViewController {
             }
         }
         
-        self.addToCartButton.setTitle(String(format: "Add To Cart - £ %.2f", (price * Double(self.stepperView.value)) + (total * Double(self.stepperView.value))), for: .normal)
+        let grandTotal = (price * Double(self.stepperView.value)) + (total * Double(self.stepperView.value))
+        self.addToCartButton.setTitle(String(format: "Add To Cart - £ %.2f", grandTotal), for: .normal)
         
-        return total
+        return grandTotal
     }
     
     func isDataValid() -> (isValid: Bool, section: Int?) {
