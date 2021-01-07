@@ -3242,7 +3242,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3269,7 +3269,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3412,7 +3412,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3443,7 +3443,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
