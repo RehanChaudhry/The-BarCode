@@ -20,7 +20,10 @@ enum BarType: String {
 }
 
 enum MenuType: String {
-    case barCode = "barcode", other = "other"
+    case barCode = "barcode",
+    deliverect = "deliverect",
+    squareup = "squareup",
+    other = "other"
 }
 
 class Explore: CoreStoreObject , ImportableUniqueObject {

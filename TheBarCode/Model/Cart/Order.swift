@@ -114,6 +114,8 @@ class Order: Mappable {
     
     var menuTypeRaw: String = MenuType.barCode.rawValue
     
+    var squareUpLocationId: String = ""
+    
     required init?(map: Map) {
         
     }
@@ -173,6 +175,7 @@ class Order: Mappable {
         self.menuTypeRaw <- map["epos_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
+        self.squareUpLocationId <- map["establishment.location_id"]
         
         self.updatedAtRaw <- map["updated_at.date"]
         

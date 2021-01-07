@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '11.0'
 use_frameworks!
 
 target 'TheBarCode' do
@@ -44,6 +44,9 @@ target 'TheBarCode' do
   pod 'MLLabel', '~> 1.10.5'
   
   pod 'RNCryptor', '~> 5.1.0'
+
+  pod 'SquareInAppPaymentsSDK', '~> 1.4.0'
+  pod 'SquareBuyerVerificationSDK', '~> 1.3.0'
 
   target 'TheBarCodeTests' do
     inherit! :search_paths

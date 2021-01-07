@@ -8,6 +8,8 @@
 
 import UIKit
 import ObjectMapper
+import SquareInAppPaymentsSDK
+import SquareBuyerVerificationSDK
 
 protocol AddCardViewControllerDelegate: class {
     func addCardViewController(controller: AddCardViewController, cardDidAdded card: CreditCard)
@@ -52,6 +54,13 @@ class AddCardViewController: UIViewController {
     @IBOutlet var spaceBarButton: UIBarButtonItem!
     @IBOutlet var doneBarButton: UIBarButtonItem!
     
+    @IBOutlet var separatorView: UIView!
+    
+    @IBOutlet var cardNoFieldContainerHeight: NSLayoutConstraint!
+    @IBOutlet var cvcFieldContainerHeight: NSLayoutConstraint!
+    @IBOutlet var expiryFieldContainerHeight: NSLayoutConstraint!
+    @IBOutlet var separatorBottom: NSLayoutConstraint!
+    
     lazy var countries: [Country] = {
         return Country.allCountries()
     }()
@@ -73,6 +82,14 @@ class AddCardViewController: UIViewController {
     
     weak var delegate: AddCardViewControllerDelegate?
     
+    var sqVerificationParams: (cardDetails: SQIPCardDetails, barId: String, locationId: String, completion: ((_ error: NSError?) -> Void))?
+    
+    var requireOnlyBillingInfo: Bool {
+        get {
+            return self.sqVerificationParams != nil
+        }
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -86,6 +103,28 @@ class AddCardViewController: UIViewController {
         self.countryField.inputView = self.fieldInputView
         
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
+        
+        if self.requireOnlyBillingInfo {
+            self.title = "Billing Details"
+            
+            self.separatorView.isHidden = true
+            
+            self.cardNoFieldContainerHeight.constant = 0.0
+            self.cvcFieldContainerHeight.constant = 0.0
+            self.expiryFieldContainerHeight.constant = 0.0
+            self.separatorBottom.constant = 0.0
+            
+            let postCode = self.sqVerificationParams!.cardDetails.card.postalCode ?? ""
+            self.postalCodeField.text = postCode
+            
+        } else {
+            self.title = "Add a Card"
+        }
+        
+    }
+    
+    deinit {
+        debugPrint("Add card view controller deinit called")
     }
     
     func handleExpirySelection(month: Month, year: String) {
@@ -104,36 +143,37 @@ class AddCardViewController: UIViewController {
         var isValid = true
         
         let worldpay = Worldpay.sharedInstance()!
-        
-        let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)
-        if !worldpay.validateCardNumberAdvanced(withCardNumber: cardNumber) {
-            isValid = false
-            self.cardValidationLabel.isHidden = false
-        }
-        
-        let year = Int32(self.selectedExpiry?.year.suffix(2) ?? "0")!
-        let month = Int32(self.selectedExpiry?.month.displayableValue().numeric ?? "0")!
-        if !worldpay.validateCardExpiry(withMonth: month, year: year) {
-            isValid = false
-            self.expiryValidationLabel.isHidden = false
-        }
-        
-        if worldpay.validateCardCVC(withNumber: self.cvcField.text!) {
-    
-            if cardNumber!.matchesRegex(regex: CreditCardType.amex.regex) {
-                if self.cvcField.text!.trimWhiteSpaces().count < 4 || self.cvcField.text!.trimWhiteSpaces().count > 4 {
+        if !self.requireOnlyBillingInfo {
+                let cardNumber = worldpay.stripCardNumber(withCardNumber: self.cardField.text!)
+                if !worldpay.validateCardNumberAdvanced(withCardNumber: cardNumber) {
+                    isValid = false
+                    self.cardValidationLabel.isHidden = false
+                }
+                
+                let year = Int32(self.selectedExpiry?.year.suffix(2) ?? "0")!
+                let month = Int32(self.selectedExpiry?.month.displayableValue().numeric ?? "0")!
+                if !worldpay.validateCardExpiry(withMonth: month, year: year) {
+                    isValid = false
+                    self.expiryValidationLabel.isHidden = false
+                }
+                
+                if worldpay.validateCardCVC(withNumber: self.cvcField.text!) {
+            
+                    if cardNumber!.matchesRegex(regex: CreditCardType.amex.regex) {
+                        if self.cvcField.text!.trimWhiteSpaces().count < 4 || self.cvcField.text!.trimWhiteSpaces().count > 4 {
+                            isValid = false
+                            self.cvcValidationLabel.isHidden = false
+                        }
+                    } else {
+                        if self.cvcField.text!.trimWhiteSpaces().count < 3 || self.cvcField.text!.trimWhiteSpaces().count > 3 {
+                            isValid = false
+                            self.cvcValidationLabel.isHidden = false
+                        }
+                    }
+                } else {
                     isValid = false
                     self.cvcValidationLabel.isHidden = false
                 }
-            } else {
-                if self.cvcField.text!.trimWhiteSpaces().count < 3 || self.cvcField.text!.trimWhiteSpaces().count > 3 {
-                    isValid = false
-                    self.cvcValidationLabel.isHidden = false
-                }
-            }
-        } else {
-            isValid = false
-            self.cvcValidationLabel.isHidden = false
         }
 
         if self.nameField.text?.trimWhiteSpaces().count == 0 || !worldpay.validateCardHolderName(withName: self.nameField.text!) {
@@ -169,16 +209,84 @@ class AddCardViewController: UIViewController {
         return isValid
     }
     
+    func makeVerificationParameters(paymentSourceID: String, locationId: String) -> SQIPVerificationParameters {
+        
+        let fullName = self.nameField.text!
+        var components = fullName.components(separatedBy: " ")
+        
+        var firstName = ""
+        var lastName = ""
+        
+        if components.count > 0 {
+            lastName = components.removeLast()
+            firstName = components.joined(separator: " ")
+        }
+        
+        let contact = SQIPContact()
+        contact.givenName = firstName
+        contact.familyName = lastName
+        contact.addressLines = [self.addressField.text!]
+        contact.city = self.cityField.text!
+        contact.country = self.selectedCountry!.code
+        contact.postalCode = self.postalCodeField.text!
+
+        return SQIPVerificationParameters(
+            paymentSourceID: paymentSourceID,
+            buyerAction: .store(),
+            locationID: locationId,
+            contact: contact
+        )
+    }
+    
     //MARK: IBActions
     @IBAction func closeBarButtonTapped(_ sender: UIBarButtonItem) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: {
+            let error = NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey : "Verification failed"])
+            self.sqVerificationParams?.completion(error)
+        })
     }
     
     @IBAction func addCardButtonTapped(sender: UIButton) {
         if self.validate() {
             self.view.endEditing(true)
             
-            self.addCard()
+            if self.requireOnlyBillingInfo {
+                
+                guard let verificationParams = self.sqVerificationParams else {
+                    self.showAlertController(title: "", msg: "Verification parameters missing")
+                    return
+                }
+                
+                self.addCardButton.showLoader()
+                self.view.isUserInteractionEnabled = false
+                
+                let params = self.makeVerificationParameters(paymentSourceID: verificationParams.cardDetails.nonce,
+                                                                         locationId: verificationParams.locationId)
+                SQIPBuyerVerificationSDK.shared.verify(with: params,
+                                                       theme: Utility.shared.makeSquareTheme(),
+                                                       viewController: self,
+                                                       success: { (detail) in
+                                                        
+                    self.addCard(cardDetails: verificationParams.cardDetails,
+                                 barId: verificationParams.barId,
+                                 cardPostCode: verificationParams.cardDetails.card.postalCode ?? "",
+                                 verificationToken: detail.verificationToken) { [unowned self] (error) in
+                                    
+                        self.addCardButton.hideLoader()
+                        self.view.isUserInteractionEnabled = true
+                        
+                        self.dismiss(animated: true) {
+                            verificationParams.completion(error)
+                        }
+                    }
+                }) { (error) in
+                    self.addCardButton.hideLoader()
+                    self.view.isUserInteractionEnabled = true
+                    verificationParams.completion(error as NSError)
+                }
+            } else {
+                self.addCard()
+            }
         }
     }
 
@@ -283,6 +391,54 @@ extension AddCardViewController {
                 self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
                 
                 self.dismiss(animated: true, completion: nil)
+            }
+            
+        }
+    }
+    
+    func addCard(cardDetails: SQIPCardDetails,
+                 barId: String,
+                 cardPostCode: String,
+                 verificationToken: String,
+                 completion: @escaping ((_ error: NSError?) -> Void)) {
+        
+        let brandType = CreditCardType.cardType(brand: cardDetails.card.brand)
+        
+        let params: [String : Any] = ["type" : brandType,
+                                      "nonce" : cardDetails.nonce,
+                                      "establishment_id" : barId,
+                                      "ending_in" : cardDetails.card.lastFourDigits,
+                                      "postcode" : self.postalCodeField.text!,
+                                      "city" : self.cityField.text!,
+                                      "country" : self.selectedCountry!.name,
+                                      "address" : self.addressField.text!,
+                                      "card_postcode" : cardPostCode,
+                                      "verification_token" : verificationToken,
+                                      "name" : self.nameField.text!]
+        
+        let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCard, method: .post) { (response, serverError, error) in
+
+            guard error == nil else {
+                completion(error! as NSError)
+                return
+            }
+            
+            guard serverError == nil else {
+                let nsError = NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey : serverError!.detail])
+                completion(nsError)
+                return
+            }
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let data = responseDict?["data"] as? [String : Any] {
+                
+                let card = Mapper<CreditCard>().map(JSON: data)!
+                self.delegate?.addCardViewController(controller: self, cardDidAdded: card)
+                
+                completion(nil)
+                
+            } else {
+                completion(APIHelper.shared.getGenericError())
             }
             
         }

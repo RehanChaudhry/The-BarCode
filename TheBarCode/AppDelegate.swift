@@ -16,6 +16,7 @@ import OneSignal
 import CoreStore
 import CoreLocation
 import BugfenderSDK
+import SquareInAppPaymentsSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -186,6 +187,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        wp?.clientKey = "T_C_bb4b4fc9-15c3-4f9a-9690-660bb4885afb"
         wp?.reusable = true
         wp?.validationType = WorldpayValidationTypeAdvanced
+        
+        SQIPInAppPaymentsSDK.squareApplicationID = Utility.shared.squareUpAppId()
         
         return true
     }

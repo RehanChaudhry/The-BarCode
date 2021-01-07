@@ -159,6 +159,8 @@ PODS:
     - SDWebImage/Core (= 4.4.2)
   - SDWebImage/Core (4.4.2)
   - SJSegmentedScrollView (1.3.9)
+  - SquareBuyerVerificationSDK (1.3.0)
+  - SquareInAppPaymentsSDK (1.4.0)
   - StatefulTableView (0.1.5)
   - SwiftyJSON (4.2.0)
   - TPKeyboardAvoiding (1.3.2)
@@ -193,6 +195,8 @@ DEPENDENCIES:
   - RNCryptor (~> 5.1.0)
   - SDWebImage (~> 4.4.2)
   - SJSegmentedScrollView (~> 1.3.9)
+  - SquareBuyerVerificationSDK (~> 1.3.0)
+  - SquareInAppPaymentsSDK (~> 1.4.0)
   - StatefulTableView (~> 0.1.5)
   - SwiftyJSON (~> 4.2.0)
   - TPKeyboardAvoiding (~> 1.3.2)
@@ -238,6 +242,8 @@ SPEC REPOS:
     - RNCryptor
     - SDWebImage
     - SJSegmentedScrollView
+    - SquareBuyerVerificationSDK
+    - SquareInAppPaymentsSDK
     - StatefulTableView
     - SwiftyJSON
     - TPKeyboardAvoiding
@@ -282,11 +288,13 @@ SPEC CHECKSUMS:
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SJSegmentedScrollView: 41dde7568372103e3526caa9de6914f9725256f7
+  SquareBuyerVerificationSDK: 6a73cc3b073d8e613cb1fe8643600ff9ac4d6373
+  SquareInAppPaymentsSDK: 6c3293e5600c121bbdc5499ffa3b3976e2cf0054
   StatefulTableView: 071f3f6f274d28cf84d4c669dea5fe9fb10b7d9e
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 02c8792f5ca15617b823cb3d891761130271bbba
+PODFILE CHECKSUM: e93b657876a55a2aed9f1c448362f4b4e049f2ab
 
 COCOAPODS: 1.10.0

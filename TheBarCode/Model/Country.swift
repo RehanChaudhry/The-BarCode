@@ -7,22 +7,25 @@
 //
 
 import UIKit
+import SquareBuyerVerificationSDK
 
 class Country: NSObject {
     
     var id: String
     var name: String
+    var code: SQIPCountry
     
-    init(id: String, name: String) {
+    init(id: String, name: String, code: SQIPCountry) {
         self.id = id
         self.name = name
+        self.code = code
     }
     
     static func allCountries() -> [Country] {
-        return [Country(id: "1", name: "England"),
-                Country(id: "2", name: "Scotland"),
-                Country(id: "3", name: "Wales"),
-                Country(id: "4", name: "Northern Ireland")]
+        return [Country(id: "1", name: "England", code: SQIPCountry.GB),
+                Country(id: "2", name: "Scotland", code: SQIPCountry.GB),
+                Country(id: "3", name: "Wales", code: SQIPCountry.GB),
+                Country(id: "4", name: "Northern Ireland", code: SQIPCountry.GB)]
     }
     
 }

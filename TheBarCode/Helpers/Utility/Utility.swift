@@ -15,6 +15,7 @@ import FirebaseDynamicLinks
 import FirebaseCrashlytics
 import OneSignal
 import RNCryptor
+import SquareInAppPaymentsSDK
 
 let bundleId = Bundle.main.bundleIdentifier!
 let androidPackageName = "com.milnesmayltd.thebarcode"
@@ -116,6 +117,8 @@ let oneSignalStaggingAppId = "87a21c8e-cfee-4b79-8eef-23e692c64eca"
 let oneSignalQAAppId = "5ce0f111-23bc-4aec-bc4e-b11bf065cfc8"
 let oneSignalProdAppId = "a314acb3-b5df-442d-820e-6cfc6731fc70"
 
+let squareUpAppIdSandbox = "sandbox-sq0idb-pb9LiBBq20hVo9pfOPaWKg"
+let squareUpAppIdProd = "sq0idp-cTxLyYykw0EuzZ48xgUFRg"
 
 let googleMapQAAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
 let googleMapProdAppId = "AIzaSyCOY0CYfKs3TIAGdtrlqTl6tuJrzOOvDe4"
@@ -603,6 +606,14 @@ class Utility: NSObject {
         }
     }
     
+    func squareUpAppId() -> String {
+        let currentEnvironment = EnvironmentType.current()
+        if currentEnvironment == .production {
+            return squareUpAppIdProd
+        } else {
+            return squareUpAppIdSandbox
+        }
+    }
     
     func getPinImage(offerType: StandardOfferType) -> UIImage {
         switch offerType {
@@ -764,6 +775,23 @@ extension Utility {
         let dataRaw = Data(base64Encoded: originalData)!
         
         return String(data: dataRaw, encoding: .utf8)!
+    }
+    
+    func makeSquareTheme() -> SQIPTheme {
+        let theme = SQIPTheme()
+        theme.errorColor = .red
+        theme.foregroundColor = UIColor.appBgGrayColor()
+        theme.tintColor = UIColor.appBlueColor()
+        theme.keyboardAppearance = .dark
+        theme.messageColor = UIColor.white
+        theme.font = UIFont.appRegularFontOf(size: 16.0)
+        theme.backgroundColor = UIColor.appCartUnSelectedColor()
+        theme.textColor = UIColor.white
+        theme.saveButtonFont = UIFont.appBoldFontOf(size: 16.0)
+        theme.saveButtonTextColor = UIColor.white
+        theme.saveButtonTitle = "Proceed"
+        
+        return theme
     }
 }
 

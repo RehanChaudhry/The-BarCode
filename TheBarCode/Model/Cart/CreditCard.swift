@@ -8,6 +8,7 @@
 
 import UIKit
 import ObjectMapper
+import SquareInAppPaymentsSDK
 
 enum CreditCardType: String {
     case visa = "visa",
@@ -157,6 +158,26 @@ enum CreditCardType: String {
         }
     }
     
+    static func cardType(brand: SQIPCardBrand) -> String {
+        switch brand {
+        case .visa:
+            return CreditCardType.typeForServer(raw: CreditCardType.visa.rawValue)
+        case .mastercard:
+            return CreditCardType.typeForServer(raw: CreditCardType.master.rawValue)
+        case .americanExpress:
+            return CreditCardType.typeForServer(raw: CreditCardType.amex.rawValue)
+        case .discover:
+            return CreditCardType.typeForServer(raw: CreditCardType.discover.rawValue)
+        case .discoverDiners:
+            return CreditCardType.typeForServer(raw: CreditCardType.dinners.rawValue)
+        case .JCB:
+            return CreditCardType.typeForServer(raw: CreditCardType.jcb.rawValue)
+        case .chinaUnionPay:
+            return CreditCardType.typeForServer(raw: CreditCardType.uniionPay.rawValue)
+        default:
+            return CreditCardType.typeForServer(raw: CreditCardType.unknown.rawValue)
+        }
+    }
     
 }
 

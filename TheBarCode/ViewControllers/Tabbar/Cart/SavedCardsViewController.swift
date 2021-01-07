@@ -11,6 +11,8 @@ import ObjectMapper
 import PureLayout
 import CoreStore
 import HTTPStatusCodes
+import SquareInAppPaymentsSDK
+import SquareBuyerVerificationSDK
 
 class SavedCardsViewController: UIViewController {
 
@@ -47,6 +49,16 @@ class SavedCardsViewController: UIViewController {
     var statefulView: LoadingAndErrorView!
     
     var useCredit: Bool = false
+    
+    var cardType: String {
+        get {
+            if self.order?.menuTypeRaw == MenuType.squareup.rawValue {
+                return "squareup"
+            } else {
+                return "worldpay"
+            }
+        }
+    }
     
     enum CardSectionType: Int {
         case info = 0, addCard = 1
@@ -144,18 +156,20 @@ class SavedCardsViewController: UIViewController {
         }
     }
     
+    func makeCardEntryViewController() -> SQIPCardEntryViewController {
+        let theme = Utility.shared.makeSquareTheme()
+        let cardEntryController = SQIPCardEntryViewController(theme: theme)
+        return cardEntryController
+    }
+    
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
         if let card = self.selectedCard {
-            
             self.generateTokenIfNeededAndCharge(card: card)
-            
         } else {
             self.showAlertController(title: "", msg: "Please select a card to proceed")
         }
     }
-    
-
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -213,7 +227,7 @@ extension SavedCardsViewController {
         self.statefulView.showLoading()
         self.statefulView.isHidden = false
         
-        var params: [String : Any] = [:]
+        var params: [String : Any] = ["card_type" : self.cardType]
         if let order = self.order {
             params["establishment_id"] = order.barId
         }
@@ -479,7 +493,6 @@ extension SavedCardsViewController {
                 self.showAlertController(title: "", msg: genericError.localizedDescription)
             }
         }
-        
     }
 }
 
@@ -505,13 +518,54 @@ extension SavedCardsViewController: CardInfoCellDelegate {
 //MARK: AddNewCardCellDelegate
 extension SavedCardsViewController: AddNewCardCellDelegate {
     func addNewCardCell(cell: AddNewCardCell, addNewCardButtonTapped sender: UIButton) {
+        
+        if self.order?.menuTypeRaw == MenuType.squareup.rawValue {
+            let vc = self.makeCardEntryViewController()
+            vc.delegate = self
+
+            let nc = UINavigationController(rootViewController: vc)
+            nc.modalPresentationStyle = .fullScreen
+            self.present(nc, animated: true, completion: nil)
+        } else {
+            let addCardNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "AddCardNavigation") as! UINavigationController)
+            addCardNavigation.modalPresentationStyle = .fullScreen
+            
+            let addCardController = addCardNavigation.viewControllers.first as! AddCardViewController
+            addCardController.delegate = self
+            
+            self.navigationController?.present(addCardNavigation, animated: true, completion: nil)
+        }
+    }
+}
+
+//MARK: SQIPCardEntryViewControllerDelegate
+extension SavedCardsViewController: SQIPCardEntryViewControllerDelegate {
+    func cardEntryViewController(_ cardEntryViewController: SQIPCardEntryViewController, didCompleteWith status: SQIPCardEntryCompletionStatus) {
+        cardEntryViewController.dismiss(animated: true, completion: nil)
+    }
+    
+    func cardEntryViewController(_ cardEntryViewController: SQIPCardEntryViewController, didObtain cardDetails: SQIPCardDetails, completionHandler: @escaping (Error?) -> Void) {
+        
+        guard let locationId = self.order?.squareUpLocationId, locationId.count > 0 else {
+            self.showAlertController(title: "", msg: "Location id is required for square up")
+            return
+        }
+        
+        guard let barId = self.order?.barId else {
+            let error = NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey : "Establishment id is required"])
+            completionHandler(error)
+            return
+        }
+        
         let addCardNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "AddCardNavigation") as! UINavigationController)
         addCardNavigation.modalPresentationStyle = .fullScreen
         
-        let addCardController = addCardNavigation.viewControllers.first as! AddCardViewController
+        let addCardController = (addCardNavigation.viewControllers.first as! AddCardViewController)
         addCardController.delegate = self
-        
-        self.navigationController?.present(addCardNavigation, animated: true, completion: nil)
+        addCardController.sqVerificationParams = (cardDetails: cardDetails, barId: barId, locationId: locationId, completion: { (verificationError) in
+            completionHandler(verificationError)
+        })
+        cardEntryViewController.present(addCardNavigation, animated: true, completion: nil)
     }
 }
 
