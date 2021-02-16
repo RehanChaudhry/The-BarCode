@@ -111,6 +111,9 @@ class MyCartViewController: UIViewController {
         
         self.selectedOrder = nil
         
+        self.checkOutButton.isUserInteractionEnabled = false
+        self.checkOutButton.updateColor(withGrey: true)
+        
         self.statefulTableView.canLoadMore = false
         self.statefulTableView.state = .idle
         self.statefulTableView.triggerInitialLoad()
@@ -455,12 +458,18 @@ extension MyCartViewController {
                     }
                     
                     //When deleting rows / section scrollview did scroll does not get called which prevents loading next page automatically
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [unowned self] in
-                        if !self.loadMore.canLoadMore() && self.orders.count == 0 {
-                            self.reset()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+                        
+                        guard self != nil else {
+                            debugPrint("preventing crash")
+                            return
+                        }
+                        
+                        if !self!.loadMore.canLoadMore() && self!.orders.count == 0 {
+                            self!.reset()
                         } else {
-                            self.scrollViewDidScroll(self.statefulTableView.innerTable)
-                            self.statefulTableView.innerTable.reloadData()
+                            self!.scrollViewDidScroll(self!.statefulTableView.innerTable)
+                            self!.statefulTableView.innerTable.reloadData()
                         }
                     }
                     

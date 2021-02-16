@@ -117,6 +117,8 @@ class AddCardViewController: UIViewController {
             let postCode = self.sqVerificationParams!.cardDetails.card.postalCode ?? ""
             self.postalCodeField.text = postCode
             
+            self.postalCodeField.isEnabled = false
+            
         } else {
             self.title = "Add a Card"
         }
@@ -186,10 +188,18 @@ class AddCardViewController: UIViewController {
             self.addressValidationLabel.isHidden = false
         }
         
-        if self.postalCodeField.text?.uppercased().isValidPostCode() == false {
-            isValid = false
-            self.postalCodeValidationLabel.isHidden = false
+        if self.requireOnlyBillingInfo {
+            if self.postalCodeField.text?.trimWhiteSpaces().count == 0 {
+                isValid = false
+                self.postalCodeValidationLabel.isHidden = false
+            }
+        } else {
+            if self.postalCodeField.text?.uppercased().isValidPostCode() == false {
+                isValid = false
+                self.postalCodeValidationLabel.isHidden = false
+            }
         }
+        
         
 //        if self.stateField.text?.trimWhiteSpaces().count == 0 {
 //            isValid = false
@@ -209,7 +219,7 @@ class AddCardViewController: UIViewController {
         return isValid
     }
     
-    func makeVerificationParameters(paymentSourceID: String, locationId: String) -> SQIPVerificationParameters {
+    func makeVerificationParameters(paymentSourceID: String, locationId: String, postCode: String) -> SQIPVerificationParameters {
         
         let fullName = self.nameField.text!
         var components = fullName.components(separatedBy: " ")
@@ -228,7 +238,7 @@ class AddCardViewController: UIViewController {
         contact.addressLines = [self.addressField.text!]
         contact.city = self.cityField.text!
         contact.country = self.selectedCountry!.code
-        contact.postalCode = self.postalCodeField.text!
+        contact.postalCode = postCode
 
         return SQIPVerificationParameters(
             paymentSourceID: paymentSourceID,
@@ -260,8 +270,10 @@ class AddCardViewController: UIViewController {
                 self.addCardButton.showLoader()
                 self.view.isUserInteractionEnabled = false
                 
-                let params = self.makeVerificationParameters(paymentSourceID: verificationParams.cardDetails.nonce,
-                                                                         locationId: verificationParams.locationId)
+                let nonce = verificationParams.cardDetails.nonce
+                let params = self.makeVerificationParameters(paymentSourceID: nonce,
+                                                             locationId: verificationParams.locationId,
+                                                             postCode: verificationParams.cardDetails.card.postalCode ?? self.postalCodeField.text!)
                 SQIPBuyerVerificationSDK.shared.verify(with: params,
                                                        theme: Utility.shared.makeSquareTheme(),
                                                        viewController: self,
@@ -282,7 +294,8 @@ class AddCardViewController: UIViewController {
                 }) { (error) in
                     self.addCardButton.hideLoader()
                     self.view.isUserInteractionEnabled = true
-                    verificationParams.completion(error as NSError)
+                    
+                    self.showAlertController(title: "", msg: error.localizedDescription)
                 }
             } else {
                 self.addCard()
@@ -403,9 +416,10 @@ extension AddCardViewController {
                  completion: @escaping ((_ error: NSError?) -> Void)) {
         
         let brandType = CreditCardType.cardType(brand: cardDetails.card.brand)
+        let nonce = cardDetails.nonce
         
         let params: [String : Any] = ["type" : brandType,
-                                      "nonce" : cardDetails.nonce,
+                                      "nonce" : nonce,
                                       "establishment_id" : barId,
                                       "ending_in" : cardDetails.card.lastFourDigits,
                                       "postcode" : self.postalCodeField.text!,

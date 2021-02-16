@@ -111,6 +111,7 @@ class Order: Mappable {
     var splitPaymentInfo: SplitPaymentInfo?
     
     var establishmentWorldpayClientKey: String? = nil
+    var establishmentSquareUpAppId: String? = nil
     
     var menuTypeRaw: String = MenuType.barCode.rawValue
     
@@ -175,6 +176,8 @@ class Order: Mappable {
         self.menuTypeRaw <- map["epos_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
+        
+        self.establishmentSquareUpAppId <- map["establishment.square_app_id"]
         self.squareUpLocationId <- map["establishment.location_id"]
         
         self.updatedAtRaw <- map["updated_at.date"]

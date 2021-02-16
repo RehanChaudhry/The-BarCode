@@ -209,6 +209,12 @@ class CreditCard: Mappable {
         return nil
     }()
     
+    var fullName: String = ""
+    var postCode: String = ""
+    var city: String = ""
+    var address: String = ""
+    var country: String = ""
+    
     required init?(map: Map) {
         
     }
@@ -222,6 +228,12 @@ class CreditCard: Mappable {
         self.cardId <- map["id"]
         
         self.encryptedCardDetails <- map["card_details"]
+        
+        self.fullName <- map["name"]
+        self.address <- map["address"]
+        self.postCode <- map["postcode"]
+        self.city <- map["city"]
+        self.country <- map["country_code"]
     }
 }
 

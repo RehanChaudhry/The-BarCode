@@ -13,6 +13,7 @@ import CoreStore
 import HTTPStatusCodes
 import SquareInAppPaymentsSDK
 import SquareBuyerVerificationSDK
+import KVNProgress
 
 class SavedCardsViewController: UIViewController {
 
@@ -162,10 +163,45 @@ class SavedCardsViewController: UIViewController {
         return cardEntryController
     }
     
+    func makeVerificationParameters(card: CreditCard,
+                                    locationId: String,
+                                    orderAmount: Double) -> SQIPVerificationParameters {
+        
+        let fullName = card.fullName
+        var components = fullName.components(separatedBy: " ")
+        
+        var firstName = ""
+        var lastName = ""
+        
+        if components.count > 0 {
+            lastName = components.removeLast()
+            firstName = components.joined(separator: " ")
+        }
+        
+        let contact = SQIPContact()
+        contact.givenName = firstName
+        contact.familyName = lastName
+        contact.addressLines = [card.address]
+        contact.city = card.city
+        contact.country = SQIPCountry.GB
+        contact.postalCode = card.postCode
+
+        return SQIPVerificationParameters(
+            paymentSourceID: card.cardToken,
+            buyerAction: SQIPBuyerAction.charge(SQIPMoney(amount: Int(orderAmount * 100.0), currency: .GBP)),
+            locationID: locationId,
+            contact: contact
+        )
+    }
+    
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
         if let card = self.selectedCard {
-            self.generateTokenIfNeededAndCharge(card: card)
+            if self.order?.menuTypeRaw == MenuType.squareup.rawValue {
+                self.squareUpChargeCard(card: card)
+            } else {
+                self.generateTokenIfNeededAndCharge(card: card)
+            }
         } else {
             self.showAlertController(title: "", msg: "Please select a card to proceed")
         }
@@ -355,7 +391,7 @@ extension SavedCardsViewController {
         }
     }
     
-    func chargeCard(card: CreditCard, token: String) {
+    func chargeCard(card: CreditCard, token: String, sqVerificationToken: String? = nil) {
         
         guard let order = self.order else {
             self.showAlertController(title: "", msg: "Order information is unavailable")
@@ -368,6 +404,10 @@ extension SavedCardsViewController {
                                       "token" : token,
                                       "session_id" : sessionId,
                                       "card_uid" : card.cardId]
+        
+        if let verificationToken = sqVerificationToken {
+            params["verification_token"] = verificationToken
+        }
         
         if let split = order.splitPaymentInfo, split.type != .none {
             params["split_type"] = split.type.rawValue
@@ -494,6 +534,47 @@ extension SavedCardsViewController {
             }
         }
     }
+    
+    func squareUpChargeCard(card: CreditCard) {
+        
+        guard let applicationId = order?.establishmentSquareUpAppId else {
+            self.showAlertController(title: "", msg: "Squareup application id not available")
+            return
+        }
+        
+        SQIPInAppPaymentsSDK.squareApplicationID = applicationId
+        
+        guard let locationId = self.order?.squareUpLocationId, locationId.count > 0 else {
+            self.showAlertController(title: "", msg: "Location id is required for square up")
+            return
+        }
+        
+        
+        
+        let sourceId = card.cardToken
+        let params = self.makeVerificationParameters(card: card,
+                                                     locationId: locationId,
+                                                     orderAmount: self.totalBillPayable)
+
+        self.payButton.showLoader()
+        self.view.isUserInteractionEnabled = false
+        SQIPBuyerVerificationSDK.shared.verify(with: params,
+                                               theme: Utility.shared.makeSquareTheme(),
+                                               viewController: self,
+                                               success: { (detail) in
+                                                
+                                                self.view.isUserInteractionEnabled = true
+                                                self.chargeCard(card: card,
+                                                                token: sourceId,
+                                                                sqVerificationToken: detail.verificationToken)
+                                                
+            
+        }) { (error) in
+            self.payButton.hideLoader()
+            self.view.isUserInteractionEnabled = true
+            KVNProgress.showError(withStatus: error.localizedDescription)
+        }
+    }
 }
 
 //MARK: CardInfoCellDelegate
@@ -520,6 +601,14 @@ extension SavedCardsViewController: AddNewCardCellDelegate {
     func addNewCardCell(cell: AddNewCardCell, addNewCardButtonTapped sender: UIButton) {
         
         if self.order?.menuTypeRaw == MenuType.squareup.rawValue {
+            
+            guard let applicationId = order?.establishmentSquareUpAppId else {
+                self.showAlertController(title: "", msg: "Squareup application id not available")
+                return
+            }
+            
+            SQIPInAppPaymentsSDK.squareApplicationID = applicationId
+            
             let vc = self.makeCardEntryViewController()
             vc.delegate = self
 

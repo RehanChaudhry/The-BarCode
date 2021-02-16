@@ -248,6 +248,7 @@
 		0C9BB9E0238E407E00B84346 /* RedeemingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9BB9DF238E407E00B84346 /* RedeemingType.swift */; };
 		0C9BB9E3238E42B800B84346 /* RedeemingTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9BB9E1238E42B800B84346 /* RedeemingTypeCell.swift */; };
 		0C9BB9E4238E42B800B84346 /* RedeemingTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9BB9E2238E42B800B84346 /* RedeemingTypeCell.xib */; };
+		0C9CE6CC25C2D8D200E68432 /* DoubleAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9CE6CB25C2D8D200E68432 /* DoubleAdditions.swift */; };
 		0C9ECA8E2295284800DEC34F /* SocialLinksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9ECA8C2295284800DEC34F /* SocialLinksCell.swift */; };
 		0C9ECA8F2295284800DEC34F /* SocialLinksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C9ECA8D2295284800DEC34F /* SocialLinksCell.xib */; };
 		0C9FA2792236768B008F0B62 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9FA2782236768A008F0B62 /* StringFormatter.swift */; };
@@ -760,6 +761,7 @@
 		0C9BB9DF238E407E00B84346 /* RedeemingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemingType.swift; sourceTree = "<group>"; };
 		0C9BB9E1238E42B800B84346 /* RedeemingTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemingTypeCell.swift; sourceTree = "<group>"; };
 		0C9BB9E2238E42B800B84346 /* RedeemingTypeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RedeemingTypeCell.xib; sourceTree = "<group>"; };
+		0C9CE6CB25C2D8D200E68432 /* DoubleAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleAdditions.swift; sourceTree = "<group>"; };
 		0C9ECA8C2295284800DEC34F /* SocialLinksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinksCell.swift; sourceTree = "<group>"; };
 		0C9ECA8D2295284800DEC34F /* SocialLinksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialLinksCell.xib; sourceTree = "<group>"; };
 		0C9FA2782236768A008F0B62 /* StringFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
@@ -1296,6 +1298,7 @@
 		0C23A88D2146730800DFB281 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0C9CE6CA25C2D8BD00E68432 /* DoubleAdditions */,
 				0C84E87F25075DAC00F35ECA /* UIImageView */,
 				0C884863216736ED00DB222F /* UILabel */,
 				0C8BDCE32150E4AB00D5117B /* String */,
@@ -2071,6 +2074,14 @@
 				0C9BB9DF238E407E00B84346 /* RedeemingType.swift */,
 			);
 			path = RedeemingType;
+			sourceTree = "<group>";
+		};
+		0C9CE6CA25C2D8BD00E68432 /* DoubleAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				0C9CE6CB25C2D8D200E68432 /* DoubleAdditions.swift */,
+			);
+			path = DoubleAdditions;
 			sourceTree = "<group>";
 		};
 		0C9FA27722367677008F0B62 /* StringFormatter */ = {
@@ -2991,6 +3002,7 @@
 				B3C4108724E2CAB7008AF43C /* SnackBarInfoView.swift in Sources */,
 				0C39F2F5231E72D500596A2B /* GMUPlacemark.m in Sources */,
 				FA42BF8324C97178003C3970 /* OrderDeliveryInfoSection.swift in Sources */,
+				0C9CE6CC25C2D8D200E68432 /* DoubleAdditions.swift in Sources */,
 				FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */,
 				837B48B32175FB2C00841419 /* Pagination.swift in Sources */,
 				83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */,
@@ -3242,7 +3254,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3251,7 +3263,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.2;
+				MARKETING_VERSION = 8.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp.OneSignalNotificationServiceExtension;
@@ -3269,7 +3281,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3278,7 +3290,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.2;
+				MARKETING_VERSION = 8.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3412,7 +3424,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3424,7 +3436,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.2;
+				MARKETING_VERSION = 8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3443,7 +3455,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3455,7 +3467,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.2;
+				MARKETING_VERSION = 8.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

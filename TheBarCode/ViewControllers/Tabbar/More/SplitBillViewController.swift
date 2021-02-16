@@ -18,6 +18,8 @@ class SplitBillViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var accessoryInputView: UIView!
+    
     var viewModels: [OrderViewModel] = []
     
     var order: Order!
@@ -142,7 +144,7 @@ class SplitBillViewController: UIViewController {
         var splitPaymentInfo: SplitPaymentInfo = (type: .equal, value: 0.0)
         
         if (self.viewModels.first(where: {$0.type == .equalSplit}) as? OrderSplitBillTypeSection)?.items.first?.isSelected == true {
-            splitPaymentInfo = (type: .equal, value: self.getProductsTotal() / 2.0)
+            splitPaymentInfo = (type: .equal, value: Double(self.getProductsTotal() / 2.0).round(to: 2))
         } else if (self.viewModels.first(where: {$0.type == .fixedAmountSplit}) as? OrderSplitBillTypeSection)?.items.first?.isSelected == true {
 
             let value = (self.viewModels.first(where: {$0.type == .fixedAmountSplitField}) as? OrderFieldSection)?.items.first?.text ?? ""
@@ -157,7 +159,7 @@ class SplitBillViewController: UIViewController {
             
             let value = (self.viewModels.first(where: {$0.type == .percentSplitField}) as? OrderFieldSection)?.items.first?.text ?? ""
             if let percent = Double(value), percent <= 100.0, percent > 0 {
-                let amount = self.getProductsTotal() / 100.0 * percent
+                let amount = Double(self.getProductsTotal() / 100.0 * percent).round(to: 2)
                 splitPaymentInfo = (type: .percent, value: amount)
             } else {
                 isValid = false
@@ -181,6 +183,10 @@ class SplitBillViewController: UIViewController {
             self.navigationController?.pushViewController(controller, animated: true)
         }
         
+    }
+    
+    @IBAction func doneBarButtonTapped(sender: UIBarButtonItem) {
+        self.view.endEditing(true)
     }
 }
 
@@ -273,6 +279,7 @@ extension SplitBillViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)
             cell.setUpCell(orderField: section.items[indexPath.row])
+            cell.textField.inputAccessoryView = self.accessoryInputView
             return cell
         } else {
             
