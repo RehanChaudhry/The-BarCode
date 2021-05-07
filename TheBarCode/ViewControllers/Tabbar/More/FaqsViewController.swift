@@ -31,7 +31,7 @@ class FaqsViewController: UIViewController {
         let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 25% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
         self.faqSections.append(section1)
         
-        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20.")])
+        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20 or ₹500.")])
         self.faqSections.append(section2)
         
         let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the bar and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
@@ -43,14 +43,14 @@ class FaqsViewController: UIViewController {
         let section5 = FAQSection(title: "Do I have to Reload?", faqs: [FAQ(text: "No. The Barcode is not a subscription and you can choose to use it as often or as little as you like. You can use The Barcode as a directory of great independent Bars and take advantage of the offers that are on there from when you sign up. However, Reloading is the best way to make the most of all of the features on 'The Barcode' app, and remember, you only pay to save.")])
         self.faqSections.append(section5)
         
-        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "£1.00.")])
+        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "£1.00 or ₹89.00.")])
         self.faqSections.append(section6)
         
         
-        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 at all times. However this can vary from 10%, 15% and 25% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
+        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 or ₹500 at all times. However this can vary from 10%, 15% and 25% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
         self.faqSections.append(section7)
         
-        let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "10% off the first round up to a value of £20, on any day of the week and at any time.")])
+        let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "10% off the first round up to a value of £20 or ₹500, on any day of the week and at any time.")])
         self.faqSections.append(section8)
         
         let section9 = FAQSection(title: "What is the maximum discount any bar can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])

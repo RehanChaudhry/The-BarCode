@@ -71,7 +71,7 @@ class OutOfCreditViewController: UIViewController {
             self.unlimitedRedemptionButton.isHidden = false
             self.unlimitedRedemptionTop.constant = 16.0
             
-            self.detailLabel.text = "This bar offers unlimited redemption. Pay £1.00 and you can redeem any offer till the bar closes. \n\nGet more credits by sharing offers or inviting friends"
+            self.detailLabel.text = "This bar offers unlimited redemption. Pay £1.00 or ₹89.00 and you can redeem any offer till the bar closes. \n\nGet more credits by sharing offers or inviting friends"
             
         } else {
             self.reloadButton.isHidden = true
