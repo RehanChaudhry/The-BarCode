@@ -106,7 +106,7 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
             return cell
         } else if let deal = object as? Deal {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-            cell.setUpDealCell(deal: deal)
+            cell.setUpDealCell(deal: deal, bar: deal.establishment.value!)
             cell.delegate = self
             return cell
         }
@@ -143,6 +143,7 @@ extension BookmarkedOfferViewController: UITableViewDelegate, UITableViewDataSou
         
         let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.deal = offer
+        offerDetailController.bar = offer.establishment.value!
         offerDetailController.isPresenting = true
         
         self.present(offerDetailNavigation, animated: true, completion: nil)

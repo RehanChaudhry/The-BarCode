@@ -38,15 +38,15 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
 
-    func setUpCell(orderItem: OrderItem) {
+    func setUpCell(order: Order, orderItem: OrderItem) {
         
         self.nameLabel.text = orderItem.name
         
         let priceString = String(format: "%.2f", orderItem.totalUnitPrice)
-        self.unitPriceLabel.text = "x £ " + priceString
+        self.unitPriceLabel.text = "x \(order.currencySymbol) " + priceString
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
-        self.totalPriceLabel.text = "£ " + totalPriceString
+        self.totalPriceLabel.text = "\(order.currencySymbol) " + totalPriceString
 
         self.stepperView.delegate = self
         

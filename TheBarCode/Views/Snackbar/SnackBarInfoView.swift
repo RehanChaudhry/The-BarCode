@@ -59,11 +59,11 @@ class SnackBarInfoView: UIView, NibLoadable {
     }
     
     //MARK: My Methods
-    func setUpSavings(totalSavings: Double) {
+    func setUpSavings(totalSavings: Double, currencySymbol: String) {
         let savings = totalSavings >= 100 ? "99+" : String(format: "%.2f", totalSavings)
         
         UIView.performWithoutAnimation {
-            self.savingsButton.setTitle("£ \(savings)", for: .normal)
+            self.savingsButton.setTitle("\(currencySymbol) \(savings)", for: .normal)
             self.savingsButton.layoutIfNeeded()
         }
     }

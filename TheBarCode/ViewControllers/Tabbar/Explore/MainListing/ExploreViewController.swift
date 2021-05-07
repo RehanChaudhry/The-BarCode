@@ -300,6 +300,9 @@ class ExploreViewController: UIViewController {
         let inviteNavigation = (self.storyboard?.instantiateViewController(withIdentifier: "InviteNavigation") as! UINavigationController)
         inviteNavigation.modalPresentationStyle = .fullScreen
         
+        let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.isDismissable = true
+        
         self.present(inviteNavigation, animated: true, completion: nil)
     }
     
@@ -398,7 +401,7 @@ extension ExploreViewController {
                 let credit = redeemInfoDict["credit"] as! Int
                 Utility.shared.userCreditUpdate(creditValue: credit)
                 
-                self.barsController.snackBar.setUpSavings(totalSavings: self.redeemInfo!.totalSavings)
+                self.barsController.snackBar.setUpSavings(totalSavings: self.redeemInfo!.totalSavings, currencySymbol: self.redeemInfo!.currencySymbol)
                 
                 if self.redeemInfo!.isFirstRedeem {
                     self.updateSnackBarForType(type: .discount)

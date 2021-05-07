@@ -51,11 +51,11 @@ class ReloadViewController: UIViewController {
     var type: ReloadState! = .unKnown
     
     //In-app
-    var transactionInProgress: Bool = false
-    var productIDs: [String] = []
-    var products: [SKProduct] = []
+//    var transactionInProgress: Bool = false
+//    var productIDs: [String] = []
+//    var products: [SKProduct] = []
     
-    let productIdReload = bundleId + ".reload"
+    var product: SKProduct?
     
     var shouldAutoDismissOnReload: Bool = false
     
@@ -92,19 +92,19 @@ class ReloadViewController: UIViewController {
         self.tableView.addSubview(self.statefulView)
         
         self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
-            self.getReloadStatus()
+            self.requestIAPProduct()
         }
         
-        self.getReloadStatus()
+        self.requestIAPProduct()
         
-        self.productIDs = [productIdReload]
-        SKPaymentQueue.default().add(self)
+//        self.productIDs = [productIdReload]
+//        SKPaymentQueue.default().add(self)
         
         Analytics.logEvent(viewReloadScreen, parameters: nil)
     }
 
     deinit {
-        SKPaymentQueue.default().remove(self)
+//        SKPaymentQueue.default().remove(self)
         
         self.reloadTimer?.invalidate()
         self.reloadTimer = nil
@@ -122,6 +122,17 @@ class ReloadViewController: UIViewController {
     }
     
     //MARK: In-APP
+    func requestIAPProduct() {
+        self.statefulView.showLoading()
+        self.statefulView.isHidden = false
+        
+        let identifier = bundleId + ".reload"
+        let productRequest = SKProductsRequest(productIdentifiers: Set<String>([identifier]))
+        productRequest.delegate = self
+        productRequest.start()
+    }
+    
+    /*
     func requestProductInfo() {
         if SKPaymentQueue.canMakePayments() {
             
@@ -143,9 +154,9 @@ class ReloadViewController: UIViewController {
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
     }
+    */
     
     //MARK: My Methods
-    
     func setUpRedeemInfoView(type: ReloadState) {
         
         let user = Utility.shared.getCurrentUser()
@@ -243,8 +254,8 @@ class ReloadViewController: UIViewController {
             lastReloadSavings = redeemInfo.lastReloadSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.lastReloadSavings)
         }
         
-        self.totalSavingLabel.text = "£ " + totalSavings
-        self.reloadSavingLabel.text = "£ " + lastReloadSavings
+        self.totalSavingLabel.text = "\(self.redeemInfo?.currencySymbol ?? "") " + totalSavings
+        self.reloadSavingLabel.text = "\(self.redeemInfo?.currencySymbol ?? "") " + lastReloadSavings
     }
     
     func startReloadTimer() {
@@ -297,7 +308,21 @@ class ReloadViewController: UIViewController {
             
         } else if self.type == ReloadState.reloadTimerExpire {
            
-            self.requestProductInfo()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+            self.reloadButton.showLoader()
+            IAPHandler.shared.buyProduct(product: self.product!) { (txId, error) in
+                guard error == nil else {
+                    if error!._code != SKError.paymentCancelled.rawValue {
+                        self.showAlertController(title: "", msg: error!.localizedDescription)
+                    }
+                    
+                    self.reloadButton.hideLoader()
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                    return
+                }
+                
+                self.reloadRedeems(transactionID: txId!)
+            }
             
         } else {
             debugPrint("Unknown reload state")
@@ -312,19 +337,20 @@ class ReloadViewController: UIViewController {
 
 }
 
+//MARK: UITableViewDelegate, UITableViewDataSource
 extension ReloadViewController: UITableViewDelegate, UITableViewDataSource {
  
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard self.product != nil else {
+            return 0
+        }
+        
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ReloadPriceTVC.self)
-        cell.setUpCell(state: self.type)
+        cell.setUpCell(state: self.type, product: self.product!)
         return cell
     }
 }
@@ -418,6 +444,27 @@ extension ReloadViewController {
     }
 }
 
+//MARK: SKProductsRequestDelegate
+extension ReloadViewController: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        DispatchQueue.main.async {
+            if let product = response.products.first {
+                self.product = product
+                self.getReloadStatus()
+            } else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: "Unable to get products", reloadMessage: "Tap to refresh")
+            }
+        }
+    }
+    
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        DispatchQueue.main.async {
+            self.statefulView.showErrorViewWithRetry(errorMessage: "Unable to get products", reloadMessage: "Tap to refresh")
+        }
+    }
+}
+
+/*
 //MARK: InApp Purchase
 extension ReloadViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
@@ -477,4 +524,4 @@ extension ReloadViewController: SKProductsRequestDelegate, SKPaymentTransactionO
     }
 
 }
-
+*/

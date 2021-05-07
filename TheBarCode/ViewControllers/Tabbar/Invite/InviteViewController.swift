@@ -25,13 +25,15 @@ class InviteViewController: UITableViewController {
     
     @IBOutlet var inviteFriendCodeButton: GradientButton!
     
-//    @IBOutlet var closeBarButton: UIBarButtonItem!
+    var closeBarButton: UIBarButtonItem!
     
     var isRedeemingDeal: Bool = false
     
     weak var delegate: InviteViewControllerDelegate?
     
     var selectedIndex: Int = NSNotFound
+    
+    var isDismissable: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +42,11 @@ class InviteViewController: UITableViewController {
         
         self.addBackButton()
         
-//        self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
+        self.closeBarButton = UIBarButtonItem(image: UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cancelButtonTapped(_:)))
+        
+        if (self.isDismissable) {
+            self.navigationItem.leftBarButtonItem = self.closeBarButton
+        }
         
         let coverHeight = ((307.0 / 375.0) * self.view.frame.width)
         var headerFrame = headerView.frame

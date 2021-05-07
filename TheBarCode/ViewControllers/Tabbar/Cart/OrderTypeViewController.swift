@@ -200,7 +200,7 @@ class OrderTypeViewController: UIViewController {
         
         let totalAmount = max(0.0, totalProductPrice)
         self.totalBillPayable = totalAmount
-        self.checkoutButton.setTitle(String(format: "Continue - £ %.2f", totalAmount), for: .normal)
+        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", totalAmount), for: .normal)
     }
     
     func unSelectAllOrderTypeRadios() {
@@ -458,10 +458,11 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.setupCell(orderItem: item,
                                showSeparator: (isLastOrderItem && !section.isExpanded),
                                isExpanded: section.isExpanded,
-                               hasSelectedModifiers: section.isExpandable)
+                               hasSelectedModifiers: section.isExpandable,
+                               currencySymbol: self.order.currencySymbol)
                 cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
             } else if let item = item as? ProductModifier {
-                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell))
+                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell), currencySymbol: self.order.currencySymbol)
                 cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
                 return cell
             }
@@ -471,14 +472,14 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
@@ -491,22 +492,22 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderDineInSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderRadioButtonTableViewCell.self)
             cell.delegate = self
-            cell.setUpCell(radioButton: section.items[indexPath.row])
+            cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
             return cell
         } else if let section = viewModel as? OrderCounterCollectionSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderRadioButtonTableViewCell.self)
             cell.delegate = self
-            cell.setUpCell(radioButton: section.items[indexPath.row])
+            cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
             return cell
         } else if let section = viewModel as? OrderTakeAwaySection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderRadioButtonTableViewCell.self)
             cell.delegate = self
-            cell.setUpCell(radioButton: section.items[indexPath.row])
+            cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
             return cell
         } else if let section = viewModel as? OrderDeliverySection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderRadioButtonTableViewCell.self)
             cell.delegate = self
-            cell.setUpCell(radioButton: section.items[indexPath.row])
+            cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
             return cell
         } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)

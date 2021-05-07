@@ -80,7 +80,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
     }
     
-    func setUpDealCell(deal: Deal, topPadding: Bool = true) {
+    func setUpDealCell(deal: Deal, topPadding: Bool = true, bar: Bar) {
         
         self.cartIconContainer.isHidden = true
         self.coverImageView.isHidden = false
@@ -128,7 +128,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
             self.titleLabel.attributedText = getAttributedTitle(title: deal.title.value)
             
             let priceString = String(format: "%.2f", deal.voucherAmount.value ?? 0.0)
-            self.priceLabel.text = "   £ " + priceString + "   "
+            self.priceLabel.text = "   \(bar.currencySymbol.value) " + priceString + "   "
             self.priceLabel.isHidden = deal.voucherAmount.value == 0.0
             
         } else {

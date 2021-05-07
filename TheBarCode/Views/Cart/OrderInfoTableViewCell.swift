@@ -123,7 +123,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
-    func setupCell(orderItem: OrderItem, showSeparator: Bool, isExpanded: Bool, hasSelectedModifiers: Bool) {
+    func setupCell(orderItem: OrderItem, showSeparator: Bool, isExpanded: Bool, hasSelectedModifiers: Bool, currencySymbol: String) {
         
         if hasSelectedModifiers {
             self.iconImageView.image = UIImage(named: isExpanded ? "icon_accordion" : "icon_accordion_right")
@@ -135,7 +135,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", orderItem.totalPrice)
-        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.text = "\(currencySymbol) " + totalPriceString
         self.rightLabel.isHidden = false
         self.rightLabel.font = UIFont.appBoldFontOf(size: 14.0)
         
@@ -146,12 +146,12 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setUpAppearanceForItem(isExapandable: hasSelectedModifiers)
     }
     
-    func setupCell(modifier: ProductModifier, showSeparator: Bool) {
+    func setupCell(modifier: ProductModifier, showSeparator: Bool, currencySymbol: String) {
         self.leftLabel.text = "\(modifier.quantity) x " + modifier.name
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", modifier.total)
-        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.text = "\(currencySymbol) " + totalPriceString
         self.rightLabel.isHidden = false
         self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
@@ -162,13 +162,13 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setUpAppearanceForSubItem()
     }
     
-    func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool) {
+    func setupCell(orderDiscountInfo: OrderDiscountInfo, showSeparator: Bool, currencySymbol: String) {
         self.leftLabel.text =  orderDiscountInfo.title
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         if orderDiscountInfo.price > 0.0 {
             let totalPriceString = String(format: "%.2f", orderDiscountInfo.price)
-            self.rightLabel.text = "- £ " + totalPriceString
+            self.rightLabel.text = "- \(currencySymbol) " + totalPriceString
         } else {
             self.rightLabel.text = ""
         }
@@ -183,12 +183,12 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
-    func setupCell(orderDeliveryInfo: OrderDeliveryInfo, showSeparator: Bool) {
+    func setupCell(orderDeliveryInfo: OrderDeliveryInfo, showSeparator: Bool, currencySymbol: String) {
         self.leftLabel.text =  orderDeliveryInfo.title
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
                 
         let totalPriceString = String(format: "%.2f", orderDeliveryInfo.price)
-        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.text = "\(currencySymbol) " + totalPriceString
         self.rightLabel.isHidden = false
         self.rightLabel.font = UIFont.appRegularFontOf(size: 14.0)
               
@@ -199,12 +199,12 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
-    func setupCell(orderTotalBillInfo: OrderBillInfo, showSeparator: Bool, radius: CGFloat = 8.0) {
+    func setupCell(orderTotalBillInfo: OrderBillInfo, showSeparator: Bool, radius: CGFloat = 8.0, currencySymbol: String) {
         self.leftLabel.text =  orderTotalBillInfo.title
         self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
         
         let totalPriceString = String(format: "%.2f", orderTotalBillInfo.price)
-        self.rightLabel.text = "£ " + totalPriceString
+        self.rightLabel.text = "\(currencySymbol) " + totalPriceString
         self.rightLabel.isHidden = false
         
         self.rightLabel.font = UIFont.appBoldFontOf(size: 14)

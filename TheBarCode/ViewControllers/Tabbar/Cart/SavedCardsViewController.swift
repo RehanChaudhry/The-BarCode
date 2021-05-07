@@ -97,7 +97,7 @@ class SavedCardsViewController: UIViewController {
         self.tableView.register(cellType: CardInfoCell.self)
         self.tableView.register(cellType: AddNewCardCell.self)
         
-        self.payButton.setTitle(String(format: "Pay - £ %.2f", self.totalBillPayable), for: .normal)
+        self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable), for: .normal)
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.statefulView.backgroundColor = self.view.backgroundColor

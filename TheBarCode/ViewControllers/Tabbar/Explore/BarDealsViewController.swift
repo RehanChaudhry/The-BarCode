@@ -97,7 +97,7 @@ extension BarDealsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-        cell.setUpDealCell(deal: self.deals[indexPath.row])
+        cell.setUpDealCell(deal: self.deals[indexPath.row], bar: self.bar)
         return cell
     }
     

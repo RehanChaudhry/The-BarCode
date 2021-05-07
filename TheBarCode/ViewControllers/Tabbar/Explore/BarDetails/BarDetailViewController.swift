@@ -438,6 +438,7 @@ class BarDetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ExploreDetailToOfferDetailSegue" {
             let vc = segue.destination as! OfferDetailViewController
+            vc.bar = self.selectedBar!
             vc.deal = sender as? Deal
         }
     }
@@ -706,6 +707,7 @@ extension BarDetailViewController: OutOfCreditViewControllerDelegate {
         inviteNavigation.modalPresentationStyle = .fullScreen
         
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.isDismissable = true
         inviteController.isRedeemingDeal = true
         inviteController.delegate = self
         inviteController.selectedIndex = selectedIndex

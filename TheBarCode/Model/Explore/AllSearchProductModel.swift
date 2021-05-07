@@ -13,17 +13,22 @@ class AllSearchProductModel: AllSearchSectionViewModelItem {
     var type: AllSearchSectionViewModelItemType
     var product: Product
     
-    var isInAppPaymentOn: Bool
-    var menuTypeRaw: String
+    var bar: Bar
     
-    var barId: String
+//    var isInAppPaymentOn: Bool
+//    var menuTypeRaw: String
+//
+//    var barId: String
     
-    init(type: AllSearchSectionViewModelItemType, product: Product, isInAppPaymentOn: Bool, barId: String, menuTypeRaw: String) {
+    init(type: AllSearchSectionViewModelItemType, product: Product, bar: Bar) {
         self.type = type
         self.product = product
-        self.isInAppPaymentOn = isInAppPaymentOn
         
-        self.barId = barId
-        self.menuTypeRaw = menuTypeRaw
+        self.bar = bar
+        
+//        self.isInAppPaymentOn = isInAppPaymentOn
+//
+//        self.barId = barId
+//        self.menuTypeRaw = menuTypeRaw
     }
 }

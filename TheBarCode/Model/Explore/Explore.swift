@@ -88,6 +88,10 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var deliveryRadius = Value.Required<Double>("delivery_distance", initial: 0.0)
     
     var barTypeRaw = Value.Required<String>("bar_type_raw", initial: "")
+        
+    var country = Value.Required<String>("country", initial: "United Kingdom (UK)")
+    var currencySymbol = Value.Required<String>("currency_symbol", initial: "£")
+    var currencyCode = Value.Required<String>("currency_code", initial: "GBP")
     
     var barType: BarType {
         get {
@@ -338,6 +342,15 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
         
         self.isReservationAllowed.value = source["is_reservation"] as? Bool ?? false
         self.reservationUrl.value = source["reservation_url"] as? String ?? ""
+        
+        if let region = source["region"] as? [String : Any],
+           let country = region["country"] as? String,
+           let currencyCode = region["currency_code"] as? String,
+           let currencySymbol = region["currency_symbol"] as? String {
+            self.country.value = country
+            self.currencyCode.value = currencyCode
+            self.currencySymbol.value = currencySymbol
+        }
     }
 }
 

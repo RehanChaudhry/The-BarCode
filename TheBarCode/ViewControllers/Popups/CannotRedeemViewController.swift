@@ -125,8 +125,8 @@ class CannotRedeemViewController: UIViewController {
             lastReloadSavings = redeemInfo.lastReloadSavings >= 100.0 ? "99+" : String(format: "%.2f", redeemInfo.lastReloadSavings)
         }
         
-        self.totalSavingLabel.text = "£ " + totalSavings
-        self.reloadSavingLabel.text = "£ " + lastReloadSavings
+        self.totalSavingLabel.text = "\(self.redeemInfo?.currencySymbol ?? "") " + totalSavings
+        self.reloadSavingLabel.text = "\(self.redeemInfo?.currencySymbol ?? "") " + lastReloadSavings
     }
     
     func startReloadTimer() {

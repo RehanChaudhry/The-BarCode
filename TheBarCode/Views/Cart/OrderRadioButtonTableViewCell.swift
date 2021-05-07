@@ -54,7 +54,7 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setupCell(orderOfferInfo: OrderDiscount, showSeparator: Bool) {
+    func setupCell(orderOfferInfo: OrderDiscount, showSeparator: Bool, currencySymbol: String) {
         
         UIView.performWithoutAnimation {
             self.titleButton.setTitle(orderOfferInfo.text, for: .normal)
@@ -75,7 +75,7 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         self.titleButton.isEnabled = true
         
         if orderOfferInfo.shouldShowValue {
-            self.subTitleLabel.text = String(format: "£ %.2f", orderOfferInfo.value)
+            self.subTitleLabel.text = String(format: "\(currencySymbol) %.2f", orderOfferInfo.value)
             self.subTitleLabel.textColor = UIColor.appBlueColor()
         } else {
             self.subTitleLabel.text = ""
@@ -83,10 +83,10 @@ class OrderRadioButtonTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setUpCell(radioButton: OrderRadioButton) {
+    func setUpCell(radioButton: OrderRadioButton, currencySymbol: String) {
         
         if radioButton.value > 0.0 {
-            self.subTitleLabel.text = String(format: "£ %.2f", radioButton.value)
+            self.subTitleLabel.text = String(format: "\(currencySymbol) %.2f", radioButton.value)
         } else {
             self.subTitleLabel.text = radioButton.subTitle
         }

@@ -31,7 +31,7 @@ class ExploreDetailHeaderCollectionViewCell: FSPagerViewCell, NibReusable {
     }
     
     
-    func setUpCell(imageName: String, deal: Deal) {
+    func setUpCell(imageName: String, deal: Deal, currencySymbol: String) {
         
         let url = URL(string: imageName)
         self.coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image")
@@ -40,7 +40,7 @@ class ExploreDetailHeaderCollectionViewCell: FSPagerViewCell, NibReusable {
         if deal.isVoucher.value {
             let price = deal.voucherAmount.value ?? 0.0
             let priceString = String(format: "%.2f", price)
-            self.priceLabel.text = "   £ " + priceString + "   "
+            self.priceLabel.text = "   \(currencySymbol) " + priceString + "   "
             self.priceLabel.isHidden = price == 0.0
         } else {
              self.priceLabel.isHidden = true

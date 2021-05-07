@@ -44,6 +44,20 @@ class IAPHandler: NSObject {
         }
     }
     
+    func buyProduct(product: SKProduct, completion: @escaping IAPHandlerCompletion) {
+        guard !self.isPurchaseInProgress else {
+            let message = "One in app purchase is already in progress. Please wait while it is finished"
+            let error = NSError(domain: "InPurchase", code: 100, userInfo: [NSLocalizedDescriptionKey : message])
+            completion(nil, error)
+            return
+        }
+        
+        self.isPurchaseInProgress = true
+        self.completionHandler = completion
+        
+        self.buyProduct(product: product)
+    }
+    
     private func buyProduct(product: SKProduct) {
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(self)

@@ -141,12 +141,12 @@ class ReviewPaymentViewController: UIViewController {
             splitAmountInfo.price = leftAmount
             splitTotalInfo.price = leftAmount
             
-            self.order?.splitPaymentInfo = (value: leftAmount, type: .none)
+            self.order?.splitPaymentInfo = (type: .none, value: leftAmount)
         }
         
         total -= paidAmount
         self.totalBillPayable = max(0.0, total)
-        self.payButton.setTitle(String(format: "Confirm Pay - £ %.2f", self.totalBillPayable), for: .normal)
+        self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
     }
     
     //MARK: My IBActions
@@ -210,10 +210,11 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
                 cell.setupCell(orderItem: item,
                                showSeparator: (isLastOrderItem && !section.isExpanded),
                                isExpanded: section.isExpanded,
-                               hasSelectedModifiers: section.isExpandable)
+                               hasSelectedModifiers: section.isExpandable,
+                               currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
             } else if let item = item as? ProductModifier {
-                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell))
+                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell), currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
                 return cell
             }
@@ -223,14 +224,14 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
         } else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderDeliveryInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
@@ -239,7 +240,7 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             
             let cornerRadius: CGFloat = self.order!.paymentSplit.count == 0 ? 8.0 : 0.0
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: self.order!.paymentSplit.count > 0, radius: cornerRadius)
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: self.order!.paymentSplit.count > 0, radius: cornerRadius, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             
             return cell
@@ -249,7 +250,7 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             
             let cornerRadius: CGFloat = isLastCell ? 8.0 : 0.0
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: !isLastCell, radius: cornerRadius)
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: !isLastCell, radius: cornerRadius, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: true, adjustBottom: true)
             
             if isLastCell {
@@ -269,7 +270,7 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
         } else if let section = viewModel as? OrderPaymentInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPaymentTableViewCell.self)
-            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator)
+            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol)
             return cell
             
         } else {

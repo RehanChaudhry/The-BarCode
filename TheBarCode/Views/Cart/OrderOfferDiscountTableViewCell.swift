@@ -34,11 +34,11 @@ class OrderOfferDiscountTableViewCell: UITableViewCell, NibReusable {
     }
     
     //MARK: My Methods
-    func setUpCell(discountInfo: OrderOfferDiscountInfo, isFirst: Bool, isLast: Bool) {
+    func setUpCell(discountInfo: OrderOfferDiscountInfo, isFirst: Bool, isLast: Bool, currencySymbol: String) {
         self.titleLabel.text = discountInfo.title
         
         if discountInfo.value > 0 {
-            self.subTitleLabel.text = String(format: "Saving £ %.2f", discountInfo.value)
+            self.subTitleLabel.text = String(format: "Saving \(currencySymbol) %.2f", discountInfo.value)
         } else {
             self.subTitleLabel.text = ""
         }

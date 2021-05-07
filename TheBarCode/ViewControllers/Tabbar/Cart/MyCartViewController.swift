@@ -129,7 +129,7 @@ class MyCartViewController: UIViewController {
             }
                                           
             let priceString = String(format: "%.2f", total)
-            let buttonTitle = "Checkout - £ " + priceString
+            let buttonTitle = "Checkout - \(order.currencySymbol) " + priceString
             
             self.checkOutButton.setTitle(buttonTitle, for: .normal)
         } else {
@@ -225,7 +225,10 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: OrderItemTableViewCell.self)
         
-        cell.setUpCell(orderItem: self.orders[indexPath.section].orderItems[indexPath.item])
+        let order = self.orders[indexPath.section]
+        let item = order.orderItems[indexPath.row]
+        
+        cell.setUpCell(order: order, orderItem: item)
         cell.delegate = self
         
         return cell
@@ -257,6 +260,10 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
                                                       price: orderItem.unitPrice,
                                                       quantity: quantity)
             productModifiersController.defaultQuantity = orderItem.quantity
+            productModifiersController.regionInfo = (country: order.country,
+                                                     currencySymbol: order.currencySymbol,
+                                                     currencyCode: order.currencyCode)
+            
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         }
     }

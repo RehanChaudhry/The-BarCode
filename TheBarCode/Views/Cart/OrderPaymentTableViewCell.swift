@@ -38,7 +38,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setupCell(orderPaymentInfo: OrderPaymentInfo, showSeparator: Bool) {
+    func setupCell(orderPaymentInfo: OrderPaymentInfo, showSeparator: Bool, currencySymbol: String) {
 
         self.mainView.layer.cornerRadius = 8
 
@@ -55,7 +55,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         self.paymentLabel.text = "\(orderPaymentInfo.status.rawValue.uppercased())" + " (" + "\(Int(orderPaymentInfo.percentage))%)"
         
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
-        self.priceLabel.text =  "£ " + priceString
+        self.priceLabel.text =  "\(currencySymbol) " + priceString
 
         self.showSeparator(show: showSeparator)
     }

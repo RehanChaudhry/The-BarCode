@@ -71,7 +71,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setupCell(product: Product, isInAppPaymentOn: Bool) {
+    func setupCell(product: Product, bar: Bar) {
         
         self.titleLabel.attributedText = product.name.value.html2Attributed(isTitle: true)
         self.detailLabel.attributedText = product.detail.value.html2Attributed(isTitle: false)
@@ -82,10 +82,10 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.detailLabelTop.constant = 0.0
         }
         
-        self.handlePrice(product: product, isInAppPaymentOn: isInAppPaymentOn)
+        self.handlePrice(product: product, bar: bar)
 
         self.removeItemButton.isHidden = product.quantity.value == 0
-        self.addItemButton.isUserInteractionEnabled = isInAppPaymentOn
+        self.addItemButton.isUserInteractionEnabled = bar.isInAppPaymentOn.value
         
         UIView.performWithoutAnimation {
             let suffix = product.quantity.value > 1 ? "Items Added" : "Item Added"
@@ -93,7 +93,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.removeItemButton.layoutIfNeeded()
         }
         
-        if isInAppPaymentOn {
+        if bar.isInAppPaymentOn.value {
             self.shouldEnableCartButtons(enable: !(product.isAddingToCart || product.isRemovingFromCart))
         } else {
             self.addItemButton.isUserInteractionEnabled = false
@@ -103,20 +103,20 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.handleRemoveFromCart(isRemoving: product.isRemovingFromCart)
     }
     
-    func handlePrice(product: Product, isInAppPaymentOn: Bool) {
+    func handlePrice(product: Product, bar: Bar) {
         
         let price = Double(product.price.value) ?? 0.0
         
-        if isInAppPaymentOn {
+        if bar.isInAppPaymentOn.value {
             if product.haveModifiers.value {
-                self.priceLabel.text = price > 0 ? "£ " + String(format: "%.2f", price) : ""
+                self.priceLabel.text = price > 0 ? "\(bar.currencySymbol.value) " + String(format: "%.2f", price) : ""
                 self.setupCartIcon(type: price > 0 ? .priceWithCartIcon : .cartIconOnly)
             } else {
-                self.priceLabel.text = "£ " + String(format: "%.2f", price)
+                self.priceLabel.text = "\(bar.currencySymbol.value) " + String(format: "%.2f", price)
                 self.setupCartIcon(type: price > 0 ? .priceWithCartIcon : .none)
             }
         } else {
-            self.priceLabel.text = "£ " + String(format: "%.2f", price)
+            self.priceLabel.text = "\(bar.currencySymbol.value) " + String(format: "%.2f", price)
             self.setupCartIcon(type: price > 0 ? .priceWithOutCartIcon : .none)
         }
         

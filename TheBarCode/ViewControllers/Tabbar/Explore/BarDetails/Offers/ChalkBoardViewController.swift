@@ -104,7 +104,7 @@ extension ChalkBoardViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: DealTableViewCell.self)
-        cell.setUpDealCell(deal: self.deals[indexPath.row], topPadding: indexPath.row != 0)
+        cell.setUpDealCell(deal: self.deals[indexPath.row], topPadding: indexPath.row != 0, bar: self.bar)
         cell.delegate = self
         return cell
     }

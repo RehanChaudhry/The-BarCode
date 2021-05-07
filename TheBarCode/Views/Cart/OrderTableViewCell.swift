@@ -36,7 +36,7 @@ class OrderTableViewCell: UITableViewCell, NibReusable {
         self.barNameLabel.text = order.barName + " - " + order.orderType.displayableValue()
         
         let amount = order.paymentSplit.first?.amount ?? 0.0
-        self.priceLabel.text = String(format: "£ %.2f", amount)
+        self.priceLabel.text = String(format: "\(order.currencySymbol) %.2f", amount)
         
         self.statusButton.titleLabel?.lineBreakMode = .byWordWrapping
         self.statusButton.titleLabel?.numberOfLines = 0

@@ -42,6 +42,7 @@ class OfferDetailViewController: UIViewController {
     
     var images: [String] = []
     
+    var bar: Bar!
     var deal: Deal!
     
     var offerType : OfferType = .unknown
@@ -421,7 +422,7 @@ extension OfferDetailViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(for: indexPath, cellType: ExploreDetailHeaderCollectionViewCell.self)
-        cell.setUpCell(imageName: self.images[indexPath.item], deal: self.deal )
+        cell.setUpCell(imageName: self.images[indexPath.item], deal: self.deal, currencySymbol: self.bar.currencySymbol.value)
         return cell
     }
     
@@ -503,6 +504,7 @@ extension OfferDetailViewController: OutOfCreditViewControllerDelegate {
         inviteNavigation.modalPresentationStyle = .fullScreen
         
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.isDismissable = true
         inviteController.isRedeemingDeal = true
         inviteController.delegate = self
         inviteController.selectedIndex = selectedIndex

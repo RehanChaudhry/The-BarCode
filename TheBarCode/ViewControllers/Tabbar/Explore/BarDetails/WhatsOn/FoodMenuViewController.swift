@@ -130,7 +130,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
         
         let segment = self.segments[indexPath.section]
-        cell.setupCell(product: segment.products[indexPath.row], isInAppPaymentOn: self.bar.isInAppPaymentOn.value)
+        cell.setupCell(product: segment.products[indexPath.row], bar: self.bar)
         
         cell.delegate = self
         
@@ -198,6 +198,9 @@ extension FoodMenuViewController: ProductMenuCellDelegate {
                                                       quantity: product.quantity.value)
             productModifiersController.establishmentId = self.bar.id.value
             productModifiersController.type = self.bar.menuTypeRaw.value
+            productModifiersController.regionInfo = (country: self.bar.country.value,
+                                                     currencySymbol: self.bar.currencySymbol.value,
+                                                     currencyCode: self.bar.currencyCode.value)
             
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {

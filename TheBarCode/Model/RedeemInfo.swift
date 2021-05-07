@@ -18,6 +18,10 @@ class RedeemInfo: Mappable {
     var totalSavings: Double = 0.0
     var lastReloadSavings: Double = 0.0
     
+    var country: String = "United Kingdom (UK)"
+    var currencySymbol: String = "£"
+    var currencyCode: String = "GBP"
+    
     required convenience init?( map: Map) {
         self.init()
     }
@@ -37,6 +41,10 @@ class RedeemInfo: Mappable {
         } else {
             lastReloadSavings = 0.0
         }
+        
+        self.country <- map["region.country"]
+        self.currencyCode <- map["region.currency_code"]
+        self.currencySymbol <- map["region.currency_symbol"]
         
     }
     

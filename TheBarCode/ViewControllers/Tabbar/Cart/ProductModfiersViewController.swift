@@ -13,6 +13,8 @@ import Alamofire
 import CoreStore
 import KVNProgress
 
+typealias RegionInfo = (country: String, currencySymbol: String, currencyCode: String)
+
 class ProductModfiersViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
@@ -31,6 +33,7 @@ class ProductModfiersViewController: UIViewController {
     var groups: [ProductModifierGroup] = []
     
     var productInfo: (id: String, name: String, price: Double, quantity: Int)!
+    var regionInfo: RegionInfo = ("", "", "")
     
     var cartItemId: String?
     
@@ -51,7 +54,7 @@ class ProductModfiersViewController: UIViewController {
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
           
         self.titleLabel.text = self.productInfo.name
-        self.subTitleLabel.text = self.productInfo.price > 0.0 ? String(format: "£ %.2f", self.productInfo.price) : ""
+        self.subTitleLabel.text = self.productInfo.price > 0.0 ? String(format: "\(self.regionInfo.currencySymbol) %.2f", self.productInfo.price) : ""
         
         self.tableView.tableFooterView = UIView()
         self.tableView.register(cellType: ProductModifierCell.self)
@@ -114,7 +117,7 @@ class ProductModfiersViewController: UIViewController {
         }
         
         let grandTotal = (price * Double(self.stepperView.value)) + (total * Double(self.stepperView.value))
-        self.addToCartButton.setTitle(String(format: "Add To Cart - £ %.2f", grandTotal), for: .normal)
+        self.addToCartButton.setTitle(String(format: "Add To Cart - \(self.regionInfo.currencySymbol) %.2f", grandTotal), for: .normal)
         
         return grandTotal
     }
@@ -192,7 +195,7 @@ extension ProductModfiersViewController: UITableViewDelegate, UITableViewDataSou
         let item = group.modifiers[indexPath.row]
         
         let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: ProductModifierCell.self)
-        cell.setupCell(modifier: item, group: group)
+        cell.setupCell(modifier: item, group: group, regionInfo: self.regionInfo)
         cell.delegate = self
         return cell
     }

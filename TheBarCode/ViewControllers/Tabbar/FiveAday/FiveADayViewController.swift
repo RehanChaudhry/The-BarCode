@@ -541,6 +541,7 @@ extension FiveADayViewController: OutOfCreditViewControllerDelegate {
         inviteNavigation.modalPresentationStyle = .fullScreen
         
         let inviteController =  inviteNavigation.viewControllers.first as! InviteViewController
+        inviteController.isDismissable = true
         inviteController.isRedeemingDeal = true
         inviteController.delegate = self
         inviteController.selectedIndex = selectedIndex

@@ -32,7 +32,7 @@ class SplitPaymentInfoViewController: UIViewController {
         
         self.addBackButton()
         
-        self.payButton.setTitle(String(format: "Continue - £ %.2f", self.totalBillPayable), for: .normal)
+        self.payButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
         
         self.qrImageView.generateQRCode(orderId: self.order.orderNo)
         
@@ -131,10 +131,11 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
                 cell.setupCell(orderItem: item,
                                showSeparator: (isLastOrderItem && !section.isExpanded),
                                isExpanded: section.isExpanded,
-                               hasSelectedModifiers: section.isExpandable)
+                               hasSelectedModifiers: section.isExpandable,
+                               currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
             } else if let item = item as? ProductModifier {
-                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell))
+                cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell), currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
                 return cell
             }
@@ -144,21 +145,21 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
         } else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderDeliveryInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell)
+            cell.setupCell(orderDeliveryInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
         } else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false)
+            cell.setupCell(orderTotalBillInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order!.currencySymbol)
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             

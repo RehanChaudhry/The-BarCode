@@ -215,12 +215,12 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if let item = viewModelItem as? AllSearchProductModel, item.type == .foodCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
-            cell.setupCell(product: item.product, isInAppPaymentOn: item.isInAppPaymentOn)
+            cell.setupCell(product: item.product, bar: item.bar)
             cell.delegate = self
             return cell
         } else if let item = viewModelItem as? AllSearchProductModel, item.type == .drinkCell {
             let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
-            cell.setupCell(product: item.product, isInAppPaymentOn: item.isInAppPaymentOn)
+            cell.setupCell(product: item.product, bar: item.bar)
             cell.delegate = self
             return cell
         } else if let item = viewModelItem as? AllSearchExpandModel, item.type == .footerCell {
@@ -348,7 +348,7 @@ extension AllSearchViewController: ProductMenuCellDelegate {
         let viewModelItem = viewModel.items[indexPath.item]
         
         if let item = viewModelItem as? AllSearchProductModel {
-            self.updateProductCart(product: item.product, barId: item.barId, shouldAdd: false)
+            self.updateProductCart(product: item.product, barId: item.bar.id.value, shouldAdd: false)
         }
     }
     
@@ -370,12 +370,15 @@ extension AllSearchViewController: ProductMenuCellDelegate {
                                                           name: item.product.name.value,
                                                           price: Double(item.product.price.value) ?? 0.0,
                                                           quantity: item.product.quantity.value)
-                productModifiersController.establishmentId = item.barId
-                productModifiersController.type = item.menuTypeRaw
+                productModifiersController.establishmentId = item.bar.id.value
+                productModifiersController.type = item.bar.menuTypeRaw.value
+                productModifiersController.regionInfo = (country: item.bar.country.value,
+                                                         currencySymbol: item.bar.currencySymbol.value,
+                                                         currencyCode: item.bar.currencyCode.value)
                 
                 self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
             } else {
-                self.updateProductCart(product: item.product, barId: item.barId, shouldAdd: true)
+                self.updateProductCart(product: item.product, barId: item.bar.id.value, shouldAdd: true)
             }
         }
     }
@@ -761,9 +764,7 @@ extension AllSearchViewController {
                             
                             let foodItems = fetchedFoods.map({ AllSearchProductModel(type: .foodCell,
                                                                                   product: $0,
-                                                                                  isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value,
-                                                                                  barId: fetchedBar.id.value,
-                                                                                  menuTypeRaw: fetchedBar.menuTypeRaw.value) })
+                                                                                  bar: fetchedBar) })
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, foodItem) in foodItems.enumerated() {
@@ -825,9 +826,7 @@ extension AllSearchViewController {
                             
                             let drinkItems = fetchedDrinks.map({ AllSearchProductModel(type: .drinkCell,
                                                                                        product: $0,
-                                                                                       isInAppPaymentOn: fetchedBar.isInAppPaymentOn.value,
-                                                                                       barId: fetchedBar.id.value,
-                                                                                       menuTypeRaw: fetchedBar.menuTypeRaw.value)})
+                                                                                       bar: fetchedBar)})
                             
                             var expandableItems: [AllSearchSectionViewModelItem] = []
                             for (index, drinkItem) in drinkItems.enumerated() {

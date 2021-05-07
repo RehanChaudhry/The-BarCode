@@ -46,7 +46,7 @@ class ProductModifierCell: UITableViewCell, NibReusable {
     }
     
     //MARK: My Methods
-    func setupCell(modifier: ProductModifier, group: ProductModifierGroup) {
+    func setupCell(modifier: ProductModifier, group: ProductModifierGroup, regionInfo: RegionInfo) {
         
         if group.isMultiSelectionAllowed {
             self.selectionContainerView.layer.cornerRadius = 4.0
@@ -65,8 +65,8 @@ class ProductModifierCell: UITableViewCell, NibReusable {
         }
         
         self.titleLabel.text = modifier.name
-        self.productPriceLabel.text = String(format: "£ %.2f", modifier.price)
-        self.quantityPriceLabel.text = String(format: "£ %.2f", modifier.price * Double(modifier.quantity))
+        self.productPriceLabel.text = String(format: "\(regionInfo.currencySymbol) %.2f", modifier.price)
+        self.quantityPriceLabel.text = String(format: "\(regionInfo.currencySymbol) %.2f", modifier.price * Double(modifier.quantity))
         
         self.stepperView.minValue = 0
         self.stepperView.maxValue = group.multiSelectMax

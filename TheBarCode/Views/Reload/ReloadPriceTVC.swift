@@ -8,6 +8,7 @@
 
 import UIKit
 import Reusable
+import StoreKit
 
 class ReloadPriceTVC: UITableViewCell, NibReusable {
 
@@ -25,7 +26,7 @@ class ReloadPriceTVC: UITableViewCell, NibReusable {
         // Configure the view for the selected state
     }
     
-    func setUpCell(state: ReloadState) {
+    func setUpCell(state: ReloadState, product: SKProduct) {
         
         if state == ReloadState.noOfferRedeemed {
                         
@@ -66,8 +67,13 @@ class ReloadPriceTVC: UITableViewCell, NibReusable {
             let blueAttributes = [NSAttributedStringKey.font: font,
                                   NSAttributedStringKey.foregroundColor: UIColor.appBlueColor()]
             
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.locale = product.priceLocale
+            let cost = formatter.string(from: product.price) ?? ""
+            
             let description = "Reload all offers \n& access credits for \n "
-            let description2 = "£1"
+            let description2 = cost
 
             let attributedText = NSAttributedString(string: description, attributes: boldAttributes)
             let attributedPrice = NSAttributedString(string: description2, attributes: blueAttributes)

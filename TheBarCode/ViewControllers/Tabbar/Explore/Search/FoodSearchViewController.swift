@@ -181,7 +181,7 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = self.statefulTableView.innerTable.dequeueReusableCell(for: indexPath, cellType: ProductMenuCell.self)
         
         let product = self.searchResults[indexPath.section].products[indexPath.row]
-        cell.setupCell(product: product, isInAppPaymentOn: self.searchResults[indexPath.section].bar.isInAppPaymentOn.value)
+        cell.setupCell(product: product, bar: self.searchResults[indexPath.section].bar)
         cell.separatorView.isHidden = false
         
         cell.delegate = self
@@ -228,7 +228,9 @@ extension FoodSearchViewController: ProductMenuCellDelegate {
                                                       quantity: product.quantity.value)
             productModifiersController.establishmentId = bar.id.value
             productModifiersController.type = bar.menuTypeRaw.value
-            
+            productModifiersController.regionInfo = (country: bar.country.value,
+                                                     currencySymbol: bar.currencySymbol.value,
+                                                     currencyCode: bar.currencyCode.value)
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
             self.updateCart(product: product, barId: bar.id.value, shouldAdd: true)

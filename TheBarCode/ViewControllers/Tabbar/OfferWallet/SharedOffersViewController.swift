@@ -153,9 +153,12 @@ extension SharedOffersViewController: UITableViewDataSource, UITableViewDelegate
         let offerDetailNavigation = self.storyboard!.instantiateViewController(withIdentifier: "OfferDetailNavigation") as! UINavigationController
         offerDetailNavigation.modalPresentationStyle = .fullScreen
         
+        let deal = (self.offers[indexPath.row] as! Deal)
+        
         let offerDetailController = offerDetailNavigation.viewControllers.first! as! OfferDetailViewController
         offerDetailController.isSharedOffer = true
-        offerDetailController.deal = (self.offers[indexPath.row] as! Deal)
+        offerDetailController.deal = deal
+        offerDetailController.bar = deal.establishment.value!
         offerDetailController.isPresenting = true
         
         self.present(offerDetailNavigation, animated: true, completion: nil)

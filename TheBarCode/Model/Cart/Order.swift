@@ -117,6 +117,10 @@ class Order: Mappable {
     
     var squareUpLocationId: String = ""
     
+    var country: String = "United Kingdom (UK)"
+    var currencySymbol: String = "£"
+    var currencyCode: String = "GBP"
+    
     required init?(map: Map) {
         
     }
@@ -125,6 +129,10 @@ class Order: Mappable {
         
         self.barId = "\(map.JSON["establishment_id"]!)"
         self.barName <- map["establishment.title"]
+        
+        self.country <- map["establishment.region.country"]
+        self.currencyCode <- map["establishment.region.currency_code"]
+        self.currencySymbol <- map["establishment.region.currency_symbol"]
         
         self.statusRaw <- map["status"]
         
