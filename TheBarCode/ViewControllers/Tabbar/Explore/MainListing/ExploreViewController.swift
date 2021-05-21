@@ -12,6 +12,7 @@ import HTTPStatusCodes
 import ObjectMapper
 import Alamofire
 import FirebaseAnalytics
+import OneSignal
 
 enum ExploreType: String {
     case bars = "bars", deals = "deals", liveOffers = "live_offers"
@@ -202,6 +203,9 @@ class ExploreViewController: UIViewController {
             redeemInfoCopy!.remainingSeconds = redeemInfo.remainingSeconds
             redeemInfoCopy!.totalSavings = redeemInfo.totalSavings
             redeemInfoCopy!.lastReloadSavings = redeemInfo.lastReloadSavings
+            redeemInfoCopy!.currencySymbol = redeemInfo.currencySymbol
+            redeemInfoCopy!.country = redeemInfo.country
+            redeemInfoCopy!.currencyCode = redeemInfo.currencyCode
         }
         
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
@@ -222,7 +226,7 @@ class ExploreViewController: UIViewController {
         if type == .discount {
             return (title: "Get guaranteed discounts off your first round plus loads of other great offers!" , message: "You can start using all offers and credits now.\n\nYou can reload all offers when the counter hits 0:00:00:00\n\nInvite friends and share the offers you receive to earn more credits.")
         } else if type == .reload {
-            return (title: "Reload in" , message: "When the timer hits Zero, Reload all used offers and access Credits for just £1 or ₹89\n\nYou are eligible to Reload every 7 days")
+            return (title: "Reload in" , message: "When the timer hits Zero, Reload all used offers and access Credits for just \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.reload)\n\nYou are eligible to Reload every 7 days")
         } else if type == .congrates {
             return (title: "Reload" , message: "You are able to reload")
         }
@@ -472,6 +476,18 @@ extension ExploreViewController {
     @objc func applicationDidBecomeActive(notification: Notification) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.refreshSnackBar()
+            
+            //WHEN USER DENY NOTIFICATION PERMISSION AND GOTO SETTINGS AND COME BACK TO APP ONESIGNAL DOES NOT REGISTER AUTOMATICALLY
+            let center = UNUserNotificationCenter.current()
+            center.getNotificationSettings { (settings) in
+                if(settings.authorizationStatus == .authorized) {
+                    DispatchQueue.main.async {
+                        OneSignal.promptForPushNotifications { granted in
+                            debugPrint("register for notifications")
+                        }
+                    }
+                }
+            }
         }
     }
     

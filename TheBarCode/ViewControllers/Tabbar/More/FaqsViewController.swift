@@ -28,51 +28,51 @@ class FaqsViewController: UIViewController {
         
         Analytics.logEvent(viewFaqsScreen, parameters: nil)
         
-        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The standard discount ranges from a minimum of 10% up to 25% off your first round. Keep your eye out though, bars provide plenty of varied offers that are greater than the standard offer at different times and for different events.")])
+        let section1 = FAQSection(title: "How much discount do we receive?", faqs: [FAQ(text: "The members discount ranges from a minimum of 10% up to 25% off your first round. Keep your eye out though, venues provide plenty of varied offers that are greater than the members discount at different times and for different events.")])
         self.faqSections.append(section1)
         
-        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is £20 or ₹500.")])
+        let section2 = FAQSection(title: "What constitutes a round?", faqs: [FAQ(text: "A Barcode round is \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.round).")])
         self.faqSections.append(section2)
         
-        let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the bar and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
+        let section3 = FAQSection(title: "How do I claim my discount?", faqs: [FAQ(text: "You simply order your drinks and tell the bartender that you are using The Barcode. For offer redemption you must be in the vicinty of the venue and when it is time to pay, press \"Redeem\", the offer will be redeemed and the discount will be applied to your bill. Simple!")])
         self.faqSections.append(section3)
         
         let section4 = FAQSection(title: "How often can I reload?", faqs: [FAQ(text: "You can reload a maximum of once every 7 days but can reload anytime after 7 days from the previous reload. The timer at the top of the screen will let you know how long to wait until you can next Reload. Your 7 day timer starts after you first Redeem one of our many great offers.")])
         self.faqSections.append(section4)
         
-        let section5 = FAQSection(title: "Do I have to Reload?", faqs: [FAQ(text: "No. The Barcode is not a subscription and you can choose to use it as often or as little as you like. You can use The Barcode as a directory of great independent Bars and take advantage of the offers that are on there from when you sign up. However, Reloading is the best way to make the most of all of the features on 'The Barcode' app, and remember, you only pay to save.")])
+        let section5 = FAQSection(title: "Do I have to Reload?", faqs: [FAQ(text: "No. The Barcode is not a subscription and you can choose to use it as often or as little as you like. You can use The Barcode as a directory of great independent venues and take advantage of the offers that are on there from when you sign up. However, Reloading is the best way to make the most of all of the features on 'The Barcode' app, and remember, you only pay to save.")])
         self.faqSections.append(section5)
         
-        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "£1.00 or ₹89.00.")])
+        let section6 = FAQSection(title: "How much does it cost to reload?", faqs: [FAQ(text: "\(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.reload)")])
         self.faqSections.append(section6)
         
         
-        let section7 = FAQSection(title: "Do the same rules apply to all bars?", faqs: [FAQ(text: "Yes, all Bars have to honour a minimum discount of 10% off a round to the value of £20 or ₹500 at all times. However this can vary from 10%, 15% and 25% at different Bars and at different times. You can see the value of the discount at the banner at the bottom of each Bar page.")])
+        let section7 = FAQSection(title: "Do the same rules apply to all venues?", faqs: [FAQ(text: "Yes, all venues have to honour a minimum discount of 10% off a round to the value of \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.round) at all times. However this can vary from 10%, 15% and 25% at different venues and at different times. You can see the value of the discount at the banner at the bottom of each venue page.")])
         self.faqSections.append(section7)
         
-        let section8 = FAQSection(title: "What is the minimum discount that any bar can offer?", faqs: [FAQ(text: "10% off the first round up to a value of £20 or ₹500, on any day of the week and at any time.")])
+        let section8 = FAQSection(title: "What is the minimum discount that any venue can offer?", faqs: [FAQ(text: "10% off the first round up to a value of \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.round), on any day of the week and at any time.")])
         self.faqSections.append(section8)
         
-        let section9 = FAQSection(title: "What is the maximum discount any bar can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual bar and what they wish to do.")])
+        let section9 = FAQSection(title: "What is the maximum discount any venue can offer?", faqs: [FAQ(text: "It is open ended and depends entirely on the individual venue and what they wish to do.")])
         self.faqSections.append(section9)
         
         let section10 = FAQSection(title: "Is there any time I can’t claim my discount?", faqs: [FAQ(text: "Only when you have already used your discounts and have not applied either credits or reloaded.")])
         self.faqSections.append(section10)
         
-        let section11 = FAQSection(title: "Can I claim my discount at any Bar that is on the app?", faqs: [FAQ(text: "Yes.")])
+        let section11 = FAQSection(title: "Can I claim my discount at any venue that is on the app?", faqs: [FAQ(text: "Yes.")])
         self.faqSections.append(section11)
         
-        let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Bars are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner Bars.")])
+        let section12 = FAQSection(title: "Are all offers exclusive to The Barcode?", faqs: [FAQ(text: "Any offer that has a redemption button attached will be an exclusive Barcode offer, so you don't need to worry about wasting money or credits on regular offers. Venues are also able to promote regular deals on The Barcode but these are purely informational and can't be redeemed. The 25% off deal is a unique Barcode offer and is available at all of our partner venues.")])
         self.faqSections.append(section12)
         
         
-        let section13 = FAQSection(title: "Does the discount apply to food as well as drinks?", faqs: [FAQ(text: "The rules of The Barcode are that it must only be honored on rounds of drinks. However, as a combination of offers, or as part of an individual bars particular strategy, they may have all sorts of food offers for you to choose from.")])
+        let section13 = FAQSection(title: "Does the discount apply to food as well as drinks?", faqs: [FAQ(text: "Yes – Users can claim their minimum discounts off any order for any items upto the value of \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.round).")])
         self.faqSections.append(section13)
         
         let section14 = FAQSection(title: "What do I get for a referral?", faqs: [FAQ(text: "For each referral you make to 'The Barcode' you receive 1 free credit on us. Just go to the invite friends tab and invite as many friends as you want. When they have downloaded the app and redeemed their first offer you will get a credit. ")])
         self.faqSections.append(section14)
         
-        let section15 = FAQSection(title: "How much is a credit worth?", faqs: [FAQ(text: "A credit can be used to activate any offer you like. This could be a standard 25% offer that you want to re-use or one of the many other offers on the app that you want to redeem again.")])
+        let section15 = FAQSection(title: "How much is a credit worth?", faqs: [FAQ(text: "A credit can be used to activate any offer you like. This could be a members discount of 25% that you want to re-use or one of the many other offers on the app that you want to redeem again.")])
         self.faqSections.append(section15)
         
         let section16 = FAQSection(title: "How do I get more credits?", faqs: [FAQ(text: "You can get credits by inviting friends to join the app or sharing offers with your friends. The Credits will drop into your account as soon they have either downloaded the app using your code and redeemed their first offer, or redeemed the offer you shared.")])
@@ -82,10 +82,10 @@ class FaqsViewController: UIViewController {
 //        let section17 = FAQSection(title: "Can I Share my Credits?", faqs: [FAQ(text: "Yes, if you are feeling super generous!! By using our 'Share Credits' feature you can pass on credits to friends who may be in need. Just type in your friends unique code and they will receive one of your credits. You can do this as many times as you like.")])
 //        self.faqSections.append(section17)
         
-        let section18 = FAQSection(title: "How often can I use credits", faqs: [FAQ(text: "You can use credits as often as you like. For them to be valid though you need have Reloaded within the previous 7 days. If you haven't, no problem, just hit the Reload button and reactivate all the offers that you have previously Redeemed.")])
+        let section18 = FAQSection(title: "How often can I use credits?", faqs: [FAQ(text: "You can use credits as often as you like. For them to be valid though you need to have Reloaded within the previous 7 days. If you haven't, no problem, just hit the Reload button and reactivate all the offers that you have previously Redeemed.")])
         self.faqSections.append(section18)
         
-        let section19 = FAQSection(title: "How many credits can I use in a night?", faqs: [FAQ(text: "You can use as many credits in a night as you have available. You can Redeem 2 offers per night per Bar but how many Bars you go and Redeem in is up to you.")])
+        let section19 = FAQSection(title: "How many credits can I use in a night?", faqs: [FAQ(text: "You can use as many credits in a night as you have available. You can Redeem 2 offers per night per venue but how many venues you go and Redeem in is up to you.")])
         self.faqSections.append(section19)
         
         let section20 = FAQSection(title: "Can I save credits?", faqs: [FAQ(text: "Yes. They have no expiry date so feel free to bank them for a rainy day.")])
@@ -99,7 +99,7 @@ class FaqsViewController: UIViewController {
 //        self.faqSections.append(section22)
         
         
-        let section23 = FAQSection(title: "Am I able to claim live offers if I haven’t reloaded?", faqs: [FAQ(text: "Yes, unless the offer that is sent out is conditional on you redeeming your offer and you have already redeemed previously in that bar since your last reload period.")])
+        let section23 = FAQSection(title: "Am I able to claim offers if I haven’t reloaded?", faqs: [FAQ(text: "Yes, unless the offer that is sent out is conditional on you redeeming your offer and you have already redeemed previously in that venue since your last reload period.")])
         self.faqSections.append(section23)
         
         let section24 = FAQSection(title: "What defines which offers I receive in my ‘Edits.’?", faqs: [FAQ(text: "The Edits offers are designed to give you the most relevant offers on any given day. We take your user preferences plus your geographical data and work out what we think the best deals are for you. You can adjust what offers you receive by changing your user preferences.")])

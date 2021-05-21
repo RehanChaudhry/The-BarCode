@@ -71,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dataStack = Utility.barCodeDataStack
         try! dataStack.addStorageAndWait(dataStorage)
         
+        Utility.shared.restoreSavedRegionalInfoFromUserDefaults()
+        
         self.setupAuthIfNeeded()
         
         self.customizeAppearance()

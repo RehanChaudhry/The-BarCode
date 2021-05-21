@@ -52,11 +52,13 @@ class MobileLoginViewController: UIViewController {
         self.phoneNoFieldView.textField.becomeFirstResponder()
         
 //        self.phoneNoFieldView.prefixLabel.isHidden = true
-        self.phoneNoFieldView.prefixLabel.text = "+44"
+        self.phoneNoFieldView.prefixLabel.text = Utility.shared.regionalInfo.dialingCode
         self.phoneNoFieldView.prefixLabel.textColor = UIColor.clear
         self.phoneNoFieldView.prefixLabelWidth.constant = 36.0
         self.phoneNoFieldView.prefixLabelMargin.constant = 5.0
         self.phoneNoFieldView.flagView.isHidden = false
+        
+        self.phoneNoFieldView.flagImageView.image = Utility.shared.regionalInfo.country == INCountryCode ? UIImage(named: "icon_in_flag") : UIImage(named: "icon_flag_uk")
     }
     
     //MARK: My Methods
@@ -110,7 +112,7 @@ class MobileLoginViewController: UIViewController {
         var isValid = true
         
         let text = self.phoneNoFieldView.textField.text!
-        let mobileNumber = text //text.unformat("NNNNN NNNNNN", oldString: text)
+        let mobileNumber = text.digits //text.unformat("NNNNN NNNNNN", oldString: text)
         
         if mobileNumber.count < 11 {
             isValid = false
@@ -149,6 +151,7 @@ extension MobileLoginViewController: FieldViewDelegate {
         }
         
         if textField.text!.count == 0 && string != "0" {
+            textField.text = "0" + string
             return false
         }
         

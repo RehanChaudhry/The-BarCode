@@ -153,31 +153,40 @@ extension BarDetailAboutViewController: UITableViewDelegate, UITableViewDataSour
 extension BarDetailAboutViewController: SocialLinksCellDelegate {
     func socialLinksCell(cell: SocialLinksCell, facebookButtonTapped sender: UIButton) {
         guard let fbLink = self.bar.facebookPageUrl.value, fbLink.count > 0, let url = URL(string: fbLink) else {
+            self.showAlertController(title: "", msg: "Invalid URL")
             return
         }
         
         UIApplication.shared.open(url, options: [:]) { (completed) in
-            
+            if !completed {
+                self.showAlertController(title: "", msg: "Invalid URL")
+            }
         }
     }
     
     func socialLinksCell(cell: SocialLinksCell, twitterButtonTapped sender: UIButton) {
         guard let twitterLink = self.bar.twitterProfileUrl.value, twitterLink.count > 0, let url = URL(string: twitterLink) else {
+            self.showAlertController(title: "", msg: "Invalid URL")
             return
         }
         
         UIApplication.shared.open(url, options: [:]) { (completed) in
-            
+            if !completed {
+                self.showAlertController(title: "", msg: "Invalid URL")
+            }
         }
     }
     
     func socialLinksCell(cell: SocialLinksCell, instagramButtonTapped sender: UIButton) {
         guard let instagramLink = self.bar.instagramProfileUrl.value, instagramLink.count > 0, let url = URL(string: instagramLink) else {
+            self.showAlertController(title: "", msg: "Invalid URL")
             return
         }
         
         UIApplication.shared.open(url, options: [:]) { (completed) in
-            
+            if !completed {
+                self.showAlertController(title: "", msg: "Invalid URL")
+            }
         }
     }
 }

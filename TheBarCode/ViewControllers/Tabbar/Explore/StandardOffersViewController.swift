@@ -192,7 +192,7 @@ extension StandardOffersViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = self.tableView.dequeueReusableHeaderFooterView(FiltersHeaderView.self)
         if section == 0 {
-            headerView?.setupHeader(title: "STANDARD OFFERS")
+            headerView?.setupHeader(title: "MEMBERS DISCOUNT")
         } else if section == 1 {
             headerView?.setupHeader(title: "REDEEMING TYPES")
         }

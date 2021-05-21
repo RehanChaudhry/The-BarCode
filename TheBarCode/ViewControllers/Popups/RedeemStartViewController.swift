@@ -67,7 +67,7 @@ class RedeemStartViewController: UIViewController {
             self.standardOfferInfoLabel.text = "Unlimited Offer"
         } else {
             if self.offerType == OfferType.standard {
-                self.standardOfferInfoLabel.text = "Discount applies only to the first £20.00 or ₹500.00"
+                self.standardOfferInfoLabel.text = "Discount applies only to the first \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.round)"
             } else {
                 self.standardOfferInfoLabel.text = ""
             }

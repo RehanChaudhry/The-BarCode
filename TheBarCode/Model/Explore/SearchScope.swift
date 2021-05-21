@@ -31,7 +31,7 @@ enum SearchScope: String {
         case .bar:
             let item = SearchScopeItem(storyboardId: "BarSearchViewController",
                                        scopeType: .bar,
-                                       title: "BARS",
+                                       title: "VENUES",
                                        backgroundColor: .appSearchScopeBarsColor(),
                                        selectedBackgroundColor: .appSearchScopeBarsSelectedColor())
             return item

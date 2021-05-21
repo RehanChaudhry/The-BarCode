@@ -44,6 +44,7 @@ class FieldView: UIView, NibReusable {
     @IBOutlet weak var sampleTextLabel: UILabel!
     
     @IBOutlet var flagView: UIView!
+    @IBOutlet var flagImageView: UIImageView!
     
     weak var delegate: FieldViewDelegate?
     

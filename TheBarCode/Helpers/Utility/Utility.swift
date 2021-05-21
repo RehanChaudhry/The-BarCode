@@ -127,6 +127,9 @@ let tbcLogoUrl = URL(string: "https://thebarcode.co/storage/tbc-logo.png")
 
 let keyChainServiceName = bundleId + ".keychainservice"
 
+let UKCountryCode = "UK"
+let INCountryCode = "IN"
+
 enum EnvironmentType: String {
     case dev = "dev", stagging = "stagging", qa = "qa", production = "production", unknown = "unknown"
     
@@ -152,6 +155,8 @@ class Utility: NSObject {
     static let shared = Utility()
    
     var notificationCount: Int = 0
+    
+    var regionalInfo: (currencySymbol: String, reload: String, round: String, dialingCode: String, country: String) = (currencySymbol: "£", reload: "1", round: "20", dialingCode: "+44", country: "UK")
 
     static let barCodeDataStack = DataStack(
         CoreStoreSchema(
@@ -205,6 +210,27 @@ class Utility: NSObject {
         }
         
     }()
+    
+    func saveRegionalInfoToUserDefaults() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(self.regionalInfo.currencySymbol, forKey: "currencySymbol")
+        userDefaults.setValue(self.regionalInfo.reload, forKey: "reload")
+        userDefaults.setValue(self.regionalInfo.round, forKey: "round")
+        userDefaults.setValue(self.regionalInfo.country, forKey: "country")
+        userDefaults.setValue(self.regionalInfo.dialingCode, forKey: "dialingCode")
+        userDefaults.synchronize()
+    }
+    
+    func restoreSavedRegionalInfoFromUserDefaults() {
+        let userDefaults = UserDefaults.standard
+        if let symbol = userDefaults.value(forKey: "currencySymbol") as? String,
+           let reload = userDefaults.value(forKey: "reload") as? String,
+           let round = userDefaults.value(forKey: "round") as? String,
+           let country = userDefaults.value(forKey: "country") as? String,
+           let dialingCode = userDefaults.value(forKey: "dialingCode") as? String {
+            self.regionalInfo = (currencySymbol: symbol, reload: reload, round: round, dialingCode: dialingCode, country: country)
+        }
+    }
     
     func saveFullnameForAppleId(fullName: String) {
         let keychainService = Keychain(service: keyChainServiceName)

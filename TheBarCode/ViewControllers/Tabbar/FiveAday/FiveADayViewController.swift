@@ -328,7 +328,7 @@ extension FiveADayViewController {
                 }
                 
                 if self.deals.isEmpty {
-                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Five A Day Deal Available", reloadMessage: "Tap To refresh")
+                    self.statefulView.showErrorViewWithRetry(errorMessage: "No Edits Available", reloadMessage: "Tap To refresh")
                 } else {
                     self.statefulView.isHidden = true
                     self.statefulView.showNothing()

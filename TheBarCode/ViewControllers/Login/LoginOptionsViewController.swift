@@ -124,13 +124,13 @@ class LoginOptionsViewController: UIViewController {
     
     func setupInitialData(){
         
-        let option1 = IntroOption(title: "Discover", detail: "Discover awesome Independent pubs and bars", type: .barFinder)
+        let option1 = IntroOption(title: "Discover", detail: "Discover awesome Independent venues", type: .barFinder)
     
         let option2 = IntroOption(title: "Edits", detail: "Get a daily bundle of offers specific to you", type: .fiveADay)
         
         let option3 = IntroOption(title: "Live Alerts", detail: "Receive real-time offers from your nearest and dearest", type: .liveOffers)
 
-        let option4 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just £1 or ₹89", type: .reload)
+        let option4 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.reload)", type: .reload)
         
         let option5 = IntroOption(title: "Get Credits", detail: "Earn credits by inviting friends and sharing offers", type: .credits)
 

@@ -133,7 +133,23 @@ extension SplashViewController {
             }
             
             let responseDict = (response as? [String : Any])?["response"] as? [String : Any]
-            if let responseData = (responseDict?["data"] as? [String : Any]), let forceUpdate = responseData["force_update"] as? Bool {
+            let responseData = (responseDict?["data"] as? [String : Any])
+            
+            if let responseData = responseData,
+               let symbol = responseData["currency_symbol"] as? String,
+               let _ = responseData["reload"],
+               let _ = responseData["round"],
+               let _ = responseData["dialing_code"],
+               let _ = responseData["country"] {
+                Utility.shared.regionalInfo = (currencySymbol: symbol,
+                                               reload: "\(responseData["reload"]!)",
+                                               round: "\(responseData["round"]!)",
+                                               dialingCode: "\(responseData["dialing_code"]!)",
+                                               country: "\(responseData["country"]!)")
+                Utility.shared.saveRegionalInfoToUserDefaults()
+            }
+            
+            if let forceUpdate = responseData?["force_update"] as? Bool {
                 
                 if forceUpdate {
                     self.showForceUpdateAlert()

@@ -71,6 +71,7 @@ class CannotRedeemViewController: UIViewController {
         
         if alertType == .credit {
             actionButton.setTitle("Invite Friends & Get Credits", for: .normal)
+            self.setupSavingsLabel()
         } else if alertType == .discount {
             actionButton.setTitle("Invite Friends", for: .normal)
             self.setupSavingsLabel()
