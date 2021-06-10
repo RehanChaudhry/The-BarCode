@@ -154,9 +154,7 @@ class MyCartViewController: UIViewController {
         }
     }
     
-    //MARK: My IBActions
-    @IBAction func checkOutButtonTapped(sender: UIButton) {
-        
+    func moveToCheckOut() {
         if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
             
             if self.isComingFromBarDetails {
@@ -176,12 +174,40 @@ class MyCartViewController: UIViewController {
                 self.navigationController?.present(navigation, animated: true, completion: nil)
             }
         }
+    }
+    
+    //MARK: My IBActions
+    @IBAction func checkOutButtonTapped(sender: UIButton) {
+        
+        
+        
+        let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
+        cannotRedeemViewController.messageText = "If you have any allergies, please let a member of the waiting staff know before ordering."
+        cannotRedeemViewController.titleText = "Info"
+        cannotRedeemViewController.headerImageName = "login_intro_reload_5"
+        cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
+        cannotRedeemViewController.delegate = self
+        self.present(cannotRedeemViewController, animated: true, completion: nil)
         
     }
     
     @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+//MARK: CannotRedeemViewControllerDelegate
+
+extension MyCartViewController: CannotRedeemViewControllerDelegate {
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+        self.moveToCheckOut()
+    }
+    
+    func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
+        
+    }
+    
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
