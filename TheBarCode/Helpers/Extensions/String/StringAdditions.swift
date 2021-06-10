@@ -19,9 +19,15 @@ extension String {
     }
     
     func isValidPostCode() -> Bool {
-        let postcodeFormat = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$"
-        let postcodePredicate = NSPredicate(format:"SELF MATCHES %@", postcodeFormat)
-        return postcodePredicate.evaluate(with: self)
+        if Utility.shared.regionalInfo.country == INCountryCode {
+            let postcodeFormat = "^[1-9][0-9]{5}$"
+            let postcodePredicate = NSPredicate(format:"SELF MATCHES %@", postcodeFormat)
+            return postcodePredicate.evaluate(with: self)
+        } else {
+            let postcodeFormat = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$"
+            let postcodePredicate = NSPredicate(format:"SELF MATCHES %@", postcodeFormat)
+            return postcodePredicate.evaluate(with: self)
+        }
     }
     
     func trimWhiteSpaces() -> String {

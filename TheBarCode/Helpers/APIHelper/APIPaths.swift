@@ -98,6 +98,8 @@ let apiPathModifierGroups = "modifier-group"
 let worldPayTermBaseUrl = "https://online.worldpay.com/3dsr/"
 let worldPayScheme = "worldpay-scheme"
 
+let apiPathPaymentSense = "payment-sense"
+
 //Analytics Events
 let appLaunched = "App Launched".getFormattedEventName()
 

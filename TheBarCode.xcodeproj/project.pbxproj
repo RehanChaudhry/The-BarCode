@@ -372,6 +372,7 @@
 		B34BD95124D2E18A00714308 /* TableReserveNoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B34BD94F24D2E18A00714308 /* TableReserveNoteCell.xib */; };
 		B35F6F6724DD1BB80045029B /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F6F6524DD1BB80045029B /* AddressTableViewCell.swift */; };
 		B35F6F6824DD1BB80045029B /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B35F6F6624DD1BB80045029B /* AddressTableViewCell.xib */; };
+		B3A88DB1266F33E500AB5992 /* PaymentSenseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A88DB0266F33E500AB5992 /* PaymentSenseWebViewController.swift */; };
 		B3C1292324D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */; };
 		B3C1292424D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */; };
 		B3C1292624D99D4000789FF2 /* OrderOfferRedeemSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */; };
@@ -899,6 +900,7 @@
 		B34BD94F24D2E18A00714308 /* TableReserveNoteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableReserveNoteCell.xib; sourceTree = "<group>"; };
 		B35F6F6524DD1BB80045029B /* AddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTableViewCell.swift; sourceTree = "<group>"; };
 		B35F6F6624DD1BB80045029B /* AddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressTableViewCell.xib; sourceTree = "<group>"; };
+		B3A88DB0266F33E500AB5992 /* PaymentSenseWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSenseWebViewController.swift; sourceTree = "<group>"; };
 		B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemTableViewCell.swift; sourceTree = "<group>"; };
 		B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderOfferRedeemTableViewCell.xib; sourceTree = "<group>"; };
 		B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemSection.swift; sourceTree = "<group>"; };
@@ -1971,6 +1973,7 @@
 				0C955DD52147F20100F9385B /* TermsViewController.swift */,
 				0C955DD72147F20E00F9385B /* PrivacyPolicyViewController.swift */,
 				0C521FAD252D97F300464500 /* ThreeDSWebViewController.swift */,
+				B3A88DB0266F33E500AB5992 /* PaymentSenseWebViewController.swift */,
 			);
 			path = OtherControllers;
 			sourceTree = "<group>";
@@ -2989,6 +2992,7 @@
 				0CA216352237B881008B3E0B /* MobileVerificationViewController.swift in Sources */,
 				FA9076A524C1E1320035AAA3 /* CartSectionHeaderView.swift in Sources */,
 				0C8E9A93214A88B100224720 /* NotificationSettingsViewController.swift in Sources */,
+				B3A88DB1266F33E500AB5992 /* PaymentSenseWebViewController.swift in Sources */,
 				0C117EF422DD9E630061FFC3 /* OffersViewController.swift in Sources */,
 				0C955DF22149317100F9385B /* StatefulCollectionView+PullToRefresh.swift in Sources */,
 				B300A6BE24E57F1800037C7C /* SplitBillScannerViewController.swift in Sources */,
@@ -3254,7 +3258,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3263,7 +3267,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.4;
+				MARKETING_VERSION = 8.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp.OneSignalNotificationServiceExtension;
@@ -3281,7 +3285,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3290,7 +3294,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.4;
+				MARKETING_VERSION = 8.5;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3424,7 +3428,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3436,7 +3440,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.4;
+				MARKETING_VERSION = 8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3455,7 +3459,7 @@
 				CODE_SIGN_ENTITLEMENTS = TheBarCode/TheBarCode.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = Y9DNDAU2YH;
 				INFOPLIST_FILE = TheBarCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3467,7 +3471,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.4;
+				MARKETING_VERSION = 8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -75,6 +75,8 @@ class AddAddressViewController: UIViewController {
         }
     }
     
+    var maxPostCodeCharLimit = 8
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -130,6 +132,8 @@ class AddAddressViewController: UIViewController {
             self.title = "Add Address"
             self.getCurrentLocation()
         }
+        
+        self.maxPostCodeCharLimit = Utility.shared.regionalInfo.country == INCountryCode ? 6 : 8
         
     }
     
@@ -217,7 +221,7 @@ class AddAddressViewController: UIViewController {
         if self.postCodeField.text?.isValidPostCode() == false {
             isValid = false
             
-            self.postCodeValidationLabel.text = "Please enter a valid postcode e.g. L1 8JQ"
+            self.postCodeValidationLabel.text = "Please enter a valid postcode"
         } else {
             self.postCodeValidationLabel.text = ""
         }
@@ -264,7 +268,7 @@ extension AddAddressViewController: UITextFieldDelegate {
         var maxLength: Int?
         
         if textField == self.postCodeField {
-            maxLength = 8
+            maxLength = self.maxPostCodeCharLimit
         } else {
             maxLength = 300
         }

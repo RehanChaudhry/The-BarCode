@@ -42,6 +42,11 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var removeItemActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var removeItemButton: UIButton!
     
+    @IBOutlet var deliveryOnlyLabel: UILabel!
+    
+    @IBOutlet var deliveryOnlyLabelWidth: NSLayoutConstraint!
+    @IBOutlet var deliveryOnlyLabelLeft: NSLayoutConstraint!
+    
     weak var delegate: ProductMenuCellDelegate!
     
     enum CartIconType: String {
@@ -97,6 +102,16 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.shouldEnableCartButtons(enable: !(product.isAddingToCart || product.isRemovingFromCart))
         } else {
             self.addItemButton.isUserInteractionEnabled = false
+        }
+        
+        if product.isDeliveryOnly.value {
+            self.deliveryOnlyLabel.isHidden = false
+            self.deliveryOnlyLabelWidth.constant = 110.0
+            self.deliveryOnlyLabelLeft.constant = 8.0
+        } else {
+            self.deliveryOnlyLabel.isHidden = true
+            self.deliveryOnlyLabelWidth.constant = 0.0
+            self.deliveryOnlyLabelLeft.constant = 0.0
         }
         
         self.handleAddingToCart(isAdding: product.isAddingToCart)

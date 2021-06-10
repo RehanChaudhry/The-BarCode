@@ -89,6 +89,8 @@ class AddCardViewController: UIViewController {
             return self.sqVerificationParams != nil
         }
     }
+    
+    var maxPostCodeCharLimit = 8
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,6 +124,8 @@ class AddCardViewController: UIViewController {
         } else {
             self.title = "Add a Card"
         }
+        
+        self.maxPostCodeCharLimit = Utility.shared.regionalInfo.country == INCountryCode ? 6 : 8
         
     }
     
@@ -504,7 +508,7 @@ extension AddCardViewController: UITextFieldDelegate {
             
             return false
         } else if textField == self.postalCodeField {
-            maxLength = 8
+            maxLength = self.maxPostCodeCharLimit
         } else if textField == self.cvcField {
             maxLength = 4
         } else if textField == self.postalCodeField {

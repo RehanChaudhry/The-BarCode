@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +13,9 @@
         </array>
         <array key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
+        </array>
+        <array key="Lato-Semibold.ttf">
+            <string>Lato-Semibold</string>
         </array>
     </customFonts>
     <objects>
@@ -26,7 +29,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5w-VV-CxB">
-                        <rect key="frame" x="16" y="16" width="288" height="19.5"/>
+                        <rect key="frame" x="16" y="16" width="170" height="19.5"/>
                         <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -126,22 +129,40 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </activityIndicatorView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Delivery Only" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e7m-pk-RNc">
+                        <rect key="frame" x="194" y="11" width="110" height="28"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="110" id="coQ-5J-U6I"/>
+                            <constraint firstAttribute="height" constant="28" id="iuZ-yB-nkp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YRW-ik-7Li" firstAttribute="centerY" secondItem="yIc-JX-wm2" secondAttribute="centerY" id="1K2-aP-mcY"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" id="3ed-3J-niA"/>
                     <constraint firstAttribute="bottom" secondItem="kMK-ZW-8Cu" secondAttribute="bottom" id="5bA-mp-Vcx"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="9gw-F9-FJP"/>
+                    <constraint firstItem="e7m-pk-RNc" firstAttribute="top" secondItem="aAo-BC-Qdw" secondAttribute="top" constant="11" id="BhX-8s-X4R"/>
                     <constraint firstItem="Sw9-bv-cKI" firstAttribute="centerY" secondItem="TMq-dN-c4f" secondAttribute="centerY" id="FLD-AD-o0o"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="leading" secondItem="YRW-ik-7Li" secondAttribute="trailing" constant="8" id="FTU-Zp-eYW"/>
                     <constraint firstAttribute="trailing" secondItem="kMK-ZW-8Cu" secondAttribute="trailing" constant="16" id="KZf-Uq-PgM"/>
                     <constraint firstItem="f5w-VV-CxB" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="O8y-Qj-0RB"/>
                     <constraint firstItem="Sw9-bv-cKI" firstAttribute="leading" secondItem="TMq-dN-c4f" secondAttribute="trailing" constant="7.5" id="Ppi-85-HCQ"/>
                     <constraint firstItem="YRW-ik-7Li" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sw9-bv-cKI" secondAttribute="trailing" constant="8" id="R7V-Pa-v9Q"/>
-                    <constraint firstAttribute="trailing" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="16" id="RJo-fx-S8L"/>
                     <constraint firstAttribute="trailing" secondItem="yIc-JX-wm2" secondAttribute="trailing" constant="16" id="SNF-o2-JcO"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="top" secondItem="f5w-VV-CxB" secondAttribute="bottom" constant="10" id="Xgb-3C-Sx7"/>
                     <constraint firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" constant="16" id="Y75-oZ-vAC"/>
+                    <constraint firstAttribute="trailing" secondItem="e7m-pk-RNc" secondAttribute="trailing" constant="16" id="bgf-Hy-yKx"/>
+                    <constraint firstItem="e7m-pk-RNc" firstAttribute="leading" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="8" symbolic="YES" id="cVQ-9m-kco"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="iKn-AU-0kP"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="lie-y5-Xgz"/>
                     <constraint firstAttribute="trailing" secondItem="mX7-Be-M1C" secondAttribute="trailing" constant="16" id="q8U-m5-Ghc"/>
@@ -157,6 +178,9 @@
                 <outlet property="cartIconContainer" destination="DwO-yC-v2a" id="8j0-cF-GCQ"/>
                 <outlet property="cartIconContainerWidth" destination="DGK-IJ-M4L" id="M2D-9U-naB"/>
                 <outlet property="cartIconImageView" destination="CQA-7a-WMo" id="QJq-m4-fL3"/>
+                <outlet property="deliveryOnlyLabel" destination="e7m-pk-RNc" id="Hfd-66-CYI"/>
+                <outlet property="deliveryOnlyLabelLeft" destination="cVQ-9m-kco" id="nzP-Q6-vGc"/>
+                <outlet property="deliveryOnlyLabelWidth" destination="coQ-5J-U6I" id="bcg-ZO-wTA"/>
                 <outlet property="detailLabel" destination="mX7-Be-M1C" id="3Xv-4Q-viz"/>
                 <outlet property="detailLabelTop" destination="Xgb-3C-Sx7" id="qq4-z6-78B"/>
                 <outlet property="priceContainer" destination="TMq-dN-c4f" id="9S3-FD-UAX"/>

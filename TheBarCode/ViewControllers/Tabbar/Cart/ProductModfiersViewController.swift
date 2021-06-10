@@ -127,7 +127,7 @@ class ProductModfiersViewController: UIViewController {
         var section: Int? = nil
         
         for (groupIndex, group) in self.groups.enumerated() {
-            if group.isRequired && group.selectedModifiersCount < group.min {
+            if group.isRequired && group.selectedModifiersQuantity < group.min {
                 isValid = false
                 section = groupIndex
                 self.showAlertController(title: "Required", msg: "Please select atleast \(group.min) from \(group.name)")

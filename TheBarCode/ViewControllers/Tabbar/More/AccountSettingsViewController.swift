@@ -60,6 +60,8 @@ class AccountSettingsViewController: UIViewController {
     var signupProvider: SignUpProvider!
 //    var isLoggedInViaMobile: Bool = false
     
+    var maxPostCodeCharLimit = 8
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,6 +87,8 @@ class AccountSettingsViewController: UIViewController {
         self.setUpUserProfile()
         
         Analytics.logEvent(viewAccountSettingScreen, parameters: nil)
+        
+        self.maxPostCodeCharLimit = Utility.shared.regionalInfo.country == INCountryCode ? 6 : 8
     }
 
     override func didReceiveMemoryWarning() {
@@ -572,7 +576,7 @@ extension AccountSettingsViewController: FieldViewDelegate {
             }
             
         } else if fieldView == self.postcodeFieldView {
-            maxLength = 8
+            maxLength = self.maxPostCodeCharLimit
         }
 
         let currentString: NSString = textField.text! as NSString

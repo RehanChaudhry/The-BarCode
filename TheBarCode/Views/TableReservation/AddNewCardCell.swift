@@ -17,6 +17,10 @@ class AddNewCardCell: UITableViewCell, NibReusable {
 
     @IBOutlet var containerView: UIView!
     
+    @IBOutlet var actionButton: UIButton!
+    
+    @IBOutlet var checkmarkImageView: UIImageView!
+    
     weak var delegate: AddNewCardCellDelegate?
     
     override func awakeFromNib() {
@@ -24,6 +28,9 @@ class AddNewCardCell: UITableViewCell, NibReusable {
         // Initialization code
         
         self.separatorInset = UIEdgeInsetsMake(0.0, 4000, 0.0, 0.0)
+        
+        self.checkmarkImageView.tintColor = UIColor.appBlueColor()
+        self.checkmarkImageView.image = self.checkmarkImageView.image?.withRenderingMode(.alwaysTemplate)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,6 +44,16 @@ class AddNewCardCell: UITableViewCell, NibReusable {
         if #available(iOS 11.0, *) {
             self.containerView.layer.cornerRadius = radius
             self.containerView.layer.maskedCorners = mask
+        }
+    }
+    
+    func setup(gatewayType: PaymentGatewayType, isSelectedNewPaymentCard: Bool) {
+        if gatewayType == PaymentGatewayType.paymentSense {
+            self.checkmarkImageView.isHidden = !isSelectedNewPaymentCard
+            self.actionButton.setTitle("New Payment Card", for: .normal)
+        } else {
+            self.actionButton.setTitle("+ Add Payment Method", for: .normal)
+            self.checkmarkImageView.isHidden = true
         }
     }
     

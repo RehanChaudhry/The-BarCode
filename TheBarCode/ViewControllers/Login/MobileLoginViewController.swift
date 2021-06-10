@@ -24,6 +24,8 @@ class MobileLoginViewController: UIViewController {
     
     var forSignUp: Bool = false
     
+    var maxCharsLimit: Int = 11
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,12 +61,18 @@ class MobileLoginViewController: UIViewController {
         self.phoneNoFieldView.flagView.isHidden = false
         
         self.phoneNoFieldView.flagImageView.image = Utility.shared.regionalInfo.country == INCountryCode ? UIImage(named: "icon_in_flag") : UIImage(named: "icon_flag_uk")
+        self.maxCharsLimit = Utility.shared.regionalInfo.country == INCountryCode ? 10 : 11
     }
     
     //MARK: My Methods
     func showVerificationController() {
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
+        var text = ""
+        if Utility.shared.regionalInfo.country == INCountryCode {
+            text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!
+        } else {
+            text = self.phoneNoFieldView.prefixLabel.text! + " " + self.phoneNoFieldView.textField.text!.dropFirst()
+        }
         
         let verificationController = (self.storyboard?.instantiateViewController(withIdentifier: "MobileVerificationViewController") as! MobileVerificationViewController)
         verificationController.modalPresentationStyle = .overCurrentContext
@@ -114,7 +122,7 @@ class MobileLoginViewController: UIViewController {
         let text = self.phoneNoFieldView.textField.text!
         let mobileNumber = text.digits //text.unformat("NNNNN NNNNNN", oldString: text)
         
-        if mobileNumber.count < 11 {
+        if mobileNumber.count < self.maxCharsLimit {
             isValid = false
             self.phoneNoFieldView.showValidationMessage(message: "Please enter valid mobile number")
         } else {
@@ -145,13 +153,17 @@ extension MobileLoginViewController: MobileVerificationViewControllerDelegate {
 extension MobileLoginViewController: FieldViewDelegate {
     func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
         
-        if string == "" {
-            textField.text = ""
-            return false
+        if string.isEmpty {
+            return true
         }
         
-        if textField.text!.count == 0 && string != "0" {
-            textField.text = "0" + string
+        if Utility.shared.regionalInfo.country != INCountryCode && textField.text!.count == 0 && string != "0" {
+            let finalText = "0" + string
+            
+            if finalText.count <= self.maxCharsLimit {
+                textField.text = finalText
+            }
+            
             return false
         }
         
@@ -159,12 +171,10 @@ extension MobileLoginViewController: FieldViewDelegate {
             return true
         }
         
-       
-        
         let lastText = (text as NSString).replacingCharacters(in: range, with: string) as String
         //textField.text = lastText.format("NNNNN NNNNNN", oldString: text)
         
-        if lastText.count > 11 {
+        if lastText.count > self.maxCharsLimit {
             return false
         }
         textField.text = lastText
@@ -180,7 +190,13 @@ extension MobileLoginViewController {
         self.signInButton.showLoader()
         UIApplication.shared.beginIgnoringInteractionEvents()
         
-        let text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!.dropFirst()
+        var text = ""
+        if Utility.shared.regionalInfo.country == INCountryCode {
+            text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!
+        } else {
+            text = self.phoneNoFieldView.prefixLabel.text! + "" + self.phoneNoFieldView.textField.text!.dropFirst()
+        }
+        
         let mobileNumber = text //text.unformat("XNN NNNN NNNNNN", oldString: text)
         let params = ["contact_number" : mobileNumber]
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathMobileLogin, method: .post) { (response, serverError, error) in

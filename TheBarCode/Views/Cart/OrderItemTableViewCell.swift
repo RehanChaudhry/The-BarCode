@@ -40,7 +40,7 @@ class OrderItemTableViewCell: UITableViewCell, NibReusable {
 
     func setUpCell(order: Order, orderItem: OrderItem) {
         
-        self.nameLabel.text = orderItem.name
+        self.nameLabel.text = orderItem.name + (orderItem.isDeliveryOnly ? " (Delivery Only)" : "")
         
         let priceString = String(format: "%.2f", orderItem.totalUnitPrice)
         self.unitPriceLabel.text = "x \(order.currencySymbol) " + priceString

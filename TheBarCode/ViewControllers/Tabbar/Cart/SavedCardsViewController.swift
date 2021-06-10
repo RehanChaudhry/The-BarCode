@@ -56,7 +56,11 @@ class SavedCardsViewController: UIViewController {
             if self.order?.menuTypeRaw == MenuType.squareup.rawValue {
                 return "squareup"
             } else {
-                return "worldpay"
+                if self.order?.paymentGatewayTypeRaw == PaymentGatewayType.paymentSense.rawValue {
+                    return PaymentGatewayType.paymentSense.rawValue
+                } else {
+                    return PaymentGatewayType.worldPay.rawValue
+                }
             }
         }
     }
@@ -68,6 +72,8 @@ class SavedCardsViewController: UIViewController {
             return [.info, .addCard]
         }
     }
+    
+    var isSelectedNewPaymentCard: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,14 +128,16 @@ class SavedCardsViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func moveToThankYou(order: Order) {
+    func moveToThankYou(order: Order, shouldRefresh: Bool) {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ThankYouViewController") as! ThankYouViewController)
         controller.order = order
+        controller.shouldRefreshOrderDetails = shouldRefresh
         self.navigationController?.setViewControllers([controller], animated: true)
     }
     
     func selectCardAt(index: Int) {
         self.selectedCard = self.cards[index]
+        self.isSelectedNewPaymentCard = false
         tableView.reloadData()
     }
     
@@ -202,6 +210,18 @@ class SavedCardsViewController: UIViewController {
             } else {
                 self.generateTokenIfNeededAndCharge(card: card)
             }
+        } else if self.cardType == PaymentGatewayType.paymentSense.rawValue {
+            let webNavController = self.storyboard!.instantiateViewController(withIdentifier: "PaymentSenseNavController") as! UINavigationController
+            webNavController.modalPresentationStyle = .fullScreen
+            
+            let webviewController = webNavController.viewControllers.first as! PaymentSenseWebViewController
+            webviewController.delegate = self
+            webviewController.order = self.order
+            webviewController.selectedOffer = self.selectedOffer
+            webviewController.selectedVoucher = self.selectedVoucher
+            webviewController.useCredit = self.useCredit
+            
+            self.present(webNavController, animated: true, completion: nil)
         } else {
             self.showAlertController(title: "", msg: "Please select a card to proceed")
         }
@@ -241,6 +261,7 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = self.tableView.dequeueReusableCell(for: indexPath, cellType: AddNewCardCell.self)
             cell.maskCorners(radius: 8.0, mask: self.cards.count == 0 ? [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner] : [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.delegate = self
+            cell.setup(gatewayType: PaymentGatewayType(rawValue: self.cardType) ?? .worldPay, isSelectedNewPaymentCard: self.isSelectedNewPaymentCard)
             return cell
         }
         
@@ -287,6 +308,7 @@ extension SavedCardsViewController {
                 self.cards.append(contentsOf: cards)
                 
                 self.selectedCard = self.cards.first
+                self.isSelectedNewPaymentCard = (self.cards.count == 0 && self.cardType == PaymentGatewayType.paymentSense.rawValue)
                 self.tableView.reloadData()
                 
                 self.statefulView.isHidden = true
@@ -470,7 +492,7 @@ extension SavedCardsViewController {
                 let context = OrderMappingContext(type: .order)
                 let order = Mapper<Order>(context: context).map(JSON: responseObject)!
                 
-                self.moveToThankYou(order: order)
+                self.moveToThankYou(order: order, shouldRefresh: false)
                 self.postDealRedeemNotificationIfNeeded()
                 
                 NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
@@ -523,7 +545,7 @@ extension SavedCardsViewController {
                 let context = OrderMappingContext(type: .order)
                 let order = Mapper<Order>(context: context).map(JSON: responseObject)!
                 
-                self.moveToThankYou(order: order)
+                self.moveToThankYou(order: order, shouldRefresh: false)
                 self.postDealRedeemNotificationIfNeeded()
                 
                 NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
@@ -615,6 +637,10 @@ extension SavedCardsViewController: AddNewCardCellDelegate {
             let nc = UINavigationController(rootViewController: vc)
             nc.modalPresentationStyle = .fullScreen
             self.present(nc, animated: true, completion: nil)
+        } else if self.cardType == PaymentGatewayType.paymentSense.rawValue {
+            self.selectedCard = nil
+            self.isSelectedNewPaymentCard = true
+            self.tableView.reloadData()
         } else {
             let addCardNavigation = (self.storyboard!.instantiateViewController(withIdentifier: "AddCardNavigation") as! UINavigationController)
             addCardNavigation.modalPresentationStyle = .fullScreen
@@ -673,5 +699,15 @@ extension SavedCardsViewController: AddCardViewControllerDelegate {
 extension SavedCardsViewController: ThreeDSWebViewControllerDelegate {
     func threeDSWebViewController(controller: ThreeDSWebViewController, didCompleted3DSAuthentication secureCode: String, model: ThreeDSModel) {
         self.updatePaymentStatus(secureCode: secureCode, model: model)
+    }
+}
+
+//MARK: PaymentSenseWebViewControllerDelegate
+extension SavedCardsViewController: PaymentSenseWebViewControllerDelegate {
+    func paymentSenseWebViewController(controller: PaymentSenseWebViewController, didPaidSuccessfully order: Order) {
+        self.moveToThankYou(order: order, shouldRefresh: true)
+        self.postDealRedeemNotificationIfNeeded()
+        
+        NotificationCenter.default.post(name: notificationNameOrderPlaced, object: order)
     }
 }

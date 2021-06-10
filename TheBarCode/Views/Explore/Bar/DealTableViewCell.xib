@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -67,7 +67,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="hW6-Fn-oCJ">
-                        <rect key="frame" x="156.5" y="146" width="7" height="37"/>
+                        <rect key="frame" x="118" y="155.5" width="84.5" height="27.5"/>
                     </pageControl>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPg-Iz-5Vi" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="256" y="138" width="40" height="40"/>
@@ -112,7 +112,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oO-An-LV1">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oO-An-LV1">
                         <rect key="frame" x="268" y="193" width="44" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -125,7 +125,7 @@
                             <action selector="bookmarkButtonTappedWithSender:" destination="CsO-OR-xRH" eventType="touchUpInside" id="s54-NQ-VsO"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgE-wp-hQF">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgE-wp-hQF">
                         <rect key="frame" x="224" y="193" width="44" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -146,7 +146,7 @@
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="oox-j9-KtP">
                         <rect key="frame" x="280" y="204" width="20" height="20"/>
                     </activityIndicatorView>
-                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBZ-y5-dh9">
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBZ-y5-dh9">
                         <rect key="frame" x="24" y="150" width="60" height="28"/>
                         <color key="backgroundColor" red="0.48675468779999997" green="0.49157404119999998" blue="0.49157404119999998" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -163,6 +163,22 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Delivery Only" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVb-O6-cYD">
+                        <rect key="frame" x="24" y="32" width="110" height="28"/>
+                        <color key="backgroundColor" red="0.48627450979999998" green="0.49019607840000001" blue="0.49019607840000001" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="5qw-3r-AHw"/>
+                            <constraint firstAttribute="width" constant="110" id="mdt-lU-kea"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_map" translatesAutoresizingMaskIntoConstraints="NO" id="hyz-OS-uPR">
                         <rect key="frame" x="16" y="232.5" width="10" height="15"/>
                         <constraints>
@@ -170,7 +186,7 @@
                             <constraint firstAttribute="width" constant="10" id="dCq-cE-1ve"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfi-6e-e5W">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfi-6e-e5W">
                         <rect key="frame" x="34" y="226.5" width="71" height="27"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="27" id="elu-Bv-kFq"/>
@@ -220,9 +236,11 @@
                     <constraint firstAttribute="bottom" secondItem="xfi-6e-e5W" secondAttribute="bottom" constant="1.5" id="OHx-sU-f9H"/>
                     <constraint firstItem="aBZ-y5-dh9" firstAttribute="bottom" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="-8" id="Orw-lj-sz0"/>
                     <constraint firstAttribute="trailing" secondItem="lm4-Vj-yFJ" secondAttribute="trailing" constant="16" id="Qj8-go-I6f"/>
+                    <constraint firstItem="PVb-O6-cYD" firstAttribute="top" secondItem="Ddr-47-qEj" secondAttribute="top" constant="8" id="Rwy-wR-Hjp"/>
                     <constraint firstAttribute="trailing" secondItem="4oO-An-LV1" secondAttribute="trailing" constant="8" id="XOC-re-lyC"/>
                     <constraint firstItem="6Tc-Mw-7nw" firstAttribute="top" secondItem="DSu-Lx-xS8" secondAttribute="bottom" constant="6.5" id="ZlD-oN-mKJ"/>
                     <constraint firstItem="4oO-An-LV1" firstAttribute="top" secondItem="8pS-Va-tqg" secondAttribute="bottom" constant="7" id="cRn-8Z-Ym1"/>
+                    <constraint firstItem="PVb-O6-cYD" firstAttribute="leading" secondItem="Ddr-47-qEj" secondAttribute="leading" constant="8" id="cqj-li-ltK"/>
                     <constraint firstItem="sPg-Iz-5Vi" firstAttribute="bottom" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="-8" id="d0J-KM-cJ0"/>
                     <constraint firstItem="Ddr-47-qEj" firstAttribute="top" secondItem="6Bg-MI-Mip" secondAttribute="top" constant="24" id="eZ9-b9-yWQ"/>
                     <constraint firstItem="DSu-Lx-xS8" firstAttribute="top" secondItem="Ddr-47-qEj" secondAttribute="bottom" constant="20" id="kER-IF-p8H"/>
@@ -247,6 +265,7 @@
                 <outlet property="bookmarkButton" destination="4oO-An-LV1" id="yKN-Kd-nVv"/>
                 <outlet property="cartIconContainer" destination="P3h-gs-dA7" id="bUO-0h-ARx"/>
                 <outlet property="coverImageView" destination="8pS-Va-tqg" id="iIj-qm-izf"/>
+                <outlet property="deliveryOnlyLabel" destination="PVb-O6-cYD" id="6ZH-0U-5dW"/>
                 <outlet property="detailLabel" destination="6Tc-Mw-7nw" id="gN4-Yg-LDa"/>
                 <outlet property="distanceButton" destination="xfi-6e-e5W" id="0eL-JO-uyh"/>
                 <outlet property="locationIconImageView" destination="hyz-OS-uPR" id="WrL-bg-ZeL"/>

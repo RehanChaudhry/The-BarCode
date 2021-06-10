@@ -33,6 +33,8 @@ class Product: CoreStoreObject {
     
     var cartItemId = Value.Optional<String>("cart_item_id")
     
+    var isDeliveryOnly = Value.Required<Bool>("delivery_only", initial: false)
+    
     var isAddingToCart: Bool = false
     var isRemovingFromCart: Bool = false
 }
@@ -110,6 +112,9 @@ extension Product: ImportableUniqueObject {
         
         self.haveModifiers.value = source["have_modifiers"] as? Bool ?? false
         
+        if let isDeliveryOnly = source["delivery_only"] as? Bool {
+            self.isDeliveryOnly.value = isDeliveryOnly
+        }
     }
 }
 

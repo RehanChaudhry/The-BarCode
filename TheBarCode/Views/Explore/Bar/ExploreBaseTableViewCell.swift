@@ -33,8 +33,9 @@ class ExploreBaseTableViewCell: UITableViewCell {
     
     @IBOutlet var unlimitedRedemptionView: ShadowView!
 
-    @IBOutlet var barTypeView: ShadowView!
     @IBOutlet var cartIconContainer: ShadowView!
+    
+    @IBOutlet var deliveryOnlyLabel: UILabel!
 
     var bar: Explore?
     
@@ -83,16 +84,17 @@ class ExploreBaseTableViewCell: UITableViewCell {
         self.pageControl.numberOfPages = self.bar?.images.count ?? 0
         self.pageControl.isHidden = self.pageControl.numberOfPages <= 1
         
-        titleLabel.text = explore.title.value
+        self.titleLabel.text = explore.title.value
         self.distanceButton.setTitle(Utility.shared.getformattedDistance(distance: explore.distance.value), for: .normal)
         
-        locationIconImageView.isHidden = false
+        self.locationIconImageView.isHidden = false
         
         self.setupStatus(explore: explore)
         
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
         
         self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
+        self.deliveryOnlyLabel.isHidden = !explore.isDeliveryOnly.value
     }
     
     func scrollToCurrentImage() {

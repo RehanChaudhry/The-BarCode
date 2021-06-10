@@ -38,6 +38,8 @@ class OrderItem: Mappable {
     var isUpdating: Bool = false
     var haveModifiers: Bool = false
     
+    var isDeliveryOnly: Bool = false
+    
     required init?(map: Map) {
         
     }
@@ -89,5 +91,7 @@ class OrderItem: Mappable {
         }
         
         self.quantity = Int("\(map.JSON["quantity"]!)") ?? 0
+        
+        self.isDeliveryOnly <- map["delivery_only"]
     }
 }

@@ -26,6 +26,11 @@ enum MenuType: String {
     other = "other"
 }
 
+enum PaymentGatewayType: String {
+    case worldPay = "worldpay",
+         paymentSense = "payment_sense"
+}
+
 class Explore: CoreStoreObject , ImportableUniqueObject {
     
     var id = Value.Required<String>("id", initial: "")
@@ -93,6 +98,8 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var currencySymbol = Value.Required<String>("currency_symbol", initial: "£")
     var currencyCode = Value.Required<String>("currency_code", initial: "GBP")
     
+    var isDeliveryOnly = Value.Required<Bool>("delivery_only", initial: false)
+    
     var barType: BarType {
         get {
             return BarType(rawValue: self.barTypeRaw.value) ?? .standardBar
@@ -104,6 +111,14 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
     var menuType: MenuType {
         get {
             return MenuType(rawValue: self.menuTypeRaw.value) ?? .other
+        }
+    }
+    
+    var paymentGatewayRaw = Value.Optional<String>("payment_gateway")
+    
+    var paymentGateway: PaymentGatewayType  {
+        get {
+            return PaymentGatewayType(rawValue: self.paymentGatewayRaw.value ?? "") ?? .worldPay
         }
     }
     
@@ -340,6 +355,10 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             self.menuTypeRaw.value = type
         }
         
+        if let gateway = source["payment_gateway_type"] as? String {
+            self.paymentGatewayRaw.value = gateway
+        }
+        
         self.isReservationAllowed.value = source["is_reservation"] as? Bool ?? false
         self.reservationUrl.value = source["reservation_url"] as? String ?? ""
         
@@ -350,6 +369,10 @@ class Explore: CoreStoreObject , ImportableUniqueObject {
             self.country.value = country
             self.currencyCode.value = currencyCode
             self.currencySymbol.value = currencySymbol
+        }
+        
+        if let isDeliveryOnly = source["delivery_only"] as? Bool {
+            self.isDeliveryOnly.value = isDeliveryOnly
         }
     }
 }

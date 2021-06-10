@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,9 +44,9 @@
                         </connections>
                     </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-13-9ha">
-                        <rect key="frame" x="156.5" y="145.5" width="7" height="37"/>
+                        <rect key="frame" x="118" y="155" width="84.5" height="27.5"/>
                     </pageControl>
-                    <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bii-27-Fef">
+                    <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bii-27-Fef">
                         <rect key="frame" x="24" y="150" width="60" height="28"/>
                         <color key="backgroundColor" red="0.48627450980392156" green="0.49019607843137253" blue="0.49019607843137253" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -76,7 +76,7 @@
                             <constraint firstAttribute="height" constant="15" id="UKG-JA-Aot"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-2O-2M4">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-2O-2M4">
                         <rect key="frame" x="34" y="234.5" width="68" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="RW5-GJ-DoU"/>
@@ -95,7 +95,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Skp-3x-YSf">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Skp-3x-YSf">
                         <rect key="frame" x="274" y="194" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="84H-84-hQe"/>
@@ -129,28 +129,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlj-J8-B4g" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
-                        <rect key="frame" x="24" y="32" width="40" height="40"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-standardBar" translatesAutoresizingMaskIntoConstraints="NO" id="T8u-4t-wTh">
-                                <rect key="frame" x="9" y="8" width="22" height="24"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="T8u-4t-wTh" secondAttribute="trailing" constant="9" id="6ST-Wa-r99"/>
-                            <constraint firstAttribute="height" constant="40" id="GTv-PJ-uGc"/>
-                            <constraint firstItem="T8u-4t-wTh" firstAttribute="top" secondItem="Zlj-J8-B4g" secondAttribute="top" constant="8" id="K3f-H5-Ske"/>
-                            <constraint firstAttribute="width" constant="40" id="N7p-gs-45S"/>
-                            <constraint firstAttribute="bottom" secondItem="T8u-4t-wTh" secondAttribute="bottom" constant="8" id="gxT-es-pvR"/>
-                            <constraint firstItem="T8u-4t-wTh" firstAttribute="leading" secondItem="Zlj-J8-B4g" secondAttribute="leading" constant="9" id="q2D-Sb-fWJ"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="20"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AM3-aF-Ulf" customClass="ShadowView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="256" y="32" width="40" height="40"/>
                         <subviews>
@@ -174,12 +152,28 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Delivery Only" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAE-tH-hXu">
+                        <rect key="frame" x="24" y="32" width="110" height="28"/>
+                        <color key="backgroundColor" red="0.48627450979999998" green="0.49019607840000001" blue="0.49019607840000001" alpha="0.50888270550000003" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="110" id="FV9-yB-39m"/>
+                            <constraint firstAttribute="height" constant="28" id="baV-44-Ifo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.89019607840000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="bii-27-Fef" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-8" id="2af-Kc-xsF"/>
                     <constraint firstItem="Skp-3x-YSf" firstAttribute="top" secondItem="ind-3c-R0V" secondAttribute="bottom" constant="8" id="2cV-1Y-GKW"/>
                     <constraint firstItem="AM3-aF-Ulf" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="3Ol-7c-Xhp"/>
-                    <constraint firstItem="Zlj-J8-B4g" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="7Hw-ml-FX5"/>
+                    <constraint firstItem="kAE-tH-hXu" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" constant="8" id="3r7-h6-1Kh"/>
                     <constraint firstAttribute="trailing" secondItem="pPl-cS-XOh" secondAttribute="trailing" constant="16" id="7p7-oV-iNq"/>
                     <constraint firstItem="uPd-tc-4ns" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="9Ek-fh-Mof"/>
                     <constraint firstItem="AM3-aF-Ulf" firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="-8" id="Ap2-Ac-Fmg"/>
@@ -192,7 +186,6 @@
                     <constraint firstItem="gvl-13-9ha" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-3.5" id="IEK-vA-no4"/>
                     <constraint firstAttribute="trailing" secondItem="Skp-3x-YSf" secondAttribute="trailing" constant="6" id="IhX-r6-VPu"/>
                     <constraint firstItem="88w-H1-hsa" firstAttribute="centerY" secondItem="lui-2O-2M4" secondAttribute="centerY" id="JtO-58-33B"/>
-                    <constraint firstItem="Zlj-J8-B4g" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" constant="8" id="Mg2-yJ-jOw"/>
                     <constraint firstItem="gvl-13-9ha" firstAttribute="centerX" secondItem="TNh-vE-HpY" secondAttribute="centerX" id="OZ5-2k-dVW"/>
                     <constraint firstAttribute="bottom" secondItem="pPl-cS-XOh" secondAttribute="bottom" constant="1" id="RxW-3O-lZ3"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="leading" secondItem="Uz3-UE-iJo" secondAttribute="leading" constant="16" id="XKL-Ju-87r"/>
@@ -200,6 +193,7 @@
                     <constraint firstItem="ind-3c-R0V" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" id="aJb-OI-XAH"/>
                     <constraint firstItem="lui-2O-2M4" firstAttribute="leading" secondItem="88w-H1-hsa" secondAttribute="trailing" constant="8" id="bdR-cf-Iyv"/>
                     <constraint firstItem="CR5-uj-0UX" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="20" id="cGm-Yv-ZHd"/>
+                    <constraint firstItem="kAE-tH-hXu" firstAttribute="top" secondItem="TNh-vE-HpY" secondAttribute="top" constant="8" id="dE6-RB-TS7"/>
                     <constraint firstAttribute="trailing" secondItem="TNh-vE-HpY" secondAttribute="trailing" constant="16" id="gqI-sl-0Fn"/>
                     <constraint firstItem="uPd-tc-4ns" firstAttribute="bottom" secondItem="TNh-vE-HpY" secondAttribute="bottom" constant="-8" id="h5q-3m-8s0"/>
                     <constraint firstItem="bii-27-Fef" firstAttribute="leading" secondItem="TNh-vE-HpY" secondAttribute="leading" constant="8" id="hrQ-YB-VTj"/>
@@ -211,11 +205,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="cuJ-Hl-gUF"/>
             <connections>
-                <outlet property="barTypeView" destination="Zlj-J8-B4g" id="afc-ht-G3M"/>
                 <outlet property="bottomPadding" destination="t3a-Gn-4Zs" id="nkx-Ti-agc"/>
                 <outlet property="cartIconContainer" destination="AM3-aF-Ulf" id="Bpj-1o-LjO"/>
                 <outlet property="coverImageView" destination="ind-3c-R0V" id="Utf-tb-2IR"/>
                 <outlet property="deliverRadiusLabel" destination="pPl-cS-XOh" id="GRB-Ck-5OU"/>
+                <outlet property="deliveryOnlyLabel" destination="kAE-tH-hXu" id="Zb6-CA-f9E"/>
                 <outlet property="distanceButton" destination="lui-2O-2M4" id="tuN-sk-SVI"/>
                 <outlet property="favouriteButton" destination="Skp-3x-YSf" id="JhB-hY-PRO"/>
                 <outlet property="locationIconImageView" destination="88w-H1-hsa" id="IhG-Nb-n55"/>
@@ -230,7 +224,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon-standardBar" width="21.333333969116211" height="21.333333969116211"/>
         <image name="icon_add_cart" width="30" height="30"/>
         <image name="icon_map" width="15" height="20"/>
         <image name="icon_tab_fav" width="28" height="26"/>

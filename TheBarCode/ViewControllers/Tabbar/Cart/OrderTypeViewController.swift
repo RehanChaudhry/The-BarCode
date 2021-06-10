@@ -132,22 +132,24 @@ class OrderTypeViewController: UIViewController {
         let standardOfferHeadingSection = HeadingSection(items: [standardOfferHeading])
         self.viewModels.append(standardOfferHeadingSection)
         
-        let dineRadioButton = OrderRadioButton(title: "Dine In", subTitle: "")
-        dineRadioButton.isSelected = true
-        let dineInSection = OrderDineInSection(items: [dineRadioButton])
-        self.viewModels.append(dineInSection)
-        
-        let dineInField = self.getDineInField()
-        let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
-        self.viewModels.append(dineInFieldSection)
-        
-        let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
-        let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
-        self.viewModels.append(counterCollectionSection)
-        
-        let takeAwayRadio = OrderRadioButton(title: "Takeaway", subTitle: "")
-        let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
-        self.viewModels.append(takeAwaySection)
+        if !self.order.isDeliveryOnly {
+            let dineRadioButton = OrderRadioButton(title: "Dine In", subTitle: "")
+            dineRadioButton.isSelected = true
+            let dineInSection = OrderDineInSection(items: [dineRadioButton])
+            self.viewModels.append(dineInSection)
+            
+            let dineInField = self.getDineInField()
+            let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
+            self.viewModels.append(dineInFieldSection)
+            
+            let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
+            let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
+            self.viewModels.append(counterCollectionSection)
+            
+            let takeAwayRadio = OrderRadioButton(title: "Takeaway", subTitle: "")
+            let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
+            self.viewModels.append(takeAwaySection)
+        }
         
         if self.order.isDeliveryAvailable && self.order.todayDeliveryStatus == .available {
             let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
@@ -159,6 +161,16 @@ class OrderTypeViewController: UIViewController {
             
             let deliveryAddressSection = OrderDeliveryAddressSection(items: [])
             self.viewModels.append(deliveryAddressSection)
+            
+            if self.order.isDeliveryOnly && !self.order.isCurrentlyDeliveryDisabled {
+                
+                deliveryRadioButton.isSelected = true
+                
+                self.addAddress()
+                self.updateOrderType(orderType: .delivery)
+            }
+            
+            
         }
         
         let mobileNo = OrderMobileNumber()

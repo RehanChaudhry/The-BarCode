@@ -114,12 +114,15 @@ class Order: Mappable {
     var establishmentSquareUpAppId: String? = nil
     
     var menuTypeRaw: String = MenuType.barCode.rawValue
+    var paymentGatewayTypeRaw: String = PaymentGatewayType.paymentSense.rawValue
     
     var squareUpLocationId: String = ""
     
     var country: String = "United Kingdom (UK)"
     var currencySymbol: String = "£"
     var currencyCode: String = "GBP"
+    
+    var isDeliveryOnly: Bool = false
     
     required init?(map: Map) {
         
@@ -133,6 +136,8 @@ class Order: Mappable {
         self.country <- map["establishment.region.country"]
         self.currencyCode <- map["establishment.region.currency_code"]
         self.currencySymbol <- map["establishment.region.currency_symbol"]
+        
+        self.isDeliveryOnly <- map["establishment.delivery_only"]
         
         self.statusRaw <- map["status"]
         
@@ -182,6 +187,7 @@ class Order: Mappable {
         }
         
         self.menuTypeRaw <- map["epos_type"]
+        self.paymentGatewayTypeRaw <- map["payment_gateway_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
         

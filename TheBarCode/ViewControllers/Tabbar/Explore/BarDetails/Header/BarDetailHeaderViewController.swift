@@ -39,11 +39,10 @@ class BarDetailHeaderViewController: UIViewController {
     
     @IBOutlet var unlimitedRedemptionView: ShadowView!
     
-    @IBOutlet weak var barTypeView: ShadowView!
-    @IBOutlet weak var barTypeImageView: UIImageView!
-    
     @IBOutlet var cartIconContainer: ShadowView!
     @IBOutlet var cartIconImageView: UIImageView!
+    
+    @IBOutlet var isDeliveryOnlyLabel: UILabel!
     
     var bar: Bar!
     
@@ -119,6 +118,7 @@ class BarDetailHeaderViewController: UIViewController {
         self.favouriteButton.tintColor = color
         
         self.cartIconContainer.isHidden = !self.bar.isInAppPaymentOn.value
+        self.isDeliveryOnlyLabel.isHidden = !self.bar.isDeliveryOnly.value
         
         UIView.performWithoutAnimation {
             if self.bar.currentlyBarIsOpened {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,8 +24,8 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5j-eF-p1C">
                         <rect key="frame" x="16" y="0.0" width="382" height="56"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cB1-al-Qtk">
-                                <rect key="frame" x="16" y="8" width="350" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cB1-al-Qtk">
+                                <rect key="frame" x="16" y="8" width="324" height="40"/>
                                 <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                                 <state key="normal" title="+ Add Payment Method">
                                     <color key="titleColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -34,13 +34,22 @@
                                     <action selector="addCardButtonTappedWithSender:" destination="iAb-hJ-t3S" eventType="touchUpInside" id="psr-3u-9bz"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_selected_check_mark" translatesAutoresizingMaskIntoConstraints="NO" id="F9G-LW-4sz">
+                                <rect key="frame" x="348" y="19" width="18" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="Kg9-mj-Svk"/>
+                                    <constraint firstAttribute="width" constant="18" id="R8U-pr-laR"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cB1-al-Qtk" firstAttribute="top" secondItem="W5j-eF-p1C" secondAttribute="top" constant="8" id="JpF-dy-qu2"/>
                             <constraint firstAttribute="bottom" secondItem="cB1-al-Qtk" secondAttribute="bottom" constant="8" id="NE5-fk-hvP"/>
-                            <constraint firstAttribute="trailing" secondItem="cB1-al-Qtk" secondAttribute="trailing" constant="16" id="XrH-lU-rLW"/>
+                            <constraint firstItem="F9G-LW-4sz" firstAttribute="leading" secondItem="cB1-al-Qtk" secondAttribute="trailing" constant="8" symbolic="YES" id="beh-8e-ZWZ"/>
+                            <constraint firstAttribute="trailing" secondItem="F9G-LW-4sz" secondAttribute="trailing" constant="16" id="i48-TK-Cet"/>
                             <constraint firstItem="cB1-al-Qtk" firstAttribute="leading" secondItem="W5j-eF-p1C" secondAttribute="leading" constant="16" id="l0p-YY-coF"/>
+                            <constraint firstItem="F9G-LW-4sz" firstAttribute="centerY" secondItem="W5j-eF-p1C" secondAttribute="centerY" id="zan-eD-EeR"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -54,9 +63,14 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="actionButton" destination="cB1-al-Qtk" id="cP0-8A-frm"/>
+                <outlet property="checkmarkImageView" destination="F9G-LW-4sz" id="Eud-ok-EG6"/>
                 <outlet property="containerView" destination="W5j-eF-p1C" id="hCw-th-l5q"/>
             </connections>
             <point key="canvasLocation" x="-181.15942028985509" y="-70.3125"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_selected_check_mark" width="170.66667175292969" height="170.66667175292969"/>
+    </resources>
 </document>

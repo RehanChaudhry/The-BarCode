@@ -271,20 +271,15 @@ class ExploreBaseViewController: UIViewController {
     func setUserLocation() {
         
         let authorizationStatus = CLLocationManager.authorizationStatus()
-        var canContinue: Bool? = nil
-        if authorizationStatus == .authorizedAlways {
-            canContinue = true
-        } else if authorizationStatus == .authorizedWhenInUse {
-            canContinue = false
-        }
+        let canContinue = authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
         
-        guard let requestAlwaysAccess = canContinue else {
+        guard canContinue else {
             debugPrint("Location permission not authorized")
             self.setupMapCamera(cordinate: defaultUKLocation)
             return
         }
         
-        self.locationManager.locationPreferenceAlways = requestAlwaysAccess
+        self.locationManager.locationPreferenceAlways = authorizationStatus == .authorizedAlways
         self.locationManager.requestLocation(desiredAccuracy: kCLLocationAccuracyBestForNavigation, timeOut: 20.0) { [unowned self] (location, error) in
             
             guard error == nil else {

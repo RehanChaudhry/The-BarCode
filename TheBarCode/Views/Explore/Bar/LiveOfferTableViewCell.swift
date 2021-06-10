@@ -88,6 +88,7 @@ class LiveOfferTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.pagerView.isHidden = true
         self.pageControl.isHidden = true
         self.statusButton.isHidden = true
+        self.deliveryOnlyLabel.isHidden = true
         
         let url = offer.imageUrl.value
         self.coverImageView.setImageWith(url: URL(string: url), showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)

@@ -78,6 +78,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.unlimitedRedemptionView.isHidden = !explore.currentlyUnlimitedRedemptionAllowed
         
         self.cartIconContainer.isHidden = !explore.isInAppPaymentOn.value
+        self.deliveryOnlyLabel.isHidden = !explore.isDeliveryOnly.value
     }
     
     func setUpDealCell(deal: Deal, topPadding: Bool = true, bar: Bar) {
@@ -87,6 +88,7 @@ class DealTableViewCell: ExploreBaseTableViewCell, NibReusable {
         self.pageControl.isHidden = true
         self.statusButton.isHidden = true
         self.pagerView.isHidden = true
+        self.deliveryOnlyLabel.isHidden = true
         
         let url = URL(string: deal.imageUrl.value)
         coverImageView.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)

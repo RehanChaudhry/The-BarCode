@@ -165,7 +165,17 @@ class TabBarController: UITabBarController {
         
         debugPrint("User access token: \(user.accessToken.value)")
         
-        OneSignal.sendTags(["user_id" : user.userId.value])
+        OneSignal.sendTag("user_id", value: user.userId.value) { result  in
+            Analytics.logEvent("OneSignalTag_Success", parameters: ["result" : String(describing: result),
+                                                                    "user_id" : user.userId.value,
+                                                                    "env" : EnvironmentType.current().rawValue])
+        } onFailure: { error in
+            Analytics.logEvent("OneSignalTag_Failed", parameters: ["error" : error?.localizedDescription ?? "Unknown error occurred",
+                                                                   "user_id" : user.userId.value,
+                                                                   "env" : EnvironmentType.current().rawValue])
+        }
+
+        OneSignal.setExternalUserId(user.userId.value)
         
         Bugfender.setDeviceString("id: \(user.userId.value) fullName: \(user.fullName.value)", forKey: "user")
         

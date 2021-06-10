@@ -8,10 +8,12 @@
 
 import UIKit
 import StatefulTableView
+import Alamofire
+import ObjectMapper
 
 class ThankYouViewController: UIViewController {
 
-    @IBOutlet var statefulTableView: StatefulTableView!
+    @IBOutlet var tableView: UITableView!
    
     @IBOutlet var tableHeaderView: UIView!
     @IBOutlet var tableFooterView: UIView!
@@ -21,6 +23,14 @@ class ThankYouViewController: UIViewController {
     var order: Order!
     var viewModels: [OrderViewModel] = []
     
+    var shouldRefreshOrderDetails: Bool = false
+    
+    var dataRequest: DataRequest?
+    
+    var refreshControl: UIRefreshControl!
+    
+    var statefulView: LoadingAndErrorView!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,36 +43,46 @@ class ThankYouViewController: UIViewController {
         
         self.setUpStatefulTableView()
         self.setupViewModel()
+        
+        if self.shouldRefreshOrderDetails {
+            self.getOrderDetails(isRefreshing: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.statefulTableView.innerTable.reloadData()
+        self.tableView.reloadData()
     }
     
     //MARK: My Methods
     func setUpStatefulTableView() {
          
-        self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
-        self.statefulTableView.innerTable.register(cellType: OrderStatusTableViewCell.self)
-        self.statefulTableView.innerTable.register(cellType: OrderPaymentTableViewCell.self)
+        self.tableView.register(cellType: OrderInfoTableViewCell.self)
+        self.tableView.register(cellType: OrderStatusTableViewCell.self)
+        self.tableView.register(cellType: OrderPaymentTableViewCell.self)
 
-        self.statefulTableView.innerTable.delegate = self
-        self.statefulTableView.innerTable.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
-        self.statefulTableView.backgroundColor = .clear
-        for aView in self.statefulTableView.subviews {
-            aView.backgroundColor = .clear
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 200.0
+        self.tableView.tableHeaderView = self.tableHeaderView
+        self.tableView.tableFooterView = self.tableFooterView
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(didTriggerPullToRefresh(sender:)), for: .valueChanged)
+        self.tableView.refreshControl = self.refreshControl
+        
+        self.statefulView = LoadingAndErrorView.loadFromNib()
+        self.statefulView.isHidden = true
+        self.view.addSubview(statefulView)
+        
+        self.statefulView.retryHandler = {[unowned self](sender: UIButton) in
+            self.getOrderDetails(isRefreshing: false)
         }
         
-        self.statefulTableView.canLoadMore = false
-        self.statefulTableView.canPullToRefresh = false
-        self.statefulTableView.innerTable.rowHeight = UITableViewAutomaticDimension
-        self.statefulTableView.innerTable.estimatedRowHeight = 200.0
-        self.statefulTableView.innerTable.tableHeaderView = self.tableHeaderView
-        self.statefulTableView.innerTable.tableFooterView = self.tableFooterView
-        
+        self.statefulView.autoPinEdgesToSuperviewSafeArea()
      }
     
     func moveToOrderDetails() {
@@ -168,8 +188,7 @@ class ThankYouViewController: UIViewController {
             
         }
         
-        
-        self.statefulTableView.innerTable.reloadData()
+        self.tableView.reloadData()
     }
     
     func getProductsTotalPrice() -> Double {
@@ -179,6 +198,10 @@ class ThankYouViewController: UIViewController {
         }
 
         return total
+    }
+    
+    @objc func didTriggerPullToRefresh(sender: UIRefreshControl) {
+        self.getOrderDetails(isRefreshing: true)
     }
     
     //MARK: My IBActions
@@ -191,12 +214,48 @@ class ThankYouViewController: UIViewController {
     }
 }
 
+//MARK: Webservices Methods
+extension ThankYouViewController {
+    func getOrderDetails(isRefreshing: Bool) {
+        
+        if isRefreshing {
+            self.refreshControl.beginRefreshing()
+        } else {
+            self.statefulView.isHidden = false
+            self.statefulView.showLoading()
+        }
+        
+        self.dataRequest?.cancel()
+        self.dataRequest = APIHelper.shared.hitApi(params: [:], apiPath: apiPathOrders + "/" + self.order.orderNo, method: .get) { (response, serverError, error) in
+            self.refreshControl.endRefreshing()
+            
+            guard error == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: error!.localizedDescription, reloadMessage: "Tap to reload")
+                return
+            }
+            
+            guard serverError == nil else {
+                self.statefulView.showErrorViewWithRetry(errorMessage: serverError!.detail, reloadMessage: "Tap to reload")
+                return
+            }
+            
+            self.statefulView.isHidden = true
+            self.statefulView.showNothing()
+            
+            let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
+            if let details = (responseDict?["data"] as? [String : Any]) {
+                let context = OrderMappingContext(type: .order)
+                self.order = Mapper<Order>(context: context).map(JSON: details)
+                self.setupViewModel()
+                
+                NotificationCenter.default.post(name: notificationNameOrderDidRefresh, object: self.order)
+            }
+        }
+    }
+}
+
 //MARK: UITableViewDataSource, UITableViewDelegate
 extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.statefulTableView.scrollViewDidScroll(scrollView)
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.viewModels.count
@@ -317,7 +376,7 @@ extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
          
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
+        self.tableView.deselectRow(at: indexPath, animated: false)
         
         let viewModel = self.viewModels[indexPath.section]
         
@@ -325,7 +384,7 @@ extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
             viewModel.isExpandable,
             let _ = viewModel.rows[indexPath.row] as? OrderItem {
             viewModel.isExpanded = !viewModel.isExpanded
-            self.statefulTableView.innerTable.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+            self.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
         }
     }
 }

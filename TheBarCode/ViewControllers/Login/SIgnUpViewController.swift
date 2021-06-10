@@ -98,6 +98,8 @@ class SIgnUpViewController: UIViewController {
     var facebookParams: (socialId: String, accessToken: String)?
     var instagramParams: (socialId: String, accessToken: String, profileImage: String)?
     
+    var maxPostCodeCharLimit = 8
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -121,6 +123,8 @@ class SIgnUpViewController: UIViewController {
         
         self.setUpFields()
         self.setUpTermsAndPolicyLink()
+        
+        self.maxPostCodeCharLimit = Utility.shared.regionalInfo.country == INCountryCode ? 6 : 8
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -548,7 +552,7 @@ extension SIgnUpViewController: FieldViewDelegate {
     func fieldView(fieldView: FieldView, shouldChangeCharactersIn range: NSRange, replacementString string: String, textField: UITextField) -> Bool {
         
         if fieldView == self.postcodeFieldView {
-            let maxLength = 8
+            let maxLength = self.maxPostCodeCharLimit
             let currentString: NSString = textField.text! as NSString
             let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
             return newString.length <= maxLength
