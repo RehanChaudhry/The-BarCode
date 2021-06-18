@@ -15,6 +15,10 @@ import KVNProgress
 
 typealias RegionInfo = (country: String, currencySymbol: String, currencyCode: String)
 
+protocol ProductModfiersViewControllerDelegate: AnyObject {
+    func productModfiersViewController(controller: ProductModfiersViewController, cartUpdateFailed error: NSError)
+}
+
 class ProductModfiersViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
@@ -45,6 +49,8 @@ class ProductModfiersViewController: UIViewController {
     var headerHeights: [Int : CGFloat] = [:]
     
     var isUpdating: Bool = false
+    
+    weak var delegate: ProductModfiersViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -370,8 +376,16 @@ extension ProductModfiersViewController {
             guard serverError == nil else {
                 if serverError!.detail.count > 0 {
                     KVNProgress.showError(withStatus: serverError!.detail)
+                    
+                    let needsRefresh = serverError?.rawResponse["refresh"] as? Bool
+                    
+                    let nsError = NSError(domain: "ServerError", code: serverError!.statusCode, userInfo: [NSLocalizedDescriptionKey : serverError!.detail,
+                                                                                                           "refresh" : needsRefresh ?? false])
+                    self.delegate?.productModfiersViewController(controller: self, cartUpdateFailed: nsError)
+                    
                 } else {
                     KVNProgress.showError(withStatus: serverError!.nsError().localizedDescription)
+                    self.delegate?.productModfiersViewController(controller: self, cartUpdateFailed: serverError!.nsError())
                 }
                 return
             }

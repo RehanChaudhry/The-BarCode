@@ -114,7 +114,7 @@ class Order: Mappable {
     var establishmentSquareUpAppId: String? = nil
     
     var menuTypeRaw: String = MenuType.barCode.rawValue
-    var paymentGatewayTypeRaw: String = PaymentGatewayType.paymentSense.rawValue
+    var paymentGatewayTypeRaw: String? = nil
     
     var squareUpLocationId: String = ""
     
@@ -187,7 +187,7 @@ class Order: Mappable {
         }
         
         self.menuTypeRaw <- map["epos_type"]
-        self.paymentGatewayTypeRaw <- map["payment_gateway_type"]
+        self.paymentGatewayTypeRaw <- map["establishment.payment_gateway_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
         

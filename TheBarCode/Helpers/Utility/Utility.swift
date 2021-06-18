@@ -858,7 +858,10 @@ extension Utility {
             
             guard serverError == nil else {
                 if serverError!.detail.count > 0 {
-                    let nsError = NSError(domain: "ServerError", code: serverError!.statusCode, userInfo: [NSLocalizedDescriptionKey : serverError!.detail])
+                    
+                    let needsRefresh = serverError?.rawResponse["refresh"] as? Bool
+                    let nsError = NSError(domain: "ServerError", code: serverError!.statusCode, userInfo: [NSLocalizedDescriptionKey : serverError!.detail,
+                                                                                                           "refresh" : needsRefresh ?? false])
                     completion(nsError)
                 } else {
                     completion(serverError!.nsError())

@@ -15,6 +15,7 @@ import ObjectMapper
 import PureLayout
 import FirebaseAnalytics
 import KVNProgress
+import HTTPStatusCodes
 
 protocol FoodMenuViewControllerDelegate: class {
     func foodMenuViewController(controller: FoodMenuViewController, didSelect product: Product)
@@ -192,6 +193,7 @@ extension FoodMenuViewController: ProductMenuCellDelegate {
             productModifiersNavigation.modalPresentationStyle = .fullScreen
             
             let productModifiersController = (productModifiersNavigation.viewControllers.first as! ProductModfiersViewController)
+            productModifiersController.delegate = self
             productModifiersController.productInfo = (id: product.id.value,
                                                       name: product.name.value,
                                                       price: Double(product.price.value) ?? 0.0,
@@ -286,10 +288,27 @@ extension FoodMenuViewController {
         Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
+                
+                let shouldRefresh = error.userInfo["refresh"] as? Bool
+                if error.code == HTTPStatusCode.notAcceptable.rawValue, shouldRefresh == true {
+                    self.reset()
+                }
             }
         }
         
         self.statefulTableView.innerTable.reloadData()
+    }
+}
+
+//MARK: ProductModfiersViewControllerDelegate
+extension FoodMenuViewController: ProductModfiersViewControllerDelegate {
+    func productModfiersViewController(controller: ProductModfiersViewController, cartUpdateFailed error: NSError) {
+        let shouldRefresh = error.userInfo["refresh"] as? Bool
+        if error.code == HTTPStatusCode.notAcceptable.rawValue, shouldRefresh == true {
+            self.dismiss(animated: true) {
+                self.reset()
+            }
+        }
     }
 }
 

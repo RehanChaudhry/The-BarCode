@@ -38,6 +38,8 @@ class PaymentSenseWebViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.title = "Add Card"
+        
         self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
         let webConfiguration = WKWebViewConfiguration()
@@ -77,8 +79,8 @@ class PaymentSenseWebViewController: UIViewController {
 
         self.loadUrl()
         
-        let reloadBarButton = UIBarButtonItem(title: "Relaod", style: .plain, target: self, action: #selector(reload))
-        self.navigationItem.rightBarButtonItem = reloadBarButton
+//        let reloadBarButton = UIBarButtonItem(title: "Relaod", style: .plain, target: self, action: #selector(reload))
+//        self.navigationItem.rightBarButtonItem = reloadBarButton
     }
 
     override func didReceiveMemoryWarning() {
