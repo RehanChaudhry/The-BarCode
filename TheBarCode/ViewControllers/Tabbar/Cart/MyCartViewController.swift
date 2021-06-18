@@ -183,7 +183,7 @@ class MyCartViewController: UIViewController {
         
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = "If you have any allergies, please let a member of the waiting staff know before ordering."
-        cannotRedeemViewController.titleText = "Info"
+        cannotRedeemViewController.titleText = "Disclaimer"
         cannotRedeemViewController.headerImageName = "login_intro_reload_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
