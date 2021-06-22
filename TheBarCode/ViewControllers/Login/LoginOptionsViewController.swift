@@ -124,15 +124,15 @@ class LoginOptionsViewController: UIViewController {
     
     func setupInitialData(){
         
-        let option1 = IntroOption(title: "Discover", detail: "Discover awesome Independent venues", type: .barFinder)
+        let option1 = IntroOption(title: "Discover", detail: "Find awesome independent venues near you", type: .barFinder)
     
-        let option2 = IntroOption(title: "Edits", detail: "Get a daily bundle of offers specific to you", type: .fiveADay)
+        let option2 = IntroOption(title: "Order & Pay", detail: "For delivery, dine in and takeaway", type: .fiveADay)
         
-        let option3 = IntroOption(title: "Live Alerts", detail: "Receive real-time offers from your nearest and dearest", type: .liveOffers)
-
-        let option4 = IntroOption(title: "Reload and get Discounts", detail: "Reload all offers for just \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.reload)", type: .reload)
+        let option3 = IntroOption(title: "Guaranteed Discounts", detail: "Reload all redeemed offers each week for \(Utility.shared.regionalInfo.currencySymbol)\(Utility.shared.regionalInfo.reload)", type: .liveOffers)
         
-        let option5 = IntroOption(title: "Get Credits", detail: "Earn credits by inviting friends and sharing offers", type: .credits)
+        let option4 = IntroOption(title: "What’s On", detail: "Find out about events and offers in real time", type: .reload)
+        
+        let option5 = IntroOption(title: "Credits & Rewards", detail: "Earn credits by inviting friends and sharing offers", type: .credits)
 
         introOptions = [option1, option2, option3, option4, option5]
         

@@ -36,11 +36,11 @@ class IntroOption {
                 let imagePostfix = self.getImagePostfix()
                 return (imagePrefix + imagePostfix)
             case .liveOffers:
-                let imagePrefix = "login_intro_live_offer"
+                let imagePrefix = "login_intro_reload"
                 let imagePostfix = self.getImagePostfix()
                 return (imagePrefix + imagePostfix)
             case .reload:
-                let imagePrefix = "login_intro_reload"
+                let imagePrefix = "login_intro_live_offer"
                 let imagePostfix = self.getImagePostfix()
                 return (imagePrefix + imagePostfix)
             case .credits:

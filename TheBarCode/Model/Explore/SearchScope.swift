@@ -45,7 +45,7 @@ enum SearchScope: String {
         case .deal:
             let item = SearchScopeItem(storyboardId: "DealSearchViewController",
                                        scopeType: .deal,
-                                       title: "DEALS",
+                                       title: "OFFERS",
                                        backgroundColor: .appSearchScopeDealsColor(),
                                        selectedBackgroundColor: .appSearchScopeDealsSelectedColor())
             return item
