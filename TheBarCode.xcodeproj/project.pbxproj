@@ -3440,7 +3440,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.5;
+				MARKETING_VERSION = 8.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3471,7 +3471,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TheBarCode/Helpers/Worldpay",
 				);
-				MARKETING_VERSION = 8.5;
+				MARKETING_VERSION = 8.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cygnismedia.thebarcodeapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
