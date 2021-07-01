@@ -32,7 +32,7 @@ class IntroOption {
                 let imagePostfix = self.getImagePostfix()
                 return (imagePrefix + imagePostfix)
             case .fiveADay:
-                let imagePrefix = "order_and_pay"
+                let imagePrefix = "login_intro_five_a_day"
                 let imagePostfix = self.getImagePostfix()
                 return (imagePrefix + imagePostfix)
             case .liveOffers:

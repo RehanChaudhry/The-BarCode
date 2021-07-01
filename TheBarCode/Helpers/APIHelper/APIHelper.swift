@@ -16,12 +16,12 @@ let staggingAPIDomain = "https://thebarcode.cygnis.dev"
 let qaAPIDomain = "https://thebarcode-qa.cygnis.dev"
 let devAPIDomain = "https://thebarcode-dev.cygnis.dev"
 let productionAPIDomain = "https://thebarcode.co"
-let localAPIDomain = "http://192.168.86.61:8000"
+let localAPIDomain = "http://192.168.86.81:8000"
 
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = productionAPIDomain
+let theBarCodeAPIDomain = localAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"
