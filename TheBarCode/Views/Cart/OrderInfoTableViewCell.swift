@@ -123,6 +123,7 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setupMainViewAppearanceAsStandard()
     }
     
+    
     func setupCell(orderItem: OrderItem, showSeparator: Bool, isExpanded: Bool, hasSelectedModifiers: Bool, currencySymbol: String) {
         
         if hasSelectedModifiers {
@@ -144,6 +145,19 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.maskCorners(radius: 0.0, mask: [])
         
         self.setUpAppearanceForItem(isExapandable: hasSelectedModifiers)
+    }
+    
+    func setupCell(tipInfo: TipInfo, showSeparator: Bool) {
+        self.leftLabel.text = tipInfo.tipLabel + " - " + tipInfo.orderType.displayableValue()
+        self.leftLabel.font = UIFont.appBoldFontOf(size: 14)
+
+        self.rightLabel.text = tipInfo.tipAmount
+        
+        self.showSeparator(show: showSeparator)
+        
+        self.maskCorners(radius: 8.0, mask: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        
+        self.setupMainViewAppearanceAsStandard()
     }
     
     func setupCell(modifier: ProductModifier, showSeparator: Bool, currencySymbol: String) {

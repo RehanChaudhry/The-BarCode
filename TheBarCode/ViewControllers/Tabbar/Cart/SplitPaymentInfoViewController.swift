@@ -134,7 +134,8 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
                                hasSelectedModifiers: section.isExpandable,
                                currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: isFirstOrderItem ? 16.0 : 8.0, bottom: (isLastOrderItem && !section.isExpanded) ? 16.0 : 4.0)
-            } else if let item = item as? ProductModifier {
+            }
+            else if let item = item as? ProductModifier {
                 cell.setupCell(modifier: item, showSeparator: (isLastOrderItem && isLastCell), currencySymbol: self.order!.currencySymbol)
                 cell.adjustMargins(top: 4.0, bottom: (isLastOrderItem && isLastCell) ? 16.0 : 4.0)
                 return cell
@@ -142,7 +143,18 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
             
             return cell
 
-        } else if let section = viewModel as? OrderDiscountSection {
+        }
+        
+        else if let section = viewModel as? TipInfoSection {
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+            let tip = TipInfo(tipLabel: "Tip", tipAmount: self.order.orderTip, orderType: self.order.orderType)
+            cell.setupCell(tipInfo: tip , showSeparator: isLastCell)
+            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+            return cell
+        
+        }
+        
+        else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)

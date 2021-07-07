@@ -19,6 +19,8 @@ class OrderFieldInput: NSObject {
     var maxCharacters: Int = 100
     
     var text: String = ""
+    
+    var currencySymbol = ""
 }
 
 class OrderFieldSection: OrderViewModel {

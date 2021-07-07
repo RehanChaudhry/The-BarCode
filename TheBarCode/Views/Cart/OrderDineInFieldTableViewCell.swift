@@ -11,7 +11,9 @@ import Reusable
 
 class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
 
+    @IBOutlet weak var currencySymbol: UILabel!
     @IBOutlet var textField: UITextField!
+    @IBOutlet weak var backGroundView: UIView!
     
     var orderField: OrderFieldInput!
     
@@ -30,6 +32,10 @@ class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
     
     //MARK: My Methods
     func setUpCell(orderField: OrderFieldInput) {
+    
+        self.backGroundView.layer.cornerRadius = 8;
+        self.backGroundView.layer.masksToBounds = true;
+        self.currencySymbol.text = orderField.currencySymbol
         self.textField.text = orderField.text
         self.textField.placeholder = orderField.placeholder
         self.textField.keyboardType = orderField.keyboardType

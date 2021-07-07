@@ -14,5 +14,9 @@
 		<string>applinks:thebarcode.page.link</string>
 		<string>applinks:barcodeoffer.page.link</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.com.cygnismedia.thebarcodeapp</string>
+	</array>
 </dict>
 </plist>

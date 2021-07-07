@@ -43,6 +43,9 @@ class Order: Mappable {
     
     var total: Double = 0.0
     
+    var orderTip: String = ""
+    
+    
     var status: OrderStatus {
         return OrderStatus(rawValue: self.statusRaw) ?? .other
     }

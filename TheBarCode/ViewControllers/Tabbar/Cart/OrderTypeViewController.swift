@@ -114,6 +114,17 @@ class OrderTypeViewController: UIViewController {
         return field
     }
     
+    func getTipField() -> OrderFieldInput {
+        let field = OrderFieldInput()
+        field.currencySymbol = order.currencySymbol
+//        self.order.tip = field.text
+        field.placeholder = "Enter tip"
+        field.allowedCharacterSet = CharacterSet.decimalDigits
+        field.keyboardType = .numberPad
+        
+        return field
+    }
+    
     func setupViewModel() {
        
         self.viewModels.removeAll()
@@ -139,8 +150,10 @@ class OrderTypeViewController: UIViewController {
             self.viewModels.append(dineInSection)
             
             let dineInField = self.getDineInField()
-            let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
+            let tipField = self.getTipField()
+            let dineInFieldSection = OrderFieldSection(items: [dineInField, tipField], type: .tableNo)
             self.viewModels.append(dineInFieldSection)
+            
             
             let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
             let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
@@ -242,10 +255,15 @@ class OrderTypeViewController: UIViewController {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .tableNo}),
             let section = self.viewModels[sectionIndex] as? OrderFieldSection,
             section.items.count == 0 {
-            let field = self.getDineInField()
-            section.items.append(field)
+            let dineInField = self.getDineInField()
+            section.items.append(dineInField)
+            
+            let tipField = self.getTipField()
+            section.items.append(tipField)
         }
+ 
     }
+    
     
     func removeDineInField() {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .tableNo}),
@@ -377,12 +395,14 @@ class OrderTypeViewController: UIViewController {
             item.isSelected {
             
             let fieldSection = self.viewModels.first(where: {$0.type == .tableNo}) as? OrderFieldSection
-            let tableNo = fieldSection?.items.first?.text ?? ""
+            let tableNo = fieldSection?.items[0].text ?? ""
+            let orderTip = fieldSection?.items[1].text ?? ""
             
             if tableNo.trimWhiteSpaces().count == 0 {
                 self.showAlertController(title: "", msg: "Please enter table number to proceed")
             } else {
                 params["table_no"] = tableNo
+                params["order_tip"] = orderTip
                 self.createOrder(orderType: .dineIn, info: params)
             }
             
@@ -683,6 +703,7 @@ extension OrderTypeViewController {
                 let typeRaw = responseObject["type"] as? String {
                 self.order.orderNo = "\(responseObject["id"]!)"
                 self.order.orderTypeRaw = typeRaw
+                self.order.orderTip = "\(responseObject["order_tip"]!)"
                 self.moveToNextStep(orderType: orderType)
             } else {
                 let genericError = APIHelper.shared.getGenericError()

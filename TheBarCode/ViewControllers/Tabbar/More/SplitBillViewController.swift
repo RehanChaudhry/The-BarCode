@@ -69,8 +69,9 @@ class SplitBillViewController: UIViewController {
         self.viewModels.append(barInfoSection)
 
         self.viewModels.append(contentsOf: self.order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
-        
+                
         let total: Double = self.getProductsTotal()
+        
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
