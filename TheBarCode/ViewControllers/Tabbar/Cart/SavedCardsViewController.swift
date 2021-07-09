@@ -14,6 +14,8 @@ import HTTPStatusCodes
 import SquareInAppPaymentsSDK
 import SquareBuyerVerificationSDK
 import KVNProgress
+import PassKit
+
 
 class SavedCardsViewController: UIViewController {
 
@@ -75,13 +77,38 @@ class SavedCardsViewController: UIViewController {
     
     var isSelectedNewPaymentCard: Bool = false
     
+    //MARK: Apple Pay Request
+    
+    private var paymentRequest: PKPaymentRequest {
+        let request = PKPaymentRequest()
+        
+        request.merchantIdentifier = "merchant.com.cygnismedia.thebarcodeapp"
+        request.supportedNetworks = [.quicPay, .masterCard, .visa]
+        request.supportedCountries = ["IN", "GB"]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = "GB"
+        print("Country Code \(order!.country)")
+        request.currencyCode = order!.currencyCode
+        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Total", amount: NSDecimalNumber(value: order!.total))]
+        
+        
+        
+        
+            
+            
+
+        
+        
+        return request
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         self.title = "Payment Method"
-        
+                
         self.closeBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(closeBarButtonTapped(sender:)))
         
         if self.order == nil {
@@ -226,7 +253,42 @@ class SavedCardsViewController: UIViewController {
             self.showAlertController(title: "", msg: "Please select a card to proceed")
         }
     }
+    @IBAction func applePayButtonTapped (sender: UIButton) {
+        
+        let controller = PKPaymentAuthorizationViewController(paymentRequest: paymentRequest)
+        if controller != nil {
+            controller!.delegate = self
+        present(controller!, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func displayDefaultAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
+
+extension SavedCardsViewController: PKPaymentAuthorizationViewControllerDelegate {
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+
+        dismiss(animated: true, completion: nil)
+
+    }
+    func paymentAuthorizationViewController(_ controller: PKPaymentAuthorizationViewController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        
+        
+//        completion(PKPaymentAuthorizationResult(status: .failure, errors: nil))
+            
+        displayDefaultAlert(title: "Success!", message: "The Apple Pay transaction was complete.")
+
+    }
+}
+
 
 //MARK: UITableViewDataSource, UITableViewDelegate
 extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
