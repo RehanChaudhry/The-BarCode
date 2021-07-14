@@ -220,7 +220,7 @@ extension DrinkListViewController {
         }
         
         let params: [String : Any] = ["establishment_id": self.bar.id.value,
-                                      "type" : "drink",
+                                      "supported_order_type" : "dine_in_collection",
                                       "pagination" : true,
                                       "page": self.loadMore.next]
         

@@ -479,12 +479,12 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .drink {
             barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 1
-            barDetailController.preSelectedSubTabIndexOffers = 0
-        } else if scopeType == .event {
-            barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
+        } else if scopeType == .event {
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 2
+            barDetailController.preSelectedSubTabIndexOffers = 2
         }
         
         self.present(barDetailNav, animated: true, completion: nil)

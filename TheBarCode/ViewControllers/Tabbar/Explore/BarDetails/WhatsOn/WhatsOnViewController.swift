@@ -33,6 +33,7 @@ class WhatsOnViewController: UIViewController {
     
     @IBOutlet var segmentContainer: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentControlHeightConstraint: NSLayoutConstraint!
     
     var bar: Bar!
     
@@ -57,13 +58,6 @@ class WhatsOnViewController: UIViewController {
         
         self.segmentContainer.backgroundColor = UIColor.appNavBarGrayColor()
         
-        self.eventsController = (self.storyboard!.instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController)
-        self.eventsController.bar = self.bar
-        self.eventsController.delegate = self
-        self.addChildController(controller: self.eventsController)
-        self.eventsContainer.addSubview(self.eventsController.view)
-        self.eventsController.view.autoPinEdgesToSuperviewEdges()
-        
         if self.bar.menuType == .barCode {
             self.drinksController = (self.storyboard!.instantiateViewController(withIdentifier: "DrinkListViewController") as! DrinkListViewController)
             self.drinksController!.bar = self.bar
@@ -71,9 +65,12 @@ class WhatsOnViewController: UIViewController {
             self.addChildController(controller: self.drinksController!)
             self.drinksContainer?.addSubview(self.drinksController!.view)
             self.drinksController!.view.autoPinEdgesToSuperviewEdges()
+            self.segmentControlHeightConstraint.constant = 47
         } else {
             self.segmentedControl.removeSegment(at: 2, animated: false)
             self.segmentedControl.setTitle("Food & Drinks", forSegmentAt: 1)
+            self.segmentedControl.isHidden = true
+            self.segmentControlHeightConstraint.constant = 0
         }
         
         self.foodMenuController = (self.storyboard!.instantiateViewController(withIdentifier: "FoodMenuViewController") as! FoodMenuViewController)
@@ -140,7 +137,7 @@ class WhatsOnViewController: UIViewController {
     
     
     func reset() {
-        self.eventsController.reset()
+        //self.eventsController.reset()
         self.drinksController?.reset()
         self.foodMenuController.reset()
     }
@@ -160,14 +157,14 @@ class WhatsOnViewController: UIViewController {
 
 //MARK: SJSegmentedViewControllerViewSource
 extension WhatsOnViewController: SJSegmentedViewControllerViewSource {
-    func viewsForSegmentControllerToObserveContentOffsetChange() -> [UIView] {
+    /*func viewsForSegmentControllerToObserveContentOffsetChange() -> [UIView] {
         if let drinksController = self.drinksController {
             return [self.eventsController.statefulTableView.innerTable, drinksController.statefulTableView.innerTable, self.foodMenuController.statefulTableView.innerTable]
         } else {
             return [self.eventsController.statefulTableView.innerTable, self.foodMenuController.statefulTableView.innerTable]
         }
         
-    }
+    }*/
 }
 
 //MARK: EventsViewControllerDelegate

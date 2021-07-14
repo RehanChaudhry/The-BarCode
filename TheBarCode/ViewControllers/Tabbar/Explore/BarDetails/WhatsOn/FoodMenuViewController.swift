@@ -223,7 +223,7 @@ extension FoodMenuViewController {
         
         //Type will only go if menu is created using barcode admin panel
         if self.bar.menuType == .barCode {
-            params["type"] = "food"
+            params["supported_order_type"] = "takeaway_delivery"
         }
         
         self.loadMore.isLoading = true

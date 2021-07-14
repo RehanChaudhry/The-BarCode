@@ -172,13 +172,13 @@ class BarDetailViewController: UIViewController {
         self.whatsOnController = (self.storyboard!.instantiateViewController(withIdentifier: "WhatsOnViewController") as! WhatsOnViewController)
         self.whatsOnController.bar = self.selectedBar
         self.whatsOnController.delegate = self
-        self.whatsOnController.title = "Whats On"
+        self.whatsOnController.title = "Menu"
         self.whatsOnController.preSelectedTabIndex = self.preSelectedSubTabIndexWhatsOn
         self.whatsOnController.view.backgroundColor = self.containerView.backgroundColor
         
         self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "OffersViewController") as! OffersViewController)
         self.offersController.bar = self.selectedBar
-        self.offersController.title = "Offers"
+        self.offersController.title = "Whats On"
         self.offersController.delegate = self
         self.offersController.preSelectedTabIndex = self.preSelectedSubTabIndexOffers
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
