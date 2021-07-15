@@ -35,7 +35,7 @@ class OffersViewController: UIViewController {
     var eventsController: EventsViewController!
     
     weak var delegate: OffersViewControllerDelegate!
-    weak var delegateWhatsOnViewController: WhatsOnViewControllerDelegate!
+    weak var delegateWhatsOnViewController: EventsViewControllerDelegate?
     
     var preSelectedTabIndex: Int = 0
     var eventsContainer: UIView!
@@ -148,7 +148,9 @@ extension OffersViewController: LiveOffersViewControllerDelegate {
 //MARK: EventsViewControllerDelegate
 extension OffersViewController: EventsViewControllerDelegate {
     func eventsViewController(controller: EventsViewController, didSelect event: Event) {
-        self.delegateWhatsOnViewController.whatsOnViewController(controller: WhatsOnViewController(), didSelect: event)
+        if let _ = self.delegateWhatsOnViewController {
+            self.delegateWhatsOnViewController?.eventsViewController(controller: EventsViewController(), didSelect: event)
+        }
     }
 }
 
