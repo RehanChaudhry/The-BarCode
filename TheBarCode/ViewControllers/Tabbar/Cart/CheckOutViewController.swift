@@ -31,6 +31,9 @@ class CheckOutViewController: UIViewController {
     
     var totalBillPayable: Double = 0.0
     
+    var orderTip: Double = 0.0
+
+    
     var refreshControl: UIRefreshControl!
     
     var isGettingVouchers: Bool = false {
@@ -126,6 +129,10 @@ class CheckOutViewController: UIViewController {
             let orderDeliveryInfoSection = OrderDeliveryInfoSection(items: [orderDeliveryInfo])
             self.viewModels.append(orderDeliveryInfoSection)
         }
+        
+        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.orderTip)
+        let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
+        self.viewModels.append(tipInfoSection)
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
@@ -242,7 +249,7 @@ class CheckOutViewController: UIViewController {
         totalPayablePrice = max(0, totalPayablePrice)
         
         if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
-            (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = grandTotal
+            (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = grandTotal + self.orderTip
             let indexPath = IndexPath(row: 0, section: totalSectionIndex)
             
             if self.tableView.numberOfSections > 0 {
@@ -271,7 +278,7 @@ class CheckOutViewController: UIViewController {
             self.totalBillPayable = max(0.0, totalPayablePrice)
         }
         
-        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
+        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + self.orderTip), for: .normal)
         
     }
     
@@ -394,7 +401,7 @@ class CheckOutViewController: UIViewController {
             
         let paymentController = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
         paymentController.order = self.order
-        paymentController.totalBillPayable = self.totalBillPayable
+        paymentController.totalBillPayable = self.totalBillPayable + self.orderTip
         paymentController.selectedVoucher = selectedVoucher
         paymentController.selectedOffer = selectedOffer
         paymentController.useCredit = self.useCredit
@@ -451,7 +458,16 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
             
             return cell
 
-        } else if let section = viewModel as? OrderTotalBillInfoSection {
+        }
+        
+        else if let section = viewModel as? OrderTipInfoSection {
+             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+         cell.setupCell(orderTipInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order!.currencySymbol)
+         cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+             return cell
+         }
+        
+        else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             

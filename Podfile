@@ -60,6 +60,22 @@ target 'TheBarCode' do
 
 end
 
+post_install do |installer|
+        installer.pods_project.targets.each do |target|
+          target.build_configurations.each do |config|
+            deployment_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+            target_components = deployment_target.split
+
+            if target_components.length > 0
+              target_initial = target_components[0].to_i
+              if target_initial < 9
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = "9.0"
+              end
+            end
+          end
+        end
+    end
+
 target 'OneSignalNotificationServiceExtension' do
     pod 'OneSignal', '~> 2.13.0'
 end

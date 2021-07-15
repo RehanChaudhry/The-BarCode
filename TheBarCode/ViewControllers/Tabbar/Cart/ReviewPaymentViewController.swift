@@ -24,6 +24,8 @@ class ReviewPaymentViewController: UIViewController {
     var viewModels: [OrderViewModel] = []
     
     var totalBillPayable: Double = 0.0
+    
+    var orderTip: Double = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,11 +92,16 @@ class ReviewPaymentViewController: UIViewController {
 
         self.viewModels.append(contentsOf: order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
         
+        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.orderTip)
+        let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
+        self.viewModels.append(tipInfoSection)
+        
         var total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
             return result + item.totalPrice
         }
         
-        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total)
+        
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total + self.orderTip)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
@@ -146,7 +153,7 @@ class ReviewPaymentViewController: UIViewController {
         
         total -= paidAmount
         self.totalBillPayable = max(0.0, total)
-        self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
+        self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable + self.orderTip), for: .normal)
     }
     
     //MARK: My IBActions
@@ -157,6 +164,10 @@ class ReviewPaymentViewController: UIViewController {
         }
         
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "CheckOutViewController") as! CheckOutViewController)
+        
+        controller.totalBillPayable = self.totalBillPayable
+        controller.orderTip = self.orderTip
+        controller.order = self.order
         controller.order = order
         self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -221,7 +232,16 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
             
             return cell
 
-        } else if let section = viewModel as? OrderDiscountSection {
+        }
+        
+        else if let section = viewModel as? OrderTipInfoSection {
+             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+         cell.setupCell(orderTipInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order!.currencySymbol)
+         cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+             return cell
+         }
+        
+        else if let section = viewModel as? OrderDiscountSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             cell.setupCell(orderDiscountInfo: section.items[indexPath.row], showSeparator: isLastCell, currencySymbol: self.order!.currencySymbol)

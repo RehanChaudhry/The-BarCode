@@ -14,6 +14,7 @@ enum OrderSectionType: String {
     productDetails = "productDetails",
     discountDetails = "discountDetails",
     deliveryChargesDetails = "deliveryChargesDetails",
+    orderTip = "tip",
     totalBill = "totalBill",
     splitAmount = "splitAmount",
     heading = "heading",
@@ -84,46 +85,6 @@ class BarInfoSection: OrderViewModel {
     var items: [BarInfo]
     
     init(items: [BarInfo]) {
-        self.items = items
-    }
-}
-
-//MARK: TipDetails
-
-class TipInfo: NSObject {
-    
-    var tipLabel: String
-    var tipAmount: String
-    var orderType: OrderType
-
-    init(tipLabel: String, tipAmount: String, orderType: OrderType) {
-        self.tipLabel = tipLabel
-        self.tipAmount = tipAmount
-        self.orderType = orderType
-    }
-}
-
-class TipInfoSection: OrderViewModel {
-    
-    var shouldShowSeparator: Bool {
-        return true
-    }
-    
-    var type: OrderSectionType {
-        return .barDetails
-    }
-    
-    var rowCount: Int {
-        return self.items.count
-    }
-    
-    var rowHeight: CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    var items: [TipInfo]
-    
-    init(items: [TipInfo]) {
         self.items = items
     }
 }

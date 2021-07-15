@@ -147,18 +147,23 @@ class OrderInfoTableViewCell: UITableViewCell, NibReusable {
         self.setUpAppearanceForItem(isExapandable: hasSelectedModifiers)
     }
     
-    func setupCell(tipInfo: TipInfo, showSeparator: Bool) {
-        self.leftLabel.text = tipInfo.tipLabel + " - " + tipInfo.orderType.displayableValue()
-        self.leftLabel.font = UIFont.appBoldFontOf(size: 14)
-
-        self.rightLabel.text = tipInfo.tipAmount
+    func setupCell(orderTipInfo: OrderTipInfo , showSeparator: Bool, radius: CGFloat = 8.0, currencySymbol: String) {
+        self.leftLabel.text =  orderTipInfo.title
+        self.leftLabel.font = UIFont.appRegularFontOf(size: 14.0)
+        let tipPrice = String(format: "%.2f", orderTipInfo.tipAmount)
+        self.rightLabel.text = "\(currencySymbol) \(tipPrice)"
+        self.rightLabel.isHidden = false
+        
+        self.rightLabel.font = UIFont.appBoldFontOf(size: 14)
+        self.mainView.backgroundColor = UIColor.black
         
         self.showSeparator(show: showSeparator)
         
-        self.maskCorners(radius: 8.0, mask: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        self.maskCorners(radius: 0.0, mask: [])
         
         self.setupMainViewAppearanceAsStandard()
     }
+    
     
     func setupCell(modifier: ProductModifier, showSeparator: Bool, currencySymbol: String) {
         self.leftLabel.text = "\(modifier.quantity) x " + modifier.name

@@ -392,6 +392,7 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
+		F9801F49269DA435005A0D3A /* OrderTipInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9801F48269DA435005A0D3A /* OrderTipInfo.swift */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
 		FA042EAD24D15430006D757B /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA042EAC24D15430006D757B /* StepperView.swift */; };
@@ -924,6 +925,7 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F9801F48269DA435005A0D3A /* OrderTipInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTipInfo.swift; sourceTree = "<group>"; };
 		F9A08A4526945D43005E2A20 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
@@ -2458,6 +2460,7 @@
 				0C368A6B25089D8300A2E0D3 /* OrderSplitBillTypeSection.swift */,
 				0CBF1819250F38EB007220D0 /* OrderMessageSection.swift */,
 				0CE4867725497CEA00E22AD2 /* OrderMobileNumberSection.swift */,
+				F9801F48269DA435005A0D3A /* OrderTipInfo.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2920,6 +2923,7 @@
 				FA42B4B724C87E250000ED15 /* MyReservationsViewController.swift in Sources */,
 				0C0BD8D822F411FA00668DF7 /* OfferWalletViewController.swift in Sources */,
 				0C8E9AAB214BBAE300224720 /* FAQ.swift in Sources */,
+				F9801F49269DA435005A0D3A /* OrderTipInfo.swift in Sources */,
 				0CFECFD622EAC63C0033BE20 /* AllSearchHeaderView.swift in Sources */,
 				0C39F300231E72D500596A2B /* GQTPointQuadTreeChild.m in Sources */,
 				0C8D166B229F8F2A00666F77 /* ExploreImageCell.swift in Sources */,

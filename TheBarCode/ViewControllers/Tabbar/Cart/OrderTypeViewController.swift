@@ -85,6 +85,19 @@ class OrderTypeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        let totalProductPrice = self.getProductsTotalPrice()
+        
+        if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
+            (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = totalProductPrice
+            let indexPath = IndexPath(row: 0, section: totalSectionIndex)
+            if self.tableView.numberOfSections > 0 {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            } else {
+                self.tableView.reloadData()
+            }
+        }
+        
         self.tableView.reloadData()
     }
 
@@ -117,7 +130,6 @@ class OrderTypeViewController: UIViewController {
     func getTipField() -> OrderFieldInput {
         let field = OrderFieldInput()
         field.currencySymbol = order.currencySymbol
-//        self.order.tip = field.text
         field.placeholder = "Enter tip"
         field.allowedCharacterSet = CharacterSet.decimalDigits
         field.keyboardType = .numberPad
@@ -233,6 +245,7 @@ class OrderTypeViewController: UIViewController {
             deliveryItem.isSelected {
             totalProductPrice += deliveryItem.value
         }
+        
         
         let totalAmount = max(0.0, totalProductPrice)
         self.totalBillPayable = totalAmount
@@ -362,10 +375,39 @@ class OrderTypeViewController: UIViewController {
     }
     
     func moveToSplitPayment(viewModels: [OrderViewModel]) {
+        
+        // to calculate total bill after tip is added
+        let ordertip = Double(order.orderTip) ?? 0.0
+        let totalBillPayAbleWithTip = self.totalBillPayable + ordertip
+        
+        var models: [OrderViewModel] = []
+        models.append(contentsOf: viewModels)
+        
+        if let index = models.firstIndex(where: { $0.type == .totalBill}),
+           let totalBillSection = self.viewModels[index] as? OrderTotalBillInfoSection,
+           let totalBill = totalBillSection.items.first  {
+            
+            totalBill.price = totalBillPayAbleWithTip
+            
+            let orderTipInfo = OrderTipInfo(title: "Tip", tipAmount: Double(order.orderTip) ?? 0.0)
+            let orderTipInfoSection = OrderTipInfoSection(items: [orderTipInfo])
+            
+            models.insert(orderTipInfoSection, at: index)
+            
+            let indexPath = IndexPath(row: 0, section: index)
+            if self.tableView.numberOfSections > 0 {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            } else {
+                self.tableView.reloadData()
+            }
+            
+            
+        }
+        
         let splitpaymentController = self.storyboard!.instantiateViewController(withIdentifier: "SplitPaymentInfoViewController") as! SplitPaymentInfoViewController
         splitpaymentController.order = self.order
-        splitpaymentController.viewModels = viewModels
-        splitpaymentController.totalBillPayable = self.totalBillPayable
+        splitpaymentController.viewModels = models
+        splitpaymentController.totalBillPayable = totalBillPayAbleWithTip
         self.navigationController?.pushViewController(splitpaymentController, animated: true)
     }
     
@@ -715,6 +757,7 @@ extension OrderTypeViewController {
                 self.order.orderNo = "\(responseObject["id"]!)"
                 self.order.orderTypeRaw = typeRaw
                 self.order.orderTip = "\(responseObject["order_tip"]!)"
+                self.order.total = (responseObject["total"]) as! Double
                 self.moveToNextStep(orderType: orderType)
             } else {
                 let genericError = APIHelper.shared.getGenericError()

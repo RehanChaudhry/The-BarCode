@@ -10,6 +10,7 @@ import UIKit
 import StatefulTableView
 
 class SplitPaymentInfoViewController: UIViewController {
+    
 
     @IBOutlet var statefulTableView: StatefulTableView!
     
@@ -37,6 +38,7 @@ class SplitPaymentInfoViewController: UIViewController {
         self.qrImageView.generateQRCode(orderId: self.order.orderNo)
         
         self.setUpStatefulTableView()
+        self.setUpViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,8 +46,15 @@ class SplitPaymentInfoViewController: UIViewController {
         
         self.statefulTableView.innerTable.reloadData()
     }
+    
 
      //MARK: My Methods
+    
+    func setUpViewModel() {
+       
+        
+    }
+    
     func setUpStatefulTableView() {
          
         self.statefulTableView.innerTable.register(cellType: OrderInfoTableViewCell.self)
@@ -73,14 +82,23 @@ class SplitPaymentInfoViewController: UIViewController {
     
     func moveToReviewPayment() {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ReviewPaymentViewController") as! ReviewPaymentViewController)
-        controller.orderId = self.order.orderNo
+            
+            
+        controller.totalBillPayable = self.totalBillPayable
+        let orderTip = Double(order.orderTip) ?? 0.0
+        controller.orderTip = orderTip
+            controller.orderId = self.order.orderNo
+            controller.order = self.order
+            
         self.navigationController?.pushViewController(controller, animated: true)
+    
     }
     
     //MARK: My IBActions
     @IBAction func payButtonTapped(sender: UIButton) {
         self.moveToReviewPayment()
     }
+    
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate
@@ -145,13 +163,11 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
 
         }
         
-        else if let section = viewModel as? TipInfoSection {
+       else if let section = viewModel as? OrderTipInfoSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
-            let tip = TipInfo(tipLabel: "Tip", tipAmount: self.order.orderTip, orderType: self.order.orderType)
-            cell.setupCell(tipInfo: tip , showSeparator: isLastCell)
-            cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+        cell.setupCell(orderTipInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order.currencySymbol)
+        cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
-        
         }
         
         else if let section = viewModel as? OrderDiscountSection {
