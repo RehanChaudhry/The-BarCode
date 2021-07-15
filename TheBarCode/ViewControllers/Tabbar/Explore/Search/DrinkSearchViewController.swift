@@ -268,7 +268,7 @@ extension DrinkSearchViewController {
             self.loadMore.next = 1
         }
         
-        var params:[String : Any] =  ["type": SearchScope.drink.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.drink.rawValue,
                                       "pagination" : true,
                                       "is_for_map" : false,
                                       "page" : self.loadMore.next,
@@ -361,7 +361,7 @@ extension DrinkSearchViewController {
     
     func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
         
-        var params:[String : Any] =  ["type": SearchScope.drink.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.drink.rawValue,
                                       "pagination" : false,
                                       "is_for_map" : true,
                                       "keyword" : self.keyword]

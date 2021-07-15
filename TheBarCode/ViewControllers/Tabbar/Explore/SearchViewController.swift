@@ -373,7 +373,7 @@ extension SearchViewController: StandardOffersViewControllerDelegate {
 }
 
 //MARK: UICollectionViewDataSource, UICollectionViewDelegate
-extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.scopeItems.count
     }
@@ -387,6 +387,14 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.row == 4 || indexPath.row == 5 {
+            return CGSize(width: 150, height: 43.0)
+        }else {
+            return CGSize(width: 100, height: 43.0)
+        }
     }
 }
 
@@ -475,11 +483,11 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
             barDetailController.preSelectedSubTabIndexOffers = 2
         } else if scopeType == .food || scopeType == .delivery {
             barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .drink {
             barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 0
+            barDetailController.preSelectedSubTabIndexWhatsOn = 1
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .event {
             barDetailController.preSelectedTabIndex = 2

@@ -266,7 +266,7 @@ extension FoodSearchViewController {
             self.loadMore.next = 1
         }
         
-        var params:[String : Any] =  ["type": SearchScope.food.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.food.rawValue,
                                       "pagination" : true,
                                       "is_for_map" : false,
                                       "page" : self.loadMore.next,
@@ -359,7 +359,7 @@ extension FoodSearchViewController {
     
     func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
         
-        var params:[String : Any] =  ["type": SearchScope.food.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.food.rawValue,
                                       "pagination" : false,
                                       "is_for_map" : true,
                                       "keyword" : self.keyword]

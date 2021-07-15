@@ -12,7 +12,11 @@ import SJSegmentedScrollView
 protocol OffersViewControllerDelegate: class {
     func offersViewController(controller: OffersViewController, didSelectBanner banner: Deal)
     func offersViewController(controller: OffersViewController, didSelectExclusive exclusive: Deal)
-    func offersViewController(controller: OffersViewController, didSelectLive live: LiveOffer)
+    func offersViewController(controller: OffersViewController, didSelectLive event: LiveOffer)
+}
+
+protocol OffersEventsDelegate: class {
+    func offersViewController(controller: OffersViewController, didSelectLiveEvent live: Event)
 }
 
 class OffersViewController: UIViewController {
@@ -35,7 +39,7 @@ class OffersViewController: UIViewController {
     var eventsController: EventsViewController!
     
     weak var delegate: OffersViewControllerDelegate!
-    weak var delegateWhatsOnViewController: EventsViewControllerDelegate?
+    weak var delegateWhatsOnViewController: OffersEventsDelegate?
     
     var preSelectedTabIndex: Int = 0
     var eventsContainer: UIView!
@@ -149,7 +153,7 @@ extension OffersViewController: LiveOffersViewControllerDelegate {
 extension OffersViewController: EventsViewControllerDelegate {
     func eventsViewController(controller: EventsViewController, didSelect event: Event) {
         if let _ = self.delegateWhatsOnViewController {
-            self.delegateWhatsOnViewController?.eventsViewController(controller: EventsViewController(), didSelect: event)
+            self.delegateWhatsOnViewController?.offersViewController(controller: self, didSelectLiveEvent: event)
         }
     }
 }
