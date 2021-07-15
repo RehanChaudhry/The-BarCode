@@ -60,6 +60,10 @@ class Order: Mappable {
 
     var isDeliveryAvailable: Bool = false
     var isCurrentlyDeliveryDisabled: Bool = false
+    var isDineIN : Bool = false
+    var isCollection : Bool = false
+    var isTakeAway: Bool = false
+    var isDelivery: Bool = false
     var isGlobalDeliveryAllowed: Bool = false
     
     var todayDeliveryStatusRaw: String = ""
@@ -139,6 +143,12 @@ class Order: Mappable {
         
         self.isDeliveryOnly <- map["establishment.delivery_only"]
         
+        self.isDineIN <- map["establishment.dine_in"]
+        self.isTakeAway <- map["establishment.take_away"]
+        self.isCollection <- map["establishment.collection"]
+        self.isDelivery <- map["establishment.delivery"]
+
+        
         self.statusRaw <- map["status"]
         
         self.total <- map["total"]
@@ -150,6 +160,13 @@ class Order: Mappable {
             self.orderItems <- map["menuItems"]
             self.isDeliveryAvailable <- map["establishment.is_deliver"]
             self.isCurrentlyDeliveryDisabled <- map["establishment.is_delivery_disable"]
+            
+            self.isDineIN <- map["dine_in"]
+            self.isCollection <- map["collection"]
+            self.isTakeAway <- map["take_away"]
+            self.isDelivery <- map["delivery"]
+
+            
             self.isGlobalDeliveryAllowed <- map["establishment.is_global_delivery"]
             
             self.globalDeliveryCharges <- map["establishment.global_delivery_charges"]

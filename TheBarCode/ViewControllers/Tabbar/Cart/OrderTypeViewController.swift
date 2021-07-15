@@ -131,8 +131,12 @@ class OrderTypeViewController: UIViewController {
         let standardOfferHeading = Heading(title: "Select Order Type")
         let standardOfferHeadingSection = HeadingSection(items: [standardOfferHeading])
         self.viewModels.append(standardOfferHeadingSection)
-        
-        if !self.order.isDeliveryOnly {
+        print("Order Type \(self.order.isDineIN)")
+        print("Order Type \(self.order.isTakeAway)")
+        print("Order Type \(self.order.isCollection)")
+        print("Order Type \(self.order.isDelivery)")
+
+        if self.order.isDineIN == true {
             let dineRadioButton = OrderRadioButton(title: "Dine In", subTitle: "")
             dineRadioButton.isSelected = true
             let dineInSection = OrderDineInSection(items: [dineRadioButton])
@@ -142,16 +146,24 @@ class OrderTypeViewController: UIViewController {
             let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
             self.viewModels.append(dineInFieldSection)
             
+        }
+        
+        if self.order.isCollection == true {
+            
             let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
             let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
             self.viewModels.append(counterCollectionSection)
+            
+        }
+        
+        if self.order.isTakeAway == true {
             
             let takeAwayRadio = OrderRadioButton(title: "Takeaway", subTitle: "")
             let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
             self.viewModels.append(takeAwaySection)
         }
         
-        if self.order.isDeliveryAvailable && self.order.todayDeliveryStatus == .available {
+        if self.order.isDelivery == true && self.order.todayDeliveryStatus == .available {
             let deliveryRadioButton = OrderRadioButton(title: "Delivery", subTitle: "")
             deliveryRadioButton.value = Utility.shared.getDeliveryCharges(order: self.order, totalPrice: self.getProductsTotalPrice())
             deliveryRadioButton.isEnabled = !self.order.isCurrentlyDeliveryDisabled
