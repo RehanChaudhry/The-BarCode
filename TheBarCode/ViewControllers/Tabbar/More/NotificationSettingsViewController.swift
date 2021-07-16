@@ -146,7 +146,7 @@ extension NotificationSettingsViewController {
 
 
 extension NotificationSettingsViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         if self.selectedSwitchType == .fiveADay {
             self.fiveADaySwitch.isOn = !self.fiveADaySwitch.isOn
         } else if self.selectedSwitchType == .liveOfferSwitch {

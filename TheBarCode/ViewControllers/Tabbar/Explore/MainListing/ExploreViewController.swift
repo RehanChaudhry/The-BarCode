@@ -537,7 +537,7 @@ extension ExploreViewController: SnackBarInfoViewDelegate {
 
 //MARK: CannotRedeemViewControllerDelegate
 extension ExploreViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         
         if controller.alertType == .credit {
            self.moveToInvite()

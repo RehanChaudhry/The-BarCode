@@ -640,7 +640,7 @@ extension FiveADayViewController: RedeemDealViewControllerDelegate {
 
 //MARK: CannotRedeemViewControllerDelegate
 extension FiveADayViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         self.pagerView.automaticSlidingInterval = 4.0
     }
     

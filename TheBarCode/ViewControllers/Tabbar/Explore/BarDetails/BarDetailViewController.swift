@@ -747,7 +747,7 @@ extension BarDetailViewController: RedeemDealViewControllerDelegate {
 
 //MARK: CannotRedeemViewControllerDelegate
 extension BarDetailViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {

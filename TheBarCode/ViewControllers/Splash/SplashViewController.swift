@@ -92,7 +92,7 @@ class SplashViewController: UIViewController {
 //MARK: CannotRedeemViewControllerDelegate
 extension SplashViewController: CannotRedeemViewControllerDelegate {
     
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         let url = URL(string: appstoreUrlString)
         UIApplication.shared.open(url!, options: [:], completionHandler: { (finish) in
             self.showForceUpdateAlert()

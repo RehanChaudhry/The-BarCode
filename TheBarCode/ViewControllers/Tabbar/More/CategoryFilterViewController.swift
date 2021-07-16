@@ -449,7 +449,7 @@ extension CategoryFilterViewController {
 
 //CannotRedeemViewControllerDelegate
 extension CategoryFilterViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         
     }
     
