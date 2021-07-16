@@ -154,7 +154,7 @@ class MyCartViewController: UIViewController {
         }
     }
     
-    func moveToCheckOut() {
+    func moveToCheckOut(cartType: Bool) {
         if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
             
             if self.isComingFromBarDetails {
@@ -162,6 +162,7 @@ class MyCartViewController: UIViewController {
                 let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
                 orderTypeController.showCloseBarButton = false
                 orderTypeController.order = order
+                orderTypeController.cartType = cartType
                 self.navigationController?.pushViewController(orderTypeController, animated: true)
                 
             } else {
@@ -170,7 +171,7 @@ class MyCartViewController: UIViewController {
                 
                 let controller = navigation.viewControllers.first! as! OrderTypeViewController
                 controller.order = order
-                
+                controller.cartType = cartType
                 self.navigationController?.present(navigation, animated: true, completion: nil)
             }
         }
@@ -181,24 +182,25 @@ class MyCartViewController: UIViewController {
         
         if self.selectedOrder?.cartType == "takeaway_delivery" {
             if self.selectedOrder?.isTakeAway == true || (self.selectedOrder?.isDelivery == true && self.selectedOrder?.isCurrentlyDeliveryDisabled == false) {
-                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true)
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true, cartType: true)
             }else {
-                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false)
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false, cartType: false)
             }
         }else {
             if self.selectedOrder?.isDineIN == true || self.selectedOrder?.isCollection == true {
-                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true)
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true, cartType: false)
             }else {
-                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false)
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false, cartType: false)
             }
         }
     }
     
-    func popupMsg(messageText: String, titleText: String, status: Bool) {
+    func popupMsg(messageText: String, titleText: String, status: Bool, cartType: Bool) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
         cannotRedeemViewController.messageText = messageText
         cannotRedeemViewController.titleText = titleText
         cannotRedeemViewController.dismissStatus = status
+        cannotRedeemViewController.cartType = cartType
         cannotRedeemViewController.headerImageName = "login_intro_reload_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
@@ -213,9 +215,8 @@ class MyCartViewController: UIViewController {
 //MARK: CannotRedeemViewControllerDelegate
 
 extension MyCartViewController: CannotRedeemViewControllerDelegate {
-    
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
-        self.moveToCheckOut()
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
+        self.moveToCheckOut(cartType: cartType)
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {

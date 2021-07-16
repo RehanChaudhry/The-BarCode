@@ -57,6 +57,7 @@ class OrderTypeViewController: UIViewController {
     var addressRequest: DataRequest?
     
     var isLoadingAddress: Bool = false
+    var cartType = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

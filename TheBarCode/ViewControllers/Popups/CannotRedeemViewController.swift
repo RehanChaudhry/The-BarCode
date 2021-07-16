@@ -15,7 +15,7 @@ enum CustomAlertType: String {
 }
 
 protocol CannotRedeemViewControllerDelegate: class {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton)
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool)
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton)
 }
 
@@ -47,6 +47,7 @@ class CannotRedeemViewController: UIViewController {
     var redeemInfo: RedeemInfo?
     
     var dismissStatus = false
+    var cartType = false
     
     var alignment: NSTextAlignment = .left
     
@@ -168,7 +169,7 @@ class CannotRedeemViewController: UIViewController {
     @IBAction func okButtonTapped(_ sender: UIButton) {
         if self.dismissStatus {
             self.dismiss(animated: true) {
-                self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+                self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender, cartType: self.cartType)
             }
             self.dismiss(animated: true, completion: nil)
         }else {
