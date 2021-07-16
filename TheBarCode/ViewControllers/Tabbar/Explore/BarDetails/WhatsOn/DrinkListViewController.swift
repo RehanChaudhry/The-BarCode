@@ -220,7 +220,7 @@ extension DrinkListViewController {
         }
         
         let params: [String : Any] = ["establishment_id": self.bar.id.value,
-                                      "supported_order_type" : "dine_in_collection",
+                                      "supported_order_type" : "takeaway_delivery",
                                       "pagination" : true,
                                       "page": self.loadMore.next]
         
@@ -281,7 +281,7 @@ extension DrinkListViewController {
     
     func updateCart(product: Product, shouldAdd: Bool) {
         
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "takeaway_delivery") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }

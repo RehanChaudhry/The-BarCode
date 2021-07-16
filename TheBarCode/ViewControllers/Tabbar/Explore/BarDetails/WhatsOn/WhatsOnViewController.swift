@@ -98,16 +98,16 @@ class WhatsOnViewController: UIViewController {
     
     //MARK: My Methods
     func setupContainerView() {
-        self.eventsContainer = UIView()
-        self.eventsContainer.backgroundColor = UIColor.clear
-        self.contentView.addSubview(self.eventsContainer)
-        
-        self.eventsContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
-        self.eventsContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-        self.eventsContainer.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
-        
-        self.eventsContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
-        self.eventsContainer.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+//        self.eventsContainer = UIView()
+//        self.eventsContainer.backgroundColor = UIColor.clear
+//        self.contentView.addSubview(self.eventsContainer)
+//
+//        self.eventsContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+//        self.eventsContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
+//        self.eventsContainer.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
+//
+//        self.eventsContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+//        self.eventsContainer.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
         
         if self.bar.menuType == .barCode {
             self.drinksContainer = UIView()
@@ -116,7 +116,7 @@ class WhatsOnViewController: UIViewController {
             
             self.drinksContainer!.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
             self.drinksContainer!.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-            self.drinksContainer!.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.eventsContainer)
+            self.drinksContainer!.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
             
             self.drinksContainer!.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
             self.drinksContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
@@ -128,7 +128,7 @@ class WhatsOnViewController: UIViewController {
         
         self.foodContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
         self.foodContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-        self.foodContainer.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.drinksContainer ?? self.eventsContainer)
+        self.foodContainer.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.drinksContainer ?? self.contentView)
         self.foodContainer.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
         
         self.foodContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)

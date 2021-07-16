@@ -24,7 +24,7 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
     weak var delegate: CartSectionHeaderViewDelegate!
     var barId: String!
     
-    func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool) {
+    func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool, cartType: String) {
         self.titleLabel.text = title
         
         self.selectionView.backgroundColor = isSelected ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()

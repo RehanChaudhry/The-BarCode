@@ -240,7 +240,7 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         let order = self.orders[section]
 
         let isSelected =  order.barName == self.selectedOrder?.barName
-        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed)
+        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed, cartType: order.cartType)
         
         headerView?.delegate = self
         headerView?.barId =  order.barId

@@ -50,7 +50,7 @@ class Order: Mappable {
     var statusRaw: String = OrderStatus.other.rawValue
     
     var orderItems: [OrderItem] = []
-    
+    var cartType: String = ""
     var paymentSplit: [PaymentSplit] = []
     
     var voucher: OrderDiscount?
@@ -160,13 +160,7 @@ class Order: Mappable {
             self.orderItems <- map["menuItems"]
             self.isDeliveryAvailable <- map["establishment.is_deliver"]
             self.isCurrentlyDeliveryDisabled <- map["establishment.is_delivery_disable"]
-            
-            self.isDineIN <- map["dine_in"]
-            self.isCollection <- map["collection"]
-            self.isTakeAway <- map["take_away"]
-            self.isDelivery <- map["delivery"]
-
-            
+                
             self.isGlobalDeliveryAllowed <- map["establishment.is_global_delivery"]
             
             self.globalDeliveryCharges <- map["establishment.global_delivery_charges"]
@@ -182,7 +176,7 @@ class Order: Mappable {
             } else if let _ = map.JSON["order_id"] as? Int {
                 self.orderNo = "\(map.JSON["order_id"]!)"
             }
-            
+            self.cartType <- map["cart_type"]
             self.establishmentDayStatusRaw <- map["establishment.establishment_timings.status"]
             self.isEstablishmentOpen <- map["establishment.establishment_timings.is_bar_open"]
             

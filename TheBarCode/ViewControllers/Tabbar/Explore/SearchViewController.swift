@@ -390,11 +390,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row == 4 || indexPath.row == 5 {
-            return CGSize(width: 150, height: 43.0)
-        }else {
-            return CGSize(width: 100, height: 43.0)
-        }
+        return CGSize(width: 110, height: 43.0)
     }
 }
 

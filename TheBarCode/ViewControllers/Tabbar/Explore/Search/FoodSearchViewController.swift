@@ -470,7 +470,7 @@ extension FoodSearchViewController {
     
     func updateCart(product: Product, barId: String, shouldAdd: Bool) {
         
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId) { (error) in
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId, shouldSeperateCards: false, cart_type: "") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }

@@ -22,6 +22,8 @@ class SearchScopeCell: UICollectionViewCell, NibReusable {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.button.titleLabel?.numberOfLines = 0
+        self.button.titleLabel?.textAlignment = .center
     }
 
     //MARK: My Methods

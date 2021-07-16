@@ -223,7 +223,7 @@ extension FoodMenuViewController {
         
         //Type will only go if menu is created using barcode admin panel
         if self.bar.menuType == .barCode {
-            params["supported_order_type"] = "takeaway_delivery"
+            params["supported_order_type"] = "dine_in_collection"
         }
         
         self.loadMore.isLoading = true
@@ -283,7 +283,7 @@ extension FoodMenuViewController {
     
     func updateCart(product: Product, shouldAdd: Bool) {
         
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "dine_in_collection") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }

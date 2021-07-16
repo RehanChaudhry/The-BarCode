@@ -823,7 +823,7 @@ extension Utility {
 
 //MARK: Update Cart
 extension Utility {
-    func updateCart(product: Product, shouldAdd: Bool, barId: String, completion: @escaping (_ error: NSError?) -> Void) {
+    func updateCart(product: Product, shouldAdd: Bool, barId: String, shouldSeperateCards: Bool, cart_type: String, completion: @escaping (_ error: NSError?) -> Void) {
         
         var params: [String : Any] = ["id" : product.id.value,
                                       "establishment_id" : barId]
@@ -837,6 +837,10 @@ extension Utility {
         } else {
             product.isRemovingFromCart = true
             params["quantity"] = 0
+        }
+        
+        if shouldSeperateCards {
+            params["cart_type"] = cart_type
         }
 
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
