@@ -179,16 +179,30 @@ class MyCartViewController: UIViewController {
     //MARK: My IBActions
     @IBAction func checkOutButtonTapped(sender: UIButton) {
         
-        
-        
+        if self.selectedOrder?.cartType == "takeaway_delivery" {
+            if self.selectedOrder?.isTakeAway == true || (self.selectedOrder?.isDelivery == true && self.selectedOrder?.isCurrentlyDeliveryDisabled == false) {
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true)
+            }else {
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false)
+            }
+        }else {
+            if self.selectedOrder?.isDineIN == true || self.selectedOrder?.isCollection == true {
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true)
+            }else {
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false)
+            }
+        }
+    }
+    
+    func popupMsg(messageText: String, titleText: String, status: Bool) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-        cannotRedeemViewController.messageText = "If you have any allergies, please let a member of the waiting staff know before ordering."
-        cannotRedeemViewController.titleText = "Disclaimer"
+        cannotRedeemViewController.messageText = messageText
+        cannotRedeemViewController.titleText = titleText
+        cannotRedeemViewController.dismissStatus = status
         cannotRedeemViewController.headerImageName = "login_intro_reload_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
         self.present(cannotRedeemViewController, animated: true, completion: nil)
-        
     }
     
     @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
@@ -238,13 +252,16 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         let headerView = tableView.dequeueReusableHeaderFooterView(CartSectionHeaderView.self)
         
         let order = self.orders[section]
-
+        headerView?.selectionButton.tag = section
+//        headerView?.selectionView.tag = section
         let isSelected =  order.barName == self.selectedOrder?.barName
         headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed, cartType: order.cartType)
         
+        headerView?.setButtonColor(state: self.selectedOrder?.cartId == self.orders[section].cartId ? true : false)
+        
         headerView?.delegate = self
         headerView?.barId =  order.barId
-        
+        headerView?.cartID = order.cartId
         return headerView
     }
     
@@ -259,7 +276,6 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-         
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
@@ -544,12 +560,12 @@ extension MyCartViewController {
 
 //MARK: CartSectionHeaderViewDelegate
 extension MyCartViewController: CartSectionHeaderViewDelegate {
-    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String) {
+    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String, tag: Int) {
       
         let filteredOrders = self.orders.filter { (order) -> Bool in
-            return order.barId == selectedBarId
+            return order.cartId == selectedBarId
         }
-       
+        
         self.selectedOrder = filteredOrders.first
         self.statefulTableView.innerTable.reloadData()
     }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -35,36 +36,27 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRJ-ai-e9Z">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rc6-TT-f2B">
                             <rect key="frame" x="8" y="11" width="16" height="16"/>
-                            <color key="backgroundColor" red="0.22352941179999999" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="16" id="Ov0-M3-TNE"/>
-                                <constraint firstAttribute="width" constant="16" id="rF2-yA-hWE"/>
+                                <constraint firstAttribute="width" constant="16" id="T9U-BI-N1i"/>
+                                <constraint firstAttribute="height" constant="16" id="Vae-XO-Q6I"/>
                             </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="8"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                    <integer key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                    <color key="value" red="0.22352941176470587" green="0.22745098039215686" blue="0.23137254901960785" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
+                            <connections>
+                                <action selector="selectionBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="fFj-K7-bsg"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zhE-Dz-qAG" secondAttribute="trailing" constant="8" id="6Wh-KK-mvK"/>
-                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="centerY" secondItem="WRJ-ai-e9Z" secondAttribute="centerY" id="7mJ-E9-BXt"/>
-                        <constraint firstItem="WRJ-ai-e9Z" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="11" id="9GF-No-Pe1"/>
-                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="leading" secondItem="WRJ-ai-e9Z" secondAttribute="trailing" constant="8" id="BdW-LA-JJy"/>
+                        <constraint firstItem="rc6-TT-f2B" firstAttribute="centerY" secondItem="zhE-Dz-qAG" secondAttribute="centerY" id="8kj-RQ-3q1"/>
                         <constraint firstAttribute="bottom" secondItem="zhE-Dz-qAG" secondAttribute="bottom" constant="8" id="CLs-Ac-DZP"/>
-                        <constraint firstItem="WRJ-ai-e9Z" firstAttribute="leading" secondItem="SI9-Qn-qcu" secondAttribute="leading" constant="8" id="Mxc-UJ-KFJ"/>
+                        <constraint firstItem="rc6-TT-f2B" firstAttribute="leading" secondItem="SI9-Qn-qcu" secondAttribute="leading" constant="8" id="UzU-gD-1Wq"/>
+                        <constraint firstItem="rc6-TT-f2B" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="11" id="Vca-LR-DK9"/>
                         <constraint firstItem="zhE-Dz-qAG" firstAttribute="top" secondItem="SI9-Qn-qcu" secondAttribute="top" constant="8" id="hWD-WS-Oj3"/>
-                        <constraint firstAttribute="bottom" secondItem="WRJ-ai-e9Z" secondAttribute="bottom" constant="11" id="x7c-Ge-zCc"/>
+                        <constraint firstItem="zhE-Dz-qAG" firstAttribute="leading" secondItem="rc6-TT-f2B" secondAttribute="trailing" constant="8" id="ijW-8A-hXk"/>
+                        <constraint firstAttribute="bottom" secondItem="rc6-TT-f2B" secondAttribute="bottom" constant="11" id="wM7-9E-slt"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -75,16 +67,17 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue is closed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTl-jc-o1I">
                     <rect key="frame" x="16" y="54" width="390" height="15"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                    <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" systemColor="systemPinkColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbz-Y6-iDt">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbz-Y6-iDt">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
                     <connections>
-                        <action selector="selectionButtonTapped:" destination="-2" eventType="touchUpInside" id="Unx-7Z-AMn"/>
+                        <action selector="selectionButtonTapped:" destination="-2" eventType="touchUpInside" id="1F4-y5-qdj"/>
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="Qo3-kx-fBx"/>
             <constraints>
                 <constraint firstItem="Qo3-kx-fBx" firstAttribute="bottom" secondItem="VTl-jc-o1I" secondAttribute="bottom" constant="8" id="1bw-pg-xYH"/>
                 <constraint firstItem="VTl-jc-o1I" firstAttribute="leading" secondItem="Qo3-kx-fBx" secondAttribute="leading" constant="16" id="2la-Im-Hbw"/>
@@ -103,14 +96,18 @@
                 <constraint firstItem="e3C-rk-sFL" firstAttribute="trailing" secondItem="Qo3-kx-fBx" secondAttribute="trailing" id="yCz-yv-TZz"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="Qo3-kx-fBx"/>
             <connections>
                 <outlet property="infoLabel" destination="VTl-jc-o1I" id="qca-WW-hp3"/>
                 <outlet property="infoLabelBottom" destination="1bw-pg-xYH" id="zsU-cD-obC"/>
-                <outlet property="selectionView" destination="WRJ-ai-e9Z" id="IXN-XB-RFm"/>
+                <outlet property="selectionButton" destination="rc6-TT-f2B" id="bZn-sD-OvV"/>
                 <outlet property="titleLabel" destination="zhE-Dz-qAG" id="jeD-To-yPO"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="119.86607142857142"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

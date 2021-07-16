@@ -46,6 +46,8 @@ class CannotRedeemViewController: UIViewController {
     var reloadTimer: Timer?
     var redeemInfo: RedeemInfo?
     
+    var dismissStatus = false
+    
     var alignment: NSTextAlignment = .left
     
     weak var delegate: CannotRedeemViewControllerDelegate?
@@ -164,10 +166,14 @@ class CannotRedeemViewController: UIViewController {
     
     //MARK: IBActions
     @IBAction func okButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+        if self.dismissStatus {
+            self.dismiss(animated: true) {
+                self.delegate?.cannotRedeemController(controller: self, okButtonTapped: sender)
+            }
+            self.dismiss(animated: true, completion: nil)
+        }else {
+            self.dismiss(animated: true, completion: nil)
         }
-        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
