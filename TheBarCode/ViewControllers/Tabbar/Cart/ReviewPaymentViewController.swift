@@ -25,13 +25,13 @@ class ReviewPaymentViewController: UIViewController {
     
     var totalBillPayable: Double = 0.0
     
-    var orderTip: Double = 0.0
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "Review"
+        
+        //orderTip = Double(order!.orderTip) ?? 0.0
 
         self.addBackButton()
         
@@ -92,7 +92,7 @@ class ReviewPaymentViewController: UIViewController {
 
         self.viewModels.append(contentsOf: order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
         
-        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.orderTip)
+        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
         let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
         self.viewModels.append(tipInfoSection)
         
@@ -101,7 +101,7 @@ class ReviewPaymentViewController: UIViewController {
         }
         
         
-        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total + self.orderTip)
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: total + self.order!.orderTip)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
@@ -153,7 +153,7 @@ class ReviewPaymentViewController: UIViewController {
         
         total -= paidAmount
         self.totalBillPayable = max(0.0, total)
-        self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable + self.orderTip), for: .normal)
+        self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable + self.order!.orderTip), for: .normal)
     }
     
     //MARK: My IBActions
@@ -166,7 +166,7 @@ class ReviewPaymentViewController: UIViewController {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "CheckOutViewController") as! CheckOutViewController)
         
         controller.totalBillPayable = self.totalBillPayable
-        controller.orderTip = self.orderTip
+        //controller.orderTip = self.orderTip
         controller.order = self.order
         controller.order = order
         self.navigationController?.pushViewController(controller, animated: true)

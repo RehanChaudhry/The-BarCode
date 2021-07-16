@@ -20,7 +20,7 @@ class OrderDetailsViewController: UIViewController {
     
     var orderId: String?
     var order: Order?
-    
+        
     var viewModels: [OrderViewModel] = []
     
     var refreshControl: UIRefreshControl!
@@ -129,7 +129,11 @@ class OrderDetailsViewController: UIViewController {
             totalProductPrice += deliveryCharges
         }
         
-        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: totalProductPrice)
+        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
+        let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
+        self.viewModels.append(tipInfoSection)
+        
+        let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: totalProductPrice + self.order!.orderTip)
         orderTotalBillInfo.shouldRoundCorners = true
         orderTotalBillInfo.showWithBlackAppearance = true
         
@@ -351,7 +355,18 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
             cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
             
-        } else if let section = viewModel as? OrderTotalBillInfoSection {
+        }
+        
+        
+        else if let section = viewModel as? OrderTipInfoSection {
+             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
+         cell.setupCell(orderTipInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order!.currencySymbol)
+         cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
+             return cell
+         }
+        
+        
+        else if let section = viewModel as? OrderTotalBillInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
             

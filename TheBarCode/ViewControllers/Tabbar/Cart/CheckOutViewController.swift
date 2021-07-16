@@ -31,9 +31,6 @@ class CheckOutViewController: UIViewController {
     
     var totalBillPayable: Double = 0.0
     
-    var orderTip: Double = 0.0
-
-    
     var refreshControl: UIRefreshControl!
     
     var isGettingVouchers: Bool = false {
@@ -130,7 +127,7 @@ class CheckOutViewController: UIViewController {
             self.viewModels.append(orderDeliveryInfoSection)
         }
         
-        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.orderTip)
+        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
         let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
         self.viewModels.append(tipInfoSection)
         
@@ -249,7 +246,7 @@ class CheckOutViewController: UIViewController {
         totalPayablePrice = max(0, totalPayablePrice)
         
         if let totalSectionIndex = self.viewModels.firstIndex(where: {$0.type == .totalBill}) {
-            (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = grandTotal + self.orderTip
+            (self.viewModels[totalSectionIndex] as! OrderTotalBillInfoSection).items.first?.price = grandTotal + self.order!.orderTip
             let indexPath = IndexPath(row: 0, section: totalSectionIndex)
             
             if self.tableView.numberOfSections > 0 {
@@ -278,7 +275,7 @@ class CheckOutViewController: UIViewController {
             self.totalBillPayable = max(0.0, totalPayablePrice)
         }
         
-        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + self.orderTip), for: .normal)
+        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + self.order.orderTip), for: .normal)
         
     }
     
@@ -401,7 +398,7 @@ class CheckOutViewController: UIViewController {
             
         let paymentController = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
         paymentController.order = self.order
-        paymentController.totalBillPayable = self.totalBillPayable + self.orderTip
+        paymentController.totalBillPayable = self.totalBillPayable + self.order!.orderTip
         paymentController.selectedVoucher = selectedVoucher
         paymentController.selectedOffer = selectedOffer
         paymentController.useCredit = self.useCredit

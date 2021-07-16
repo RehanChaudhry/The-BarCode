@@ -85,8 +85,6 @@ class SplitPaymentInfoViewController: UIViewController {
             
             
         controller.totalBillPayable = self.totalBillPayable
-        let orderTip = Double(order.orderTip) ?? 0.0
-        controller.orderTip = orderTip
             controller.orderId = self.order.orderNo
             controller.order = self.order
             

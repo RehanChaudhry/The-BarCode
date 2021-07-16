@@ -43,7 +43,7 @@ class Order: Mappable {
     
     var total: Double = 0.0
     
-    var orderTip: String = ""
+    var orderTip: Double = 0.0
     
     
     var status: OrderStatus {
@@ -168,6 +168,7 @@ class Order: Mappable {
             self.isCollection <- map["collection"]
             self.isTakeAway <- map["take_away"]
             self.isDelivery <- map["delivery"]
+            
 
             
             self.isGlobalDeliveryAllowed <- map["establishment.is_global_delivery"]
@@ -215,6 +216,8 @@ class Order: Mappable {
         self.squareUpLocationId <- map["establishment.location_id"]
         
         self.updatedAtRaw <- map["updated_at.date"]
+        
+        self.orderTip <- map["order_tip"]
         
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"

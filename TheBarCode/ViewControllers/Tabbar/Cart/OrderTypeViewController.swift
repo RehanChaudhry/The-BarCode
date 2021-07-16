@@ -377,8 +377,7 @@ class OrderTypeViewController: UIViewController {
     func moveToSplitPayment(viewModels: [OrderViewModel]) {
         
         // to calculate total bill after tip is added
-        let ordertip = Double(order.orderTip) ?? 0.0
-        let totalBillPayAbleWithTip = self.totalBillPayable + ordertip
+        let totalBillPayAbleWithTip = self.totalBillPayable + self.order.orderTip
         
         var models: [OrderViewModel] = []
         models.append(contentsOf: viewModels)
@@ -389,7 +388,7 @@ class OrderTypeViewController: UIViewController {
             
             totalBill.price = totalBillPayAbleWithTip
             
-            let orderTipInfo = OrderTipInfo(title: "Tip", tipAmount: Double(order.orderTip) ?? 0.0)
+            let orderTipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order.orderTip)
             let orderTipInfoSection = OrderTipInfoSection(items: [orderTipInfo])
             
             models.insert(orderTipInfoSection, at: index)
@@ -756,7 +755,8 @@ extension OrderTypeViewController {
                 let typeRaw = responseObject["type"] as? String {
                 self.order.orderNo = "\(responseObject["id"]!)"
                 self.order.orderTypeRaw = typeRaw
-                self.order.orderTip = "\(responseObject["order_tip"]!)"
+                self.order.orderTip = responseObject["order_tip"] as! Double
+                print("Order Tip \(self.order.orderTip)")
                 self.order.total = (responseObject["total"]) as! Double
                 self.moveToNextStep(orderType: orderType)
             } else {

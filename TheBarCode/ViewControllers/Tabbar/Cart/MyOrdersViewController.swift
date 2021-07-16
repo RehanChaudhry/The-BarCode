@@ -32,6 +32,8 @@ class MyOrdersViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        print("View Did Load = \(self.orders[0].orderTip)")
+        
         self.closeBarButton.image = self.closeBarButton.image?.withRenderingMode(.alwaysOriginal)
         
         self.setUpStatefulTableView()
@@ -76,6 +78,7 @@ class MyOrdersViewController: UIViewController {
                
         let orderDetailsViewController = orderDetailsNavigation.viewControllers.first as! OrderDetailsViewController
         orderDetailsViewController.order = order
+        
         
         self.present(orderDetailsNavigation, animated: true, completion: nil)
     }
