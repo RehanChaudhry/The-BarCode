@@ -99,7 +99,7 @@ class OffersViewController: UIViewController {
     
     //MARK: My Methods
     func reset() {
-        self.liveController.reset()
+//        self.liveController.reset()
         self.chalkboardController.reset()
         self.exclusiveController.reset()
         self.eventsController.reset()
