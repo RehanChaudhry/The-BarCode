@@ -46,6 +46,9 @@ class ProductModfiersViewController: UIViewController {
     
     var isUpdating: Bool = false
     
+    var cartType = ""
+    var isSeperateCart = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -147,12 +150,12 @@ class ProductModfiersViewController: UIViewController {
     @IBAction func addToCartButtonTapped(sender: UIButton) {
         let validationInfo = self.isDataValid()
         if validationInfo.isValid {
-            
+
             guard self.calculateTotal() > 0.0 else {
                 KVNProgress.showError(withStatus: "Total price must be greater than 0")
                 return
             }
-            
+
             self.updateCart()
         } else if let section = validationInfo.section {
             let indexPath = IndexPath(row: NSNotFound, section: section)
@@ -326,7 +329,9 @@ extension ProductModfiersViewController {
                                       "quantity" : self.stepperView.value,
                                       "establishment_id" : self.establishmentId,
                                       "modifier_details" : selectedModifier]
-        
+        if self.isSeperateCart {
+            params["cart_type"] = self.cartType
+        }
         if let cartItemId = self.cartItemId {
             params["cart_item_id"] = cartItemId
         }

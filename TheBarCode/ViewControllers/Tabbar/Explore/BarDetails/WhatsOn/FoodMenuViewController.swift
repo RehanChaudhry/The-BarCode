@@ -201,7 +201,8 @@ extension FoodMenuViewController: ProductMenuCellDelegate {
             productModifiersController.regionInfo = (country: self.bar.country.value,
                                                      currencySymbol: self.bar.currencySymbol.value,
                                                      currencyCode: self.bar.currencyCode.value)
-            
+            productModifiersController.cartType = "dine_in_collection"
+            productModifiersController.isSeperateCart = self.bar.menuType == .barCode ? true : false
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
             self.updateCart(product: product, shouldAdd: true)
