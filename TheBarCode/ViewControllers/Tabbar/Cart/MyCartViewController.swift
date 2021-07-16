@@ -303,8 +303,8 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
              debugPrint("IndexPath not found")
              return
          }
-                
-        self.updateCart(indexPath: indexPath, shouldDelete: true, shouldStepUp: false)
+        
+        self.updateCart(indexPath: indexPath, shouldDelete: true, shouldStepUp: false, cartType: self.orders[indexPath.section].cartType, isSeperateCard: self.orders[indexPath.section].menuTypeRaw == "barcode" ? true : false)
     }
     
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
@@ -314,7 +314,7 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
         }
         
         let orderItem = self.orders[indexPath.section].orderItems[indexPath.row]
-        self.updateCart(indexPath: indexPath, shouldDelete: false, shouldStepUp: stepper.value > orderItem.quantity)
+        self.updateCart(indexPath: indexPath, shouldDelete: false, shouldStepUp: stepper.value > orderItem.quantity, cartType: self.orders[indexPath.section].cartType, isSeperateCard: self.orders[indexPath.section].menuTypeRaw == "barcode" ? true : false)
     }
 }
 
@@ -392,7 +392,7 @@ extension MyCartViewController {
         }
     }
     
-    func updateCart(indexPath: IndexPath, shouldDelete: Bool, shouldStepUp: Bool) {
+    func updateCart(indexPath: IndexPath, shouldDelete: Bool, shouldStepUp: Bool, cartType: String, isSeperateCard: Bool) {
         
         let order: Order = self.orders[indexPath.section]
         let item: OrderItem = order.orderItems[indexPath.row]
@@ -418,6 +418,10 @@ extension MyCartViewController {
         } else {
             item.isDeleting = true
             params["quantity"] = 0
+        }
+        
+        if isSeperateCard {
+            params["cart_type"] = cartType
         }
         
         if item.selectedProductModifiers.count > 0 {
