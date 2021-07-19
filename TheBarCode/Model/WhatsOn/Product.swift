@@ -37,6 +37,8 @@ class Product: CoreStoreObject {
     
     var isAddingToCart: Bool = false
     var isRemovingFromCart: Bool = false
+    var isTakeaway: Bool = false
+    var isDinein: Bool = false
 }
 
 extension Product: ImportableUniqueObject {
@@ -68,6 +70,9 @@ extension Product: ImportableUniqueObject {
         
         self.id.value = "\(source["id"]!)"
         self.establishmentId.value = "\(source["establishment_id"]!)"
+        
+        self.isTakeaway = source["takeaway_delivery"] as? Bool ?? false
+        self.isDinein = source["dine_in_collection"] as? Bool ?? false
         
         self.image.value = source["image"] as? String ?? ""
         

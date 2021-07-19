@@ -474,6 +474,10 @@ extension FoodSearchViewController {
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }
+        } successCompletion: { (type) in
+            
+        } updateCountCompletion: { (cartItemID) in
+            
         }
         
         self.statefulTableView.innerTable.reloadData()

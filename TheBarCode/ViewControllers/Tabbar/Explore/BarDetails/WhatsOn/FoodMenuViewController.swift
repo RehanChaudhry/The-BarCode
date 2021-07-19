@@ -288,9 +288,13 @@ extension FoodMenuViewController {
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }
+        } successCompletion: {(type) in
+            if type == "dine_in_collection" {
+                self.statefulTableView.innerTable.reloadData()
+            }
+        } updateCountCompletion: { (cartItemID) in
+            
         }
-        
-        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -394,7 +398,13 @@ extension FoodMenuViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension FoodMenuViewController {
     @objc func productCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        if let dict = notification.userInfo as NSDictionary? {
+            if let cartType = dict["cartType"] as? String {
+                if cartType == "dine_in_collection" {
+                    self.statefulTableView.innerTable.reloadData()
+                }
+            }
+        }
     }
     
     @objc func myCartUpdatedNotification(notification: Notification) {
