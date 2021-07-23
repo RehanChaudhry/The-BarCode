@@ -39,6 +39,7 @@ class Product: CoreStoreObject {
     var isRemovingFromCart: Bool = false
     var isTakeaway: Bool = false
     var isDinein: Bool = false
+    var itemCartType: String = ""
 }
 
 extension Product: ImportableUniqueObject {

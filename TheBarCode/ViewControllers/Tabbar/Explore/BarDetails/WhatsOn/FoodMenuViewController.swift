@@ -283,7 +283,7 @@ extension FoodMenuViewController {
     }
     
     func updateCart(product: Product, shouldAdd: Bool) {
-        
+        let previousQuantity = product.quantity.value
         Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "dine_in_collection") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
@@ -293,7 +293,30 @@ extension FoodMenuViewController {
                 self.statefulTableView.innerTable.reloadData()
             }
         } updateCountCompletion: { (cartItemID) in
-            
+            for segment in self.segments {
+                for selectedProduct in segment.products {
+                    if selectedProduct.id.value == product.id.value {
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                            let editedProduct = transaction.edit(selectedProduct)
+                            editedProduct?.quantity.value = shouldAdd ? selectedProduct.quantity.value + 1 : 0
+                            editedProduct?.cartItemId.value = cartItemID
+                            
+                            selectedProduct.isAddingToCart = false
+                            selectedProduct.isRemovingFromCart = false
+
+                            let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                            let cartDic: [String:Any] = [
+                                "product": editedProduct!,
+                                "newQuantity": editedProduct!.quantity.value,
+                                "previousQuantity": previousQuantity,
+                                "barId": self.bar.id.value,
+                                "cartType": "dine_in_collection"
+                            ]
+                            NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+                        })
+                    }
+                }
+            }
         }
     }
 }

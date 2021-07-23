@@ -131,7 +131,7 @@ extension DrinkListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let segment = self.segments[indexPath.section]
         cell.setupCell(product: segment.products[indexPath.row], bar: self.bar)
-
+        
         cell.delegate = self
         
         return cell
@@ -282,7 +282,7 @@ extension DrinkListViewController {
     }
     
     func updateCart(product: Product, shouldAdd: Bool) {
-        
+        let previousQuantity = product.quantity.value
         Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "takeaway_delivery") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
@@ -292,7 +292,30 @@ extension DrinkListViewController {
                 self.statefulTableView.innerTable.reloadData()
             }
         } updateCountCompletion: { (cartItemID) in
-            
+            for segment in self.segments {
+                for selectedProduct in segment.products {
+                    if selectedProduct.id.value == product.id.value && selectedProduct.itemCartType == "" {
+                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                            let editedProduct = transaction.edit(selectedProduct)
+                            editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                            editedProduct?.cartItemId.value = cartItemID
+                            
+                            product.isAddingToCart = false
+                            product.isRemovingFromCart = false
+
+                            let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                            let cartDic: [String:Any] = [
+                                "product": editedProduct!,
+                                "newQuantity": editedProduct!.quantity.value,
+                                "previousQuantity": previousQuantity,
+                                "barId": self.bar.id.value,
+                                "cartType": "takeaway_delivery"
+                            ]
+                            NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+                        })
+                    }
+                }
+            }
         }
     }
 }

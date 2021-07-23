@@ -846,22 +846,9 @@ extension Utility {
         successCompletion(cart_type)
         
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = product.quantity.value
-            
+            var cartItemId: String? = nil
             defer {
-                product.isAddingToCart = false
-                product.isRemovingFromCart = false
-
-                let cartInfo: ProductCartUpdatedObject = (product: product, newQuantity: product.quantity.value, previousQuantity: previousQuantity, barId: barId)
-                let cartDic: [String:Any] = [
-                    "product": product,
-                    "newQuantity": product.quantity.value,
-                    "previousQuantity": previousQuantity,
-                    "barId": barId,
-                    "cartType": cart_type
-                ]
-                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+                updateCountCompletion(cartItemId ?? "")
             }
             
             guard error == nil else {
@@ -879,8 +866,6 @@ extension Utility {
                 return
             }
             
-            var cartItemId: String? = nil
-            
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let data = responseDict?["data"] as? [String : Any],
                 let items = data["menuItems"] as? [[String : Any]],
@@ -889,20 +874,10 @@ extension Utility {
                 
                 cartItemId = "\(item["cart_item_id"]!)"
             }
-            
-            if product.isDinein {
-                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                    let editedProduct = transaction.edit(product)
-                    editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
-                    editedProduct?.cartItemId.value = cartItemId
-                })
-            }else if product.isTakeaway {
-                try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                    let editedProduct = transaction.edit(product)
-                    editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
-                    editedProduct?.cartItemId.value = cartItemId
-                })
-            }
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.cartItemId.value = cartItemId
+            })
         }
     }
 }
