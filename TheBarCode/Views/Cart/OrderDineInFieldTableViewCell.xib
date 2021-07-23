@@ -23,14 +23,11 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5r-4U-Tq5">
                         <rect key="frame" x="44" y="8" width="260" height="44"/>
-                        <color key="backgroundColor" red="0.22748589520000001" green="0.22735980150000001" blue="0.23137339949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.22745098039215686" green="0.22745098039215686" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter table number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zvy-qV-BJx" customClass="InsetField" customModule="TheBarCode" customModuleProvider="target">
-                        <rect key="frame" x="98" y="8" width="206" height="44"/>
+                        <rect key="frame" x="44" y="8" width="174.5" height="44"/>
                         <color key="backgroundColor" red="0.22748589520000001" green="0.22735980150000001" blue="0.23137339949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <constraints>
-                            <constraint firstAttribute="height" priority="999" constant="44" id="FMs-fo-Db3"/>
-                        </constraints>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert"/>
@@ -47,8 +44,15 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="9cK-Go-xIq"/>
                         </connections>
                     </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kg0-ZR-CkO" userLabel="Seperator">
+                        <rect key="frame" x="228.5" y="8" width="2" height="44"/>
+                        <color key="backgroundColor" red="0.45098039215686275" green="0.45882352941176469" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="2" id="15K-zL-qUI"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVF-OG-c6n">
-                        <rect key="frame" x="56" y="19.5" width="42" height="21"/>
+                        <rect key="frame" x="246.5" y="19" width="41.5" height="22"/>
                         <color key="backgroundColor" red="0.22748589520000001" green="0.22735980150000001" blue="0.23137339949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -57,16 +61,20 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="cVF-OG-c6n" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="0Bz-8P-2bP"/>
+                    <constraint firstAttribute="bottom" secondItem="kg0-ZR-CkO" secondAttribute="bottom" constant="8" id="4jf-lq-5sb"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="cVF-OG-c6n" secondAttribute="trailing" constant="16" id="BU0-dI-Cdt"/>
                     <constraint firstAttribute="trailing" secondItem="F5r-4U-Tq5" secondAttribute="trailing" constant="16" id="BwC-S8-RLj"/>
+                    <constraint firstItem="cVF-OG-c6n" firstAttribute="leading" secondItem="kg0-ZR-CkO" secondAttribute="trailing" constant="16" id="Cfj-n6-T9M"/>
                     <constraint firstAttribute="bottom" secondItem="F5r-4U-Tq5" secondAttribute="bottom" constant="8" id="KWh-xJ-MtT"/>
-                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="leading" secondItem="cVF-OG-c6n" secondAttribute="trailing" id="L7S-UG-ISZ"/>
-                    <constraint firstItem="cVF-OG-c6n" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="56" id="TCa-Ua-Sl7"/>
+                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="bottom" secondItem="kg0-ZR-CkO" secondAttribute="bottom" id="Lic-3s-1z2"/>
+                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="top" secondItem="F5r-4U-Tq5" secondAttribute="top" id="TFl-fB-npR"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="cVF-OG-c6n" secondAttribute="bottom" constant="8" id="Z8w-Am-fZM"/>
+                    <constraint firstItem="kg0-ZR-CkO" firstAttribute="leading" secondItem="Zvy-qV-BJx" secondAttribute="trailing" constant="10" id="Zph-qR-hZd"/>
                     <constraint firstItem="F5r-4U-Tq5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="fJB-YO-WqL"/>
                     <constraint firstItem="F5r-4U-Tq5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="k6n-5i-y2u"/>
-                    <constraint firstAttribute="bottom" secondItem="Zvy-qV-BJx" secondAttribute="bottom" priority="999" constant="8" id="lGQ-Qc-ezz"/>
-                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="8" id="o2q-LP-nOC"/>
-                    <constraint firstAttribute="trailing" secondItem="Zvy-qV-BJx" secondAttribute="trailing" priority="999" constant="16" id="pPW-MV-pgp"/>
-                    <constraint firstItem="cVF-OG-c6n" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wdR-ei-JLC"/>
+                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="leading" secondItem="F5r-4U-Tq5" secondAttribute="leading" id="kWr-v7-03i"/>
+                    <constraint firstItem="kg0-ZR-CkO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="n2M-Wl-JUU"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -74,6 +82,7 @@
             <connections>
                 <outlet property="backGroundView" destination="F5r-4U-Tq5" id="2sd-Ed-B7e"/>
                 <outlet property="currencySymbol" destination="cVF-OG-c6n" id="Bej-B8-hP1"/>
+                <outlet property="seperator" destination="kg0-ZR-CkO" id="DQp-R9-2HC"/>
                 <outlet property="textField" destination="Zvy-qV-BJx" id="I2o-4Y-Pgw"/>
             </connections>
             <point key="canvasLocation" x="136.875" y="106.69014084507042"/>

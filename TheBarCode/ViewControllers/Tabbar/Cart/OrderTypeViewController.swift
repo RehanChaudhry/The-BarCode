@@ -131,8 +131,9 @@ class OrderTypeViewController: UIViewController {
         let field = OrderFieldInput()
         field.currencySymbol = order.currencySymbol
         field.placeholder = "Enter tip"
-        field.allowedCharacterSet = CharacterSet.decimalDigits
-        field.keyboardType = .numberPad
+        field.allowedCharacterSet = CharacterSet(charactersIn: "0123456789.")
+        field.maxCharacters = 4
+        field.keyboardType = UIKeyboardType.decimalPad
         
         return field
     }
@@ -595,7 +596,13 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)
+            if indexPath.row == 0 {
+                cell.seperator.isHidden = true
             cell.setUpCell(orderField: section.items[indexPath.row])
+            }
+            if indexPath.row == 1 {
+            cell.setUpCell(orderField: section.items[indexPath.row])
+            }
             cell.textField.inputAccessoryView = self.accessoryInputView
             return cell
         } else if let section = viewModel as? OrderDeliveryAddressSection {
@@ -755,7 +762,7 @@ extension OrderTypeViewController {
                 let typeRaw = responseObject["type"] as? String {
                 self.order.orderNo = "\(responseObject["id"]!)"
                 self.order.orderTypeRaw = typeRaw
-                self.order.orderTip = responseObject["order_tip"] as! Double
+                self.order.orderTip = (responseObject["order_tip"] as? Double ?? 0.0)
                 print("Order Tip \(self.order.orderTip)")
                 self.order.total = (responseObject["total"]) as! Double
                 self.moveToNextStep(orderType: orderType)

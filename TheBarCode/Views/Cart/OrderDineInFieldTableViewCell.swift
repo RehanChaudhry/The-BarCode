@@ -15,6 +15,7 @@ class OrderDineInFieldTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var textField: UITextField!
     @IBOutlet weak var backGroundView: UIView!
     
+    @IBOutlet weak var seperator: UIView!
     var orderField: OrderFieldInput!
     
     override func awakeFromNib() {
