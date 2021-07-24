@@ -262,7 +262,9 @@ extension FoodMenuViewController {
                     }
                 })
                 
-                let segments = Mapper<ProductMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                let mapContext = ProductMenuSegmentMappingContext(type: .dineIn)
+                
+                let segments = Mapper<ProductMenuSegment>(context: mapContext).mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
                 segments.first?.isExpanded = true

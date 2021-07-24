@@ -348,7 +348,7 @@ extension AllSearchViewController: ProductMenuCellDelegate {
         let viewModelItem = viewModel.items[indexPath.item]
         
         if let item = viewModelItem as? AllSearchProductModel {
-            self.updateProductCart(product: item.product, barId: item.bar.id.value, shouldAdd: false)
+            self.updateProductCart(product: item.product, bar: item.bar, shouldAdd: false)
         }
     }
     
@@ -378,7 +378,7 @@ extension AllSearchViewController: ProductMenuCellDelegate {
                 
                 self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
             } else {
-                self.updateProductCart(product: item.product, barId: item.bar.id.value, shouldAdd: true)
+                self.updateProductCart(product: item.product, bar: item.bar, shouldAdd: true)
             }
         }
     }
@@ -747,8 +747,21 @@ extension AllSearchViewController {
                                 mutableBarDict["mapping_type"] = ExploreMappingType.bars.rawValue
                                 bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                                 
-                                let foodsArray = result["menus"] as? [[String : Any]] ?? []
-                                foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
+                                let menuItems = result["menus"] as? [[String : Any]] ?? []
+                                for menuItem in menuItems {
+                                    
+                                    let context = ProductMenuSegmentMappingContext(type: .dineIn)
+                                    
+                                    var itemData: [String : Any] = menuItem
+                                    itemData["contextual_id"] = Product.getContextulId(source: menuItem,
+                                                                                       mapContext: context)
+                                    let importedFood = try! transaction.importUniqueObject(Into<Product>(), source: itemData)
+                                    foods.append(importedFood!)
+                                    
+                                }
+                                
+//                                let foodsArray = result["menus"] as? [[String : Any]] ?? []
+//                                foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
                             })
                             
                             let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
@@ -810,8 +823,20 @@ extension AllSearchViewController {
                                 mutableBarDict["mapping_type"] = ExploreMappingType.bars.rawValue
                                 bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                                 
-                                let drinksArray = result["menus"] as? [[String : Any]] ?? []
-                                drinks = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: drinksArray)
+                                let menuItems = result["menus"] as? [[String : Any]] ?? []
+                                for menuItem in menuItems {
+                                    
+                                    let context = ProductMenuSegmentMappingContext(type: .takeAwaydelivery)
+                                    
+                                    var itemData: [String : Any] = menuItem
+                                    itemData["contextual_id"] = Product.getContextulId(source: menuItem,
+                                                                                       mapContext: context)
+                                    let importedFood = try! transaction.importUniqueObject(Into<Product>(), source: itemData)
+                                    drinks.append(importedFood!)
+                                }
+                                
+//                                let drinksArray = result["menus"] as? [[String : Any]] ?? []
+//                                drinks = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: drinksArray)
                             })
                             
                             let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)!
@@ -1083,9 +1108,16 @@ extension AllSearchViewController {
         }
     }
     
-    func updateProductCart(product: Product, barId: String, shouldAdd: Bool) {
+    func updateProductCart(product: Product, bar: Bar, shouldAdd: Bool) {
         
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId, shouldSeperateCards: false, cart_type: "") { (error) in
+        var cartType: String = ""
+        if product.contextualId.value.contains(ProductMenuType.dineIn.rawValue) {
+            cartType = "dine_in_collection"
+        } else if product.contextualId.value.contains(ProductMenuType.takeAwaydelivery.rawValue) {
+            cartType = "takeaway_delivery"
+        }
+        
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: bar.id.value, shouldSeperateCards: bar.menuType == .barCode, cart_type: cartType) { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }

@@ -261,7 +261,9 @@ extension DrinkListViewController {
                     }
                 })
                 
-                let segments = Mapper<ProductMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                let mapContext = ProductMenuSegmentMappingContext(type: .takeAwaydelivery)
+                
+                let segments = Mapper<ProductMenuSegment>(context: mapContext).mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
                 segments.first?.isExpanded = true

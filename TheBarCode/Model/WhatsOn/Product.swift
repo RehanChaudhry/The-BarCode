@@ -12,6 +12,8 @@ import CoreStore
 class Product: CoreStoreObject {
     
     var id = Value.Required<String>("id", initial: "")
+    var contextualId = Value.Required<String>("contextual_id", initial: "")
+    
     var establishmentId = Value.Required<String>("establishment_id", initial: "")
     
     var image = Value.Required<String>("image", initial: "")
@@ -47,16 +49,16 @@ extension Product: ImportableUniqueObject {
     typealias ImportSource = [String: Any]
     
     class var uniqueIDKeyPath: String {
-        return String(keyPath: \Product.id)
+        return String(keyPath: \Product.contextualId)
     }
     
     var uniqueIDValue: String {
-        get { return self.id.value }
-        set { self.id.value = newValue }
+        get { return self.contextualId.value }
+        set { self.contextualId.value = newValue }
     }
     
     static func uniqueID(from source: [String : Any], in transaction: BaseDataTransaction) throws -> String? {
-        return "\(source["id"]!)"
+        return "\(source["contextual_id"]!)"
     }
     
     func didInsert(from source: [String : Any], in transaction: BaseDataTransaction) throws {
@@ -70,6 +72,7 @@ extension Product: ImportableUniqueObject {
     func updateInCoreStore(source: [String : Any], transaction: BaseDataTransaction) {
         
         self.id.value = "\(source["id"]!)"
+        self.contextualId.value = "\(source["contextual_id"]!)"
         self.establishmentId.value = "\(source["establishment_id"]!)"
         
         self.isTakeaway = source["takeaway_delivery"] as? Bool ?? false
@@ -121,6 +124,11 @@ extension Product: ImportableUniqueObject {
         if let isDeliveryOnly = source["delivery_only"] as? Bool {
             self.isDeliveryOnly.value = isDeliveryOnly
         }
+    }
+    
+    static func getContextulId(source: [String : Any],
+                            mapContext: ProductMenuSegmentMappingContext) -> String {
+        return "\(source["id"]!)_\(mapContext.type.rawValue)"
     }
 }
 

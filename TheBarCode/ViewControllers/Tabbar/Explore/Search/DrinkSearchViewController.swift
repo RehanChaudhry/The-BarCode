@@ -330,7 +330,19 @@ extension DrinkSearchViewController {
                         bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                         
                         let productsArray = responseObject["menus"] as? [[String : Any]] ?? []
-                        products = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: productsArray)
+                        for menuItem in productsArray {
+                            
+                            let context = ProductMenuSegmentMappingContext(type: .takeAwaydelivery)
+                            
+                            var itemData: [String : Any] = menuItem
+                            itemData["contextual_id"] = Product.getContextulId(source: menuItem,
+                                                                               mapContext: context)
+                            let importedFood = try! transaction.importUniqueObject(Into<Product>(), source: itemData)
+                            products.append(importedFood!)
+                        }
+                        
+//                        let productsArray = responseObject["menus"] as? [[String : Any]] ?? []
+//                        products = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: productsArray)
                     })
                     
                     let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)

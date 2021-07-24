@@ -328,7 +328,19 @@ extension FoodSearchViewController {
                         bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                         
                         let foodsArray = responseObject["menus"] as? [[String : Any]] ?? []
-                        foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
+                        for menuItem in foodsArray {
+                            
+                            let context = ProductMenuSegmentMappingContext(type: .dineIn)
+                            
+                            var itemData: [String : Any] = menuItem
+                            itemData["contextual_id"] = Product.getContextulId(source: menuItem,
+                                                                               mapContext: context)
+                            let importedFood = try! transaction.importUniqueObject(Into<Product>(), source: itemData)
+                            foods.append(importedFood!)
+                        }
+                        
+//                        let foodsArray = responseObject["menus"] as? [[String : Any]] ?? []
+//                        foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
                     })
                     
                     let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)

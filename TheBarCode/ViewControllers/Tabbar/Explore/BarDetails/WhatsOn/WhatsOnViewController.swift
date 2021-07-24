@@ -28,7 +28,7 @@ class WhatsOnViewController: UIViewController {
     
     var eventsContainer: UIView!
     var drinksContainer: UIView?
-    var foodContainer: UIView!
+    var foodContainer: UIView?
     
     
     @IBOutlet var segmentContainer: UIView!
@@ -59,12 +59,13 @@ class WhatsOnViewController: UIViewController {
         self.segmentContainer.backgroundColor = UIColor.appNavBarGrayColor()
         
         if self.bar.menuType == .barCode {
-            self.drinksController = (self.storyboard!.instantiateViewController(withIdentifier: "DrinkListViewController") as! DrinkListViewController)
-            self.drinksController!.bar = self.bar
-            self.drinksController!.delegate = self
-            self.addChildController(controller: self.drinksController!)
-            self.drinksContainer?.addSubview(self.drinksController!.view)
-            self.drinksController!.view.autoPinEdgesToSuperviewEdges()
+            self.foodMenuController = (self.storyboard!.instantiateViewController(withIdentifier: "FoodMenuViewController") as! FoodMenuViewController)
+            self.foodMenuController.bar = self.bar
+            self.foodMenuController.delegate = self
+            self.addChildController(controller: self.foodMenuController)
+            self.foodContainer?.addSubview(self.foodMenuController.view)
+            self.foodMenuController.view.autoPinEdgesToSuperviewEdges()
+            
             self.segmentControlHeightConstraint.constant = 47
         } else {
             self.segmentedControl.removeSegment(at: 2, animated: false)
@@ -73,12 +74,14 @@ class WhatsOnViewController: UIViewController {
             self.segmentControlHeightConstraint.constant = 0
         }
         
-        self.foodMenuController = (self.storyboard!.instantiateViewController(withIdentifier: "FoodMenuViewController") as! FoodMenuViewController)
-        self.foodMenuController.bar = self.bar
-        self.foodMenuController.delegate = self
-        self.addChildController(controller: self.foodMenuController)
-        self.foodContainer.addSubview(self.foodMenuController.view)
-        self.foodMenuController.view.autoPinEdgesToSuperviewEdges()
+        self.drinksController = (self.storyboard!.instantiateViewController(withIdentifier: "DrinkListViewController") as! DrinkListViewController)
+        self.drinksController!.bar = self.bar
+        self.drinksController!.delegate = self
+        self.addChildController(controller: self.drinksController!)
+        self.drinksContainer?.addSubview(self.drinksController!.view)
+        self.drinksController!.view.autoPinEdgesToSuperviewEdges()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -110,29 +113,33 @@ class WhatsOnViewController: UIViewController {
 //        self.eventsContainer.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
         
         if self.bar.menuType == .barCode {
-            self.drinksContainer = UIView()
-            self.drinksContainer?.backgroundColor = UIColor.clear
-            self.contentView.addSubview(self.drinksContainer!)
+            self.foodContainer = UIView()
+            self.foodContainer?.backgroundColor = UIColor.clear
+            self.contentView?.addSubview(self.foodContainer!)
             
-            self.drinksContainer!.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
-            self.drinksContainer!.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-            self.drinksContainer!.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
+            self.foodContainer?.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+            self.foodContainer?.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
             
-            self.drinksContainer!.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
-            self.drinksContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+            self.foodContainer?.autoPinEdge(ALEdge.left, to: ALEdge.left, of: self.contentView)
+            
+            self.foodContainer?.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+            self.foodContainer?.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
         }
         
-        self.foodContainer = UIView()
-        self.foodContainer.backgroundColor = UIColor.clear
-        self.contentView.addSubview(self.foodContainer)
+        self.drinksContainer = UIView()
+        self.drinksContainer?.backgroundColor = UIColor.clear
+        self.contentView.addSubview(self.drinksContainer!)
         
-        self.foodContainer.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
-        self.foodContainer.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
-        self.foodContainer.autoPinEdge(ALEdge.left, to: self.bar.menuType == .barCode ? ALEdge.right : ALEdge.left, of: self.drinksContainer ?? self.contentView)
-        self.foodContainer.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
+        self.drinksContainer!.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
+        self.drinksContainer!.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
         
-        self.foodContainer.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
-        self.foodContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+        self.drinksContainer?.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.foodContainer ?? self.contentView)
+        self.drinksContainer?.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
+        
+        self.drinksContainer!.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)
+        self.drinksContainer!.autoMatch(ALDimension.height, to: ALDimension.height, of: self.placeholderView)
+        
+        
     }
     
     
