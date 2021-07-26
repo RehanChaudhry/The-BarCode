@@ -1138,7 +1138,7 @@ extension AllSearchViewController {
                     "newQuantity": editedProduct!.quantity.value,
                     "previousQuantity": previousQuantity,
                     "barId": bar.id.value,
-                    "cartType": "takeaway_delivery"
+                    "cartType": cartType
                 ]
                 NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
             })

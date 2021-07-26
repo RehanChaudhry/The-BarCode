@@ -198,7 +198,7 @@ class Order: Mappable {
         }
         
         self.menuTypeRaw <- map["epos_type"]
-        self.paymentGatewayTypeRaw <- map["payment_gateway_type"]
+        self.paymentGatewayTypeRaw <- map["establishment.payment_gateway_type"]
         
         self.establishmentWorldpayClientKey <- map["establishment.worldpay_client_key"]
         
