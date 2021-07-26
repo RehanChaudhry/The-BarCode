@@ -425,7 +425,7 @@ extension TabBarController {
 
 //MARK: CannotRedeemViewControllerDelegate
 extension TabBarController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton,  cartType: Bool) {
         
         if self.showingSharedEventAlert {
             let sharedEventNavigation = self.storyboard!.instantiateViewController(withIdentifier: "SharedEventNavigation") as! UINavigationController

@@ -132,7 +132,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
         
         let segment = self.segments[indexPath.section]
         cell.setupCell(product: segment.products[indexPath.row], bar: self.bar)
-        
+        print(segment.products[indexPath.row].name.value , " -> ", segment.products[indexPath.row].quantity.value)
         cell.delegate = self
         
         return cell
@@ -203,7 +203,8 @@ extension FoodMenuViewController: ProductMenuCellDelegate {
             productModifiersController.regionInfo = (country: self.bar.country.value,
                                                      currencySymbol: self.bar.currencySymbol.value,
                                                      currencyCode: self.bar.currencyCode.value)
-            
+            productModifiersController.cartType = "dine_in_collection"
+            productModifiersController.isSeperateCart = self.bar.menuType == .barCode ? true : false
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
             self.updateCart(product: product, shouldAdd: true)
@@ -225,7 +226,7 @@ extension FoodMenuViewController {
         
         //Type will only go if menu is created using barcode admin panel
         if self.bar.menuType == .barCode {
-            params["type"] = "food"
+            params["supported_order_type"] = "dine_in_collection"
         }
         
         self.loadMore.isLoading = true
@@ -263,7 +264,9 @@ extension FoodMenuViewController {
                     }
                 })
                 
-                let segments = Mapper<ProductMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                let mapContext = ProductMenuSegmentMappingContext(type: .dineIn)
+                
+                let segments = Mapper<ProductMenuSegment>(context: mapContext).mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
                 segments.first?.isExpanded = true
@@ -284,8 +287,8 @@ extension FoodMenuViewController {
     }
     
     func updateCart(product: Product, shouldAdd: Bool) {
-        
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
+        let previousQuantity = product.quantity.value
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "dine_in_collection") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
                 
@@ -294,9 +297,30 @@ extension FoodMenuViewController {
                     self.reset()
                 }
             }
+        } successCompletion: {(type) in
+            if type == "dine_in_collection" {
+                self.statefulTableView.innerTable.reloadData()
+            }
+        } updateCountCompletion: { (cartItemID) in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemID
+                
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
+
+                let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                let cartDic: [String:Any] = [
+                    "product": editedProduct!,
+                    "newQuantity": editedProduct!.quantity.value,
+                    "previousQuantity": previousQuantity,
+                    "barId": self.bar.id.value,
+                    "cartType": "dine_in_collection"
+                ]
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+            })
         }
-        
-        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -412,11 +436,19 @@ extension FoodMenuViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension FoodMenuViewController {
     @objc func productCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        if let dict = notification.userInfo as NSDictionary? {
+            if let cartType = dict["cartType"] as? String {
+                if cartType == "dine_in_collection" {
+                    self.statefulTableView.innerTable.reloadData()
+                }
+            }
+        }
     }
     
     @objc func myCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        self.getDeals(isRefreshing: true) { [unowned self] (error) in
+            debugPrint("food segments== \(self.segments.count)")
+        }
     }
 }
 

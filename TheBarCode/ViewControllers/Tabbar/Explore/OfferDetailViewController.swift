@@ -685,7 +685,7 @@ extension OfferDetailViewController: OfferDetailTableViewCellDelegate{
 
 //MARK: CannotRedeemViewControllerDelegate
 extension OfferDetailViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {

@@ -12,7 +12,11 @@ import SJSegmentedScrollView
 protocol OffersViewControllerDelegate: class {
     func offersViewController(controller: OffersViewController, didSelectBanner banner: Deal)
     func offersViewController(controller: OffersViewController, didSelectExclusive exclusive: Deal)
-    func offersViewController(controller: OffersViewController, didSelectLive live: LiveOffer)
+    func offersViewController(controller: OffersViewController, didSelectLive event: LiveOffer)
+}
+
+protocol OffersEventsDelegate: class {
+    func offersViewController(controller: OffersViewController, didSelectLiveEvent live: Event)
 }
 
 class OffersViewController: UIViewController {
@@ -32,10 +36,13 @@ class OffersViewController: UIViewController {
     var chalkboardController: ChalkBoardViewController!
     var exclusiveController: ExclusiveViewController!
     var liveController: LiveOffersViewController!
+    var eventsController: EventsViewController!
     
     weak var delegate: OffersViewControllerDelegate!
+    weak var delegateWhatsOnViewController: OffersEventsDelegate?
     
     var preSelectedTabIndex: Int = 0
+    var eventsContainer: UIView!
     
     var viewDidLayout: Bool = false
     
@@ -62,13 +69,20 @@ class OffersViewController: UIViewController {
         self.exclusiveContainerView.addSubview(self.exclusiveController.view)
         self.exclusiveController.view.autoPinEdgesToSuperviewEdges()
         
-        self.liveController = (self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController)
-        self.liveController.bar = self.bar
-        self.liveController.delegate = self
-        self.addChildController(controller: self.liveController)
-        self.liveContainerView.addSubview(self.liveController.view)
-        self.liveController.view.autoPinEdgesToSuperviewEdges()
+        self.eventsController = (self.storyboard!.instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController)
+        self.eventsController.bar = self.bar
+        self.eventsController.delegate = self
+        self.addChildController(controller: self.eventsController)
+        self.liveContainerView.addSubview(self.eventsController.view)
+        self.eventsController.view.autoPinEdgesToSuperviewEdges()
+
         
+//        self.liveController = (self.storyboard!.instantiateViewController(withIdentifier: "LiveOffersViewController") as! LiveOffersViewController)
+//        self.liveController.bar = self.bar
+//        self.liveController.delegate = self
+//        self.addChildController(controller: self.liveController)
+//        self.liveContainerView.addSubview(self.liveController.view)
+//        self.liveController.view.autoPinEdgesToSuperviewEdges()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,9 +99,10 @@ class OffersViewController: UIViewController {
     
     //MARK: My Methods
     func reset() {
-        self.liveController.reset()
+//        self.liveController.reset()
         self.chalkboardController.reset()
         self.exclusiveController.reset()
+        self.eventsController.reset()
     }
     
     func addChildController(controller: UIViewController) {
@@ -109,7 +124,7 @@ extension OffersViewController: SJSegmentedViewControllerViewSource {
     func viewsForSegmentControllerToObserveContentOffsetChange() -> [UIView] {
         return [self.chalkboardController.statefulTableView.innerTable,
                 self.exclusiveController.statefulTableView.innerTable,
-                self.liveController.statefulTableView.innerTable]
+                self.eventsController.statefulTableView.innerTable]
     }
 }
 
@@ -133,3 +148,13 @@ extension OffersViewController: LiveOffersViewControllerDelegate {
         self.delegate.offersViewController(controller: self, didSelectLive: offer)
     }
 }
+
+//MARK: EventsViewControllerDelegate
+extension OffersViewController: EventsViewControllerDelegate {
+    func eventsViewController(controller: EventsViewController, didSelect event: Event) {
+        if let _ = self.delegateWhatsOnViewController {
+            self.delegateWhatsOnViewController?.offersViewController(controller: self, didSelectLiveEvent: event)
+        }
+    }
+}
+

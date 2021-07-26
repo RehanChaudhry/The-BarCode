@@ -7,7 +7,7 @@
 		<key>AFNetworking.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>55</integer>
+			<integer>57</integer>
 		</dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
@@ -220,7 +220,7 @@
 		<key>KVNProgress.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>53</integer>
+			<integer>56</integer>
 		</dict>
 		<key>KeychainAccess.xcscheme</key>
 		<dict>
@@ -239,7 +239,7 @@
 		<key>MLLabel.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>56</integer>
+			<integer>51</integer>
 		</dict>
 		<key>ObjectMapper.xcscheme</key>
 		<dict>
@@ -300,7 +300,7 @@
 		<key>RNCryptor.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>57</integer>
+			<integer>52</integer>
 		</dict>
 		<key>Reusable.xcscheme</key>
 		<dict>
@@ -326,12 +326,12 @@
 		<key>SquareBuyerVerificationSDK.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>54</integer>
+			<integer>55</integer>
 		</dict>
 		<key>SquareInAppPaymentsSDK.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>51</integer>
+			<integer>53</integer>
 		</dict>
 		<key>StatefulTableView.xcscheme</key>
 		<dict>

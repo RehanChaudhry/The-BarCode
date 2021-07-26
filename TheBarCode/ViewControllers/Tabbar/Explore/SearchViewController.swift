@@ -373,7 +373,7 @@ extension SearchViewController: StandardOffersViewControllerDelegate {
 }
 
 //MARK: UICollectionViewDataSource, UICollectionViewDelegate
-extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.scopeItems.count
     }
@@ -387,6 +387,10 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 110, height: 43.0)
     }
 }
 
@@ -475,16 +479,16 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
             barDetailController.preSelectedSubTabIndexOffers = 2
         } else if scopeType == .food || scopeType == .delivery {
             barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .drink {
             barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexWhatsOn = 1
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .event {
-            barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 0
-            barDetailController.preSelectedSubTabIndexOffers = 0
+            barDetailController.preSelectedTabIndex = 2
+            barDetailController.preSelectedSubTabIndexWhatsOn = 2
+            barDetailController.preSelectedSubTabIndexOffers = 2
         }
         
         self.present(barDetailNav, animated: true, completion: nil)

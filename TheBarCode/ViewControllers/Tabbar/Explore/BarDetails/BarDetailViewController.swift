@@ -178,8 +178,9 @@ class BarDetailViewController: UIViewController {
         
         self.offersController = (self.storyboard!.instantiateViewController(withIdentifier: "OffersViewController") as! OffersViewController)
         self.offersController.bar = self.selectedBar
-        self.offersController.title = "Offers"
+        self.offersController.title = "Whats On"
         self.offersController.delegate = self
+        self.offersController.delegateWhatsOnViewController = self
         self.offersController.preSelectedTabIndex = self.preSelectedSubTabIndexOffers
         self.offersController.view.backgroundColor = self.containerView.backgroundColor
         
@@ -746,7 +747,7 @@ extension BarDetailViewController: RedeemDealViewControllerDelegate {
 
 //MARK: CannotRedeemViewControllerDelegate
 extension BarDetailViewController: CannotRedeemViewControllerDelegate {
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
@@ -764,6 +765,15 @@ extension BarDetailViewController: WhatsOnViewControllerDelegate {
     func whatsOnViewController(controller: WhatsOnViewController, didSelect event: Event) {
         let eventDetailController = (self.storyboard!.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController)
         eventDetailController.event = event
+        self.navigationController?.pushViewController(eventDetailController, animated: true)
+    }
+}
+
+// MARK:- OffersEventsDelegate
+extension BarDetailViewController: OffersEventsDelegate {
+    func offersViewController(controller: OffersViewController, didSelectLiveEvent live: Event) {
+        let eventDetailController = (self.storyboard!.instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController)
+        eventDetailController.event = live
         self.navigationController?.pushViewController(eventDetailController, animated: true)
     }
 }

@@ -206,7 +206,7 @@ extension FoodSearchViewController: ProductMenuCellDelegate {
         
         let bar = self.searchResults[indexPath.section].bar
         let model = self.searchResults[indexPath.section].products[indexPath.row]
-        self.updateCart(product: model, barId: bar.id.value, shouldAdd: false)
+        self.updateCart(product: model, barId: bar.id.value, shouldAdd: false, bar: bar)
     }
     
     func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton) {
@@ -233,7 +233,7 @@ extension FoodSearchViewController: ProductMenuCellDelegate {
                                                      currencyCode: bar.currencyCode.value)
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
-            self.updateCart(product: product, barId: bar.id.value, shouldAdd: true)
+            self.updateCart(product: product, barId: bar.id.value, shouldAdd: true, bar: bar)
         }
     }
 }
@@ -266,7 +266,7 @@ extension FoodSearchViewController {
             self.loadMore.next = 1
         }
         
-        var params:[String : Any] =  ["type": SearchScope.food.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.food.rawValue,
                                       "pagination" : true,
                                       "is_for_map" : false,
                                       "page" : self.loadMore.next,
@@ -328,7 +328,19 @@ extension FoodSearchViewController {
                         bar = try! transaction.importUniqueObject(Into<Bar>(), source: mutableBarDict)
                         
                         let foodsArray = responseObject["menus"] as? [[String : Any]] ?? []
-                        foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
+                        for menuItem in foodsArray {
+                            
+                            let context = ProductMenuSegmentMappingContext(type: .dineIn)
+                            
+                            var itemData: [String : Any] = menuItem
+                            itemData["contextual_id"] = Product.getContextulId(source: menuItem,
+                                                                               mapContext: context)
+                            let importedFood = try! transaction.importUniqueObject(Into<Product>(), source: itemData)
+                            foods.append(importedFood!)
+                        }
+                        
+//                        let foodsArray = responseObject["menus"] as? [[String : Any]] ?? []
+//                        foods = try! transaction.importUniqueObjects(Into<Product>(), sourceArray: foodsArray)
                     })
                     
                     let fetchedBar = Utility.barCodeDataStack.fetchExisting(bar)
@@ -359,7 +371,7 @@ extension FoodSearchViewController {
     
     func getBarsForMap(completion: @escaping (_ error: NSError?) -> Void) {
         
-        var params:[String : Any] =  ["type": SearchScope.food.rawValue,
+        var params:[String : Any] =  ["supported_order_type": SearchScope.food.rawValue,
                                       "pagination" : false,
                                       "is_for_map" : true,
                                       "keyword" : self.keyword]
@@ -468,12 +480,33 @@ extension FoodSearchViewController {
         }
     }
     
-    func updateCart(product: Product, barId: String, shouldAdd: Bool) {
-        
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId) { (error) in
+    func updateCart(product: Product, barId: String, shouldAdd: Bool, bar: Bar) {
+        let previousQuantity = product.quantity.value
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: barId, shouldSeperateCards: bar.menuType == .barCode ? true : false, cart_type: "dine_in_collection") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
             }
+        } successCompletion: { (type) in
+            
+        } updateCountCompletion: { (cartItemID) in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemID
+                
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
+
+                let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: barId)
+                let cartDic: [String:Any] = [
+                    "product": editedProduct!,
+                    "newQuantity": editedProduct!.quantity.value,
+                    "previousQuantity": previousQuantity,
+                    "barId": barId,
+                    "cartType": "dine_in_collection"
+                ]
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+            })
         }
         
         self.statefulTableView.innerTable.reloadData()

@@ -15,8 +15,8 @@ enum SearchScope: String {
     delivery = "delivery",
     deal = "deals",
     liveOffer = "live_offers",
-    food = "food",
-    drink = "drink",
+    food = "dine_in_collection",
+    drink = "takeaway_delivery",
     event = "event"
     
     func item() -> SearchScopeItem {
@@ -59,14 +59,14 @@ enum SearchScope: String {
         case .food:
             let item = SearchScopeItem(storyboardId: "FoodSearchViewController",
                                        scopeType: .food,
-                                       title: "FOOD",
+                                       title: "Dine In/Collection",
                                        backgroundColor: .appSearchScopeFoodsColor(),
                                        selectedBackgroundColor: .appSearchScopeFoodsSelectedColor())
             return item
         case .drink:
             let item = SearchScopeItem(storyboardId: "DrinkSearchViewController",
                                        scopeType: .drink,
-                                       title: "DRINKS",
+                                       title: "Takeaway/Delivery",
                                        backgroundColor: .appSearchScopeDrinksColor(),
                                        selectedBackgroundColor: .appSearchScopeDrinksSelectedColor())
             return item

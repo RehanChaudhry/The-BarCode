@@ -154,7 +154,7 @@ class MyCartViewController: UIViewController {
         }
     }
     
-    func moveToCheckOut() {
+    func moveToCheckOut(cartType: Bool) {
         if let order = self.selectedOrder, self.inProgressRequestCount == 0 {
             
             if self.isComingFromBarDetails {
@@ -162,6 +162,7 @@ class MyCartViewController: UIViewController {
                 let orderTypeController = (self.storyboard!.instantiateViewController(withIdentifier: "OrderTypeViewController") as! OrderTypeViewController)
                 orderTypeController.showCloseBarButton = false
                 orderTypeController.order = order
+                orderTypeController.cartType = cartType
                 self.navigationController?.pushViewController(orderTypeController, animated: true)
                 
             } else {
@@ -170,7 +171,7 @@ class MyCartViewController: UIViewController {
                 
                 let controller = navigation.viewControllers.first! as! OrderTypeViewController
                 controller.order = order
-                
+                controller.cartType = cartType
                 self.navigationController?.present(navigation, animated: true, completion: nil)
             }
         }
@@ -179,16 +180,31 @@ class MyCartViewController: UIViewController {
     //MARK: My IBActions
     @IBAction func checkOutButtonTapped(sender: UIButton) {
         
-        
-        
+        if self.selectedOrder?.cartType == "takeaway_delivery" {
+            if self.selectedOrder?.isTakeAway == true || (self.selectedOrder?.isDelivery == true && self.selectedOrder?.isCurrentlyDeliveryDisabled == false) {
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true, cartType: true)
+            }else {
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false, cartType: false)
+            }
+        }else {
+            if self.selectedOrder?.isDineIN == true || self.selectedOrder?.isCollection == true {
+                self.popupMsg(messageText: "If you have any allergies, please let a member of the waiting staff know before ordering.", titleText: "Disclaimer", status: true, cartType: false)
+            }else {
+                self.popupMsg(messageText: "The venue is currently not providing products for the selected order type, please stay tuned!", titleText: "Alert", status: false, cartType: false)
+            }
+        }
+    }
+    
+    func popupMsg(messageText: String, titleText: String, status: Bool, cartType: Bool) {
         let cannotRedeemViewController = self.storyboard?.instantiateViewController(withIdentifier: "CannotRedeemViewController") as! CannotRedeemViewController
-        cannotRedeemViewController.messageText = "If you have any allergies, please let a member of the waiting staff know before ordering."
-        cannotRedeemViewController.titleText = "Disclaimer"
+        cannotRedeemViewController.messageText = messageText
+        cannotRedeemViewController.titleText = titleText
+        cannotRedeemViewController.dismissStatus = status
+        cannotRedeemViewController.cartType = cartType
         cannotRedeemViewController.headerImageName = "login_intro_reload_5"
         cannotRedeemViewController.modalPresentationStyle = .overCurrentContext
         cannotRedeemViewController.delegate = self
         self.present(cannotRedeemViewController, animated: true, completion: nil)
-        
     }
     
     @IBAction func closeBarButtonTapped(sender: UIBarButtonItem) {
@@ -199,9 +215,8 @@ class MyCartViewController: UIViewController {
 //MARK: CannotRedeemViewControllerDelegate
 
 extension MyCartViewController: CannotRedeemViewControllerDelegate {
-    
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
-        self.moveToCheckOut()
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
+        self.moveToCheckOut(cartType: cartType)
     }
     
     func cannotRedeemController(controller: CannotRedeemViewController, crossButtonTapped sender: UIButton) {
@@ -238,13 +253,16 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         let headerView = tableView.dequeueReusableHeaderFooterView(CartSectionHeaderView.self)
         
         let order = self.orders[section]
-
+        headerView?.selectionButton.tag = section
+//        headerView?.selectionView.tag = section
         let isSelected =  order.barName == self.selectedOrder?.barName
-        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed)
+        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed, cartType: order.cartType)
+        
+        headerView?.setButtonColor(state: self.selectedOrder?.cartId == self.orders[section].cartId ? true : false)
         
         headerView?.delegate = self
         headerView?.barId =  order.barId
-        
+        headerView?.cartID = order.cartId
         return headerView
     }
     
@@ -259,7 +277,6 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-         
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.statefulTableView.innerTable.deselectRow(at: indexPath, animated: false)
@@ -303,8 +320,8 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
              debugPrint("IndexPath not found")
              return
          }
-                
-        self.updateCart(indexPath: indexPath, shouldDelete: true, shouldStepUp: false)
+        
+        self.updateCart(indexPath: indexPath, shouldDelete: true, shouldStepUp: false, cartType: self.orders[indexPath.section].cartType, isSeperateCard: self.orders[indexPath.section].menuTypeRaw == "barcode" ? true : false)
     }
     
     func orderItemTableViewCell(cell: OrderItemTableViewCell, stepperValueChanged stepper: StepperView) {
@@ -314,7 +331,7 @@ extension MyCartViewController: OrderItemTableViewCellDelegate {
         }
         
         let orderItem = self.orders[indexPath.section].orderItems[indexPath.row]
-        self.updateCart(indexPath: indexPath, shouldDelete: false, shouldStepUp: stepper.value > orderItem.quantity)
+        self.updateCart(indexPath: indexPath, shouldDelete: false, shouldStepUp: stepper.value > orderItem.quantity, cartType: self.orders[indexPath.section].cartType, isSeperateCard: self.orders[indexPath.section].menuTypeRaw == "barcode" ? true : false)
     }
 }
 
@@ -392,7 +409,7 @@ extension MyCartViewController {
         }
     }
     
-    func updateCart(indexPath: IndexPath, shouldDelete: Bool, shouldStepUp: Bool) {
+    func updateCart(indexPath: IndexPath, shouldDelete: Bool, shouldStepUp: Bool, cartType: String, isSeperateCard: Bool) {
         
         let order: Order = self.orders[indexPath.section]
         let item: OrderItem = order.orderItems[indexPath.row]
@@ -418,6 +435,10 @@ extension MyCartViewController {
         } else {
             item.isDeleting = true
             params["quantity"] = 0
+        }
+        
+        if isSeperateCard {
+            params["cart_type"] = cartType
         }
         
         if item.selectedProductModifiers.count > 0 {
@@ -540,12 +561,12 @@ extension MyCartViewController {
 
 //MARK: CartSectionHeaderViewDelegate
 extension MyCartViewController: CartSectionHeaderViewDelegate {
-    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String) {
+    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String, tag: Int) {
       
         let filteredOrders = self.orders.filter { (order) -> Bool in
-            return order.barId == selectedBarId
+            return order.cartId == selectedBarId
         }
-       
+        
         self.selectedOrder = filteredOrders.first
         self.statefulTableView.innerTable.reloadData()
     }

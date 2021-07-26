@@ -745,7 +745,7 @@ extension SIgnUpViewController: CannotRedeemViewControllerDelegate {
         self.signUp()
     }
     
-    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton) {
+    func cannotRedeemController(controller: CannotRedeemViewController, okButtonTapped sender: UIButton, cartType: Bool) {
         self.signUp()
     }
 }

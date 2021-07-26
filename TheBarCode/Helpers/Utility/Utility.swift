@@ -823,7 +823,7 @@ extension Utility {
 
 //MARK: Update Cart
 extension Utility {
-    func updateCart(product: Product, shouldAdd: Bool, barId: String, completion: @escaping (_ error: NSError?) -> Void) {
+    func updateCart(product: Product, shouldAdd: Bool, barId: String, shouldSeperateCards: Bool, cart_type: String, completion: @escaping (_ error: NSError?) -> Void, successCompletion: @escaping (_ type: String) -> Void, updateCountCompletion: @escaping (_ cartItemID: String) -> Void) {
         
         var params: [String : Any] = ["id" : product.id.value,
                                       "establishment_id" : barId]
@@ -838,17 +838,17 @@ extension Utility {
             product.isRemovingFromCart = true
             params["quantity"] = 0
         }
-
+        
+        if shouldSeperateCards {
+            params["cart_type"] = cart_type
+        }
+        
+        successCompletion(cart_type)
+        
         let _ = APIHelper.shared.hitApi(params: params, apiPath: apiPathCart, method: .post) { (response, serverError, error) in
-            
-            let previousQuantity = product.quantity.value
-            
+            var cartItemId: String? = nil
             defer {
-                product.isAddingToCart = false
-                product.isRemovingFromCart = false
-
-                let cartInfo: ProductCartUpdatedObject = (product: product, newQuantity: product.quantity.value, previousQuantity: previousQuantity, barId: barId)
-                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo)
+                updateCountCompletion(cartItemId ?? "")
             }
             
             guard error == nil else {
@@ -869,8 +869,6 @@ extension Utility {
                 return
             }
             
-            var cartItemId: String? = nil
-            
             let responseDict = ((response as? [String : Any])?["response"] as? [String : Any])
             if let data = responseDict?["data"] as? [String : Any],
                 let items = data["menuItems"] as? [[String : Any]],
@@ -879,12 +877,6 @@ extension Utility {
                 
                 cartItemId = "\(item["cart_item_id"]!)"
             }
-            
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedProduct = transaction.edit(product)
-                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
-                editedProduct?.cartItemId.value = cartItemId
-            })
         }
     }
 }

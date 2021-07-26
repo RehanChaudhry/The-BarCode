@@ -132,7 +132,7 @@ extension DrinkListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let segment = self.segments[indexPath.section]
         cell.setupCell(product: segment.products[indexPath.row], bar: self.bar)
-
+        
         cell.delegate = self
         
         return cell
@@ -205,6 +205,8 @@ extension DrinkListViewController: ProductMenuCellDelegate {
             productModifiersController.regionInfo = (country: self.bar.country.value,
                                                      currencySymbol: self.bar.currencySymbol.value,
                                                      currencyCode: self.bar.currencyCode.value)
+            productModifiersController.cartType = "takeaway_delivery"
+            productModifiersController.isSeperateCart = self.bar.menuType == .barCode ? true : false
             
             self.navigationController?.present(productModifiersNavigation, animated: true, completion: nil)
         } else {
@@ -222,7 +224,7 @@ extension DrinkListViewController {
         }
         
         let params: [String : Any] = ["establishment_id": self.bar.id.value,
-                                      "type" : "drink",
+                                      "supported_order_type" : "takeaway_delivery",
                                       "pagination" : true,
                                       "page": self.loadMore.next]
         
@@ -261,7 +263,9 @@ extension DrinkListViewController {
                     }
                 })
                 
-                let segments = Mapper<ProductMenuSegment>().mapArray(JSONArray: segmentsWithItems)
+                let mapContext = ProductMenuSegmentMappingContext(type: .takeAwaydelivery)
+                
+                let segments = Mapper<ProductMenuSegment>(context: mapContext).mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
                 segments.first?.isExpanded = true
@@ -282,8 +286,8 @@ extension DrinkListViewController {
     }
     
     func updateCart(product: Product, shouldAdd: Bool) {
-        
-        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value) { (error) in
+        let previousQuantity = product.quantity.value
+        Utility.shared.updateCart(product: product, shouldAdd: shouldAdd, barId: self.bar.id.value, shouldSeperateCards: self.bar.menuType == .barCode ? true : false, cart_type: "takeaway_delivery") { (error) in
             if let error = error {
                 KVNProgress.showError(withStatus: error.localizedDescription)
                 
@@ -292,9 +296,30 @@ extension DrinkListViewController {
                     self.reset()
                 }
             }
+        } successCompletion: { (type) in
+            if type == "takeaway_delivery" {
+                self.statefulTableView.innerTable.reloadData()
+            }
+        } updateCountCompletion: { (cartItemID) in
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemID
+                
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
+
+                let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                let cartDic: [String:Any] = [
+                    "product": editedProduct!,
+                    "newQuantity": editedProduct!.quantity.value,
+                    "previousQuantity": previousQuantity,
+                    "barId": self.bar.id.value,
+                    "cartType": "takeaway_delivery"
+                ]
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+            })
         }
-        
-        self.statefulTableView.innerTable.reloadData()
     }
 }
 
@@ -410,10 +435,18 @@ extension DrinkListViewController: StatefulTableDelegate {
 //MARK: Notification Methods
 extension DrinkListViewController {
     @objc func productCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        if let dict = notification.userInfo as NSDictionary? {
+            if let cartType = dict["cartType"] as? String {
+                if cartType == "takeaway_delivery" {
+                    self.statefulTableView.innerTable.reloadData()
+                }
+            }
+        }
     }
     
     @objc func myCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        self.getDeals(isRefreshing: true) { [unowned self] (error) in
+            debugPrint("food segments== \(self.segments.count)")
+        }
     }
 }

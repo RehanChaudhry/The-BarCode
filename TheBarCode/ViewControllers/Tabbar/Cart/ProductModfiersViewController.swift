@@ -51,6 +51,8 @@ class ProductModfiersViewController: UIViewController {
     var isUpdating: Bool = false
     
     weak var delegate: ProductModfiersViewControllerDelegate?
+    var cartType = ""
+    var isSeperateCart = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,12 +155,12 @@ class ProductModfiersViewController: UIViewController {
     @IBAction func addToCartButtonTapped(sender: UIButton) {
         let validationInfo = self.isDataValid()
         if validationInfo.isValid {
-            
+
             guard self.calculateTotal() > 0.0 else {
                 KVNProgress.showError(withStatus: "Total price must be greater than 0")
                 return
             }
-            
+
             self.updateCart()
         } else if let section = validationInfo.section {
             let indexPath = IndexPath(row: NSNotFound, section: section)
@@ -332,7 +334,9 @@ extension ProductModfiersViewController {
                                       "quantity" : self.stepperView.value,
                                       "establishment_id" : self.establishmentId,
                                       "modifier_details" : selectedModifier]
-        
+        if self.isSeperateCart {
+            params["cart_type"] = self.cartType
+        }
         if let cartItemId = self.cartItemId {
             params["cart_item_id"] = cartItemId
         }
@@ -363,9 +367,15 @@ extension ProductModfiersViewController {
                                                                      newQuantity: self.stepperView.value + previousQuantity,
                                                                      previousQuantity: previousQuantity,
                                                                      barId: self.establishmentId)
-                    NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: productCartInfo)
+                    let cartDic: [String:Any] = [
+                        "product": product,
+                        "newQuantity": self.stepperView.value + previousQuantity,
+                        "previousQuantity": previousQuantity,
+                        "barId": self.establishmentId,
+                        "cartType": self.cartType
+                    ]
+                    NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: productCartInfo, userInfo: cartDic)
                 }
-                
             }
             
             guard error == nil else {

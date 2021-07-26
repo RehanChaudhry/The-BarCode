@@ -10,28 +10,28 @@ import UIKit
 import Reusable
 
 protocol CartSectionHeaderViewDelegate : class {
-    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String)
+    func cartSectionHeaderView(view: CartSectionHeaderView, selectedBarId: String, tag: Int)
 }
 
 class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
  
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var selectionView: UIView!
+    @IBOutlet weak var selectionButton: UIButton!
     
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var infoLabelBottom: NSLayoutConstraint!
     
     weak var delegate: CartSectionHeaderViewDelegate!
     var barId: String!
-    
-    func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool) {
-        self.titleLabel.text = title
+    var buttonToggle = true
+    var cartID = ""
+    func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool, cartType: String) {
+        self.titleLabel.text = title + " - " + cartType.replacingOccurrences(of: "_", with: " ").capitalized
         
-        self.selectionView.backgroundColor = isSelected ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()
-        
-        self.selectionView.layer.cornerRadius = 8
-        self.selectionView.layer.borderWidth = 2
-        self.selectionView.layer.borderColor = UIColor.appCartUnSelectedColor().cgColor
+        self.selectionButton.layer.cornerRadius = 8
+        self.selectionButton.layer.borderWidth = 2
+        self.selectionButton.layer.borderColor = UIColor.appCartUnSelectedColor().cgColor
         
         if isVenueClosed {
             self.infoLabelBottom.constant = 8.0
@@ -45,8 +45,17 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
 
     @IBAction func selectionButtonTapped(_ sender: UIButton) {
         
-        self.selectionView.backgroundColor = UIColor.appBlueColor()
-        self.delegate.cartSectionHeaderView(view: self, selectedBarId: self.barId)
+//        self.selectionView.backgroundColor = UIColor.appBlueColor()
+        self.delegate.cartSectionHeaderView(view: self, selectedBarId: self.cartID, tag: sender.tag)
+        self.selectionButton.backgroundColor = self.buttonToggle ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()
+        self.buttonToggle = !self.buttonToggle
+    }
+    
+    func setButtonColor(state: Bool) {
+        self.selectionButton.backgroundColor = state ? UIColor.appBlueColor() : UIColor.appCartUnSelectedColor()
+    }
+    
+    @IBAction func selectionBtnAction(_ sender: UIButton) {
         
     }
 }
