@@ -137,6 +137,8 @@ class OrderTypeViewController: UIViewController {
         print("Order Type \(self.order.isCollection)")
         print("Order Type \(self.order.isDelivery)")
 
+        
+        if cartType == false {
         if self.order.isDineIN == true {
             let dineRadioButton = OrderRadioButton(title: "Dine In", subTitle: "")
             dineRadioButton.isSelected = true
@@ -156,10 +158,13 @@ class OrderTypeViewController: UIViewController {
             self.viewModels.append(counterCollectionSection)
             
         }
-        
+    }
+        if cartType == true {
         if self.order.isTakeAway == true {
             
+            
             let takeAwayRadio = OrderRadioButton(title: "Takeaway", subTitle: "")
+            takeAwayRadio.isSelected = true
             let takeAwaySection = OrderTakeAwaySection(items: [takeAwayRadio])
             self.viewModels.append(takeAwaySection)
         }
@@ -184,6 +189,7 @@ class OrderTypeViewController: UIViewController {
             }
             
             
+        }
         }
         
         let mobileNo = OrderMobileNumber()
