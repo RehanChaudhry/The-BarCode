@@ -111,7 +111,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(ProductMenuHeaderView.self)
-        headerView?.setupHeader(title: self.segments[section].name, isExpanded: self.segments[section].isExpanded)
+        headerView?.setupHeader(title: self.segments[section].name, isExpanded: true)
         headerView?.delegate = self
         headerView?.section = section
         return headerView
@@ -123,7 +123,7 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let segment = self.segments[section]
-        return segment.isExpanded ? segment.products.count : 0
+        return segment.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -151,7 +151,7 @@ extension FoodMenuViewController: ProductMenuHeaderViewDelegate {
     func foodMenuHeaderView(header: ProductMenuHeaderView, titleButtonTapped sender: UIButton) {
         let segment = self.segments[header.section]
         
-        segment.isExpanded = !segment.isExpanded
+        //segment.isExpanded = !segment.isExpanded
         
         var indexPaths: [IndexPath] = []
         for i in 0..<self.segments[header.section].products.count {
@@ -159,13 +159,13 @@ extension FoodMenuViewController: ProductMenuHeaderViewDelegate {
             indexPaths.append(indexPath)
         }
         
-        if segment.isExpanded {
-            self.statefulTableView.innerTable.insertRows(at: indexPaths, with: .automatic)
-        } else {
-            self.statefulTableView.innerTable.deleteRows(at: indexPaths, with: .automatic)
-        }
+//        if segment.isExpanded {
+//            self.statefulTableView.innerTable.insertRows(at: indexPaths, with: .automatic)
+//        } else {
+//            self.statefulTableView.innerTable.deleteRows(at: indexPaths, with: .automatic)
+//        }
         
-        header.setupHeader(title: segment.name, isExpanded: segment.isExpanded)
+        header.setupHeader(title: segment.name, isExpanded: true)
     }
 }
 
