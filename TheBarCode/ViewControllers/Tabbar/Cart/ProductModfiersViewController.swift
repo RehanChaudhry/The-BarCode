@@ -362,9 +362,15 @@ extension ProductModfiersViewController {
                                                                      newQuantity: self.stepperView.value + previousQuantity,
                                                                      previousQuantity: previousQuantity,
                                                                      barId: self.establishmentId)
-                    NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: productCartInfo)
+                    let cartDic: [String:Any] = [
+                        "product": product,
+                        "newQuantity": self.stepperView.value + previousQuantity,
+                        "previousQuantity": previousQuantity,
+                        "barId": self.establishmentId,
+                        "cartType": self.cartType
+                    ]
+                    NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: productCartInfo, userInfo: cartDic)
                 }
-                
             }
             
             guard error == nil else {

@@ -133,7 +133,7 @@ class WhatsOnViewController: UIViewController {
         self.drinksContainer!.autoPinEdge(ALEdge.top, to: ALEdge.top, of: self.contentView)
         self.drinksContainer!.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: self.contentView)
         
-        self.drinksContainer?.autoPinEdge(ALEdge.left, to: ALEdge.right, of: self.foodContainer ?? self.contentView)
+        self.drinksContainer?.autoPinEdge(ALEdge.left, to: self.bar.menuType == .barCode ? ALEdge.right : ALEdge.left, of: self.foodContainer ?? self.contentView)
         self.drinksContainer?.autoPinEdge(ALEdge.right, to: ALEdge.right, of: self.contentView)
         
         self.drinksContainer!.autoMatch(ALDimension.width, to: ALDimension.width, of: self.placeholderView)

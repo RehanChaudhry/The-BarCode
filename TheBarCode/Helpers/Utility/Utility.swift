@@ -874,10 +874,6 @@ extension Utility {
                 
                 cartItemId = "\(item["cart_item_id"]!)"
             }
-            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                let editedProduct = transaction.edit(product)
-                editedProduct?.cartItemId.value = cartItemId
-            })
         }
     }
 }

@@ -294,30 +294,24 @@ extension DrinkListViewController {
                 self.statefulTableView.innerTable.reloadData()
             }
         } updateCountCompletion: { (cartItemID) in
-            for segment in self.segments {
-                for selectedProduct in segment.products {
-                    if selectedProduct.id.value == product.id.value && selectedProduct.itemCartType == "" {
-                        try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
-                            let editedProduct = transaction.edit(selectedProduct)
-                            editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
-                            editedProduct?.cartItemId.value = cartItemID
-                            
-                            product.isAddingToCart = false
-                            product.isRemovingFromCart = false
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemID
+                
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
 
-                            let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
-                            let cartDic: [String:Any] = [
-                                "product": editedProduct!,
-                                "newQuantity": editedProduct!.quantity.value,
-                                "previousQuantity": previousQuantity,
-                                "barId": self.bar.id.value,
-                                "cartType": "takeaway_delivery"
-                            ]
-                            NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
-                        })
-                    }
-                }
-            }
+                let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: self.bar.id.value)
+                let cartDic: [String:Any] = [
+                    "product": editedProduct!,
+                    "newQuantity": editedProduct!.quantity.value,
+                    "previousQuantity": previousQuantity,
+                    "barId": self.bar.id.value,
+                    "cartType": "takeaway_delivery"
+                ]
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+            })
         }
     }
 }
@@ -432,6 +426,8 @@ extension DrinkListViewController {
     }
     
     @objc func myCartUpdatedNotification(notification: Notification) {
-        self.statefulTableView.innerTable.reloadData()
+        self.getDeals(isRefreshing: true) { [unowned self] (error) in
+            debugPrint("food segments== \(self.segments.count)")
+        }
     }
 }

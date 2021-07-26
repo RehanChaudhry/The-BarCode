@@ -1109,7 +1109,7 @@ extension AllSearchViewController {
     }
     
     func updateProductCart(product: Product, bar: Bar, shouldAdd: Bool) {
-        
+        let previousQuantity = product.quantity.value
         var cartType: String = ""
         if product.contextualId.value.contains(ProductMenuType.dineIn.rawValue) {
             cartType = "dine_in_collection"
@@ -1124,7 +1124,24 @@ extension AllSearchViewController {
         } successCompletion: { (type) in
             
         } updateCountCompletion: { (cartItemID) in
-            
+            try! Utility.barCodeDataStack.perform(synchronous: { (transaction) -> Void in
+                let editedProduct = transaction.edit(product)
+                editedProduct?.quantity.value = shouldAdd ? product.quantity.value + 1 : 0
+                editedProduct?.cartItemId.value = cartItemID
+                
+                product.isAddingToCart = false
+                product.isRemovingFromCart = false
+
+                let cartInfo: ProductCartUpdatedObject = (product: editedProduct!, newQuantity: editedProduct!.quantity.value, previousQuantity: previousQuantity, barId: bar.id.value)
+                let cartDic: [String:Any] = [
+                    "product": editedProduct!,
+                    "newQuantity": editedProduct!.quantity.value,
+                    "previousQuantity": previousQuantity,
+                    "barId": bar.id.value,
+                    "cartType": "takeaway_delivery"
+                ]
+                NotificationCenter.default.post(name: notificationNameProductCartUpdated, object: cartInfo, userInfo: cartDic)
+            })
         }
         
         self.statefulTableView.innerTable.reloadData()
