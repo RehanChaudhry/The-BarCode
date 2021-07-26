@@ -21,27 +21,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="118" id="gkc-Xc-FNt" customClass="ProductMenuCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="325" id="gkc-Xc-FNt" customClass="ProductMenuCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gkc-Xc-FNt" id="aAo-BC-Qdw">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5w-VV-CxB">
-                        <rect key="frame" x="16" y="16" width="170" height="19.5"/>
-                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="2 deals available" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mX7-Be-M1C">
-                        <rect key="frame" x="16" y="45.5" width="288" height="9.5"/>
+                        <rect key="frame" x="16" y="228.5" width="288" height="38.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMq-dN-c4f">
-                        <rect key="frame" x="16" y="65" width="95.5" height="28"/>
+                        <rect key="frame" x="16" y="277" width="95.5" height="28"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DwO-yC-v2a">
                                 <rect key="frame" x="0.0" y="0.0" width="38" height="28"/>
@@ -103,7 +97,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yIc-JX-wm2">
-                        <rect key="frame" x="204" y="65" width="100" height="28"/>
+                        <rect key="frame" x="204" y="277" width="100" height="28"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
                         <state key="normal" title="2 Items added " image="icon_trash_bin">
                             <color key="titleColor" red="0.0" green="0.8901960784313725" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -113,19 +107,19 @@
                         </connections>
                     </button>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-ZW-8Cu">
-                        <rect key="frame" x="16" y="108.5" width="288" height="0.5"/>
+                        <rect key="frame" x="16" y="320.5" width="288" height="0.5"/>
                         <color key="backgroundColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="BKb-4e-OFz"/>
                         </constraints>
                     </view>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Sw9-bv-cKI">
-                        <rect key="frame" x="119" y="69" width="20" height="20"/>
+                        <rect key="frame" x="119" y="281" width="20" height="20"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </activityIndicatorView>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="YRW-ik-7Li">
-                        <rect key="frame" x="176" y="69" width="20" height="20"/>
+                        <rect key="frame" x="176" y="281" width="20" height="20"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </activityIndicatorView>
@@ -145,29 +139,44 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cT5-pO-8Cv" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                        <rect key="frame" x="16" y="49" width="288" height="140"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="140" id="MoU-Yz-iP2"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Empirical Brew Pub" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5w-VV-CxB">
+                        <rect key="frame" x="16" y="199" width="288" height="19.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="16" id="0hJ-I3-3r5"/>
                     <constraint firstItem="YRW-ik-7Li" firstAttribute="centerY" secondItem="yIc-JX-wm2" secondAttribute="centerY" id="1K2-aP-mcY"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" id="3ed-3J-niA"/>
+                    <constraint firstItem="cT5-pO-8Cv" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="4LJ-q3-URE"/>
                     <constraint firstAttribute="bottom" secondItem="kMK-ZW-8Cu" secondAttribute="bottom" id="5bA-mp-Vcx"/>
                     <constraint firstItem="mX7-Be-M1C" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="9gw-F9-FJP"/>
                     <constraint firstItem="e7m-pk-RNc" firstAttribute="top" secondItem="aAo-BC-Qdw" secondAttribute="top" constant="11" id="BhX-8s-X4R"/>
+                    <constraint firstAttribute="trailing" secondItem="cT5-pO-8Cv" secondAttribute="trailing" constant="16" id="Cu3-k3-c2C"/>
                     <constraint firstItem="Sw9-bv-cKI" firstAttribute="centerY" secondItem="TMq-dN-c4f" secondAttribute="centerY" id="FLD-AD-o0o"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="leading" secondItem="YRW-ik-7Li" secondAttribute="trailing" constant="8" id="FTU-Zp-eYW"/>
+                    <constraint firstItem="f5w-VV-CxB" firstAttribute="top" secondItem="cT5-pO-8Cv" secondAttribute="bottom" constant="10" id="ICM-VO-cze"/>
                     <constraint firstAttribute="trailing" secondItem="kMK-ZW-8Cu" secondAttribute="trailing" constant="16" id="KZf-Uq-PgM"/>
-                    <constraint firstItem="f5w-VV-CxB" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="O8y-Qj-0RB"/>
+                    <constraint firstItem="cT5-pO-8Cv" firstAttribute="top" secondItem="e7m-pk-RNc" secondAttribute="bottom" constant="10" id="PAd-To-g4t"/>
+                    <constraint firstItem="f5w-VV-CxB" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="PEt-g1-Ctr"/>
                     <constraint firstItem="Sw9-bv-cKI" firstAttribute="leading" secondItem="TMq-dN-c4f" secondAttribute="trailing" constant="7.5" id="Ppi-85-HCQ"/>
                     <constraint firstItem="YRW-ik-7Li" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sw9-bv-cKI" secondAttribute="trailing" constant="8" id="R7V-Pa-v9Q"/>
                     <constraint firstAttribute="trailing" secondItem="yIc-JX-wm2" secondAttribute="trailing" constant="16" id="SNF-o2-JcO"/>
-                    <constraint firstItem="mX7-Be-M1C" firstAttribute="top" secondItem="f5w-VV-CxB" secondAttribute="bottom" constant="10" id="Xgb-3C-Sx7"/>
                     <constraint firstAttribute="bottom" secondItem="TMq-dN-c4f" secondAttribute="bottom" constant="16" id="Y75-oZ-vAC"/>
                     <constraint firstAttribute="trailing" secondItem="e7m-pk-RNc" secondAttribute="trailing" constant="16" id="bgf-Hy-yKx"/>
-                    <constraint firstItem="e7m-pk-RNc" firstAttribute="leading" secondItem="f5w-VV-CxB" secondAttribute="trailing" constant="8" symbolic="YES" id="cVQ-9m-kco"/>
+                    <constraint firstItem="mX7-Be-M1C" firstAttribute="top" secondItem="f5w-VV-CxB" secondAttribute="bottom" constant="10" id="dAS-oK-Jov"/>
                     <constraint firstItem="yIc-JX-wm2" firstAttribute="top" secondItem="TMq-dN-c4f" secondAttribute="top" id="iKn-AU-0kP"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="lie-y5-Xgz"/>
                     <constraint firstAttribute="trailing" secondItem="mX7-Be-M1C" secondAttribute="trailing" constant="16" id="q8U-m5-Ghc"/>
                     <constraint firstItem="TMq-dN-c4f" firstAttribute="top" secondItem="mX7-Be-M1C" secondAttribute="bottom" constant="10" id="sb5-St-gbl"/>
-                    <constraint firstItem="f5w-VV-CxB" firstAttribute="top" secondItem="aAo-BC-Qdw" secondAttribute="top" constant="16" id="uro-pX-tYP"/>
                     <constraint firstItem="kMK-ZW-8Cu" firstAttribute="leading" secondItem="aAo-BC-Qdw" secondAttribute="leading" constant="16" id="vPu-av-Pup"/>
                 </constraints>
             </tableViewCellContentView>
@@ -179,23 +188,24 @@
                 <outlet property="cartIconContainerWidth" destination="DGK-IJ-M4L" id="M2D-9U-naB"/>
                 <outlet property="cartIconImageView" destination="CQA-7a-WMo" id="QJq-m4-fL3"/>
                 <outlet property="deliveryOnlyLabel" destination="e7m-pk-RNc" id="Hfd-66-CYI"/>
-                <outlet property="deliveryOnlyLabelLeft" destination="cVQ-9m-kco" id="nzP-Q6-vGc"/>
+                <outlet property="deliveryOnlyLabelHeight" destination="iuZ-yB-nkp" id="tuJ-6p-tAs"/>
                 <outlet property="deliveryOnlyLabelWidth" destination="coQ-5J-U6I" id="bcg-ZO-wTA"/>
-                <outlet property="detailLabel" destination="mX7-Be-M1C" id="3Xv-4Q-viz"/>
-                <outlet property="detailLabelTop" destination="Xgb-3C-Sx7" id="qq4-z6-78B"/>
+                <outlet property="detailLabel" destination="mX7-Be-M1C" id="4gT-gx-QBI"/>
+                <outlet property="detailLabelTop" destination="dAS-oK-Jov" id="CcE-gB-HUY"/>
                 <outlet property="priceContainer" destination="TMq-dN-c4f" id="9S3-FD-UAX"/>
                 <outlet property="priceContainerHeight" destination="78g-hG-GmT" id="Rbd-4u-MfF"/>
                 <outlet property="priceContainerTop" destination="sb5-St-gbl" id="JcZ-sL-oSZ"/>
                 <outlet property="priceLabel" destination="fBL-S5-DOc" id="n8J-gM-XyW"/>
                 <outlet property="priceLabelLeft" destination="ewB-Zc-Q1g" id="RUb-IK-sUz"/>
                 <outlet property="priceLabelRight" destination="48l-oF-Xhp" id="jWU-17-zj2"/>
+                <outlet property="productImage" destination="cT5-pO-8Cv" id="T2i-3p-aBZ"/>
+                <outlet property="productImageConstraint" destination="MoU-Yz-iP2" id="T1l-YZ-AJf"/>
                 <outlet property="removeItemActivityIndicator" destination="YRW-ik-7Li" id="cGp-SR-95n"/>
                 <outlet property="removeItemButton" destination="yIc-JX-wm2" id="xBG-Nd-Kci"/>
                 <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>
                 <outlet property="titleLabel" destination="f5w-VV-CxB" id="hju-Y7-m1D"/>
-                <outlet property="topPadding" destination="uro-pX-tYP" id="Ahe-II-dq8"/>
             </connections>
-            <point key="canvasLocation" x="140.57971014492756" y="100.78125"/>
+            <point key="canvasLocation" x="160.86956521739131" y="128.90625"/>
         </tableViewCell>
     </objects>
     <resources>
