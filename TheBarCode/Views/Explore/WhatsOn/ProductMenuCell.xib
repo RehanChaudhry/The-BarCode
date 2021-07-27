@@ -204,6 +204,7 @@
                 <outlet property="removeItemButton" destination="yIc-JX-wm2" id="xBG-Nd-Kci"/>
                 <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>
                 <outlet property="titleLabel" destination="f5w-VV-CxB" id="hju-Y7-m1D"/>
+                <outlet property="titleLabelTopConstraint" destination="ICM-VO-cze" id="TSY-Gg-Cy8"/>
             </connections>
             <point key="canvasLocation" x="160.86956521739131" y="128.90625"/>
         </tableViewCell>

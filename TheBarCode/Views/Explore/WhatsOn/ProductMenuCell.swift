@@ -28,6 +28,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     @IBOutlet var cartIconImageView: UIImageView!
     
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var detailLabelTop: NSLayoutConstraint!
     @IBOutlet var priceContainerHeight: NSLayoutConstraint!
     @IBOutlet var priceContainerTop: NSLayoutConstraint!
@@ -92,16 +93,15 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         if product.image.value != "" {
             let url = URL(string: product.image.value)
+            
             self.productImage.layer.cornerRadius = 15
             self.productImage.clipsToBounds = true
             self.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
             self.productImageConstraint.constant = 200
-            self.detailLabelTop.constant = 10
+            self.titleLabelTopConstraint.constant = 10
         } else {
             self.productImageConstraint.constant = 0
-            if self.detailLabelTop.constant != 0.0 {
-                self.detailLabelTop.constant = 0
-            }
+            self.titleLabelTopConstraint.constant = 0
         }
         
         self.handlePrice(product: product, bar: bar)
