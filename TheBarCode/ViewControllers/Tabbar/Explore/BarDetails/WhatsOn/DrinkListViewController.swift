@@ -173,6 +173,18 @@ extension DrinkListViewController: ProductMenuHeaderViewDelegate {
 
 //MARK: ProductMenuCellDelegate
 extension DrinkListViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, selectedIndexPath: IndexPath) {
+        let ProductDetailsViewController = (self.storyboard!.instantiateViewController(withIdentifier: "ProductDetailsNavigation") as! UINavigationController)
+        ProductDetailsViewController.modalPresentationStyle = .fullScreen
+        let product = self.segments[selectedIndexPath.section].products[selectedIndexPath.row]
+        let vc = ProductDetailsViewController.viewControllers.first as! ProductDetailsViewController
+        vc.productTitle = product.name.value
+        vc.productDesc = product.detail.value
+        vc.productImage = product.image.value
+        vc.productPrice = product.price.value
+        self.navigationController?.present(ProductDetailsViewController, animated: true, completion: nil)
+    }
+    
     func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
