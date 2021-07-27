@@ -42,6 +42,7 @@ class Product: CoreStoreObject {
     var isTakeaway: Bool = false
     var isDinein: Bool = false
     var itemCartType: String = ""
+    var productImage: String = ""
 }
 
 extension Product: ImportableUniqueObject {
@@ -82,7 +83,7 @@ extension Product: ImportableUniqueObject {
         
         self.name.value = source["name"] as? String ?? ""
         self.detail.value = source["description"] as? String ?? ""
-        
+        self.productImage = source["image"] as? String ?? ""
         if let _ = source["price"] {
             self.price.value = "\(source["price"]!)"
         } else {

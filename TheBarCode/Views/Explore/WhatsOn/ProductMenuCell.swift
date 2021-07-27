@@ -19,6 +19,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
+    @IBOutlet weak var productImage: AsyncImageView!
     
     @IBOutlet var priceContainer: UIView!
     @IBOutlet var separatorView: UIView!
@@ -35,6 +36,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var cartIconContainerWidth: NSLayoutConstraint!
     @IBOutlet var priceLabelLeft: NSLayoutConstraint!
     @IBOutlet var priceLabelRight: NSLayoutConstraint!
+    @IBOutlet weak var productImageConstraint: NSLayoutConstraint!
     
     @IBOutlet var addItemActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var addItemButton: UIButton!
@@ -44,6 +46,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     @IBOutlet var deliveryOnlyLabel: UILabel!
     
+    @IBOutlet weak var deliveryOnlyLabelHeight: NSLayoutConstraint!
     @IBOutlet var deliveryOnlyLabelWidth: NSLayoutConstraint!
     @IBOutlet var deliveryOnlyLabelLeft: NSLayoutConstraint!
     
@@ -87,6 +90,20 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.detailLabelTop.constant = 0.0
         }
         
+        if product.image.value != "" {
+            let url = URL(string: product.image.value)
+            self.productImage.layer.cornerRadius = 15
+            self.productImage.clipsToBounds = true
+            self.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+            self.productImageConstraint.constant = 200
+            self.detailLabelTop.constant = 10
+        } else {
+            self.productImageConstraint.constant = 0
+            if self.detailLabelTop.constant != 0.0 {
+                self.detailLabelTop.constant = 0
+            }
+        }
+        
         self.handlePrice(product: product, bar: bar)
 
         self.removeItemButton.isHidden = product.quantity.value == 0
@@ -107,11 +124,13 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         if product.isDeliveryOnly.value {
             self.deliveryOnlyLabel.isHidden = false
             self.deliveryOnlyLabelWidth.constant = 110.0
-            self.deliveryOnlyLabelLeft.constant = 8.0
+            self.deliveryOnlyLabelHeight.constant = 28.0
+//            self.deliveryOnlyLabelLeft.constant = 8.0
         } else {
             self.deliveryOnlyLabel.isHidden = true
             self.deliveryOnlyLabelWidth.constant = 0.0
-            self.deliveryOnlyLabelLeft.constant = 0.0
+            self.deliveryOnlyLabelHeight.constant = 0.0
+//            self.deliveryOnlyLabelLeft.constant = 0.0
         }
         
         self.handleAddingToCart(isAdding: product.isAddingToCart)
