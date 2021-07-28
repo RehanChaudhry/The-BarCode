@@ -55,6 +55,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
 //    @IBOutlet var deliveryOnlyLabelLeft: NSLayoutConstraint!
     
     weak var delegate: ProductMenuCellDelegate!
+    var givenProduct: Product!
     
     enum CartIconType: String {
         case none = "none",
@@ -96,7 +97,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.detailLabel.attributedText = product.detail.value.html2Attributed(isTitle: false)
         
         self.priceContainer.layer.cornerRadius = 10
-        
+        self.givenProduct = product
         if product.detail.value.count > 0 {
             self.detailLabelTop.constant = 10.0
         } else {
@@ -253,6 +254,8 @@ extension ProductMenuCell: UICollectionViewDelegate, UICollectionViewDataSource,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarProductsCell", for: indexPath) as! SimilarProductsCell
         cell.layer.cornerRadius = 20
         cell.clipsToBounds = true
+        let url = URL(string: self.givenProduct.image.value)
+        cell.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         return cell
     }
     

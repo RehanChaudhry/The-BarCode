@@ -173,7 +173,7 @@ extension FoodMenuViewController: ProductMenuCellDelegate {
     func productMenuCell(cell: ProductMenuCell, selectedIndexPath: IndexPath) {
         let ProductDetailsViewController = (self.storyboard!.instantiateViewController(withIdentifier: "ProductDetailsNavigation") as! UINavigationController)
         ProductDetailsViewController.modalPresentationStyle = .fullScreen
-        let product = self.segments[selectedIndexPath.section].products[selectedIndexPath.row]
+        let product = self.segments[0].products[0]
         let vc = ProductDetailsViewController.viewControllers.first as! ProductDetailsViewController
         vc.productTitle = product.name.value
         vc.productDesc = product.detail.value

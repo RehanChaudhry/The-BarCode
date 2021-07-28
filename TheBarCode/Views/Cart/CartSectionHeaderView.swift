@@ -27,7 +27,8 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
     var buttonToggle = true
     var cartID = ""
     func setupHeader(title: String, isSelected: Bool, isVenueClosed: Bool, cartType: String) {
-        self.titleLabel.text = title + " - " + cartType.replacingOccurrences(of: "_", with: " ").capitalized
+        let suffix = cartType != "" ? " - " : ""
+        self.titleLabel.text = title + suffix + cartType.replacingOccurrences(of: "_", with: " ").capitalized
         
         self.selectionButton.layer.cornerRadius = 8
         self.selectionButton.layer.borderWidth = 2
