@@ -51,7 +51,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cT5-pO-8Cv" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar_cover_image" translatesAutoresizingMaskIntoConstraints="NO" id="cT5-pO-8Cv" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
                         <rect key="frame" x="16" y="10" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="5cZ-3t-xUp"/>
@@ -256,6 +256,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="bar_cover_image" width="990" height="482"/>
         <image name="icon_add_cart" width="30" height="30"/>
         <image name="icon_trash_bin" width="16" height="16"/>
     </resources>

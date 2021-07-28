@@ -11,7 +11,7 @@ import Reusable
 
 class SimilarProductsCell: UICollectionViewCell, NibReusable {
     
-    @IBOutlet weak var productImage: UIImageView!
+    @IBOutlet weak var productImage: AsyncImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
