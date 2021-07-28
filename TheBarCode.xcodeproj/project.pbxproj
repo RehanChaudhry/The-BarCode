@@ -373,6 +373,9 @@
 		B35F6F6724DD1BB80045029B /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35F6F6524DD1BB80045029B /* AddressTableViewCell.swift */; };
 		B35F6F6824DD1BB80045029B /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B35F6F6624DD1BB80045029B /* AddressTableViewCell.xib */; };
 		B3A88DB1266F33E500AB5992 /* PaymentSenseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A88DB0266F33E500AB5992 /* PaymentSenseWebViewController.swift */; };
+		B3B9731726AFEB480085347C /* SimilarProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9731526AFEB480085347C /* SimilarProductsCell.swift */; };
+		B3B9731826AFEB480085347C /* SimilarProductsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3B9731626AFEB480085347C /* SimilarProductsCell.xib */; };
+		B3B9731A26B0116C0085347C /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9731926B0116C0085347C /* ProductDetailsViewController.swift */; };
 		B3C1292324D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */; };
 		B3C1292424D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */; };
 		B3C1292624D99D4000789FF2 /* OrderOfferRedeemSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */; };
@@ -902,6 +905,9 @@
 		B35F6F6524DD1BB80045029B /* AddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTableViewCell.swift; sourceTree = "<group>"; };
 		B35F6F6624DD1BB80045029B /* AddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressTableViewCell.xib; sourceTree = "<group>"; };
 		B3A88DB0266F33E500AB5992 /* PaymentSenseWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSenseWebViewController.swift; sourceTree = "<group>"; };
+		B3B9731526AFEB480085347C /* SimilarProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarProductsCell.swift; sourceTree = "<group>"; };
+		B3B9731626AFEB480085347C /* SimilarProductsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimilarProductsCell.xib; sourceTree = "<group>"; };
+		B3B9731926B0116C0085347C /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemTableViewCell.swift; sourceTree = "<group>"; };
 		B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderOfferRedeemTableViewCell.xib; sourceTree = "<group>"; };
 		B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemSection.swift; sourceTree = "<group>"; };
@@ -1063,6 +1069,8 @@
 				0C0CA20D22E04BC300C90409 /* WhatsOnDetailEventCell.xib */,
 				0CA20F6D237032290051F0DC /* ProductMenuHeaderView.swift */,
 				0CA20F6F237032390051F0DC /* ProductMenuHeaderView.xib */,
+				B3B9731526AFEB480085347C /* SimilarProductsCell.swift */,
+				B3B9731626AFEB480085347C /* SimilarProductsCell.xib */,
 			);
 			path = WhatsOn;
 			sourceTree = "<group>";
@@ -1176,6 +1184,7 @@
 				0C117EF922DDA1240061FFC3 /* EventsViewController.swift */,
 				0C117EFB22DDA12F0061FFC3 /* DrinkListViewController.swift */,
 				0C117EFD22DDA13C0061FFC3 /* FoodMenuViewController.swift */,
+				B3B9731926B0116C0085347C /* ProductDetailsViewController.swift */,
 			);
 			path = WhatsOn;
 			sourceTree = "<group>";
@@ -2714,6 +2723,7 @@
 				0C694B02236C01FC002A08CC /* SharedEventCell.xib in Resources */,
 				B3E0912D24E283A800871256 /* BarAboutTableViewCell.xib in Resources */,
 				832FD1D4216B2BE5008516F4 /* DealDetailTableViewCell.xib in Resources */,
+				B3B9731826AFEB480085347C /* SimilarProductsCell.xib in Resources */,
 				0CBF181E250F39F8007220D0 /* OrderMessageTableViewCell.xib in Resources */,
 				0C8BDCD02150D0AF00D5117B /* BarTableViewCell.xib in Resources */,
 				0C1C43AC258CB2AA00E87E28 /* ProductModifierHeader.xib in Resources */,
@@ -3096,6 +3106,7 @@
 				0C94FCD22366F6E100B7B18D /* SharedEventsViewController.swift in Sources */,
 				B33CF7AB24DE8AA4001566F0 /* SavedCardsViewController.swift in Sources */,
 				0CC81FAF2170881800FDB92D /* EmailVerificationViewController.swift in Sources */,
+				B3B9731A26B0116C0085347C /* ProductDetailsViewController.swift in Sources */,
 				0CF426FA2509E9CB0054A604 /* OrderSplitAmountInfoSection.swift in Sources */,
 				0C23A84E214654FD00DFB281 /* SplashViewController.swift in Sources */,
 				0C478A8F215C9A75002C51FA /* BarDetailViewController.swift in Sources */,
@@ -3170,6 +3181,7 @@
 				0C955DC32147C85900F9385B /* UIViewControllerAdditions.swift in Sources */,
 				B3373E6C24DB0EFA007E53E6 /* OrderDeliverySection.swift in Sources */,
 				83825234217E23C300567388 /* FavouritButton.swift in Sources */,
+				B3B9731726AFEB480085347C /* SimilarProductsCell.swift in Sources */,
 				0C39F2EF231E72D500596A2B /* GMUWeightedLatLng.m in Sources */,
 				0C05DDD0232120CC0073A2BA /* AllSearchBarModel.swift in Sources */,
 				0C39F2FE231E72D500596A2B /* GMUGeoJSONParser.m in Sources */,

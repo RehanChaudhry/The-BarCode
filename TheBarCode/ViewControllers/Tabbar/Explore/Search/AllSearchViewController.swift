@@ -339,6 +339,10 @@ extension AllSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: ProductMenuCellDelegate
 extension AllSearchViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, selectedIndexPath: IndexPath) {
+        
+    }
+    
     func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return

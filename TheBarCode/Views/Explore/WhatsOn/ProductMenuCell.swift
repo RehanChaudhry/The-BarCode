@@ -12,6 +12,7 @@ import Reusable
 protocol ProductMenuCellDelegate: class {
     func productMenuCell(cell: ProductMenuCell, addToCartButtonTapped sender: UIButton)
     func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton)
+    func productMenuCell(cell: ProductMenuCell, selectedIndexPath: IndexPath)
 }
 
 class ProductMenuCell: UITableViewCell, NibReusable {
@@ -21,6 +22,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     @IBOutlet var priceLabel: UILabel!
     @IBOutlet weak var productImage: AsyncImageView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var priceContainer: UIView!
     @IBOutlet var separatorView: UIView!
     
@@ -28,11 +30,13 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     @IBOutlet var cartIconImageView: UIImageView!
     
+//    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var detailLabelTop: NSLayoutConstraint!
     @IBOutlet var priceContainerHeight: NSLayoutConstraint!
     @IBOutlet var priceContainerTop: NSLayoutConstraint!
-    @IBOutlet var topPadding: NSLayoutConstraint!
+//    @IBOutlet var topPadding: NSLayoutConstraint!
     
+    @IBOutlet weak var collectionViewContainerHeight: NSLayoutConstraint!
     @IBOutlet var cartIconContainerWidth: NSLayoutConstraint!
     @IBOutlet var priceLabelLeft: NSLayoutConstraint!
     @IBOutlet var priceLabelRight: NSLayoutConstraint!
@@ -48,7 +52,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     @IBOutlet weak var deliveryOnlyLabelHeight: NSLayoutConstraint!
     @IBOutlet var deliveryOnlyLabelWidth: NSLayoutConstraint!
-    @IBOutlet var deliveryOnlyLabelLeft: NSLayoutConstraint!
+//    @IBOutlet var deliveryOnlyLabelLeft: NSLayoutConstraint!
     
     weak var delegate: ProductMenuCellDelegate!
     
@@ -71,6 +75,13 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         self.cartIconImageView.image = self.cartIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.removeItemButton.setImage(UIImage(named: "icon_trash_bin")?.tinted(with: UIColor.white), for: .normal)
+        self.setDelegates()
+    }
+    
+    func setDelegates() {
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(cellType: SimilarProductsCell.self)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -84,6 +95,8 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.titleLabel.attributedText = product.name.value.html2Attributed(isTitle: true)
         self.detailLabel.attributedText = product.detail.value.html2Attributed(isTitle: false)
         
+        self.priceContainer.layer.cornerRadius = 10
+        
         if product.detail.value.count > 0 {
             self.detailLabelTop.constant = 10.0
         } else {
@@ -92,16 +105,10 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         if product.image.value != "" {
             let url = URL(string: product.image.value)
-            self.productImage.layer.cornerRadius = 15
+            
+            self.productImage.layer.cornerRadius = 10
             self.productImage.clipsToBounds = true
             self.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
-            self.productImageConstraint.constant = 200
-            self.detailLabelTop.constant = 10
-        } else {
-            self.productImageConstraint.constant = 0
-            if self.detailLabelTop.constant != 0.0 {
-                self.detailLabelTop.constant = 0
-            }
         }
         
         self.handlePrice(product: product, bar: bar)
@@ -195,7 +202,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelRight.constant = 0.0
             
             self.priceContainerTop.constant = 8.0
-            self.priceContainerHeight.constant = 28.0
+            self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = false
             self.priceContainer.isHidden = false
@@ -205,7 +212,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelRight.constant = 12.0
             
             self.priceContainerTop.constant = 8.0
-            self.priceContainerHeight.constant = 28.0
+            self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = false
             self.priceContainer.isHidden = false
@@ -215,7 +222,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelRight.constant = 12.0
             
             self.priceContainerTop.constant = 8.0
-            self.priceContainerHeight.constant = 28.0
+            self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = true
             self.priceContainer.isHidden = false
@@ -232,4 +239,34 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     }
 }
 
-
+// MARK:- COLLECTION VIEW DELEGATES & DATA SOURCE
+extension ProductMenuCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarProductsCell", for: indexPath) as! SimilarProductsCell
+        cell.layer.cornerRadius = 20
+        cell.clipsToBounds = true
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 5, height: 100.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let _ = delegate {
+            delegate?.productMenuCell(cell: self, selectedIndexPath: indexPath)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
+    }
+}

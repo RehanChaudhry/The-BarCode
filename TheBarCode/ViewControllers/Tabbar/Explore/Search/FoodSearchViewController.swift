@@ -199,6 +199,10 @@ extension FoodSearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: ProductMenuCellDelegate
 extension FoodSearchViewController: ProductMenuCellDelegate {
+    func productMenuCell(cell: ProductMenuCell, selectedIndexPath: IndexPath) {
+        
+    }
+    
     func productMenuCell(cell: ProductMenuCell, removeFromCartButtonTapped sender: UIButton) {
         guard let indexPath = self.statefulTableView.innerTable.indexPath(for: cell) else {
             return
