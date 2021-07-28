@@ -169,13 +169,16 @@ class OrderTypeViewController: UIViewController {
             let dineInSection = OrderDineInSection(items: [dineRadioButton])
             self.viewModels.append(dineInSection)
             
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
+            
             let dineInField = self.getDineInField()
             let tipField = self.getTipField()
             let dineInFieldSection = OrderFieldSection(items: [dineInField, tipField], type: .tableNo)
             self.viewModels.append(dineInFieldSection)
-            
+                
+            }
         }
-        
+            
         if self.order.isCollection == true {
             
             let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
