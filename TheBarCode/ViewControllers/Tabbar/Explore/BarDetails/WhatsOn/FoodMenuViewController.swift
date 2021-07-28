@@ -132,7 +132,6 @@ extension FoodMenuViewController: UITableViewDataSource, UITableViewDelegate {
         
         let segment = self.segments[indexPath.section]
         cell.setupCell(product: segment.products[indexPath.row], bar: self.bar)
-        print(segment.products[indexPath.row].name.value , " -> ", segment.products[indexPath.row].quantity.value)
         cell.delegate = self
         
         return cell
