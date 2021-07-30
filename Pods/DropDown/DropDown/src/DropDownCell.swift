@@ -12,11 +12,16 @@ open class DropDownCell: UITableViewCell {
 		
 	//UI
 	@IBOutlet open weak var optionLabel: UILabel!
-	
-	var selectedBackgroundColor: UIColor?
+//    @IBOutlet open weak var countLabel: UILabel!
+    
+    var selectedBackgroundColor: UIColor?
     var highlightTextColor: UIColor?
     var normalTextColor: UIColor?
-
+    
+    public func setCount(count: String) {
+//        self.countLabel.text = count
+    }
+    
 }
 
 //MARK: - UI
@@ -53,9 +58,11 @@ extension DropDownCell {
 				if selected {
 					self.backgroundColor = selectedBackgroundColor
                     self.optionLabel.textColor = self.highlightTextColor
+//                    self.countLabel.textColor = self.highlightTextColor
 				} else {
 					self.backgroundColor = .clear
                     self.optionLabel.textColor = self.normalTextColor
+//                    self.countLabel.textColor = self.normalTextColor
 				}
 			}
 		}

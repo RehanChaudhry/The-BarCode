@@ -392,6 +392,8 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
+		F963887026B17B4600AEA8F5 /* MenuSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F963886E26B17B4600AEA8F5 /* MenuSegmentCell.xib */; };
+		F963887626B2BCC200AEA8F5 /* MenuSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F963887526B2BCC200AEA8F5 /* MenuSegmentCell.swift */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
 		FA042EAD24D15430006D757B /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA042EAC24D15430006D757B /* StepperView.swift */; };
@@ -924,6 +926,8 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F963886E26B17B4600AEA8F5 /* MenuSegmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuSegmentCell.xib; sourceTree = "<group>"; };
+		F963887526B2BCC200AEA8F5 /* MenuSegmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSegmentCell.swift; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		FA042EAC24D15430006D757B /* StepperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
@@ -1057,9 +1061,11 @@
 				0CB668E922DDF2FA003422DB /* ProductMenuCell.swift */,
 				0CB668EA22DDF2FA003422DB /* ProductMenuCell.xib */,
 				0C0CA20C22E04BC300C90409 /* WhatsOnDetailEventCell.swift */,
+				F963887526B2BCC200AEA8F5 /* MenuSegmentCell.swift */,
 				0C0CA20D22E04BC300C90409 /* WhatsOnDetailEventCell.xib */,
 				0CA20F6D237032290051F0DC /* ProductMenuHeaderView.swift */,
 				0CA20F6F237032390051F0DC /* ProductMenuHeaderView.xib */,
+				F963886E26B17B4600AEA8F5 /* MenuSegmentCell.xib */,
 			);
 			path = WhatsOn;
 			sourceTree = "<group>";
@@ -2641,6 +2647,7 @@
 				0C8F4C08230E7CF400BF4E43 /* FoodSearchFooterView.xib in Resources */,
 				B3C1292424D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib in Resources */,
 				0C8BDCD42150D0BE00D5117B /* DealTableViewCell.xib in Resources */,
+				F963887026B17B4600AEA8F5 /* MenuSegmentCell.xib in Resources */,
 				0C8E9AA6214B9F7E00224720 /* FAQTableViewCell.xib in Resources */,
 				0CB668EC22DDF2FA003422DB /* ProductMenuCell.xib in Resources */,
 				B3C4108524E2AE37008AF43C /* BarContactTableViewCell.xib in Resources */,
@@ -3013,6 +3020,7 @@
 				0C955DC92147CB5200F9385B /* UIImageAdditions.swift in Sources */,
 				FA5F8B0324CAB91800356DCD /* TableReservationViewController.swift in Sources */,
 				B324C76F24E3FF0A00D111A0 /* ReviewPaymentViewController.swift in Sources */,
+				F963887626B2BCC200AEA8F5 /* MenuSegmentCell.swift in Sources */,
 				FA42BF8124C97059003C3970 /* OrderTotalBillInfoSection.swift in Sources */,
 				0C8BDCE12150D79B00D5117B /* LiveOffer.swift in Sources */,
 				0C478A98215C9E39002C51FA /* ExploreAboutTableViewCell.swift in Sources */,

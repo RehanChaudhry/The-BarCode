@@ -1070,8 +1070,10 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 		
 		if let cellConfiguration = cellConfiguration {
 			cell.optionLabel.text = cellConfiguration(index, dataSource[index])
+//            cell.countLabel.text = cellConfiguration(index, dataSource[index])
 		} else {
 			cell.optionLabel.text = dataSource[index]
+//            cell.countLabel.text = dataSource[index]
 		}
 		
 		customCellConfiguration?(index, dataSource[index], cell)
