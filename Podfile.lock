@@ -25,6 +25,7 @@ PODS:
     - BugfenderSDK/Swift (= 1.7.0)
   - BugfenderSDK/Swift (1.7.0)
   - CoreStore (6.3.2)
+  - DropDown (2.3.13)
   - DTCoreText (1.6.23):
     - DTCoreText/Core (= 1.6.23)
     - DTFoundation/Core (~> 1.7.5)
@@ -171,6 +172,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7.3)
   - BugfenderSDK (~> 1.7)
   - CoreStore (~> 6.3.2)
+  - DropDown (~> 2.3.2)
   - DTCoreText (~> 1.6.23)
   - EasyNotificationBadge (~> 1.2.0)
   - FBSDKLoginKit (~> 7.1.1)
@@ -208,6 +210,7 @@ SPEC REPOS:
     - Alamofire
     - BugfenderSDK
     - CoreStore
+    - DropDown
     - DTCoreText
     - DTFoundation
     - EasyNotificationBadge
@@ -254,6 +257,7 @@ SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   BugfenderSDK: cc587f83e8cec9ae1567ec1d837969a6df7dcbca
   CoreStore: 690a587902a81c412cf353466d2d2a029934267e
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
   DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
   EasyNotificationBadge: afeb15ed6f9a4262d626a2b745297e96afa26c2e
@@ -295,6 +299,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   UIColor_Hex_Swift: 2fb123c7d864994a5137ef57c4dc55e17a657d29
 
-PODFILE CHECKSUM: 924d6feb46308bcfd6fcb2e3fc2f81940e8bd99b
+PODFILE CHECKSUM: b9b95758cf3fc08c372b56697126fcc956c06405
 
 COCOAPODS: 1.10.1

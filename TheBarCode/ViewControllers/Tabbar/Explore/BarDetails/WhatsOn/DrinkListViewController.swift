@@ -16,6 +16,7 @@ import PureLayout
 import FirebaseAnalytics
 import KVNProgress
 import HTTPStatusCodes
+import DropDown
 
 protocol DrinkListViewControllerDelegate: class {
     func drinkListViewController(controller: DrinkListViewController, didSelect product: Product)
@@ -23,6 +24,7 @@ protocol DrinkListViewControllerDelegate: class {
 
 class DrinkListViewController: UIViewController {
     
+    @IBOutlet weak var menuSegmentButton: UIButton!
     @IBOutlet var statefulTableView: StatefulTableView!
     
     weak var delegate: DrinkListViewControllerDelegate!
@@ -32,6 +34,9 @@ class DrinkListViewController: UIViewController {
     
     var dataRequest: DataRequest?
     var loadMore = Pagination()
+    let dropDown = DropDown()
+    var selectedDropDownRow = 0
+    var menuToggle = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +48,85 @@ class DrinkListViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
+        self.menuSegmentButton.layer.cornerRadius = 10
+        self.menuSegmentButton.clipsToBounds = true
         
+        self.setText(state: true)
     }
     
+    //MARK: MY IBA ACTIONS
+    
+    func setText(state: Bool) {
+        let fullString = NSMutableAttributedString(string: state ? "Close" : "Menu")
+
+        // create our NSTextAttachment
+        let image1Attachment = NSTextAttachment()
+        image1Attachment.image = UIImage(named: state ? "close" : "icon_rules")
+
+        // wrap the attachment in its own attributed string so we can append it
+        let image1String = NSAttributedString(attachment: image1Attachment)
+
+        // add the NSTextAttachment wrapper to our full string, then add some more text.
+        fullString.append(image1String)
+
+        // draw the result in a label
+        self.menuSegmentButton.titleLabel?.attributedText = fullString
+    }
+    
+    func addAttributedText(state:Bool) -> NSAttributedString {
+        let axtractedImageAttribute = NSMutableAttributedString(string: state ? "Close" : "Menu")
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(named: state ? "icon_rules" : "close")
+        let attachmentString = NSAttributedString(attachment: attachment)
+        axtractedImageAttribute.append(attachmentString)
+        return axtractedImageAttribute
+    }
+    
+    @IBAction func menuSegmentButtonPressed(_ sender: GradientButton) {
+        
+        sender.setTitle(self.menuToggle ? "  Close" : "  Menu", for: .normal)
+        sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+        self.menuToggle = !self.menuToggle
+        self.dropDown.anchorView = view
+        var segmentsName: [String] = []
+        //for Drop Down
+        segments.forEach { item in
+            segmentsName.append(item.name)
+        }
+        self.dropDown.dataSource = segmentsName
+        self.dropDown.cellNib = UINib(nibName: "MenuSegmentCell", bundle: nil)
+        self.dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+            guard let cell = cell as? MenuSegmentCell else { return }
+            cell.segmentProductsCount.text = "\(self.segments[index].products.count)"
+            if index == self.selectedDropDownRow {
+                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
+                cell.segmentProductsCount.font = UIFont.boldSystemFont(ofSize: 15.0)
+            }else {
+                cell.optionLabel.font = UIFont.appRegularFontOf(size: 15.0)
+                cell.segmentProductsCount.font = UIFont.appRegularFontOf(size: 15.0)
+            }
+        }
+            self.dropDown.width = 200
+            self.dropDown.direction = .any
+        self.dropDown.selectRow(self.selectedDropDownRow)
+        self.dropDown.bottomOffset = CGPoint(x: 200, y: (self.view.bounds.height - CGFloat((self.segments.count * 62))) - 50)
+            self.dropDown.selectionAction = { (index: Int, item: String) in
+              print("Selected item: \(item) at index: \(index)")
+                self.selectedDropDownRow = index
+                self.statefulTableView.scrollToRowAtIndexPath(IndexPath(row: 0, section: index), atScrollPosition: .top, animated: true)
+                sender.setTitle(self.menuToggle ? "  Close" : "  Menu", for: .normal)
+                sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+                self.menuToggle = !self.menuToggle
+                
+            }
+        
+        self.dropDown.cancelAction = { [self] in
+            sender.setTitle(self.menuToggle ? "  Close" : "  Menu", for: .normal)
+            sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+            self.menuToggle = !self.menuToggle
+        }
+            self.dropDown.show()
+        }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -97,6 +178,7 @@ class DrinkListViewController: UIViewController {
             }
         }
     }
+    
 }
 
 //MARK: UITableViewDataSource, UITableViewDelegate

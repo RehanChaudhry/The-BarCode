@@ -44,6 +44,8 @@ target 'TheBarCode' do
   pod 'MLLabel', '~> 1.10.5'
   
   pod 'RNCryptor', '~> 5.1.0'
+  
+  pod 'DropDown', '~> 2.3.2'
 
   pod 'SquareInAppPaymentsSDK', '~> 1.4.0'
   pod 'SquareBuyerVerificationSDK', '~> 1.3.0'

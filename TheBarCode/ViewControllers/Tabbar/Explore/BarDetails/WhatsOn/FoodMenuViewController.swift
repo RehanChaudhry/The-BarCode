@@ -16,6 +16,8 @@ import PureLayout
 import FirebaseAnalytics
 import KVNProgress
 import HTTPStatusCodes
+import DropDown
+
 
 protocol FoodMenuViewControllerDelegate: class {
     func foodMenuViewController(controller: FoodMenuViewController, didSelect product: Product)
@@ -25,6 +27,7 @@ class FoodMenuViewController: UIViewController {
     
     @IBOutlet var statefulTableView: StatefulTableView!
     
+    @IBOutlet weak var menuSegmentButton: UIButton!
     weak var delegate: FoodMenuViewControllerDelegate!
     
     var segments: [ProductMenuSegment] = []
@@ -33,7 +36,9 @@ class FoodMenuViewController: UIViewController {
     
     var dataRequest: DataRequest?
     var loadMore = Pagination()
-    
+    let dropDown = DropDown()
+    var selectedDropDownRow = 0
+    var menuToggle = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,8 +49,56 @@ class FoodMenuViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(productCartUpdatedNotification(notification:)), name: notificationNameProductCartUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(myCartUpdatedNotification(notification:)), name: notificationNameMyCartUpdated, object: nil)
+        
+        self.menuSegmentButton.layer.cornerRadius = 10
+        self.menuSegmentButton.clipsToBounds = true
+        
+  
     }
     
+    @IBAction func menuSegmentButtonPressed(_ sender: UIButton) {
+
+        sender.setTitle(self.menuToggle ? "Close" : "Menu", for: .normal)
+        sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+        self.menuToggle = !self.menuToggle
+        self.dropDown.anchorView = view
+        var segmentsName: [String] = []
+        //for Drop Down
+        segments.forEach { item in
+            segmentsName.append(item.name)
+        }
+        self.dropDown.dataSource = segmentsName
+        self.dropDown.cellNib = UINib(nibName: "MenuSegmentCell", bundle: nil)
+        self.dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+            guard let cell = cell as? MenuSegmentCell else { return }
+            cell.segmentProductsCount.text = "\(self.segments[index].products.count)"
+            if index == self.selectedDropDownRow {
+                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
+                cell.segmentProductsCount.font = UIFont.boldSystemFont(ofSize: 15.0)
+            }else {
+                cell.optionLabel.font = UIFont.appRegularFontOf(size: 15.0)
+                cell.segmentProductsCount.font = UIFont.appRegularFontOf(size: 15.0)
+            }
+        }
+            self.dropDown.width = 200
+            self.dropDown.direction = .any
+        self.dropDown.bottomOffset = CGPoint(x: 200, y: (self.view.bounds.height - CGFloat((self.segments.count * 62))) - 50)
+        self.dropDown.selectionAction = { (index: Int, item: String) in
+          print("Selected item: \(item) at index: \(index)")
+            self.selectedDropDownRow = index
+            self.statefulTableView.scrollToRowAtIndexPath(IndexPath(row: 0, section: index), atScrollPosition: .top, animated: true)
+            
+            sender.setTitle(self.menuToggle ? "  Close" : "  Menu", for: .normal)
+            sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+            self.menuToggle = !self.menuToggle
+        }
+        self.dropDown.cancelAction = { [self] in
+            sender.setTitle(self.menuToggle ? "Close" : "Menu", for: .normal)
+            sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
+            self.menuToggle = !self.menuToggle
+        }
+            self.dropDown.show()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
