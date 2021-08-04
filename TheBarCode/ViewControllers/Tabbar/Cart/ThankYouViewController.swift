@@ -184,11 +184,19 @@ class ThankYouViewController: UIViewController {
                                             percentage: percent,
                                             statusRaw: PaymentStatus.paid.rawValue,
                                             price: amount)
+                
                 paymentInfo.append(info)
+                
+               
+                
             }
             
             let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
             self.viewModels.append(orderPaymentInfoSection)
+            
+           
+            
+            
             
         }
         
@@ -382,7 +390,7 @@ extension ThankYouViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderPaymentInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPaymentTableViewCell.self)
-            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order.currencySymbol)
+            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order.currencySymbol, orderTip: self.order!.paymentSplit[indexPath.row].orderTip ?? 0.0)
             return cell
             
         } else {

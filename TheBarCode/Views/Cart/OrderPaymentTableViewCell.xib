@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -17,15 +17,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderPaymentTableViewCell" id="ItX-FW-LwN" customClass="OrderPaymentTableViewCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderPaymentTableViewCell" rowHeight="105" id="ItX-FW-LwN" customClass="OrderPaymentTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="105"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ItX-FW-LwN" id="oM3-XC-eLC">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdb-be-hRM">
-                        <rect key="frame" x="16" y="8" width="382" height="55"/>
+                        <rect key="frame" x="16" y="8" width="382" height="89"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEN MILNES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emg-Rj-bfc">
                                 <rect key="frame" x="12" y="8" width="358" height="17"/>
@@ -45,15 +45,34 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TrL-Cu-DL2">
+                                <rect key="frame" x="12" y="55" width="22" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="Nrs-sX-pq9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11.5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vP3-BT-HTN">
+                                <rect key="frame" x="342" y="55" width="28" height="17"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="vP3-BT-HTN" secondAttribute="trailing" constant="12" id="2Cc-Hu-Ahp"/>
+                            <constraint firstItem="TrL-Cu-DL2" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="12" id="5yA-Zy-lEg"/>
                             <constraint firstItem="Emg-Rj-bfc" firstAttribute="top" secondItem="zdb-be-hRM" secondAttribute="top" constant="8" id="MNu-FV-PN6"/>
+                            <constraint firstAttribute="bottom" secondItem="TrL-Cu-DL2" secondAttribute="bottom" constant="17" id="N0K-iw-TqF"/>
+                            <constraint firstItem="TrL-Cu-DL2" firstAttribute="top" secondItem="2fX-s9-ANh" secondAttribute="bottom" constant="8" symbolic="YES" id="Pu6-RQ-sf6"/>
                             <constraint firstItem="2fX-s9-ANh" firstAttribute="top" secondItem="Emg-Rj-bfc" secondAttribute="bottom" constant="5" id="RLy-fo-XUZ"/>
                             <constraint firstItem="4Jd-cN-gb5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2fX-s9-ANh" secondAttribute="trailing" constant="8" id="YHc-uw-Xph"/>
-                            <constraint firstAttribute="bottom" secondItem="2fX-s9-ANh" secondAttribute="bottom" constant="8" id="aoG-BV-laC"/>
                             <constraint firstAttribute="trailing" secondItem="4Jd-cN-gb5" secondAttribute="trailing" constant="12" id="d0c-2q-2Ct"/>
                             <constraint firstItem="2fX-s9-ANh" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="12" id="fvi-ES-kNM"/>
+                            <constraint firstAttribute="bottom" secondItem="vP3-BT-HTN" secondAttribute="bottom" constant="17" id="pFo-AL-ip8"/>
                             <constraint firstItem="Emg-Rj-bfc" firstAttribute="leading" secondItem="zdb-be-hRM" secondAttribute="leading" constant="12" id="pxZ-TI-gsb"/>
                             <constraint firstItem="4Jd-cN-gb5" firstAttribute="centerY" secondItem="2fX-s9-ANh" secondAttribute="centerY" id="smS-LA-7EP"/>
                             <constraint firstAttribute="trailing" secondItem="Emg-Rj-bfc" secondAttribute="trailing" constant="12" id="x9f-W3-OMY"/>
@@ -63,7 +82,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="zdb-be-hRM" firstAttribute="top" secondItem="oM3-XC-eLC" secondAttribute="top" constant="8" id="D4Q-XU-Pph"/>
-                    <constraint firstAttribute="bottom" secondItem="zdb-be-hRM" secondAttribute="bottom" constant="8" id="gB5-GX-I95"/>
+                    <constraint firstAttribute="bottom" secondItem="zdb-be-hRM" secondAttribute="bottom" constant="8" id="SVf-X7-PqM"/>
                     <constraint firstItem="zdb-be-hRM" firstAttribute="leading" secondItem="oM3-XC-eLC" secondAttribute="leading" constant="16" id="i6b-1C-c30"/>
                     <constraint firstAttribute="trailing" secondItem="zdb-be-hRM" secondAttribute="trailing" constant="16" id="wDt-8H-CGD"/>
                 </constraints>
@@ -74,8 +93,12 @@
                 <outlet property="nameLabel" destination="Emg-Rj-bfc" id="kfr-Ze-RPQ"/>
                 <outlet property="paymentLabel" destination="2fX-s9-ANh" id="l12-jD-2Zd"/>
                 <outlet property="priceLabel" destination="4Jd-cN-gb5" id="Plv-QW-5I4"/>
+                <outlet property="tipAmount" destination="vP3-BT-HTN" id="LVn-ZD-oGI"/>
+                <outlet property="tipLabel" destination="TrL-Cu-DL2" id="rgR-GY-bXg"/>
+                <outlet property="tipLabelBottomConstraint" destination="N0K-iw-TqF" id="Dey-tV-UEN"/>
+                <outlet property="tipLabelHeightConstraint" destination="Nrs-sX-pq9" id="Qh0-hL-AAl"/>
             </connections>
-            <point key="canvasLocation" x="-16" y="-29"/>
+            <point key="canvasLocation" x="-17.39130434782609" y="-17.745535714285712"/>
         </tableViewCell>
     </objects>
 </document>

@@ -16,12 +16,19 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
     @IBOutlet var paymentLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
     
+    @IBOutlet weak var tipLabelBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tipLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tipLabel: UILabel!
+    @IBOutlet weak var tipAmount: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         self.mainView.layer.cornerRadius = 8
-
+        self.tipLabel.isHidden = true
+        self.tipAmount.isHidden = true
+        self.tipLabelHeightConstraint.constant = 0
+        self.tipLabelBottomConstraint.constant = 0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,7 +45,7 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         }
     }
     
-    func setupCell(orderPaymentInfo: OrderPaymentInfo, showSeparator: Bool, currencySymbol: String) {
+    func setupCell(orderPaymentInfo: OrderPaymentInfo, showSeparator: Bool, currencySymbol: String, orderTip: Double) {
 
         self.mainView.layer.cornerRadius = 8
 
@@ -56,6 +63,18 @@ class OrderPaymentTableViewCell: UITableViewCell, NibReusable {
         
         let priceString = String(format: "%.2f", orderPaymentInfo.price)
         self.priceLabel.text =  "\(currencySymbol) " + priceString
+        
+        if orderTip != 0.0 {
+            
+            self.tipLabel.isHidden = false
+            self.tipAmount.isHidden = false
+            self.tipLabelHeightConstraint.constant = 17
+            self.tipLabelBottomConstraint.constant = 17
+            let tipPriceString = String(format: "%.2f", orderTip)
+            self.tipAmount.text =  "\(currencySymbol) " + tipPriceString
+
+        }
+        
 
         self.showSeparator(show: showSeparator)
     }

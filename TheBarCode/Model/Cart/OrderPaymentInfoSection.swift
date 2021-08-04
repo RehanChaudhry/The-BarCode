@@ -33,6 +33,7 @@ class OrderPaymentInfo: NSObject {
         
         self.price = price
     }
+    
 }
 
 class OrderPaymentInfoSection: OrderViewModel {
