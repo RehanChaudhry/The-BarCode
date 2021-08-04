@@ -81,12 +81,17 @@ class SplitPaymentInfoViewController: UIViewController {
      }
     
     func moveToReviewPayment() {
+        
+        let currentUser = Utility.shared.getCurrentUser()!
+        let splitPayment = PaymentSplit(id: currentUser.userId.value, name: currentUser.fullName.value, amount: self.totalBillPayable, discount: 0.0, orderTip: self.order!.orderTip)
+        
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "ReviewPaymentViewController") as! ReviewPaymentViewController)
             
             
         controller.totalBillPayable = self.totalBillPayable
             controller.orderId = self.order.orderNo
             controller.order = self.order
+        controller.splitPaymentyInfo = splitPayment
             
         self.navigationController?.pushViewController(controller, animated: true)
     

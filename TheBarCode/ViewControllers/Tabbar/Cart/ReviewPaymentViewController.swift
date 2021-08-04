@@ -25,6 +25,8 @@ class ReviewPaymentViewController: UIViewController {
     
     var totalBillPayable: Double = 0.0
     
+    var splitPaymentyInfo : PaymentSplit!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,13 +38,14 @@ class ReviewPaymentViewController: UIViewController {
         self.addBackButton()
         
         self.payButton.setTitle("Confirm Pay", for: .normal)
-        
+        //self.order!.paymentSplit.append(self.splitPaymentyInfo)
         self.setUpStatefulTableView()
         self.statefulTableView.triggerInitialLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         
         self.statefulTableView.innerTable.reloadData()
     }
@@ -129,6 +132,9 @@ class ReviewPaymentViewController: UIViewController {
                                             percentage: percent,
                                             statusRaw: PaymentStatus.paid.rawValue,
                                             price: amount)
+                
+                
+                
                 paymentInfo.append(info)
                 
                 paidAmount += amount
@@ -140,6 +146,7 @@ class ReviewPaymentViewController: UIViewController {
                                                    percentage: percent,
                                                    statusRaw: PaymentStatus.pay.rawValue,
                                                    price: leftAmount)
+            
             paymentInfo.insert(leftPaymentInfo, at: 0)
             
             let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
@@ -290,7 +297,8 @@ extension ReviewPaymentViewController: UITableViewDataSource, UITableViewDelegat
         } else if let section = viewModel as? OrderPaymentInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPaymentTableViewCell.self)
-            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol)
+            
+            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol, orderTip: self.order!.paymentSplit[indexPath.item].orderTip ?? 0.0)
             return cell
             
         } else {
@@ -340,6 +348,7 @@ extension ReviewPaymentViewController {
                 let order = Mapper<Order>(context: context).map(JSON: responseObject)
                 
                 self.order = order
+                self.order!.paymentSplit.append(self.splitPaymentyInfo)
                 
                 self.statefulTableView.canPullToRefresh = true
                 

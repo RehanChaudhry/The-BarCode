@@ -127,9 +127,17 @@ class CheckOutViewController: UIViewController {
             self.viewModels.append(orderDeliveryInfoSection)
         }
         
-        let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
-        let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
-        self.viewModels.append(tipInfoSection)
+            
+                let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
+                let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
+                self.viewModels.append(tipInfoSection)
+                
+            
+        
+       
+                
+        
+        
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: 0.0)
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
@@ -275,7 +283,9 @@ class CheckOutViewController: UIViewController {
             self.totalBillPayable = max(0.0, totalPayablePrice)
         }
         
-        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + self.order.orderTip), for: .normal)
+        
+        
+        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
         
     }
     

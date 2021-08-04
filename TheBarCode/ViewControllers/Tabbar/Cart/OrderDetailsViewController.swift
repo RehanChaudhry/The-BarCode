@@ -200,6 +200,9 @@ class OrderDetailsViewController: UIViewController {
                                             percentage: percent,
                                             statusRaw: PaymentStatus.paid.rawValue,
                                             price: amount)
+                
+                print("Order Tip In Split Payment \(paymentSplit.orderTip ?? 0.0)")
+                
                 paymentInfo.append(info)
             }
             
@@ -393,7 +396,7 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
         } else if let section = viewModel as? OrderPaymentInfoSection {
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPaymentTableViewCell.self)
-            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol)
+            cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol, orderTip: self.order!.paymentSplit[indexPath.item].orderTip ?? 0.0)
             return cell
             
         } else {
