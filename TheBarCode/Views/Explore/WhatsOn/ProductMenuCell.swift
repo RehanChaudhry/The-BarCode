@@ -252,15 +252,17 @@ extension ProductMenuCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarProductsCell", for: indexPath) as! SimilarProductsCell
-        cell.layer.cornerRadius = 20
-        cell.clipsToBounds = true
+        DispatchQueue.main.async {
+            cell.productImage.layer.cornerRadius = 10
+            cell.productImage.clipsToBounds = true
+        }
         let url = URL(string: self.givenProduct.image.value)
         cell.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 5, height: 100.0)
+        return CGSize(width: collectionView.frame.width / 5, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
