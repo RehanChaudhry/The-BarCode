@@ -30,6 +30,7 @@ class CheckOutViewController: UIViewController {
     var order: Order!
     
     var totalBillPayable: Double = 0.0
+    var withOutSplittotalBillPayable: Double = 0.0
     
     var refreshControl: UIRefreshControl!
     
@@ -127,16 +128,9 @@ class CheckOutViewController: UIViewController {
             self.viewModels.append(orderDeliveryInfoSection)
         }
         
-            
                 let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
                 let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
                 self.viewModels.append(tipInfoSection)
-                
-            
-        
-       
-                
-        
         
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: 0.0)
@@ -283,9 +277,24 @@ class CheckOutViewController: UIViewController {
             self.totalBillPayable = max(0.0, totalPayablePrice)
         }
         
+        var splittedOrderTip: Double = 0.0
+        if self.order.paymentSplit.count != 1 {
+        let currentUser = Utility.shared.getCurrentUser()!
         
         
-        self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable), for: .normal)
+        for paymentSPlitInfo in self.order.paymentSplit {
+            
+            if currentUser.userId.value == paymentSPlitInfo.id {
+                splittedOrderTip = paymentSPlitInfo.orderTip ?? 0.0
+            }
+        }
+            self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + splittedOrderTip), for: .normal)
+        }
+        else {
+            self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.withOutSplittotalBillPayable + self.order!.orderTip), for: .normal)
+        }
+        
+       
         
     }
     
@@ -408,7 +417,8 @@ class CheckOutViewController: UIViewController {
             
         let paymentController = (self.storyboard!.instantiateViewController(withIdentifier: "SavedCardsViewController") as! SavedCardsViewController)
         paymentController.order = self.order
-        paymentController.totalBillPayable = self.totalBillPayable + self.order!.orderTip
+        paymentController.totalBillPayable = self.totalBillPayable
+        paymentController.withOutSplittotalBillPayable = self.withOutSplittotalBillPayable
         paymentController.selectedVoucher = selectedVoucher
         paymentController.selectedOffer = selectedOffer
         paymentController.useCredit = self.useCredit

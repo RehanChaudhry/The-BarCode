@@ -108,6 +108,7 @@ class ReviewPaymentViewController: UIViewController {
         let orderTotalBillInfoSection = OrderTotalBillInfoSection(items: [orderTotalBillInfo])
         self.viewModels.append(orderTotalBillInfoSection)
         
+        if order.paymentSplit.count != 1 {
         var paidAmount: Double = 0.0
         if order.paymentSplit.count > 0 {
             
@@ -120,45 +121,65 @@ class ReviewPaymentViewController: UIViewController {
             let paymentHeadingSection = HeadingSection(items: [paymentHeading])
             self.viewModels.append(paymentHeadingSection)
             
+           
+                
+            
+            
             let currentUser = Utility.shared.getCurrentUser()!
             
             var paymentInfo: [OrderPaymentInfo] = []
             for paymentSplit in order.paymentSplit {
                 
+                var count: Int = 1
+                if order.paymentSplit.count == 1 {
+                    count = 0
+                }
+                let splittedAmount = order.paymentSplit[count].amount
                 let amount = paymentSplit.amount + paymentSplit.discount
-                let percent = total > 0.0 ? amount / total * 100.0 : 0.0
+                if paidAmount == 0.0 {
+                    paidAmount += total - splittedAmount
+                }
+                
+                let percent: Double
+                if (amount > paidAmount) {
+                 percent = total > 0.0 ? (amount - paidAmount) / total * 100.0 : 0.0
+                }
+                else{
+                     percent = total > 0.0 ? (paidAmount - amount) / total * 100.0 : 0.0
+                    paidAmount -= amount
+                }
                 
                 let info = OrderPaymentInfo(title: currentUser.userId.value == paymentSplit.id ? "YOU" : paymentSplit.name.uppercased(),
                                             percentage: percent,
                                             statusRaw: PaymentStatus.paid.rawValue,
-                                            price: amount)
+                                            price: paidAmount)
                 
                 
                 
                 paymentInfo.append(info)
                 
-                paidAmount += amount
+                if (count < order.paymentSplit.count) {
+                count += 1
+                }
+                
+                if paidAmount != amount {
+                paidAmount = 0
+                paidAmount += amount - paidAmount
+                }
             }
-            
-            let leftAmount = total - paidAmount
-            let percent = total > 0.0 ? leftAmount / total * 100.0 : 0.0
-            let leftPaymentInfo = OrderPaymentInfo(title: "YOU",
-                                                   percentage: percent,
-                                                   statusRaw: PaymentStatus.pay.rawValue,
-                                                   price: leftAmount)
-            
-            paymentInfo.insert(leftPaymentInfo, at: 0)
             
             let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
             self.viewModels.append(orderPaymentInfoSection)
             
+            let leftAmount = total - paidAmount
+            
             splitAmountInfo.price = leftAmount
             splitTotalInfo.price = leftAmount
-            
+
             self.order?.splitPaymentInfo = (type: .none, value: leftAmount)
         }
-        
         total -= paidAmount
+        }
         self.totalBillPayable = max(0.0, total)
         self.payButton.setTitle(String(format: "Confirm Pay - \(order.currencySymbol) %.2f", self.totalBillPayable + self.order!.orderTip), for: .normal)
     }
@@ -174,6 +195,7 @@ class ReviewPaymentViewController: UIViewController {
         
         controller.totalBillPayable = self.totalBillPayable
         //controller.orderTip = self.orderTip
+        controller.withOutSplittotalBillPayable = self.totalBillPayable
         controller.order = self.order
         controller.order = order
         self.navigationController?.pushViewController(controller, animated: true)
@@ -348,7 +370,7 @@ extension ReviewPaymentViewController {
                 let order = Mapper<Order>(context: context).map(JSON: responseObject)
                 
                 self.order = order
-                self.order!.paymentSplit.append(self.splitPaymentyInfo)
+                self.order!.paymentSplit.insert(self.splitPaymentyInfo, at: 0)
                 
                 self.statefulTableView.canPullToRefresh = true
                 

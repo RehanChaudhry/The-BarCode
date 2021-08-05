@@ -48,6 +48,7 @@ class SavedCardsViewController: UIViewController {
     var selectedOffer: OrderDiscount?
     
     var totalBillPayable: Double = 0.0
+    var withOutSplittotalBillPayable: Double = 0.0
     
     var statefulView: LoadingAndErrorView!
     
@@ -130,7 +131,24 @@ class SavedCardsViewController: UIViewController {
         self.tableView.register(cellType: CardInfoCell.self)
         self.tableView.register(cellType: AddNewCardCell.self)
         
-        self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable), for: .normal)
+        let currentUser = Utility.shared.getCurrentUser()!
+        var splittedOrderTip: Double = 0.0
+        
+        if (self.order!.paymentSplit.count != 1){
+            for paymentSPlitInfo in self.order!.paymentSplit {
+                
+                if currentUser.userId.value == paymentSPlitInfo.id {
+                    splittedOrderTip = paymentSPlitInfo.orderTip ?? 0.0
+                }
+            }
+            
+            self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable + splittedOrderTip), for: .normal)
+        }
+        else{
+            self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.withOutSplittotalBillPayable + self.order!.orderTip), for: .normal)
+        }
+        
+       
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.statefulView.backgroundColor = self.view.backgroundColor
