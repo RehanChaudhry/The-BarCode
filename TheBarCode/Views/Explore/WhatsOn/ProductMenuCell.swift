@@ -33,7 +33,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
 //    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var detailLabelTop: NSLayoutConstraint!
     @IBOutlet var priceContainerHeight: NSLayoutConstraint!
-    @IBOutlet var priceContainerTop: NSLayoutConstraint!
+//    @IBOutlet var priceContainerTop: NSLayoutConstraint!
 //    @IBOutlet var topPadding: NSLayoutConstraint!
     
     @IBOutlet weak var collectionViewContainerHeight: NSLayoutConstraint!
@@ -76,7 +76,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         self.cartIconImageView.image = self.cartIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.removeItemButton.setImage(UIImage(named: "icon_trash_bin")?.tinted(with: UIColor.white), for: .normal)
-        self.setDelegates()
+//        self.setDelegates()
     }
     
     func setDelegates() {
@@ -101,7 +101,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         if product.detail.value.count > 0 {
             self.detailLabelTop.constant = 10.0
         } else {
-            self.detailLabelTop.constant = 0.0
+            self.detailLabelTop.constant = 5.0
         }
         
         if product.image.value != "" {
@@ -192,7 +192,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelLeft.constant = 0.0
             self.priceLabelRight.constant = 0.0
             
-            self.priceContainerTop.constant = 0.0
+//            self.priceContainerTop.constant = 0.0
             self.priceContainerHeight.constant = 0.0
             
             self.cartIconContainer.isHidden = true
@@ -202,7 +202,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelLeft.constant = 0.0
             self.priceLabelRight.constant = 0.0
             
-            self.priceContainerTop.constant = 8.0
+//            self.priceContainerTop.constant = 8.0
             self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = false
@@ -212,7 +212,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelLeft.constant = 8.0
             self.priceLabelRight.constant = 12.0
             
-            self.priceContainerTop.constant = 8.0
+//            self.priceContainerTop.constant = 8.0
             self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = false
@@ -222,7 +222,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.priceLabelLeft.constant = 12.0
             self.priceLabelRight.constant = 12.0
             
-            self.priceContainerTop.constant = 8.0
+//            self.priceContainerTop.constant = 8.0
             self.priceContainerHeight.constant = 40.0
             
             self.cartIconContainer.isHidden = true
