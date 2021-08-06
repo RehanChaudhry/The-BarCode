@@ -41,6 +41,8 @@ class DrinkListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.menuSegmentButton.isHidden = true
+        
         // Do any additional setup after loading the view.
         
         self.setUpStatefulTableView()

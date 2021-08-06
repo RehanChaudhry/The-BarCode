@@ -30,6 +30,7 @@ class SavedCardsViewController: UIViewController {
     
     var closeBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet weak var applePayButton: LoadingButton!
     var cards: [CreditCard] = []
     
     var selectedCard: CreditCard? {
@@ -106,6 +107,8 @@ class SavedCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.applePayButton.isHidden = true
+        
         // Do any additional setup after loading the view.
         
         self.title = "Payment Method"

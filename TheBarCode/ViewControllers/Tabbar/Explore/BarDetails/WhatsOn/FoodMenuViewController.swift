@@ -42,6 +42,8 @@ class FoodMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.menuSegmentButton.isHidden = true
+        
         // Do any additional setup after loading the view.
         
         self.setUpStatefulTableView()
@@ -53,7 +55,7 @@ class FoodMenuViewController: UIViewController {
         self.menuSegmentButton.layer.cornerRadius = 10
         self.menuSegmentButton.clipsToBounds = true
         
-  
+        
     }
     
     @IBAction func menuSegmentButtonPressed(_ sender: UIButton) {
