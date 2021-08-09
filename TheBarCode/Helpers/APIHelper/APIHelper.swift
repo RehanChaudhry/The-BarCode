@@ -21,7 +21,7 @@ let localAPIDomain = "http://192.168.86.81:8000"
 //Their server
 let barcodeStagingAPIDomain = "https://staging.thebarcode.co"
 
-let theBarCodeAPIDomain = barcodeStagingAPIDomain
+let theBarCodeAPIDomain = devAPIDomain
 let barCodeDomainURLString = theBarCodeAPIDomain + "/"
 let baseURLString = barCodeDomainURLString + "api/"
 let clientId = "thebarcode-ios-app"

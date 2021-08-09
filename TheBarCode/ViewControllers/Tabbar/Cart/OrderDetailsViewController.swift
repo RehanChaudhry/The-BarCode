@@ -77,6 +77,7 @@ class OrderDetailsViewController: UIViewController {
        self.tableView.register(cellType: OrderInfoTableViewCell.self)
        self.tableView.register(cellType: OrderStatusTableViewCell.self)
        self.tableView.register(cellType: OrderPaymentTableViewCell.self)
+       self.tableView.register(cellType: OrderDetailsPhoneTableViewCell.self)
        
        self.tableView.tableFooterView = UIView()
     }
@@ -201,15 +202,19 @@ class OrderDetailsViewController: UIViewController {
                                             statusRaw: PaymentStatus.paid.rawValue,
                                             price: amount)
                 
-                print("Order Tip In Split Payment \(paymentSplit.orderTip ?? 0.0)")
-                
                 paymentInfo.append(info)
             }
             
             let orderPaymentInfoSection = OrderPaymentInfoSection(items: paymentInfo)
             self.viewModels.append(orderPaymentInfoSection)
             
+           
+            
         }
+        
+        let phoneNumber = OrderDetailPhoneNumber(headingPhoneNumber: "For Further Info Please Contact", titlePhoneNumber: "+923111111111")
+        let phoneNumberSection = OrderDetailPhoneNumberSection(items: [phoneNumber])
+        self.viewModels.append(phoneNumberSection)
     }
     
     func getProductsTotalPrice() -> Double {
@@ -399,7 +404,17 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
             cell.setupCell(orderPaymentInfo: section.items[indexPath.row], showSeparator: section.shouldShowSeparator, currencySymbol: self.order!.currencySymbol, orderTip: self.order!.paymentSplit[indexPath.item].orderTip ?? 0.0)
             return cell
             
-        } else {
+        }
+        
+        else if let section = viewModel as? OrderDetailPhoneNumberSection {
+            
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDetailsPhoneTableViewCell.self)
+            cell.setupCell(orderDetailPhoneNumber: section.items[indexPath.row])
+            return cell
+            
+        }
+        
+        else {
             return UITableViewCell()
         }
     }

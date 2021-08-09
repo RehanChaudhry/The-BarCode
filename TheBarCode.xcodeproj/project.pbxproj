@@ -395,9 +395,12 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
-		F9801F49269DA435005A0D3A /* OrderTipInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9801F48269DA435005A0D3A /* OrderTipInfo.swift */; };
+		F92AE18326C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */; };
+		F92AE18426C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */; };
+		F92AE18626C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */; };
 		F963887026B17B4600AEA8F5 /* MenuSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F963886E26B17B4600AEA8F5 /* MenuSegmentCell.xib */; };
 		F963887626B2BCC200AEA8F5 /* MenuSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F963887526B2BCC200AEA8F5 /* MenuSegmentCell.swift */; };
+		F9801F49269DA435005A0D3A /* OrderTipInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9801F48269DA435005A0D3A /* OrderTipInfo.swift */; };
 		FA0193F92463CFA90038B318 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */; };
 		FA0193FB2463CFD00038B318 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */; };
 		FA042EAD24D15430006D757B /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA042EAC24D15430006D757B /* StepperView.swift */; };
@@ -933,10 +936,13 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		F9801F48269DA435005A0D3A /* OrderTipInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTipInfo.swift; sourceTree = "<group>"; };
-		F9A08A4526945D43005E2A20 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsPhoneTableViewCell.swift; sourceTree = "<group>"; };
+		F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailsPhoneTableViewCell.xib; sourceTree = "<group>"; };
+		F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailPhoneNumber.swift; sourceTree = "<group>"; };
 		F963886E26B17B4600AEA8F5 /* MenuSegmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuSegmentCell.xib; sourceTree = "<group>"; };
 		F963887526B2BCC200AEA8F5 /* MenuSegmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSegmentCell.swift; sourceTree = "<group>"; };
+		F9801F48269DA435005A0D3A /* OrderTipInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTipInfo.swift; sourceTree = "<group>"; };
+		F9A08A4526945D43005E2A20 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		FA0193F82463CFA90038B318 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		FA0193FA2463CFD00038B318 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		FA042EAC24D15430006D757B /* StepperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
@@ -2383,6 +2389,8 @@
 				0CBF181C250F39F8007220D0 /* OrderMessageTableViewCell.xib */,
 				0CE486732549758F00E22AD2 /* OrderMobileNumberTableViewCell.swift */,
 				0CE486742549758F00E22AD2 /* OrderMobileNumberTableViewCell.xib */,
+				F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */,
+				F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2476,6 +2484,7 @@
 				0CBF1819250F38EB007220D0 /* OrderMessageSection.swift */,
 				0CE4867725497CEA00E22AD2 /* OrderMobileNumberSection.swift */,
 				F9801F48269DA435005A0D3A /* OrderTipInfo.swift */,
+				F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2679,6 +2688,7 @@
 				0C5A88F021647F8A00F16851 /* ContactTableViewCell.xib in Resources */,
 				0CFC12C82161E34000588993 /* ExploreDetailHeaderCollectionViewCell.xib in Resources */,
 				0C8BDCD82150D0CD00D5117B /* LiveOfferTableViewCell.xib in Resources */,
+				F92AE18426C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib in Resources */,
 				0CAAAB342316A1B5008A7159 /* CategoryFilterLevel4Cell.xib in Resources */,
 				0CEBCECD2369A982004E6985 /* EventDetailExternalCTACell.xib in Resources */,
 				FA9076A224C1E1320035AAA3 /* OrderItemTableViewCell.xib in Resources */,
@@ -2953,6 +2963,7 @@
 				0CE4867825497CEA00E22AD2 /* OrderMobileNumberSection.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,
+				F92AE18326C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift in Sources */,
 				FA5F239024C0689B00B4FA5E /* MyOrdersPreviewViewController.swift in Sources */,
 				0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */,
 				0CB683D624FE129C0019C6EE /* OrderDiscount.swift in Sources */,
@@ -3129,6 +3140,7 @@
 				0C0CA22922E1D07600C90409 /* EventSearchViewController.swift in Sources */,
 				0C8BDCDD2150D77600D5117B /* Bar.swift in Sources */,
 				0C0CA21B22E1905200C90409 /* AllSearchViewController.swift in Sources */,
+				F92AE18626C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift in Sources */,
 				0C84E88125075DBF00F35ECA /* UIImageViewAdditions.swift in Sources */,
 				0C94FCCA2366D2A900B7B18D /* SharedViewController.swift in Sources */,
 				0CC81FAA216DD58C00FDB92D /* User.swift in Sources */,
