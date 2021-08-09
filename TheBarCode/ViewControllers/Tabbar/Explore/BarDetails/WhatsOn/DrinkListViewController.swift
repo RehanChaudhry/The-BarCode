@@ -364,7 +364,9 @@ extension DrinkListViewController {
                 let segments = Mapper<ProductMenuSegment>(context: mapContext).mapArray(JSONArray: segmentsWithItems)
                 self.segments.append(contentsOf: segments)
                 
-                segments.first?.isExpanded = true
+                for segment in segments {
+                segment.isExpanded = true
+                }
                 
                 if let pagination = responseDict?["pagination"] as? [String : Any] {
                     self.loadMore = Mapper<Pagination>().map(JSON: pagination)!
