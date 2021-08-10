@@ -45,6 +45,8 @@ class Order: Mappable {
     
     var orderTip: Double = 0.0
     
+    var barContactNumber: String? = ""
+    
     
     var status: OrderStatus {
         return OrderStatus(rawValue: self.statusRaw) ?? .other
@@ -139,6 +141,10 @@ class Order: Mappable {
         
         self.barId = "\(map.JSON["establishment_id"]!)"
         self.barName <- map["establishment.title"]
+        
+        self.barContactNumber <- map["establishment.contact_number"]
+        
+        
         
         self.country <- map["establishment.region.country"]
         self.currencyCode <- map["establishment.region.currency_code"]

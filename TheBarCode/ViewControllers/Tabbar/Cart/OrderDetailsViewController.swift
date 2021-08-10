@@ -212,7 +212,7 @@ class OrderDetailsViewController: UIViewController {
             
         }
         
-        let phoneNumber = OrderDetailPhoneNumber(headingPhoneNumber: "For Further Info Please Contact", titlePhoneNumber: "+923111111111")
+        let phoneNumber = OrderDetailPhoneNumber(headingPhoneNumber: "For Further Info Please Contact", titlePhoneNumber: self.order!.barContactNumber ?? "")
         let phoneNumberSection = OrderDetailPhoneNumberSection(items: [phoneNumber])
         self.viewModels.append(phoneNumberSection)
     }
@@ -410,6 +410,7 @@ extension OrderDetailsViewController: UITableViewDataSource, UITableViewDelegate
             
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDetailsPhoneTableViewCell.self)
             cell.setupCell(orderDetailPhoneNumber: section.items[indexPath.row])
+            cell.delegate = self
             return cell
             
         }
@@ -439,6 +440,20 @@ extension OrderDetailsViewController {
     @objc func orderStatusUpdatedNotification(notification: Notification) {
         if let id = notification.object as? String, self.getOrderId() == id {
             self.getOrderDetails(isRefreshing: self.order != nil)
+        }
+    }
+}
+
+extension OrderDetailsViewController: OrderDetailsPhoneTableViewCellDelegate {
+    func orderDetailsPhoneTableViewCell(cell: OrderDetailsPhoneTableViewCell, phoneNumberTapped sender: UIButton) {
+
+        let phoneNumber: String = "tel://\(self.order!.barContactNumber ?? "")"
+        let urlString = phoneNumber.replacingOccurrences(of: " ", with: "")
+
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            debugPrint("Phone number url nil")
         }
     }
 }

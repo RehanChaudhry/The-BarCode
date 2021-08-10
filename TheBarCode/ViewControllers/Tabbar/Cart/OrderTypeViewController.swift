@@ -176,6 +176,11 @@ class OrderTypeViewController: UIViewController {
             let dineInFieldSection = OrderFieldSection(items: [dineInField, tipField], type: .tableNo)
             self.viewModels.append(dineInFieldSection)
                 
+            } else {
+                
+                let dineInField = self.getDineInField()
+                let dineInFieldSection = OrderFieldSection(items: [dineInField], type: .tableNo)
+                self.viewModels.append(dineInFieldSection)
             }
         }
             
@@ -458,8 +463,16 @@ class OrderTypeViewController: UIViewController {
             item.isSelected {
             
             let fieldSection = self.viewModels.first(where: {$0.type == .tableNo}) as? OrderFieldSection
-            let tableNo = fieldSection?.items[0].text ?? ""
-            let orderTip = fieldSection?.items[1].text ?? ""
+            let tableNo: String
+            var orderTip: String = ""
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
+             tableNo = fieldSection?.items[0].text ?? ""
+             orderTip = fieldSection?.items[1].text ?? ""
+                
+            } else {
+                
+                 tableNo = fieldSection?.items[0].text ?? ""
+            }
             
             if tableNo.trimWhiteSpaces().count == 0 {
                 self.showAlertController(title: "", msg: "Please enter table number to proceed")

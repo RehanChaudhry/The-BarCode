@@ -9,10 +9,20 @@
 import UIKit
 import Reusable
 
+protocol OrderDetailsPhoneTableViewCellDelegate: class {
+   
+    func orderDetailsPhoneTableViewCell(cell: OrderDetailsPhoneTableViewCell, phoneNumberTapped sender: UIButton)
+   
+}
+
 class OrderDetailsPhoneTableViewCell: UITableViewCell, NibReusable {
 
     @IBOutlet weak var headingPhoneNumberLabel: UILabel!
-    @IBOutlet weak var titlePhoneNumberLabel: UILabel!
+    
+    @IBOutlet weak var phoneNumberButton: UIButton!
+    
+    weak var delegate: OrderDetailsPhoneTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,8 +40,22 @@ class OrderDetailsPhoneTableViewCell: UITableViewCell, NibReusable {
 
         self.headingPhoneNumberLabel.text = orderDetailPhoneNumber.headingPhoneNumber
         
-        self.titlePhoneNumberLabel.text = orderDetailPhoneNumber.titlePhoneNumber
+        if orderDetailPhoneNumber.titlePhoneNumber == "" {
+            self.phoneNumberButton.isHidden = true
+            self.phoneNumberButton.isHidden = true
+            //self.phoneNumberButton.constant = 0.0
+            self.phoneNumberButton.setTitle("", for: .normal)
+        } else {
+            self.phoneNumberButton.isHidden = false
+            self.phoneNumberButton.isHidden = false
+            //self.phoneNumberButton.constant = 40.0
+            self.phoneNumberButton.setTitle(orderDetailPhoneNumber.titlePhoneNumber, for: .normal)
+        }
         
     }
     
+    @IBAction func phoneNumberTapped(_ sender: UIButton) {
+        
+        self.delegate?.orderDetailsPhoneTableViewCell(cell: self, phoneNumberTapped: sender)
+    }
 }
