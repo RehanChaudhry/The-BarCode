@@ -22,6 +22,7 @@ enum MenuItemType: String {
     reload = "reload",
     faqs = "faqs",
     rules = "rules",
+    paymentSenseTermsAndConditions = "paymentSenseTermsAndConditions",
     privacyPolicy = "privacyPolicy",
     signOut = "signOut"
     
@@ -51,6 +52,8 @@ enum MenuItemType: String {
             return ("Frequently Asked Questions", "icon_faq", "FaqsNavigation", true, 16.0)
         case .rules:
             return ("Redemption & Reload Rules", "icon_rules", "RulesNavigation", true, 16.0)
+        case .paymentSenseTermsAndConditions:
+            return ("Payment Sense Terms and Conditions", "paymentsense-icon", "PaymentSenseTermConditionsNavigation", true, 16.0)
         case .privacyPolicy:
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:
@@ -71,6 +74,7 @@ enum MenuItemType: String {
         MenuItem(type: .reload),
         MenuItem(type: .faqs),
         MenuItem(type: .rules),
+        MenuItem(type: .paymentSenseTermsAndConditions),
         MenuItem(type: .privacyPolicy),
         MenuItem(type: .signOut),
         ]

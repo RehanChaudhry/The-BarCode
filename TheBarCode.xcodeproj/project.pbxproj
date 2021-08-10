@@ -376,6 +376,7 @@
 		B3B9731726AFEB480085347C /* SimilarProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9731526AFEB480085347C /* SimilarProductsCell.swift */; };
 		B3B9731826AFEB480085347C /* SimilarProductsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3B9731626AFEB480085347C /* SimilarProductsCell.xib */; };
 		B3B9731A26B0116C0085347C /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9731926B0116C0085347C /* ProductDetailsViewController.swift */; };
+		B3B9EDD826C2944D00A0A7BE /* PaymentSenseTermConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B9EDD726C2944D00A0A7BE /* PaymentSenseTermConditionsViewController.swift */; };
 		B3C1292324D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */; };
 		B3C1292424D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */; };
 		B3C1292624D99D4000789FF2 /* OrderOfferRedeemSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */; };
@@ -913,6 +914,7 @@
 		B3B9731526AFEB480085347C /* SimilarProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarProductsCell.swift; sourceTree = "<group>"; };
 		B3B9731626AFEB480085347C /* SimilarProductsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimilarProductsCell.xib; sourceTree = "<group>"; };
 		B3B9731926B0116C0085347C /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
+		B3B9EDD726C2944D00A0A7BE /* PaymentSenseTermConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSenseTermConditionsViewController.swift; sourceTree = "<group>"; };
 		B3C1292124D9992C00789FF2 /* OrderOfferRedeemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemTableViewCell.swift; sourceTree = "<group>"; };
 		B3C1292224D9992C00789FF2 /* OrderOfferRedeemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderOfferRedeemTableViewCell.xib; sourceTree = "<group>"; };
 		B3C1292524D99D4000789FF2 /* OrderOfferRedeemSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderOfferRedeemSection.swift; sourceTree = "<group>"; };
@@ -1622,6 +1624,7 @@
 				FA42B4B624C87E250000ED15 /* MyReservationsViewController.swift */,
 				0C84E8822507A7AC00F35ECA /* SplitBillViewController.swift */,
 				B300A6BD24E57F1800037C7C /* SplitBillScannerViewController.swift */,
+				B3B9EDD726C2944D00A0A7BE /* PaymentSenseTermConditionsViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -3066,6 +3069,7 @@
 				B3C1292624D99D4000789FF2 /* OrderOfferRedeemSection.swift in Sources */,
 				0C8E9A91214A87E600224720 /* AccountSettingsViewController.swift in Sources */,
 				0C23A88C2146583200DFB281 /* MoreViewController.swift in Sources */,
+				B3B9EDD826C2944D00A0A7BE /* PaymentSenseTermConditionsViewController.swift in Sources */,
 				B33A30A724D84AB40043EE4D /* OrderOffersSection.swift in Sources */,
 				0C057A3B217778AF00C99356 /* CreditCosumptionViewController.swift in Sources */,
 				0CFC12C72161E34000588993 /* ExploreDetailHeaderCollectionViewCell.swift in Sources */,
