@@ -122,6 +122,7 @@ let forgotPasswordRequest = "Clicked on password reset".getFormattedEventName()
 //MORE
 let signOutClick = "Clicked on sign out".getFormattedEventName()
 let privacyPolicyClick = "Clicked on Prviacy Policy".getFormattedEventName()
+let paymentSenseTermsAndConditionsClick = "Clicked on Payment Sense Terms And Conditions".getFormattedEventName()
 let faqMenuClick = "Clicked on FAQ".getFormattedEventName()
 let preferencesSubmitClick = "Submit Preferences".getFormattedEventName()
 let reloadButtonClick = "Clicked on Reload button".getFormattedEventName()
