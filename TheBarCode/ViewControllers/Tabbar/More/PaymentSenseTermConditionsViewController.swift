@@ -16,7 +16,7 @@ class PaymentSenseTermConditionsViewController: UIViewController {
     }
     
     func setupNavBar() {
-        self.title = "Payment Sense Terms & Conditions"
+        self.title = "Paymentsense Terms"
         let leftButton = UIBarButtonItem(image: UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(didTapBack))
         self.navigationItem.leftBarButtonItem = leftButton
     }

@@ -53,7 +53,7 @@ enum MenuItemType: String {
         case .rules:
             return ("Redemption & Reload Rules", "icon_rules", "RulesNavigation", true, 16.0)
         case .paymentSenseTermsAndConditions:
-            return ("Payment Sense Terms and Conditions", "paymentsense-icon", "PaymentSenseTermConditionsNavigation", true, 16.0)
+            return ("Paymentsense Terms", "paymentsense-icon", "PaymentSenseTermConditionsNavigation", true, 16.0)
         case .privacyPolicy:
             return ("Privacy Policy", "icon_privacy", "PrivacyNavigation", true, 16.0)
         case .signOut:
