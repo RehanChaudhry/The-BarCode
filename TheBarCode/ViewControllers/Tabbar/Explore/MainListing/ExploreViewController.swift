@@ -166,7 +166,7 @@ class ExploreViewController: UIViewController {
             barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexWhatsOn = 1
         } else {
-            barDetailController.preSelectedTabIndex = 0
+            barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexOffers = 0
         }
         
@@ -179,6 +179,7 @@ class ExploreViewController: UIViewController {
         
         let barDetailController = (barDetailNav.viewControllers.first as! BarDetailViewController)
         barDetailController.barId = barId
+        barDetailController.preSelectedTabIndex = 1
         barDetailController.delegate = self
         self.present(barDetailNav, animated: true, completion: nil)
     }

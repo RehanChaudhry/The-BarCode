@@ -458,7 +458,7 @@ extension SearchViewController: BaseSearchScopeViewControllerDelegate {
         barDetailController.delegate = self
         
         if scopeType == .bar {
-            barDetailController.preSelectedTabIndex = 0
+            barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexWhatsOn = 0
             barDetailController.preSelectedSubTabIndexOffers = 0
         } else if scopeType == .deal {

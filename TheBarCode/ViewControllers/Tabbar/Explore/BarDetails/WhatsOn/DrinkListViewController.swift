@@ -471,7 +471,7 @@ extension DrinkListViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Drinks Available"
+            let title = "Takeaway/Delivery Not Available"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()

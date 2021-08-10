@@ -442,7 +442,7 @@ extension FoodMenuViewController: StatefulTableDelegate {
     
     func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
         if forInitialLoadError == nil {
-            let title = "No Food Available"
+            let title = "Dine In/Counter Collection Not Available"
             let subTitle = "Tap to refresh"
             
             let emptyDataView = EmptyDataView.loadFromNib()
