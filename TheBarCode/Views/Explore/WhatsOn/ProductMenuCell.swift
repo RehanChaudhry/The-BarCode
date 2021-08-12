@@ -36,11 +36,16 @@ class ProductMenuCell: UITableViewCell, NibReusable {
 //    @IBOutlet var priceContainerTop: NSLayoutConstraint!
 //    @IBOutlet var topPadding: NSLayoutConstraint!
     
+    @IBOutlet weak var priceContainerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var seperatorTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionViewContainerHeight: NSLayoutConstraint!
     @IBOutlet var cartIconContainerWidth: NSLayoutConstraint!
     @IBOutlet var priceLabelLeft: NSLayoutConstraint!
     @IBOutlet var priceLabelRight: NSLayoutConstraint!
     @IBOutlet weak var productImageConstraint: NSLayoutConstraint!
+    @IBOutlet weak var productImageWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var addItemActivityIndicator: UIActivityIndicatorView!
     @IBOutlet var addItemButton: UIButton!
@@ -56,6 +61,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
     
     weak var delegate: ProductMenuCellDelegate!
     var givenProduct: Product!
+    //var relatedProducts: [RelatedProductModel] = []
     
     enum CartIconType: String {
         case none = "none",
@@ -110,7 +116,12 @@ class ProductMenuCell: UITableViewCell, NibReusable {
             self.productImage.layer.cornerRadius = 10
             self.productImage.clipsToBounds = true
             self.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
+        }else {
+            self.productImageConstraint.constant = 0
+            self.productImageWidthConstraint.constant = 0
         }
+        
+        //self.relatedProducts = product.relatedProducts
         
         self.handlePrice(product: product, bar: bar)
 
@@ -143,6 +154,13 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         self.handleAddingToCart(isAdding: product.isAddingToCart)
         self.handleRemoveFromCart(isRemoving: product.isRemovingFromCart)
+//        if product.relatedProducts.count > 0 {
+//            self.collectionView.reloadData()
+//        }else {
+//            self.collectionViewContainerHeight.constant = 0
+//            self.collectionContainerHeight.constant = 0
+//            self.collectionContainerTop.constant = 10.0
+//        }
     }
     
     func handlePrice(product: Product, bar: Bar) {
@@ -252,15 +270,17 @@ extension ProductMenuCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SimilarProductsCell", for: indexPath) as! SimilarProductsCell
-        cell.layer.cornerRadius = 20
-        cell.clipsToBounds = true
+        DispatchQueue.main.async {
+            cell.productImage.layer.cornerRadius = 10
+            cell.productImage.clipsToBounds = true
+        }
         let url = URL(string: self.givenProduct.image.value)
         cell.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 5, height: 100.0)
+        return CGSize(width: collectionView.frame.width / 5, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

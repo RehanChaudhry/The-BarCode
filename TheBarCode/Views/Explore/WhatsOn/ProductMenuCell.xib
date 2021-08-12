@@ -197,6 +197,10 @@
                 <outlet property="cartIconContainer" destination="DwO-yC-v2a" id="8j0-cF-GCQ"/>
                 <outlet property="cartIconContainerWidth" destination="DGK-IJ-M4L" id="M2D-9U-naB"/>
                 <outlet property="cartIconImageView" destination="CQA-7a-WMo" id="QJq-m4-fL3"/>
+                <outlet property="collectionContainerHeight" destination="BbT-Ej-Cp0" id="bXh-Xw-Nsb"/>
+                <outlet property="collectionContainerTop" destination="xl3-rr-FAd" id="rBt-LI-qMP"/>
+                <outlet property="collectionView" destination="gSb-K2-aay" id="IvO-9d-Q78"/>
+                <outlet property="collectionViewContainerHeight" destination="BbT-Ej-Cp0" id="sOL-9c-7IW"/>
                 <outlet property="deliveryOnlyLabel" destination="e7m-pk-RNc" id="Hfd-66-CYI"/>
                 <outlet property="deliveryOnlyLabelHeight" destination="ey5-pe-75X" id="E0e-SO-GHE"/>
                 <outlet property="deliveryOnlyLabelWidth" destination="Kj2-CV-iYS" id="FdV-kY-GdS"/>
@@ -204,14 +208,18 @@
                 <outlet property="detailLabelTop" destination="7FT-2M-hGm" id="Y6H-eA-uLx"/>
                 <outlet property="priceContainer" destination="TMq-dN-c4f" id="U9E-Lq-X6X"/>
                 <outlet property="priceContainerHeight" destination="78g-hG-GmT" id="Rbd-4u-MfF"/>
+                <outlet property="priceContainerHeightConstraint" destination="bSx-pp-yW1" id="BTC-0X-r9i"/>
+                <outlet property="priceContainerTop" destination="nf7-HL-7oW" id="1V5-Dl-NLE"/>
                 <outlet property="priceLabel" destination="fBL-S5-DOc" id="n8J-gM-XyW"/>
                 <outlet property="priceLabelLeft" destination="ewB-Zc-Q1g" id="RUb-IK-sUz"/>
                 <outlet property="priceLabelRight" destination="48l-oF-Xhp" id="jWU-17-zj2"/>
                 <outlet property="productImage" destination="cT5-pO-8Cv" id="T2i-3p-aBZ"/>
                 <outlet property="productImageConstraint" destination="MoU-Yz-iP2" id="T1l-YZ-AJf"/>
+                <outlet property="productImageWidthConstraint" destination="5cZ-3t-xUp" id="B6o-vS-Les"/>
                 <outlet property="removeItemActivityIndicator" destination="YRW-ik-7Li" id="cGp-SR-95n"/>
                 <outlet property="removeItemButton" destination="yIc-JX-wm2" id="xBG-Nd-Kci"/>
                 <outlet property="separatorView" destination="kMK-ZW-8Cu" id="aew-LB-UAH"/>
+                <outlet property="seperatorTopConstraint" destination="cde-gB-pYO" id="dt4-bn-oJi"/>
                 <outlet property="titleLabel" destination="f5w-VV-CxB" id="hju-Y7-m1D"/>
             </connections>
             <point key="canvasLocation" x="224.63768115942031" y="33.816964285714285"/>

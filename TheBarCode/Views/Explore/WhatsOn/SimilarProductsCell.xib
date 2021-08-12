@@ -17,20 +17,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar_cover_image" translatesAutoresizingMaskIntoConstraints="NO" id="xOv-1V-8es" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9nn-6O-faf">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                    </imageView>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar_cover_image" translatesAutoresizingMaskIntoConstraints="NO" id="xOv-1V-8es" customClass="AsyncImageView" customModule="TheBarCode" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xOv-1V-8es" firstAttribute="top" secondItem="9nn-6O-faf" secondAttribute="top" id="9Lf-EB-WPv"/>
+                            <constraint firstAttribute="trailing" secondItem="xOv-1V-8es" secondAttribute="trailing" id="kN2-Vi-cTs"/>
+                            <constraint firstItem="xOv-1V-8es" firstAttribute="leading" secondItem="9nn-6O-faf" secondAttribute="leading" id="tP7-zR-rgD"/>
+                            <constraint firstAttribute="bottom" secondItem="xOv-1V-8es" secondAttribute="bottom" id="vWv-Zm-nTa"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="xOv-1V-8es" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0w6-Pa-bdG"/>
-                <constraint firstAttribute="trailing" secondItem="xOv-1V-8es" secondAttribute="trailing" id="Hgo-lF-Myl"/>
-                <constraint firstAttribute="bottom" secondItem="xOv-1V-8es" secondAttribute="bottom" id="i4t-Q4-4kc"/>
-                <constraint firstItem="xOv-1V-8es" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="suH-i2-ib4"/>
+                <constraint firstAttribute="bottom" secondItem="9nn-6O-faf" secondAttribute="bottom" id="4dZ-1X-xB1"/>
+                <constraint firstItem="9nn-6O-faf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Q4s-zG-3By"/>
+                <constraint firstAttribute="trailing" secondItem="9nn-6O-faf" secondAttribute="trailing" id="e0d-dD-gxE"/>
+                <constraint firstItem="9nn-6O-faf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mCN-l7-P7X"/>
             </constraints>
             <size key="customSize" width="100" height="100"/>
             <connections>
+                <outlet property="containerView" destination="9nn-6O-faf" id="NY1-X8-VFK"/>
                 <outlet property="productImage" destination="xOv-1V-8es" id="A1j-nH-zDu"/>
             </connections>
             <point key="canvasLocation" x="168.11594202898553" y="114.50892857142857"/>
