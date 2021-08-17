@@ -164,7 +164,7 @@ class ExploreViewController: UIViewController {
         
         if bar.isInAppPaymentOn.value {
             barDetailController.preSelectedTabIndex = 1
-            barDetailController.preSelectedSubTabIndexWhatsOn = 1
+            barDetailController.preSelectedSubTabIndexWhatsOn = 0
         } else {
             barDetailController.preSelectedTabIndex = 1
             barDetailController.preSelectedSubTabIndexOffers = 0

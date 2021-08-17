@@ -111,6 +111,7 @@ class OrderTypeViewController: UIViewController {
         self.tableView.register(cellType: OrderDineInFieldTableViewCell.self)
         self.tableView.register(cellType: OrderDeliveryAddressTableViewCell.self)
         self.tableView.register(cellType: OrderMobileNumberTableViewCell.self)
+        self.tableView.register(cellType: CounterCollectionNoteTableViewCell.self)
         
         let tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 16))
         tableHeaderView.backgroundColor = UIColor.clear
@@ -137,6 +138,14 @@ class OrderTypeViewController: UIViewController {
         field.keyboardType = UIKeyboardType.decimalPad
         
         return field
+    }
+    
+    func getCounterCollectionField() -> CounterCollectionField {
+        
+        let field = CounterCollectionField()
+        field.text = self.order!.collectionNote ?? ""
+        return field
+
     }
     
     func setupViewModel() {
@@ -189,6 +198,16 @@ class OrderTypeViewController: UIViewController {
             let counterRadioButton = OrderRadioButton(title: "Counter Collection", subTitle: "")
             let counterCollectionSection = OrderCounterCollectionSection(items: [counterRadioButton])
             self.viewModels.append(counterCollectionSection)
+            
+            
+            
+            let counterCollectionLabel = self.getCounterCollectionField()
+            
+            let collectionSection = CounterCollectionFieldSection(items: [counterCollectionLabel], type: .counterCollectionField)
+            
+            self.viewModels.append(collectionSection)
+            
+            self.removeCounterCollectionField()
             
         }
     }
@@ -304,12 +323,31 @@ class OrderTypeViewController: UIViewController {
  
     }
     
-    
     func removeDineInField() {
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .tableNo}),
             let fieldSection = self.viewModels[sectionIndex] as? OrderFieldSection {
             fieldSection.items.removeAll()
         }
+    }
+    
+    func addCounterCollectionField(){
+        
+        if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .counterCollectionField}),
+            let section = self.viewModels[sectionIndex] as? CounterCollectionFieldSection,
+            section.items.count == 0 {
+            let counterCollectionField = self.getCounterCollectionField()
+            section.items.append(counterCollectionField)
+        }
+       
+    }
+    
+    func removeCounterCollectionField(){
+        
+        if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .counterCollectionField}),
+            let fieldSection = self.viewModels[sectionIndex] as? CounterCollectionFieldSection {
+            fieldSection.items.removeAll()
+        }
+        
     }
     
     func addAddress() {
@@ -607,7 +645,17 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
             return cell
-        } else if let section = viewModel as? OrderTakeAwaySection {
+        }
+        
+        else if let section = viewModel as? CounterCollectionFieldSection {
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CounterCollectionNoteTableViewCell.self)
+            
+            cell.setUpCell(counterCollectionNote: section.items[indexPath.row])
+            
+            return cell
+        }
+        
+        else if let section = viewModel as? OrderTakeAwaySection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderRadioButtonTableViewCell.self)
             cell.delegate = self
             cell.setUpCell(radioButton: section.items[indexPath.row], currencySymbol: self.order.currencySymbol)
@@ -687,6 +735,7 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
         if let dineIn = self.viewModels[indexPath.section] as? OrderDineInSection {
             dineIn.items.first?.isSelected = true
             
+            self.removeCounterCollectionField()
             self.addDineInField()
             self.removeAddress()
             self.updateOrderType(orderType: .dineIn)
@@ -696,6 +745,7 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             
             self.removeDineInField()
             self.removeAddress()
+            self.removeCounterCollectionField()
             self.updateOrderType(orderType: .takeAway)
             
         } else if let counterCollection  = self.viewModels[indexPath.section] as? OrderCounterCollectionSection {
@@ -703,6 +753,7 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             
             self.removeDineInField()
             self.removeAddress()
+            self.addCounterCollectionField()
             self.updateOrderType(orderType: .counterCollection)
             
         } else if let deliverySetion = self.viewModels[indexPath.section] as? OrderDeliverySection {
@@ -710,6 +761,7 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             
             self.removeDineInField()
             self.addAddress()
+            self.removeCounterCollectionField()
             self.updateOrderType(orderType: .delivery)
         }
         
@@ -786,7 +838,7 @@ extension OrderTypeViewController {
                 self.order.orderNo = "\(responseObject["id"]!)"
                 self.order.orderTypeRaw = typeRaw
                 self.order.orderTip = (responseObject["order_tip"] as? Double ?? 0.0)
-                print("Order Tip \(self.order.orderTip)")
+                
                 self.order.total = (responseObject["total"]) as! Double
                 self.moveToNextStep(orderType: orderType)
             } else {

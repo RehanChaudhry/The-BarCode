@@ -28,6 +28,7 @@ enum OrderSectionType: String {
     dineIn = "dineIn",
     tableNo = "tableNo",
     counterCollection = "counterCollection",
+    counterCollectionField = "counterCollectionField",
     takeAway = "takeAway",
     delivery = "delivery",
     deliveryAddress = "deliveryAddress",

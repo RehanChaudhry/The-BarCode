@@ -47,6 +47,8 @@ class Order: Mappable {
     
     var barContactNumber: String? = ""
     
+    var collectionNote: String? = ""
+    
     
     var status: OrderStatus {
         return OrderStatus(rawValue: self.statusRaw) ?? .other
@@ -156,6 +158,9 @@ class Order: Mappable {
         self.isTakeAway <- map["establishment.take_away"]
         self.isCollection <- map["establishment.collection"]
         self.isDelivery <- map["establishment.delivery"]
+        
+        self.collectionNote <- map["establishment.collection_note"]
+        
 
         
         self.statusRaw <- map["status"]

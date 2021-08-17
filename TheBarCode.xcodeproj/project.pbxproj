@@ -396,6 +396,10 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
+		F909EEB226C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */; };
+		F909EEB326C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */; };
+		F909EEB526C64A2C000B1EA8 /* CounterCollectionNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909EEB426C64A2C000B1EA8 /* CounterCollectionNote.swift */; };
+		F909EEB726CB8D38000B1EA8 /* CounterCollectionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */; };
 		F92AE18326C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */; };
 		F92AE18426C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */; };
 		F92AE18626C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */; };
@@ -938,6 +942,10 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionNoteTableViewCell.swift; sourceTree = "<group>"; };
+		F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CounterCollectionNoteTableViewCell.xib; sourceTree = "<group>"; };
+		F909EEB426C64A2C000B1EA8 /* CounterCollectionNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionNote.swift; sourceTree = "<group>"; };
+		F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionField.swift; sourceTree = "<group>"; };
 		F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsPhoneTableViewCell.swift; sourceTree = "<group>"; };
 		F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailsPhoneTableViewCell.xib; sourceTree = "<group>"; };
 		F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailPhoneNumber.swift; sourceTree = "<group>"; };
@@ -2394,6 +2402,8 @@
 				0CE486742549758F00E22AD2 /* OrderMobileNumberTableViewCell.xib */,
 				F92AE18126C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift */,
 				F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */,
+				F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */,
+				F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2488,6 +2498,8 @@
 				0CE4867725497CEA00E22AD2 /* OrderMobileNumberSection.swift */,
 				F9801F48269DA435005A0D3A /* OrderTipInfo.swift */,
 				F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */,
+				F909EEB426C64A2C000B1EA8 /* CounterCollectionNote.swift */,
+				F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2701,6 +2713,7 @@
 				0C955DE42149312100F9385B /* CategoryCollectionViewCell.xib in Resources */,
 				0CFECFD822EAC64B0033BE20 /* AllSearchHeaderView.xib in Resources */,
 				0C23A8B32146873400DFB281 /* Lato-ThinItalic.ttf in Resources */,
+				F909EEB326C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib in Resources */,
 				0C48E16A2191BAC100B81ADD /* ShareOfferCell.xib in Resources */,
 				0CEBCEC623699470004E6985 /* EventDetailInfoCell.xib in Resources */,
 				0CAAAB3023169D54008A7159 /* CategoryFilterLevel2Cell.xib in Resources */,
@@ -3003,6 +3016,7 @@
 				0C117EF222DD9E4D0061FFC3 /* WhatsOnViewController.swift in Sources */,
 				0C0CA21D22E1908200C90409 /* BarSearchViewController.swift in Sources */,
 				0C6DABE42368500E003C3999 /* SharedEventParams.swift in Sources */,
+				F909EEB726CB8D38000B1EA8 /* CounterCollectionField.swift in Sources */,
 				0C39F2F6231E72D500596A2B /* GMUPolygon.m in Sources */,
 				0C9BB9E3238E42B800B84346 /* RedeemingTypeCell.swift in Sources */,
 				0C0CA22722E1D06A00C90409 /* DrinkSearchViewController.swift in Sources */,
@@ -3044,6 +3058,7 @@
 				0C39F2F5231E72D500596A2B /* GMUPlacemark.m in Sources */,
 				FA42BF8324C97178003C3970 /* OrderDeliveryInfoSection.swift in Sources */,
 				0C9CE6CC25C2D8D200E68432 /* DoubleAdditions.swift in Sources */,
+				F909EEB226C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift in Sources */,
 				FAFEC5A024C183A2001E63EA /* SectionHeaderView.swift in Sources */,
 				837B48B32175FB2C00841419 /* Pagination.swift in Sources */,
 				83FD60432167726D0069A90A /* UIApplicationAdditions.swift in Sources */,
@@ -3167,6 +3182,7 @@
 				B324C77124E4079500D111A0 /* ThankYouViewController.swift in Sources */,
 				0C23A884214657F700DFB281 /* InviteViewController.swift in Sources */,
 				0CF3B1CA2372B47600B93786 /* ProductMenuSegment.swift in Sources */,
+				F909EEB526C64A2C000B1EA8 /* CounterCollectionNote.swift in Sources */,
 				0C0CA21922E0852F00C90409 /* SearchScope.swift in Sources */,
 				8344E299216760BC00CB8BD2 /* FiveADayCollectionViewCell.swift in Sources */,
 				B33A30AA24D84B980043EE4D /* OrderRadioButtonTableViewCell.swift in Sources */,

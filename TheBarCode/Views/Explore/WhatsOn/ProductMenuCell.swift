@@ -83,6 +83,7 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         self.cartIconImageView.image = self.cartIconImageView.image?.withRenderingMode(.alwaysTemplate)
         self.removeItemButton.setImage(UIImage(named: "icon_trash_bin")?.tinted(with: UIColor.white), for: .normal)
 //        self.setDelegates()
+        self.seperatorTopConstraint.constant = 15
     }
     
     func setDelegates() {
