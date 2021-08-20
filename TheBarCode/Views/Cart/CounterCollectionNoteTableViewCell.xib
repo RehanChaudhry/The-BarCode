@@ -13,15 +13,15 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CounterCollectionNoteTableViewCell" rowHeight="32" id="KGk-i7-Jjw" customClass="CounterCollectionNoteTableViewCell" customModule="TheBarCode" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lB-3F-jge">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dI6-A9-ElP">
-                                <rect key="frame" x="44" y="0.0" width="31" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dI6-A9-ElP">
+                                <rect key="frame" x="44" y="0.0" width="260" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.40145140889999997" green="0.86804586650000004" blue="0.97256857159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -29,9 +29,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.28637453909999999" green="0.29402109980000002" blue="0.29804036020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dI6-A9-ElP" secondAttribute="trailing" constant="16" id="AcG-Sn-e3b"/>
                             <constraint firstItem="dI6-A9-ElP" firstAttribute="leading" secondItem="1lB-3F-jge" secondAttribute="leading" constant="44" id="PaY-9k-dk8"/>
                             <constraint firstItem="dI6-A9-ElP" firstAttribute="top" secondItem="1lB-3F-jge" secondAttribute="top" id="bYi-9o-E7g"/>
-                            <constraint firstAttribute="height" constant="16" id="dFw-Id-Ia1"/>
                         </constraints>
                     </view>
                 </subviews>

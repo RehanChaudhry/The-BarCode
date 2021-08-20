@@ -86,8 +86,8 @@ class MoreViewController: UIViewController {
             return faqMenuClick
         case .rules:
             return redemptionReloadRulesMenuClick
-        case .paymentSenseTermsAndConditions:
-            return paymentSenseTermsAndConditionsClick
+//        case .paymentSenseTermsAndConditions:
+//            return paymentSenseTermsAndConditionsClick
         case .privacyPolicy:
             return privacyPolicyClick
         case .signOut:

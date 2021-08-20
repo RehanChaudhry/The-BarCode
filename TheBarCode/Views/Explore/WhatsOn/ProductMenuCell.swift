@@ -113,7 +113,8 @@ class ProductMenuCell: UITableViewCell, NibReusable {
         
         if product.image.value != "" {
             let url = URL(string: product.image.value)
-            
+            self.productImageConstraint.constant = 100
+            self.productImageWidthConstraint.constant = 100
             self.productImage.layer.cornerRadius = 10
             self.productImage.clipsToBounds = true
             self.productImage.setImageWith(url: url, showRetryButton: false, placeHolder: UIImage(named: "bar_cover_image"), shouldShowAcitivityIndicator: true, shouldShowProgress: false)
