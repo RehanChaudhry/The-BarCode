@@ -116,10 +116,10 @@ class DrinkListViewController: UIViewController {
               print("Selected item: \(item) at index: \(index)")
                 self.selectedDropDownRow = index
                 self.statefulTableView.scrollToRowAtIndexPath(IndexPath(row: 0, section: index), atScrollPosition: .top, animated: true)
+                
                 sender.setTitle(self.menuToggle ? "  Close" : "  Menu", for: .normal)
                 sender.setImage(UIImage(named: self.menuToggle ? "close_black" : "icon_rules_black"), for: .normal)
                 self.menuToggle = !self.menuToggle
-                
             }
         
         self.dropDown.cancelAction = { [self] in
