@@ -11,6 +11,8 @@ import Reusable
 
 class CounterCollectionNoteTableViewCell: UITableViewCell, NibReusable {
 
+    @IBOutlet weak var textField: InsetField!
+    @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var counterCollectionLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

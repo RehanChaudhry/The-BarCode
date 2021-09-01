@@ -59,6 +59,8 @@ class OrderTypeViewController: UIViewController {
     var isLoadingAddress: Bool = false
     var cartType = false
     
+    var selectedSection = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -201,12 +203,19 @@ class OrderTypeViewController: UIViewController {
             
             
             
+           
+            
+            let tipField = self.getTipField()
+            let tipFieldSection = OrderFieldSection(items: [tipField], type: .counterCollectionTipField)
+            self.viewModels.append(tipFieldSection)
+            
             let counterCollectionLabel = self.getCounterCollectionField()
             
             let collectionSection = CounterCollectionFieldSection(items: [counterCollectionLabel], type: .counterCollectionField)
             
             self.viewModels.append(collectionSection)
             
+            self.removeCounterCOllectionTipField()
             self.removeCounterCollectionField()
             
         }
@@ -330,6 +339,24 @@ class OrderTypeViewController: UIViewController {
         }
     }
     
+    func addCounterCOllectionTipField() {
+        if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .counterCollectionTipField}),
+            let section = self.viewModels[sectionIndex] as? OrderFieldSection,
+            section.items.count == 0 {
+            
+            let tipField = self.getTipField()
+            section.items.append(tipField)
+        }
+ 
+    }
+    
+    func removeCounterCOllectionTipField() {
+        if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .counterCollectionTipField}),
+            let fieldSection = self.viewModels[sectionIndex] as? OrderFieldSection {
+            fieldSection.items.removeAll()
+        }
+    }
+    
     func addCounterCollectionField(){
         
         if let sectionIndex = self.viewModels.firstIndex(where: {$0.type == .counterCollectionField}),
@@ -424,6 +451,7 @@ class OrderTypeViewController: UIViewController {
     
     func moveToCheckout(orderType: OrderType) {
         let controller = (self.storyboard!.instantiateViewController(withIdentifier: "CheckOutViewController") as! CheckOutViewController)
+        controller.withOutSplittotalBillPayable = self.order.total
         controller.order = self.order
         self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -547,6 +575,15 @@ class OrderTypeViewController: UIViewController {
             let item = section.items.first,
             item.isSelected {
             
+            let fieldSection = self.viewModels.first(where: {$0.type == .counterCollectionTipField}) as? OrderFieldSection
+            var orderTip: String = ""
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
+             orderTip = fieldSection?.items[0].text ?? ""
+                
+            }
+            
+            params["order_tip"] = orderTip
+            
             self.createOrder(orderType: .counterCollection, info: params)
             
         }  else if let section = self.viewModels.first(where: {$0.type == .takeAway}) as? OrderTakeAwaySection,
@@ -651,7 +688,8 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: CounterCollectionNoteTableViewCell.self)
             
             cell.setUpCell(counterCollectionNote: section.items[indexPath.row])
-            
+//            let secondCell = tableView.cellForRow(at: indexPath) as! OrderDineInFieldTableViewCell
+//            secondCell.seperator.isHidden = false
             return cell
         }
         
@@ -668,12 +706,16 @@ extension OrderTypeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if let section = viewModel as? OrderFieldSection {
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderDineInFieldTableViewCell.self)
             if indexPath.row == 0 {
-                cell.seperator.isHidden = true
+                cell.seperator.isHidden = self.selectedSection == 0 ? true : false
             cell.setUpCell(orderField: section.items[indexPath.row])
             }
             if indexPath.row == 1 {
+                cell.seperator.isHidden = false
             cell.setUpCell(orderField: section.items[indexPath.row])
             }
+            
+            
+            
             cell.textField.inputAccessoryView = self.accessoryInputView
             return cell
         } else if let section = viewModel as? OrderDeliveryAddressSection {
@@ -734,8 +776,9 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
         
         if let dineIn = self.viewModels[indexPath.section] as? OrderDineInSection {
             dineIn.items.first?.isSelected = true
-            
+            self.selectedSection = 0
             self.removeCounterCollectionField()
+            self.removeCounterCOllectionTipField()
             self.addDineInField()
             self.removeAddress()
             self.updateOrderType(orderType: .dineIn)
@@ -744,14 +787,16 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             takeAway.items.first?.isSelected = true
             
             self.removeDineInField()
+            self.removeCounterCOllectionTipField()
             self.removeAddress()
             self.removeCounterCollectionField()
             self.updateOrderType(orderType: .takeAway)
             
         } else if let counterCollection  = self.viewModels[indexPath.section] as? OrderCounterCollectionSection {
             counterCollection.items.first?.isSelected = true
-            
+            self.selectedSection = 1
             self.removeDineInField()
+            self.addCounterCOllectionTipField()
             self.removeAddress()
             self.addCounterCollectionField()
             self.updateOrderType(orderType: .counterCollection)
@@ -760,6 +805,7 @@ extension OrderTypeViewController: OrderRadioButtonTableViewCellDelegate {
             deliverySetion.items.first?.isSelected = true
             
             self.removeDineInField()
+            self.removeCounterCOllectionTipField()
             self.addAddress()
             self.removeCounterCollectionField()
             self.updateOrderType(orderType: .delivery)

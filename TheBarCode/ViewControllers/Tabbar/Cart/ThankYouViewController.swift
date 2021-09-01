@@ -113,9 +113,13 @@ class ThankYouViewController: UIViewController {
             totalProductPrice += deliveryCharges
         }
         
+        if self.order.orderType.rawValue == "dine_in" || self.order.orderType.rawValue == "collection" {
+        
         let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
         let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
         self.viewModels.append(tipInfoSection)
+            
+        }
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: totalProductPrice + self.order!.orderTip)
         orderTotalBillInfo.shouldRoundCorners = true

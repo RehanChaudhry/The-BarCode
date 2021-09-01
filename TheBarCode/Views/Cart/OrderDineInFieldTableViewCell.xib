@@ -63,18 +63,22 @@
                 <constraints>
                     <constraint firstItem="cVF-OG-c6n" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="0Bz-8P-2bP"/>
                     <constraint firstAttribute="bottom" secondItem="kg0-ZR-CkO" secondAttribute="bottom" constant="8" id="4jf-lq-5sb"/>
+                    <constraint firstItem="kg0-ZR-CkO" firstAttribute="leading" secondItem="Zvy-qV-BJx" secondAttribute="trailing" constant="10" id="A1Q-lg-VvB"/>
                     <constraint firstAttribute="trailingMargin" secondItem="cVF-OG-c6n" secondAttribute="trailing" constant="16" id="BU0-dI-Cdt"/>
                     <constraint firstAttribute="trailing" secondItem="F5r-4U-Tq5" secondAttribute="trailing" constant="16" id="BwC-S8-RLj"/>
                     <constraint firstItem="cVF-OG-c6n" firstAttribute="leading" secondItem="kg0-ZR-CkO" secondAttribute="trailing" constant="16" id="Cfj-n6-T9M"/>
+                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="GWC-Yx-Aln"/>
                     <constraint firstAttribute="bottom" secondItem="F5r-4U-Tq5" secondAttribute="bottom" constant="8" id="KWh-xJ-MtT"/>
                     <constraint firstItem="Zvy-qV-BJx" firstAttribute="bottom" secondItem="kg0-ZR-CkO" secondAttribute="bottom" id="Lic-3s-1z2"/>
                     <constraint firstItem="Zvy-qV-BJx" firstAttribute="top" secondItem="F5r-4U-Tq5" secondAttribute="top" id="TFl-fB-npR"/>
                     <constraint firstAttribute="bottomMargin" secondItem="cVF-OG-c6n" secondAttribute="bottom" constant="8" id="Z8w-Am-fZM"/>
                     <constraint firstItem="kg0-ZR-CkO" firstAttribute="leading" secondItem="Zvy-qV-BJx" secondAttribute="trailing" constant="10" id="Zph-qR-hZd"/>
+                    <constraint firstAttribute="bottom" secondItem="Zvy-qV-BJx" secondAttribute="bottom" constant="8" id="eYn-3g-oNO"/>
                     <constraint firstItem="F5r-4U-Tq5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="fJB-YO-WqL"/>
                     <constraint firstItem="F5r-4U-Tq5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="k6n-5i-y2u"/>
                     <constraint firstItem="Zvy-qV-BJx" firstAttribute="leading" secondItem="F5r-4U-Tq5" secondAttribute="leading" id="kWr-v7-03i"/>
                     <constraint firstItem="kg0-ZR-CkO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="n2M-Wl-JUU"/>
+                    <constraint firstItem="Zvy-qV-BJx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wov-7O-fyb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

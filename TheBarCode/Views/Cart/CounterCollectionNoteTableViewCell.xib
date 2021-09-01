@@ -7,18 +7,23 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CounterCollectionNoteTableViewCell" rowHeight="32" id="KGk-i7-Jjw" customClass="CounterCollectionNoteTableViewCell" customModule="TheBarCode" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CounterCollectionNoteTableViewCell" rowHeight="78" id="KGk-i7-Jjw" customClass="CounterCollectionNoteTableViewCell" customModule="TheBarCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lB-3F-jge">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="78"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dI6-A9-ElP">
                                 <rect key="frame" x="44" y="0.0" width="260" height="14.5"/>
@@ -26,13 +31,70 @@
                                 <color key="textColor" red="0.40145140889999997" green="0.86804586650000004" blue="0.97256857159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gml-9E-RZp">
+                                <rect key="frame" x="44" y="22.5" width="260" height="47.5"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter table number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zZr-WM-nMJ" customClass="InsetField" customModule="TheBarCode" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="2" width="197" height="44"/>
+                                        <color key="backgroundColor" red="0.22748589520000001" green="0.22735980150000001" blue="0.23137339949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Bs0-3m-8Fd"/>
+                                        </constraints>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                <color key="value" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cet-fr-g1O" userLabel="Seperator">
+                                        <rect key="frame" x="202" y="0.0" width="2" height="47.5"/>
+                                        <color key="backgroundColor" red="0.45098039220000002" green="0.45882352939999999" blue="0.46274509800000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="2" id="dZd-T1-1lM"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6RG-1S-h4Y">
+                                        <rect key="frame" x="210" y="13.5" width="41.5" height="20.5"/>
+                                        <color key="backgroundColor" red="0.22748589520000001" green="0.22735980150000001" blue="0.23137339949999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2274509804" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="Cet-fr-g1O" firstAttribute="leading" secondItem="zZr-WM-nMJ" secondAttribute="trailing" constant="5" id="CiI-4T-Cj3"/>
+                                    <constraint firstItem="6RG-1S-h4Y" firstAttribute="leading" secondItem="Cet-fr-g1O" secondAttribute="trailing" constant="6" id="Hgo-tM-zIL"/>
+                                    <constraint firstItem="zZr-WM-nMJ" firstAttribute="leading" secondItem="gml-9E-RZp" secondAttribute="leading" id="ONm-qt-RbX"/>
+                                    <constraint firstItem="zZr-WM-nMJ" firstAttribute="centerY" secondItem="gml-9E-RZp" secondAttribute="centerY" id="gCn-OH-HKr"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cet-fr-g1O" secondAttribute="bottom" id="hg1-Uy-kno"/>
+                                    <constraint firstItem="Cet-fr-g1O" firstAttribute="top" secondItem="gml-9E-RZp" secondAttribute="top" id="jFS-RT-eer"/>
+                                    <constraint firstAttribute="trailing" secondItem="6RG-1S-h4Y" secondAttribute="trailing" constant="8.5" id="myp-h0-li2"/>
+                                    <constraint firstItem="6RG-1S-h4Y" firstAttribute="centerY" secondItem="gml-9E-RZp" secondAttribute="centerY" id="pHw-P8-TyA"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.28637453909999999" green="0.29402109980000002" blue="0.29804036020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="dI6-A9-ElP" secondAttribute="trailing" constant="16" id="AcG-Sn-e3b"/>
                             <constraint firstItem="dI6-A9-ElP" firstAttribute="leading" secondItem="1lB-3F-jge" secondAttribute="leading" constant="44" id="PaY-9k-dk8"/>
+                            <constraint firstItem="gml-9E-RZp" firstAttribute="top" secondItem="dI6-A9-ElP" secondAttribute="bottom" constant="8" id="PgF-bJ-Ka9"/>
                             <constraint firstItem="dI6-A9-ElP" firstAttribute="top" secondItem="1lB-3F-jge" secondAttribute="top" id="bYi-9o-E7g"/>
+                            <constraint firstItem="gml-9E-RZp" firstAttribute="leading" secondItem="1lB-3F-jge" secondAttribute="leading" constant="44" id="uB0-2x-cbv"/>
+                            <constraint firstAttribute="trailing" secondItem="gml-9E-RZp" secondAttribute="trailing" constant="16" id="xe9-K0-1qt"/>
+                            <constraint firstAttribute="bottom" secondItem="gml-9E-RZp" secondAttribute="bottom" constant="8" id="xrF-5r-Iy3"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="gml-9E-RZp"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.28637453909999999" green="0.29402109980000002" blue="0.29804036020000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -47,8 +109,10 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="counterCollectionLabel" destination="dI6-A9-ElP" id="z79-WM-I3V"/>
+                <outlet property="currencyLabel" destination="6RG-1S-h4Y" id="KUd-ot-6qH"/>
+                <outlet property="textField" destination="zZr-WM-nMJ" id="efh-aE-3sJ"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="85.714285714285708"/>
+            <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </tableViewCell>
     </objects>
 </document>
