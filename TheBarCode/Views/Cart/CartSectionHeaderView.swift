@@ -32,7 +32,7 @@ class CartSectionHeaderView: UITableViewHeaderFooterView, NibReusable {
         
         if cartType == "dine_in_collection" {
             
-            self.titleLabel.text = "Table Service"
+            self.titleLabel.text = "Dine-In"
         }
         else{
             
