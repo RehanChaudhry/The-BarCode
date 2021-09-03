@@ -167,10 +167,12 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
         }
         
        else if let section = viewModel as? OrderTipInfoSection {
+        
             let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderInfoTableViewCell.self)
         cell.setupCell(orderTipInfo: section.items[indexPath.row], showSeparator: false, currencySymbol: self.order.currencySymbol)
         cell.adjustMargins(adjustTop: isFirstCell, adjustBottom: isLastCell)
             return cell
+        
         }
         
         else if let section = viewModel as? OrderDiscountSection {
@@ -210,6 +212,15 @@ extension SplitPaymentInfoViewController: UITableViewDataSource, UITableViewDele
             let _ = viewModel.rows[indexPath.row] as? OrderItem {
             viewModel.isExpanded = !viewModel.isExpanded
             self.statefulTableView.innerTable.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section ==  2 {
+            return self.order.orderTip != 0.0 ? 48.0 : 0.0
+        }
+        else {
+            return 48.0
         }
     }
 }

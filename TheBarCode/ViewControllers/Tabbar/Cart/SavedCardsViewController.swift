@@ -137,7 +137,7 @@ class SavedCardsViewController: UIViewController {
         let currentUser = Utility.shared.getCurrentUser()!
         var splittedOrderTip: Double = 0.0
         
-        if (self.order!.paymentSplit.count != 0){
+        if (self.order!.paymentSplit.count != 1){
             for paymentSPlitInfo in self.order!.paymentSplit {
                 
                 if currentUser.userId.value == paymentSPlitInfo.id {
@@ -148,10 +148,8 @@ class SavedCardsViewController: UIViewController {
             self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable + splittedOrderTip), for: .normal)
         }
         else{
-            self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable + self.order!.orderTip), for: .normal)
+            self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.withOutSplittotalBillPayable + self.order!.orderTip), for: .normal)
         }
-        
-       
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
         self.statefulView.backgroundColor = self.view.backgroundColor

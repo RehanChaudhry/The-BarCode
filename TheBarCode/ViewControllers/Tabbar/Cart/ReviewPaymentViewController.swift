@@ -95,9 +95,13 @@ class ReviewPaymentViewController: UIViewController {
 
         self.viewModels.append(contentsOf: order.orderItems.map({ OrderProductsInfoSection(item: $0) }))
         
+        if order.orderTip != 0.0 {
+        
         let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
         let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
         self.viewModels.append(tipInfoSection)
+            
+        }
         
         var total: Double = order.orderItems.reduce(0.0) { (result, item) -> Double in
             return result + item.totalPrice

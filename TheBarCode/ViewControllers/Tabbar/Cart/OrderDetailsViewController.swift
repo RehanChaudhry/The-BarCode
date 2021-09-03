@@ -130,11 +130,14 @@ class OrderDetailsViewController: UIViewController {
             totalProductPrice += deliveryCharges
         }
         
+        if order.orderTip != 0.0 {
+        
         if self.order!.orderType.rawValue == "dine_in" || self.order!.orderType.rawValue == "collection" {
         
         let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
         let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
         self.viewModels.append(tipInfoSection)
+        }
         }
         
         let orderTotalBillInfo = OrderBillInfo(title: "Grand Total", price: totalProductPrice + self.order!.orderTip)
@@ -215,9 +218,9 @@ class OrderDetailsViewController: UIViewController {
             
         }
         
-        let phoneNumber = OrderDetailPhoneNumber(headingPhoneNumber: "For Further Info Please Contact", titlePhoneNumber: self.order!.barContactNumber ?? "")
-        let phoneNumberSection = OrderDetailPhoneNumberSection(items: [phoneNumber])
-        self.viewModels.append(phoneNumberSection)
+//        let phoneNumber = OrderDetailPhoneNumber(headingPhoneNumber: "For Further Info Please Contact", titlePhoneNumber: self.order!.barContactNumber ?? "")
+//        let phoneNumberSection = OrderDetailPhoneNumberSection(items: [phoneNumber])
+//        self.viewModels.append(phoneNumberSection)
     }
     
     func getProductsTotalPrice() -> Double {

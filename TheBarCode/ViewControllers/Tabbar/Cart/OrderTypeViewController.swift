@@ -21,7 +21,7 @@ enum OrderType: String {
     func displayableValue() -> String {
         switch self {
         case .dineIn:
-            return "Dine In"
+            return "Table Service"
         case .takeAway:
             return "Takeaway"
         case .counterCollection:
@@ -132,6 +132,7 @@ class OrderTypeViewController: UIViewController {
     }
     
     func getTipField() -> OrderFieldInput {
+        
         let field = OrderFieldInput()
         field.currencySymbol = order.currencySymbol
         field.placeholder = "Enter tip"
@@ -145,7 +146,7 @@ class OrderTypeViewController: UIViewController {
     func getCounterCollectionField() -> CounterCollectionField {
         
         let field = CounterCollectionField()
-        field.text = self.order!.collectionNote ?? ""
+        field.text = self.order!.collectionNote?.firstUppercased ?? ""
         return field
 
     }
@@ -175,7 +176,7 @@ class OrderTypeViewController: UIViewController {
         
         if cartType == false {
         if self.order.isDineIN == true {
-            let dineRadioButton = OrderRadioButton(title: "Dine In", subTitle: "")
+            let dineRadioButton = OrderRadioButton(title: "Table Service", subTitle: "")
             dineRadioButton.isSelected = true
             let dineInSection = OrderDineInSection(items: [dineRadioButton])
             self.viewModels.append(dineInSection)
@@ -203,11 +204,15 @@ class OrderTypeViewController: UIViewController {
             
             
             
-           
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
             
             let tipField = self.getTipField()
             let tipFieldSection = OrderFieldSection(items: [tipField], type: .counterCollectionTipField)
             self.viewModels.append(tipFieldSection)
+                
+                
+            }
+            
             
             let counterCollectionLabel = self.getCounterCollectionField()
             
@@ -325,9 +330,10 @@ class OrderTypeViewController: UIViewController {
             section.items.count == 0 {
             let dineInField = self.getDineInField()
             section.items.append(dineInField)
-            
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
             let tipField = self.getTipField()
             section.items.append(tipField)
+            }
         }
  
     }
@@ -344,8 +350,10 @@ class OrderTypeViewController: UIViewController {
             let section = self.viewModels[sectionIndex] as? OrderFieldSection,
             section.items.count == 0 {
             
+            if ("\(self.order.menuTypeRaw)" != "squareup"){
             let tipField = self.getTipField()
             section.items.append(tipField)
+            }
         }
  
     }
@@ -894,4 +902,8 @@ extension OrderTypeViewController {
             
         }
     }
+}
+extension StringProtocol {
+    var firstUppercased: String { return prefix(1).uppercased() + dropFirst() }
+    var firstCapitalized: String { return prefix(1).capitalized + dropFirst() }
 }

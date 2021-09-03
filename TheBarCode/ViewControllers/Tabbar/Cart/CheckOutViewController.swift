@@ -128,11 +128,14 @@ class CheckOutViewController: UIViewController {
             self.viewModels.append(orderDeliveryInfoSection)
         }
         
+        if self.order.orderTip != 0.0 {
+        
         if self.order.orderType.rawValue == "dine_in" || self.order.orderType.rawValue ==  "collection" {
         
                 let tipInfo = OrderTipInfo(title: "Tip", tipAmount: self.order!.orderTip)
                 let tipInfoSection = OrderTipInfoSection(items: [tipInfo])
                 self.viewModels.append(tipInfoSection)
+        }
         }
         
         
@@ -276,8 +279,9 @@ class CheckOutViewController: UIViewController {
                 }
             }
             
-            totalPayablePrice -= paidAmount
+            //totalPayablePrice -= paidAmount
             self.totalBillPayable = max(0.0, totalPayablePrice)
+            self.withOutSplittotalBillPayable = totalBillPayable
         }
         
         var splittedOrderTip: Double = 0.0
@@ -296,8 +300,6 @@ class CheckOutViewController: UIViewController {
         else {
             self.checkoutButton.setTitle(String(format: "Continue - \(self.order.currencySymbol) %.2f", self.totalBillPayable + self.order!.orderTip), for: .normal)
         }
-        
-       
         
     }
     
