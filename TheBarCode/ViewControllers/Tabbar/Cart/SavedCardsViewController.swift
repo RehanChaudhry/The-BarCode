@@ -30,12 +30,14 @@ class SavedCardsViewController: UIViewController {
     
     var closeBarButtonItem: UIBarButtonItem!
     
+    var state = false
+    
     @IBOutlet weak var applePayButton: LoadingButton!
     var cards: [CreditCard] = []
     
     var selectedCard: CreditCard? {
         didSet {
-            if self.selectedCard == nil {
+            if self.selectedCard == nil || self.state == false {
                 payButton.updateColor(withGrey: true)
             } else {
                 payButton.updateColor(withGrey: false)
@@ -69,14 +71,18 @@ class SavedCardsViewController: UIViewController {
         }
     }
     
+    
     enum CardSectionType: Int {
-        case info = 0, addCard = 1
+        case info = 0, addCard = 1, orderPrivacyPolicy = 2
         
         static func allTypes() -> [CardSectionType] {
-            return [.info, .addCard]
+            
+            return [.info, .addCard, orderPrivacyPolicy]
+            
         }
     }
     
+
     var isSelectedNewPaymentCard: Bool = false
     
     //MARK: Apple Pay Request
@@ -133,10 +139,12 @@ class SavedCardsViewController: UIViewController {
         
         self.tableView.register(cellType: CardInfoCell.self)
         self.tableView.register(cellType: AddNewCardCell.self)
+        self.tableView.register(cellType: OrderPrivacyPolicyTableViewCell.self)
         
         let currentUser = Utility.shared.getCurrentUser()!
         var splittedOrderTip: Double = 0.0
         
+        if self.order != nil {
         if (self.order!.paymentSplit.count != 1){
             for paymentSPlitInfo in self.order!.paymentSplit {
                 
@@ -147,8 +155,10 @@ class SavedCardsViewController: UIViewController {
             
             self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.totalBillPayable + splittedOrderTip), for: .normal)
         }
+        
         else{
             self.payButton.setTitle(String(format: "Pay - \(self.order?.currencySymbol ?? "") %.2f", self.withOutSplittotalBillPayable + self.order!.orderTip), for: .normal)
+        }
         }
         
         self.statefulView = LoadingAndErrorView.loadFromNib()
@@ -346,6 +356,20 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         
+        else if indexPath.section == CardSectionType.orderPrivacyPolicy.rawValue {
+            if self.order != nil {
+                let cell = tableView.dequeueReusableCell(for: indexPath, cellType: OrderPrivacyPolicyTableViewCell.self)
+                cell.setupCell(orderPrivacyPolicy: OrderPrivacyPolicy())
+                cell.delegate = self
+                return cell
+            }else {
+                let cell = UITableViewCell()
+                cell.backgroundColor = UIColor.clear
+                return cell
+            }
+            
+        }
+        
         return UITableViewCell()
     }
     
@@ -359,7 +383,30 @@ extension SavedCardsViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 //MARK: Webservices Methods
-extension SavedCardsViewController {
+extension SavedCardsViewController: OrderPrivacyPolicyDelegate {
+    func didTapOrderPrivacyPolicy() {
+        
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "PrivacyNavigation") as! UINavigationController
+        controller.modalPresentationStyle = .fullScreen
+        let vc = controller.viewControllers.first as! PrivacyPolicyViewController
+        vc.isPrivacy = false
+        self.navigationController?.present(controller, animated: true, completion: nil)
+    }
+    
+    func didAgreeOrderPrivacy(state: Bool) {
+        
+        self.state = state
+        
+        if self.state == false || self.selectedCard == nil {
+            payButton.updateColor(withGrey: true)
+            self.payButton.isUserInteractionEnabled = false
+        } else {
+            payButton.updateColor(withGrey: false)
+            self.payButton.isUserInteractionEnabled = true
+        }
+        
+    }
+    
     func getCards() {
         
         self.statefulView.showLoading()

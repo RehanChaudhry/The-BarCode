@@ -14,16 +14,19 @@ class PrivacyPolicyViewController: UIViewController {
     
     @IBOutlet var closeBarButton: UIBarButtonItem!
     
+    var isPrivacy = true
+    
     var webView: WKWebView!
     
     var statefulView: LoadingAndErrorView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.title = "Privacy Policy"
+        self.title = self.isPrivacy ? "Privacy Policy" : "Terms and Condtions"
         
         self.closeBarButton.image = UIImage(named: "icon_close")?.withRenderingMode(.alwaysOriginal)
         
@@ -42,7 +45,7 @@ class PrivacyPolicyViewController: UIViewController {
         
         self.statefulView.autoPinEdgesToSuperviewSafeArea()
         
-        let url = URL(string: barCodeDomainURLString + "privacy-policy")
+        let url = URL(string: self.isPrivacy ? (barCodeDomainURLString + "privacy-policy") : "https://thebarcode.co/terms")
         let request = URLRequest(url: url!)
         self.webView.load(request)
         

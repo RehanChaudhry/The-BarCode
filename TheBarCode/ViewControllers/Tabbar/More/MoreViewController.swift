@@ -142,9 +142,13 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             self.tabBarController?.present(navController, animated: true, completion: nil)
         }
         else {
-            let controller = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId)
-            controller?.modalPresentationStyle = .fullScreen
-            self.tabBarController?.present(controller!, animated: true, completion: nil)
+            let controller = self.storyboard?.instantiateViewController(withIdentifier: menuItem.type.description().storyboardId) as! UINavigationController
+            if menuItem.type.description().storyboardId == "PrivacyNavigation" {
+                let vc = controller.viewControllers.first as! PrivacyPolicyViewController
+                vc.isPrivacy = true
+            }
+            controller.modalPresentationStyle = .fullScreen
+            self.tabBarController?.present(controller, animated: true, completion: nil)
         }
     }
 }

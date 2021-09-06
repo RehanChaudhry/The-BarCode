@@ -91,6 +91,7 @@ class CheckOutViewController: UIViewController {
         self.tableView.register(cellType: OrderOfferRedeemTableViewCell.self)
         self.tableView.register(cellType: OrderOfferDiscountTableViewCell.self)
         self.tableView.register(cellType: OrderMessageTableViewCell.self)
+        self.tableView.register(cellType: OrderPrivacyPolicyTableViewCell.self)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -192,6 +193,7 @@ class CheckOutViewController: UIViewController {
                 let messageSection = OrderMessageSection(items: [messageInfo])
                 self.viewModels.append(messageSection)
             }
+        
             
 //            let redeemButton = OrderOfferRedeem(title: "Redeem", enable: (self.offers.count > 0 || self.vouchers.count > 0))
 //            let offerRedeemSection = OrderOfferRedeemSection(type: .offerRedeem, items: [redeemButton])
@@ -555,7 +557,9 @@ extension CheckOutViewController: UITableViewDataSource, UITableViewDelegate {
             cell.infoLabel.delegate = self
             return cell
             
-        } else {
+        }
+        
+        else {
             return UITableViewCell()
         }
     }
@@ -745,6 +749,8 @@ extension CheckOutViewController {
 
 //MARK: Notification Methods
 extension CheckOutViewController {
+    
+    
     @objc func reloadSuccessfullNotification(notification: Notification) {
         self.viewModels.removeAll()
         self.tableView.reloadData()

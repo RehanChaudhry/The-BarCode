@@ -40,7 +40,8 @@ enum OrderSectionType: String {
     messageBoard = "messageBoard",
     mobileNumber = "mobileNumber",
     phoneNumber = "phoneNumber",
-    counterCollectionTipField = "counterCollectionTipField"
+    counterCollectionTipField = "counterCollectionTipField",
+    orderPrivacyPolicy = "orderPrivacyPolicy"
 }
 
 protocol OrderViewModel: class {

@@ -396,6 +396,9 @@
 		CE838BE4221D3ABB00B6C575 /* ActiveStandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE838BE3221D3ABB00B6C575 /* ActiveStandardOffer.swift */; };
 		CE980C19221A71E90056D86E /* StandardOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE980C18221A71E90056D86E /* StandardOffer.swift */; };
 		D86A283E04B330DB8DAA115B /* Pods_TheBarCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46DE7FE33D8FF4361D9FA8E3 /* Pods_TheBarCode.framework */; };
+		F9083AED26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9083AEB26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.swift */; };
+		F9083AEE26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9083AEC26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.xib */; };
+		F9083AF026E23231000D5A95 /* OrderPrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9083AEF26E23231000D5A95 /* OrderPrivacyPolicy.swift */; };
 		F909EEB226C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */; };
 		F909EEB326C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */; };
 		F909EEB726CB8D38000B1EA8 /* CounterCollectionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */; };
@@ -941,6 +944,9 @@
 		E531B48DC91908DCB6985EDD /* Pods-TheBarCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode/Pods-TheBarCode.debug.xcconfig"; sourceTree = "<group>"; };
 		E72F62330534CDD31352BBF1 /* Pods-TheBarCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCodeUITests/Pods-TheBarCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F2C055E1D8B8F15209F635AF /* Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheBarCode-OneSignalNotificationServiceExtension/Pods-TheBarCode-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		F9083AEB26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrivacyPolicyTableViewCell.swift; sourceTree = "<group>"; };
+		F9083AEC26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderPrivacyPolicyTableViewCell.xib; sourceTree = "<group>"; };
+		F9083AEF26E23231000D5A95 /* OrderPrivacyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPrivacyPolicy.swift; sourceTree = "<group>"; };
 		F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionNoteTableViewCell.swift; sourceTree = "<group>"; };
 		F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CounterCollectionNoteTableViewCell.xib; sourceTree = "<group>"; };
 		F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterCollectionField.swift; sourceTree = "<group>"; };
@@ -2402,6 +2408,8 @@
 				F92AE18226C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.xib */,
 				F909EEB026C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.swift */,
 				F909EEB126C6489F000B1EA8 /* CounterCollectionNoteTableViewCell.xib */,
+				F9083AEB26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.swift */,
+				F9083AEC26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.xib */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2497,6 +2505,7 @@
 				F9801F48269DA435005A0D3A /* OrderTipInfo.swift */,
 				F92AE18526C0FFE80087ABA9 /* OrderDetailPhoneNumber.swift */,
 				F909EEB626CB8D38000B1EA8 /* CounterCollectionField.swift */,
+				F9083AEF26E23231000D5A95 /* OrderPrivacyPolicy.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -2668,6 +2677,7 @@
 				0CEFD5E12361C0B9000E2FBC /* MapPinCell.xib in Resources */,
 				0C955DF92149319200F9385B /* TableViewLoadMoreCell.xib in Resources */,
 				0C955E03214931C400F9385B /* CollectionViewLoadMoreView.xib in Resources */,
+				F9083AEE26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.xib in Resources */,
 				0C23A8B52146873400DFB281 /* Lato-BlackItalic.ttf in Resources */,
 				0C8D166C229F8F2A00666F77 /* ExploreImageCell.xib in Resources */,
 				0C05DDDA232139690073A2BA /* AllSearchFooterCell.xib in Resources */,
@@ -2937,6 +2947,7 @@
 				0C23A87F214656C300DFB281 /* SIgnUpViewController.swift in Sources */,
 				0CEBCECF2369B9C8004E6985 /* EventExternalCTA.swift in Sources */,
 				0C0CA21522E07E0200C90409 /* SearchScopeCell.swift in Sources */,
+				F9083AED26E22FCC000D5A95 /* OrderPrivacyPolicyTableViewCell.swift in Sources */,
 				0C8E9A97214A8A8800224720 /* ReloadViewController.swift in Sources */,
 				0C5A88F321647FEE00F16851 /* Contact.swift in Sources */,
 				838B4E4021B1684E00C32214 /* ReloadPriceTVC.swift in Sources */,
@@ -2976,6 +2987,7 @@
 				0CE4867825497CEA00E22AD2 /* OrderMobileNumberSection.swift in Sources */,
 				0C8BDCC72150C34400D5117B /* UIScrollViewAdditions.swift in Sources */,
 				0C94FCCC2366F66200B7B18D /* BookmarkedEventsViewController.swift in Sources */,
+				F9083AF026E23231000D5A95 /* OrderPrivacyPolicy.swift in Sources */,
 				F92AE18326C0FCBA0087ABA9 /* OrderDetailsPhoneTableViewCell.swift in Sources */,
 				FA5F239024C0689B00B4FA5E /* MyOrdersPreviewViewController.swift in Sources */,
 				0C39F29B231D351800596A2B /* MapBasicBar.swift in Sources */,
