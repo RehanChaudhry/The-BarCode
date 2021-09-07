@@ -39,8 +39,12 @@ class SavedCardsViewController: UIViewController {
         didSet {
             if self.selectedCard == nil || self.state == false {
                 payButton.updateColor(withGrey: true)
+                payButton.isUserInteractionEnabled = false
+                
             } else {
                 payButton.updateColor(withGrey: false)
+                payButton.isUserInteractionEnabled = true
+
             }
         }
     }

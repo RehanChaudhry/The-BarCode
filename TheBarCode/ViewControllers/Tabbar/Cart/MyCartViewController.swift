@@ -256,7 +256,7 @@ extension MyCartViewController: UITableViewDataSource, UITableViewDelegate {
         headerView?.selectionButton.tag = section
 //        headerView?.selectionView.tag = section
         let isSelected =  order.barName == self.selectedOrder?.barName
-        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed, cartType: order.cartType)
+        headerView?.setupHeader(title: order.barName, isSelected: isSelected, isVenueClosed: order.isClosed, cartType: order.cartType, menuType: order.menuTypeRaw)
         
         headerView?.setButtonColor(state: self.selectedOrder?.cartId == self.orders[section].cartId ? true : false)
         
