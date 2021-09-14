@@ -37,13 +37,13 @@ class SavedCardsViewController: UIViewController {
     
     var selectedCard: CreditCard? {
         didSet {
-            if self.selectedCard == nil || self.state == false {
-                payButton.updateColor(withGrey: true)
-                payButton.isUserInteractionEnabled = false
-                
-            } else {
+            if (self.selectedCard != nil || cardType == PaymentGatewayType.paymentSense.rawValue) && self.state == true {
                 payButton.updateColor(withGrey: false)
                 payButton.isUserInteractionEnabled = true
+                
+            } else {
+                payButton.updateColor(withGrey: true)
+                payButton.isUserInteractionEnabled = false
 
             }
         }
@@ -401,12 +401,12 @@ extension SavedCardsViewController: OrderPrivacyPolicyDelegate {
         
         self.state = state
         
-        if self.state == false || self.selectedCard == nil {
-            payButton.updateColor(withGrey: true)
-            self.payButton.isUserInteractionEnabled = false
-        } else {
+        if (self.selectedCard != nil || cardType == PaymentGatewayType.paymentSense.rawValue) &&  self.state == true{
             payButton.updateColor(withGrey: false)
             self.payButton.isUserInteractionEnabled = true
+        } else {
+            payButton.updateColor(withGrey: true)
+            self.payButton.isUserInteractionEnabled = false
         }
         
     }
